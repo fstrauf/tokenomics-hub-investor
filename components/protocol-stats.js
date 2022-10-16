@@ -4,7 +4,7 @@ const fetcher = (...args) => fetch(...args).then((res) => res.json())
 
 export default function ProtocolStats({ protocol }) {
 
-  const { data, error } = useSWR('https://api.coingecko.com/api/v3/coins/convex-finance', fetcher)
+  const { data, error } = useSWR('https://api.coingecko.com/api/v3/coins/' + protocol, fetcher)
 
   if (error) return <div>Failed to load</div>
   if (!data) return <div>Loading...</div>
@@ -12,7 +12,15 @@ export default function ProtocolStats({ protocol }) {
   return (
     <div>
       <h1>Market Cap</h1>
+      <p>{data.market_data.market_cap.usd}</p>
+      <h1>Fully Diluted Valuation</h1>
       <p>{data.market_data.fully_diluted_valuation.usd}</p>
+      <h1>Max Supply</h1>
+      <p>{data.market_data.max_supply}</p>
+      <h1>Total Supply</h1>
+      <p>{data.market_data.total_supply}</p>
+      <h1>Circulating Supply</h1>
+      <p>{data.market_data.circulating_supply}</p>
     </div>
   )
 

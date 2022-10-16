@@ -40,7 +40,7 @@ export default function Post({ post, morePosts, preview }) {
                 title={post.title}
                 coverImage={post.coverImage}
                 date={post.date}
-                author={post.author}
+                type={post.type}
               />
               <PostBody content={post.body} />
               <ProtocolStats protocol={post.slug} />
