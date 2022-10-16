@@ -13,6 +13,8 @@ import PostTitle from '../../components/post-title'
 import Head from 'next/head'
 import { CMS_NAME } from '../../lib/constants'
 import Form from '../../components/form'
+import ProtocolBreakdown from '../../components/protocol-breakdown'
+import ProtocolStats from '../../components/protocol-stats'
 
 export default function Post({ post, morePosts, preview }) {
   const router = useRouter()
@@ -41,10 +43,17 @@ export default function Post({ post, morePosts, preview }) {
                 author={post.author}
               />
               <PostBody content={post.body} />
+              <ProtocolStats protocol={post.slug} />
+              <ProtocolBreakdown 
+                utility={post.tokenUtility} 
+                demand={post.demandDriver} 
+                capture={post.valueCapture} 
+                creation={post.valueCreation} 
+              />
             </article>
 
-            <Comments comments={post.comments} />
-            <Form _id={post._id} />
+            {/* <Comments comments={post.comments} />
+            <Form _id={post._id} /> */}
 
             <SectionSeparator />
             {morePosts.length > 0 && <MoreStories posts={morePosts} />}
