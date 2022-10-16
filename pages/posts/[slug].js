@@ -2,17 +2,18 @@ import { useRouter } from 'next/router'
 import ErrorPage from 'next/error'
 import Container from '../../components/container'
 import PostBody from '../../components/post-body'
+import OurTake from '../../components/our-take'
 import MoreStories from '../../components/more-stories'
 import Header from '../../components/header'
 import PostHeader from '../../components/post-header'
-import Comments from '../../components/comments'
+// import Comments from '../../components/comments'
 import SectionSeparator from '../../components/section-separator'
 import Layout from '../../components/layout'
 import { getAllPostsWithSlug, getPostAndMorePosts } from '../../lib/api'
 import PostTitle from '../../components/post-title'
 import Head from 'next/head'
-import { CMS_NAME } from '../../lib/constants'
-import Form from '../../components/form'
+// import { CMS_NAME } from '../../lib/constants'
+// import Form from '../../components/form'
 import ProtocolBreakdown from '../../components/protocol-breakdown'
 import ProtocolStats from '../../components/protocol-stats'
 
@@ -31,25 +32,24 @@ export default function Post({ post, morePosts, preview }) {
           <>
             <article>
               <Head>
-                <title>
-                  {post.title} | Next.js Blog Example with {CMS_NAME}
-                </title>
+                <title>{post.title}</title>
                 {/* <meta property="og:image" content={post.ogImage.url} /> */}
               </Head>
               <PostHeader
                 title={post.title}
                 coverImage={post.coverImage}
-                date={post.date}
+                shortDescription={post.shortDescription}
                 type={post.catTitle?.title}
               />
-              <PostBody content={post.body} />
-              <ProtocolStats protocol={post.slug} />
               <ProtocolBreakdown 
                 utility={post.tokenUtility} 
                 demand={post.demandDriver} 
                 capture={post.valueCapture} 
                 creation={post.valueCreation} 
               />
+              <ProtocolStats protocol={post.slug} />
+              <OurTake content={post.ourTake} />
+              <PostBody content={post.body} />
             </article>
 
             {/* <Comments comments={post.comments} />

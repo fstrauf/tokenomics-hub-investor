@@ -34,16 +34,6 @@ export default {
       type: 'datetime',
     },
     {
-      name: 'body',
-      title: 'Body',
-      type: 'blockContent',
-    },
-    {
-      name: 'tokenUtility',
-      title: 'Token Utility',
-      type: 'text',
-    },
-    {
       name: 'mainImage',
       title: 'Main image',
       type: 'image',
@@ -51,6 +41,12 @@ export default {
         hotspot: true,
       },
     },
+    {
+      name: 'tokenUtility',
+      title: 'Token Utility',
+      type: 'text',
+    },
+    
     {
       name: 'valueCreation',
       title: 'Value Creation',
@@ -66,5 +62,21 @@ export default {
       title: 'Demand Drivers',
       type: 'text',
     },
+    {
+      name: 'ourTake',
+      title: 'Our Take',
+      type: 'blockContent',
+    },  
+    {
+      name: 'body',
+      title: 'Body',
+      type: 'blockContent',
+    },   
+    {
+      name: 'resources',
+      title: 'Resources',
+      type: 'array',
+      of: [{type: 'resource'}],
+    }, 
   ],
 }

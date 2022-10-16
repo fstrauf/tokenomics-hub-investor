@@ -57,7 +57,8 @@ export default function PostBody({ content }) {
     <>
     <div className="mx-auto max-w-2xl" className={markdownStyles.markdown}>
       <PortableText value={content}
-      components={components}/>
+      components={components}
+      />
     </div>
     </>
   )
