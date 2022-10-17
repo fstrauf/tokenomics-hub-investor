@@ -16,6 +16,7 @@ import Head from 'next/head'
 // import Form from '../../components/form'
 import ProtocolBreakdown from '../../components/protocol-breakdown'
 import ProtocolStats from '../../components/protocol-stats'
+import Resources from '../../components/resources'
 
 export default function Post({ post, morePosts, preview }) {
   const router = useRouter()
@@ -50,6 +51,7 @@ export default function Post({ post, morePosts, preview }) {
               <ProtocolStats protocol={post.slug} />
               <OurTake content={post.ourTake} />
               <PostBody content={post.body} />
+              <Resources resources={post.resources} />
             </article>
 
             {/* <Comments comments={post.comments} />
