@@ -10,6 +10,6 @@ article a {
 
 @layer components {
   .section-head {
-    @apply mt-4;
+    @apply mt-4 text-xl mb-2 text-gray-500;
   }
 }

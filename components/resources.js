@@ -4,7 +4,7 @@ export default function Resources({ resources }) {
   return (
     <section>
       <h1 className='section-head'>Resources</h1>
-      <div className='border-4 border-dashed'>
+      <div className='border-4 border-dashed rounded-lg'>
         <div className='m-2 grid'>
         {resources.map((resource) => (          
           <Link as={resource.url} href={resource.url}>

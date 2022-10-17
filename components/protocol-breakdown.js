@@ -4,7 +4,7 @@ export default function ProtocolBreakdown({ utility, demand, capture, creation }
   return (
     <>
     <h1 className='section-head'>Token Strength</h1>
-      <div className='grid border-4 border-dashed'>        
+      <div className='grid border-4 border-dashed rounded-lg'>        
           <BreakdownBox value={utility} title='Token Utility:'/>    
           <BreakdownBox value={demand} title='Demand Driver:'/>
           <BreakdownBox value={capture} title='Value Capture:'/>

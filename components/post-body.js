@@ -8,31 +8,14 @@ import { urlForImage } from '../lib/sanity'
 const SampleImageComponent = ({ value, isInline }) => {
   const { width, height } = getImageDimensions(value)
   return (
-    // <img
-    //   src={urlBuilder()
-    //     .image(value)
-    //     .width(isInline ? 100 : 800)
-    //     .fit('max')
-    //     .auto('format')
-    //     .url()}
-    //   alt={value.alt || ' '}
-    //   loading="lazy"
-    //   style={{
-    //     // Display alongside text if image appears inside a block text span
-    //     display: isInline ? 'inline-block' : 'block',
-
-    //     // Avoid jumping around with aspect-ratio CSS property
-    //     aspectRatio: width / height,
-    //   }}
-    // />
     <img
-      width={1240}
-      height={540}
-      // alt={`Cover Image for ${title}`}
-      // className={cn('shadow-small', {
-      //   'transition-shadow duration-200 hover:shadow-medium': slug,
-      // })}
-      src={urlForImage(value).width(1240).height(540).url()}
+      src={urlForImage(value).width(isInline ? 100 : 800).url()}
+      alt={value.alt || ' '}
+      loading="lazy"
+      style={{      
+        display: isInline ? 'inline-block' : 'block',
+        aspectRatio: width / height,
+      }}
     />
   )
 }
@@ -50,18 +33,11 @@ const components = {
   },
 }
 
-
-// const myPortableTextComponents = {
-//   types: {
-//     image: ({value}) => <img src={value.imageUrl} />,
-//   },
-// }
-
 export default function PostBody({ content }) {
   return (
     <>
       <h1 className='section-head'>Deep Dive</h1>
-      <div className='border-4 border-dashed'>
+      <div className='border-4 border-dashed rounded-lg'>
         <div className='ml-2'>
           <div className="mx-auto max-w-2xl" className={markdownStyles.markdown}>
             <PortableText value={content}
