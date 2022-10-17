@@ -12,8 +12,8 @@ export default function PostPreview({
   slug,
 }) {
   return (
-    <div>
-      <h3 className="mb-3 text-3xl leading-snug">
+    <div className='m-2'>
+      <h3 className="mb-3 text-xl leading-snug">
         <Link as={`/posts/${slug}`} href="/posts/[slug]">
           <a className="hover:underline">{title}</a>
         </Link>
