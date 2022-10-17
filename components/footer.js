@@ -1,10 +1,12 @@
 import Container from './container'
+import { TWITTER, DISCORD, LINKTREE } from '../lib/constants'
+import { SocialIcon } from 'react-social-icons';
 
 export default function Footer() {
   return (
     <footer className="border-t border-accent-2 bg-accent-1">
       <Container>
-        <div className="flex flex-col items-center py-28 lg:flex-row">
+        {/* <div className="flex flex-col items-center py-28 lg:flex-row">
           <h3 className="mb-10 text-center text-4xl font-bold leading-tight tracking-tighter lg:mb-0 lg:w-1/2 lg:pr-4 lg:text-left lg:text-5xl">
             Statically Generated with Next.js.
           </h3>
@@ -22,7 +24,10 @@ export default function Footer() {
               View on GitHub
             </a>
           </div>
-        </div>
+        </div> */}
+        <SocialIcon url={TWITTER} />
+        <SocialIcon url={DISCORD} />
+        <SocialIcon url={LINKTREE} />
       </Container>
     </footer>
   )

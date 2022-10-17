@@ -6,9 +6,9 @@ import Link from 'next/link'
 export default function HeroPost({
   title,
   coverImage,
-  date,
-  excerpt,
-  author,
+  // date,
+  // excerpt,
+  // author,
   slug,
 }) {
   return (
@@ -28,14 +28,14 @@ export default function HeroPost({
               <a className="hover:underline">{title}</a>
             </Link>
           </h3>
-          <div className="mb-4 text-lg md:mb-0">
+          {/* <div className="mb-4 text-lg md:mb-0">
             <Date dateString={date} />
-          </div>
+          </div> */}
         </div>
-        <div>
+        {/* <div>
           <p className="mb-4 text-lg leading-relaxed">{excerpt}</p>
           <Avatar name={author?.name} picture={author?.picture} />
-        </div>
+        </div> */}
       </div>
     </section>
   )
