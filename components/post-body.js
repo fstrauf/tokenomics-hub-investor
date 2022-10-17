@@ -1,12 +1,12 @@
 import markdownStyles from './markdown-styles.module.css'
 import { PortableText } from '@portabletext/react'
 import urlBuilder from '@sanity/image-url'
-import {getImageDimensions} from '@sanity/asset-utils'
+import { getImageDimensions } from '@sanity/asset-utils'
 import { urlForImage } from '../lib/sanity'
 
 // Barebones lazy-loaded image component
-const SampleImageComponent = ({value, isInline}) => {
-  const {width, height} = getImageDimensions(value)
+const SampleImageComponent = ({ value, isInline }) => {
+  const { width, height } = getImageDimensions(value)
   return (
     // <img
     //   src={urlBuilder()
@@ -40,8 +40,13 @@ const SampleImageComponent = ({value, isInline}) => {
 const components = {
   types: {
     image: SampleImageComponent,
-    // Any other custom types you have in your content
-    // Examples: mapLocation, contactForm, code, featuredProjects, latestNews, etc.
+  },
+  list: {
+    bullet: ({ children }) => <ul className="list-disc list-inside">{children}</ul>,
+    number: ({ children }) => <ol className="list-decimal list-inside">{children}</ol>,
+  },
+  listItem: {
+    bullet: ({ children }) => <li>{children}</li>,
   },
 }
 
@@ -55,11 +60,16 @@ const components = {
 export default function PostBody({ content }) {
   return (
     <>
-    <div className="mx-auto max-w-2xl" className={markdownStyles.markdown}>
-      <PortableText value={content}
-      components={components}
-      />
-    </div>
+      <h1 className='section-head'>Deep Dive</h1>
+      <div className='border-4 border-dashed'>
+        <div className='ml-2'>
+          <div className="mx-auto max-w-2xl" className={markdownStyles.markdown}>
+            <PortableText value={content}
+              components={components}
+            />
+          </div>
+        </div>
+      </div>
     </>
   )
 }

@@ -7,3 +7,9 @@ article a {
 }
 /* purgecss end ignore */
 @tailwind utilities;
+
+@layer components {
+  .section-head {
+    @apply mt-4;
+  }
+}

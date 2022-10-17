@@ -12,18 +12,18 @@ export default function ProtocolStats({ protocol }) {
 
   return (
     <>
-    <h1 className='mt-4'>Stats</h1>
+    <h1 className='section-head'>Stats</h1>
     <div className='border-4 border-dashed grid grid-cols-2 gap-3'>
-      <h1>Market Cap (in USD)</h1>
-      <NumericFormat className='text-end' value={data.market_data.market_cap.usd} thousandSeparator="," prefix={'$'} decimalScale={2}/>
-      <h1>Fully Diluted Valuation</h1>
-      <NumericFormat className='text-end' value={data.market_data.fully_diluted_valuation.usd} thousandSeparator="," prefix={'$'} decimalScale={2}/>
-      <h1>Max Supply</h1>
-      <NumericFormat className='text-end' value={data.market_data.max_supply} thousandSeparator="," decimalScale={0}/>
-      <h1>Total Supply</h1>
-      <NumericFormat className='text-end' value={data.market_data.total_supply} thousandSeparator="," decimalScale={-0}/>
-      <h1>Circulating Supply</h1>
-      <NumericFormat className='text-end' value={data.market_data.circulating_supply} thousandSeparator="," decimalScale={0}/>
+      <h1 className='ml-2'>Market Cap (in USD)</h1>
+      <NumericFormat className='text-end mr-2' value={data.market_data.market_cap.usd} thousandSeparator="," prefix={'$'} decimalScale={2}/>
+      <h1 className='ml-2'>Fully Diluted Valuation</h1>
+      <NumericFormat className='text-end mr-2' value={data.market_data.fully_diluted_valuation.usd} thousandSeparator="," prefix={'$'} decimalScale={2}/>
+      <h1 className='ml-2'>Max Supply</h1>
+      <NumericFormat className='text-end mr-2' value={data.market_data.max_supply} thousandSeparator="," decimalScale={0}/>
+      <h1 className='ml-2'>Total Supply</h1>
+      <NumericFormat className='text-end mr-2' value={data.market_data.total_supply} thousandSeparator="," decimalScale={-0}/>
+      <h1 className='ml-2'>Circulating Supply</h1>
+      <NumericFormat className='text-end mr-2' value={data.market_data.circulating_supply} thousandSeparator="," decimalScale={0}/>
     </div>
     </>
   )
