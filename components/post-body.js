@@ -8,15 +8,18 @@ import { urlForImage } from '../lib/sanity'
 const SampleImageComponent = ({ value, isInline }) => {
   const { width, height } = getImageDimensions(value)
   return (
-    <img
-      src={urlForImage(value).width(isInline ? 100 : 800).url()}
-      alt={value.alt || ' '}
-      loading="lazy"
-      style={{      
-        display: isInline ? 'inline-block' : 'block',
-        aspectRatio: width / height,
-      }}
-    />
+    <div className=''>
+      <img
+        className='m-auto'
+        src={urlForImage(value).width(isInline ? 100 : 800).url()}
+        alt={value.alt || ' '}
+        loading="lazy"
+        style={{
+          display: isInline ? 'inline-block' : 'block',
+          aspectRatio: width / height,
+        }}
+      />
+    </div>
   )
 }
 
