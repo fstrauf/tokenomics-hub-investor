@@ -1,4 +1,5 @@
 import useSWR from 'swr'
+import { NumericFormat } from 'react-number-format';
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json())
 
@@ -10,18 +11,21 @@ export default function ProtocolStats({ protocol }) {
   if (!data) return <div>Loading...</div>
 
   return (
-    <div>
-      <h1>Market Cap</h1>
-      <p>{data.market_data.market_cap.usd}</p>
+    <>
+    <h1 className='mt-4'>Stats</h1>
+    <div className='border-4 border-dashed grid grid-cols-2 gap-3'>
+      <h1>Market Cap (in USD)</h1>
+      <NumericFormat className='text-end' value={data.market_data.market_cap.usd} thousandSeparator="," prefix={'$'} decimalScale={2}/>
       <h1>Fully Diluted Valuation</h1>
-      <p>{data.market_data.fully_diluted_valuation.usd}</p>
+      <NumericFormat className='text-end' value={data.market_data.fully_diluted_valuation.usd} thousandSeparator="," prefix={'$'} decimalScale={2}/>
       <h1>Max Supply</h1>
-      <p>{data.market_data.max_supply}</p>
+      <NumericFormat className='text-end' value={data.market_data.max_supply} thousandSeparator="," decimalScale={0}/>
       <h1>Total Supply</h1>
-      <p>{data.market_data.total_supply}</p>
+      <NumericFormat className='text-end' value={data.market_data.total_supply} thousandSeparator="," decimalScale={-0}/>
       <h1>Circulating Supply</h1>
-      <p>{data.market_data.circulating_supply}</p>
+      <NumericFormat className='text-end' value={data.market_data.circulating_supply} thousandSeparator="," decimalScale={0}/>
     </div>
+    </>
   )
 
 }

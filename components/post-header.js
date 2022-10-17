@@ -23,8 +23,9 @@ export default function PostHeader({ title, coverImage, shortDescription, type }
       <div className="mb-6 text-lg">
         <h1>{shortDescription}</h1>
       </div>
-      <div className="mb-6 text-lg">
-        <h1>Type: {type}</h1>
+      <div className="mb-6 flex">
+        <h1 className='font-bold w-20'>Type:</h1>
+        <h1>{type}</h1>
       </div>
     </>
   )

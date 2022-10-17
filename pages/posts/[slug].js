@@ -44,7 +44,7 @@ export default function Post({ post, morePosts, preview }) {
               />
               <ProtocolBreakdown 
                 utility={post.tokenUtility} 
-                demand={post.demandDriver} 
+                demand={post.demandDrivers} 
                 capture={post.valueCapture} 
                 creation={post.valueCreation} 
               />
