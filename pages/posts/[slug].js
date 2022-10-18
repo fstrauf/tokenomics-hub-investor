@@ -17,6 +17,9 @@ import Head from 'next/head'
 import ProtocolBreakdown from '../../components/protocol-breakdown'
 import ProtocolStats from '../../components/protocol-stats'
 import Resources from '../../components/resources'
+// import Tab from '../../components/tab'
+import { Tab } from '@headlessui/react'
+import { Fragment } from 'react'
 
 export default function Post({ post, morePosts, preview }) {
   const router = useRouter()
@@ -39,19 +42,64 @@ export default function Post({ post, morePosts, preview }) {
               <PostHeader
                 title={post.title}
                 coverImage={post.coverImage}
+                updatedAt={post.date}
                 shortDescription={post.shortDescription}
                 type={post.catTitle?.title}
               />
-              <ProtocolBreakdown 
-                utility={post.tokenUtility} 
-                demand={post.demandDrivers} 
-                capture={post.valueCapture} 
-                creation={post.valueCreation} 
-              />
-              <ProtocolStats protocol={post.slug} />
-              <OurTake content={post.ourTake} />
-              <PostBody content={post.body} />
-              <Resources resources={post.resources} />
+              <div className=''>
+              <Tab.Group as="nav" className='' defaultIndex={0} >
+                <Tab.List className='bg-gray-800 h-20 rounded-lg grid gap-4 grid-cols-3'>
+                  <Tab as={Fragment}>
+                    {({ selected }) => (
+                      <button
+                        className={
+                          selected ? 'bg-blue-500 text-white rounded-lg' : 'bg-gray-800 text-white rounded-lg'
+                        }
+                      >
+                        Overview
+                      </button>
+                    )}</Tab>
+                    <Tab as={Fragment}>
+                    {({ selected }) => (
+                      <button
+                        className={
+                          selected ? 'bg-blue-500 text-white rounded-lg' : 'bg-gray-800 text-white rounded-lg'
+                        }
+                      >
+                        Deep Dive
+                      </button>
+                    )}</Tab>
+                    <Tab as={Fragment}>
+                    {({ selected }) => (
+                      <button
+                        className={
+                          selected ? 'bg-blue-500 text-white rounded-lg' : 'bg-gray-800 text-white rounded-lg'
+                        }
+                      >
+                        Resources
+                      </button>
+                    )}</Tab>
+                </Tab.List>
+                <Tab.Panels>
+                  <Tab.Panel>
+                    <ProtocolBreakdown
+                      utility={post.tokenUtility}
+                      demand={post.demandDrivers}
+                      capture={post.valueCapture}
+                      creation={post.valueCreation}
+                    />
+                    <ProtocolStats protocol={post.slug} />
+                    <OurTake content={post.ourTake} />
+                  </Tab.Panel>
+                  <Tab.Panel>
+                    <PostBody content={post.body} />
+                  </Tab.Panel>
+                  <Tab.Panel>
+                    <Resources resources={post.resources} />
+                  </Tab.Panel>
+                </Tab.Panels>
+              </Tab.Group>
+              </div>
             </article>
 
             {/* <Comments comments={post.comments} />
