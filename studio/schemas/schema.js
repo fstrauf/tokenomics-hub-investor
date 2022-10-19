@@ -12,6 +12,7 @@ import category from './category'
 // import comment from './comment'
 import protocols from './protocols'
 import resource from './resource'
+import timeline from './timeline'
 
 // Then we give our schema to the builder and provide the result to Sanity
 export default createSchema({
@@ -31,5 +32,6 @@ export default createSchema({
     // comment,
     protocols,
     resource,
+    timeline,
   ]),
 })

@@ -29,6 +29,12 @@ export default {
       of: [{ type: 'reference', to: { type: 'category' } }],
     },
     {
+      name: 'timeline',
+      title: 'Timeline',
+      type: 'array',
+      of: [{type: 'timeline'}],
+    },
+    {
       name: 'publishedAt',
       title: 'Published at',
       type: 'datetime',
@@ -46,7 +52,6 @@ export default {
       title: 'Token Utility',
       type: 'text',
     },
-    
     {
       name: 'valueCreation',
       title: 'Value Creation',

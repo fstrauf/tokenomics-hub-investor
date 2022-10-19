@@ -20,6 +20,7 @@ import Resources from '../../components/resources'
 // import Tab from '../../components/tab'
 import { Tab } from '@headlessui/react'
 import { Fragment } from 'react'
+import TimeLine from '../../components/timeline'
 
 export default function Post({ post, morePosts, preview }) {
   const router = useRouter()
@@ -81,6 +82,7 @@ export default function Post({ post, morePosts, preview }) {
                     )}</Tab>
                 </Tab.List>
                 <Tab.Panels>
+                  {/* Overview */}
                   <Tab.Panel>
                     <ProtocolBreakdown
                       utility={post.tokenUtility}
@@ -90,10 +92,13 @@ export default function Post({ post, morePosts, preview }) {
                     />
                     <ProtocolStats protocol={post.slug} />
                     <OurTake content={post.ourTake} />
+                    <TimeLine items={post.timeline} />
                   </Tab.Panel>
+                  {/* Deep Dive */}
                   <Tab.Panel>
                     <PostBody content={post.body} />
                   </Tab.Panel>
+                  {/* Resources */}
                   <Tab.Panel>
                     <Resources resources={post.resources} />
                   </Tab.Panel>

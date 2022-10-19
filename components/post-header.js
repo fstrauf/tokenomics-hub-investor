@@ -21,12 +21,13 @@ export default function PostHeader({ title, coverImage, updatedAt, shortDescript
       <div className="mb-6 text-lg">
         <h1>{shortDescription}</h1>
       </div>
-      <div className="mb-6 flex">
-        <h1 className='font-bold w-20'>Type:</h1>
+      <div className="text-lg flex flex-auto gap-4">
+      {/* <div className="mb-6 grid grid-cols-2 auto-cols-auto w-1/2"> */}
+        <h1 className='font-bold'>Type:</h1>
         <h1>{type}</h1>
       </div>
-      <div className="mb-6 text-lg flex">
-        <h1 className='font-bold w-20'>Updated:</h1>
+      <div className="mb-6 text-lg flex flex-auto gap-4">
+        <h1 className='font-bold'>Updated:</h1>
         <Date dateString={updatedAt} />
       </div>
     </>
