@@ -83,5 +83,11 @@ export default {
       type: 'array',
       of: [{type: 'resource'}],
     }, 
+    {
+      name: 'thirdPartyResources',
+      title: '3rd Party Resources',
+      type: 'array',
+      of: [{type: 'resource'}],
+    }, 
   ],
 }
