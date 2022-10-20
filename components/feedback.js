@@ -1,10 +1,9 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, useState } from 'react'
+import { DISCORD_WEBHOOK } from '../lib/constants'
 
-export default function MyModal() {
-    const url = 'https://discordapp.com/api/webhooks/1032495484813709342/HXN6cpJvV2lVrGBjhWMbedRBLew_6FyS8cen2oVvnNVzyWu5tMnnopPuiohmqBlRMaYf'
-
-    const [isOpen, setIsOpen] = useState(true)
+export default function Feedback() {    
+    const [isOpen, setIsOpen] = useState(false)
 
     const [form, setForm] = useState({
         name: '',
@@ -13,16 +12,19 @@ export default function MyModal() {
 
     function closeModal(event) {
         setIsOpen(false)
-        // event.preventDefault();        
-        fetch(url, {
+    }
+
+    function handleSubmit(event) {
+        fetch(DISCORD_WEBHOOK, {
             "method":"POST",
             "headers": {"Content-Type": "application/json"},
             "body": JSON.stringify({
-                "content": 'Name: ' + form.name + '||| Feedback: ' + form.feedback
+                "content": 'Name: ' + form.name + ' ||| Feedback: ' + form.feedback
               })
           })
           .then(res=> console.log(res))
           .catch(err => console.error(err));
+        closeModal()
     }
 
     function openModal() {
@@ -75,14 +77,14 @@ export default function MyModal() {
                                 <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                                     <Dialog.Title
                                         as="h3"
-                                        className="text-lg font-medium leading-6 text-gray-900"
+                                        className="text-lg font-medium leading-6 text-gray-700 mb-4"
                                     >
                                         We'd love your feedback!
                                     </Dialog.Title>
-                                    <form action="#" method="POST" onSubmit={closeModal}>
-                                        <div className="space-y-6 bg-slate-700 px-4 py-5 sm:p-6">
+                                    <form action="#" method="POST" onSubmit={handleSubmit}>
+                                        <div className="space-y-6 px-4 py-5 sm:p-6">
                                             <div className="col-span-3 sm:col-span-2">
-                                                <label htmlFor="name" className="block text-sm font-medium text-white">
+                                                <label htmlFor="name" className="block text-lg font-medium text-black mb-2">
                                                     Name
                                                 </label>
                                                 <input
@@ -96,15 +98,15 @@ export default function MyModal() {
                                                         });
                                                     }}
                                                     id="name"
-                                                    className="block w-full flex-1 rounded-none rounded-r-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                                    className="block w-full flex-1 rounded-md border-2 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 sm:text-m"
                                                 />
-                                                <label htmlFor="feedback" className="block text-sm font-medium text-white">
+                                                <label htmlFor="feedback" className="block text-lg font-medium text-black mt-4 mb-2">
                                                     Feedback
                                                 </label>
                                                 <textarea
                                                     id="feedback"
                                                     name="feedback"
-                                                    rows={3}
+                                                    rows={5}
                                                     value={form.feedback}
                                                     onChange={e => {
                                                         setForm({
@@ -112,7 +114,7 @@ export default function MyModal() {
                                                             feedback: e.target.value
                                                         });
                                                     }}
-                                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                                    className="mt-1 block w-full rounded-md border-2 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-m"
                                                     defaultValue={''}
                                                 />
                                             </div>
@@ -123,7 +125,7 @@ export default function MyModal() {
                                         <button
                                             type="submit"
                                             className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                                            onClick={closeModal}
+                                            onClick={handleSubmit}
                                         >
                                             Submit
                                         </button>
