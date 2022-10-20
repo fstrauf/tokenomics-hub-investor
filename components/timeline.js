@@ -4,7 +4,7 @@ import Date from '../components/date'
 export default function TimeLine({ items }) {
   return (
     <>
-      <h1 className='section-head'>Tokenomics Changelog</h1>
+      <h1 className='section-head'>Tokenomics Timeline</h1>
 
         <ol className="relative border-l border-gray-200">
           {items && items.map((item) => (

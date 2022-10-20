@@ -18,8 +18,8 @@ import ProtocolBreakdown from '../../components/protocol-breakdown'
 import ProtocolStats from '../../components/protocol-stats'
 import Resources from '../../components/resources'
 // import Tab from '../../components/tab'
-import { Tab } from '@headlessui/react'
-import { Fragment } from 'react'
+// import { Tab } from '@headlessui/react'
+// import { Fragment } from 'react'
 import TimeLine from '../../components/timeline'
 import { Link } from 'react-scroll'
 
@@ -55,10 +55,10 @@ export default function Post({ post, morePosts, preview }) {
                         <li><Link class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 no-underline" activeClass="active" to="tokenStrength" spy={true} smooth={true}>Overview</Link></li>
                         <li><Link class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 no-underline" to="stats" spy={true} smooth={true}>Stats</Link></li>
                         <li><Link class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 no-underline" to="ourTake" spy={true} smooth={true}>Our Take</Link></li>
-                        <li><Link class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 no-underline" to="timeline" spy={true} smooth={true}>Changelog</Link></li>
+                        <li><Link class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 no-underline" to="timeline" spy={true} smooth={true}>Timeline</Link></li>
                         <li><Link class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 no-underline" to="deepDive" spy={true} smooth={true}>Deep Dive</Link></li>
                         <li><Link class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 no-underline" to="Resources" spy={true} smooth={true}>Resources</Link></li>
-                        <li><Link class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 no-underline" to="3rdPartyResources" spy={true} smooth={true}>3P Resources</Link></li>
+                        {/* <li><Link class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 no-underline" to="3rdPartyResources" spy={true} smooth={true}>3P Resources</Link></li> */}
                       </ul> 
                       </div>
                     </aside>
@@ -81,9 +81,9 @@ export default function Post({ post, morePosts, preview }) {
                       <div id='deepDive'></div>
                       <PostBody content={post.body} />
                       <div id='Resources'></div>
-                      <Resources resources={post.resources} name='Resources' />
-                      <div id='3rdPartyResources'></div>
-                      <Resources resources={post.thirdPartyResources} name='Third Party Resources' />                
+                      <Resources resources={post.resources} tpresources={post.thirdPartyResources} name='Resources' />
+                      {/* <div id='3rdPartyResources'></div>
+                      <Resources resources={post.thirdPartyResources} name='Third Party Resources' />                 */}
                     </main>
                   </div>              
             </article>
