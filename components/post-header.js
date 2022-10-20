@@ -2,7 +2,7 @@
 import Date from '../components/date'
 import CoverImage from '../components/cover-image'
 import PostTitle from '../components/post-title'
-export default function PostHeader({ title, coverImage, updatedAt, shortDescription, type }) {
+export default function PostHeader({ title, coverImage, updatedAt, shortDescription, type, tags }) {
   return (
     <>
       <PostTitle>{title}</PostTitle>
@@ -26,9 +26,15 @@ export default function PostHeader({ title, coverImage, updatedAt, shortDescript
         <h1 className='font-bold'>Type:</h1>
         <h1>{type}</h1>
       </div>
-      <div className="mb-6 text-lg flex flex-auto gap-4">
+      <div className="text-lg flex flex-auto gap-4">
         <h1 className='font-bold'>Updated:</h1>
         <Date dateString={updatedAt} />
+      </div>
+      <div className="mb-6 text-lg flex flex-auto gap-4">
+        <h1 className='font-bold'>Tags:</h1>
+        {tags && tags.map((tag) => (          
+          <p>{tag}</p>
+        ))}
       </div>
     </>
   )

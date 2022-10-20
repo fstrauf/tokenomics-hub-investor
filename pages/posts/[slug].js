@@ -47,6 +47,7 @@ export default function Post({ post, morePosts, preview }) {
                 updatedAt={post.date}
                 shortDescription={post.shortDescription}
                 type={post.catTitle?.title}
+                tags={post.tags}
               />             
                   <div class="flex">
                     <aside class="h-screen sticky top-0 w-52 mr-2">

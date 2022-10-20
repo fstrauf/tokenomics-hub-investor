@@ -1,6 +1,5 @@
 import Container from './container'
 import { TWITTER, DISCORD, LINKTREE, YOUTUBE } from '../lib/constants'
-import { SocialIcon } from 'react-social-icons'
 import Feedback from './feedback'
 
 export default function Footer() {
