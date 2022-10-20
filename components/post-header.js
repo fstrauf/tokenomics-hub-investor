@@ -1,6 +1,6 @@
 // import Avatar from '../components/avatar'
 import Date from '../components/date'
-import CoverImage from '../components/cover-image'
+// import CoverImage from '../components/cover-image'
 import PostTitle from '../components/post-title'
 export default function PostHeader({ title, coverImage, updatedAt, shortDescription, type, tags }) {
   return (
@@ -33,7 +33,7 @@ export default function PostHeader({ title, coverImage, updatedAt, shortDescript
       <div className="mb-6 text-lg flex flex-auto gap-4">
         <h1 className='font-bold'>Tags:</h1>
         {tags && tags.map((tag) => (          
-          <p>{tag.title}</p>
+          <p>{tag?.title}</p>
         ))}
       </div>
     </>
