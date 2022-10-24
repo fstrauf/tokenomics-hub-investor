@@ -1,4 +1,5 @@
 // import { CMS_NAME, CMS_URL } from '../lib/constants'
+import Search from "./search"
 
 export default function Intro() {
   return (
@@ -6,6 +7,7 @@ export default function Intro() {
       <h1 className="text-4xl font-bold leading-tight tracking-tighter md:pr-8 md:text-7xl">
         Tokenomics Hub
       </h1>
+      <Search />
       {/* <h4 className="mt-5 text-center text-lg md:pl-8 md:text-left">
         A statically generated blog example using{' '}
         <a
