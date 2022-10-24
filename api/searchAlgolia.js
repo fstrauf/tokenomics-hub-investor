@@ -23,7 +23,7 @@ const sanity = sanityClient({
 export default function handler(req, res) {
   const sanityAlgolia = indexer(
     {
-      post: {
+      protocols: {
         index: algolia.initIndex(process.env['ALGOLIA_INDEX']),
         projection: `{
             title,
@@ -34,12 +34,12 @@ export default function handler(req, res) {
     },
     document => {
       switch (document._type) {
-        case 'post':
+        case 'protocols':
           return {
             title: document.title,
             path: document.slug.current,
             publishedAt: document.publishedAt,
-            excerpt: flattenBlocks(document.excerpt),
+            // excerpt: flattenBlocks(document.excerpt),
           };
         default:
           throw new Error(`Unknown type: ${document.type}`);

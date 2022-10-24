@@ -33,7 +33,7 @@ export default function PostHeader({ title, coverImage, updatedAt, shortDescript
       <div className="mb-6 text-lg flex flex-auto gap-4">
         <h1 className='font-bold'>Tags:</h1>
         {tags && tags.map((tag) => (          
-          <p>{tag?.title}</p>
+          <p className='rounded-lg bg-gray-800 text-white'>{tag?.title}</p>
         ))}
       </div>
     </>
