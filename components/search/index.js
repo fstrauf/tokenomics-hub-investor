@@ -18,7 +18,7 @@ export default function Search() {
         <>
             {/* <div class="flex justify-center"> */}
             {/* <div class="mb-3 xl:w-96"> */}
-            <div class="inline-flex flex-col justify-center relative text-gray-500">
+            <div class="justify-center relative text-gray-500">
                 <InstantSearch
                     searchClient={algoliaInstance}
                     indexName="thub_protocols"
@@ -28,11 +28,11 @@ export default function Search() {
                         <SearchBox
                             classNames={{
                                 input: 'block p-2 pl-8 rounded border border-gray-200 bg-gray-200 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-transparent',
-                                // submit: 'text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800',
-                                // submitIcon: 'absolute right-2.5 bottom-7 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg px-4 py-4',
                                 submitIcon: 'hidden',
                                 reset: 'flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none',
-                                resetIcon: 'hidden'
+                                resetIcon: 'hidden',
+                                loadingIndicator: 'hidden',
+                                loadingIcon: 'hidden'
 
                             }}
                             placeholder="Search" aria-label="Search" aria-describedby="button-addon3"
@@ -43,9 +43,9 @@ export default function Search() {
 
                         <Hits hitComponent={Hit}
                             classNames={{
-                                root: 'overflow-y-scroll w-70% absolute static z-1 w-full border divide-y shadow max-h-72 overflow-y-auto bg-white',
-                                list: 'bg-white border border-gray-100 w-full mt-2 ',
-                                item: 'block p-2 hover:bg-indigo-50'
+                                root: 'absolute w-full shadow overflow-y-auto bg-white',
+                                list: 'bg-white border-gray-100 mt-2',
+                                item: 'p-2 hover:bg-indigo-50'
                             }} />
                     </EmptyQueryBoundary>
                 </InstantSearch>
