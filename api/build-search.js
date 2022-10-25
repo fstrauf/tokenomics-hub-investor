@@ -1,18 +1,15 @@
-// import sanityServerClient from '$lib/utils/sanityServerClient'
-// import algoliasearch from 'algoliasearch'
-const algoliasearch = require('algoliasearch');
-// import client, { previewClient } from './sanity'
+import algoliasearch from 'algoliasearch';
 import { getPostsForSearch } from '../lib/api.js'
 
 export const algoliaInstance = algoliasearch(
-  process.env['ALGOLIA_APPLICATION_ID'],
+  process.env['NEXT_PUBLIC_ALGOLIA_APPLICATION_ID'],
   process.env['ALGOLIA_ADMIN_KEY'],
 )
 
 
 export default async function handler(request, response) {
   const documents = await getPostsForSearch(false)
-  const index = algoliaInstance.initIndex(process.env['ALGOLIA_INDEX'])
+  const index = algoliaInstance.initIndex(process.env['NEXT_PUBLIC_ALGOLIA_INDEX'])
 
   try {
     console.log(documents)

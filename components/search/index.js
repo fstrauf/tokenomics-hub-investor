@@ -1,27 +1,23 @@
 import algoliasearch from "algoliasearch/lite";
 import { InstantSearch, SearchBox, Hits, useInstantSearch } from 'react-instantsearch-hooks-web';
-import { useState } from 'react'
 import Link from 'next/link'
 
 export default function Search() {
-    // const algoliaInstance = algoliasearch(
-    //     process.env['ALGOLIA_APPLICATION_ID'],
-    //     process.env['ALGOLIA_ADMIN_SEARCH_KEY'],
-    // )
 
-    const [enabled, setEnabled] = useState(false)
     const algoliaInstance = algoliasearch(
-        "WO3E6QTYIT",
-        "8cf50f42219f8ed79a601fbc1ddc7833",
+        process.env.NEXT_PUBLIC_ALGOLIA_APPLICATION_ID,
+        process.env.NEXT_PUBLIC_ALGOLIA_ADMIN_SEARCH_KEY,
     )
+
+    console.log(process.env)
+
     return (
         <>
-            {/* <div class="flex justify-center"> */}
-            {/* <div class="mb-3 xl:w-96"> */}
+
             <div class="justify-center relative text-gray-500">
                 <InstantSearch
                     searchClient={algoliaInstance}
-                    indexName="thub_protocols"
+                    indexName={process.env.NEXT_PUBLIC_ALGOLIA_INDEX}
                 >
 
                     <div class="relative">
@@ -50,9 +46,6 @@ export default function Search() {
                     </EmptyQueryBoundary>
                 </InstantSearch>
             </div>
-            {/* </div> */}
-            {/* </div> */}
-
         </>
     )
 }
@@ -62,17 +55,6 @@ function Hit({ hit }) {
         <Link href={`posts/${hit.slug}`} to={`posts/${hit.slug}`}>
             <h1>{hit.title}</h1>
         </Link>
-    );
-}
-
-function App(props) {
-    return (
-        <InstantSearch {...props}>
-            <SearchBox />
-            <EmptyQueryBoundary fallback={null}>
-                <Hits />
-            </EmptyQueryBoundary>
-        </InstantSearch>
     );
 }
 
