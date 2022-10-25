@@ -7,24 +7,7 @@ export default function Intro() {
       <h1 className="text-4xl font-bold leading-tight tracking-tighter md:pr-8 md:text-7xl">
         Tokenomics Hub
       </h1>
-      <Search />
-      {/* <h4 className="mt-5 text-center text-lg md:pl-8 md:text-left">
-        A statically generated blog example using{' '}
-        <a
-          href="https://nextjs.org/"
-          className="underline transition-colors duration-200 hover:text-success"
-        >
-          Next.js
-        </a>{' '}
-        and{' '}
-        <a
-          href={CMS_URL}
-          className="underline transition-colors duration-200 hover:text-success"
-        >
-          Sanity.io
-        </a>
-        .
-      </h4> */}
+      <Search isPost={false} />    
     </section>
   )
 }
