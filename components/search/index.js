@@ -1,7 +1,6 @@
 import algoliasearch from "algoliasearch/lite";
 import { InstantSearch, SearchBox, Hits, useInstantSearch } from 'react-instantsearch-hooks-web';
 import Link from 'next/link'
-import React, { useState } from 'react';
 
 let prefix = ''
 
@@ -15,6 +14,8 @@ export default function Search({ isPost }) {
     if(!isPost)
     {
         prefix ='posts/'
+    }else{
+        prefix =''
     }
 
     return (

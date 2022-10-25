@@ -75,6 +75,11 @@ export default {
       type: 'text',
     },
     {
+      name: 'businessModel',
+      title: 'Businessmodel',
+      type: 'text',
+    },
+    {
       name: 'ourTake',
       title: 'Our Take',
       type: 'blockContent',

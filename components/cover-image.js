@@ -8,7 +8,7 @@ export default function CoverImage({ title, url, imageObject, slug }) {
       // width={1240}
       // height={540}
       alt={`Cover Image for ${title}`}
-      // className='w-1/2'
+      className='rounded-lg'
       // className={cn('shadow-small', {
       //   'transition-shadow duration-200 hover:shadow-medium': slug,
       // })}

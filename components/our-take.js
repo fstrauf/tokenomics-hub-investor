@@ -27,11 +27,11 @@ const components = {
     image: SampleImageComponent,
   },
   list: {
-    bullet: ({children}) => <ul className="list-disc list-inside">{children}</ul>,
+    bullet: ({children}) => <ul className="list-disc list-inside -indent-6 ml-6">{children}</ul>,
     number: ({children}) => <ol className="list-decimal list-inside">{children}</ol>,
   },
   listItem: {
-    bullet: ({children}) => <li>{children}</li>,
+    bullet: ({children}) => <li className=''>{children}</li>,
   },
 }
 

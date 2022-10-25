@@ -66,6 +66,7 @@ export default function Post({ post, morePosts, preview }) {
                         demand={post.demandDrivers}
                         capture={post.valueCapture}
                         creation={post.valueCreation}
+                        business={post.businessModel}
                       />
                       <div id='stats'></div>
                       <ProtocolStats protocol={post.slug} />
