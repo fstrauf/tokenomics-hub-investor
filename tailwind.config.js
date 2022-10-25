@@ -6,11 +6,12 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'accent-1': '#101623',
-        'accent-2': '#101623',
+        'dao-red': '#FF6666',
+        'dao-green': '#008090',
         'accent-7': '#333',
         success: '#0070f3',
         cyan: '#79FFE1',
+        'dark-tdao': 'rgb(16 22 35)',
       },
       spacing: {
         28: '7rem',
