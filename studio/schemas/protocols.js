@@ -96,7 +96,12 @@ export default {
         {name: 'horizon', type: 'text', title: 'Decision Horizon'},
         {name: 'metrics', type: 'text', title: 'Metrics'},
       ]
-    },  
+    }, 
+    {
+      name: 'diagram',
+      title: 'Diagram',    
+      type: 'url'
+    }, 
     {
       name: 'body',
       title: 'Body',

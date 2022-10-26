@@ -16,6 +16,7 @@ import ProtocolStats from '../../components/protocol-stats'
 import Resources from '../../components/resources'
 import TimeLine from '../../components/timeline'
 import { Link } from 'react-scroll'
+import Diagram from '../../components/diagram'
 
 export default function Post({ post, morePosts, preview }) {
   const router = useRouter()
@@ -57,7 +58,7 @@ export default function Post({ post, morePosts, preview }) {
                         <li><Link class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg text-white hover:bg-gray-100 hover:bg-gray-700 no-underline" to="timeline" spy={true} smooth={true}>Timeline</Link></li>
                         <li><Link class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg text-white hover:bg-gray-100 hover:bg-gray-700 no-underline" to="deepDive" spy={true} smooth={true}>Deep Dive</Link></li>
                         <li><Link class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg text-white hover:bg-gray-100 hover:bg-gray-700 no-underline" to="Resources" spy={true} smooth={true}>Resources</Link></li>
-                        {/* <li><Link class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 no-underline" to="3rdPartyResources" spy={true} smooth={true}>3P Resources</Link></li> */}
+                        <li><Link class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg text-white hover:bg-gray-100 hover:bg-gray-700 no-underline" to="diagram" spy={true} smooth={true}>Diagram</Link></li>
                       </ul> 
                       </div>
                     </div>
@@ -80,16 +81,13 @@ export default function Post({ post, morePosts, preview }) {
                       <TimeLine items={post.timeline} />
                       <div id='deepDive'></div>
                       <PostBody content={post.body} />
+                      <div id='diagram'></div>
+                      <Diagram diagram={post.diagram}/>
                       <div id='Resources'></div>
-                      <Resources resources={post.resources} tpresources={post.thirdPartyResources} name='Resources' />
-                      {/* <div id='3rdPartyResources'></div>
-                      <Resources resources={post.thirdPartyResources} name='Third Party Resources' />                 */}
+                      <Resources resources={post.resources} tpresources={post.thirdPartyResources} name='Resources' />                                           
                     </main>
                   </div>              
             </article>
-
-            {/* <Comments comments={post.comments} />
-            <Form _id={post._id} /> */}
 
             <SectionSeparator />
             {morePosts.length > 0 && <MoreStories posts={morePosts} />}
