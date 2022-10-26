@@ -30,6 +30,10 @@ export default function Post({ post, morePosts, preview }) {
           <PostTitle>Loading…</PostTitle>
         ) : (
           <>
+
+{/* <iframe frameborder="0" style="width:100%;height:995px;" src="https://viewer.diagrams.net/?highlight=0000ff&edit=_blank&nav=1&title=tokenomics_Balancer.drawio#Uhttps%3A%2F%2Fdrive.google.com%2Fuc%3Fid%3D12J2yq3FoA2iw2usdZz80EAAgnuUc0oa2%26export%3Ddownload"></iframe> */}
+
+
             <article>
               <Head>
                 <title>{post.title}</title>
@@ -71,7 +75,7 @@ export default function Post({ post, morePosts, preview }) {
                       <div id='stats'></div>
                       <ProtocolStats protocol={post.slug} />
                       <div id='ourTake'></div>
-                      <OurTake content={post.ourTake} />
+                      <OurTake content={post.ourTake} investmentTake={post.investmentTake} />
                       <div id='timeline'></div>
                       <TimeLine items={post.timeline} />
                       <div id='deepDive'></div>

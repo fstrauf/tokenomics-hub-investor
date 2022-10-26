@@ -20,7 +20,7 @@ export default function Search({ isPost }) {
 
     return (
         <>
-            <div class="justify-center relative text-gray-500">
+            <div className="justify-center relative text-gray-500">
                 <InstantSearch
                     searchClient={algoliaInstance}
                     indexName={process.env.NEXT_PUBLIC_ALGOLIA_INDEX}

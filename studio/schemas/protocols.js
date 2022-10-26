@@ -83,6 +83,19 @@ export default {
       name: 'ourTake',
       title: 'Our Take',
       type: 'blockContent',
+    },
+    {
+      name: 'investmentTake',
+      title: 'InvestmentTake',    
+      type: 'object',
+      fields: [
+        {name: 'threeMonthHorizon', type: 'text', title: 'Three Month Horizon'},
+        {name: 'oneYearHorizon', type: 'text', title: 'One Year Horizon'},
+        {name: 'upside', type: 'text', title: 'Upside'},
+        {name: 'downside', type: 'text', title: 'Downside'},
+        {name: 'horizon', type: 'text', title: 'Decision Horizon'},
+        {name: 'metrics', type: 'text', title: 'Metrics'},
+      ]
     },  
     {
       name: 'body',

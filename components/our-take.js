@@ -27,25 +27,53 @@ const components = {
     image: SampleImageComponent,
   },
   list: {
-    bullet: ({children}) => <ul className="list-disc list-inside -indent-6 ml-6">{children}</ul>,
-    number: ({children}) => <ol className="list-decimal list-inside">{children}</ol>,
+    bullet: ({ children }) => <ul className="list-disc list-inside -indent-6 ml-6">{children}</ul>,
+    number: ({ children }) => <ol className="list-decimal list-inside">{children}</ol>,
   },
   listItem: {
-    bullet: ({children}) => <li className=''>{children}</li>,
+    bullet: ({ children }) => <li>{children}</li>,
   },
 }
 
-export default function OurTake({ content }) {
+export default function OurTake({ content, investmentTake }) {
   return (
     <>
       <h1 className='section-head'>Our Take</h1>
-      <div className='border-4 border-dashed rounded-lg'>
+      <div className='border-4 border-dashed rounded-lg bg-white'>
         <div className='ml-2'>
           <div className="mx-auto max-w-2xl" className={markdownStyles.markdown}>
-            <PortableText value={content} 
-            components={components}
+            <PortableText value={content}
+              components={components}
             />
           </div>
+          {/* <h1>Investment Take</h1> */}
+          <table class="text-sm text-left text-gray-500 dark:text-gray-400 bg-gray-50 m-2">
+            <caption className='section-head'>Investment Take</caption>
+            <tr class="">
+                <th scope="row" class="py-3 px-6 py-4 px-6 font-medium text-gray-900 whitespace-nowrap">3 month time horizon</th>
+                <td class="py-4 px-6 bg-white border-l">{investmentTake.threeMonthHorizon}</td>
+            </tr>
+            <tr>
+                <th scope="row" class="py-3 px-6 py-4 px-6 font-medium text-gray-900 whitespace-nowrap">1 year time horizon</th>
+                <td class="py-4 px-6 bg-white border-l">{investmentTake.oneYearHorizon}</td>
+            </tr>
+            <tr>
+                <th scope="row" class="py-3 px-6 py-4 px-6 font-medium text-gray-900 whitespace-nowrap">Potential Upside</th>
+                <td class="py-4 px-6 bg-white border-l">{investmentTake.upside}</td>
+            </tr>
+            <tr>
+                <th scope="row" class="py-3 px-6 py-4 px-6 font-medium text-gray-900 whitespace-nowrap">Downside / Risk</th>
+                <td class="py-4 px-6 bg-white border-l">{investmentTake.downside}</td>
+            </tr>
+            <tr>
+                <th scope="row" class="py-3 px-6 py-4 px-6 font-medium text-gray-900 whitespace-nowrap">Investment decision horizon</th>
+                <td class="py-4 px-6 bg-white border-l">{investmentTake.horizon}</td>
+            </tr>
+            <tr>
+                <th scope="row" class="py-3 px-6 py-4 px-6 font-medium text-gray-900 whitespace-nowrap">Metrics</th>
+                <td class="py-4 px-6 bg-white border-l">{investmentTake.metrics}</td>
+            </tr>
+        </table>
         </div>
       </div>
     </>
