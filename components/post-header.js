@@ -18,12 +18,12 @@ export default function PostHeader({ title, coverImage, updatedAt, shortDescript
         </div> */}
 
       {/* </div> */}
-      <div className="mb-6 text-lg text-white">
+      <div className="mb-6 text-lg">
         <h1>{shortDescription}</h1>
       </div>
       <div className="text-lg flex flex-auto gap-4">
       {/* <div className="mb-6 grid grid-cols-2 auto-cols-auto w-1/2"> */}
-        <h1 className='font-bold text-white'>Type:</h1>
+        <h1 className='font-bold'>Type:</h1>
         <h1>{type}</h1>
       </div>
       <div className="text-lg flex flex-auto gap-4">
