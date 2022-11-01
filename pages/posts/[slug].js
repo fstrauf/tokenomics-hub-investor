@@ -11,7 +11,7 @@ import Layout from '../../components/layout'
 import { getAllPostsWithSlug, getPostAndMorePosts } from '../../lib/api'
 import PostTitle from '../../components/post-title'
 import Head from 'next/head'
-import ProtocolBreakdown from '../../components/protocol-breakdown'
+import TokenStrength from '../../components/token-strength'
 import ProtocolStats from '../../components/protocol-stats'
 import Resources from '../../components/resources'
 import TimeLine from '../../components/timeline'
@@ -36,7 +36,7 @@ export default function Post({ post, morePosts, preview }) {
 {/* <iframe frameborder="0" style="width:100%;height:995px;" src="https://viewer.diagrams.net/?highlight=0000ff&edit=_blank&nav=1&title=tokenomics_Balancer.drawio#Uhttps%3A%2F%2Fdrive.google.com%2Fuc%3Fid%3D12J2yq3FoA2iw2usdZz80EAAgnuUc0oa2%26export%3Ddownload"></iframe> */}
 
 
-            <article>
+            <article className=''>
               <Head>
                 <title>{post.title}</title>
                 {/* <meta property="og:image" content={post.ogImage.url} /> */}
@@ -64,15 +64,16 @@ export default function Post({ post, morePosts, preview }) {
                       </div>
                     </div>
 
-                    <main>
+                    <main className='w-full'>
                       {/* section header */}
                       <div id='tokenStrength'></div>
-                      <ProtocolBreakdown
-                        utility={post.tokenUtility}
-                        demand={post.demandDrivers}
-                        capture={post.valueCapture}
-                        creation={post.valueCreation}
-                        business={post.businessModel}
+                      <TokenStrength
+                        tokenStrength={post.tokenStrength}
+                        // utility={post.tokenUtility}
+                        // demand={post.demandDrivers}
+                        // capture={post.valueCapture}
+                        // creation={post.valueCreation}
+                        // business={post.businessModel}
                       />
                       <div id='stats'></div>
                       <ProtocolStats protocol={post.slug} />

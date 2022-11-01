@@ -54,31 +54,48 @@ export default {
       },
       validation: Rule => Rule.required(),
     },
+    // {
+    //   name: 'tokenUtility',
+    //   title: 'Token Utility',
+    //   type: 'text',
+    // },
+    // {
+    //   name: 'valueCreation',
+    //   title: 'Value Creation',
+    //   type: 'text',
+    // },
+    // {
+    //   name: 'valueCapture',
+    //   title: 'Value Capture',
+    //   type: 'text',
+    // },
+    // {
+    //   name: 'demandDrivers',
+    //   title: 'Demand Drivers',
+    //   type: 'text',
+    // },
+    // {
+    //   name: 'businessModel',
+    //   title: 'Businessmodel',
+    //   type: 'text',
+    // },
     {
-      name: 'tokenUtility',
-      title: 'Token Utility',
-      type: 'text',
-    },
-    {
-      name: 'valueCreation',
-      title: 'Value Creation',
-      type: 'text',
-    },
-    {
-      name: 'valueCapture',
-      title: 'Value Capture',
-      type: 'text',
-    },
-    {
-      name: 'demandDrivers',
-      title: 'Demand Drivers',
-      type: 'text',
-    },
-    {
-      name: 'businessModel',
-      title: 'Businessmodel',
-      type: 'text',
-    },
+      name: 'tokenStrength',
+      title: 'Token Strength',    
+      type: 'object',
+      fields: [
+        {name: 'businessModel', type: 'text', title: 'Businessmodel'},
+        {name: 'businessModelStrength', type: 'number', title: 'Businessmodel Strength'},
+        {name: 'demandDrivers', type: 'text', title: 'Demand Drivers'},
+        {name: 'demandDriversStrength', type: 'number', title: 'Demand Drivers Strength'},
+        {name: 'valueCapture', type: 'text', title: 'Value Capture'},
+        {name: 'valueCaptureStrength', type: 'number', title: 'Value Capture Strength'},
+        {name: 'valueCreation', type: 'text', title: 'Value Creation'},
+        {name: 'valueCreationStrength', type: 'number', title: 'Value Creation Strength'},
+        {name: 'tokenUtility', type: 'text', title: 'Token Utility'},
+        {name: 'tokenUtilityStrength', type: 'number', title: 'Token Utility Strength'},
+      ]
+    }, 
     {
       name: 'ourTake',
       title: 'Our Take',

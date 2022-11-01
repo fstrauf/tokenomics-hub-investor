@@ -29,7 +29,7 @@ const fetcher = (...args) => fetch(...args).then((res) => res.json())
 
 export default function ProtocolStats({ protocol }) {
   const statsData = useSWR('https://api.coingecko.com/api/v3/coins/' + protocol, fetcher)
-  const chartData = useSWR(`https://api.coingecko.com/api/v3/coins/${protocol}/market_chart?vs_currency=usd&days=max&interval=daily`, fetcher)
+  const chartData = useSWR(`https://api.coingecko.com/api/v3/coins/${protocol}/market_chart?vs_currency=usd&days=max&interval=weekly`, fetcher)
 
   if (statsData.error || chartData.error) return <div>Failed to load</div>
   if (!statsData.data || !chartData.data) return <div>Loading...</div>
@@ -44,7 +44,7 @@ export default function ProtocolStats({ protocol }) {
     labels: priceData.map(value => moment(value.x).format('MMM DD YYYY')),
     datasets: [
       {
-        fill: true,
+        fill: false,
         label: protocol,
         data: priceData.map(val => val.y),
         borderColor: 'rgb(53, 162, 235)',
