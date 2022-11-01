@@ -48,6 +48,7 @@ export default function Post({ post, morePosts, preview }) {
                 shortDescription={post.shortDescription}
                 type={post.catTitle?.title}
                 tags={post.tags}
+                tokenStrength={post.tokenStrength.tokenStrength}
               />             
                   <div class="md:flex">
                     <div class="top-0 z-50 md:mr-2 md:float-top md:h-screen sticky md:w-52">

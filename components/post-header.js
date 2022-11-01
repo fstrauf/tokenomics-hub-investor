@@ -2,10 +2,10 @@
 import Date from '../components/date'
 // import CoverImage from '../components/cover-image'
 import PostTitle from '../components/post-title'
-export default function PostHeader({ title, coverImage, updatedAt, shortDescription, type, tags }) {
+export default function PostHeader({ title, coverImage, updatedAt, shortDescription, type, tags, tokenStrength }) {
 
   // https://codepen.io/nkunic/pen/jXBZWV
-  const percentageComplete = 0.9
+  const percentageComplete = tokenStrength / 10
   const strokeDashOffsetValue = 100 - (percentageComplete * 100)
 
 
@@ -41,7 +41,7 @@ export default function PostHeader({ title, coverImage, updatedAt, shortDescript
             cy="16"
           />
         </svg>
-        <span class="absolute text-xl text-blue-700">94</span>
+        <span class="absolute text-xl text-blue-700">{tokenStrength}</span>
       </div>
       <div className="mb-6 text-lg">
         <h1>{shortDescription}</h1>
