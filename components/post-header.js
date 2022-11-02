@@ -1,7 +1,7 @@
 
 import Date from '../components/date'
 import PostTitle from '../components/post-title'
-import { CircularProgressbar } from 'react-circular-progressbar';
+import { CircularProgressbar } from 'react-circular-progressbar'
 
 export default function PostHeader({ title, updatedAt, shortDescription, type, tags, tokenStrength }) {
 

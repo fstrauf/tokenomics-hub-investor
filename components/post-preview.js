@@ -3,6 +3,7 @@
 import CoverImage from './cover-image'
 import Link from 'next/link'
 import { urlForImage } from '../lib/sanity'
+
 export default function PostPreview({
   title,
   coverImage,
