@@ -50,10 +50,10 @@ export default function Post({ post, morePosts, preview }) {
                 tags={post.tags}
                 tokenStrength={post.tokenStrength.tokenStrength}
               />             
-                  <div class="md:flex">
-                    <div class="top-0 z-50 md:mr-2 md:float-top md:h-screen sticky md:w-52">
-                    <div class="overflow-y-auto md:py-4 md:px-3 bg-gray-50 rounded bg-gray-800">
-                      <ul className='flex md:block md:space-y-2'>
+
+                    <div class="top-0 z-50 sticky">
+                    <div class="overflow-y-auto md:px-3 bg-gray-50 rounded bg-gray-800">
+                      <ul className='flex'>
                         <li><Link class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg text-white hover:bg-gray-100 hover:bg-gray-700 no-underline" activeClass="active" to="tokenStrength" spy={true} smooth={true}>Overview</Link></li>
                         <li><Link class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg text-white hover:bg-gray-100 hover:bg-gray-700 no-underline" to="stats" spy={true} smooth={true}>Stats</Link></li>
                         <li><Link class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg text-white hover:bg-gray-100 hover:bg-gray-700 no-underline" to="ourTake" spy={true} smooth={true}>Our Take</Link></li>
@@ -70,11 +70,6 @@ export default function Post({ post, morePosts, preview }) {
                       <div id='tokenStrength'></div>
                       <TokenStrength
                         tokenStrength={post.tokenStrength}
-                        // utility={post.tokenUtility}
-                        // demand={post.demandDrivers}
-                        // capture={post.valueCapture}
-                        // creation={post.valueCreation}
-                        // business={post.businessModel}
                       />
                       <div id='stats'></div>
                       <ProtocolStats protocol={post.slug} />
@@ -89,7 +84,7 @@ export default function Post({ post, morePosts, preview }) {
                       <div id='Resources'></div>
                       <Resources resources={post.resources} tpresources={post.thirdPartyResources} name='Resources' />                                           
                     </main>
-                  </div>              
+       
             </article>
 
             <SectionSeparator />

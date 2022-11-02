@@ -39,7 +39,7 @@ export default function OurTake({ content, investmentTake }) {
   return (
     <>
       <h1 className='section-head'>Our Take</h1>
-      <div className='border-4 border-dashed rounded-lg bg-white'>
+      <div className='border-2 border-dashed rounded-lg bg-white'>
         <div className='ml-2'>
           <div className="mx-auto max-w-2xl" className={markdownStyles.markdown}>
             <PortableText value={content}
@@ -52,27 +52,27 @@ export default function OurTake({ content, investmentTake }) {
               <tbody>
                 <tr class="">
                   <th scope="row" class="py-3 px-6 py-4 px-6 font-medium text-gray-900 whitespace-nowrap">3 month time horizon</th>
-                  <td class="py-4 px-6 bg-white border-l">{investmentTake?.threeMonthHorizon}</td>
+                  <td class="py-4 px-6 bg-white border-l text-gray-900">{investmentTake?.threeMonthHorizon}</td>
                 </tr>
                 <tr>
                   <th scope="row" class="py-3 px-6 py-4 px-6 font-medium text-gray-900 whitespace-nowrap">1 year time horizon</th>
-                  <td class="py-4 px-6 bg-white border-l">{investmentTake?.oneYearHorizon}</td>
+                  <td class="py-4 px-6 bg-white border-l text-gray-900">{investmentTake?.oneYearHorizon}</td>
                 </tr>
                 <tr>
                   <th scope="row" class="py-3 px-6 py-4 px-6 font-medium text-gray-900 whitespace-nowrap">Potential Upside</th>
-                  <td class="py-4 px-6 bg-white border-l">{investmentTake?.upside}</td>
+                  <td class="py-4 px-6 bg-white border-l text-gray-900">{investmentTake?.upside}</td>
                 </tr>
                 <tr>
                   <th scope="row" class="py-3 px-6 py-4 px-6 font-medium text-gray-900 whitespace-nowrap">Downside / Risk</th>
-                  <td class="py-4 px-6 bg-white border-l">{investmentTake?.downside}</td>
+                  <td class="py-4 px-6 bg-white border-l text-gray-900">{investmentTake?.downside}</td>
                 </tr>
                 <tr>
                   <th scope="row" class="py-3 px-6 py-4 px-6 font-medium text-gray-900 whitespace-nowrap">Investment decision horizon</th>
-                  <td class="py-4 px-6 bg-white border-l">{investmentTake?.horizon}</td>
+                  <td class="py-4 px-6 bg-white border-l text-gray-900">{investmentTake?.horizon}</td>
                 </tr>
                 <tr>
                   <th scope="row" class="py-3 px-6 py-4 px-6 font-medium text-gray-900 whitespace-nowrap">Metrics</th>
-                  <td class="py-4 px-6 bg-white border-l">{investmentTake?.metrics}</td>
+                  <td class="py-4 px-6 bg-white border-l text-gray-900">{investmentTake?.metrics}</td>
                 </tr>
               </tbody>
             </table>

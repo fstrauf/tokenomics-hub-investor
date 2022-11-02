@@ -56,7 +56,7 @@ export default function ProtocolStats({ protocol }) {
   return (
     <>
       <h1 className='section-head'>Stats</h1>
-      <div className='border-4 border-dashed rounded-lg'>
+      <div className='border-2 border-dashed rounded-lg'>
         <div className='grid grid-cols-2 gap-3'>
           <h1 className='ml-2'>Market Cap (in USD)</h1>
           <NumericFormat className='text-end mr-2' value={statsData.data.market_data.market_cap.usd} thousandSeparator="," prefix={'$'} decimalScale={2} displayType="text" />

@@ -40,7 +40,7 @@ export default function PostBody({ content }) {
   return (
     <>
       <h1 className='section-head'>Deep Dive</h1>
-      <div className='border-4 border-dashed rounded-lg'>
+      <div className='border-2 border-dashed rounded-lg'>
         <div className='ml-2'>
           <div className="mx-auto max-w-2xl" className={markdownStyles.markdown}>
             <PortableText value={content}

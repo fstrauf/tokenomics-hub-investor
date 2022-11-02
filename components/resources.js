@@ -4,7 +4,7 @@ export default function Resources({ resources, tpresources }) {
   return (
     <section>
       <h1 className='section-head'>Resources</h1>
-      <div className='border-4 border-dashed rounded-lg'>
+      <div className='border-2 border-dashed rounded-lg'>
       <h1 className='section-head m-2'>Tokenomics DAO</h1>
         <div className='m-2 grid'>
         {resources && resources.map((resource) => (          
