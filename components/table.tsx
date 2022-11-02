@@ -15,9 +15,15 @@ import {
 
 type Protocol = {
   title: string
-  catTitle: object
-  tokenStrength: object
+  // catTitle: object
+  // tokenStrength: object
+  tokenStrength: any
+  coverImage: object
+  slug: string
+  catTitle: any
 }
+
+type Props = []
 
 const columnHelper = createColumnHelper<Protocol>()
 
@@ -41,7 +47,7 @@ const columns = [
 
 ]
 
-const Table: React.FC = ({ prop }) => {
+const Table: React.FC<{ prop: Props }> = ({ prop }) => {
   const [data, setData] = React.useState(() => [...prop])
   const [sorting, setSorting] = React.useState<SortingState>([])
 
