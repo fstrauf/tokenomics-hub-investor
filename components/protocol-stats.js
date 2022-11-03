@@ -42,7 +42,7 @@ export default function ProtocolStats({ protocol }) {
       y: {
           ticks: {
               // Include a dollar sign in the ticks
-              callback: function(value, index, ticks) {
+              callback: function(value) {
                   return '$' + value;
               }
           }
@@ -67,19 +67,19 @@ export default function ProtocolStats({ protocol }) {
     <>
       <h1 className='ftext-xl md:text-2xl lg:text-3xl font-bold mt-10 mb-4 md:mt-20 text-black section-head'>Stats.</h1>
       <div className='border-2 rounded-lg'>
-        <div className='grid grid-cols-2'>
-          <h1 className='ml-2'>Market Cap (in USD)</h1>
+        <div className='grid grid-cols-2 justify-items-start auto-cols-max place-content-start'>
+          <h1 className='ml-2 font-bold'>Market Cap (in USD)</h1>
           <NumericFormat className='text-end mr-2' value={statsData.data.market_data.market_cap.usd} thousandSeparator="," prefix={'$'} decimalScale={2} displayType="text" />
-          <h1 className='ml-2'>Fully Diluted Valuation</h1>
+          <h1 className='ml-2 font-bold'>Fully Diluted Valuation</h1>
           <NumericFormat className='text-end mr-2' value={statsData.data.market_data.fully_diluted_valuation.usd} thousandSeparator="," prefix={'$'} decimalScale={2} displayType="text" />
-          <h1 className='ml-2'>Max Supply</h1>
+          <h1 className='ml-2 font-bold'>Max Supply</h1>
           <NumericFormat className='text-end mr-2' value={statsData.data.market_data.max_supply} thousandSeparator="," decimalScale={0} displayType="text" />
-          <h1 className='ml-2'>Total Supply</h1>
+          <h1 className='ml-2 font-bold'>Total Supply</h1>
           <NumericFormat className='text-end mr-2' value={statsData.data.market_data.total_supply} thousandSeparator="," decimalScale={-0} displayType="text" />
-          <h1 className='ml-2'>Circulating Supply</h1>
+          <h1 className='ml-2 font-bold'>Circulating Supply</h1>
           <NumericFormat className='text-end mr-2' value={statsData.data.market_data.circulating_supply} thousandSeparator="," decimalScale={0} displayType="text" />
         </div>        
-        <div className='m-2'>
+        <div className='m-2 mt-4'>
           <Line options={options} data={mappedChartData} />
         </div>
       </div>

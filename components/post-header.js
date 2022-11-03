@@ -11,11 +11,13 @@ export default function PostHeader({ title, updatedAt, shortDescription, type, t
     <>
       <PostTitle>{title}</PostTitle>
 
-      <div className='w-20 h-20 md:w-40 md:h-40'>
-        <CircularProgressbar value={percentageComplete} text={`${percentageComplete}`} />
-      </div>
-      <div className="mb-6 text-lg">
-        <h1>{shortDescription}</h1>
+      <div className='flex flex-col md:flex-row-reverse justify-between'>
+        <div className='w-20 h-20 self-center mb-4 md:w-40 md:h-40'>
+          <CircularProgressbar value={percentageComplete} text={`${percentageComplete}`} />
+        </div>
+        <div className="mb-6 text-lg md:basis-96">
+          <h1>{shortDescription}</h1>
+        </div>
       </div>
       <div className="text-lg flex flex-auto gap-4">
         {/* <div className="mb-6 grid grid-cols-2 auto-cols-auto w-1/2"> */}
