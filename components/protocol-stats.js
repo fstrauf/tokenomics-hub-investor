@@ -37,7 +37,17 @@ export default function ProtocolStats({ protocol }) {
   const priceData = chartData.data.prices.map(value => ({ x: value[0], y: value[1].toFixed(2) }));
 
   const options = {
-    responsive: true
+    responsive: true,
+    scales: {
+      y: {
+          ticks: {
+              // Include a dollar sign in the ticks
+              callback: function(value, index, ticks) {
+                  return '$' + value;
+              }
+          }
+      }
+  }
   }
 
   const mappedChartData = {
@@ -45,7 +55,7 @@ export default function ProtocolStats({ protocol }) {
     datasets: [
       {
         fill: false,
-        label: protocol,
+        label: statsData.data.symbol.toUpperCase() + ' / USD',
         data: priceData.map(val => val.y),
         borderColor: 'rgb(53, 162, 235)',
         backgroundColor: 'rgba(53, 162, 235, 0.5)',
