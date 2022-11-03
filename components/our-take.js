@@ -38,8 +38,8 @@ const components = {
 export default function OurTake({ content, investmentTake }) {
   return (
     <>
-      <h1 className='section-head'>Our Take</h1>
-      <div className='border-2 border-dashed rounded-lg bg-white'>
+      <h1 className='text-xl md:text-2xl lg:text-3xl font-bold mt-10 mb-4 md:mt-20 text-black section-head'>Our Take.</h1>
+      <div className='border-2 rounded-lg bg-white'>
         <div className='ml-2'>
           <div className="mx-auto max-w-2xl" className={markdownStyles.markdown}>
             <PortableText value={content}

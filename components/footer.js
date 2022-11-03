@@ -12,7 +12,7 @@ export default function Footer() {
             <div class="mb-6 md:mb-0">
               <a href="#" class="flex items-center">
                 {/* <img src="https://flowbite.com/docs/images/logo.svg" class="mr-3 h-8" alt="FlowBite Logo"> */}
-                <span class="self-center text-2xl font-semibold whitespace-nowrap">Tokenomics DAO</span>
+                <span class="self-center text-2xl font-bold whitespace-nowrap">Tokenomics DAO</span>
               </a>
             </div>
             <Feedback />

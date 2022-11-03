@@ -22,7 +22,7 @@ export default function Index({ allPosts, preview }) {
         </Head>
         <Container>
           <Intro />
-          <h1 className='text-3xl text-center mb-10'>Explore, compare and evaluate tokenomics of crypto projects.</h1>
+          <h1 className='text-2xl md:text-3xl text-center mb-10'>Explore, compare and evaluate tokenomics of crypto projects.</h1>
           {/* {morePosts.length > 0 && <MoreStories posts={morePosts} />} */}
           {/* <Table data={morePosts} /> */}
           <Table prop={morePosts} />

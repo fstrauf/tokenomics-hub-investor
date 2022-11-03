@@ -64,7 +64,7 @@ const Table: React.FC<{ prop: Props }> = ({ prop }) => {
   })
 
   return (
-    <div className="mt-2 flex flex-col mb-10">
+    <div className="max-w-5xl mt-2 flex flex-col mb-10 m-auto">
       <div className="-my-2 overflow-x-auto -mx-4 sm:-mx-6 lg:-mx-8">
         <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
           <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
@@ -108,7 +108,7 @@ const Table: React.FC<{ prop: Props }> = ({ prop }) => {
                   <tr key={row.id} className='hover:bg-gray-100'>
                     {/* row.original.slug */}
                     {row.getVisibleCells().map(cell => (
-                      <td key={cell.id} className="px-2 py-2 whitespace-nowrap">
+                      <td key={cell.id} className="text-center px-2 py-2">
                         {flexRender(cell.column.columnDef.cell, cell.getContext())}
                       </td>
                     ))}
@@ -143,7 +143,7 @@ function HeaderLink({ value, slug }) {
   return (
     <div className='ml-2'>
       <Link href={url}>
-        <a className="hover:underline"  >{value}</a>
+        <a className=""  >{value}</a>
       </Link>
     </div>
   )

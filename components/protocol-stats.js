@@ -57,17 +57,17 @@ export default function ProtocolStats({ protocol }) {
         fill: false,
         label: statsData.data.symbol.toUpperCase() + ' / USD',
         data: priceData.map(val => val.y),
-        borderColor: 'rgb(53, 162, 235)',
-        backgroundColor: 'rgba(53, 162, 235, 0.5)',
+        borderColor: 'black',
+        backgroundColor: '#FF6666',
       }
     ]
   }
 
   return (
     <>
-      <h1 className='section-head'>Stats</h1>
-      <div className='border-2 border-dashed rounded-lg'>
-        <div className='grid grid-cols-2 gap-3'>
+      <h1 className='ftext-xl md:text-2xl lg:text-3xl font-bold mt-10 mb-4 md:mt-20 text-black section-head'>Stats.</h1>
+      <div className='border-2 rounded-lg'>
+        <div className='grid grid-cols-2'>
           <h1 className='ml-2'>Market Cap (in USD)</h1>
           <NumericFormat className='text-end mr-2' value={statsData.data.market_data.market_cap.usd} thousandSeparator="," prefix={'$'} decimalScale={2} displayType="text" />
           <h1 className='ml-2'>Fully Diluted Valuation</h1>

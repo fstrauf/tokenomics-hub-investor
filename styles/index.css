@@ -33,7 +33,7 @@ article a {
 }
 
 .CircularProgressbar .CircularProgressbar-path {
-  stroke: #3e98c7;
+  stroke: #FF6666;
   stroke-linecap: round;
   transition: stroke-dashoffset 0.5s ease 0s;
 }
@@ -45,7 +45,7 @@ article a {
 }
 
 .CircularProgressbar .CircularProgressbar-text {
-  fill: #3e98c7;
+  fill: #FF6666;
   font-size: 30px;
   dominant-baseline: middle;
   text-anchor: middle;
