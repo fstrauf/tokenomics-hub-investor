@@ -65,7 +65,7 @@ export default function Post({ post, morePosts, preview }) {
                       </div>
                     </div>
 
-                    <main className='max-w-5xl justify-center'>
+                    <main className='max-w-5xl flex flex-col m-auto'>
                       {/* section header */}
                       <div id='tokenStrength'></div>
                       <TokenStrength
