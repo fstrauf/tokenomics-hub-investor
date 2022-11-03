@@ -51,21 +51,21 @@ export default function Post({ post, morePosts, preview }) {
                 tokenStrength={post.tokenStrength.tokenStrength}
               />             
 
-                    <div class="top-0 z-50 sticky">
-                    <div class="overflow-y-auto md:px-3 bg-gray-50 rounded bg-gray-800">
+                    <div class="w-full top-0 z-50 sticky">
+                    <div class="overflow-x-scroll md:px-10 bg-white border-b-2 border-black">
                       <ul className='flex'>
-                        <li><Link class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg text-white hover:bg-gray-100 hover:bg-gray-700 no-underline" activeClass="active" to="tokenStrength" spy={true} smooth={true}>Overview</Link></li>
-                        <li><Link class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg text-white hover:bg-gray-100 hover:bg-gray-700 no-underline" to="stats" spy={true} smooth={true}>Stats</Link></li>
-                        <li><Link class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg text-white hover:bg-gray-100 hover:bg-gray-700 no-underline" to="ourTake" spy={true} smooth={true}>Our Take</Link></li>
-                        <li><Link class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg text-white hover:bg-gray-100 hover:bg-gray-700 no-underline" to="timeline" spy={true} smooth={true}>Timeline</Link></li>
-                        <li><Link class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg text-white hover:bg-gray-100 hover:bg-gray-700 no-underline" to="deepDive" spy={true} smooth={true}>Deep Dive</Link></li>
-                        <li><Link class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg text-white hover:bg-gray-100 hover:bg-gray-700 no-underline" to="Resources" spy={true} smooth={true}>Resources</Link></li>
-                        <li><Link class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg text-white hover:bg-gray-100 hover:bg-gray-700 no-underline" to="diagram" spy={true} smooth={true}>Diagram</Link></li>
+                        <li><Link class="flex items-center p-4 text-lg font-bold text-gray-900 rounded-lg text-black hover:bg-[rgb(228,231,235)] hover:bg-gray-700 no-underline" activeClass="active" to="tokenStrength" spy={true} smooth={true}>Overview</Link></li>
+                        <li><Link class="flex items-center p-4 text-lg font-bold text-gray-900 rounded-lg text-black hover:bg-[rgb(228,231,235)] hover:bg-gray-700 no-underline" to="stats" spy={true} smooth={true}>Stats</Link></li>
+                        <li><Link class="flex items-center p-4 text-lg font-bold text-gray-900 rounded-lg text-black hover:bg-[rgb(228,231,235)] hover:bg-gray-700 no-underline" to="ourTake" spy={true} smooth={true}>Our Take</Link></li>
+                        <li><Link class="flex items-center p-4 text-lg font-bold text-gray-900 rounded-lg text-black hover:bg-[rgb(228,231,235)] hover:bg-gray-700 no-underline" to="timeline" spy={true} smooth={true}>Timeline</Link></li>
+                        <li><Link class="flex items-center p-4 text-lg font-bold text-gray-900 rounded-lg text-black hover:bg-[rgb(228,231,235)] hover:bg-gray-700 no-underline" to="deepDive" spy={true} smooth={true}>Deep Dive</Link></li>
+                        <li><Link class="flex items-center p-4 text-lg font-bold text-gray-900 rounded-lg text-black hover:bg-[rgb(228,231,235)] hover:bg-gray-700 no-underline" to="Resources" spy={true} smooth={true}>Resources</Link></li>
+                        <li><Link class="flex items-center p-4 text-lg font-bold text-gray-900 rounded-lg text-black hover:bg-[rgb(228,231,235)] hover:bg-gray-700 no-underline" to="diagram" spy={true} smooth={true}>Diagram</Link></li>
                       </ul> 
                       </div>
                     </div>
 
-                    <main className='w-full'>
+                    <main className='max-w-5xl justify-center'>
                       {/* section header */}
                       <div id='tokenStrength'></div>
                       <TokenStrength

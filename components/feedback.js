@@ -45,7 +45,7 @@ export default function Feedback() {
                     onClick={openModal}
                     className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
                 >
-                    Leave Some Feedback
+                    Leave Feedback
                 </button>
             </div>
 

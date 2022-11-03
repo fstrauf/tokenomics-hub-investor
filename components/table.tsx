@@ -108,7 +108,7 @@ const Table: React.FC<{ prop: Props }> = ({ prop }) => {
                   <tr key={row.id} className='hover:bg-gray-100'>
                     {/* row.original.slug */}
                     {row.getVisibleCells().map(cell => (
-                      <td key={cell.id} className="px-2 py-2 whitespace-nowrap">
+                      <td key={cell.id} className="text-center px-2 py-2">
                         {flexRender(cell.column.columnDef.cell, cell.getContext())}
                       </td>
                     ))}
@@ -143,7 +143,7 @@ function HeaderLink({ value, slug }) {
   return (
     <div className='ml-2'>
       <Link href={url}>
-        <a className="hover:underline"  >{value}</a>
+        <a className=""  >{value}</a>
       </Link>
     </div>
   )
