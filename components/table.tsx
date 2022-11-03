@@ -31,6 +31,7 @@ const columns = [
   columnHelper.accessor(row => row.coverImage, {
     id: ' ',
     cell: info => <ProtocolImage value={info.getValue()} slug={info.row.original.slug} />,
+    enableSorting: false,
   }),
   columnHelper.accessor(row => row.title, {
     id: 'Title',
@@ -67,7 +68,7 @@ const Table: React.FC<{ prop: Props }> = ({ prop }) => {
       <div className="-my-2 overflow-x-auto -mx-4 sm:-mx-6 lg:-mx-8">
         <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
           <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-            <table className="min-w-full divide-y divide-gray-200 table-auto">
+            <table className="min-w-full divide-y divide-gray-200 text-center">
               <thead className="bg-gray-50 h-10">
                 {table.getHeaderGroups().map(headerGroup => (
                   <tr key={headerGroup.id}>
@@ -75,7 +76,7 @@ const Table: React.FC<{ prop: Props }> = ({ prop }) => {
                       return (
                         <th key={header.id}
                           scope='col'
-                          className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                           {header.isPlaceholder ? null : (
                             <div
                               {...{
@@ -129,7 +130,7 @@ export function StatusPill({ value }) {
 
   return (
     <span
-      className="px-3 py-1 uppercase leading-wide font-bold text-xs rounded-full shadow-sm bg-green-100 text-green-700"
+      className="px-3 py-1 uppercase leading-wide font-bold text-xs rounded-full shadow-sm bg-gray-100 text-gray-700"
     >
       {value}
     </span>
@@ -149,18 +150,17 @@ function HeaderLink({ value, slug }) {
 }
 
 function TokenStrength({ value }) {
+  const strength = value * 10
   return (
-    <div className='w-10 h-10 '>
-      <CircularProgressbar value={value} text={`${value}`} />
+    <div className='w-10 h-10 m-auto'>
+      <CircularProgressbar value={strength} text={`${strength}`} />
     </div>
   )
 }
 
 function ProtocolImage({ value, slug }) {
-  // const url = 'posts/' + slug
-
   return (
-    <div className='w-4 ml-4 md:w-16'>
+    <div className='w-4 ml-4 sm:w-16'>
       <CoverImage
         slug={slug}
         title={slug}
