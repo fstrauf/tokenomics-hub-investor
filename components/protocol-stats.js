@@ -28,8 +28,8 @@ ChartJS.register(
 const fetcher = (...args) => fetch(...args).then((res) => res.json())
 
 export default function ProtocolStats({ protocol }) {
-  const statsData = useSWR('https://api.coingecko.com/api/v3/coins/' + protocol, fetcher)
-  const chartData = useSWR(`https://api.coingecko.com/api/v3/coins/${protocol}/market_chart?vs_currency=usd&days=max&interval=weekly`, fetcher)
+  const statsData = useSWR('https://api.coingecko.com/api/v3/coins/' + protocol, fetcher, { refreshInterval: 30000 })
+  const chartData = useSWR(`https://api.coingecko.com/api/v3/coins/${protocol}/market_chart?vs_currency=usd&days=max&interval=weekly`, fetcher, { refreshInterval: 30000 })
 
   if (statsData.error || chartData.error) return <div>Failed to load</div>
   if (!statsData.data || !chartData.data) return <div>Loading...</div>

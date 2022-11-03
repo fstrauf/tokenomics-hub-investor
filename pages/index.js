@@ -1,10 +1,10 @@
 import Container from '../components/container'
-import MoreStories from '../components/more-stories'
+// import MoreStories from '../components/more-stories'
 import Intro from '../components/intro'
 import Layout from '../components/layout'
 import { getAllPostsForHome } from '../lib/api'
 import Head from 'next/head'
-import React, { useMemo, useState, useEffect } from "react";
+// import React, { useMemo, useState, useEffect } from "react";
 // import { CMS_NAME } from '../lib/constants'
 import Table from '../components/table'
 // import { Tab } from '@headlessui/react'

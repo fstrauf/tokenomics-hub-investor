@@ -17,13 +17,25 @@ import Resources from '../../components/resources'
 import TimeLine from '../../components/timeline'
 import { Link } from 'react-scroll'
 import Diagram from '../../components/diagram'
+import FeedbackPopup from '../../components/feedback-popup'
+import { useState, useCallback, useEffect } from 'react'
 
 
 export default function Post({ post, morePosts, preview }) {
 
-  // const timerId = setTimeout(() => {
-  //   console.log('Will be called after 2 seconds');
-  // }, 10000);
+  const [isOpen, setIsOpen] = useState(false)
+
+  const handleIsOpen = useCallback((event) => {
+      console.log(event)
+      setIsOpen(false);
+      
+    }, [isOpen]);
+
+    useEffect(() => {
+      const timerId = setTimeout(() => {
+        setIsOpen(true)
+      }, 30000);
+    }, []);
 
   const router = useRouter()
   if (!router.isFallback && !post?.slug) {
@@ -51,21 +63,20 @@ export default function Post({ post, morePosts, preview }) {
                 tags={post.tags}
                 tokenStrength={post.tokenStrength.tokenStrength}
               />             
-
-                    <div class="w-full top-0 z-50 sticky">
-                    <div class="overflow-x-scroll md:px-10 bg-white border-b-2 border-black">
-                      <ul className='flex'>
-                        <li><Link class="flex items-center p-4 text-lg font-bold text-gray-900 rounded-lg text-black hover:bg-[rgb(228,231,235)] hover:bg-gray-700 no-underline" activeClass="active" to="tokenStrength" spy={true} smooth={true}>Overview</Link></li>
-                        <li><Link class="flex items-center p-4 text-lg font-bold text-gray-900 rounded-lg text-black hover:bg-[rgb(228,231,235)] hover:bg-gray-700 no-underline" to="stats" spy={true} smooth={true}>Stats</Link></li>
-                        <li><Link class="flex items-center p-4 text-lg font-bold text-gray-900 rounded-lg text-black hover:bg-[rgb(228,231,235)] hover:bg-gray-700 no-underline" to="ourTake" spy={true} smooth={true}>Our Take</Link></li>
-                        <li><Link class="flex items-center p-4 text-lg font-bold text-gray-900 rounded-lg text-black hover:bg-[rgb(228,231,235)] hover:bg-gray-700 no-underline" to="timeline" spy={true} smooth={true}>Timeline</Link></li>
-                        <li><Link class="flex items-center p-4 text-lg font-bold text-gray-900 rounded-lg text-black hover:bg-[rgb(228,231,235)] hover:bg-gray-700 no-underline" to="deepDive" spy={true} smooth={true}>Deep Dive</Link></li>
-                        <li><Link class="flex items-center p-4 text-lg font-bold text-gray-900 rounded-lg text-black hover:bg-[rgb(228,231,235)] hover:bg-gray-700 no-underline" to="Resources" spy={true} smooth={true}>Resources</Link></li>
-                        <li><Link class="flex items-center p-4 text-lg font-bold text-gray-900 rounded-lg text-black hover:bg-[rgb(228,231,235)] hover:bg-gray-700 no-underline" to="diagram" spy={true} smooth={true}>Diagram</Link></li>
-                      </ul> 
+                    <FeedbackPopup isOpen={isOpen} handleIsOpen={handleIsOpen} />
+                    <div className={`w-full top-3 ${isOpen ? '': 'z-50 sticky'}`}>
+                      <div class="overflow-x-scroll md:px-10 bg-white border-b-2 border-black">
+                        <ul className='flex'>
+                          <li><Link class="flex items-center p-4 text-lg font-bold text-gray-900 rounded-lg text-black hover:bg-[rgb(228,231,235)] hover:bg-gray-700 no-underline" activeClass="active" to="tokenStrength" spy={true} smooth={true}>Overview</Link></li>
+                          <li><Link class="flex items-center p-4 text-lg font-bold text-gray-900 rounded-lg text-black hover:bg-[rgb(228,231,235)] hover:bg-gray-700 no-underline" to="stats" spy={true} smooth={true}>Stats</Link></li>
+                          <li><Link class="flex items-center p-4 text-lg font-bold text-gray-900 rounded-lg text-black hover:bg-[rgb(228,231,235)] hover:bg-gray-700 no-underline" to="ourTake" spy={true} smooth={true}>Our Take</Link></li>
+                          <li><Link class="flex items-center p-4 text-lg font-bold text-gray-900 rounded-lg text-black hover:bg-[rgb(228,231,235)] hover:bg-gray-700 no-underline" to="timeline" spy={true} smooth={true}>Timeline</Link></li>
+                          <li><Link class="flex items-center p-4 text-lg font-bold text-gray-900 rounded-lg text-black hover:bg-[rgb(228,231,235)] hover:bg-gray-700 no-underline" to="deepDive" spy={true} smooth={true}>Deep Dive</Link></li>
+                          <li><Link class="flex items-center p-4 text-lg font-bold text-gray-900 rounded-lg text-black hover:bg-[rgb(228,231,235)] hover:bg-gray-700 no-underline" to="Resources" spy={true} smooth={true}>Resources</Link></li>
+                          <li><Link class="flex items-center p-4 text-lg font-bold text-gray-900 rounded-lg text-black hover:bg-[rgb(228,231,235)] hover:bg-gray-700 no-underline" to="diagram" spy={true} smooth={true}>Diagram</Link></li>
+                        </ul> 
                       </div>
-                    </div>
-
+                    </div>                    
                     <main className='max-w-5xl flex flex-col m-auto'>
                       {/* section header */}
                       <div id='tokenStrength'></div>
