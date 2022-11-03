@@ -2,12 +2,13 @@ import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, useState } from 'react'
 import { DISCORD_WEBHOOK } from '../lib/constants'
 
-export default function Feedback() {    
+export default function Feedback() {
     const [isOpen, setIsOpen] = useState(false)
 
     const [form, setForm] = useState({
         name: '',
         feedback: '',
+        email: '',
     })
 
     function closeModal(event) {
@@ -16,14 +17,14 @@ export default function Feedback() {
 
     function handleSubmit(event) {
         fetch(DISCORD_WEBHOOK, {
-            "method":"POST",
-            "headers": {"Content-Type": "application/json"},
+            "method": "POST",
+            "headers": { "Content-Type": "application/json" },
             "body": JSON.stringify({
-                "content": 'Name: ' + form.name + ' ||| Feedback: ' + form.feedback
-              })
-          })
-          .then(res=> console.log(res))
-          .catch(err => console.error(err));
+                "content": 'Name: ' + form.name + '\nEmail: ' + form.email + '\nFeedback: ' + form.feedback
+            })
+        })
+            .then(res => console.log(res))
+            .catch(err => console.error(err));
         closeModal()
     }
 
@@ -31,11 +32,11 @@ export default function Feedback() {
         setIsOpen(true)
     }
 
-    const handleChange = (event) => {
-        const name = event.target.name;
-        const value = event.target.value;
-        setInputs(values => ({ ...values, [name]: value }))
-    }
+    // const handleChange = (event) => {
+    //     const name = event.target.name;
+    //     const value = event.target.value;
+    //     setInputs(values => ({ ...values, [name]: value }))
+    // }
 
     return (
         <>
@@ -79,7 +80,8 @@ export default function Feedback() {
                                         as="h3"
                                         className="text-lg font-medium leading-6 text-gray-700 mb-4"
                                     >
-                                        We'd love your feedback!
+                                        We'd love your feedback! 
+                                        <p className='mt-2 text-xs'>(constructive feedback will be rewarded - just enter your email)</p>
                                     </Dialog.Title>
                                     <form action="#" method="POST" onSubmit={handleSubmit}>
                                         <div className="space-y-6 px-4 py-5 sm:p-6">
@@ -98,6 +100,22 @@ export default function Feedback() {
                                                         });
                                                     }}
                                                     id="name"
+                                                    className="block w-full flex-1 rounded-md border-2 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 sm:text-m"
+                                                />
+                                                <label htmlFor="email" className="block text-lg font-medium text-black mb-2">
+                                                    Email
+                                                </label>
+                                                <input
+                                                    type="email"
+                                                    name="email"
+                                                    value={form.email}
+                                                    onChange={e => {
+                                                        setForm({
+                                                            ...form,
+                                                            email: e.target.value
+                                                        });
+                                                    }}
+                                                    id="email"
                                                     className="block w-full flex-1 rounded-md border-2 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 sm:text-m"
                                                 />
                                                 <label htmlFor="feedback" className="block text-lg font-medium text-black mt-4 mb-2">

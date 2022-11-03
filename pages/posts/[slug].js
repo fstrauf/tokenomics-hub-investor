@@ -20,6 +20,11 @@ import Diagram from '../../components/diagram'
 
 
 export default function Post({ post, morePosts, preview }) {
+
+  // const timerId = setTimeout(() => {
+  //   console.log('Will be called after 2 seconds');
+  // }, 10000);
+
   const router = useRouter()
   if (!router.isFallback && !post?.slug) {
     return <ErrorPage statusCode={404} />
@@ -32,10 +37,6 @@ export default function Post({ post, morePosts, preview }) {
           <PostTitle>Loading…</PostTitle>
         ) : (
           <>
-
-{/* <iframe frameborder="0" style="width:100%;height:995px;" src="https://viewer.diagrams.net/?highlight=0000ff&edit=_blank&nav=1&title=tokenomics_Balancer.drawio#Uhttps%3A%2F%2Fdrive.google.com%2Fuc%3Fid%3D12J2yq3FoA2iw2usdZz80EAAgnuUc0oa2%26export%3Ddownload"></iframe> */}
-
-
             <article className=''>
               <Head>
                 <title>{post.title}</title>
