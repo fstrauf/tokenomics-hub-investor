@@ -19,6 +19,8 @@ import { Link } from 'react-scroll'
 import Diagram from '../../components/diagram'
 import FeedbackPopup from '../../components/feedback-popup'
 import { useState, useCallback, useEffect } from 'react'
+import Comments from '../../components/comments'
+import Form from '../../components/form'
 
 
 export default function Post({ post, morePosts, preview }) {
@@ -31,11 +33,11 @@ export default function Post({ post, morePosts, preview }) {
       
     }, [isOpen]);
 
-    useEffect(() => {
-      const timerId = setTimeout(() => {
-        setIsOpen(true)
-      }, 30000);
-    }, []);
+    // useEffect(() => {
+    //   const timerId = setTimeout(() => {
+    //     setIsOpen(true)
+    //   }, 30000);
+    // }, []);
 
   const router = useRouter()
   if (!router.isFallback && !post?.slug) {
@@ -98,6 +100,8 @@ export default function Post({ post, morePosts, preview }) {
                     </main>
        
             </article>
+            <Comments comments={post.comments} />
+            <Form _id={post._id} />
 
             <SectionSeparator />
             {morePosts.length > 0 && <MoreStories posts={morePosts} />}

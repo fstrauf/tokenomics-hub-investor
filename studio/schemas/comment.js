@@ -27,18 +27,18 @@ export default {
     {
       name: 'post',
       type: 'reference',
-      to: [{ type: 'post' }],
+      to: [{ type: 'protocols' }],
     },
   ],
   preview: {
     select: {
       name: 'name',
       comment: 'comment',
-      post: 'post.title',
+      post: 'protocols.title',
     },
-    prepare({ name, comment, post }) {
+    prepare({ name, comment, protocols }) {
       return {
-        title: `${name} on ${post}`,
+        title: `${name} on ${protocols}`,
         subtitle: comment,
       }
     },
