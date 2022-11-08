@@ -1,5 +1,5 @@
 import algoliasearch from 'algoliasearch';
-import { getPostsForSearch } from '../lib/api.js'
+import { getPostsForSearch } from '../../lib/api.js'
 
 export const algoliaInstance = algoliasearch(
   process.env['NEXT_PUBLIC_ALGOLIA_APPLICATION_ID'],
