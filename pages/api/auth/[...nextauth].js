@@ -1,27 +1,13 @@
-// import NextAuth from "next-auth"
-// import GithubProvider from "next-auth/providers/github"
 
-// export const authOptions = {
-//   // Configure one or more authentication providers
-//   providers: [
-//     GithubProvider({
-//       clientId: process.env.GITHUB_ID,
-//       clientSecret: process.env.GITHUB_SECRET,
-//     }),
-//     // ...add more providers here
-//   ],
-// }
+// https://alexb72.medium.com/how-to-send-emails-using-a-nodemailer-gmail-and-oauth2-fe19d66451f9
 
-// export default NextAuth(authOptions)
-
-
-
-import NextAuth, { NextAuthOptions } from 'next-auth';
+import NextAuth from 'next-auth';
 import GitHub from 'next-auth/providers/github';
 import GoogleProvider from "next-auth/providers/google";
-// import { NextApiRequest, NextApiResponse } from 'next';
+import EmailProvider from "next-auth/providers/email"
 import { SanityAdapter, SanityCredentials } from 'next-auth-sanity';
 import sanityClient from '@sanity/client'
+import { google } from 'googleapis'
 
 const config = {
   dataset: process.env.SANITY_STUDIO_API_DATASET,
@@ -32,23 +18,51 @@ const config = {
 }
 const client = sanityClient(config)
 
+const OAuth2 = google.auth.OAuth2
+
+const myOAuth2Client = new OAuth2(
+  process.env.EMAIL_CLIENT_ID,
+  process.env.EMAIL_CLIENT_SECRET,
+  "https://developers.google.com/oauthplayground"
+)
+
+myOAuth2Client.setCredentials({
+  refresh_token:  process.env.EMAIL_REFRESH_TOKEN,
+});
+
+const myAccessToken = myOAuth2Client.getAccessToken()
+
 export const authOptions = {
-    providers: [
-        GitHub({
-          clientId: process.env.GITHUB_ID,
-          clientSecret: process.env.GITHUB_SECRET
-        }),
-        GoogleProvider({
-          clientId: process.env.GOOGLE_CLIENT_ID,
-          clientSecret: process.env.GOOGLE_CLIENT_SECRET
-        }),
-        SanityCredentials(client) // only if you use sign in with credentials
-      ],
-      secret: process.env.NEXTAUTH_SECRET,
-      session: {
-        strategy: 'jwt'
+  providers: [
+    GitHub({
+      clientId: process.env.GITHUB_ID,
+      clientSecret: process.env.GITHUB_SECRET
+    }),
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET
+    }),
+    EmailProvider({
+      server: {
+        service: 'gmail',
+        auth: {
+          type: "OAuth2",
+          user: process.env.EMAIL_USER,
+          clientId: process.env.EMAIL_CLIENT_ID,
+          clientSecret: process.env.EMAIL_CLIENT_SECRET,
+          refreshToken: process.env.EMAIL_REFRESH_TOKEN,
+          accessToken: myAccessToken 
+        }
       },
-      adapter: SanityAdapter(client)
+      from: process.env.EMAIL_FROM
+    }),
+    // SanityCredentials(client) // only if you use sign in with credentials
+  ],
+  secret: process.env.NEXTAUTH_SECRET,
+  session: {
+    strategy: 'jwt'
+  },
+  adapter: SanityAdapter(client)
 }
 
 export default NextAuth(authOptions)

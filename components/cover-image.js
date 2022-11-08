@@ -5,16 +5,16 @@ import { urlForImage } from '../lib/sanity'
 export default function CoverImage({ title, url, imageObject, slug }) {
   const image = (
     <img
-      // width={1240}
-      // height={540}
+      width={40}
+      height={40}
       alt={`Cover Image for ${title}`}
       className='rounded-lg'
       // className={cn('shadow-small', {
       //   'transition-shadow duration-200 hover:shadow-medium': slug,
       // })}
       src={urlForImage(imageObject)
-        // .width(1240)
-        // .height(540)
+        .width(40)
+        .height(40)
         .url()}
     />
   )

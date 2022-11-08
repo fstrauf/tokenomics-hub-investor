@@ -3,14 +3,13 @@ import { useSession, signOut, signIn } from 'next-auth/react';
 
 const Login: FC = () => {
   const { data: session, status } = useSession()
-  const loading = status === "loading"
 
   return (
     <>
       <div className='block'>
         <p
           className={`${
-            !session && loading ? '' : 'relative top-0 opacity-100 overflow-hidden rounded p-3 m-0 bg-gray-100 transition-all duration-700 ease-in'
+            !session ? 'relative top-0 opacity-100 overflow-hidden rounded p-3 m-0 bg-gray-100' : 'relative top-0 opacity-100 overflow-hidden rounded p-3 m-0 bg-gray-100'
           }`}
         >
           {!session && (
@@ -20,7 +19,7 @@ const Login: FC = () => {
               </span>
               <a
                 href={`/api/auth/signin`}
-                className='float-right -mr-2 font-medium rounded cursor-pointer text-base leading-6 relative z-10 bg-transparent bg-blue-600 border-blue-600 text-white no-underline p-3'
+                className='float-right -mr-2 font-medium rounded cursor-pointer text-base leading-6 relative z-10 bg-dao-red border-dao-red text-white no-underline p-3'
                 onClick={(e) => {
                   e.preventDefault()
                   signIn()
@@ -34,7 +33,7 @@ const Login: FC = () => {
             <>
               <a
                 href={`/api/auth/signout`}
-                className='float-right -mr-2 font-medium rounded cursor-pointer text-base leading-6 relative z-10 bg-transparent bg-blue-600 border-blue-600 text-white no-underline p-3'
+                className='float-right -mr-2 font-medium rounded cursor-pointer text-base leading-6 relative z-10 bg-dao-red text-white no-underline p-3'
                 onClick={(e) => {
                   e.preventDefault()
                   signOut()
