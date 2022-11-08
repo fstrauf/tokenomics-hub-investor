@@ -23,7 +23,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-  ],
+, "pages/api/sanity/signUp.js", "components/login-btn.jsx"  ],
   "exclude": [
     "node_modules"
   ]

@@ -12,6 +12,9 @@ import resource from './resource'
 import timeline from './timeline'
 import tag from './tag'
 import comment from './comment'
+import user from './user'
+import account from './account'
+import verificationToken from './verification-token'
 
 // Then we give our schema to the builder and provide the result to Sanity
 export default createSchema({
@@ -27,5 +30,8 @@ export default createSchema({
     timeline,
     tag,
     comment,
+    user,
+    account,
+    verificationToken,
   ]),
 })

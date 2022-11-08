@@ -1,10 +1,12 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import {useSession } from "next-auth/react"
 
 export default function Form({ _id }) {
   const [formData, setFormData] = useState()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [hasSubmitted, setHasSubmitted] = useState(false)
+  const { data: session, status } = useSession()
   const {
     register,
     handleSubmit,
@@ -60,6 +62,7 @@ export default function Form({ _id }) {
           {...register('name', { required: true })}
           className="form-input mt-1 block w-full rounded border py-2 px-3 shadow"
           placeholder="John Appleseed"
+          value={session?.user.name}
         />
       </label>
       <label className="mb-5 block">
@@ -70,6 +73,7 @@ export default function Form({ _id }) {
           {...register('email', { required: true })}
           className="form-input mt-1 block w-full rounded border py-2 px-3 shadow"
           placeholder="your@email.com"
+          value={session?.user.email}
         />
       </label>
       <label className="mb-5 block">
