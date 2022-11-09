@@ -23,7 +23,7 @@ const OAuth2 = google.auth.OAuth2
 const myOAuth2Client = new OAuth2(
   process.env.EMAIL_CLIENT_ID,
   process.env.EMAIL_CLIENT_SECRET,
-  "https://www.tokenomicshub.xyz/"
+  "https://www.tokenomicshub.xyz/login/oauth2/code/Google"
 )
 
 myOAuth2Client.setCredentials({
