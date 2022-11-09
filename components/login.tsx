@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { useSession, signOut, signIn } from 'next-auth/react';
 
-const Login: FC = () => {
+const Login: FC = ({ message }) => {
   const { data: session, status } = useSession()
 
   return (
@@ -14,8 +14,8 @@ const Login: FC = () => {
         >
           {!session && (
             <>
-              <span className='absolute z-10 pt-3 left-4 right-24 whitespace-nowrap text-ellipsis overflow-hidden leading-5'>
-                You are not signed in
+              <span className='absolute font-bold z-10 pt-3 left-4 right-24 whitespace-nowrap text-ellipsis overflow-hidden leading-5'>
+                {message}
               </span>
               <a
                 href={`/api/auth/signin`}

@@ -18,12 +18,15 @@ import TimeLine from '../../components/timeline'
 import { Link } from 'react-scroll'
 import Diagram from '../../components/diagram'
 import FeedbackPopup from '../../components/feedback-popup'
-import { useState, useCallback, useEffect } from 'react'
+import { useState, useCallback } from 'react'
 import Comments from '../../components/comments'
 import Form from '../../components/form'
-
+import { useSession } from 'next-auth/react';
+import Login from '../../components/login'
 
 export default function Post({ post, morePosts, preview }) {
+
+  const { data: session, status } = useSession()
 
   const [isOpen, setIsOpen] = useState(false)
 
@@ -87,16 +90,23 @@ export default function Post({ post, morePosts, preview }) {
                       />
                       <div id='stats'></div>
                       <ProtocolStats protocol={post.slug} />
-                      <div id='ourTake'></div>
-                      <OurTake content={post.ourTake} investmentTake={post.investmentTake} />
-                      <div id='timeline'></div>
-                      <TimeLine items={post.timeline} />
-                      <div id='deepDive'></div>
-                      <PostBody content={post.body} />
-                      <div id='diagram'></div>
-                      <Diagram diagram={post.diagram}/>
-                      <div id='Resources'></div>
-                      <Resources resources={post.resources} tpresources={post.thirdPartyResources} name='Resources' />                                           
+                      {!session && (
+                        <div className='mt-10'>
+                        <Login message="You need to sign in to see more - it's free" />
+                        </div>
+                      )}
+                      <div className={`${session ? '': 'blur-lg'}`}>
+                        <div id='ourTake'></div>
+                        <OurTake content={post.ourTake} investmentTake={post.investmentTake} />
+                        <div id='timeline'></div>
+                        <TimeLine items={post.timeline} />
+                        <div id='deepDive'></div>
+                        <PostBody content={post.body} />
+                        <div id='diagram'></div>
+                        <Diagram diagram={post.diagram}/>
+                        <div id='Resources'></div>
+                        <Resources resources={post.resources} tpresources={post.thirdPartyResources} name='Resources' />                                           
+                      </div>                      
                     </main>
        
             </article>

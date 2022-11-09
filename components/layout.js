@@ -11,7 +11,7 @@ export default function Layout({ preview, children }) {
   return (
     <>
       <Meta />
-      <Login />
+      <Login message="You are not signed in" />
       <div className="min-h-screen">
         <main>{children}</main>
       </div>
