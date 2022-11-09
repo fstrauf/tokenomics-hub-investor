@@ -1,7 +1,9 @@
 import React, { FC } from 'react';
 import { useSession, signOut, signIn } from 'next-auth/react';
 
-const Login: FC = ({ message }) => {
+type Message = string
+
+const Login: FC<{ message: Message }> = ({ message }) => {
   const { data: session, status } = useSession()
 
   return (
