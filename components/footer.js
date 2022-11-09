@@ -1,8 +1,10 @@
 import Container from './container'
 import { TWITTER, DISCORD, LINKTREE, YOUTUBE } from '../lib/constants'
 import Feedback from './feedback'
+import Link from 'next/link';
 
 export default function Footer() {
+
   return (
     <footer className="border-t border-accent-2 bg-accent-1">
       <Container>
@@ -10,13 +12,15 @@ export default function Footer() {
         <footer class="p-4 sm:p-6">
           <div class="md:flex md:justify-between">
             <div class="mb-6 md:mb-0">
-              <a href="#" class="flex items-center">
-                {/* <img src="https://flowbite.com/docs/images/logo.svg" class="mr-3 h-8" alt="FlowBite Logo"> */}
+              <a href="/" class="flex items-center">
                 <span class="self-center text-2xl font-bold whitespace-nowrap">Tokenomics DAO</span>
               </a>
             </div>
             <Feedback />
           </div>
+          <Link href="/terms" className="m-2 bg-gray-200 border-solid border-2 border-sky-500 rounded hover:underline">
+            Terms & Conditions
+          </Link>
           <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
           <div class="sm:flex sm:items-center sm:justify-between">
             <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2022 <a href="https://tokenomicsdao.xyz/" class="hover:underline">Tokenomics DAO</a>. All Rights Reserved.

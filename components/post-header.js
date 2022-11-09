@@ -20,9 +20,8 @@ export default function PostHeader({ title, updatedAt, shortDescription, type, t
         </div>
       </div>
       <div className="text-lg flex flex-auto gap-4">
-        {/* <div className="mb-6 grid grid-cols-2 auto-cols-auto w-1/2"> */}
         <h1 className='font-bold'>Type:</h1>
-        <h1>{type}</h1>
+        <p className='px-3 py-1 text-sm rounded-full font-bold bg-gray-100 text-gray-700 shadow-sm text-white'>{type}</p>
       </div>
       <div className="text-lg flex flex-auto gap-4">
         <h1 className='font-bold'>Updated:</h1>
@@ -31,7 +30,7 @@ export default function PostHeader({ title, updatedAt, shortDescription, type, t
       <div className="mb-6 text-lg flex flex-auto gap-4">
         <h1 className='font-bold'>Tags:</h1>
         {tags && tags.map((tag) => (
-          <p className='rounded-lg bg-gray-800 text-white'>{tag?.title}</p>
+          <p className='px-3 py-1 text-sm rounded-full bg-gray-600 text-white'>{tag?.title}</p>
         ))}
       </div>
     </>

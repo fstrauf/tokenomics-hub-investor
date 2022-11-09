@@ -95,7 +95,7 @@ export default function Post({ post, morePosts, preview }) {
                         <Login message="You need to sign in to see more - it's free" />
                         </div>
                       )}
-                      <div className={`${session ? '': 'blur-lg'}`}>
+                      <div className={`${session ? '': 'blur-sm'}`}>
                         <div id='ourTake'></div>
                         <OurTake content={post.ourTake} investmentTake={post.investmentTake} />
                         <div id='timeline'></div>
