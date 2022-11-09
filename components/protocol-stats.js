@@ -12,7 +12,6 @@ import {
   Legend,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
-import moment from "moment";
 
 ChartJS.register(
   CategoryScale,
@@ -40,18 +39,18 @@ export default function ProtocolStats({ protocol }) {
     responsive: true,
     scales: {
       y: {
-          ticks: {
-              // Include a dollar sign in the ticks
-              callback: function(value) {
-                  return '$' + value;
-              }
+        ticks: {
+          // Include a dollar sign in the ticks
+          callback: function (value) {
+            return '$' + value;
           }
+        }
       }
-  }
+    }
   }
 
   const mappedChartData = {
-    labels: priceData.map(value => moment(value.x).format('MMM DD YYYY')),
+    labels: priceData.map(value => new Date(value.x).toISOString().slice(0, 10)),
     datasets: [
       {
         fill: false,
@@ -62,6 +61,8 @@ export default function ProtocolStats({ protocol }) {
       }
     ]
   }
+
+
 
   return (
     <>
@@ -78,9 +79,9 @@ export default function ProtocolStats({ protocol }) {
           <NumericFormat className='text-end mr-2' value={statsData.data.market_data.total_supply} thousandSeparator="," decimalScale={-0} displayType="text" />
           <h1 className='ml-2 font-bold'>Circulating Supply</h1>
           <NumericFormat className='text-end mr-2' value={statsData.data.market_data.circulating_supply} thousandSeparator="," decimalScale={0} displayType="text" />
-        </div>        
+        </div>
         <div className='m-2 mt-4'>
-          <Line options={options} data={mappedChartData} />
+          <Line options={options} data={mappedChartData} />         
         </div>
       </div>
     </>
