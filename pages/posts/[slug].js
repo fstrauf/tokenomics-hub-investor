@@ -76,9 +76,9 @@ export default function Post({ post, morePosts, preview }) {
                           <li><Link class="flex items-center p-4 text-lg font-bold text-gray-900 text-black hover:rounded hover:text-white hover:bg-gray-700 no-underline" to="stats" spy={true} smooth={true}>Stats</Link></li>
                           <li><Link class="flex items-center p-4 text-lg font-bold text-gray-900 text-black hover:rounded hover:text-white hover:bg-gray-700 no-underline" to="ourTake" spy={true} smooth={true}>Our Take</Link></li>
                           <li><Link class="flex items-center p-4 text-lg font-bold text-gray-900 text-black hover:rounded hover:text-white hover:bg-gray-700 no-underline" to="timeline" spy={true} smooth={true}>Timeline</Link></li>
-                          <li><Link class="flex items-center p-4 text-lg font-bold text-gray-900 text-black hover:rounded hover:text-white hover:bg-gray-700 no-underline" to="deepDive" spy={true} smooth={true}>Deep Dive</Link></li>
-                          <li><Link class="flex items-center p-4 text-lg font-bold text-gray-900 text-black hover:rounded hover:text-white hover:bg-gray-700 no-underline" to="Resources" spy={true} smooth={true}>Resources</Link></li>
+                          <li><Link class="flex items-center p-4 text-lg font-bold text-gray-900 text-black hover:rounded hover:text-white hover:bg-gray-700 no-underline" to="deepDive" spy={true} smooth={true}>Deep Dive</Link></li>                          
                           <li><Link class="flex items-center p-4 text-lg font-bold text-gray-900 text-black hover:rounded hover:text-white hover:bg-gray-700 no-underline" to="diagram" spy={true} smooth={true}>Diagram</Link></li>
+                          <li><Link class="flex items-center p-4 text-lg font-bold text-gray-900 text-black hover:rounded hover:text-white hover:bg-gray-700 no-underline" to="Resources" spy={true} smooth={true}>Resources</Link></li>
                         </ul> 
                       </div>
                     </div>                    
