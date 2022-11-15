@@ -7,8 +7,8 @@ export default function TokenStrength({ tokenStrength }) {
       <div className='grid border-2 rounded-lg'>        
           <BreakdownBox value={tokenStrength.tokenUtility} strength={tokenStrength.tokenUtilityStrength} title='Token Utility:'/>    
           <BreakdownBox value={tokenStrength.demandDrivers} strength={tokenStrength.demandDriversStrength} title='Demand Driver:'/>
-          <BreakdownBox value={tokenStrength.valueCapture} strength={tokenStrength.valueCaptureStrength} title='Value Capture:'/>
           <BreakdownBox value={tokenStrength.valueCreation} strength={tokenStrength.valueCreationStrength} title='Value Creation:'/>
+          <BreakdownBox value={tokenStrength.valueCapture} strength={tokenStrength.valueCaptureStrength} title='Value Capture:'/>          
           <BreakdownBox value={tokenStrength.businessModel} strength={tokenStrength.businessModelStrength} title='Business Model:'/>
       </div>
     </>
