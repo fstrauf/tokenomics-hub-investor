@@ -11,7 +11,7 @@ export async function getStaticProps({ params, preview = false }) {
     return {
         props: {
             preview,
-            authorPosts: data?.authorPosts,
+            authorPosts: data?.authorPosts || null,
             author: data?.author || null,
         },
         revalidate: 1,
@@ -78,7 +78,7 @@ export default function UserProfile({ author, authorPosts }) {
                                 </div>
                                 <div class="text-center mt-12">
                                     <h3 class="text-4xl font-semibold leading-normal mb-2 text-blueGray-700 mb-2">
-                                        {author.name}
+                                        {author?.name}
                                     </h3>
                                     <div class="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
                                         <i class="fas fa-map-marker-alt mr-2 text-lg text-blueGray-400"></i>
@@ -106,7 +106,7 @@ export default function UserProfile({ author, authorPosts }) {
                                         </div>
                                         <div>
                                             <h1 className='text-3xl mb-5'>Content Created</h1>
-                                            {authorPosts.map((post) => (
+                                            {authorPosts?.map((post) => (
                                                 <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow-md m-5">
                                                     <div class="flex justify-center px-4 pt-4">
                                                         <PostPreview
