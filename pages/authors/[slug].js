@@ -123,16 +123,9 @@ export default function UserProfile({ author, authorPosts, consultingNFT }) {
                                     <div className='flex gap-10 justify-around'>
                                         <div>
                                             <h1 className='text-3xl mb-5'>Projects Completed</h1>
-                                            {consultingNFT.map((nft) => (
+                                            {consultingNFT?.map((nft) => (
                                                 <ProjectCard consultingNFT={nft} />
                                             ))}
-{/*                                             
-                                            <ProjectCard />
-                                            <ProjectCard />
-                                            <ProjectCard />
-                                            <ProjectCard />
-                                            <ProjectCard />
-                                            <ProjectCard /> */}
                                         </div>
                                         <div>
                                             <h1 className='text-3xl mb-5'>Content Created</h1>
