@@ -6,7 +6,7 @@ import Head from 'next/head'
 import Table from '../components/table'
 
 export default function Index({ allPosts, preview }) {
-  const morePosts = allPosts
+  // const morePosts = allPosts
 
   return (
     <>
@@ -16,7 +16,7 @@ export default function Index({ allPosts, preview }) {
         <Container>
           <Intro />
           <h1 className='text-2xl md:text-3xl text-center mb-10'>Explore, compare and evaluate tokenomics of crypto projects.</h1>
-          <Table prop={morePosts} />
+          <Table prop={allPosts} />
         </Container>
       </Layout>
     </>

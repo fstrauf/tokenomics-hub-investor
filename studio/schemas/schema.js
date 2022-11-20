@@ -15,6 +15,7 @@ import comment from './comment'
 import user from './user'
 import account from './account'
 import verificationToken from './verification-token'
+import author from './author'
 
 // Then we give our schema to the builder and provide the result to Sanity
 export default createSchema({
@@ -33,5 +34,6 @@ export default createSchema({
     user,
     account,
     verificationToken,
+    author,
   ]),
 })

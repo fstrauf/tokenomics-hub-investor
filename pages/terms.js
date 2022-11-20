@@ -1,10 +1,9 @@
-import { getAllPostsForHome } from '../lib/api'
+// import { getAllPostsForHome } from '../lib/api'
 import Layout from '../components/layout'
 import Intro from '../components/intro'
 
 
-export default function Terms({ allPosts, preview }) {
-    const morePosts = allPosts
+export default function Terms() {
 
     return (
         <>
@@ -19,7 +18,7 @@ export default function Terms({ allPosts, preview }) {
                         nor shall it be construed as including, advice, guidance or recommendations to take,
                         or not to take, any actions or decisions in relation to any matter, including in relation
                         to investments or the purchase or sale of any securities, shares or other assets of any kind.
-<br></br><br></br>
+                        <br></br><br></br>
                         To the extent information obtained through the Site or the Site Content may be deemed to be
                         investment advice, such information is impersonal and not adapted to any particular client,
                         investor or investment program. You acknowledge that information obtained through the Site
@@ -63,17 +62,6 @@ export default function Terms({ allPosts, preview }) {
                     </p>
                 </div>
             </Layout>
-
-
-
         </>
     )
-}
-
-export async function getStaticProps({ preview = false }) {
-    const allPosts = await getAllPostsForHome(preview)
-    return {
-        props: { allPosts, preview },
-        revalidate: 1,
-    }
 }

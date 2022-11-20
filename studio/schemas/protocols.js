@@ -22,7 +22,7 @@ export default {
     {
       name: 'shortDescription',
       title: 'Short Description',
-      type: 'string',
+      type: 'text',
     },
     {
       name: 'categories',
@@ -56,46 +56,21 @@ export default {
       },
       validation: Rule => Rule.required(),
     },
-    // {
-    //   name: 'tokenUtility',
-    //   title: 'Token Utility',
-    //   type: 'text',
-    // },
-    // {
-    //   name: 'valueCreation',
-    //   title: 'Value Creation',
-    //   type: 'text',
-    // },
-    // {
-    //   name: 'valueCapture',
-    //   title: 'Value Capture',
-    //   type: 'text',
-    // },
-    // {
-    //   name: 'demandDrivers',
-    //   title: 'Demand Drivers',
-    //   type: 'text',
-    // },
-    // {
-    //   name: 'businessModel',
-    //   title: 'Businessmodel',
-    //   type: 'text',
-    // },
     {
       name: 'tokenStrength',
       title: 'Token Strength',
       type: 'object',
       fields: [
-        { name: 'businessModel', type: 'text', title: 'Businessmodel' },
-        { name: 'businessModelStrength', type: 'number', title: 'Businessmodel Strength' },
-        { name: 'demandDrivers', type: 'text', title: 'Demand Drivers' },
-        { name: 'demandDriversStrength', type: 'number', title: 'Demand Drivers Strength' },
-        { name: 'valueCapture', type: 'text', title: 'Value Capture' },
-        { name: 'valueCaptureStrength', type: 'number', title: 'Value Capture Strength' },
-        { name: 'valueCreation', type: 'text', title: 'Value Creation' },
-        { name: 'valueCreationStrength', type: 'number', title: 'Value Creation Strength' },
         { name: 'tokenUtility', type: 'text', title: 'Token Utility' },
         { name: 'tokenUtilityStrength', type: 'number', title: 'Token Utility Strength' },
+        { name: 'businessModel', type: 'text', title: 'Businessmodel' },
+        { name: 'businessModelStrength', type: 'number', title: 'Businessmodel Strength' },
+        { name: 'valueCreation', type: 'text', title: 'Value Creation' },
+        { name: 'valueCreationStrength', type: 'number', title: 'Value Creation Strength' },
+        { name: 'valueCapture', type: 'text', title: 'Value Capture' },
+        { name: 'valueCaptureStrength', type: 'number', title: 'Value Capture Strength' },
+        { name: 'demandDrivers', type: 'text', title: 'Demand Drivers' },
+        { name: 'demandDriversStrength', type: 'number', title: 'Demand Drivers Strength' },
         {
           name: 'tokenStrength',
           type: 'number',
@@ -157,6 +132,12 @@ export default {
       title: '3rd Party Resources',
       type: 'array',
       of: [{ type: 'resource' }],
+    },
+    {
+      name: 'author',
+      title: 'Author',
+      type: 'reference',
+      to: { type: 'author' },
     },
   ],
 }

@@ -15,7 +15,7 @@ export default function PostHeader({ title, updatedAt, shortDescription, type, t
         <div className='w-20 h-20 self-center mb-4 md:w-40 md:h-40'>
           <CircularProgressbar value={percentageComplete} text={`${percentageComplete}`} />
         </div>
-        <div className="mb-6 text-lg md:basis-96">
+        <div className="mb-6 text-lg md:basis-3/5">
           <h1>{shortDescription}</h1>
         </div>
       </div>
