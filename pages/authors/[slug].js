@@ -3,16 +3,43 @@ import Intro from '../../components/intro'
 import ProjectCard from '../..//components/projectCard'
 import { getAllAuthorsWithSlug, getAuthorAndPostsBySlug } from '../../lib/api'
 import PostPreview from '../../components/post-preview'
+import Moralis from 'moralis';
+import { EvmChain } from '@moralisweb3/evm-utils';
 
 
 export async function getStaticProps({ params, preview = false }) {
     const data = await getAuthorAndPostsBySlug(params.slug, preview)
-    console.log(data)
+
+    await Moralis.start({ apiKey: process.env.MORALIS_API_KEY });
+
+    const contract = '0x9ee89523c1b763563a0ab3f6e85336810290ea14'
+
+    // let nftList = []
+    const allNFTs = await Moralis.EvmApi.nft.getWalletNFTs({
+      address: data?.author?.wallet,
+      chain: EvmChain.POLYGON
+    });
+
+    // console.log(allNFTs)
+
+    const consultingNFT = allNFTs?.raw.result.filter(nft => {
+        if(nft.token_address===contract){
+            return true
+        } else {
+            return false
+        }
+    })
+
+    // session.nftOwned = nftList.raw.result.find((nfts) => nfts.token_address === contract)
+
+    // console.log(consultingNFT)
+
     return {
         props: {
             preview,
             authorPosts: data?.authorPosts || null,
             author: data?.author || null,
+            consultingNFT: consultingNFT || null,
         },
         revalidate: 1,
     }
@@ -32,7 +59,7 @@ export async function getStaticPaths() {
 }
 
 
-export default function UserProfile({ author, authorPosts }) {
+export default function UserProfile({ author, authorPosts, consultingNFT }) {
     return (
         <>
             <Layout>
@@ -96,13 +123,16 @@ export default function UserProfile({ author, authorPosts }) {
                                     <div className='flex gap-10 justify-around'>
                                         <div>
                                             <h1 className='text-3xl mb-5'>Projects Completed</h1>
+                                            {consultingNFT.map((nft) => (
+                                                <ProjectCard consultingNFT={nft} />
+                                            ))}
+{/*                                             
                                             <ProjectCard />
                                             <ProjectCard />
                                             <ProjectCard />
                                             <ProjectCard />
                                             <ProjectCard />
-                                            <ProjectCard />
-                                            <ProjectCard />
+                                            <ProjectCard /> */}
                                         </div>
                                         <div>
                                             <h1 className='text-3xl mb-5'>Content Created</h1>
