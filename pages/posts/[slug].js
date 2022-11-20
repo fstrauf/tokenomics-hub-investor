@@ -24,6 +24,7 @@ import Form from '../../components/form'
 import { useSession } from 'next-auth/react';
 import Login from '../../components/login'
 import AuthorCard from '../../components/authorCard'
+import EditPiece from '../../components/edit-piece'
 
 export default function Post({ post, morePosts, preview }) {
 
@@ -34,16 +35,16 @@ export default function Post({ post, morePosts, preview }) {
   const [isOpen, setIsOpen] = useState(false)
 
   const handleIsOpen = useCallback((event) => {
-      console.log(event)
-      setIsOpen(false);
-      
-    }, [isOpen]);
+    console.log(event)
+    setIsOpen(false);
 
-    // useEffect(() => {
-    //   const timerId = setTimeout(() => {
-    //     setIsOpen(true)
-    //   }, 30000);
-    // }, []);
+  }, [isOpen]);
+
+  // useEffect(() => {
+  //   const timerId = setTimeout(() => {
+  //     setIsOpen(true)
+  //   }, 30000);
+  // }, []);
 
   const router = useRouter()
   if (!router.isFallback && !post?.slug) {
@@ -70,21 +71,21 @@ export default function Post({ post, morePosts, preview }) {
                 type={post.catTitle?.title}
                 tags={post.tags}
                 tokenStrength={post.tokenStrength.tokenStrength}
-              />             
+              />
               <FeedbackPopup isOpen={isOpen} handleIsOpen={handleIsOpen} />
-              <div className={`w-full top-3 ${isOpen ? '': 'z-50 sticky'}`}>
+              <div className={`w-full top-3 ${isOpen ? '' : 'z-50 sticky'}`}>
                 <div class="overflow-x-scroll md:px-10 bg-white border-b-2 border-black">
                   <ul className='flex'>
                     <li><Link class="flex items-center p-4 text-lg font-bold text-gray-900 text-black hover:rounded hover:text-white hover:bg-gray-700 no-underline" activeClass="active" to="tokenStrength" spy={true} smooth={true}>Overview</Link></li>
                     <li><Link class="flex items-center p-4 text-lg font-bold text-gray-900 text-black hover:rounded hover:text-white hover:bg-gray-700 no-underline" to="stats" spy={true} smooth={true}>Stats</Link></li>
                     <li><Link class="flex items-center p-4 text-lg font-bold text-gray-900 text-black hover:rounded hover:text-white hover:bg-gray-700 no-underline" to="ourTake" spy={true} smooth={true}>Our Take</Link></li>
                     <li><Link class="flex items-center p-4 text-lg font-bold text-gray-900 text-black hover:rounded hover:text-white hover:bg-gray-700 no-underline" to="timeline" spy={true} smooth={true}>Timeline</Link></li>
-                    <li><Link class="flex items-center p-4 text-lg font-bold text-gray-900 text-black hover:rounded hover:text-white hover:bg-gray-700 no-underline" to="deepDive" spy={true} smooth={true}>Deep Dive</Link></li>                          
+                    <li><Link class="flex items-center p-4 text-lg font-bold text-gray-900 text-black hover:rounded hover:text-white hover:bg-gray-700 no-underline" to="deepDive" spy={true} smooth={true}>Deep Dive</Link></li>
                     <li><Link class="flex items-center p-4 text-lg font-bold text-gray-900 text-black hover:rounded hover:text-white hover:bg-gray-700 no-underline" to="diagram" spy={true} smooth={true}>Diagram</Link></li>
                     <li><Link class="flex items-center p-4 text-lg font-bold text-gray-900 text-black hover:rounded hover:text-white hover:bg-gray-700 no-underline" to="Resources" spy={true} smooth={true}>Resources</Link></li>
-                  </ul> 
+                  </ul>
                 </div>
-              </div>                    
+              </div>
               <main className='max-w-4xl flex flex-col m-auto'>
                 {/* section header */}
                 <div id='tokenStrength'></div>
@@ -95,10 +96,10 @@ export default function Post({ post, morePosts, preview }) {
                 <ProtocolStats protocol={post.slug} />
                 {!session && (
                   <div className='mt-10'>
-                  <Login message="You need to sign in to see more - it's free" />
+                    <Login message="You need to sign in to see more - it's free" />
                   </div>
                 )}
-                <div className={`${session ? '': 'blur-sm'}`}>
+                <div className={`${session ? '' : 'blur-sm'}`}>
                   <div id='ourTake'></div>
                   <OurTake content={post.ourTake} investmentTake={post.investmentTake} />
                   <div id='timeline'></div>
@@ -106,13 +107,16 @@ export default function Post({ post, morePosts, preview }) {
                   <div id='deepDive'></div>
                   <PostBody content={post.body} />
                   <div id='diagram'></div>
-                  <Diagram diagram={post.diagram}/>
+                  <Diagram diagram={post.diagram} />
                   <div id='Resources'></div>
-                  <Resources resources={post.resources} tpresources={post.thirdPartyResources} name='Resources' />                                           
-                </div>                      
+                  <Resources resources={post.resources} tpresources={post.thirdPartyResources} name='Resources' />
+                  <div className='mt-10'>
+                    <EditPiece />
+                  </div>
+                </div>
               </main>
               <h1 className='text-xl md:text-2xl lg:text-3xl font-bold mt-10 mb-4 md:mt-20 text-black section-head'>Author.</h1>
-              <AuthorCard author={post.author}/>
+              <AuthorCard author={post.author} />
             </article>
             <Comments comments={post.comments} />
             <Form _id={post._id} />
