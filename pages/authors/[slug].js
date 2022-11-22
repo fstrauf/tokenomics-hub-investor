@@ -15,24 +15,20 @@ export async function getStaticProps({ params, preview = false }) {
     const contract = '0x9ee89523c1b763563a0ab3f6e85336810290ea14'
 
     // let nftList = []
-    var allNFTs = []
-    var consultingNFT = []
-    if (data?.author?.wallet !== '') {
-        allNFTs = await Moralis.EvmApi.nft.getWalletNFTs({
-            address: data?.author?.wallet,
-            chain: EvmChain.POLYGON
-        });
+    const allNFTs = await Moralis.EvmApi.nft.getWalletNFTs({
+      address: data?.author?.wallet,
+      chain: EvmChain.POLYGON
+    });
 
-        // console.log(allNFTs)
+    // console.log(allNFTs)
 
-        consultingNFT = allNFTs?.raw.result.filter(nft => {
-            if (nft.token_address === contract) {
-                return true
-            } else {
-                return false
-            }
-        })
-    }
+    const consultingNFT = allNFTs?.raw.result.filter(nft => {
+        if(nft.token_address===contract){
+            return true
+        } else {
+            return false
+        }
+    })
 
     // session.nftOwned = nftList.raw.result.find((nfts) => nfts.token_address === contract)
 
