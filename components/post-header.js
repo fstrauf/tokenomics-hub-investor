@@ -5,7 +5,7 @@ import { CircularProgressbar } from 'react-circular-progressbar'
 
 export default function PostHeader({ title, updatedAt, shortDescription, type, tags, tokenStrength }) {
 
-  const percentageComplete = tokenStrength * 10
+  const percentageComplete = tokenStrength
 
   return (
     <>

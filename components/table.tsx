@@ -143,14 +143,14 @@ function HeaderLink({ value, slug }) {
   return (
     <div className='ml-2'>
       <Link href={url}>
-        <a className=""  >{value}</a>
+        <a className="font-bold"  >{value}</a>
       </Link>
     </div>
   )
 }
 
 function TokenStrength({ value }) {
-  const strength = value * 10
+  const strength = value
   return (
     <div className='w-10 h-10 m-auto'>
       <CircularProgressbar value={strength} text={`${strength}`} />
