@@ -16,14 +16,14 @@ export async function getStaticProps({ params, preview = false }) {
 
     // let nftList = []
     const allNFTs = await Moralis.EvmApi.nft.getWalletNFTs({
-      address: data?.author?.wallet,
-      chain: EvmChain.POLYGON
+        address: data?.author?.wallet,
+        chain: EvmChain.POLYGON
     });
 
     // console.log(allNFTs)
 
     const consultingNFT = allNFTs?.raw.result.filter(nft => {
-        if(nft.token_address===contract){
+        if (nft.token_address === contract) {
             return true
         } else {
             return false
@@ -41,7 +41,7 @@ export async function getStaticProps({ params, preview = false }) {
             author: data?.author || null,
             consultingNFT: consultingNFT || null,
         },
-        revalidate: 1,
+        // revalidate: 1,
     }
 }
 
@@ -64,23 +64,13 @@ export default function UserProfile({ author, authorPosts, consultingNFT }) {
         <>
             <Layout>
                 <Intro />
-                <section class="relative block h-500-px">
-                    <div class="absolute top-0 w-full h-full bg-center bg-cover">
-                        <span id="blackOverlay" class="w-full h-full absolute opacity-50 bg-black"></span>
-                    </div>
-                    {/* <div class="top-auto bottom-0 left-0 right-0 w-full absolute pointer-events-none overflow-hidden h-70-px">
-                        <svg class="absolute bottom-0 overflow-hidden" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" version="1.1" viewBox="0 0 2560 100" x="0" y="0">
-                            <polygon class="text-blueGray-200 fill-current" points="2560 0 2560 100 0 100"></polygon>
-                        </svg>
-                    </div> */}
-                </section>
-                <section class="relative py-16 bg-blueGray-200">
+                <div class="py-16 bg-blueGray-200">
                     <div class="container mx-auto px-4">
-                        <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-xl rounded-lg -mt-64">
+                        <div class="flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-xl rounded-lg">
                             <div class="px-6">
                                 <div class="flex flex-wrap justify-center">
                                     <div class="w-full lg:w-3/12 px-4 lg:order-2 flex justify-center">
-                                        <div class="relative">
+                                        <div class="">
                                             {/* <img alt="..." src="https://demos.creative-tim.com/notus-js/assets/img/team-2-800x800.jpg" class="shadow-xl rounded-full h-auto align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-150-px"> */}
                                             <img class="w-24 h-24 mb-3 rounded-full shadow-lg" src="https://i.pravatar.cc/300?img=50" />
                                         </div>
@@ -148,7 +138,7 @@ export default function UserProfile({ author, authorPosts, consultingNFT }) {
                             </div>
                         </div>
                     </div>
-                </section>
+                </div>
 
 
             </Layout>

@@ -50,7 +50,7 @@ const columns = [
 
 const Table: React.FC<{ prop: Props }> = ({ prop }) => {
   const [data, setData] = React.useState(() => [...prop])
-  const [sorting, setSorting] = React.useState<SortingState>([])
+  const [sorting, setSorting] = React.useState<SortingState>([{ id: 'Token Strength', desc: true }])
 
   const table = useReactTable({
     data,
@@ -58,6 +58,11 @@ const Table: React.FC<{ prop: Props }> = ({ prop }) => {
     state: {
       sorting,
     },
+    // initialState: {
+    //   sorting: {
+        
+    //   }
+    // },
     onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
