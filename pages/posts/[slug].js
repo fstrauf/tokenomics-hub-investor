@@ -25,12 +25,9 @@ import { useSession } from 'next-auth/react';
 import Login from '../../components/login'
 import AuthorCard from '../../components/authorCard'
 import EditPiece from '../../components/edit-piece'
-// import { urlForImage } from '../../lib/sanity'
 import { HOME_OG_IMAGE_URL } from '../../lib/constants'
 
 export default function Post({ post, morePosts, preview }) {
-
-  // console.log(post)
 
   const { data: session, status } = useSession()
 
@@ -47,8 +44,6 @@ export default function Post({ post, morePosts, preview }) {
   //     setIsOpen(true)
   //   }, 30000);
   // }, []);
-
-  // console.log(urlForImage(post.coverImage).url())
 
   const router = useRouter()
   if (!router.isFallback && !post?.slug) {
@@ -80,7 +75,7 @@ export default function Post({ post, morePosts, preview }) {
               </Head>
               <PostHeader
                 title={post.title}
-                // coverImage={post.coverImage}
+                slug={post.slug}
                 updatedAt={post.date}
                 shortDescription={post.shortDescription}
                 type={post.catTitle?.title}
