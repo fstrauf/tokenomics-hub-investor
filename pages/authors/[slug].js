@@ -6,8 +6,7 @@ import PostPreview from '../../components/post-preview'
 import Moralis from 'moralis';
 import { EvmChain } from '@moralisweb3/evm-utils';
 
-
-export async function getStaticProps({ params, preview = false }) {
+export async function getServerSideProps({ params, preview = false }) {
     const data = await getAuthorAndPostsBySlug(params.slug, preview)
 
     await Moralis.start({ apiKey: process.env.MORALIS_API_KEY });
@@ -45,18 +44,18 @@ export async function getStaticProps({ params, preview = false }) {
     }
 }
 
-export async function getStaticPaths() {
-    const allAuthors = await getAllAuthorsWithSlug()
-    return {
-        paths:
-            allAuthors?.map((author) => ({
-                params: {
-                    slug: author.slug,
-                },
-            })) || [],
-        fallback: true,
-    }
-}
+// export async function getStaticPaths() {
+//     const allAuthors = await getAllAuthorsWithSlug()
+//     return {
+//         paths:
+//             allAuthors?.map((author) => ({
+//                 params: {
+//                     slug: author.slug,
+//                 },
+//             })) || [],
+//         fallback: true,
+//     }
+// }
 
 
 export default function UserProfile({ author, authorPosts, consultingNFT }) {
