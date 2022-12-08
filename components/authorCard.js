@@ -29,8 +29,8 @@ export default function AuthorCard({author}) {
 
                     </div>
                     <div class="flex mt-4 space-x-3 md:mt-6">
-                        <Link as={`/authors/${author?.slug}`} href="/authors/[slug]">
-                            <a class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">See Profile</a>
+                        <Link as={`/authors/${author?.slug}`} href="/authors/[slug]" class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
+                            See Profile
                         </Link>
                     </div>
                 </div>

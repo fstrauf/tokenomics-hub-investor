@@ -18,7 +18,7 @@ export default function Footer() {
             </div>
             <Feedback />
           </div>
-          <Link href="/terms" className="m-2 bg-gray-200 border-solid border-2 border-sky-500 rounded hover:underline">
+          <Link href="/terms" className="hover:underline">
             Terms & Conditions
           </Link>
           <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />

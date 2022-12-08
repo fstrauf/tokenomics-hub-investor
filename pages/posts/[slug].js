@@ -25,6 +25,8 @@ import { useSession } from 'next-auth/react';
 import Login from '../../components/login'
 import AuthorCard from '../../components/authorCard'
 import EditPiece from '../../components/edit-piece'
+// import { urlForImage } from '../../lib/sanity'
+import { HOME_OG_IMAGE_URL } from '../../lib/constants'
 
 export default function Post({ post, morePosts, preview }) {
 
@@ -46,6 +48,8 @@ export default function Post({ post, morePosts, preview }) {
   //   }, 30000);
   // }, []);
 
+  // console.log(urlForImage(post.coverImage).url())
+
   const router = useRouter()
   if (!router.isFallback && !post?.slug) {
     return <ErrorPage statusCode={404} />
@@ -61,11 +65,22 @@ export default function Post({ post, morePosts, preview }) {
             <article className=''>
               <Head>
                 <title>{post.title}</title>
-                {/* <meta property="og:image" content={post.ogImage.url} /> */}
+                
+                <meta property='twitter:card' content='summary_large_image' />
+                <meta name="twitter:site" content="@tokenomicsdao" />
+                <meta name="twitter:creator" content="@tokenomicsdao" />
+                <meta property='og:title' content={`Tokenomics Hub: ${post.title}`} />
+                <meta property="og:url" content="https://www.tokenomicshub.xyz/" />
+                <meta property="og:type" content="website" />
+                <meta property="og:image" content={HOME_OG_IMAGE_URL} />
+                <meta
+                  property="og:description"
+                  content={post.shortDescription}
+                />
               </Head>
               <PostHeader
                 title={post.title}
-                coverImage={post.coverImage}
+                // coverImage={post.coverImage}
                 updatedAt={post.date}
                 shortDescription={post.shortDescription}
                 type={post.catTitle?.title}

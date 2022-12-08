@@ -147,8 +147,8 @@ function HeaderLink({ value, slug }) {
 
   return (
     <div className='ml-2'>
-      <Link href={url}>
-        <a className="font-bold"  >{value}</a>
+      <Link href={url} className="font-bold"  >
+        {value}
       </Link>
     </div>
   )
