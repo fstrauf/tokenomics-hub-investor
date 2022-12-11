@@ -12,8 +12,8 @@ export default function Intro() {
         <h1 className="mb-2 text-4xl font-bold leading-tight tracking-tighter md:mb-0 md:pr-8 md:text-6xl lg:text-7xl">
           Tokenomics Hub
         </h1>
-        <div>
-          <Link href="/calculator" className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
+        <div className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
+          <Link href="/calculator" >
             Calculator
           </Link>
         </div>
