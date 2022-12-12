@@ -1,8 +1,8 @@
-import * as React from 'react'
+import React from 'react'
 import Link from 'next/link'
 import { CircularProgressbar } from 'react-circular-progressbar'
 import CoverImage from './cover-image'
-import { urlForImage } from '../lib/sanity'
+// import { urlForImage } from '../lib/sanity'
 
 import {
   createColumnHelper,
@@ -19,8 +19,9 @@ type Protocol = {
   // tokenStrength: object
   tokenStrength: any
   coverImage: object
+  mainImageUrl: string
   slug: string
-  catTitle: any
+  categories: any
 }
 
 type Props = []
@@ -28,7 +29,8 @@ type Props = []
 const columnHelper = createColumnHelper<Protocol>()
 
 const columns = [
-  columnHelper.accessor(row => row.coverImage, {
+  columnHelper.accessor(row => row.mainImageUrl, {
+    // columnHelper.accessor(row => row.coverImage, {
     id: ' ',
     cell: info => <ProtocolImage value={info.getValue()} slug={info.row.original.slug} />,
     enableSorting: false,
@@ -37,11 +39,12 @@ const columns = [
     id: 'Title',
     cell: info => <HeaderLink value={info.getValue()} slug={info.row.original.slug} />,
   }),
-  columnHelper.accessor(row => row.tokenStrength.tokenStrength, {
+  columnHelper.accessor(row => row.tokenStrength, {
+    // columnHelper.accessor(row => row.tokenStrength.tokenStrength, {
     id: 'Token Strength',
     cell: info => <TokenStrength value={info.getValue()} />
   }),
-  columnHelper.accessor(row => row.catTitle.title, {
+  columnHelper.accessor(row => row.categories[0].title, {
     id: 'Category',
     cell: info => <StatusPill value={info.getValue()} />
   }),
@@ -52,6 +55,7 @@ const Table: React.FC<{ prop: Props }> = ({ prop }) => {
   const [data, setData] = React.useState(() => [...prop])
   const [sorting, setSorting] = React.useState<SortingState>([{ id: 'Token Strength', desc: true }])
 
+  // console.log(data[0].categories)
   const table = useReactTable({
     data,
     columns,
@@ -132,7 +136,7 @@ export default Table;
 
 
 export function StatusPill({ value }) {
-
+// console.log(value)
   return (
     <span
       className="px-3 py-1 uppercase leading-wide font-bold text-xs rounded-full shadow-sm bg-gray-100 text-gray-700"
@@ -164,13 +168,15 @@ function TokenStrength({ value }) {
 }
 
 function ProtocolImage({ value, slug }) {
+  // console.log(value)
   return (
     <div className='w-4 ml-4 sm:w-16'>
       <CoverImage
         slug={slug}
         title={slug}
         imageObject={value}
-        url={urlForImage(value).url()}
+        // url={urlForImage(value).url()}
+        url={value}
       />
     </div>
   )

@@ -1,0 +1,292 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["referentialIntegrity"]
+}
+
+datasource db {
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+model Post {
+  id                    String              @id @default(cuid())
+  title                 String?
+  slug                  String              @unique
+  shortDescription      String?
+  breakdown             String?             @db.VarChar(10000)
+  ourTake               String?             @db.VarChar(1000)
+  published             Boolean             @default(false)
+  author                User?               @relation(fields: [authorId], references: [id])
+  authorId              String?
+  categories            Category[]
+  tags                  Tag[]
+  protocolTimeLine      ProtocolTimeLine[]
+  publishedAt           DateTime?
+  mainImageUrl          String?
+  tokenUtility          String?
+  tokenUtilityStrength  Int?
+  businessModel         String?
+  businessModelStrength Int?
+  valueCreation         String?
+  valueCreationStrength Int?
+  valueCapture          String?
+  valueCaptureStrength  Int?
+  demandDrivers         String?
+  demandDriversStrength Int?
+  tokenStrength         Int?
+  threeMonthHorizon     String?
+  oneYearHorizon        String?
+  upside                String?
+  downside              String?
+  horizon               String?
+  metrics               String?
+  diagramUrl            String?             @db.VarChar(1000)
+  ProtocolResources     ProtocolResources[]
+
+  @@index([authorId])
+}
+
+model Category {
+  id    Int     @id @default(autoincrement())
+  title String?
+  posts Post[]
+}
+
+model Tag {
+  id    Int     @id @default(autoincrement())
+  title String?
+  posts Post[]
+}
+
+model ProtocolTimeLine {
+  id          String    @id @default(cuid())
+  title       String?
+  date        DateTime?
+  description String?
+  postId      String
+  post        Post      @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@index([postId])
+}
+
+model ProtocolResources {
+  id       String   @id @default(cuid())
+  url      String?
+  internal Boolean?
+  postId   String
+  post     Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@index([postId])
+}
+
+model Account {
+  id                 String  @id @default(cuid())
+  userId             String  @map("user_id")
+  type               String
+  provider           String
+  providerAccountId  String  @map("provider_account_id")
+  refresh_token      String?
+  access_token       String?
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String?
+  session_state      String?
+  oauth_token_secret String?
+  oauth_token        String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique @map("session_token")
+  userId       String   @map("user_id")
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model VerificationToken {
+  id         Int      @id @default(autoincrement())
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model User {
+  id                    String                  @id @default(cuid())
+  name                  String?
+  email                 String?                 @unique
+  emailVerified         DateTime?
+  image                 String?
+  role                  String?
+  posts                 Post[]
+  accounts              Account[]
+  sessions              Session[]
+  Payout                Payout[]
+  Vote                  Vote[]
+  ContentAuthor         ContentAuthor[]
+  wallet                String?                 @unique
+  TeamProposal          TeamsProposal[]
+  RewardRoundTeamMember RewardRoundTeamMember[]
+  MemberVote            MemberVote[]
+}
+
+model RewardRound {
+  id            String          @id @default(cuid())
+  monthYear     String?         @unique
+  budget        Int?
+  contentPoints Int?
+  Vote          Vote[]
+  Payout        Payout[]
+  isOpen        Boolean         @default(false)
+  Content       Content[]
+  TeamValueAdd  TeamValueAdd[]
+  TeamsProposal TeamsProposal[]
+  phase         String?         @default("preparation")
+  // TeamAllocationProposal TeamAllocationProposal[]
+}
+
+model Payout {
+  id                String      @id @default(cuid())
+  userId            String      @map("user_id")
+  user              User        @relation(fields: [userId], references: [id])
+  rewardRoundId     String
+  rewardRound       RewardRound @relation(fields: [rewardRoundId], references: [id], onDelete: Cascade)
+  pointsReceived    Int?
+  contentCashReward Float?
+  teamCashReward    Float?
+  ownershipReward   Float?
+
+  @@index([userId])
+  @@index([rewardRoundId])
+}
+
+model Content {
+  id              String          @id @default(cuid())
+  description     String?
+  url             String?
+  pointsVote      Int?            @default(0)
+  createdAt       String?
+  createdOn       DateTime?
+  contentAuthorId String?
+  type            String?
+  // ContentAuthor ContentAuthor @relation(fields: [contentAuthorId], references: [id])
+  Vote            Vote[]
+  ContentAuthor   ContentAuthor[]
+  rewardRoundId   String?         @default(cuid())
+  rewardRound     RewardRound?    @relation(fields: [rewardRoundId], references: [id], onDelete: Cascade)
+
+  @@index([rewardRoundId])
+}
+
+model Vote {
+  id            String      @id @default(cuid())
+  rewardRoundId String
+  rewardRound   RewardRound @relation(fields: [rewardRoundId], references: [id])
+  userId        String      @map("user_id")
+  user          User        @relation(fields: [userId], references: [id])
+  pointsSpent   Int?
+  contentId     String
+  content       Content     @relation(fields: [contentId], references: [id], onDelete: Cascade)
+
+  @@index([rewardRoundId])
+  @@index([userId])
+  @@index([contentId])
+}
+
+model ContentAuthor {
+  id        String  @id @default(cuid())
+  userId    String  @map("user_id")
+  user      User    @relation(fields: [userId], references: [id])
+  contentId String
+  content   Content @relation(fields: [contentId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([contentId])
+}
+
+model Team {
+  id   String @id @default(cuid())
+  name String
+
+  TeamValueAdd TeamValueAdd[]
+  // TeamAllocationProposal TeamAllocationProposal[]
+}
+
+model TeamValueAdd {
+  id                    String                  @id @default(cuid())
+  teamId                String?                 @default(cuid())
+  team                  Team?                   @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  rewardRoundId         String?                 @default(cuid())
+  rewardRound           RewardRound?            @relation(fields: [rewardRoundId], references: [id], onDelete: Cascade)
+  valueAdd              String                  @db.VarChar(1000)
+  allocation            Int?
+  TeamProposal          TeamsProposal[]
+  RewardRoundTeamMember RewardRoundTeamMember[]
+  MemberVote            MemberVote[]
+  cashAllocation        Float?
+
+  @@index([teamId])
+  @@index([rewardRoundId])
+}
+
+model TeamsProposal {
+  id             String        @id @default(cuid())
+  userId         String        @map("user_id")
+  user           User          @relation(fields: [userId], references: [id])
+  reason         String        @db.VarChar(1000)
+  active         Boolean       @default(false)
+  rewardRoundId  String?       @default(cuid())
+  rewardRound    RewardRound?  @relation(fields: [rewardRoundId], references: [id], onDelete: Cascade)
+  teamValueAddId String?       @default(cuid())
+  teamValueAdd   TeamValueAdd? @relation(fields: [teamValueAddId], references: [id], onDelete: Cascade)
+  allocation     Int?
+  proposalNumber Int?
+  submittedOn    DateTime?
+
+  @@index([userId])
+  @@index([rewardRoundId])
+  @@index([teamValueAddId])
+}
+
+model RewardRoundTeamMember {
+  id               String        @id @default(cuid())
+  userId           String        @map("user_id")
+  user             User          @relation(fields: [userId], references: [id])
+  teamValueAddId   String?       @default(cuid())
+  teamValueAdd     TeamValueAdd? @relation(fields: [teamValueAddId], references: [id], onDelete: Cascade)
+  valueAdd         String?       @db.VarChar(1000)
+  selected         Boolean       @default(false)
+  MemberVote       MemberVote[]
+  allocationPoints Int?
+
+  @@index([userId])
+  @@index([teamValueAddId])
+}
+
+model MemberVote {
+  id                      String                 @id @default(cuid())
+  userId                  String                 @map("user_id")
+  user                    User                   @relation(fields: [userId], references: [id])
+  pointsSpent             Int?
+  teamValueAddId          String?                @default(cuid())
+  teamValueAdd            TeamValueAdd?          @relation(fields: [teamValueAddId], references: [id], onDelete: Cascade)
+  RewardRoundTeamMemberId String?                @default(cuid())
+  RewardRoundTeamMember   RewardRoundTeamMember? @relation(fields: [RewardRoundTeamMemberId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([teamValueAddId])
+  @@index([RewardRoundTeamMemberId])
+}

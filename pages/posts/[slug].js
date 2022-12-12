@@ -26,6 +26,7 @@ import Login from '../../components/login'
 import AuthorCard from '../../components/authorCard'
 import EditPiece from '../../components/edit-piece'
 import { HOME_OG_IMAGE_URL } from '../../lib/constants'
+import prisma from '../../lib/prisma'
 
 export default function Post({ post, morePosts, preview }) {
 
@@ -76,23 +77,23 @@ export default function Post({ post, morePosts, preview }) {
               <PostHeader
                 title={post.title}
                 slug={post.slug}
-                updatedAt={post.date}
+                updatedAt={post.publishedAt}
                 shortDescription={post.shortDescription}
-                type={post.catTitle?.title}
+                type={post.categories[0]?.title}
                 tags={post.tags}
-                tokenStrength={post.tokenStrength.tokenStrength}
+                tokenStrength={post.tokenStrength}
               />
               <FeedbackPopup isOpen={isOpen} handleIsOpen={handleIsOpen} />
               <div className={`w-full top-3 ${isOpen ? '' : 'z-50 sticky'}`}>
                 <div class="overflow-x-scroll md:px-10 bg-white border-b-2 border-black">
                   <ul className='flex'>
-                    <li><Link class="flex items-center p-4 text-lg font-bold text-gray-900 text-black hover:rounded hover:text-white hover:bg-gray-700 no-underline" activeClass="active" to="tokenStrength" spy={true} smooth={true}>Overview</Link></li>
-                    <li><Link class="flex items-center p-4 text-lg font-bold text-gray-900 text-black hover:rounded hover:text-white hover:bg-gray-700 no-underline" to="stats" spy={true} smooth={true}>Stats</Link></li>
-                    <li><Link class="flex items-center p-4 text-lg font-bold text-gray-900 text-black hover:rounded hover:text-white hover:bg-gray-700 no-underline" to="ourTake" spy={true} smooth={true}>Our Take</Link></li>
-                    <li><Link class="flex items-center p-4 text-lg font-bold text-gray-900 text-black hover:rounded hover:text-white hover:bg-gray-700 no-underline" to="timeline" spy={true} smooth={true}>Timeline</Link></li>
-                    <li><Link class="flex items-center p-4 text-lg font-bold text-gray-900 text-black hover:rounded hover:text-white hover:bg-gray-700 no-underline" to="deepDive" spy={true} smooth={true}>Deep Dive</Link></li>
-                    <li><Link class="flex items-center p-4 text-lg font-bold text-gray-900 text-black hover:rounded hover:text-white hover:bg-gray-700 no-underline" to="diagram" spy={true} smooth={true}>Diagram</Link></li>
-                    <li><Link class="flex items-center p-4 text-lg font-bold text-gray-900 text-black hover:rounded hover:text-white hover:bg-gray-700 no-underline" to="Resources" spy={true} smooth={true}>Resources</Link></li>
+                    <li><Link class="flex items-center p-4 text-lg font-bold text-gray-900 hover:rounded hover:text-white hover:bg-gray-700 no-underline" activeClass="active" to="tokenStrength" spy={true} smooth={true}>Overview</Link></li>
+                    <li><Link class="flex items-center p-4 text-lg font-bold text-gray-900 hover:rounded hover:text-white hover:bg-gray-700 no-underline" to="stats" spy={true} smooth={true}>Stats</Link></li>
+                    <li><Link class="flex items-center p-4 text-lg font-bold text-gray-900 hover:rounded hover:text-white hover:bg-gray-700 no-underline" to="ourTake" spy={true} smooth={true}>Our Take</Link></li>
+                    <li><Link class="flex items-center p-4 text-lg font-bold text-gray-900 hover:rounded hover:text-white hover:bg-gray-700 no-underline" to="timeline" spy={true} smooth={true}>Timeline</Link></li>
+                    <li><Link class="flex items-center p-4 text-lg font-bold text-gray-900 hover:rounded hover:text-white hover:bg-gray-700 no-underline" to="deepDive" spy={true} smooth={true}>Deep Dive</Link></li>
+                    <li><Link class="flex items-center p-4 text-lg font-bold text-gray-900 hover:rounded hover:text-white hover:bg-gray-700 no-underline" to="diagram" spy={true} smooth={true}>Diagram</Link></li>
+                    <li><Link class="flex items-center p-4 text-lg font-bold text-gray-900 hover:rounded hover:text-white hover:bg-gray-700 no-underline" to="Resources" spy={true} smooth={true}>Resources</Link></li>
                   </ul>
                 </div>
               </div>
@@ -100,7 +101,7 @@ export default function Post({ post, morePosts, preview }) {
                 {/* section header */}
                 <div id='tokenStrength'></div>
                 <TokenStrength
-                  tokenStrength={post.tokenStrength}
+                  tokenStrength={post}
                 />
                 <div id='stats'></div>
                 <ProtocolStats protocol={post.slug} />
@@ -111,13 +112,13 @@ export default function Post({ post, morePosts, preview }) {
                 )}
                 <div className={`${session ? '' : 'blur-sm'}`}>
                   <div id='ourTake'></div>
-                  <OurTake content={post.ourTake} investmentTake={post.investmentTake} />
+                  <OurTake content={post} />
                   <div id='timeline'></div>
                   <TimeLine items={post.timeline} />
                   <div id='deepDive'></div>
-                  <PostBody content={post.body} />
+                  <PostBody content={post.breakdown} />
                   <div id='diagram'></div>
-                  <Diagram diagram={post.diagram} />
+                  <Diagram diagram={post.diagramUrl} />
                   <div id='Resources'></div>
                   <Resources resources={post.resources} tpresources={post.thirdPartyResources} name='Resources' />
                   <div className='mt-10'>
@@ -131,7 +132,7 @@ export default function Post({ post, morePosts, preview }) {
             <Comments comments={post.comments} />
             <Form _id={post._id} />
             <SectionSeparator />
-            {morePosts.length > 0 && <MoreStories posts={morePosts} />}
+            {/* {morePosts.length > 0 && <MoreStories posts={morePosts} />} */}
           </>
         )}
       </Container>
@@ -140,11 +141,24 @@ export default function Post({ post, morePosts, preview }) {
 }
 
 export async function getStaticProps({ params, preview = false }) {
-  const data = await getPostAndMorePosts(params.slug, preview)
+  // const data = await getPostAndMorePosts(params.slug, preview)
+
+  const data = await prisma.post.findUnique({
+    where: {
+      slug: params.slug,
+    },
+    include: {
+      categories: {},
+      tags: {},
+    }
+  })
+
+  console.log(data)
+
   return {
     props: {
       preview,
-      post: data?.post || null,
+      post: data || null,
       morePosts: data?.morePosts || null,
     },
     revalidate: 1,
@@ -152,7 +166,29 @@ export async function getStaticProps({ params, preview = false }) {
 }
 
 export async function getStaticPaths() {
-  const allPosts = await getAllPostsWithSlug()
+  // const allPosts = await getAllPostsWithSlug()
+
+  const allPosts = await prisma.post.findMany({
+    select: {
+      // mainImageUrl: true,
+      // title: true,
+      // tokenStrength: true,
+      slug: true,
+      // categories: {
+      //   select: {
+      //     title: true,
+      //   }
+
+      // }
+    },
+  })
+
+
+  // console.log(allPosts?.map((post) => ({
+  //   params: {
+  //     slug: post.slug,
+  //   },
+  // })) || [])
   return {
     paths:
       allPosts?.map((post) => ({
