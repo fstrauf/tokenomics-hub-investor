@@ -43,17 +43,34 @@ import parse from 'html-react-parser';
 
 export default function PostBody({ content }) {
 
+  // const jsonContent = JSON.parse(content)
+
+  // const output = useMemo(() => {
+  //   return generateHTML(jsonContent, [
+  //     StarterKit,
+  //     Image,
+  //     // other extensions …
+  //   ])
+  // }, [jsonContent])
+
+  // const jsxReady = parse(output)
+
   const jsonContent = JSON.parse(content)
 
-  const output = useMemo(() => {
-    return generateHTML(jsonContent, [
-      StarterKit,
-      Image,
-      // other extensions …
-    ])
-  }, [jsonContent])
+  var jsxReady = ''
 
-  const jsxReady = parse(output)
+  if(Object.keys(jsonContent).length >0)
+  {
+    const output = useMemo(() => {
+      return generateHTML(jsonContent, [
+        StarterKit,
+        Image,
+        // other extensions …
+      ])
+    }, [jsonContent])
+
+    jsxReady = parse(output)
+  }
 
   return (
     <>

@@ -31,6 +31,7 @@
     "@types/node": "^18.11.3",
     "@types/react": "^18.0.24",
     "algoliasearch": "^4.14.2",
+    "babel-plugin-superjson-next": "^0.4.5",
     "chart.js": "^3.9.1",
     "classnames": "^2.3.2",
     "date-fns": "^2.29.3",
@@ -41,6 +42,7 @@
     "next-auth": "^4.16.3",
     "next-auth-sanity": "^1.4.4",
     "next-sanity": "^3.1.3",
+    "next-superjson-plugin": "^0.5.2",
     "nextjs-google-analytics": "^2.2.0",
     "nodemailer": "^6.8.0",
     "prosemirror-commands": "^1.5.0",
@@ -58,6 +60,7 @@
     "react-number-format": "^5.0.1",
     "react-scroll": "^1.8.7",
     "react-share": "^4.4.1",
+    "superjson": "^1.12.0",
     "swr": "^1.3.0"
   },
   "devDependencies": {

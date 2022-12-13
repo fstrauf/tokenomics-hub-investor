@@ -1,8 +1,12 @@
 
+// import { TransformStreamDefaultController } from 'node:stream/web';
 import prisma from '../../../lib/prisma';
 
 export default async function handle(req, res) {
-  const { ourTake, deepDive, inputFields } = req.body;
+  const { ourTake, deepDive, inputFields, selectedCats, selectedTags, tokenStrength } = req.body;
+
+  // selectedCats.map(cats => { return {id: cats.id}})
+  // selectedTags.map(tags => { return {id: tags.id}})
 
   const response = await prisma.post.create({
     data: {
@@ -24,7 +28,7 @@ export default async function handle(req, res) {
       valueCaptureStrength: inputFields.valueCaptureStrength,
       demandDrivers: inputFields.demandDrivers,
       demandDriversStrength: inputFields.demandDriversStrength,
-      tokenStrength: inputFields.tokenStrength,
+      tokenStrength: tokenStrength,
       threeMonthHorizon: inputFields.threeMonthHorizon,
       oneYearHorizon: inputFields.oneYearHorizon,
       upside: inputFields.upside,
@@ -36,6 +40,12 @@ export default async function handle(req, res) {
         connect: {
           email: 'flo@tokenomicsdao.com',
         }
+      },
+      categories: {
+        connect: selectedCats.map(cats => { return {id: cats.id}})
+      },
+      tags: {
+        connect: selectedTags.map(tags => { return {id: tags.id}})
       }      
     },
   })

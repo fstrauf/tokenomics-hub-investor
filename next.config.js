@@ -9,6 +9,16 @@ const nextConfig = {
   images: {
     domains: ['cdn.sanity.io', 'source.unsplash.com'],
   },
+  experimental: {
+    swcPlugins: [
+      [
+        'next-superjson-plugin',
+        {
+          excluded: [],
+        },
+      ],
+    ],
+  },
   typescript: {
     // !! WARN !!
     // Dangerously allow production builds to successfully complete even if

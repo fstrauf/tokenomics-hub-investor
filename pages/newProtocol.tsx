@@ -3,19 +3,32 @@ import Intro from '../components/intro'
 import React, { useState } from 'react';
 import Tiptap from '../components/TipTap';
 import Router from 'next/router';
+import { Listbox } from '@headlessui/react'
+import prisma from '../lib/prisma'
 
 
-export default function NewProtocol() {
+export default function NewProtocol({ categories, tags }) {
+
+  // console.log(tags)
 
   const [ourTake, setOurTake] = useState({});
   const [deepDive, setDeepDive] = useState({});
+  const [selectedCats, setSelectedCats] = useState([categories[0], categories[1]]);
+  const [selectedTags, setSelectedTags] = useState([tags[0], tags[1]]);
   const [inputFields, setInputFields] = useState(
     {
       title: 'Tokenomics DAO',
       slug: 'tdao',
       shortDescription: 'A great place to discuss Tokenomics',
-      categories: 'DAO',
-      tags: 'revenue share',
+      categories: [ 
+        { id: 1, title: 'DeFi' }, 
+        { id: 2, title: 'DAO' } 
+      ],
+      tags: [
+        { id: 1, title: 'Great DAO' },
+        { id: 2, title: 'AMM' },
+        { id: 3, title: 'Yield Bearing' }
+      ],
       timeLine: 'started',
       publishedAt: '21/12/2022',
       mainImage: 'https://img.icons8.com/officel/512/logo.png',
@@ -41,10 +54,12 @@ export default function NewProtocol() {
     }
   )
 
+  const tokenStrength = (inputFields.businessModelStrength + inputFields.demandDriversStrength + inputFields.valueCaptureStrength + inputFields.valueCreationStrength + inputFields.tokenUtilityStrength ) / 5
+
   const submitData = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     try {
-      const body = { ourTake, deepDive, inputFields };
+      const body = { ourTake, deepDive, inputFields, selectedCats, selectedTags, tokenStrength };
       await fetch('/api/post/newProtocol', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -95,17 +110,59 @@ export default function NewProtocol() {
           </div>
           <div>
             <label for="category">Categories</label>
-            <input type='text' id="category" name="category"
+            {/* <input type='text' id="category" name="category"
               value={inputFields.categories}
               onChange={e => setInputFields({ ...inputFields, categories: e.target.value })}
-            />
+            /> */}
+            <Listbox value={selectedCats} onChange={setSelectedCats} multiple>
+              <div className="relative mt-1">
+                <Listbox.Button className="relative w-full m-2 cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
+                  {selectedCats.map((category) => category.title).join(', ')}
+                </Listbox.Button>
+                <Listbox.Options className="z-50 absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                  {categories.map((cat) => (
+                    <Listbox.Option
+                      className={({ active }) =>
+                        `relative cursor-default select-none py-2 pl-10 pr-4 ${active ? 'z-50 bg-amber-100 text-amber-900' : 'text-gray-900'
+                        }`
+                      }
+                      key={cat.id}
+                      value={cat}
+                    >
+                      {cat.title}
+                    </Listbox.Option>
+                  ))}
+                </Listbox.Options>
+              </div>
+            </Listbox>
           </div>
           <div>
             <label for="tags">Tags</label>
-            <input type='text' id="tags" name="tags"
+            {/* <input type='text' id="tags" name="tags"
               value={inputFields.tags}
               onChange={e => setInputFields({ ...inputFields, tags: e.target.value })}
-            />
+            /> */}
+            <Listbox value={selectedTags} onChange={setSelectedTags} multiple>
+              <div className="relative mt-1">
+                <Listbox.Button className="relative w-full m-2 cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
+                  {selectedTags.map((tag) => tag.title).join(', ')}
+                </Listbox.Button>
+                <Listbox.Options className="z-50 absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                  {tags.map((tag) => (
+                    <Listbox.Option
+                      className={({ active }) =>
+                        `relative cursor-default select-none py-2 pl-10 pr-4 ${active ? 'z-50 bg-amber-100 text-amber-900' : 'text-gray-900'
+                        }`
+                      }
+                      key={tag.id}
+                      value={tag}
+                    >
+                      {tag.title}
+                    </Listbox.Option>
+                  ))}
+                </Listbox.Options>
+              </div>
+            </Listbox>
           </div>
           <div>
             <label for="timelines">Timeline</label>
@@ -185,7 +242,7 @@ export default function NewProtocol() {
               value={inputFields.demandDriversStrength}
               onChange={e => setInputFields({ ...inputFields, demandDriversStrength: Number(e.target.value) })} />
           </div>
-          <p>total Strenght</p>
+          <p>total Strenght: {tokenStrength}</p>
           <div>
             <label>Our Take</label>
             <Tiptap setContent={setOurTake} />
@@ -256,8 +313,8 @@ export default function NewProtocol() {
           </div>
           <div>
             <label for="resources">Resources</label>
-            <input type='url' id="resources" name="resources" 
-            value={inputFields.resources}
+            <input type='url' id="resources" name="resources"
+              value={inputFields.resources}
               onChange={e => setInputFields({ ...inputFields, resources: e.target.value })} />
           </div>
           <button type="submit" onClick={e => submitData(e)}>Submit</button>
@@ -267,4 +324,21 @@ export default function NewProtocol() {
       </Layout>
     </>
   )
+}
+
+export async function getStaticProps() {
+  // const data = await getPostAndMorePosts(params.slug, preview)
+
+  const categories = await prisma.category.findMany()
+  const tags = await prisma.tag.findMany()
+
+  // console.log(data)
+
+  return {
+    props: {
+      categories: categories || null,
+      tags: tags || null,
+    },
+    revalidate: 1,
+  }
 }

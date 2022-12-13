@@ -40,19 +40,27 @@ import parse from 'html-react-parser';
 //   },
 // }
 
+
 export default function OurTake({ content }) {
+
+  // console.log(content.ourTake)
 
   const jsonContent = JSON.parse(content.ourTake)
 
-  const output = useMemo(() => {
-    return generateHTML(jsonContent, [
-      StarterKit,
-      Image,
-      // other extensions …
-    ])
-  }, [jsonContent])
+  var jsxReady = ''
 
-  const jsxReady = parse(output)
+  if(Object.keys(jsonContent).length >0)
+  {
+    const output = useMemo(() => {
+      return generateHTML(jsonContent, [
+        StarterKit,
+        Image,
+        // other extensions …
+      ])
+    }, [jsonContent])
+
+    jsxReady = parse(output)
+  }
 
   return (
     <>
