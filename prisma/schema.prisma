@@ -15,7 +15,7 @@ datasource db {
 model Post {
   id                    String              @id @default(cuid())
   title                 String?
-  slug                  String              @unique
+  slug                  String              @unique @default("eth")
   shortDescription      String?
   breakdown             String?             @db.VarChar(10000)
   ourTake               String?             @db.VarChar(1000)
@@ -75,6 +75,7 @@ model ProtocolTimeLine {
 
 model ProtocolResources {
   id       String   @id @default(cuid())
+  title    String?
   url      String?
   internal Boolean?
   postId   String

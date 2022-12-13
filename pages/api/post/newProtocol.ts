@@ -8,6 +8,17 @@ export default async function handle(req, res) {
   // selectedCats.map(cats => { return {id: cats.id}})
   // selectedTags.map(tags => { return {id: tags.id}})
 
+  // console.log(inputFields.resources)
+
+  const timeLine = inputFields?.timeLine?.map(tl => {
+    return {
+      ...tl,
+      date: new Date(tl.date)
+    }
+  })
+
+  console.log(timeLine)
+
   const response = await prisma.post.create({
     data: {
       title: inputFields.title,
@@ -35,20 +46,30 @@ export default async function handle(req, res) {
       downside: inputFields.downside,
       horizon: inputFields.decisionHorizon,
       metrics: inputFields.metrics,
-      diagramUrl: inputFields.diagramUrl,      
+      diagramUrl: inputFields.diagramUrl,
       author: {
         connect: {
-          email: 'flo@tokenomicsdao.com',
+          email: 'f.strauf@gmail.com',
         }
       },
       categories: {
-        connect: selectedCats.map(cats => { return {id: cats.id}})
+        connect: selectedCats.map(cats => { return { id: cats.id } })
       },
       tags: {
-        connect: selectedTags.map(tags => { return {id: tags.id}})
-      }      
+        connect: selectedTags.map(tags => { return { id: tags.id } })
+      },
+      ProtocolResources: {
+        createMany: {
+          data: inputFields.resources
+        }
+      },
+      protocolTimeLine: {
+        createMany: {
+          data: timeLine
+        }
+      }
     },
   })
-  
+
   res.json(response);
 }

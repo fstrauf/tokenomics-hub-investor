@@ -114,13 +114,13 @@ export default function Post({ post, morePosts, preview }) {
                   <div id='ourTake'></div>
                   <OurTake content={post} />
                   <div id='timeline'></div>
-                  <TimeLine items={post.timeline} />
+                  <TimeLine items={post.protocolTimeLine} />
                   <div id='deepDive'></div>
                   <PostBody content={post.breakdown} />
                   <div id='diagram'></div>
                   <Diagram diagram={post.diagramUrl} />
                   <div id='Resources'></div>
-                  <Resources resources={post.resources} tpresources={post.thirdPartyResources} name='Resources' />
+                  <Resources resources={post.ProtocolResources} />
                   <div className='mt-10'>
                     <EditPiece />
                   </div>
@@ -150,6 +150,8 @@ export async function getStaticProps({ params, preview = false }) {
     include: {
       categories: {},
       tags: {},
+      ProtocolResources: {},
+      protocolTimeLine: {},
     }
   })
 

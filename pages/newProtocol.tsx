@@ -20,16 +20,18 @@ export default function NewProtocol({ categories, tags }) {
       title: 'Tokenomics DAO',
       slug: 'tdao',
       shortDescription: 'A great place to discuss Tokenomics',
-      categories: [ 
-        { id: 1, title: 'DeFi' }, 
-        { id: 2, title: 'DAO' } 
+      categories: [
+        { id: 1, title: 'DeFi' },
+        { id: 2, title: 'DAO' }
       ],
       tags: [
         { id: 1, title: 'Great DAO' },
         { id: 2, title: 'AMM' },
         { id: 3, title: 'Yield Bearing' }
       ],
-      timeLine: 'started',
+      timeLine: [
+        { title: 'TGE', date: 20 - 12 - 2022, description: 'tokn generation event' }
+      ],
       publishedAt: '21/12/2022',
       mainImage: 'https://img.icons8.com/officel/512/logo.png',
       tokenUtility: 'Governance',
@@ -50,14 +52,17 @@ export default function NewProtocol({ categories, tags }) {
       decisionHorizon: 'very long term',
       metrics: 'revnue, profit, growth',
       diagram: 'https://viewer.diagrams.net/?tags=%7B%7D&highlight=0000ff&edit=_blank&layers=1&nav=1&title=tokenomics_BanklessDAO.drawio#Uhttps%3A%2F%2Fdrive.google.com%2Fuc%3Fid%3D1w7W4n-NS7DPGq1e-2KaErjTEhjQMQFCs%26export%3Ddownload',
-      resources: 'https://www.tokenomicshub.xyz/',
+      resources: [
+        { title: 'website', url: 'https://www.tokenomicshub.xyz/', internal: true }
+      ],
     }
   )
 
-  const tokenStrength = (inputFields.businessModelStrength + inputFields.demandDriversStrength + inputFields.valueCaptureStrength + inputFields.valueCreationStrength + inputFields.tokenUtilityStrength ) / 5
+  const tokenStrength = (inputFields.businessModelStrength + inputFields.demandDriversStrength + inputFields.valueCaptureStrength + inputFields.valueCreationStrength + inputFields.tokenUtilityStrength) / 5
 
   const submitData = async (e: React.SyntheticEvent) => {
     e.preventDefault();
+
     try {
       const body = { ourTake, deepDive, inputFields, selectedCats, selectedTags, tokenStrength };
       await fetch('/api/post/newProtocol', {
@@ -70,6 +75,56 @@ export default function NewProtocol({ categories, tags }) {
     } catch (error) {
       console.error(error);
     }
+  }
+
+  const handleResourceChange = (index: any, event: any) => {
+    event.preventDefault()
+    let data = [...inputFields.resources];
+    data[index][event.target.name] = event.target.value;
+    // setInputFields(data);
+    setInputFields({ ...inputFields, resources: data })
+  }
+
+  const addResource = (event: any) => {
+    event.preventDefault()
+    let newfield = [...inputFields.resources, { title: 'website', url: 'https://www.tokenomicshub.xyz/', internal: true }]
+
+    setInputFields({ ...inputFields, resources: newfield })
+  }
+
+  const removeResource = (index: any, event: any) => {
+    event.preventDefault()
+    let data = [...inputFields.resources];
+    data.splice(index, 1)
+    setInputFields({ ...inputFields, resources: data })
+  }
+
+  const handleTimeLineChange = (index: any, event: any) => {
+    event.preventDefault()
+    let data = [...inputFields.timeLine];
+    // console.log(event.target)
+    // if (event.target.name === 'date') {
+    //   data[index][event.target.name] = new Date(event.target.value);
+    // } else {
+      data[index][event.target.name] = event.target.value;
+    // }
+
+    // setInputFields(data);
+    setInputFields({ ...inputFields, timeLine: data })
+  }
+
+  const addTimeLine = (event: any) => {
+    event.preventDefault()
+    let newfield = [...inputFields.timeLine, { title: 'TGE', date: 20 - 12 - 2022, description: 'tokn generation event' }]
+
+    setInputFields({ ...inputFields, timeLine: newfield })
+  }
+
+  const removeTimeLine = (index: any, event: any) => {
+    event.preventDefault()
+    let data = [...inputFields.timeLine];
+    data.splice(index, 1)
+    setInputFields({ ...inputFields, timeLine: data })
   }
 
   return (
@@ -166,9 +221,89 @@ export default function NewProtocol({ categories, tags }) {
           </div>
           <div>
             <label for="timelines">Timeline</label>
-            <input type='text' id="timeline" name="timeline"
+            {/* <input type='text' id="timeline" name="timeline"
               value={inputFields.timeLine}
-              onChange={e => setInputFields({ ...inputFields, timeLine: e.target.value })} />
+              onChange={e => setInputFields({ ...inputFields, timeLine: e.target.value })} /> */}
+            <button className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-1.5 mr-2 mb-2"
+              onClick={event => addTimeLine(event)}>Add More..</button>
+            <div className="overflow-x-auto relative">
+              <table className="w-full text-sm text-left text-gray-500 mb-5">
+                <thead className="text-xs text-gray-700 uppercase bg-gray-50">
+                  <tr>
+                    <th scope="col" className="py-3 px-6">
+                      Title
+                    </th>
+                    <th scope="col" className="py-3 px-6">
+                      Date
+                    </th>
+                    <th scope="col" className="py-3 px-6">
+                      Description
+                    </th>
+                    <th scope="col" className="py-3 px-6">
+
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {inputFields.timeLine.map((input, index) => {
+                    return (
+                      <tr key={index} className="bg-white border-b ">
+                        <th scope="row" className="py-2 px-3 font-medium text-gray-900 whitespace-nowrap ">
+                          <input
+                            name='title'
+                            placeholder='Title'
+                            type='text'
+                            value={input.title}
+                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-1.5"
+                            onChange={event => handleTimeLineChange(index, event)}
+                          />
+                        </th>
+                        <td className="py-2 px-3">
+                          <input
+                            name='date'
+                            // placeholder=''
+                            type='date'
+                            value={input.date}
+                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-1.5"
+                            onChange={event => handleTimeLineChange(index, event)}
+                          />
+                        </td>
+                        <td className="py-2 px-3">
+                          {/* <input
+                              name='internal'
+                              placeholder='Internal'
+                              checked={input.internal}
+                              type='checkbox'
+                              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-1.5"
+                              onChange={event => handleResourceChange(index, event)}
+                            /> */}
+                          <textarea rows="3"
+                            class="block p-2.5 w-full text-xs text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                            name='description'
+                            value={input.description}
+                            onChange={event => handleTimeLineChange(index, event)}
+                          />
+                        </td>
+                        <td className="py-2 px-3">
+                          <button type="button" className="text-white bg-red-500 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-800 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center mr-2"
+                            onClick={event => removeTimeLine(index, event)} >
+                            <svg
+                              fill="white"
+                              viewBox="0 0 16 16"
+                              height="1em"
+                              width="1em"
+                            // {...props}
+                            >
+                              <path d="M4 8a.5.5 0 01.5-.5h7a.5.5 0 010 1h-7A.5.5 0 014 8z" />
+                            </svg>
+                          </button>
+                        </td>
+                      </tr>
+                    )
+                  })}
+                </tbody>
+              </table>
+            </div>
           </div>
           <div>
             <label for="publishedAt">Published At</label>
@@ -313,9 +448,83 @@ export default function NewProtocol({ categories, tags }) {
           </div>
           <div>
             <label for="resources">Resources</label>
-            <input type='url' id="resources" name="resources"
+            {/* <input type='url' id="resources" name="resources"
               value={inputFields.resources}
-              onChange={e => setInputFields({ ...inputFields, resources: e.target.value })} />
+              onChange={e => setInputFields({ ...inputFields, resources: e.target.value })} /> */}
+            <button className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-1.5 mr-2 mb-2"
+              onClick={event => addResource(event)}>Add More..</button>
+            <div className="overflow-x-auto relative">
+              <table className="w-full text-sm text-left text-gray-500 mb-5">
+                <thead className="text-xs text-gray-700 uppercase bg-gray-50">
+                  <tr>
+                    <th scope="col" className="py-3 px-6">
+                      Title
+                    </th>
+                    <th scope="col" className="py-3 px-6">
+                      Url
+                    </th>
+                    <th scope="col" className="py-3 px-6">
+                      Internal?
+                    </th>
+                    <th scope="col" className="py-3 px-6">
+
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {inputFields.resources.map((input, index) => {
+                    return (
+                      <tr key={index} className="bg-white border-b ">
+                        <th scope="row" className="py-2 px-3 font-medium text-gray-900 whitespace-nowrap ">
+                          <input
+                            name='title'
+                            placeholder='Title'
+                            type='text'
+                            value={input.title}
+                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-1.5"
+                            onChange={event => handleResourceChange(index, event)}
+                          />
+                        </th>
+                        <td className="py-2 px-3">
+                          <input
+                            name='url'
+                            placeholder='Url'
+                            type='url'
+                            value={input.url}
+                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-1.5"
+                            onChange={event => handleResourceChange(index, event)}
+                          />
+                        </td>
+                        <td className="py-2 px-3">
+                          <input
+                            name='internal'
+                            placeholder='Internal'
+                            checked={input.internal}
+                            type='checkbox'
+                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-1.5"
+                            onChange={event => handleResourceChange(index, event)}
+                          />
+                        </td>
+                        <td className="py-2 px-3">
+                          <button type="button" className="text-white bg-red-500 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-800 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center mr-2"
+                            onClick={event => removeResource(index, event)} >
+                            <svg
+                              fill="white"
+                              viewBox="0 0 16 16"
+                              height="1em"
+                              width="1em"
+                            // {...props}
+                            >
+                              <path d="M4 8a.5.5 0 01.5-.5h7a.5.5 0 010 1h-7A.5.5 0 014 8z" />
+                            </svg>
+                          </button>
+                        </td>
+                      </tr>
+                    )
+                  })}
+                </tbody>
+              </table>
+            </div>
           </div>
           <button type="submit" onClick={e => submitData(e)}>Submit</button>
         </form>
