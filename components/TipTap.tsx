@@ -2,6 +2,7 @@ import { useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import React from 'react'
 import Image from '@tiptap/extension-image'
+import { uploadPhoto } from '../lib/fileUpload'
 
 type Props = {
     content?: any;
@@ -17,6 +18,7 @@ const Tiptap: React.FC<Props> = (props) => {
         extensions: [
             StarterKit,
             Image,
+
         ],
         editorProps: {
             attributes: {
@@ -30,8 +32,9 @@ const Tiptap: React.FC<Props> = (props) => {
         },
     })
 
-    const addImage = () => {
-        const url = window.prompt('URL')
+    const addImage = async (e) => {
+        // const url = window.prompt('URL')
+        const url = await uploadPhoto(e)
 
         if (url) {
             editor.chain().focus().setImage({ src: url }).run()
@@ -41,7 +44,13 @@ const Tiptap: React.FC<Props> = (props) => {
     return (
         <div>
             <MenuBar editor={editor} />
-            <button onClick={addImage} className='text-lg font-bold m-1 border-2 rounded-lg'>add image from URL</button>
+            {/* <button onClick={addImage} className='text-lg font-bold m-1 border-2 rounded-lg'>add image from URL</button> */}
+            <input
+                onChange={addImage}
+                type="file"
+                accept="image/png, image/jpeg"
+                className='text-lg font-bold m-1 border-2 rounded-lg'
+            />
             <EditorContent editor={editor} />
         </div>
     )
