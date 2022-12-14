@@ -5,11 +5,14 @@ import Tiptap from '../components/TipTap';
 import Router from 'next/router';
 import { Listbox } from '@headlessui/react'
 import prisma from '../lib/prisma'
+import { uploadPhoto } from '../lib/fileUpload';
 
 
 export default function NewProtocol({ categories, tags }) {
 
   // console.log(tags)
+
+  const today = new Date().toLocaleDateString('en-CA')
 
   const [ourTake, setOurTake] = useState({});
   const [deepDive, setDeepDive] = useState({});
@@ -30,10 +33,10 @@ export default function NewProtocol({ categories, tags }) {
         { id: 3, title: 'Yield Bearing' }
       ],
       timeLine: [
-        { title: 'TGE', date: 20 - 12 - 2022, description: 'tokn generation event' }
+        { title: 'TGE', date: today, description: 'token generation event' }
       ],
-      publishedAt: '21/12/2022',
-      mainImage: 'https://img.icons8.com/officel/512/logo.png',
+      publishedAt: today,
+      mainImage: '', // 'https://img.icons8.com/officel/512/logo.png',
       tokenUtility: 'Governance',
       tokenUtilityStrength: 50,
       businessModel: 'Consulting, Education, Content',
@@ -65,11 +68,18 @@ export default function NewProtocol({ categories, tags }) {
 
     try {
       const body = { ourTake, deepDive, inputFields, selectedCats, selectedTags, tokenStrength };
-      await fetch('/api/post/newProtocol', {
+      const response = await fetch('/api/post/newProtocol', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
       });
+
+      // console.log(response)
+      if (!response.ok) {
+        const message = `An error has occured: ${response.status}`;
+        throw new Error(message);
+      }
+
       await Router.push('/');
       console.log('protocol created');
     } catch (error) {
@@ -115,7 +125,7 @@ export default function NewProtocol({ categories, tags }) {
 
   const addTimeLine = (event: any) => {
     event.preventDefault()
-    let newfield = [...inputFields.timeLine, { title: 'TGE', date: 20 - 12 - 2022, description: 'tokn generation event' }]
+    let newfield = [...inputFields.timeLine, { title: 'TGE', date: today, description: 'token generation event' }]
 
     setInputFields({ ...inputFields, timeLine: newfield })
   }
@@ -126,6 +136,12 @@ export default function NewProtocol({ categories, tags }) {
     data.splice(index, 1)
     setInputFields({ ...inputFields, timeLine: data })
   }
+
+  const setMainImageUrl = async (e) => {
+    const url = await uploadPhoto(e)
+    console.log(url)
+    setInputFields({ ...inputFields, mainImage: url })
+  } 
 
   return (
     <>
@@ -165,10 +181,6 @@ export default function NewProtocol({ categories, tags }) {
           </div>
           <div>
             <label for="category">Categories</label>
-            {/* <input type='text' id="category" name="category"
-              value={inputFields.categories}
-              onChange={e => setInputFields({ ...inputFields, categories: e.target.value })}
-            /> */}
             <Listbox value={selectedCats} onChange={setSelectedCats} multiple>
               <div className="relative mt-1">
                 <Listbox.Button className="relative w-full m-2 cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
@@ -269,14 +281,6 @@ export default function NewProtocol({ categories, tags }) {
                           />
                         </td>
                         <td className="py-2 px-3">
-                          {/* <input
-                              name='internal'
-                              placeholder='Internal'
-                              checked={input.internal}
-                              type='checkbox'
-                              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-1.5"
-                              onChange={event => handleResourceChange(index, event)}
-                            /> */}
                           <textarea rows="3"
                             class="block p-2.5 w-full text-xs text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                             name='description'
@@ -309,13 +313,19 @@ export default function NewProtocol({ categories, tags }) {
             <label for="publishedAt">Published At</label>
             <input type='date' id="publishedAt" name="publishedAt"
               value={inputFields.publishedAt}
+              placeholder={inputFields.publishedAt}
               onChange={e => setInputFields({ ...inputFields, publishedAt: e.target.value })} />
           </div>
           <div>
             <label for="mainImage">Main Image (link to svg)</label>
-            <input type='url' id="mainImage" name="mainImage"
-              value={inputFields.mainImage}
-              onChange={e => setInputFields({ ...inputFields, mainImage: e.target.value })} />
+            <input 
+              id="mainImage" name="mainImage"
+              type="file"
+              accept="image/png, image/jpeg, image/svg+xml"
+              // value={inputFields.mainImage}
+              // onChange={e => setInputFields({ ...inputFields, mainImage: e.target.value })} 
+              onChange={e => setMainImageUrl(e)}
+              />
           </div>
           <div>
             <label for="tokenUtility">Token Utility</label>
@@ -430,7 +440,7 @@ export default function NewProtocol({ categories, tags }) {
           <div>
             <label for="metrics">Metrics</label>
             <textarea rows="3"
-              class="block p-2.5 w-full text-xs text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+              // class="block p-2.5 w-full text-xs text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
               name='metrics'
               value={inputFields.metrics}
               onChange={e => setInputFields({ ...inputFields, metrics: e.target.value })}

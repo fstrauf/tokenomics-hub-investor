@@ -17,7 +17,7 @@ export const generateUUID = () => {
 
 export const uploadPhoto = async (e) => {
   const file = e.target.files[0];
-  console.log(file)
+  // console.log(file)
   const filename = encodeURIComponent(file.name);
   const target = generateUUID() + '.' + filename.split('.').pop()
   const res = await fetch(`/api/post/upload-url?file=${filename}&target=${target}`);

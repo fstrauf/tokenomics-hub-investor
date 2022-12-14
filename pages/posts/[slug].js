@@ -61,7 +61,7 @@ export default function Post({ post, morePosts, preview }) {
             <article className=''>
               <Head>
                 <title>{post.title}</title>
-                
+
                 <meta property='twitter:card' content='summary_large_image' />
                 <meta name="twitter:site" content="@tokenomicsdao" />
                 <meta name="twitter:creator" content="@tokenomicsdao" />
@@ -83,6 +83,11 @@ export default function Post({ post, morePosts, preview }) {
                 tags={post.tags}
                 tokenStrength={post.tokenStrength}
               />
+              <div className="w-32 rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
+                <Link href="/newProtocol" >
+                  Edit
+                </Link>
+              </div>
               <FeedbackPopup isOpen={isOpen} handleIsOpen={handleIsOpen} />
               <div className={`w-full top-3 ${isOpen ? '' : 'z-50 sticky'}`}>
                 <div class="overflow-x-scroll md:px-10 bg-white border-b-2 border-black">
