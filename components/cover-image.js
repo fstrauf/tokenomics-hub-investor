@@ -1,6 +1,6 @@
 // import cn from 'classnames'
 import Link from 'next/link'
-import { urlForImage } from '../lib/sanity'
+// import { urlForImage } from '../lib/sanity'
 
 export default function CoverImage({ title, url, imageObject, slug }) {
   const image = (

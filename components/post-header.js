@@ -23,7 +23,7 @@ export default function PostHeader({ title, updatedAt, shortDescription, type, t
       </div>
       <div className="text-lg flex flex-auto gap-4">
         <h1 className='font-bold'>Updated:</h1>
-        <p>{updatedAt.toISOString().slice(0, 10)}</p>      
+        <p>{updatedAt?.toISOString().slice(0, 10)}</p>      
       </div>
       <div className="mb-6 text-lg flex flex-auto gap-4">
         <h1 className='font-bold'>Tags:</h1>
