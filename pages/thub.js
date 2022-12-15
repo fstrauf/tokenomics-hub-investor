@@ -29,7 +29,7 @@ export default function tokenomicshub() {
                     <div>
                         <p className='mt-5 font-semibold'>Drop your Email below to get the basic calculation template for free here.</p>
                         <form className='mt-5' method="post" action="https://sendfox.com/form/m89qv6/mn87gq" class="sendfox-form" id="mn87gq" data-async="true" data-recaptcha="true">
-                            <p><label for="sendfox_form_email">Email: </label><input className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-60 p-2.5 ' type="email" id="sendfox_form_email" placeholder="Email" name="email" required /></p>
+                            <p className='mt-5'><label for="sendfox_form_email">Email: </label><input className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-60 p-2.5 ' type="email" id="sendfox_form_email" placeholder="Email" name="email" required /></p>
                             <p className='mt-3'><label><input type="checkbox" name="gdpr" value="1" required /> I agree to receive email updates and promotions.</label></p>
                             {/* <!-- no botz please --> */}
                             <div className='' aria-hidden="true"><input type="text" name="a_password" tabindex="-1" value="" autocomplete="off" /></div>

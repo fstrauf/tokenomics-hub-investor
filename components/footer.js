@@ -18,9 +18,14 @@ export default function Footer() {
             </div>
             <Feedback />
           </div>
-          <Link href="/terms" className="hover:underline">
-            Terms & Conditions
-          </Link>
+          <div className='flex flex-col'>
+            <Link href="/terms" className="hover:underline">
+              Terms & Conditions
+            </Link>
+            <Link href="/thub" className="hover:underline">
+              Tokenomics Design Framework
+            </Link>
+          </div>
           <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
           <div class="sm:flex sm:items-center sm:justify-between">
             <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2022 <a href="https://tokenomicsdao.xyz/" class="hover:underline">Tokenomics DAO</a>. All Rights Reserved.
