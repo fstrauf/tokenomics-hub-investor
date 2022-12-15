@@ -15,8 +15,6 @@ import Intro from "../../components/intro";
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 
-  // console.log(params)
-
   const post = await prisma.post.findUnique({
     where: {
       id: String(params?.id),
@@ -69,19 +67,6 @@ const EditPost: React.FC<PostProps> = (props) => {
     title = `Editing ${title} . `;
   }
 
-  // const content = JSON.parse(props.content)
-
-  // const output = useMemo(() => {
-  //   return generateHTML(content, [
-  //     StarterKit,
-  //     Image,
-  //     // other extensions …
-  //   ])
-  // }, [content])
-
-  // const jsxReady = parse(output)
-  // console.log(props.post)
-
   return (
     <Layout>
       <Intro />
@@ -89,14 +74,7 @@ const EditPost: React.FC<PostProps> = (props) => {
         <h2>{title}</h2>
         <p>By {props?.post.author?.name || "Unknown author"}</p>
         <Post content={props.post} categories={props.categories} tags={props.tags}/>
-        {/* <Tiptap content={props.content} contentId={props.id} />
-        <button onClick={() => publishPost(props.id)}>Publish</button>
-        <button onClick={() => deletePost(props.id)}>Delete</button> */}
       </div>
-      {/* <article class="prose md:prose-lg lg:prose-xl">
-        {jsxReady}
-      </article> */}
-
     </Layout>
   );
 };

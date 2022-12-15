@@ -84,10 +84,10 @@ export default function Post({ post, morePosts, preview }) {
                 tags={post.tags}
                 tokenStrength={post.tokenStrength}
               />
-              <div onClick={() => Router.push("/editPost/[id]", `/editPost/${post.id}`)}
+              <button onClick={() => Router.push("/editPost/[id]", `/editPost/${post.id}`)}
                 className="w-32 rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
                 Edit
-              </div>
+              </button>
               <FeedbackPopup isOpen={isOpen} handleIsOpen={handleIsOpen} />
               <div className={`w-full top-3 ${isOpen ? '' : 'z-50 sticky'}`}>
                 <div class="overflow-x-scroll md:px-10 bg-white border-b-2 border-black">

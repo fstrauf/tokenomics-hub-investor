@@ -1,8 +1,5 @@
-
-// import { TransformStreamDefaultController } from 'node:stream/web';
 import prisma from '../../../lib/prisma';
 import {  Prisma } from '@prisma/client'
-// import { time } from 'console';
 
 export default async function handle(req, res) {
   const { ourTake, deepDive, inputFields, selectedCats, selectedTags, tokenStrength } = req.body;
@@ -14,7 +11,6 @@ export default async function handle(req, res) {
     }
   })
 
-  // console.log(inputFields?.id)
   var response = {}
   try {
     response = await prisma.post.create({      
@@ -69,14 +65,6 @@ export default async function handle(req, res) {
       },
     })
   } catch (e) {
-    if (e instanceof Prisma.PrismaClientKnownRequestError) {
-      // The .code property can be accessed in a type-safe manner
-      if (e.code === 'P2002') {
-        // console.log(
-        //   'There is a unique constraint violation, a new user cannot be created with this email'
-        // )
-      }
-    }
     throw e
   }
 

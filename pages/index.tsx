@@ -26,12 +26,11 @@ const Index: React.FC<Props> = (props) => {
         <Container>
           <Intro />
           <h1 className='text-2xl md:text-3xl text-center mb-10'>Explore, compare and evaluate tokenomics of crypto projects.</h1>
-          {/* <div>{props.rewardRound[0].monthYear}</div> */}
-          <div className="w-32 rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
+          {/* <div className="w-32 rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
             <Link href="/newProtocol" >
               New Protocol
             </Link>
-          </div>
+          </div> */}
           <Table prop={props.allPosts} />
         </Container>
       </Layout>
@@ -45,6 +44,9 @@ export async function getStaticProps({ preview = false }) {
   // const allPosts = await getAllPostsForHome(preview)
 
   const allPosts = await prisma.post.findMany({
+    where: {
+      published: true,
+    },
     select: {
       mainImageUrl: true,
       title: true,
@@ -54,7 +56,6 @@ export async function getStaticProps({ preview = false }) {
         select: {
           title: true,
         }
-
       }
     },
   })

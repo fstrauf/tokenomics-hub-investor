@@ -1,26 +1,18 @@
 import React, { useState } from 'react';
 import { uploadPhoto } from '../lib/fileUpload';
-// import Intro from './intro';
-// import Layout from './layout';
 import Tiptap from './TipTap';
 import { Listbox } from '@headlessui/react'
 import Router from 'next/router';
-// import prisma from '../lib/prisma'
 
 export default function Post({ content, categories, tags }) {
 
     const today = new Date().toLocaleDateString('en-CA')
 
-    // console.log(content?.ourTake)
-
-    const [ourTake, setOurTake] = useState(JSON.parse(content?.ourTake) ?? {});
-    const [deepDive, setDeepDive] = useState(JSON.parse(content?.breakdown) ?? {});
+    const [ourTake, setOurTake] = useState(JSON.parse(content?.ourTake || '{}') ?? {});
+    const [deepDive, setDeepDive] = useState(JSON.parse(content?.breakdown || '{}') ?? {});
     const [selectedCats, setSelectedCats] = useState(content?.categories);
     const [selectedTags, setSelectedTags] = useState(content?.tags);
     const [inputFields, setInputFields] = useState(content)
-
-    // console.log("ourtake " + ourTake )
-    // console.log("cats " +categories)
 
     const tokenStrength = (inputFields.businessModelStrength + inputFields.demandDriversStrength + inputFields.valueCaptureStrength + inputFields.valueCreationStrength + inputFields.tokenUtilityStrength) / 5
 
@@ -28,7 +20,7 @@ export default function Post({ content, categories, tags }) {
         e.preventDefault();
 
         const body = { ourTake, deepDive, inputFields, selectedCats, selectedTags, tokenStrength };
-        // console.log(inputFields.id)
+
         if (inputFields.id===undefined) {
             try {                
                 const response = await fetch('/api/post/newProtocol', {
@@ -73,7 +65,7 @@ export default function Post({ content, categories, tags }) {
         event.preventDefault()
         let data = [...inputFields.ProtocolResources];
         data[index][event.target.name] = event.target.value;
-        // setInputFields(data);
+
         setInputFields({ ...inputFields, ProtocolResources: data })
     }
 
@@ -198,9 +190,6 @@ export default function Post({ content, categories, tags }) {
                 </div>
                 <div>
                     <label for="timelines">Timeline</label>
-                    {/* <input type='text' id="timeline" name="timeline"
-                  value={inputFields.timeLine}
-                  onChange={e => setInputFields({ ...inputFields, timeLine: e.target.value })} /> */}
                     <button className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-1.5 mr-2 mb-2"
                         onClick={event => addTimeLine(event)}>Add More..</button>
                     <div className="overflow-x-auto relative">
@@ -287,8 +276,6 @@ export default function Post({ content, categories, tags }) {
                         id="mainImage" name="mainImage"
                         type="file"
                         accept="image/png, image/jpeg, image/svg+xml"
-                        // value={inputFields.mainImage}
-                        // onChange={e => setInputFields({ ...inputFields, mainImage: e.target.value })} 
                         onChange={e => setMainImageUrl(e)}
                     />
                 </div>
@@ -500,28 +487,6 @@ export default function Post({ content, categories, tags }) {
                 </div>
                 <button type="submit" onClick={e => submitData(e)}>Submit</button>
             </form>
-            {/* </div> */}
-
-            {/* </Layout> */}
         </>
     )
 }
-
-// export async function getStaticProps() {
-//     // const data = await getPostAndMorePosts(params.slug, preview)
-  
-//     const categories = await prisma.category.findMany()
-//     const tags = await prisma.tag.findMany()
-    
-//     console.log('LOG')
-    
-//     console.log(categories)
-  
-//     return {
-//       props: {
-//         categories: categories || null,
-//         tags: tags || null,
-//       },
-//       revalidate: 1,
-//     }
-//   }
