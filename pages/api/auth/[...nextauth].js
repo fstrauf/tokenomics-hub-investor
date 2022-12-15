@@ -5,18 +5,20 @@ import NextAuth from 'next-auth';
 import GitHub from 'next-auth/providers/github';
 import GoogleProvider from "next-auth/providers/google";
 import EmailProvider from "next-auth/providers/email"
-import { SanityAdapter, SanityCredentials } from 'next-auth-sanity';
-import sanityClient from '@sanity/client'
+// import { SanityAdapter, SanityCredentials } from 'next-auth-sanity';
+// import sanityClient from '@sanity/client'
 import { google } from 'googleapis'
+import prisma from '../../../lib/prisma';
+import { PrismaAdapter } from "@next-auth/prisma-adapter"
 
-const config = {
-  dataset: process.env.SANITY_STUDIO_API_DATASET,
-  projectId: process.env.SANITY_STUDIO_API_PROJECT_ID,
-  useCdn: process.env.NODE_ENV === 'production',
-  token: process.env.SANITY_API_TOKEN,
-  apiVersion: '2022-03-13',
-}
-const client = sanityClient(config)
+// const config = {
+//   dataset: process.env.SANITY_STUDIO_API_DATASET,
+//   projectId: process.env.SANITY_STUDIO_API_PROJECT_ID,
+//   useCdn: process.env.NODE_ENV === 'production',
+//   token: process.env.SANITY_API_TOKEN,
+//   apiVersion: '2022-03-13',
+// }
+// const client = sanityClient(config)
 
 const OAuth2 = google.auth.OAuth2
 
@@ -63,7 +65,8 @@ export const authOptions = {
   session: {
     strategy: 'jwt'
   },
-  adapter: SanityAdapter(client)
+  // adapter: SanityAdapter(client)
+  adapter: PrismaAdapter(prisma)
 }
 
 export default NextAuth(authOptions)
