@@ -11,7 +11,7 @@ export default function tokenomicshub() {
         <>
             <Layout>
                 <Intro />
-                <div className='max-w-xl md:max-w-4xl m-auto'>
+                <div className='max-w-md sm:max-w-xl md:max-w-2xl lg:max-w-4xl m-auto'>
                     <h1 className='text-xl'>Design your own tokenomics using our tools and help from our community.</h1>
                     <div className='flex mt-5'>
                         <div className='w-[384px] h-[276px] relative object-scale-down'>
