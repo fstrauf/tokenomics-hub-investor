@@ -4,8 +4,7 @@
     "build": "npm run build:web",
     "build:web": "next build",
     "dev": "next",
-    "fmt": "prettier --ignore-path .gitignore --write --cache .",
-    "postinstall": "(cd studio && npx @sanity/cli install)",    
+    "fmt": "prettier --ignore-path .gitignore --write --cache .",     
     "start:web": "next start",
     "analyze": "ANALYZE=true next build"
   },
