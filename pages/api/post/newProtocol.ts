@@ -1,8 +1,10 @@
 import prisma from '../../../lib/prisma';
-import {  Prisma } from '@prisma/client'
+// import {  Prisma } from '@prisma/client'
 
 export default async function handle(req, res) {
   const { ourTake, deepDive, inputFields, selectedCats, selectedTags, tokenStrength } = req.body;
+
+  console.log(inputFields)
 
   const timeLine = inputFields?.protocolTimeLine?.map(tl => {
     return {
@@ -43,7 +45,7 @@ export default async function handle(req, res) {
         diagramUrl: inputFields.diagramUrl,
         author: {
           connect: {
-            email: 'f.strauf@gmail.com',
+            email: inputFields.Author.email,
           }
         },
         categories: {

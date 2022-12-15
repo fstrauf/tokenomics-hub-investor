@@ -66,11 +66,11 @@ export default async function handle(req, res) {
       horizon: inputFields.decisionHorizon,
       metrics: inputFields.metrics,
       diagramUrl: inputFields.diagramUrl,
-      author: {
-        connect: {
-          email: 'f.strauf@gmail.com',
-        }
-      },
+      // author: {
+      //   connect: {
+      //     email: 'f.strauf@gmail.com',
+      //   }
+      // },
       categories: {
         connect: selectedCats.map(cats => { return { id: cats.id } })
       },

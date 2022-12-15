@@ -1,15 +1,8 @@
 import { GetServerSideProps } from "next";
 import Layout from "../../components/layout";
-// import Router from "next/router";
-// import { PostProps } from "../../components/Post";
 import { useSession } from "next-auth/react";
 import prisma from "../../lib/prisma";
-// import Tiptap from '../../components/TipTap';
-// import { generateHTML } from '@tiptap/html'
 import React from 'react'
-// import StarterKit from '@tiptap/starter-kit'
-// import Image from '@tiptap/extension-image'
-// import parse from 'html-react-parser';
 import Post from "../../components/post";
 import Intro from "../../components/intro";
 
@@ -41,20 +34,6 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     }
   };
 };
-
-// async function publishPost(id: string): Promise<void> {
-//   await fetch(`/api/publish/${id}`, {
-//     method: "PUT",
-//   });
-//   await Router.push("/");
-// }
-
-// async function deletePost(id: string): Promise<void> {
-//   await fetch(`/api/post/${id}`, {
-//     method: "DELETE",
-//   });
-//   Router.push("/");
-// }
 
 const EditPost: React.FC<PostProps> = (props) => {
   const { data: session, status } = useSession();
