@@ -134,8 +134,8 @@ export default function Post({ post, morePosts, preview }) {
               <h1 className='text-xl md:text-2xl lg:text-3xl font-bold mt-10 mb-4 md:mt-20 text-black section-head'>Author.</h1>
               <AuthorCard author={post.author} />
             </article>
-            <Comments comments={post.comments} />
-            <Form _id={post._id} />
+            {/* <Comments comments={post.comments} /> */}
+            {/* <Form _id={post._id} /> */}
             <SectionSeparator />
             {/* {morePosts.length > 0 && <MoreStories posts={morePosts} />} */}
           </>

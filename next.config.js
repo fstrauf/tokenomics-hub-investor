@@ -7,7 +7,7 @@
  **/
 const nextConfig = {
   images: {
-    domains: ['cdn.sanity.io', 'source.unsplash.com'],
+    domains: ['source.unsplash.com'],
   },
   experimental: {
     swcPlugins: [
