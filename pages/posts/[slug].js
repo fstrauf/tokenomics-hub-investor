@@ -27,6 +27,7 @@ import AuthorCard from '../../components/authorCard'
 import EditPiece from '../../components/edit-piece'
 import { HOME_OG_IMAGE_URL } from '../../lib/constants'
 import prisma from '../../lib/prisma'
+import Router from "next/router";
 
 export default function Post({ post, morePosts, preview }) {
 
@@ -83,10 +84,9 @@ export default function Post({ post, morePosts, preview }) {
                 tags={post.tags}
                 tokenStrength={post.tokenStrength}
               />
-              <div className="w-32 rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
-                <Link href="/newProtocol" >
-                  Edit
-                </Link>
+              <div onClick={() => Router.push("/editPost/[id]", `/editPost/${post.id}`)}
+                className="w-32 rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
+                Edit
               </div>
               <FeedbackPopup isOpen={isOpen} handleIsOpen={handleIsOpen} />
               <div className={`w-full top-3 ${isOpen ? '' : 'z-50 sticky'}`}>

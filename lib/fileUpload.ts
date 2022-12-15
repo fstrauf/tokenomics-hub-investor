@@ -20,7 +20,7 @@ export const uploadPhoto = async (e) => {
   // console.log(file)
   const filename = encodeURIComponent(file.name);
   const target = generateUUID() + '.' + filename.split('.').pop()
-  const res = await fetch(`/api/post/upload-url?file=${filename}&target=${target}`);
+  const res = await fetch(`/api/upload-url?file=${filename}&target=${target}`);
   const { url, fields } = await res.json();
   const formData = new FormData();
 

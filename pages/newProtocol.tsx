@@ -1,24 +1,24 @@
 import Layout from '../components/layout'
 import Intro from '../components/intro'
-import React, { useState } from 'react';
-import Tiptap from '../components/TipTap';
-import Router from 'next/router';
-import { Listbox } from '@headlessui/react'
+import React from 'react';
+// import Tiptap from '../components/TipTap';
+// import Router from 'next/router';
+// import { Listbox } from '@headlessui/react'
 import prisma from '../lib/prisma'
-import { uploadPhoto } from '../lib/fileUpload';
+// import { uploadPhoto } from '../lib/fileUpload';
+import Post from '../components/post';
 
-
-export default function NewProtocol({ categories, tags }) {
-
-  // console.log(tags)
+// export default function NewProtocol() {
+  export default function NewProtocol({ categories, tags }) {
 
   const today = new Date().toLocaleDateString('en-CA')
 
-  const [ourTake, setOurTake] = useState({});
-  const [deepDive, setDeepDive] = useState({});
-  const [selectedCats, setSelectedCats] = useState([categories[0], categories[1]]);
-  const [selectedTags, setSelectedTags] = useState([tags[0], tags[1]]);
-  const [inputFields, setInputFields] = useState(
+  // const [ourTake, setOurTake] = useState({});
+  // const [deepDive, setDeepDive] = useState({});
+  // const [selectedCats, setSelectedCats] = useState([categories[0], categories[1]]);
+  // const [selectedTags, setSelectedTags] = useState([tags[0], tags[1]]);
+  // const [inputFields, setInputFields] = useState(
+  const defaultContent =
     {
       title: 'Tokenomics DAO',
       slug: 'tdao',
@@ -32,7 +32,7 @@ export default function NewProtocol({ categories, tags }) {
         { id: 2, title: 'AMM' },
         { id: 3, title: 'Yield Bearing' }
       ],
-      timeLine: [
+      protocolTimeLine: [
         { title: 'TGE', date: today, description: 'token generation event' }
       ],
       publishedAt: today,
@@ -55,93 +55,92 @@ export default function NewProtocol({ categories, tags }) {
       decisionHorizon: 'very long term',
       metrics: 'revnue, profit, growth',
       diagram: 'https://viewer.diagrams.net/?tags=%7B%7D&highlight=0000ff&edit=_blank&layers=1&nav=1&title=tokenomics_BanklessDAO.drawio#Uhttps%3A%2F%2Fdrive.google.com%2Fuc%3Fid%3D1w7W4n-NS7DPGq1e-2KaErjTEhjQMQFCs%26export%3Ddownload',
-      resources: [
+      ProtocolResources: [
         { title: 'website', url: 'https://www.tokenomicshub.xyz/', internal: true }
       ],
     }
-  )
 
-  const tokenStrength = (inputFields.businessModelStrength + inputFields.demandDriversStrength + inputFields.valueCaptureStrength + inputFields.valueCreationStrength + inputFields.tokenUtilityStrength) / 5
+  // const tokenStrength = (inputFields.businessModelStrength + inputFields.demandDriversStrength + inputFields.valueCaptureStrength + inputFields.valueCreationStrength + inputFields.tokenUtilityStrength) / 5
 
-  const submitData = async (e: React.SyntheticEvent) => {
-    e.preventDefault();
+  // const submitData = async (e: React.SyntheticEvent) => {
+  //   e.preventDefault();
 
-    try {
-      const body = { ourTake, deepDive, inputFields, selectedCats, selectedTags, tokenStrength };
-      const response = await fetch('/api/post/newProtocol', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body),
-      });
+  //   try {
+  //     const body = { ourTake, deepDive, inputFields, selectedCats, selectedTags, tokenStrength };
+  //     const response = await fetch('/api/post/newProtocol', {
+  //       method: 'POST',
+  //       headers: { 'Content-Type': 'application/json' },
+  //       body: JSON.stringify(body),
+  //     });
 
-      // console.log(response)
-      if (!response.ok) {
-        const message = `An error has occured: ${response.status}`;
-        throw new Error(message);
-      }
+  //     // console.log(response)
+  //     if (!response.ok) {
+  //       const message = `An error has occured: ${response.status}`;
+  //       throw new Error(message);
+  //     }
 
-      await Router.push('/');
-      console.log('protocol created');
-    } catch (error) {
-      console.error(error);
-    }
-  }
+  //     await Router.push('/');
+  //     console.log('protocol created');
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // }
 
-  const handleResourceChange = (index: any, event: any) => {
-    event.preventDefault()
-    let data = [...inputFields.resources];
-    data[index][event.target.name] = event.target.value;
-    // setInputFields(data);
-    setInputFields({ ...inputFields, resources: data })
-  }
+  // const handleResourceChange = (index: any, event: any) => {
+  //   event.preventDefault()
+  //   let data = [...inputFields.resources];
+  //   data[index][event.target.name] = event.target.value;
+  //   // setInputFields(data);
+  //   setInputFields({ ...inputFields, resources: data })
+  // }
 
-  const addResource = (event: any) => {
-    event.preventDefault()
-    let newfield = [...inputFields.resources, { title: 'website', url: 'https://www.tokenomicshub.xyz/', internal: true }]
+  // const addResource = (event: any) => {
+  //   event.preventDefault()
+  //   let newfield = [...inputFields.resources, { title: 'website', url: 'https://www.tokenomicshub.xyz/', internal: true }]
 
-    setInputFields({ ...inputFields, resources: newfield })
-  }
+  //   setInputFields({ ...inputFields, resources: newfield })
+  // }
 
-  const removeResource = (index: any, event: any) => {
-    event.preventDefault()
-    let data = [...inputFields.resources];
-    data.splice(index, 1)
-    setInputFields({ ...inputFields, resources: data })
-  }
+  // const removeResource = (index: any, event: any) => {
+  //   event.preventDefault()
+  //   let data = [...inputFields.resources];
+  //   data.splice(index, 1)
+  //   setInputFields({ ...inputFields, resources: data })
+  // }
 
-  const handleTimeLineChange = (index: any, event: any) => {
-    event.preventDefault()
-    let data = [...inputFields.timeLine];
-    // console.log(event.target)
-    // if (event.target.name === 'date') {
-    //   data[index][event.target.name] = new Date(event.target.value);
-    // } else {
-      data[index][event.target.name] = event.target.value;
-    // }
+  // const handleTimeLineChange = (index: any, event: any) => {
+  //   event.preventDefault()
+  //   let data = [...inputFields.timeLine];
+  //   // console.log(event.target)
+  //   // if (event.target.name === 'date') {
+  //   //   data[index][event.target.name] = new Date(event.target.value);
+  //   // } else {
+  //     data[index][event.target.name] = event.target.value;
+  //   // }
 
-    // setInputFields(data);
-    setInputFields({ ...inputFields, timeLine: data })
-  }
+  //   // setInputFields(data);
+  //   setInputFields({ ...inputFields, timeLine: data })
+  // }
 
-  const addTimeLine = (event: any) => {
-    event.preventDefault()
-    let newfield = [...inputFields.timeLine, { title: 'TGE', date: today, description: 'token generation event' }]
+  // const addTimeLine = (event: any) => {
+  //   event.preventDefault()
+  //   let newfield = [...inputFields.timeLine, { title: 'TGE', date: today, description: 'token generation event' }]
 
-    setInputFields({ ...inputFields, timeLine: newfield })
-  }
+  //   setInputFields({ ...inputFields, timeLine: newfield })
+  // }
 
-  const removeTimeLine = (index: any, event: any) => {
-    event.preventDefault()
-    let data = [...inputFields.timeLine];
-    data.splice(index, 1)
-    setInputFields({ ...inputFields, timeLine: data })
-  }
+  // const removeTimeLine = (index: any, event: any) => {
+  //   event.preventDefault()
+  //   let data = [...inputFields.timeLine];
+  //   data.splice(index, 1)
+  //   setInputFields({ ...inputFields, timeLine: data })
+  // }
 
-  const setMainImageUrl = async (e) => {
-    const url = await uploadPhoto(e)
-    console.log(url)
-    setInputFields({ ...inputFields, mainImage: url })
-  } 
+  // const setMainImageUrl = async (e) => {
+  //   const url = await uploadPhoto(e)
+  //   console.log(url)
+  //   setInputFields({ ...inputFields, mainImage: url })
+  // } 
 
   return (
     <>
@@ -150,9 +149,9 @@ export default function NewProtocol({ categories, tags }) {
         <h1 className="text-3xl font-bold">
           Submit a draft for review
         </h1>
+        <Post content={defaultContent} categories={categories} tags={tags} />
 
-        <form className='flex flex-col m-auto'>
-          {/* <div className='flex flex-col m-auto'> */}
+        {/* <form className='flex flex-col m-auto'>
           <div>
             <label for="title">Title</label>
             <input
@@ -205,10 +204,6 @@ export default function NewProtocol({ categories, tags }) {
           </div>
           <div>
             <label for="tags">Tags</label>
-            {/* <input type='text' id="tags" name="tags"
-              value={inputFields.tags}
-              onChange={e => setInputFields({ ...inputFields, tags: e.target.value })}
-            /> */}
             <Listbox value={selectedTags} onChange={setSelectedTags} multiple>
               <div className="relative mt-1">
                 <Listbox.Button className="relative w-full m-2 cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
@@ -233,9 +228,6 @@ export default function NewProtocol({ categories, tags }) {
           </div>
           <div>
             <label for="timelines">Timeline</label>
-            {/* <input type='text' id="timeline" name="timeline"
-              value={inputFields.timeLine}
-              onChange={e => setInputFields({ ...inputFields, timeLine: e.target.value })} /> */}
             <button className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-1.5 mr-2 mb-2"
               onClick={event => addTimeLine(event)}>Add More..</button>
             <div className="overflow-x-auto relative">
@@ -458,9 +450,6 @@ export default function NewProtocol({ categories, tags }) {
           </div>
           <div>
             <label for="resources">Resources</label>
-            {/* <input type='url' id="resources" name="resources"
-              value={inputFields.resources}
-              onChange={e => setInputFields({ ...inputFields, resources: e.target.value })} /> */}
             <button className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-1.5 mr-2 mb-2"
               onClick={event => addResource(event)}>Add More..</button>
             <div className="overflow-x-auto relative">
@@ -537,8 +526,7 @@ export default function NewProtocol({ categories, tags }) {
             </div>
           </div>
           <button type="submit" onClick={e => submitData(e)}>Submit</button>
-        </form>
-        {/* </div> */}
+        </form> */}
 
       </Layout>
     </>

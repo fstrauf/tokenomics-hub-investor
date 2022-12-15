@@ -2,26 +2,22 @@
 // import { TransformStreamDefaultController } from 'node:stream/web';
 import prisma from '../../../lib/prisma';
 import {  Prisma } from '@prisma/client'
+// import { time } from 'console';
 
 export default async function handle(req, res) {
   const { ourTake, deepDive, inputFields, selectedCats, selectedTags, tokenStrength } = req.body;
 
-  // selectedCats.map(cats => { return {id: cats.id}})
-  // selectedTags.map(tags => { return {id: tags.id}})
-
-  // console.log(inputFields.mainImage)
-
-  const timeLine = inputFields?.timeLine?.map(tl => {
+  const timeLine = inputFields?.protocolTimeLine?.map(tl => {
     return {
       ...tl,
       date: new Date(tl.date)
     }
   })
 
-  // console.log(timeLine)
+  // console.log(inputFields?.id)
   var response = {}
   try {
-    response = await prisma.post.create({
+    response = await prisma.post.create({      
       data: {
         title: inputFields.title,
         slug: inputFields.slug,
@@ -62,7 +58,7 @@ export default async function handle(req, res) {
         },
         ProtocolResources: {
           createMany: {
-            data: inputFields.resources
+            data: inputFields.ProtocolResources
           }
         },
         protocolTimeLine: {
