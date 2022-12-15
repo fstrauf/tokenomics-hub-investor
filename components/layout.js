@@ -8,7 +8,7 @@ export default function Layout({ preview, children }) {
     <>
       <Meta />
       <Login message="You are not signed in" />
-      <div className="min-h-screen">
+      <div className="min-h-screen max-w-xl md:max-w-screen-xl m-auto">
         <main>{children}</main>
       </div>
       <Footer />

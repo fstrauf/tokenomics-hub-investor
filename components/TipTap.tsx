@@ -49,9 +49,11 @@ const Tiptap: React.FC<Props> = (props) => {
                 onChange={addImage}
                 type="file"
                 accept="image/png, image/jpeg"
-                className='text-lg font-bold m-1 border-2 rounded-lg'
+                className='text-sm ml-1 border-2 rounded-lg'
             />
-            <EditorContent editor={editor} />
+            <div className='border-2 rounded-lg m-4'>
+            <EditorContent className='h-80' editor={editor} />
+            </div>
         </div>
     )
 }
@@ -76,7 +78,7 @@ const MenuBar = ({ editor }) => {
                         .run()
                 }
                 //   className={editor.isActive('bold') ? 'is-active' : ''}
-                className='text-lg font-bold m-1 border-2 rounded-lg'
+                className='text-sm ml-1 border-2 rounded-lg'
             >
                 bold
             </button>
@@ -91,7 +93,7 @@ const MenuBar = ({ editor }) => {
                         .run()
                 }
                 //   className={editor.isActive('italic') ? 'is-active' : ''}
-                className='text-lg font-bold m-1 border-2 rounded-lg'
+                className='text-sm ml-1 border-2 rounded-lg'
             >
                 italic
             </button>
@@ -106,7 +108,7 @@ const MenuBar = ({ editor }) => {
                         .run()
                 }
                 //   className={editor.isActive('strike') ? 'is-active' : ''}
-                className='text-lg font-bold m-1 border-2 rounded-lg'
+                className='text-sm ml-1 border-2 rounded-lg'
             >
                 strike
             </button>
@@ -121,21 +123,23 @@ const MenuBar = ({ editor }) => {
                         .run()
                 }
                 //   className={editor.isActive('code') ? 'is-active' : ''}
-                className='text-lg font-bold m-1 border-2 rounded-lg'
+                className='text-sm ml-1 border-2 rounded-lg'
             >
                 code
             </button>
-            <button type='button' onClick={() => editor.chain().focus().unsetAllMarks().run()} className='text-lg font-bold m-1 border-2 rounded-lg'>
+            <button type='button' onClick={() => editor.chain().focus().unsetAllMarks().run()} 
+            className='text-sm ml-1 border-2 rounded-lg'>
                 clear marks
             </button>
-            <button type='button' onClick={() => editor.chain().focus().clearNodes().run()} className='text-lg font-bold m-1 border-2 rounded-lg'>
+            <button type='button' onClick={() => editor.chain().focus().clearNodes().run()} 
+            className='text-sm ml-1 border-2 rounded-lg'>
                 clear nodes
             </button>
             <button
                 type='button'
                 onClick={() => editor.chain().focus().setParagraph().run()}
                 //   className={editor.isActive('paragraph') ? 'is-active' : ''}
-                className='text-lg font-bold m-1 border-2 rounded-lg'
+                className='text-sm ml-1 border-2 rounded-lg'
             >
                 paragraph
             </button>
@@ -143,7 +147,7 @@ const MenuBar = ({ editor }) => {
                 type='button'
                 onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
                 //   className={editor.isActive('heading', { level: 1 }) ? 'is-active' : ''}
-                className='text-lg font-bold m-1 border-2 rounded-lg'
+                className='text-sm ml-1 border-2 rounded-lg'
             >
                 h1
             </button>
@@ -151,7 +155,7 @@ const MenuBar = ({ editor }) => {
                 type='button'
                 onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
                 //   className={editor.isActive('heading', { level: 2 }) ? 'is-active' : ''}
-                className='text-lg font-bold m-1 border-2 rounded-lg'
+                className='text-sm ml-1 border-2 rounded-lg'
             >
                 h2
             </button>
@@ -159,7 +163,7 @@ const MenuBar = ({ editor }) => {
                 type='button'
                 onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
                 //   className={editor.isActive('heading', { level: 3 }) ? 'is-active' : ''}
-                className='text-lg font-bold m-1 border-2 rounded-lg'
+                className='text-sm ml-1 border-2 rounded-lg'
             >
                 h3
             </button>
@@ -167,7 +171,7 @@ const MenuBar = ({ editor }) => {
                 type='button'
                 onClick={() => editor.chain().focus().toggleHeading({ level: 4 }).run()}
                 //   className={editor.isActive('heading', { level: 4 }) ? 'is-active' : ''}
-                className='text-lg font-bold m-1 border-2 rounded-lg'
+                className='text-sm ml-1 border-2 rounded-lg'
             >
                 h4
             </button>
@@ -175,7 +179,7 @@ const MenuBar = ({ editor }) => {
                 type='button'
                 onClick={() => editor.chain().focus().toggleHeading({ level: 5 }).run()}
                 //   className={editor.isActive('heading', { level: 5 }) ? 'is-active' : ''}
-                className='text-lg font-bold m-1 border-2 rounded-lg'
+                className='text-sm ml-1 border-2 rounded-lg'
             >
                 h5
             </button>
@@ -183,7 +187,7 @@ const MenuBar = ({ editor }) => {
                 type='button'
                 onClick={() => editor.chain().focus().toggleHeading({ level: 6 }).run()}
                 //   className={editor.isActive('heading', { level: 6 }) ? 'is-active' : ''}
-                className='text-lg font-bold m-1 border-2 rounded-lg'
+                className='text-sm ml-1 border-2 rounded-lg'
             >
                 h6
             </button>
@@ -191,7 +195,7 @@ const MenuBar = ({ editor }) => {
                 type='button'
                 onClick={() => editor.chain().focus().toggleBulletList().run()}
                 //   className={editor.isActive('bulletList') ? 'is-active' : ''}
-                className='text-lg font-bold m-1 border-2 rounded-lg'
+                className='text-sm ml-1 border-2 rounded-lg'
             >
                 bullet list
             </button>
@@ -199,7 +203,7 @@ const MenuBar = ({ editor }) => {
                 type='button'
                 onClick={() => editor.chain().focus().toggleOrderedList().run()}
                 //   className={editor.isActive('orderedList') ? 'is-active' : ''}
-                className='text-lg font-bold m-1 border-2 rounded-lg'
+                className='text-sm ml-1 border-2 rounded-lg'
             >
                 ordered list
             </button>
@@ -207,7 +211,7 @@ const MenuBar = ({ editor }) => {
                 type='button'
                 onClick={() => editor.chain().focus().toggleCodeBlock().run()}
                 //   className={editor.isActive('codeBlock') ? 'is-active' : ''}
-                className='text-lg font-bold m-1 border-2 rounded-lg'
+                className='text-sm ml-1 border-2 rounded-lg'
             >
                 code block
             </button>
@@ -215,14 +219,16 @@ const MenuBar = ({ editor }) => {
                 type='button'
                 onClick={() => editor.chain().focus().toggleBlockquote().run()}
                 //   className={editor.isActive('blockquote') ? 'is-active' : ''}
-                className='text-lg font-bold m-1 border-2 rounded-lg'
+                className='text-sm ml-1 border-2 rounded-lg'
             >
                 blockquote
             </button>
-            <button type='button' onClick={() => editor.chain().focus().setHorizontalRule().run()} className='text-lg font-bold m-1 border-2 rounded-lg'>
+            <button type='button' onClick={() => editor.chain().focus().setHorizontalRule().run()} 
+            className='text-sm ml-1 border-2 rounded-lg'>
                 horizontal rule
             </button>
-            <button type='button' onClick={() => editor.chain().focus().setHardBreak().run()} className='text-lg font-bold m-1 border-2 rounded-lg'>
+            <button type='button' onClick={() => editor.chain().focus().setHardBreak().run()} 
+            className='text-sm ml-1 border-2 rounded-lg'>
                 hard break
             </button>
             <button
@@ -235,7 +241,7 @@ const MenuBar = ({ editor }) => {
                         .undo()
                         .run()
                 }
-                className='text-lg font-bold m-1 border-2 rounded-lg'
+                className='text-sm ml-1 border-2 rounded-lg'
             >
                 undo
             </button>
@@ -249,7 +255,7 @@ const MenuBar = ({ editor }) => {
                         .redo()
                         .run()
                 }
-                className='text-lg font-bold m-1 border-2 rounded-lg'
+                className='text-sm ml-1 border-2 rounded-lg'
             >
                 redo
             </button>

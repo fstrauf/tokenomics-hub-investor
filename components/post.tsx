@@ -113,26 +113,29 @@ export default function Post({ content, categories, tags }) {
 
     return (
         <>
-            <form className='flex flex-col m-auto'>        
-                <div>
-                    <label for="title">Title</label>
+            <form className='flex flex-col m-auto mt-5'>        
+                <div className='mb-6'>
+                    <label className='block mb-2 text-sm font-medium text-gray-900'>Title</label>
                     <input
                         type="text"
                         id="title"
                         name="title"
                         required
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-dao-red focus:border-dao-red block w-full p-2.5"
                         value={inputFields.title}
                         onChange={e => setInputFields({ ...inputFields, title: e.target.value })}
                     />
                 </div>
-                <div>
-                    <label for="slug">Slug</label>
+                <div className='mb-6'>
+                    <label className='block mb-2 text-sm font-medium text-gray-900'>
+                        Slug</label>
                     <input type="text" id="slug" name="slug"
                         value={inputFields.slug}
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-dao-red focus:border-dao-red block w-full p-2.5"
                         onChange={e => setInputFields({ ...inputFields, slug: e.target.value })} />
                 </div>
-                <div>
-                    <label for="shortDescription">Short Description</label>
+                <div className='mb-6'>
+                    <label className='block mb-2 text-sm font-medium text-gray-900'>Short Description</label>
                     <textarea rows="4"
                         class="block p-2.5 w-full text-xs text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                         name='shortDescription'
@@ -140,11 +143,11 @@ export default function Post({ content, categories, tags }) {
                         onChange={e => setInputFields({ ...inputFields, shortDescription: e.target.value })}
                     />
                 </div>
-                <div>
-                    <label for="category">Categories</label>
+                <div className='mb-6'>
+                    <label className='block mb-2 text-sm font-medium text-gray-900'>Categories</label>
                     <Listbox value={selectedCats} onChange={setSelectedCats} multiple>
                         <div className="relative mt-1">
-                            <Listbox.Button className="relative w-full m-2 cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
+                            <Listbox.Button className="relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
                                 {selectedCats.map((category) => category.title).join(', ')}
                             </Listbox.Button>
                             <Listbox.Options className="z-50 absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
@@ -164,11 +167,11 @@ export default function Post({ content, categories, tags }) {
                         </div>
                     </Listbox>
                 </div>
-                <div>
-                    <label for="tags">Tags</label>
+                <div className='mb-6'>
+                    <label className='block mb-2 text-sm font-medium text-gray-900'>Tags</label>
                     <Listbox value={selectedTags} onChange={setSelectedTags} multiple>
                         <div className="relative mt-1">
-                            <Listbox.Button className="relative w-full m-2 cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
+                            <Listbox.Button className="relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
                                 {selectedTags.map((tag) => tag.title).join(', ')}
                             </Listbox.Button>
                             <Listbox.Options className="z-50 absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
@@ -188,12 +191,10 @@ export default function Post({ content, categories, tags }) {
                         </div>
                     </Listbox>
                 </div>
-                <div>
-                    <label for="timelines">Timeline</label>
-                    <button className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-1.5 mr-2 mb-2"
-                        onClick={event => addTimeLine(event)}>Add More..</button>
+                <div className='mb-6'>
+                    <label className='block mb-2 text-sm font-medium text-gray-900'>Timeline</label>                                        
                     <div className="overflow-x-auto relative">
-                        <table className="w-full text-sm text-left text-gray-500 mb-5">
+                        <table className="w-full text-sm text-left text-gray-500 mb-1">
                             <thead className="text-xs text-gray-700 uppercase bg-gray-50">
                                 <tr>
                                     <th scope="col" className="py-3 px-6">
@@ -262,90 +263,104 @@ export default function Post({ content, categories, tags }) {
                             </tbody>
                         </table>
                     </div>
+                    <button className="rounded-md bg-dao-red px-2 py-1 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+                        onClick={event => addTimeLine(event)}>Add More..</button>
                 </div>
-                <div>
-                    <label for="publishedAt">Published At</label>
+                <div className='mb-6'>
+                    <label className='block mb-2 text-sm font-medium text-gray-900'>Published At</label>
                     <input type='date' id="publishedAt" name="publishedAt"
                         value={inputFields.publishedAt}
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-dao-red focus:border-dao-red block w-full p-2.5"
                         placeholder={inputFields.publishedAt}
                         onChange={e => setInputFields({ ...inputFields, publishedAt: e.target.value })} />
                 </div>
-                <div>
-                    <label for="mainImage">Main Image (link to svg)</label>
+                <div className='mb-6'>
+                    <label className='block mb-2 text-sm font-medium text-gray-900'>Main Image (link to svg)</label>
                     <input
                         id="mainImage" name="mainImage"
                         type="file"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-dao-red focus:border-dao-red block w-full p-2.5"
                         accept="image/png, image/jpeg, image/svg+xml"
                         onChange={e => setMainImageUrl(e)}
                     />
                 </div>
-                <div>
-                    <label for="tokenUtility">Token Utility</label>
+                <div className='mb-6'>
+                    <label className='block mb-2 text-sm font-medium text-gray-900'>Token Utility</label>
                     <textarea rows="3"
                         class="block p-2.5 w-full text-xs text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                         name='tokenUtility'
                         value={inputFields.tokenUtility}
                         onChange={e => setInputFields({ ...inputFields, tokenUtility: e.target.value })}
                     />
+                    <label className='block mb-2 text-sm font-medium text-gray-900'>Strength</label>
                     <input type='number' id="tokenUtilityStrength" name="tokenUtilityStrength"
                         value={inputFields.tokenUtilityStrength}
+                        className="bg-gray-50 w-16 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-dao-red focus:border-dao-red block p-2.5"
                         onChange={e => setInputFields({ ...inputFields, tokenUtilityStrength: Number(e.target.value) })} />
                 </div>
-                <div>
-                    <label for="businessModel">Business Model</label>
+                <div className='mb-6'>
+                    <label className='block mb-2 text-sm font-medium text-gray-900'>Business Model</label>
                     <textarea rows="3"
                         class="block p-2.5 w-full text-xs text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                         name='businessModel'
                         value={inputFields.businessModel}
                         onChange={e => setInputFields({ ...inputFields, businessModel: e.target.value })}
                     />
+                    <label className='block mb-2 text-sm font-medium text-gray-900'>Strength</label>
                     <input type='number' id="businessModel" name="businessModel"
                         value={inputFields.businessModelStrength}
+                        className="bg-gray-50 w-16 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-dao-red focus:border-dao-red block p-2.5"
                         onChange={e => setInputFields({ ...inputFields, businessModelStrength: Number(e.target.value) })} />
                 </div>
-                <div>
-                    <label for="valueCreation">Value Creation</label>
+                <div className='mb-6'>
+                    <label className='block mb-2 text-sm font-medium text-gray-900'>Value Creation</label>
                     <textarea rows="3"
                         class="block p-2.5 w-full text-xs text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                         name='valueCreation'
                         value={inputFields.valueCreation}
                         onChange={e => setInputFields({ ...inputFields, valueCreation: e.target.value })}
                     />
+                    <label className='block mb-2 text-sm font-medium text-gray-900'>Strength</label>
                     <input type='number' id="valueCreation" name="valueCreation"
                         value={inputFields.valueCreationStrength}
+                        className="bg-gray-50 w-16 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-dao-red focus:border-dao-red block p-2.5"
                         onChange={e => setInputFields({ ...inputFields, valueCreationStrength: Number(e.target.value) })} />
                 </div>
-                <div>
-                    <label for="valueCapture">Value Capture</label>
+                <div className='mb-6'>
+                    <label className='block mb-2 text-sm font-medium text-gray-900'>Value Capture</label>
                     <textarea rows="3"
                         class="block p-2.5 w-full text-xs text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                         name='valueCapture'
                         value={inputFields.valueCapture}
                         onChange={e => setInputFields({ ...inputFields, valueCapture: e.target.value })}
                     />
+                    <label className='block mb-2 text-sm font-medium text-gray-900'>Strength</label>
                     <input type='number' id="valueCapture" name="valueCapture"
                         value={inputFields.valueCaptureStrength}
+                        className="bg-gray-50 w-16 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-dao-red focus:border-dao-red block p-2.5"
                         onChange={e => setInputFields({ ...inputFields, valueCaptureStrength: Number(e.target.value) })} />
                 </div>
-                <div>
-                    <label for="demandDrivers">Demand Drivers</label>
+                <div className='mb-6'>
+                    <label className='block mb-2 text-sm font-medium text-gray-900'>Demand Drivers</label>
                     <textarea rows="3"
                         class="block p-2.5 w-full text-xs text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                         name='demandDrivers'
                         value={inputFields.demandDrivers}
                         onChange={e => setInputFields({ ...inputFields, demandDrivers: e.target.value })}
                     />
+                    <label className='block mb-2 text-sm font-medium text-gray-900'>Strength</label>
                     <input type='number' id="demandDrivers" name="demandDrivers"
                         value={inputFields.demandDriversStrength}
+                        className="bg-gray-50 w-16 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-dao-red focus:border-dao-red block p-2.5"
                         onChange={e => setInputFields({ ...inputFields, demandDriversStrength: Number(e.target.value) })} />
                 </div>
-                <p>total Strenght: {tokenStrength}</p>
-                <div>
-                    <label>Our Take</label>
+                <p className='block mb-2 text-sm font-medium text-gray-900'>total Strenght: {tokenStrength}</p>
+                <div className='mb-6'>
+                    <label className='block mb-2 text-sm font-medium text-gray-900'>Our Take</label>
                     <Tiptap setContent={setOurTake} />
                 </div>
-                <div>
-                    <label for="threeMonthHorizon">Three Month Horizon</label>
+                <div className='mb-6'>
+                    <label className='block mb-2 text-sm font-medium text-gray-900'>Three Month Horizon</label>
                     <textarea rows="3"
                         class="block p-2.5 w-full text-xs text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                         name='threeMonthHorizon'
@@ -353,8 +368,8 @@ export default function Post({ content, categories, tags }) {
                         onChange={e => setInputFields({ ...inputFields, threeMonthHorizon: e.target.value })}
                     />
                 </div>
-                <div>
-                    <label for="oneYearHorizon">One Year Horizon</label>
+                <div className='mb-6'>
+                    <label className='block mb-2 text-sm font-medium text-gray-900'>One Year Horizon</label>
                     <textarea rows="3"
                         class="block p-2.5 w-full text-xs text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                         name='oneYearHorizon'
@@ -362,8 +377,8 @@ export default function Post({ content, categories, tags }) {
                         onChange={e => setInputFields({ ...inputFields, oneYearHorizon: e.target.value })}
                     />
                 </div>
-                <div>
-                    <label for="upside">Upside</label>
+                <div className='mb-6'>
+                    <label className='block mb-2 text-sm font-medium text-gray-900'>Upside</label>
                     <textarea rows="3"
                         class="block p-2.5 w-full text-xs text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                         name='upside'
@@ -371,8 +386,8 @@ export default function Post({ content, categories, tags }) {
                         onChange={e => setInputFields({ ...inputFields, upside: e.target.value })}
                     />
                 </div>
-                <div>
-                    <label for="downside">Downside</label>
+                <div className='mb-6'>
+                    <label className='block mb-2 text-sm font-medium text-gray-900'>Downside</label>
                     <textarea rows="3"
                         class="block p-2.5 w-full text-xs text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                         name='downside'
@@ -380,8 +395,8 @@ export default function Post({ content, categories, tags }) {
                         onChange={e => setInputFields({ ...inputFields, downside: e.target.value })}
                     />
                 </div>
-                <div>
-                    <label for="decisionHorizon">Decision Horizon</label>
+                <div className='mb-6'>
+                    <label className='block mb-2 text-sm font-medium text-gray-900'>Decision Horizon</label>
                     <textarea rows="3"
                         class="block p-2.5 w-full text-xs text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                         name='decisionHorizon'
@@ -389,8 +404,8 @@ export default function Post({ content, categories, tags }) {
                         onChange={e => setInputFields({ ...inputFields, decisionHorizon: e.target.value })}
                     />
                 </div>
-                <div>
-                    <label for="metrics">Metrics</label>
+                <div className='mb-6'>
+                    <label className='block mb-2 text-sm font-medium text-gray-900'>Metrics</label>
                     <textarea rows="3"
                         class="block p-2.5 w-full text-xs text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                         name='metrics'
@@ -398,28 +413,28 @@ export default function Post({ content, categories, tags }) {
                         onChange={e => setInputFields({ ...inputFields, metrics: e.target.value })}
                     />
                 </div>
-                <div>
-                    <label>Deep Dive</label>
+                <div className='mb-6'>
+                    <label className='block mb-2 text-sm font-medium text-gray-900'>Deep Dive</label>
                     <Tiptap setContent={setDeepDive} />
                 </div>
-                <div>
-                    <label for="diagram">Diagram</label>
+                <div className='mb-6'>
+                    <label className='block mb-2 text-sm font-medium text-gray-900'>Diagram</label>
                     <input type='url' id="diagram" name="diagram"
                         value={inputFields.diagram}
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-dao-red focus:border-dao-red block w-full p-2.5"
                         onChange={e => setInputFields({ ...inputFields, diagram: e.target.value })} />
                 </div>
-                <div>
-                    <label for="resources">Resources</label>                
-                    <button className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-1.5 mr-2 mb-2"
-                        onClick={event => addResource(event)}>Add More..</button>
+                <div className='mb-6'>
+                    <label className='block mb-2 text-sm font-medium text-gray-900'>Resources</label>                
+                    
                     <div className="overflow-x-auto relative">
-                        <table className="w-full text-sm text-left text-gray-500 mb-5">
+                        <table className="w-full text-sm text-left text-gray-500 mb-1">
                             <thead className="text-xs text-gray-700 uppercase bg-gray-50">
                                 <tr>
-                                    <th scope="col" className="py-3 px-6">
+                                    <th scope="col" className="py-3 px-6 w-1/6">
                                         Title
                                     </th>
-                                    <th scope="col" className="py-3 px-6">
+                                    <th scope="col" className="py-3 px-6 w-3/6">
                                         Url
                                     </th>
                                     <th scope="col" className="py-3 px-6">
@@ -450,7 +465,7 @@ export default function Post({ content, categories, tags }) {
                                                     placeholder='Url'
                                                     type='url'
                                                     value={input.url}
-                                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-1.5"
+                                                    className="bg-gray-50 w-full border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-1.5"
                                                     onChange={event => handleResourceChange(index, event)}
                                                 />
                                             </td>
@@ -484,8 +499,11 @@ export default function Post({ content, categories, tags }) {
                             </tbody>
                         </table>
                     </div>
+                    <button className="rounded-md bg-dao-red px-2 py-1 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+                        onClick={event => addResource(event)}>Add More..</button>
                 </div>
-                <button type="submit" onClick={e => submitData(e)}>Submit</button>
+                <button className="rounded-md mt-5 mb-5 bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+                type="submit" onClick={e => submitData(e)}>Submit</button>
             </form>
         </>
     )
