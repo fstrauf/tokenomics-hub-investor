@@ -7,7 +7,7 @@
  **/
 const nextConfig = {
   images: {
-    domains: ['cdn.sanity.io', 'source.unsplash.com'],
+    domains: ['cdn.sanity.io', 'source.unsplash.com', 'tokenomicsdao.xyz'],
   },
   typescript: {
     // !! WARN !!
