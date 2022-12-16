@@ -15,7 +15,7 @@ export default async function handler(req, res) {
       },
     });
   } catch (err) {
-    res.status(500).json({ error: 'failed to set up storage' })
+    return res.status(500).json({ error: 'failed to set up storage' })
   }
 
   var bucket
@@ -23,7 +23,7 @@ export default async function handler(req, res) {
     console.log("bucket")
     bucket = storage.bucket(process.env.BUCKET_NAME);
   } catch (err) {
-    res.status(500).json({ error: 'failed to get bucket' })
+    return res.status(500).json({ error: 'failed to get bucket' })
   }
 
   var file
@@ -31,7 +31,7 @@ export default async function handler(req, res) {
     console.log("file")
     file = bucket.file(req.query.target);
   } catch (err) {
-    res.status(500).json({ error: 'failed to set file' })
+    return res.status(500).json({ error: 'failed to set file' })
   }
   
   // const file = bucket.file(req.query.target);
@@ -40,8 +40,13 @@ export default async function handler(req, res) {
     fields: { 'x-goog-meta-test': 'data' },
   };
   
-
-  const [response] = await file.generateSignedPostPolicyV4(options);
-  res.status(200).json(response);
-  res.status(500).send({ error: 'failed to upload data' })
+  try{
+    console.log('upload')
+    const [response] = await file.generateSignedPostPolicyV4(options);
+    return res.status(200).json(response);
+  } catch (err) {
+    return res.status(500).send({ error: 'failed to upload data' })
+  }
+  
+  
 }
