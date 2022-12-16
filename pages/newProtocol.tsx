@@ -1,5 +1,5 @@
 import Layout from '../components/layout'
-import Intro from '../components/intro'
+import Header from '../components/header'
 import React from 'react';
 import prisma from '../lib/prisma'
 import Post from '../components/post';
@@ -28,7 +28,7 @@ export default function NewProtocol({ categories, tags, user }) {
       { title: 'TGE', date: today, description: 'token generation event' }
     ],
     publishedAt: today,
-    mainImage: '',
+    mainImageUrl: '',
     tokenUtility: 'Governance',
     tokenUtilityStrength: 50,
     businessModel: 'Consulting, Education, Content',
@@ -46,7 +46,7 @@ export default function NewProtocol({ categories, tags, user }) {
     downside: 'tokens are a scam',
     decisionHorizon: 'very long term',
     metrics: 'revnue, profit, growth',
-    diagram: 'https://viewer.diagrams.net/?tags=%7B%7D&highlight=0000ff&edit=_blank&layers=1&nav=1&title=tokenomics_BanklessDAO.drawio#Uhttps%3A%2F%2Fdrive.google.com%2Fuc%3Fid%3D1w7W4n-NS7DPGq1e-2KaErjTEhjQMQFCs%26export%3Ddownload',
+    diagramUrl: 'https://viewer.diagrams.net/?tags=%7B%7D&highlight=0000ff&edit=_blank&layers=1&nav=1&title=tokenomics_BanklessDAO.drawio#Uhttps%3A%2F%2Fdrive.google.com%2Fuc%3Fid%3D1w7W4n-NS7DPGq1e-2KaErjTEhjQMQFCs%26export%3Ddownload',
     ProtocolResources: [
       { title: 'website', url: 'https://www.tokenomicshub.xyz/', internal: true }
     ],
@@ -56,7 +56,7 @@ export default function NewProtocol({ categories, tags, user }) {
   return (
     <>
       <Layout>
-        <Intro />
+        <Header />
         <h1 className="text-3xl font-bold">
           Submit a draft for review
         </h1>

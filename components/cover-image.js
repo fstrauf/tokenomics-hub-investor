@@ -2,7 +2,7 @@
 import Link from 'next/link'
 // import { urlForImage } from '../lib/sanity'
 
-export default function CoverImage({ title, url, imageObject, slug }) {
+export default function CoverImage({ title, url, slug }) {
   const image = (
     <img
       // width='auto'

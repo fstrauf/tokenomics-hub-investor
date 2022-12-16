@@ -3,10 +3,16 @@ import { uploadPhoto } from '../lib/fileUpload';
 import Tiptap from './TipTap';
 import { Listbox } from '@headlessui/react'
 import Router from 'next/router';
+// import CoverImage from './cover-image';
+import { useForm } from "react-hook-form";
 
 export default function Post({ content, categories, tags }) {
 
+    const { handleSubmit, formState } = useForm();
+
     const today = new Date().toLocaleDateString('en-CA')
+
+    console.log(content?.ourTake)
 
     const [ourTake, setOurTake] = useState(JSON.parse(content?.ourTake || '{}') ?? {});
     const [deepDive, setDeepDive] = useState(JSON.parse(content?.breakdown || '{}') ?? {});
@@ -17,12 +23,12 @@ export default function Post({ content, categories, tags }) {
     const tokenStrength = (inputFields.businessModelStrength + inputFields.demandDriversStrength + inputFields.valueCaptureStrength + inputFields.valueCreationStrength + inputFields.tokenUtilityStrength) / 5
 
     const submitData = async (e: React.SyntheticEvent) => {
-        e.preventDefault();
+        // e.preventDefault();
 
         const body = { ourTake, deepDive, inputFields, selectedCats, selectedTags, tokenStrength };
 
-        if (inputFields.id===undefined) {
-            try {                
+        if (inputFields.id === undefined) {
+            try {
                 const response = await fetch('/api/post/newProtocol', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -40,7 +46,7 @@ export default function Post({ content, categories, tags }) {
                 console.error(error);
             }
         } else {
-            try {                
+            try {
                 const response = await fetch('/api/post/updateProtocol', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -108,12 +114,12 @@ export default function Post({ content, categories, tags }) {
     const setMainImageUrl = async (e) => {
         const url = await uploadPhoto(e)
         console.log(url)
-        setInputFields({ ...inputFields, mainImage: url })
+        setInputFields({ ...inputFields, mainImageUrl: url })
     }
 
     return (
         <>
-            <form className='flex flex-col m-auto mt-5'>        
+            <form className='flex flex-col m-auto mt-5'>
                 <div className='mb-6'>
                     <label className='block mb-2 text-sm font-medium text-gray-900'>Title</label>
                     <input
@@ -192,7 +198,7 @@ export default function Post({ content, categories, tags }) {
                     </Listbox>
                 </div>
                 <div className='mb-6'>
-                    <label className='block mb-2 text-sm font-medium text-gray-900'>Timeline</label>                                        
+                    <label className='block mb-2 text-sm font-medium text-gray-900'>Timeline</label>
                     <div className="overflow-x-auto relative">
                         <table className="w-full text-sm text-left text-gray-500 mb-1">
                             <thead className="text-xs text-gray-700 uppercase bg-gray-50">
@@ -230,7 +236,7 @@ export default function Post({ content, categories, tags }) {
                                                     name='date'
                                                     // placeholder=''
                                                     type='date'
-                                                    value={input.date}
+                                                    value={new Date(input.date).toLocaleDateString('en-CA')}
                                                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-1.5"
                                                     onChange={event => handleTimeLineChange(index, event)}
                                                 />
@@ -269,20 +275,27 @@ export default function Post({ content, categories, tags }) {
                 <div className='mb-6'>
                     <label className='block mb-2 text-sm font-medium text-gray-900'>Published At</label>
                     <input type='date' id="publishedAt" name="publishedAt"
-                        value={inputFields.publishedAt}
+                        value={new Date(inputFields.publishedAt).toLocaleDateString('en-CA')}
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-dao-red focus:border-dao-red block w-full p-2.5"
                         placeholder={inputFields.publishedAt}
                         onChange={e => setInputFields({ ...inputFields, publishedAt: e.target.value })} />
                 </div>
                 <div className='mb-6'>
                     <label className='block mb-2 text-sm font-medium text-gray-900'>Main Image (link to svg)</label>
+                    <div className='flex'>
                     <input
-                        id="mainImage" name="mainImage"
+                        id="mainImageUrl" name="mainImageUrl"
                         type="file"
-                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-dao-red focus:border-dao-red block w-full p-2.5"
+                        className="bg-gray-50 border w-72 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-dao-red focus:border-dao-red block p-2.5"
                         accept="image/png, image/jpeg, image/svg+xml"
                         onChange={e => setMainImageUrl(e)}
                     />
+                    <img
+                        alt={`Cover Image for logo`}
+                        className='rounded-lg h-10 m-auto'
+                        src={inputFields.mainImageUrl}
+                    />
+                    </div>
                 </div>
                 <div className='mb-6'>
                     <label className='block mb-2 text-sm font-medium text-gray-900'>Token Utility</label>
@@ -357,7 +370,7 @@ export default function Post({ content, categories, tags }) {
                 <p className='block mb-2 text-sm font-medium text-gray-900'>total Strenght: {tokenStrength}</p>
                 <div className='mb-6'>
                     <label className='block mb-2 text-sm font-medium text-gray-900'>Our Take</label>
-                    <Tiptap setContent={setOurTake} />
+                    <Tiptap content={ourTake} setContent={setOurTake} />
                 </div>
                 <div className='mb-6'>
                     <label className='block mb-2 text-sm font-medium text-gray-900'>Three Month Horizon</label>
@@ -415,18 +428,18 @@ export default function Post({ content, categories, tags }) {
                 </div>
                 <div className='mb-6'>
                     <label className='block mb-2 text-sm font-medium text-gray-900'>Deep Dive</label>
-                    <Tiptap setContent={setDeepDive} />
+                    <Tiptap content={deepDive} setContent={setDeepDive} />
                 </div>
                 <div className='mb-6'>
                     <label className='block mb-2 text-sm font-medium text-gray-900'>Diagram</label>
-                    <input type='url' id="diagram" name="diagram"
-                        value={inputFields.diagram}
+                    <input type='url' id="diagramUrl" name="diagramUrl"
+                        value={inputFields.diagramUrl}
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-dao-red focus:border-dao-red block w-full p-2.5"
-                        onChange={e => setInputFields({ ...inputFields, diagram: e.target.value })} />
+                        onChange={e => setInputFields({ ...inputFields, diagramUrl: e.target.value })} />
                 </div>
                 <div className='mb-6'>
-                    <label className='block mb-2 text-sm font-medium text-gray-900'>Resources</label>                
-                    
+                    <label className='block mb-2 text-sm font-medium text-gray-900'>Resources</label>
+
                     <div className="overflow-x-auto relative">
                         <table className="w-full text-sm text-left text-gray-500 mb-1">
                             <thead className="text-xs text-gray-700 uppercase bg-gray-50">
@@ -502,8 +515,9 @@ export default function Post({ content, categories, tags }) {
                     <button className="rounded-md bg-dao-red px-2 py-1 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
                         onClick={event => addResource(event)}>Add More..</button>
                 </div>
-                <button className="rounded-md mt-5 mb-5 bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
-                type="submit" onClick={e => submitData(e)}>Submit</button>
+                <button className="disabled:opacity-40 rounded-md mt-5 mb-5 bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+                    type="submit" onClick={handleSubmit(e => submitData(e))}
+                    disabled={formState.isSubmitting}>Submit</button>
             </form>
         </>
     )

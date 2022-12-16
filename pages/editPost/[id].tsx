@@ -5,6 +5,7 @@ import prisma from "../../lib/prisma";
 import React from 'react'
 import Post from "../../components/post";
 import Intro from "../../components/intro";
+import Header from '../../components/header'
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 
@@ -43,14 +44,16 @@ const EditPost: React.FC<PostProps> = (props) => {
 
   let title = props.post.title;
   if (!props.post.published) {
-    title = `Editing ${title} . `;
+    title = `Editing Draft ${title} . `;
   }
+
+  console.log(props.post)
 
   return (
     <Layout>
-      <Intro />
+      <Header />
       <div>
-        <h2>{title}</h2>
+        <h2 className="text-4xl">{title} </h2>
         <p>By {props?.post.author?.name || "Unknown author"}</p>
         <Post content={props.post} categories={props.categories} tags={props.tags}/>
       </div>

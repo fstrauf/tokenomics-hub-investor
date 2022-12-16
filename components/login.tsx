@@ -80,11 +80,23 @@ const Login: FC<{ message: Message }> = ({ message }) => {
                   <Menu.Item>
                     {({ active }) => (
                       <Link className={`${active ? 'bg-dao-green text-white' : 'text-gray-900'} group flex w-full items-center rounded-md px-2 py-2 text-sm disabled:opacity-40 ${formState.isSubmitting ? 'bg-red-200' : ''}`}
-                        href="/drafts"                          >
+                        href="/allDrafts"                          >
                         <button 
                         // disabled={!session?.user?.isAdmin}
                         >
                           All Drafts
+                        </button>
+                      </Link>
+                    )}
+                  </Menu.Item>
+                  <Menu.Item>
+                    {({ active }) => (
+                      <Link className={`${active ? 'bg-dao-green text-white' : 'text-gray-900'} group flex w-full items-center rounded-md px-2 py-2 text-sm disabled:opacity-40 ${formState.isSubmitting ? 'bg-red-200' : ''}`}
+                        href="/myDrafts"                          >
+                        <button 
+                        // disabled={!session?.user?.isAdmin}
+                        >
+                          My Drafts
                         </button>
                       </Link>
                     )}

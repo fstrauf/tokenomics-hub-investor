@@ -12,7 +12,12 @@ type Props = {
 
 const Tiptap: React.FC<Props> = (props) => {
 
-    const content = props?.content ?? '{}'
+    var content = props?.content ?? {}
+
+    if(typeof content === 'string')
+    {
+        content = JSON.parse(content)
+    }
 
     const editor = useEditor({
         extensions: [
@@ -25,7 +30,7 @@ const Tiptap: React.FC<Props> = (props) => {
                 class: 'prose prose-sm sm:prose lg:prose-lg xl:prose-2xl m-5 focus:outline-none',
             },
         },
-        content: JSON.parse(content),
+        content: content,
         onUpdate({ editor }) {
             // The content has changed.
             props.setContent(editor.getJSON())

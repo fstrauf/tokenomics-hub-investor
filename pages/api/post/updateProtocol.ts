@@ -4,6 +4,8 @@ import prisma from '../../../lib/prisma';
 export default async function handle(req, res) {
   const { ourTake, deepDive, inputFields, selectedCats, selectedTags, tokenStrength } = req.body;
 
+  // console.log(inputFields)
+
   const timeLine = inputFields?.protocolTimeLine?.map(tl => {
     return {
       // ...tl,
@@ -45,9 +47,9 @@ export default async function handle(req, res) {
       shortDescription: inputFields.shortDescription,
       breakdown: JSON.stringify(deepDive),
       ourTake: JSON.stringify(ourTake),
-      published: false,
+      // published: false,
       publishedAt: new Date(inputFields.publishedAt),
-      mainImageUrl: inputFields.mainImage,
+      mainImageUrl: inputFields.mainImageUrl,
       tokenUtility: inputFields.tokenUtility,
       tokenUtilityStrength: inputFields.tokenUtilityStrength,
       businessModel: inputFields.businessModel,

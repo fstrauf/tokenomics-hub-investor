@@ -2,11 +2,12 @@
 // import { PortableText } from '@portabletext/react'
 // import { getImageDimensions } from '@sanity/asset-utils'
 // import { urlForImage } from '../lib/sanity'
-import React, { useMemo } from 'react'
-import { generateHTML } from '@tiptap/html'
-import StarterKit from '@tiptap/starter-kit'
-import Image from '@tiptap/extension-image'
-import parse from 'html-react-parser';
+import React from 'react'
+// import { generateHTML } from '@tiptap/html'
+// import StarterKit from '@tiptap/starter-kit'
+// import Image from '@tiptap/extension-image'
+// import parse from 'html-react-parser';
+import { getJSXReady } from '../lib/helper'
 
 // Barebones lazy-loaded image component
 // const SampleImageComponent = ({ value, isInline }) => {
@@ -43,23 +44,30 @@ import parse from 'html-react-parser';
 
 export default function OurTake({ content }) {
 
-  const jsonContent = JSON.parse(content?.ourTake)
+  // console.log('ourtake ' + content?.ourTake)
+  // console.log(getJSXReady(content?.ourTake))
 
-  console.log(jsonContent)
-  var jsxReady = ''
-  if (!typeof jsonContent === null) {
-    if (Object.keys(jsonContent)?.length > 0) {
-      const output = useMemo(() => {
-        return generateHTML(jsonContent, [
-          StarterKit,
-          Image,
-          // other extensions …
-        ])
-      }, [jsonContent])
+  // // getJSXReady(content?.OurTake)
+  // const jsonContent = JSON.parse(content?.ourTake)
 
-      jsxReady = parse(output)
-    }
-  }
+  // var jsxReady = ''
+  // try {
+  //   if (typeof jsonContent !== null) {
+  //     if (Object.keys(jsonContent)?.length > 0) {
+  //       const output = useMemo(() => {
+  //         return generateHTML(jsonContent, [
+  //           StarterKit,
+  //           Image,
+  //           // other extensions …
+  //         ])
+  //       }, [jsonContent])
+  //       jsxReady = parse(output)
+  //     }
+  //   }
+  // } catch (error) {
+
+  // }
+
 
 
   return (
@@ -68,7 +76,8 @@ export default function OurTake({ content }) {
       <div className='border-2 rounded-lg bg-white'>
         <div className='ml-2'>
           <article class="prose md:prose-lg lg:prose-xl">
-            {jsxReady}
+            {getJSXReady(content?.ourTake)}
+            {/* {jsxReady} */}
           </article>
           {/* <div className="mx-auto max-w-2xl" className={markdownStyles.markdown}>
             <PortableText value={content}
