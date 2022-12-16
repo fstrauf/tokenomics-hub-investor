@@ -2,25 +2,41 @@ import { Storage } from '@google-cloud/storage';
 
 export default async function handler(req, res) {
 
-  const storage = new Storage({
-    projectId: process.env.PROJECT_ID,
-    credentials: {
-      client_email: process.env.CLIENT_EMAIL,
-      private_key: process.env.PRIVATE_KEY,
-    },
-  });
+  var storage
+  try {
+    storage = new Storage({
+      projectId: process.env.PROJECT_ID,
+      credentials: {
+        client_email: process.env.CLIENT_EMAIL,
+        private_key: process.env.PRIVATE_KEY,
+      },
+    });
+  } catch (err) {
+    res.status(500).json({ error: 'failed to set up storage' })
+  }
 
-  console.log(storage)
+  var bucket
+  try {
+    bucket = storage.bucket(process.env.BUCKET_NAME);
+  } catch (err) {
+    res.status(500).json({ error: 'failed to get bucket' })
+  }
 
-  const bucket = storage.bucket(process.env.BUCKET_NAME);
-  console.log(bucket)
-  const file = bucket.file(req.query.target);
+  var file
+  try {
+    file = bucket.file(req.query.target);
+  } catch (err) {
+    res.status(500).json({ error: 'failed to set file' })
+  }
+  
+  // const file = bucket.file(req.query.target);
   const options = {
     expires: Date.now() + 1 * 60 * 1000, //  1 minute,
     fields: { 'x-goog-meta-test': 'data' },
   };
-  console.log(options)
+  
 
   const [response] = await file.generateSignedPostPolicyV4(options);
   res.status(200).json(response);
+  res.status(500).send({ error: 'failed to upload data' })
 }
