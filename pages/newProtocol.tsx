@@ -5,8 +5,21 @@ import prisma from '../lib/prisma'
 import Post from '../components/post';
 import { getSession } from 'next-auth/react';
 import { GetServerSideProps } from 'next';
+import { useSession } from "next-auth/react"
 
 export default function NewProtocol({ categories, tags, user }) {
+  const { data: session, status } = useSession();
+
+  if (!session) {
+    return (
+      <>
+        <Layout>
+          <Header />
+          <h1>You need to log in to create a protocol</h1>
+        </Layout>
+      </>
+    )
+  }
 
   const today = new Date().toLocaleDateString('en-CA')
 
@@ -50,7 +63,7 @@ export default function NewProtocol({ categories, tags, user }) {
     ProtocolResources: [
       { title: 'website', url: 'https://www.tokenomicshub.xyz/', internal: true }
     ],
-    Author: { email: user.email }
+    Author: { email: user?.email }
   }
 
   return (

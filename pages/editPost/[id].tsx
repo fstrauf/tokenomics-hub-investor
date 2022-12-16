@@ -4,11 +4,10 @@ import { useSession } from "next-auth/react";
 import prisma from "../../lib/prisma";
 import React from 'react'
 import Post from "../../components/post";
-import Intro from "../../components/intro";
+// import Intro from "../../components/intro";
 import Header from '../../components/header'
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-
   const post = await prisma.post.findUnique({
     where: {
       id: String(params?.id),
@@ -40,6 +39,17 @@ const EditPost: React.FC<PostProps> = (props) => {
   const { data: session, status } = useSession();
   if (status === "loading") {
     return <div>Authenticating ...</div>;
+  }
+
+  if (!session) {
+    return (
+      <>
+        <Layout>
+          <Header />
+          <h1>You need to log in to create a protocol</h1>
+        </Layout>
+      </>
+    )
   }
 
   let title = props.post.title;

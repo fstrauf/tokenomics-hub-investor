@@ -36,7 +36,6 @@ export default function Post({ post, morePosts, preview }) {
   const [isOpen, setIsOpen] = useState(false)
 
   const handleIsOpen = useCallback((event) => {
-    console.log(event)
     setIsOpen(false);
 
   }, [isOpen]);
@@ -85,7 +84,8 @@ export default function Post({ post, morePosts, preview }) {
                 tokenStrength={post.tokenStrength}
               />
               <button onClick={() => Router.push("/editPost/[id]", `/editPost/${post.id}`)}
-                className="w-32 rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
+                disabled={!(session?.user?.role === 'admin') || !session?.user}
+                className="disabled:opacity-40 w-32 rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
                 Edit
               </button>
               <FeedbackPopup isOpen={isOpen} handleIsOpen={handleIsOpen} />
@@ -159,8 +159,6 @@ export async function getStaticProps({ params, preview = false }) {
       protocolTimeLine: {},
     }
   })
-
-  console.log(data)
 
   return {
     props: {

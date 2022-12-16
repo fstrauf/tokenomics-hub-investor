@@ -6,8 +6,21 @@ import Router from "next/router";
 import Drafts from '../components/drafts';
 import { GetServerSideProps } from 'next';
 import { getSession } from 'next-auth/react';
+import { useSession } from "next-auth/react"
 
-export default function AllDrafts({ posts }) {
+export default function MyDrafts({ posts }) {
+  const { data: session, status } = useSession();
+
+  if (!session) {
+    return (
+      <>
+        <Layout>
+          <Header />
+          <h1>You need to log in to view drafts</h1>
+        </Layout>
+      </>
+    )
+  }
 
   return (
     <>

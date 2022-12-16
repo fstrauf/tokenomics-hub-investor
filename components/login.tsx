@@ -16,14 +16,14 @@ const Login: FC<{ message: Message }> = ({ message }) => {
       <div className='block m-auto'>
         <div className='relative top-0 opacity-100 rounded p-3 m-0 bg-gray-100'>
           {!session && (
-              <span className='align-middle font-bold z-10 left-4 right-24 whitespace-nowrap text-ellipsis overflow-hidden leading-5'>
-                {message}
-              </span>
+            <span className='align-middle font-bold z-10 left-4 right-24 whitespace-nowrap text-ellipsis overflow-hidden leading-5'>
+              {message}
+            </span>
           )}
           {session?.user && (
-              <span className='align-middle mr-2'>
-                <strong className='text-sm'>{session.user.email ?? session.user.name} ({session.user.role})</strong>
-              </span>
+            <span className='align-middle mr-2'>
+              <strong className='text-sm'>{session.user.email ?? session.user.name} ({session.user.role})</strong>
+            </span>
           )}
           <Menu as="div" className="relative inline-block text-left z-60 float-right align-middle">
             <div>
@@ -40,13 +40,14 @@ const Login: FC<{ message: Message }> = ({ message }) => {
               leaveFrom="transform opacity-100 scale-100"
               leaveTo="transform opacity-0 scale-95"
             >
-              <Menu.Items className="z-60 absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+              <Menu.Items className="z-10 absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                 <div className="px-1 py-1 ">
                   <Menu.Item>
                     {({ active }) => (
-                      <Link className={`${active ? 'bg-dao-red text-white' : 'text-gray-900'} group flex w-full items-center rounded-md px-2 py-2 text-sm disabled:opacity-40 ${formState.isSubmitting ? 'bg-red-200' : ''}`}
-                        href="/newProtocol">
-                        <button>
+                      <Link href="/newProtocol" className='no-underline'>
+                        <button
+                          disabled={!session?.user}
+                          className={`${active ? 'bg-dao-red text-white' : 'text-gray-900'} group flex w-full items-center rounded-md px-2 py-2 text-sm disabled:opacity-70`}>
                           New Protocol
                         </button>
                       </Link>
@@ -54,7 +55,7 @@ const Login: FC<{ message: Message }> = ({ message }) => {
                   </Menu.Item>
                   <Menu.Item>
                     {({ active }) => (
-                      <Link href="/allDrafts">
+                      <Link href="/allDrafts" className='no-underline'>
                         <button
                           disabled={!(session?.user?.role === 'admin')}
                           className={`${active ? 'bg-dao-red text-white' : 'text-gray-900'} group flex w-full items-center rounded-md px-2 py-2 text-sm disabled:opacity-70`}
@@ -66,10 +67,10 @@ const Login: FC<{ message: Message }> = ({ message }) => {
                   </Menu.Item>
                   <Menu.Item>
                     {({ active }) => (
-                      <Link className={`${active ? 'bg-dao-red text-white' : 'text-gray-900'} group flex w-full items-center rounded-md px-2 py-2 text-sm disabled:opacity-40 ${formState.isSubmitting ? 'bg-red-200' : ''}`}
-                        href="/myDrafts"                          >
+                      <Link href="/myDrafts" className='no-underline'>
                         <button
-                        // disabled={!session?.user?.isAdmin}
+                          disabled={!session?.user}
+                          className={`${active ? 'bg-dao-red text-white' : 'text-gray-900'} group flex w-full items-center rounded-md px-2 py-2 text-sm disabled:opacity-70`}
                         >
                           My Drafts
                         </button>
@@ -82,7 +83,7 @@ const Login: FC<{ message: Message }> = ({ message }) => {
                     {({ active }) => (
                       <button className={`${active ? 'bg-dao-red text-white' : 'text-gray-900'} group flex w-full items-center rounded-md px-2 py-2 text-sm disabled:opacity-40 ${formState.isSubmitting ? 'bg-red-200' : ''}`}
                         onClick={() => signOut({ callbackUrl: '/' })}>
-                        <a>Log out</a>
+                        Log out
                       </button>
                     )}
                   </Menu.Item>
@@ -90,7 +91,7 @@ const Login: FC<{ message: Message }> = ({ message }) => {
                     {({ active }) => (
                       <button className={`${active ? 'bg-dao-red text-white' : 'text-gray-900'} group flex w-full items-center rounded-md px-2 py-2 text-sm disabled:opacity-40 ${formState.isSubmitting ? 'bg-red-200' : ''}`}
                         onClick={() => signIn()}>
-                        <a>Log In</a>
+                        Log In
                       </button>
                     )}
                   </Menu.Item>
