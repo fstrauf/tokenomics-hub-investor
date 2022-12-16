@@ -28,8 +28,11 @@ import EditPiece from '../../components/edit-piece'
 import { HOME_OG_IMAGE_URL } from '../../lib/constants'
 import prisma from '../../lib/prisma'
 import Router from "next/router";
+import { useForm } from "react-hook-form";
 
 export default function Post({ post, morePosts, preview }) {
+
+  const { handleSubmit, formState } = useForm();
 
   const { data: session, status } = useSession()
 
@@ -83,8 +86,8 @@ export default function Post({ post, morePosts, preview }) {
                 tags={post.tags}
                 tokenStrength={post.tokenStrength}
               />
-              <button onClick={() => Router.push("/editPost/[id]", `/editPost/${post.id}`)}
-                disabled={!(session?.user?.role === 'admin') || !session?.user}
+              <button onClick={handleSubmit(() => Router.push("/editPost/[id]", `/editPost/${post.id}`))}
+                disabled={!(session?.user?.role === 'admin') || !session?.user || formState.isSubmitting}
                 className="disabled:opacity-40 w-32 rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
                 Edit
               </button>

@@ -57,7 +57,7 @@ const Tiptap: React.FC<Props> = (props) => {
                 className='text-sm ml-1 border-2 rounded-lg'
             />
             <div className='border-2 rounded-lg m-4'>
-            <EditorContent className='h-80' editor={editor} />
+            <EditorContent className='' editor={editor} />
             </div>
         </div>
     )
