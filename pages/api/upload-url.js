@@ -5,13 +5,13 @@ export default async function handler(req, res) {
   var storage
   try {
 
-    const { privateKey } = JSON.parse(process.env.PRIVATE_KEY || '{ privateKey: null }')
+    // const { privateKey } = JSON.parse(process.env.PRIVATE_KEY || '{ privateKey: null }')
     storage = new Storage({
       projectId: process.env.PROJECT_ID,
       credentials: {
         client_email: process.env.CLIENT_EMAIL,
-        // private_key: process.env.PRIVATE_KEY,
-        private_key: privateKey,
+        private_key: process.env.PRIVATE_KEY,
+        // private_key: privateKey,
       },
     });
   } catch (err) {
