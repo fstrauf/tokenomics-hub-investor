@@ -57,7 +57,7 @@ export default function NewProtocol({ categories, tags, user }) {
     oneYearHorizon: 'will be over soon',
     upside: 'TDAO creates a ton of revenue',
     downside: 'tokens are a scam',
-    decisionHorizon: 'very long term',
+    horizon: 'very long term',
     metrics: 'revnue, profit, growth',
     diagramUrl: 'https://viewer.diagrams.net/?tags=%7B%7D&highlight=0000ff&edit=_blank&layers=1&nav=1&title=tokenomics_BanklessDAO.drawio#Uhttps%3A%2F%2Fdrive.google.com%2Fuc%3Fid%3D1w7W4n-NS7DPGq1e-2KaErjTEhjQMQFCs%26export%3Ddownload',
     ProtocolResources: [

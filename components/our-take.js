@@ -1,90 +1,15 @@
-// import markdownStyles from './markdown-styles.module.css'
-// import { PortableText } from '@portabletext/react'
-// import { getImageDimensions } from '@sanity/asset-utils'
-// import { urlForImage } from '../lib/sanity'
 import React from 'react'
-// import { generateHTML } from '@tiptap/html'
-// import StarterKit from '@tiptap/starter-kit'
-// import Image from '@tiptap/extension-image'
-// import parse from 'html-react-parser';
 import { getJSXReady } from '../lib/helper'
 
-// Barebones lazy-loaded image component
-// const SampleImageComponent = ({ value, isInline }) => {
-//   const { width, height } = getImageDimensions(value)
-//   return (
-//     <div className=''>
-//       <img
-//         className='m-auto'
-//         src={urlForImage(value).width(isInline ? 100 : 800).url()}
-//         alt={value.alt || ' '}
-//         loading="lazy"
-//         style={{
-//           display: isInline ? 'inline-block' : 'block',
-//           aspectRatio: width / height,
-//         }}
-//       />
-//     </div>
-//   )
-// }
-
-// const components = {
-//   types: {
-//     image: SampleImageComponent,
-//   },
-//   list: {
-//     bullet: ({ children }) => <ul className="list-disc list-inside -indent-6 ml-6">{children}</ul>,
-//     number: ({ children }) => <ol className="list-decimal list-inside">{children}</ol>,
-//   },
-//   listItem: {
-//     bullet: ({ children }) => <li>{children}</li>,
-//   },
-// }
-
-
 export default function OurTake({ content }) {
-
-  // console.log('ourtake ' + content?.ourTake)
-  // console.log(getJSXReady(content?.ourTake))
-
-  // // getJSXReady(content?.OurTake)
-  // const jsonContent = JSON.parse(content?.ourTake)
-
-  // var jsxReady = ''
-  // try {
-  //   if (typeof jsonContent !== null) {
-  //     if (Object.keys(jsonContent)?.length > 0) {
-  //       const output = useMemo(() => {
-  //         return generateHTML(jsonContent, [
-  //           StarterKit,
-  //           Image,
-  //           // other extensions …
-  //         ])
-  //       }, [jsonContent])
-  //       jsxReady = parse(output)
-  //     }
-  //   }
-  // } catch (error) {
-
-  // }
-
-
-
   return (
     <>
       <h1 className='text-xl md:text-2xl lg:text-3xl font-bold mt-10 mb-4 md:mt-20 text-black section-head'>Our Take.</h1>
       <div className='border-2 rounded-lg bg-white'>
         <div className='ml-2'>
-          <article className="prose md:prose-lg lg:prose-xl">
+          <article className="prose prose-sm sm:prose lg:prose-md xl:prose-lg m-5 focus:outline-none">
             {getJSXReady(content?.ourTake)}
-            {/* {jsxReady} */}
           </article>
-          {/* <div className="mx-auto max-w-2xl" className={markdownStyles.markdown}>
-            <PortableText value={content}
-              components={components}
-            />
-          </div> */}
-          {/* {investmentTake ? ( */}
           <table className="text-sm text-left text-gray-500 dark:text-gray-400 bg-gray-50 m-2">
             <caption className='section-head'>Investment Take</caption>
             <tbody>

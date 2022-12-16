@@ -27,7 +27,7 @@ const Tiptap: React.FC<Props> = (props) => {
         ],
         editorProps: {
             attributes: {
-                class: 'prose prose-sm sm:prose lg:prose-lg xl:prose-2xl m-5 focus:outline-none',
+                class: 'prose prose-sm sm:prose lg:prose-md xl:prose-lg m-5 focus:outline-none',
             },
         },
         content: content,

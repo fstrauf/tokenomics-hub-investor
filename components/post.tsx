@@ -12,7 +12,7 @@ export default function Post({ content, categories, tags }) {
 
     const today = new Date().toLocaleDateString('en-CA')
 
-    console.log(content?.ourTake)
+    // console.log(content?.ourTake)
 
     const [ourTake, setOurTake] = useState(JSON.parse(content?.ourTake || '{}') ?? {});
     const [deepDive, setDeepDive] = useState(JSON.parse(content?.breakdown || '{}') ?? {});
@@ -113,7 +113,7 @@ export default function Post({ content, categories, tags }) {
 
     const setMainImageUrl = async (e) => {
         const url = await uploadPhoto(e)
-        console.log(url)
+        // console.log(url)
         setInputFields({ ...inputFields, mainImageUrl: url })
     }
 
@@ -412,9 +412,9 @@ export default function Post({ content, categories, tags }) {
                     <label className='block mb-2 text-sm font-medium text-gray-900'>Decision Horizon</label>
                     <textarea rows="3"
                         className="block p-2.5 w-full text-xs text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
-                        name='decisionHorizon'
-                        value={inputFields.decisionHorizon}
-                        onChange={e => setInputFields({ ...inputFields, decisionHorizon: e.target.value })}
+                        name='horizon'
+                        value={inputFields.horizon}
+                        onChange={e => setInputFields({ ...inputFields, horizon: e.target.value })}
                     />
                 </div>
                 <div className='mb-6'>

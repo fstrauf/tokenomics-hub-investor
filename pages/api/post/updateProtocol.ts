@@ -65,7 +65,7 @@ export default async function handle(req, res) {
       oneYearHorizon: inputFields.oneYearHorizon,
       upside: inputFields.upside,
       downside: inputFields.downside,
-      horizon: inputFields.decisionHorizon,
+      horizon: inputFields.horizon,
       metrics: inputFields.metrics,
       diagramUrl: inputFields.diagramUrl,
       // author: {
