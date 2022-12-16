@@ -3,18 +3,31 @@ import Header from '../components/header'
 import React from 'react';
 import prisma from '../lib/prisma'
 import Drafts from '../components/drafts';
+import { useSession } from "next-auth/react"
 
 export default function AllDrafts({ posts }) {
+  const { data: session, status } = useSession();
 
-  return (
-    <>
+  if (session && session.user.role === "admin") {
+    return (
+      <>
+        <Layout>
+          <Header />
+          <h1 className='font-bold text-2xl mb-5'>All Unpublished Drafts</h1>
+          <Drafts posts={posts} />
+        </Layout>
+      </>
+    )
+  } else {
+    return (
+      <>
       <Layout>
         <Header />
-        <h1 className='font-bold text-2xl mb-5'>All Unpublished Drafts</h1>
-        <Drafts posts={posts} />       
+        <h1>You are not authorized to view this page!</h1>
       </Layout>
     </>
   )
+  }
 }
 
 export async function getStaticProps() {

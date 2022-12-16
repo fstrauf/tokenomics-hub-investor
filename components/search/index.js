@@ -26,7 +26,7 @@ export default function Search({ isPost }) {
                     indexName={process.env.NEXT_PUBLIC_ALGOLIA_INDEX}
                 >
 
-                    <div class="relative">
+                    <div className="relative">
                         <SearchBox
                             classNames={{
                                 input: 'block p-2 rounded border border-gray-200 bg-gray-200 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-transparent',

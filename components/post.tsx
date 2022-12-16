@@ -143,7 +143,7 @@ export default function Post({ content, categories, tags }) {
                 <div className='mb-6'>
                     <label className='block mb-2 text-sm font-medium text-gray-900'>Short Description</label>
                     <textarea rows="4"
-                        class="block p-2.5 w-full text-xs text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                        className="block p-2.5 w-full text-xs text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                         name='shortDescription'
                         value={inputFields.shortDescription}
                         onChange={e => setInputFields({ ...inputFields, shortDescription: e.target.value })}
@@ -243,7 +243,7 @@ export default function Post({ content, categories, tags }) {
                                             </td>
                                             <td className="py-2 px-3">
                                                 <textarea rows="3"
-                                                    class="block p-2.5 w-full text-xs text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                                                    className="block p-2.5 w-full text-xs text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                                                     name='description'
                                                     value={input.description}
                                                     onChange={event => handleTimeLineChange(index, event)}
@@ -300,7 +300,7 @@ export default function Post({ content, categories, tags }) {
                 <div className='mb-6'>
                     <label className='block mb-2 text-sm font-medium text-gray-900'>Token Utility</label>
                     <textarea rows="3"
-                        class="block p-2.5 w-full text-xs text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                        className="block p-2.5 w-full text-xs text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                         name='tokenUtility'
                         value={inputFields.tokenUtility}
                         onChange={e => setInputFields({ ...inputFields, tokenUtility: e.target.value })}
@@ -314,7 +314,7 @@ export default function Post({ content, categories, tags }) {
                 <div className='mb-6'>
                     <label className='block mb-2 text-sm font-medium text-gray-900'>Business Model</label>
                     <textarea rows="3"
-                        class="block p-2.5 w-full text-xs text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                        className="block p-2.5 w-full text-xs text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                         name='businessModel'
                         value={inputFields.businessModel}
                         onChange={e => setInputFields({ ...inputFields, businessModel: e.target.value })}
@@ -328,7 +328,7 @@ export default function Post({ content, categories, tags }) {
                 <div className='mb-6'>
                     <label className='block mb-2 text-sm font-medium text-gray-900'>Value Creation</label>
                     <textarea rows="3"
-                        class="block p-2.5 w-full text-xs text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                        className="block p-2.5 w-full text-xs text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                         name='valueCreation'
                         value={inputFields.valueCreation}
                         onChange={e => setInputFields({ ...inputFields, valueCreation: e.target.value })}
@@ -342,7 +342,7 @@ export default function Post({ content, categories, tags }) {
                 <div className='mb-6'>
                     <label className='block mb-2 text-sm font-medium text-gray-900'>Value Capture</label>
                     <textarea rows="3"
-                        class="block p-2.5 w-full text-xs text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                        className="block p-2.5 w-full text-xs text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                         name='valueCapture'
                         value={inputFields.valueCapture}
                         onChange={e => setInputFields({ ...inputFields, valueCapture: e.target.value })}
@@ -356,7 +356,7 @@ export default function Post({ content, categories, tags }) {
                 <div className='mb-6'>
                     <label className='block mb-2 text-sm font-medium text-gray-900'>Demand Drivers</label>
                     <textarea rows="3"
-                        class="block p-2.5 w-full text-xs text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                        className="block p-2.5 w-full text-xs text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                         name='demandDrivers'
                         value={inputFields.demandDrivers}
                         onChange={e => setInputFields({ ...inputFields, demandDrivers: e.target.value })}
@@ -375,7 +375,7 @@ export default function Post({ content, categories, tags }) {
                 <div className='mb-6'>
                     <label className='block mb-2 text-sm font-medium text-gray-900'>Three Month Horizon</label>
                     <textarea rows="3"
-                        class="block p-2.5 w-full text-xs text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                        className="block p-2.5 w-full text-xs text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                         name='threeMonthHorizon'
                         value={inputFields.threeMonthHorizon}
                         onChange={e => setInputFields({ ...inputFields, threeMonthHorizon: e.target.value })}
@@ -384,7 +384,7 @@ export default function Post({ content, categories, tags }) {
                 <div className='mb-6'>
                     <label className='block mb-2 text-sm font-medium text-gray-900'>One Year Horizon</label>
                     <textarea rows="3"
-                        class="block p-2.5 w-full text-xs text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                        className="block p-2.5 w-full text-xs text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                         name='oneYearHorizon'
                         value={inputFields.oneYearHorizon}
                         onChange={e => setInputFields({ ...inputFields, oneYearHorizon: e.target.value })}
@@ -393,7 +393,7 @@ export default function Post({ content, categories, tags }) {
                 <div className='mb-6'>
                     <label className='block mb-2 text-sm font-medium text-gray-900'>Upside</label>
                     <textarea rows="3"
-                        class="block p-2.5 w-full text-xs text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                        className="block p-2.5 w-full text-xs text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                         name='upside'
                         value={inputFields.upside}
                         onChange={e => setInputFields({ ...inputFields, upside: e.target.value })}
@@ -402,7 +402,7 @@ export default function Post({ content, categories, tags }) {
                 <div className='mb-6'>
                     <label className='block mb-2 text-sm font-medium text-gray-900'>Downside</label>
                     <textarea rows="3"
-                        class="block p-2.5 w-full text-xs text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                        className="block p-2.5 w-full text-xs text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                         name='downside'
                         value={inputFields.downside}
                         onChange={e => setInputFields({ ...inputFields, downside: e.target.value })}
@@ -411,7 +411,7 @@ export default function Post({ content, categories, tags }) {
                 <div className='mb-6'>
                     <label className='block mb-2 text-sm font-medium text-gray-900'>Decision Horizon</label>
                     <textarea rows="3"
-                        class="block p-2.5 w-full text-xs text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                        className="block p-2.5 w-full text-xs text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                         name='decisionHorizon'
                         value={inputFields.decisionHorizon}
                         onChange={e => setInputFields({ ...inputFields, decisionHorizon: e.target.value })}
@@ -420,7 +420,7 @@ export default function Post({ content, categories, tags }) {
                 <div className='mb-6'>
                     <label className='block mb-2 text-sm font-medium text-gray-900'>Metrics</label>
                     <textarea rows="3"
-                        class="block p-2.5 w-full text-xs text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                        className="block p-2.5 w-full text-xs text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                         name='metrics'
                         value={inputFields.metrics}
                         onChange={e => setInputFields({ ...inputFields, metrics: e.target.value })}

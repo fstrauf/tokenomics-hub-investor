@@ -39,7 +39,7 @@ export default function PostBody({ content }) {
               components={components}
             />
           </div> */}
-          <article class="prose md:prose-lg lg:prose-xl">
+          <article className="prose md:prose-lg lg:prose-xl">
             {getJSXReady(content)}
             {/* {jsxReady} */}
           </article>

@@ -30,7 +30,7 @@ const myOAuth2Client = new OAuth2(
 )
 
 myOAuth2Client.setCredentials({
-  refresh_token:  process.env.EMAIL_REFRESH_TOKEN,
+  refresh_token: process.env.EMAIL_REFRESH_TOKEN,
 });
 
 const myAccessToken = myOAuth2Client.getAccessToken()
@@ -54,7 +54,7 @@ export const authOptions = {
           clientId: process.env.EMAIL_CLIENT_ID,
           clientSecret: process.env.EMAIL_CLIENT_SECRET,
           refreshToken: process.env.EMAIL_REFRESH_TOKEN,
-          accessToken: myAccessToken 
+          accessToken: myAccessToken
         }
       },
       from: process.env.EMAIL_FROM
@@ -63,10 +63,26 @@ export const authOptions = {
   ],
   secret: process.env.NEXTAUTH_SECRET,
   session: {
-    strategy: 'jwt'
+    strategy: 'database'
+    // strategy: 'jwt'
   },
   // adapter: SanityAdapter(client)
-  adapter: PrismaAdapter(prisma)
+  adapter: PrismaAdapter(prisma),
+  callbacks: {
+    // async jwt({ token, user }) {
+    //   console.log("jwt user " + user)
+    //   if (user) {
+    //     token.id = user.id
+    //   }
+    //   return token
+    // },
+    async session({ session, token, user }) {
+      // console.log("user " + JSON.stringify(user))
+      // console.log("token " + JSON.stringify(token))
+      session.user.role = user.role; // Add role value to user object so it is passed along with session
+      return session;
+    }
+  },
 }
 
 export default NextAuth(authOptions)

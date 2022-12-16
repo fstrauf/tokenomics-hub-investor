@@ -6,7 +6,7 @@ export default function BreakdownBox({ value, strength, title }) {
 
   return (
     <div className="m-2">
-      <div class="flex flex-row">
+      <div className="flex flex-row">
         <div className='w-10 h-10 m-auto'>
           <CircularProgressbar value={percentageComplete} text={`${percentageComplete}`} />
         </div>
