@@ -4,7 +4,7 @@ export default async function handler(req, res) {
 
   var storage
   try {
-
+    console.log("storage")
     // const { privateKey } = JSON.parse(process.env.PRIVATE_KEY || '{ privateKey: null }')
     storage = new Storage({
       projectId: process.env.PROJECT_ID,
@@ -20,6 +20,7 @@ export default async function handler(req, res) {
 
   var bucket
   try {
+    console.log("bucket")
     bucket = storage.bucket(process.env.BUCKET_NAME);
   } catch (err) {
     res.status(500).json({ error: 'failed to get bucket' })
@@ -27,6 +28,7 @@ export default async function handler(req, res) {
 
   var file
   try {
+    console.log("file")
     file = bucket.file(req.query.target);
   } catch (err) {
     res.status(500).json({ error: 'failed to set file' })
