@@ -67,9 +67,14 @@ export default function Post({ content, categories, tags }) {
     }
 
     const handleResourceChange = (index: any, event: any) => {
-        event.preventDefault()
+        // event.preventDefault()
         let data = [...inputFields.ProtocolResources];
-        data[index][event.target.name] = event.target.value;
+        //is a checkbox
+        if(event.target.name === 'internal') {
+            data[index][event.target.name] = event.target.checked;
+        } else {
+            data[index][event.target.name] = event.target.value;
+        }
 
         setInputFields({ ...inputFields, ProtocolResources: data })
     }
@@ -498,7 +503,7 @@ export default function Post({ content, categories, tags }) {
                                             <td className="py-2 px-3">
                                                 <input
                                                     name='internal'
-                                                    placeholder='Internal'
+                                                    // placeholder='Internal'
                                                     checked={input.internal}
                                                     type='checkbox'
                                                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-1.5"
