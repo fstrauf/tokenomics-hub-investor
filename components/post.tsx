@@ -5,17 +5,16 @@ import { Listbox } from '@headlessui/react'
 import Router from 'next/router';
 // import CoverImage from './cover-image';
 import { useForm } from "react-hook-form";
+import toast, { Toaster } from 'react-hot-toast';
+import Toast from './toast';
 
 export default function Post({ content, categories, tags }) {
-
     const { handleSubmit, formState } = useForm();
 
     const today = new Date().toLocaleDateString('en-CA')
 
-    // console.log(content?.ourTake)
-
-    const [ourTake, setOurTake] = useState(JSON.parse(content?.ourTake || '{}') ?? {});
-    const [deepDive, setDeepDive] = useState(JSON.parse(content?.breakdown || '{}') ?? {});
+    const [ourTake, setOurTake] = useState(JSON.parse(content?.ourTake || '{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":" "}]}]}') ?? {});
+    const [deepDive, setDeepDive] = useState(JSON.parse(content?.breakdown || '{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":" "}]}]}') ?? {});
     const [selectedCats, setSelectedCats] = useState(content?.categories);
     const [selectedTags, setSelectedTags] = useState(content?.tags);
     const [inputFields, setInputFields] = useState(content)
@@ -23,7 +22,6 @@ export default function Post({ content, categories, tags }) {
     const tokenStrength = (inputFields.businessModelStrength + inputFields.demandDriversStrength + inputFields.valueCaptureStrength + inputFields.valueCreationStrength + inputFields.tokenUtilityStrength) / 5
 
     const submitData = async (e: React.SyntheticEvent) => {
-        // e.preventDefault();
 
         const body = { ourTake, deepDive, inputFields, selectedCats, selectedTags, tokenStrength };
 
@@ -36,8 +34,9 @@ export default function Post({ content, categories, tags }) {
                 });
 
                 if (!response.ok) {
-                    const message = `An error has occured: ${response.status}`;
-                    throw new Error(message);
+                    const error = await response.text()
+                    toast.custom((t) => (<Toast t={t} msg={JSON.parse(error).error} />))
+                    throw new Error(error);
                 }
 
                 await Router.push('/');
@@ -120,6 +119,7 @@ export default function Post({ content, categories, tags }) {
     return (
         <>
             <form className='flex flex-col m-auto mt-5'>
+            <Toaster />
                 <div className='mb-6'>
                     <label className='block mb-2 text-sm font-medium text-gray-900'>Title</label>
                     <input

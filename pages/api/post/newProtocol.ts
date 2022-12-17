@@ -1,9 +1,10 @@
 import prisma from '../../../lib/prisma';
-// import {  Prisma } from '@prisma/client'
+import {  Prisma } from '@prisma/client'
+// import toast, { Toaster } from 'react-hot-toast';
 
 export default async function handle(req, res) {
   const { ourTake, deepDive, inputFields, selectedCats, selectedTags, tokenStrength } = req.body;
-
+  // const notify = () => toast('Here is your toast.');
   // console.log(inputFields)
 
   const timeLine = inputFields?.protocolTimeLine?.map(tl => {
@@ -15,7 +16,7 @@ export default async function handle(req, res) {
 
   var response = {}
   try {
-    response = await prisma.post.create({      
+    response = await prisma.post.create({
       data: {
         title: inputFields.title,
         slug: inputFields.slug,
@@ -67,8 +68,19 @@ export default async function handle(req, res) {
       },
     })
   } catch (e) {
+    if (e instanceof Prisma.PrismaClientKnownRequestError) {
+      // The .code property can be accessed in a type-safe manner
+      if (e.code === 'P2002') {
+        // res.statusText = 'Unique Constraint. Slug might already exist!'
+        return res.status(500).send({ error: 'Slug might already exist!' })        
+        // console.log(
+        //   'There is a unique constraint violation, a new user cannot be created with this email'
+        // )
+      }
+    }
+    // notify()
     throw e
   }
 
-  res.json(response);
+  return res.json(response);
 }

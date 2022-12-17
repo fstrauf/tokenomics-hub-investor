@@ -29,13 +29,13 @@ export default function NewProtocol({ categories, tags, user }) {
     slug: 'tdao',
     shortDescription: 'A great place to discuss Tokenomics',
     categories: [
-      { id: 1, title: 'DeFi' },
-      { id: 2, title: 'DAO' }
+      // { id: 1, title: 'DeFi' },
+      // { id: 2, title: 'DAO' }
     ],
     tags: [
-      { id: 1, title: 'Great DAO' },
-      { id: 2, title: 'AMM' },
-      { id: 3, title: 'Yield Bearing' }
+      // { id: 1, title: 'Great DAO' },
+      // { id: 2, title: 'AMM' },
+      // { id: 3, title: 'Yield Bearing' }
     ],
     protocolTimeLine: [
       { title: 'TGE', date: today, description: 'token generation event' }
