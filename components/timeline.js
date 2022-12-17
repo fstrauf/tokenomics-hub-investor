@@ -6,7 +6,7 @@ export default function TimeLine({ items }) {
 
         <ol className="relative border-l border-gray-200">
           {items?.map((item) => (
-            <li className="mb-10 ml-6 list-inside">
+            <li key={item.id} className="mb-10 ml-6 list-inside">
               <div className="absolute w-3 h-3 bg-gray-200 rounded-full -left-1.5 border border-white"></div>
               <p>{new Date(item.date).toISOString().slice(0, 10)}</p>
               <h3 className="text-lg font-semibold">{item.title}</h3>              

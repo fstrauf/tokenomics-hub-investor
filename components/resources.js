@@ -12,7 +12,7 @@ export default function Resources({ resources }) {
       <h1 className='section-head m-2'>Tokenomics DAO</h1>
         <div className='m-2 grid'>
         {internal?.map((resource) => (     
-          <Link as={resource.url} href={resource.url} label={resource.title}>
+          <Link key={resource.id} as={resource.url} href={resource.url} label={resource.title}>
             {resource.title}
           </Link>
 
@@ -21,7 +21,7 @@ export default function Resources({ resources }) {
         <h1 className='section-head m-2'>3rd Party</h1>
         <div className='m-2 grid'>
         {external.map((resource) => (          
-          <Link as={resource.url} href={resource.url} label={resource.title}>
+          <Link key={resource.id} as={resource.url} href={resource.url} label={resource.title}>
             {resource.title}
           </Link>
 

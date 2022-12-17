@@ -145,6 +145,7 @@ export default function Post({ content, categories, tags }) {
                     <textarea rows="4"
                         className="block p-2.5 w-full text-xs text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                         name='shortDescription'
+                        maxlength="250"
                         value={inputFields.shortDescription}
                         onChange={e => setInputFields({ ...inputFields, shortDescription: e.target.value })}
                     />
@@ -246,6 +247,7 @@ export default function Post({ content, categories, tags }) {
                                                     className="block p-2.5 w-full text-xs text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                                                     name='description'
                                                     value={input.description}
+                                                    maxlength="190"
                                                     onChange={event => handleTimeLineChange(index, event)}
                                                 />
                                             </td>
@@ -302,6 +304,7 @@ export default function Post({ content, categories, tags }) {
                     <textarea rows="3"
                         className="block p-2.5 w-full text-xs text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                         name='tokenUtility'
+                        maxlength="250"
                         value={inputFields.tokenUtility}
                         onChange={e => setInputFields({ ...inputFields, tokenUtility: e.target.value })}
                     />
@@ -316,6 +319,7 @@ export default function Post({ content, categories, tags }) {
                     <textarea rows="3"
                         className="block p-2.5 w-full text-xs text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                         name='businessModel'
+                        maxlength="250"
                         value={inputFields.businessModel}
                         onChange={e => setInputFields({ ...inputFields, businessModel: e.target.value })}
                     />
@@ -330,6 +334,7 @@ export default function Post({ content, categories, tags }) {
                     <textarea rows="3"
                         className="block p-2.5 w-full text-xs text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                         name='valueCreation'
+                        maxlength="250"
                         value={inputFields.valueCreation}
                         onChange={e => setInputFields({ ...inputFields, valueCreation: e.target.value })}
                     />
@@ -344,6 +349,7 @@ export default function Post({ content, categories, tags }) {
                     <textarea rows="3"
                         className="block p-2.5 w-full text-xs text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                         name='valueCapture'
+                        maxlength="250"
                         value={inputFields.valueCapture}
                         onChange={e => setInputFields({ ...inputFields, valueCapture: e.target.value })}
                     />
@@ -358,6 +364,7 @@ export default function Post({ content, categories, tags }) {
                     <textarea rows="3"
                         className="block p-2.5 w-full text-xs text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                         name='demandDrivers'
+                        maxlength="250"
                         value={inputFields.demandDrivers}
                         onChange={e => setInputFields({ ...inputFields, demandDrivers: e.target.value })}
                     />
@@ -377,6 +384,7 @@ export default function Post({ content, categories, tags }) {
                     <textarea rows="3"
                         className="block p-2.5 w-full text-xs text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                         name='threeMonthHorizon'
+                        maxlength="250"
                         value={inputFields.threeMonthHorizon}
                         onChange={e => setInputFields({ ...inputFields, threeMonthHorizon: e.target.value })}
                     />
@@ -386,6 +394,7 @@ export default function Post({ content, categories, tags }) {
                     <textarea rows="3"
                         className="block p-2.5 w-full text-xs text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                         name='oneYearHorizon'
+                        maxlength="250"
                         value={inputFields.oneYearHorizon}
                         onChange={e => setInputFields({ ...inputFields, oneYearHorizon: e.target.value })}
                     />
@@ -395,6 +404,7 @@ export default function Post({ content, categories, tags }) {
                     <textarea rows="3"
                         className="block p-2.5 w-full text-xs text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                         name='upside'
+                        maxlength="250"
                         value={inputFields.upside}
                         onChange={e => setInputFields({ ...inputFields, upside: e.target.value })}
                     />
@@ -404,6 +414,7 @@ export default function Post({ content, categories, tags }) {
                     <textarea rows="3"
                         className="block p-2.5 w-full text-xs text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                         name='downside'
+                        maxlength="250"
                         value={inputFields.downside}
                         onChange={e => setInputFields({ ...inputFields, downside: e.target.value })}
                     />
@@ -413,6 +424,7 @@ export default function Post({ content, categories, tags }) {
                     <textarea rows="3"
                         className="block p-2.5 w-full text-xs text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                         name='horizon'
+                        maxlength="250"
                         value={inputFields.horizon}
                         onChange={e => setInputFields({ ...inputFields, horizon: e.target.value })}
                     />
@@ -422,6 +434,7 @@ export default function Post({ content, categories, tags }) {
                     <textarea rows="3"
                         className="block p-2.5 w-full text-xs text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                         name='metrics'
+                        maxlength="250"
                         value={inputFields.metrics}
                         onChange={e => setInputFields({ ...inputFields, metrics: e.target.value })}
                     />

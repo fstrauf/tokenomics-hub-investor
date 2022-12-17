@@ -16,9 +16,9 @@ model Post {
   id                    String              @id @default(cuid())
   title                 String?
   slug                  String              @unique @default("eth")
-  shortDescription      String?
-  breakdown             String?             @db.VarChar(10000)
-  ourTake               String?             @db.VarChar(1000)
+  shortDescription      String?             @db.TinyText
+  breakdown             String?             @db.Text
+  ourTake               String?             @db.Text
   published             Boolean             @default(false)
   author                User?               @relation(fields: [authorId], references: [id])
   authorId              String?
@@ -27,24 +27,24 @@ model Post {
   protocolTimeLine      ProtocolTimeLine[]
   publishedAt           DateTime?
   mainImageUrl          String?
-  tokenUtility          String?
+  tokenUtility          String?             @db.TinyText
   tokenUtilityStrength  Int?
-  businessModel         String?
+  businessModel         String?             @db.TinyText
   businessModelStrength Int?
-  valueCreation         String?
+  valueCreation         String?             @db.TinyText
   valueCreationStrength Int?
-  valueCapture          String?
+  valueCapture          String?             @db.TinyText
   valueCaptureStrength  Int?
-  demandDrivers         String?
+  demandDrivers         String?             @db.TinyText
   demandDriversStrength Int?
   tokenStrength         Int?
-  threeMonthHorizon     String?
-  oneYearHorizon        String?
-  upside                String?
-  downside              String?
-  horizon               String?
-  metrics               String?
-  diagramUrl            String?             @db.VarChar(1000)
+  threeMonthHorizon     String?             @db.TinyText
+  oneYearHorizon        String?             @db.TinyText
+  upside                String?             @db.TinyText
+  downside              String?             @db.TinyText
+  horizon               String?             @db.TinyText
+  metrics               String?             @db.TinyText
+  diagramUrl            String?             @db.TinyText
   ProtocolResources     ProtocolResources[]
 
   @@index([authorId])
