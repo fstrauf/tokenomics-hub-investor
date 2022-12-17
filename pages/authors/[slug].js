@@ -1,62 +1,56 @@
 import Layout from '../../components/layout'
 import Intro from '../../components/intro'
 import ProjectCard from '../..//components/projectCard'
-import { getAllAuthorsWithSlug, getAuthorAndPostsBySlug } from '../../lib/api'
+// import { getAllAuthorsWithSlug, getAuthorAndPostsBySlug } from '../../lib/api'
 import PostPreview from '../../components/post-preview'
 import Moralis from 'moralis';
 import { EvmChain } from '@moralisweb3/evm-utils';
+import prisma from '../../lib/prisma'
 
 export async function getServerSideProps({ params, preview = false }) {
-    const data = await getAuthorAndPostsBySlug(params.slug, preview)
+    // const data = await getAuthorAndPostsBySlug(params.slug, preview)
+
+    const data = await prisma.user.findUnique({
+        where: {
+            slug: params.slug,
+        },
+        include: {
+            posts: {},
+        },
+    })
 
     await Moralis.start({ apiKey: process.env.MORALIS_API_KEY });
 
     const contract = '0x9ee89523c1b763563a0ab3f6e85336810290ea14'
 
-    // let nftList = []
-    const allNFTs = await Moralis.EvmApi.nft.getWalletNFTs({
-        address: data?.author?.wallet,
-        chain: EvmChain.POLYGON
-    });
+    var consultingNFT
+    try{
+        const allNFTs = await Moralis.EvmApi.nft.getWalletNFTs({
+            address: data?.author?.wallet,
+            chain: EvmChain.POLYGON
+        });
+    
+        consultingNFT = allNFTs?.raw.result.filter(nft => {
+            if (nft.token_address === contract) {
+                return true
+            } else {
+                return false
+            }
+        })    
+    }catch{
 
-    // console.log(allNFTs)
-
-    const consultingNFT = allNFTs?.raw.result.filter(nft => {
-        if (nft.token_address === contract) {
-            return true
-        } else {
-            return false
-        }
-    })
-
-    // session.nftOwned = nftList.raw.result.find((nfts) => nfts.token_address === contract)
-
-    // console.log(consultingNFT)
+    }
 
     return {
         props: {
             preview,
-            authorPosts: data?.authorPosts || null,
+            authorPosts: data?.posts || null,
             author: data?.author || null,
             consultingNFT: consultingNFT || null,
         },
         // revalidate: 1,
     }
 }
-
-// export async function getStaticPaths() {
-//     const allAuthors = await getAllAuthorsWithSlug()
-//     return {
-//         paths:
-//             allAuthors?.map((author) => ({
-//                 params: {
-//                     slug: author.slug,
-//                 },
-//             })) || [],
-//         fallback: true,
-//     }
-// }
-
 
 export default function UserProfile({ author, authorPosts, consultingNFT }) {
     return (
@@ -69,8 +63,7 @@ export default function UserProfile({ author, authorPosts, consultingNFT }) {
                             <div className="px-6">
                                 <div className="flex flex-wrap justify-center">
                                     <div className="w-full lg:w-3/12 px-4 lg:order-2 flex justify-center">
-                                        <div className="">
-                                            {/* <img alt="..." src="https://demos.creative-tim.com/notus-js/assets/img/team-2-800x800.jpg" className="shadow-xl rounded-full h-auto align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-150-px"> */}
+                                        <div className="">                                            
                                             <img className="w-24 h-24 mb-3 rounded-full shadow-lg" src="https://i.pravatar.cc/300?img=50" />
                                         </div>
                                     </div>
@@ -122,11 +115,11 @@ export default function UserProfile({ author, authorPosts, consultingNFT }) {
                                                 <div className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow-md m-5">
                                                     <div className="flex justify-center px-4 pt-4">
                                                         <PostPreview
-                                                            key={post.slug}
+                                                            // key={post.slug}
                                                             title={post.title}
-                                                            coverImage={post.coverImage}
+                                                            url={post.mainImageUrl}
                                                             slug={post.slug}
-                                                            excerpt={post.excerpt}
+                                                            // excerpt={post.excerpt}
                                                         />
                                                     </div>
                                                 </div>

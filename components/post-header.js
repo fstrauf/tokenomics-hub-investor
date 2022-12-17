@@ -7,7 +7,7 @@ export default function PostHeader({ title, updatedAt, shortDescription, type, t
   const percentageComplete = tokenStrength
   
   return (
-    <>
+    <div key={title}>
       <PostTitle>{title}</PostTitle>
       <div className='flex flex-col md:flex-row-reverse justify-between'>
         <div className='w-20 h-20 self-center mb-4 md:w-40 md:h-40'>
@@ -39,6 +39,6 @@ export default function PostHeader({ title, updatedAt, shortDescription, type, t
           Share
         </TwitterShareButton>
       </div>
-    </>
+    </div>
   )
 }

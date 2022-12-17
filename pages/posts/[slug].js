@@ -135,7 +135,7 @@ export default function Post({ post, morePosts, preview }) {
                 </div>
               </main>
               <h1 className='text-xl md:text-2xl lg:text-3xl font-bold mt-10 mb-4 md:mt-20 text-black section-head'>Author.</h1>
-              {/* <AuthorCard author={post.author} /> */}
+              <AuthorCard author={post.author} />
             </article>
             {/* <Comments comments={post.comments} /> */}
             {/* <Form _id={post._id} /> */}
@@ -160,6 +160,7 @@ export async function getStaticProps({ params, preview = false }) {
       tags: {},
       ProtocolResources: {},
       protocolTimeLine: {},
+      author: {},
     }
   })
 

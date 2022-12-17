@@ -41,7 +41,7 @@ export default function NewProtocol({ categories, tags, user }) {
       { title: 'TGE', date: today, description: 'token generation event' }
     ],
     publishedAt: today,
-    mainImageUrl: '',
+    mainImageUrl: 'https://storage.googleapis.com/my-bucket-bbc0e24/Logo_Tokenomics_DAO.png',
     tokenUtility: 'Governance',
     tokenUtilityStrength: 50,
     businessModel: 'Consulting, Education, Content',

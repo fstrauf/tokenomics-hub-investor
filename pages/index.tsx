@@ -22,6 +22,12 @@ const Index: React.FC<Props> = (props) => {
     <>
       <Layout preview={props.preview}>
         <Head>
+          <title>Tokenomics Hub</title>
+          <meta name="Explore, compare and evaluate tokenomics of crypto projects." content="Created by Tokenomics DAO" />
+          {/* <link rel="icon" href="/favicon.ico" /> */}
+          <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+          <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+          <link rel="manifest" href="/site.webmanifest"></link>
         </Head>
         <Container>
           <Intro />
@@ -69,7 +75,7 @@ export async function getStaticProps({ preview = false }) {
   //       include: {
   //         ContentAuthor: {
   //           include: {
-  //             user: {}
+  //             user: { }
   //           }
 
   //         }
@@ -77,7 +83,7 @@ export async function getStaticProps({ preview = false }) {
   //     },
   //     Payout: {
   //       include: {
-  //         user: {},
+  //         user: { },
   //       }
   //     }
   //   },
