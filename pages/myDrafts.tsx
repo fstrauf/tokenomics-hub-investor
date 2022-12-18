@@ -46,7 +46,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     include: {
       categories: {
         select: {
-          title: true,
+          label: true,
         }
       },
       author: {}

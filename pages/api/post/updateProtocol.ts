@@ -2,9 +2,10 @@
 import prisma from '../../../lib/prisma';
 
 export default async function handle(req, res) {
-  const { ourTake, deepDive, inputFields, selectedCats, selectedTags, tokenStrength } = req.body;
+  const { values } = req.body;
 
   // console.log(inputFields)
+  const inputFields = values
 
   const timeLine = inputFields?.protocolTimeLine?.map(tl => {
     return {
@@ -45,10 +46,10 @@ export default async function handle(req, res) {
       title: inputFields.title,
       slug: inputFields.slug,
       shortDescription: inputFields.shortDescription,
-      breakdown: JSON.stringify(deepDive),
-      ourTake: JSON.stringify(ourTake),
+      breakdown: JSON.stringify(inputFields.deepDive),
+      // ourTake: JSON.stringify(ourTake),
       // published: false,
-      publishedAt: new Date(inputFields.publishedAt),
+      publishedAt: new Date(),
       mainImageUrl: inputFields.mainImageUrl,
       tokenUtility: inputFields.tokenUtility,
       tokenUtilityStrength: inputFields.tokenUtilityStrength,
@@ -60,7 +61,7 @@ export default async function handle(req, res) {
       valueCaptureStrength: inputFields.valueCaptureStrength,
       demandDrivers: inputFields.demandDrivers,
       demandDriversStrength: inputFields.demandDriversStrength,
-      tokenStrength: tokenStrength,
+      tokenStrength: inputFields.tokenStrength,
       threeMonthHorizon: inputFields.threeMonthHorizon,
       oneYearHorizon: inputFields.oneYearHorizon,
       upside: inputFields.upside,
@@ -74,10 +75,10 @@ export default async function handle(req, res) {
       //   }
       // },
       categories: {
-        connect: selectedCats.map(cats => { return { id: cats.id } })
+        connect: inputFields.categories.map(cats => { return { value: cats } })
       },
       tags: {
-        connect: selectedTags.map(tags => { return { id: tags.id } })
+        connect: inputFields.tags.map(tags => { return { value: tags } })
       },
       ProtocolResources: {
         createMany: {

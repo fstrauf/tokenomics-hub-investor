@@ -11,15 +11,7 @@ type Props = {
 }
 
 const Tiptap: React.FC<Props> = (props) => {
-
-    var content = props?.content ?? '{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":" "}]}]}'
-
-    // if(typeof content === 'string')
-    // {
-    //     content = JSON.parse(content)
-    // }
-
-    // content = ''
+    var content = props?.content ?? ''
 
     const editor = useEditor({
         extensions: [
@@ -34,14 +26,12 @@ const Tiptap: React.FC<Props> = (props) => {
             },
         },
         content: content,
-        onUpdate({ editor }) {
-            // The content has changed.
-            props.setContent(editor.getJSON())
+        onUpdate({ editor }) {        
+            props?.setContent(editor.getJSON())
         },
     })
 
     const addImage = async (e) => {
-        // const url = window.prompt('URL')
         const url = await uploadPhoto(e)
 
         if (url) {
@@ -51,8 +41,7 @@ const Tiptap: React.FC<Props> = (props) => {
 
     return (
         <div>
-            <MenuBar editor={editor} />
-            {/* <button onClick={addImage} className='text-lg font-bold m-1 border-2 rounded-lg'>add image from URL</button> */}
+            <MenuBar editor={editor} />        
             <input
                 onChange={addImage}
                 type="file"

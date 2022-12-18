@@ -3,6 +3,7 @@ import Header from '../components/header'
 import React from 'react';
 import prisma from '../lib/prisma'
 import Post from '../components/post';
+import Post2 from '../components/post2';
 import { getSession } from 'next-auth/react';
 import { GetServerSideProps } from 'next';
 import { useSession } from "next-auth/react"
@@ -25,12 +26,13 @@ export default function NewProtocol({ categories, tags, user }) {
 
   const defaultContent =
   {
+    id: '',
     title: 'Tokenomics DAO',
     slug: 'tdao',
     shortDescription: 'A great place to discuss Tokenomics',
     categories: [
-      // { id: 1, title: 'DeFi' },
-      // { id: 2, title: 'DAO' }
+      // { value: 1, label: 'DeFi' },
+      // { value: 2, label: 'DAO' }
     ],
     tags: [
       // { id: 1, title: 'Great DAO' },
@@ -63,7 +65,11 @@ export default function NewProtocol({ categories, tags, user }) {
     ProtocolResources: [
       { title: 'website', url: 'https://www.tokenomicshub.xyz/', internal: true }
     ],
-    Author: { email: user?.email }
+    Author: { email: user?.email },
+    strongPoints: 'Please write a concise, bullet point based list showcasing the protocol and tokens strong points',
+    weakPoints: 'Please write a concise, bullet point based list showcasing the protocol and tokens weak points',
+    problemSolution: 'Please indicate what problem the protocol is solving and what is its solution.',
+    parent: 'Please indicate what protocols you are building upon',
   }
 
   return (
@@ -73,7 +79,8 @@ export default function NewProtocol({ categories, tags, user }) {
         <h1 className="text-3xl font-bold">
           Submit a draft for review
         </h1>
-        <Post content={defaultContent} categories={categories} tags={tags} />
+        {/* <Post content={defaultContent} categories={categories} tags={tags} /> */}
+        <Post2 content={defaultContent} categories={categories} tags={tags} />
       </Layout>
     </>
   )

@@ -6,6 +6,10 @@ generator client {
   previewFeatures = ["referentialIntegrity"]
 }
 
+// generator yup {
+//   provider = "prisma-yup-generator"
+// }
+
 datasource db {
   provider     = "mysql"
   url          = env("DATABASE_URL")
@@ -45,20 +49,24 @@ model Post {
   horizon               String?             @db.TinyText
   metrics               String?             @db.TinyText
   diagramUrl            String?             @db.TinyText
+  strongPoints          String?             @db.TinyText
+  weakPoints            String?             @db.TinyText
+  problemSolution       String?             @db.TinyText
+  parent                String?             @db.TinyText
   ProtocolResources     ProtocolResources[]
 
   @@index([authorId])
 }
 
 model Category {
-  id    Int     @id @default(autoincrement())
-  title String?
+  value Int     @id @default(autoincrement())
+  label String?
   posts Post[]
 }
 
 model Tag {
-  id    Int     @id @default(autoincrement())
-  title String?
+  value Int     @id @default(autoincrement())
+  label String?
   posts Post[]
 }
 

@@ -60,7 +60,7 @@ export async function getStaticProps({ preview = false }) {
       slug: true,
       categories: {
         select: {
-          title: true,
+          label: true,
         }
       }
     },

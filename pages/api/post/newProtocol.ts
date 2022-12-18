@@ -3,9 +3,9 @@ import {  Prisma } from '@prisma/client'
 // import toast, { Toaster } from 'react-hot-toast';
 
 export default async function handle(req, res) {
-  const { ourTake, deepDive, inputFields, selectedCats, selectedTags, tokenStrength } = req.body;
+  const { values } = req.body;
   // const notify = () => toast('Here is your toast.');
-  // console.log(inputFields)
+  const inputFields = values
 
   const timeLine = inputFields?.protocolTimeLine?.map(tl => {
     return {
@@ -21,10 +21,10 @@ export default async function handle(req, res) {
         title: inputFields.title,
         slug: inputFields.slug,
         shortDescription: inputFields.shortDescription,
-        breakdown: JSON.stringify(deepDive),
-        ourTake: JSON.stringify(ourTake),
+        breakdown: JSON.stringify(inputFields.deepDive),
+        // ourTake: JSON.stringify(ourTake),
         published: false,
-        publishedAt: new Date(inputFields.publishedAt),
+        publishedAt: new Date(),
         mainImageUrl: inputFields.mainImageUrl,
         tokenUtility: inputFields.tokenUtility,
         tokenUtilityStrength: inputFields.tokenUtilityStrength,
@@ -36,7 +36,7 @@ export default async function handle(req, res) {
         valueCaptureStrength: inputFields.valueCaptureStrength,
         demandDrivers: inputFields.demandDrivers,
         demandDriversStrength: inputFields.demandDriversStrength,
-        tokenStrength: tokenStrength,
+        tokenStrength: inputFields.tokenStrength,
         threeMonthHorizon: inputFields.threeMonthHorizon,
         oneYearHorizon: inputFields.oneYearHorizon,
         upside: inputFields.upside,
@@ -44,16 +44,20 @@ export default async function handle(req, res) {
         horizon: inputFields.horizon,
         metrics: inputFields.metrics,
         diagramUrl: inputFields.diagramUrl,
+        strongPoints: inputFields.strongPoints,
+        weakPoints: inputFields.weakPoints,
+        problemSolution: inputFields.problemSolution,
+        parent: inputFields.parent,
         author: {
           connect: {
             email: inputFields.Author.email,
           }
         },
         categories: {
-          connect: selectedCats.map(cats => { return { id: cats.id } })
+          connect: inputFields.categories.map(cats => { return { value: cats } })
         },
         tags: {
-          connect: selectedTags.map(tags => { return { id: tags.id } })
+          connect: inputFields.tags.map(tags => { return { value: tags } })
         },
         ProtocolResources: {
           createMany: {
@@ -68,11 +72,12 @@ export default async function handle(req, res) {
       },
     })
   } catch (e) {
+    console.log(e)
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
       // The .code property can be accessed in a type-safe manner
       if (e.code === 'P2002') {
         // res.statusText = 'Unique Constraint. Slug might already exist!'
-        return res.status(500).send({ error: 'Slug might already exist!' })        
+        return res.status(500).send({ error: 'Slug might already exist!' })
         // console.log(
         //   'There is a unique constraint violation, a new user cannot be created with this email'
         // )
@@ -82,5 +87,7 @@ export default async function handle(req, res) {
     throw e
   }
 
-  return res.json(response);
+  console.log(response)
+  // return res.json(response);
+  return res.status(200).send({ id: response.id })
 }

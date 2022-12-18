@@ -4,12 +4,26 @@ import { getJSXReady } from '../lib/helper'
 export default function OurTake({ content }) {
   return (
     <>
-      <h1 className='text-xl md:text-2xl lg:text-3xl font-bold mt-10 mb-4 md:mt-20 text-black section-head'>Our Take.</h1>
+      <h1 className='text-xl md:text-2xl lg:text-3xl font-bold mt-10 mb-4 md:mt-20 text-black section-head'>Protocol Analysis.</h1>
       <div className='border-2 rounded-lg bg-white'>
         <div className='ml-2'>
-          <article className="prose prose-sm sm:prose lg:prose-md xl:prose-lg m-5 focus:outline-none">
-            {getJSXReady(content?.ourTake)}
-          </article>
+          <h1 className='section-head'>Details</h1>
+          <div className="m-auto w-40">
+            <h1 className="ml-2 mr-2 font-bold">Strong Points</h1>
+          </div>
+          <div className="w-full self-center">{content.strongPoints}</div>
+          <div className="m-auto w-40">
+            <h1 className="ml-2 mr-2 font-bold">Weak Points</h1>
+          </div>
+          <div className="w-full self-center">{content.weakPoints}</div>
+          <div className="m-auto w-40">
+            <h1 className="ml-2 mr-2 font-bold">Problems & Solutions</h1>
+          </div>
+          <div className="w-full self-center">{content.problemSolution}</div>
+          <div className="m-auto w-40">
+            <h1 className="ml-2 mr-2 font-bold">Predecessors</h1>
+          </div>
+          <div className="w-full self-center">{content.parent}</div>
           <table className="text-sm text-left text-gray-500 dark:text-gray-400 bg-gray-50 m-2">
             <caption className='section-head'>Investment Take</caption>
             <tbody>

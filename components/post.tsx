@@ -7,6 +7,7 @@ import Router from 'next/router';
 import { useForm } from "react-hook-form";
 import toast, { Toaster } from 'react-hot-toast';
 import Toast from './toast';
+import debounce from 'lodash.debounce'
 
 export default function Post({ content, categories, tags }) {
     const { handleSubmit, formState } = useForm();
@@ -21,7 +22,18 @@ export default function Post({ content, categories, tags }) {
 
     const tokenStrength = (inputFields.businessModelStrength + inputFields.demandDriversStrength + inputFields.valueCaptureStrength + inputFields.valueCreationStrength + inputFields.tokenUtilityStrength) / 5
 
+    const debounceSubmit = React.useCallback(        
+        debounce((e) => submitData(e), 20000),
+        []
+    );
+
+    const triggerSubmitData = async (e: React.SyntheticEvent) => {
+        await submitData(e)
+        await Router.push('/');
+    }
+
     const submitData = async (e: React.SyntheticEvent) => {
+        console.log("submit " + inputFields.slug)
 
         const body = { ourTake, deepDive, inputFields, selectedCats, selectedTags, tokenStrength };
 
@@ -33,13 +45,17 @@ export default function Post({ content, categories, tags }) {
                     body: JSON.stringify(body),
                 });
 
+
                 if (!response.ok) {
                     const error = await response.text()
                     toast.custom((t) => (<Toast t={t} msg={JSON.parse(error).error} />))
                     throw new Error(error);
+                } else {
+                    //connect the returned id to the inputfields.id
+                    console.log(response)
                 }
 
-                await Router.push('/');
+                // await Router.push('/');
                 console.log('protocol created');
             } catch (error) {
                 console.error(error);
@@ -57,7 +73,7 @@ export default function Post({ content, categories, tags }) {
                     throw new Error(message);
                 }
 
-                await Router.push('/');
+                // await Router.push('/');
                 console.log('protocol created');
             } catch (error) {
                 console.error(error);
@@ -70,7 +86,7 @@ export default function Post({ content, categories, tags }) {
         // event.preventDefault()
         let data = [...inputFields.ProtocolResources];
         //is a checkbox
-        if(event.target.name === 'internal') {
+        if (event.target.name === 'internal') {
             data[index][event.target.name] = event.target.checked;
         } else {
             data[index][event.target.name] = event.target.value;
@@ -121,10 +137,16 @@ export default function Post({ content, categories, tags }) {
         setInputFields({ ...inputFields, mainImageUrl: url })
     }
 
+    const handleInputChange = (e) => {
+        console.log(inputFields.slug)
+        setInputFields({ ...inputFields, title: e.target.value })
+        debounceSubmit()
+    }
+
     return (
         <>
             <form className='flex flex-col m-auto mt-5'>
-            <Toaster />
+                <Toaster />
                 <div className='mb-6'>
                     <label className='block mb-2 text-sm font-medium text-gray-900'>Title</label>
                     <input
@@ -134,7 +156,8 @@ export default function Post({ content, categories, tags }) {
                         required
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-dao-red focus:border-dao-red block w-full p-2.5"
                         value={inputFields.title}
-                        onChange={e => setInputFields({ ...inputFields, title: e.target.value })}
+                        // onChange={e => setInputFields({ ...inputFields, title: e.target.value })}
+                        onChange={e => handleInputChange(e)}
                     />
                 </div>
                 <div className='mb-6'>
@@ -290,18 +313,18 @@ export default function Post({ content, categories, tags }) {
                 <div className='mb-6'>
                     <label className='block mb-2 text-sm font-medium text-gray-900'>Main Image (link to svg)</label>
                     <div className='flex'>
-                    <input
-                        id="mainImageUrl" name="mainImageUrl"
-                        type="file"
-                        className="bg-gray-50 border w-72 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-dao-red focus:border-dao-red block p-2.5"
-                        accept="image/png, image/jpeg, image/svg+xml"
-                        onChange={e => setMainImageUrl(e)}
-                    />
-                    <img
-                        alt={`Cover Image for logo`}
-                        className='rounded-lg h-10 m-auto'
-                        src={inputFields.mainImageUrl}
-                    />
+                        <input
+                            id="mainImageUrl" name="mainImageUrl"
+                            type="file"
+                            className="bg-gray-50 border w-72 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-dao-red focus:border-dao-red block p-2.5"
+                            accept="image/png, image/jpeg, image/svg+xml"
+                            onChange={e => setMainImageUrl(e)}
+                        />
+                        <img
+                            alt={`Cover Image for logo`}
+                            className='rounded-lg h-10 m-auto'
+                            src={inputFields.mainImageUrl}
+                        />
                     </div>
                 </div>
                 <div className='mb-6'>
@@ -380,9 +403,49 @@ export default function Post({ content, categories, tags }) {
                         onChange={e => setInputFields({ ...inputFields, demandDriversStrength: Number(e.target.value) })} />
                 </div>
                 <p className='block mb-2 text-sm font-medium text-gray-900'>total Strenght: {tokenStrength}</p>
-                <div className='mb-6'>
+                {/* <div className='mb-6'>
                     <label className='block mb-2 text-sm font-medium text-gray-900'>Our Take</label>
                     <Tiptap content={ourTake} setContent={setOurTake} />
+                </div> */}
+                <div className='mb-6'>
+                    <label className='block mb-2 text-sm font-medium text-gray-900'>Strong Points</label>
+                    <textarea rows="3"
+                        className="block p-2.5 w-full text-xs text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                        name='strongPoints'
+                        maxlength="250"
+                        value={inputFields.strongPoints}
+                        onChange={e => setInputFields({ ...inputFields, strongPoints: e.target.value })}
+                    />
+                </div>
+                <div className='mb-6'>
+                    <label className='block mb-2 text-sm font-medium text-gray-900'>Weak Points</label>
+                    <textarea rows="3"
+                        className="block p-2.5 w-full text-xs text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                        name='weakPoints'
+                        maxlength="250"
+                        value={inputFields.weakPoints}
+                        onChange={e => setInputFields({ ...inputFields, weakPoints: e.target.value })}
+                    />
+                </div>
+                <div className='mb-6'>
+                    <label className='block mb-2 text-sm font-medium text-gray-900'>Problems / Solutions</label>
+                    <textarea rows="3"
+                        className="block p-2.5 w-full text-xs text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                        name='problemSolution'
+                        maxlength="250"
+                        value={inputFields.problemSolution}
+                        onChange={e => setInputFields({ ...inputFields, problemSolution: e.target.value })}
+                    />
+                </div>
+                <div className='mb-6'>
+                    <label className='block mb-2 text-sm font-medium text-gray-900'>Predecessor</label>
+                    <textarea rows="3"
+                        className="block p-2.5 w-full text-xs text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                        name='parent'
+                        maxlength="250"
+                        value={inputFields.parent}
+                        onChange={e => setInputFields({ ...inputFields, parent: e.target.value })}
+                    />
                 </div>
                 <div className='mb-6'>
                     <label className='block mb-2 text-sm font-medium text-gray-900'>Three Month Horizon</label>
@@ -534,7 +597,7 @@ export default function Post({ content, categories, tags }) {
                         onClick={event => addResource(event)}>Add More..</button>
                 </div>
                 <button className="disabled:opacity-40 rounded-md mt-5 mb-5 bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
-                    type="submit" onClick={handleSubmit(e => submitData(e))}
+                    type="submit" onClick={handleSubmit(e => triggerSubmitData(e))}
                     disabled={formState.isSubmitting}>Submit</button>
             </form>
         </>
