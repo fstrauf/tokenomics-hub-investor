@@ -12,6 +12,17 @@ type Props = {
 
 const Tiptap: React.FC<Props> = (props) => {
     var content = props?.content ?? ''
+    // console.log('tiptap')
+    // console.log(typeof content)
+    // console.log(content)
+    // var editorContent = ''
+    if(typeof content === 'string'){
+        try{
+            content = JSON.parse(content)
+        } catch {
+
+        }        
+    }
 
     const editor = useEditor({
         extensions: [
@@ -19,14 +30,15 @@ const Tiptap: React.FC<Props> = (props) => {
             Image,
 
         ],
-        autofocus: 'all',
+        // autofocus: 'all',
         editorProps: {
             attributes: {
                 class: 'prose prose-sm sm:prose lg:prose-md xl:prose-lg m-5 focus:outline-none',
             },
         },
         content: content,
-        onUpdate({ editor }) {        
+        onUpdate({ editor }) {      
+            console.log(editor.getJSON())  
             props?.setContent(editor.getJSON())
         },
     })

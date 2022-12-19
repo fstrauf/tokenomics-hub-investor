@@ -82,7 +82,7 @@ export default function Post({ post, morePosts, preview }) {
                 slug={post.slug}
                 updatedAt={post.publishedAt}
                 shortDescription={post.shortDescription}
-                type={post.categories[0]?.title}
+                type={post.categories[0]?.label}
                 tags={post.tags}
                 tokenStrength={post.tokenStrength}
               />

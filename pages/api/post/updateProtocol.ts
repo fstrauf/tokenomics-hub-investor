@@ -4,15 +4,23 @@ import prisma from '../../../lib/prisma';
 export default async function handle(req, res) {
   const { values } = req.body;
 
-  // console.log(inputFields)
+
   const inputFields = values
+
+  // console.log(inputFields.tags.map(tag => {
+  //   return {
+  //     value: tag.value
+  //   }
+  // }
+  // ))
+
 
   const timeLine = inputFields?.protocolTimeLine?.map(tl => {
     return {
       // ...tl,
-      title: tl.title,      
+      title: tl.title,
       date: new Date(tl.date),
-      description: tl.description,      
+      description: tl.description,
     }
   })
 
@@ -46,7 +54,7 @@ export default async function handle(req, res) {
       title: inputFields.title,
       slug: inputFields.slug,
       shortDescription: inputFields.shortDescription,
-      breakdown: JSON.stringify(inputFields.deepDive),
+      breakdown: JSON.stringify(inputFields.breakdown),
       // ourTake: JSON.stringify(ourTake),
       // published: false,
       publishedAt: new Date(),
@@ -69,16 +77,20 @@ export default async function handle(req, res) {
       horizon: inputFields.horizon,
       metrics: inputFields.metrics,
       diagramUrl: inputFields.diagramUrl,
+      strongPoints: inputFields.strongPoints,
+      weakPoints: inputFields.weakPoints,
+      problemSolution: inputFields.problemSolution,
+      parent: inputFields.parent,
       // author: {
       //   connect: {
       //     email: 'f.strauf@gmail.com',
       //   }
       // },
       categories: {
-        connect: inputFields.categories.map(cats => { return { value: cats } })
+        connect: inputFields.categories.map(cat => { return { value: cat.value } })
       },
       tags: {
-        connect: inputFields.tags.map(tags => { return { value: tags } })
+        connect: inputFields.tags.map(tag => { return { value: tag.value } })
       },
       ProtocolResources: {
         createMany: {

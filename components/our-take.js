@@ -7,23 +7,36 @@ export default function OurTake({ content }) {
       <h1 className='text-xl md:text-2xl lg:text-3xl font-bold mt-10 mb-4 md:mt-20 text-black section-head'>Protocol Analysis.</h1>
       <div className='border-2 rounded-lg bg-white'>
         <div className='ml-2'>
-          <h1 className='section-head'>Details</h1>
-          <div className="m-auto w-40">
-            <h1 className="ml-2 mr-2 font-bold">Strong Points</h1>
-          </div>
-          <div className="w-full self-center">{content.strongPoints}</div>
-          <div className="m-auto w-40">
-            <h1 className="ml-2 mr-2 font-bold">Weak Points</h1>
-          </div>
-          <div className="w-full self-center">{content.weakPoints}</div>
-          <div className="m-auto w-40">
-            <h1 className="ml-2 mr-2 font-bold">Problems & Solutions</h1>
-          </div>
-          <div className="w-full self-center">{content.problemSolution}</div>
-          <div className="m-auto w-40">
-            <h1 className="ml-2 mr-2 font-bold">Predecessors</h1>
-          </div>
-          <div className="w-full self-center">{content.parent}</div>
+          {/* <h1 className='section-head'>Details</h1>
+          <h1 className="mr-2 mt-3 font-bold text-left">Strong Points</h1>
+          <div className="w-full">{content.strongPoints}</div>
+          <h1 className="mr-2 mt-3 font-bold">Weak Points</h1>
+          <div className="w-full">{content.weakPoints}</div>
+          <h1 className="mr-2 mt-3 font-bold">Problems & Solutions</h1>
+          <div className="w-full">{content.problemSolution}</div>
+          <h1 className="mr-2 mt-3 font-bold">Predecessors</h1>
+          <div className="w-full self-center">{content.parent}</div> */}
+          <table className="text-sm text-left text-gray-500 dark:text-gray-400 bg-gray-50 m-2">
+            <caption className='section-head'>Details</caption>
+            <tbody>
+              <tr className="">
+                <th scope="row" className="py-3 px-6 font-medium text-gray-900 whitespace-nowrap">Strong Points</th>
+                <td className="py-4 px-6 bg-white border-l text-gray-900">{content.strongPoints}</td>
+              </tr>
+              <tr>
+                <th scope="row" className="py-3 px-6 font-medium text-gray-900 whitespace-nowrap">Weak Points</th>
+                <td className="py-4 px-6 bg-white border-l text-gray-900">{content.weakPoints}</td>
+              </tr>
+              <tr>
+                <th scope="row" className="py-3 px-6 font-medium text-gray-900 whitespace-nowrap">Problems & Solutions</th>
+                <td className="py-4 px-6 bg-white border-l text-gray-900">{content.problemSolution}</td>
+              </tr>
+              <tr>
+                <th scope="row" className="py-3 px-6 font-medium text-gray-900 whitespace-nowrap">Predecessors</th>
+                <td className="py-4 px-6 bg-white border-l text-gray-900">{content.parent}</td>
+              </tr>
+            </tbody>
+          </table>
           <table className="text-sm text-left text-gray-500 dark:text-gray-400 bg-gray-50 m-2">
             <caption className='section-head'>Investment Take</caption>
             <tbody>

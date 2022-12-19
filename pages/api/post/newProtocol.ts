@@ -21,7 +21,7 @@ export default async function handle(req, res) {
         title: inputFields.title,
         slug: inputFields.slug,
         shortDescription: inputFields.shortDescription,
-        breakdown: JSON.stringify(inputFields.deepDive),
+        breakdown: JSON.stringify(inputFields.breakdown),
         // ourTake: JSON.stringify(ourTake),
         published: false,
         publishedAt: new Date(),
@@ -54,10 +54,10 @@ export default async function handle(req, res) {
           }
         },
         categories: {
-          connect: inputFields.categories.map(cats => { return { value: cats } })
+          connect: inputFields.categories.map(cat => { return { value: cat.value } })
         },
         tags: {
-          connect: inputFields.tags.map(tags => { return { value: tags } })
+          connect: inputFields.tags.map(tag => { return { value: tag.value } })
         },
         ProtocolResources: {
           createMany: {

@@ -11,21 +11,25 @@ const FormSelect = ({
 }) => {
   function onChange(option) {
     // console.log(option)
+    // console.log(field.name)
     form.setFieldValue(
       field.name,
-      option ? (option).map((item) => item.value) : [],
+      option ? (option).map((item) => item) : [],
     );
   }
 
-  const getValue = () => {
-    if (options) {
-      return isMulti
-        ? options.filter((option) => field?.value?.indexOf(option.value) >= 0)
-        : options.find((option) => option.value === field.value);
-    } else {
-      return isMulti ? [] : ('');
-    }
-  };
+  // const getValue = () => {
+  //   console.log(JSON.stringify(options))
+  //   console.log('field ' + JSON.stringify(field.value))
+  //   console.log(options.find(option => option.value === field.value))
+  //   if (options) {
+  //     return isMulti
+  //       ? options.filter((option) => field?.value?.indexOf(option.value) >= 0)
+  //       : options.find((option) => option.value === field.value);
+  //   } else {
+  //     return isMulti ? [] : ('');
+  //   }
+  // };
 
   if (!isMulti) {
     return (
@@ -44,7 +48,7 @@ const FormSelect = ({
         className="react-select-container"
         classNamePrefix="react-select"
         name={field.name}
-        value={getValue()}
+        value={field.value}
         onChange={onChange}
         options={options}
         isMulti={true}

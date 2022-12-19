@@ -3,7 +3,7 @@ import Layout from "../../components/layout";
 import { useSession } from "next-auth/react";
 import prisma from "../../lib/prisma";
 import React from 'react'
-import Post from "../../components/post";
+import Post from "../../components/post2";
 import Header from '../../components/header'
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {

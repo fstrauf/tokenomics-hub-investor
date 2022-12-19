@@ -12,12 +12,14 @@ import FormTipTap from './form/FormTipTap';
 import FormStrength from './form/FormStrength';
 import FormImageSelect from './form/FormImageSelect';
 import FormId from './form/FormId';
-// import FormImageDisplay from './FormImageDisplay';
-
+import FormDate from './form/FormDate';
 
 export default function Post2({ content, categories, tags }) {
 
-    const [postId, setPostId] = useState('')
+    // console.log(categories)
+    // console.log(content)
+
+    const [postId, setPostId] = useState(content.id)
 
     const AutoSave = ({ debounceMs = 30000 }) => {
         //https://itnext.io/formik-introduction-autosave-react-19d4c15cfb90
@@ -90,13 +92,7 @@ export default function Post2({ content, categories, tags }) {
                     const message = `An error has occured: ${response.status}`;
                     throw new Error(message);
                 }else {
-                    //connect the returned id to the inputfields.id
-                    // const id = await response.text()
-                    // console.log(response)
                     toast.success('Changes auto-saved ',{position: 'bottom-right',});
-                    // setPostId(JSON.parse(id).id)
-                    // setFieldValue('id', JSON.parse(id).id)
-                    //set id as values
                 }
 
                 // await Router.push('/');
@@ -116,6 +112,7 @@ export default function Post2({ content, categories, tags }) {
             <Formik
                 initialValues={content}
                 onSubmit={submitData}
+                // enableReinitialize={true}
             >
                 {({ isSubmitting, values, setFieldValue }) => (
                     <Form>
@@ -128,6 +125,7 @@ export default function Post2({ content, categories, tags }) {
                             <label className='block mb-2 text-sm font-medium text-gray-900'>
                                 Slug</label>
                             <Field type="text" name='slug' className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-dao-red focus:border-dao-red block w-full p-2.5" />
+                            <Field type="text" name='id' className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-dao-red focus:border-dao-red block w-full p-2.5" />
                             <FormId postId={postId} type="text" name='id' className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-dao-red focus:border-dao-red block w-full p-2.5" />
                         </div>
                         <div className='mb-6'>
@@ -194,12 +192,13 @@ export default function Post2({ content, categories, tags }) {
                                                                     />
                                                                 </th>
                                                                 <td className="py-2 px-3">
-                                                                    <Field
+                                                                    {/* <Field
                                                                         name={`protocolTimeLine.${index}.date`}
                                                                         placeholder="Date"
                                                                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-1.5"
                                                                         type="date"
-                                                                    />
+                                                                    /> */}
+                                                                    <Field name={`protocolTimeLine.${index}.date`} as={FormDate} placeholder="Short description" />
                                                                 </td>
                                                                 <td className="py-2 px-3">
                                                                     <Field name={`protocolTimeLine.${index}.description`} as={FormText} placeholder="Short description" />
@@ -321,7 +320,7 @@ export default function Post2({ content, categories, tags }) {
                         <div className='mb-6'>
                             <label className='block mb-2 text-sm font-medium text-gray-900'>Deep Dive</label>
                             {/* <Tiptap content={deepDive} setContent={setDeepDive} /> */}
-                            <Field name="deepDive" as={FormTipTap} placeholder="Deep Dive" onChange={(e) => setFieldValue("deepDive", e)} />
+                            <Field name="breakdown" as={FormTipTap} placeholder="Deep Dive" onChange={(e) => setFieldValue("breakdown", e)} />
                         </div>
                         <div className='mb-6'>
                             <label className='block mb-2 text-sm font-medium text-gray-900'>Diagram</label>
