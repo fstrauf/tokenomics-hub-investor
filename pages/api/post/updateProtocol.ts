@@ -1,19 +1,10 @@
 
 import prisma from '../../../lib/prisma';
+import {  Prisma } from '@prisma/client'
 
 export default async function handle(req, res) {
   const { values } = req.body;
-
-
   const inputFields = values
-
-  // console.log(inputFields.tags.map(tag => {
-  //   return {
-  //     value: tag.value
-  //   }
-  // }
-  // ))
-
 
   const timeLine = inputFields?.protocolTimeLine?.map(tl => {
     return {
@@ -111,6 +102,16 @@ export default async function handle(req, res) {
     )
 
   } catch (e) {
+    if (e instanceof Prisma.PrismaClientKnownRequestError) {
+      // The .code property can be accessed in a type-safe manner
+      if (e.code === 'P2002') {
+        // res.statusText = 'Unique Constraint. Slug might already exist!'
+        return res.status(500).send({ error: 'Slug might already exist!' })
+        // console.log(
+        //   'There is a unique constraint violation, a new user cannot be created with this email'
+        // )
+      }
+    }
     throw e
   }
 

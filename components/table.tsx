@@ -44,7 +44,7 @@ const columns = [
     id: 'Token Strength',
     cell: info => <TokenStrength value={info.getValue()} />
   }),
-  columnHelper.accessor(row => row.categories[0]?.title, {
+  columnHelper.accessor(row => row.categories[0]?.label, {
     id: 'Category',
     cell: info => <StatusPill value={info.getValue()} />
   }),

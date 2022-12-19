@@ -60,7 +60,6 @@ export default function Post2({ content, categories, tags }) {
 
                 if (!response.ok) {
                     const error = await response.text()
-                    // toast.custom((t) => (<Toast t={t} msg={JSON.parse(error).error} />))
                     toast.error(JSON.parse(error).error,{position: 'bottom-right',});
                     throw new Error(error);
                 } else {
@@ -69,11 +68,7 @@ export default function Post2({ content, categories, tags }) {
                     // console.log(response)
                     toast.success('Changes auto-saved '+ JSON.parse(id).id,{position: 'bottom-right',});
                     setPostId(JSON.parse(id).id)
-                    // setFieldValue('id', JSON.parse(id).id)
-                    //set id as values
                 }
-
-                // await Router.push('/');
                 
                 setSubmitting(false);
                 console.log('protocol created');
@@ -89,8 +84,10 @@ export default function Post2({ content, categories, tags }) {
                 });
 
                 if (!response.ok) {
-                    const message = `An error has occured: ${response.status}`;
-                    throw new Error(message);
+                    const error = await response.text()
+                    toast.error(JSON.parse(error).error,{position: 'bottom-right',});
+                    throw new Error(error);
+
                 }else {
                     toast.success('Changes auto-saved ',{position: 'bottom-right',});
                 }
