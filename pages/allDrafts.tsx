@@ -38,7 +38,7 @@ export async function getStaticProps() {
     include: {
       categories: {
         select: {
-          title: true,
+          label: true,
         }
       },
       author: {}
