@@ -10,7 +10,7 @@ export default function Header() {
             Tokenomics Hub
           </Link>
         </h2>
-        <Search isPost={true} />
+        {/* <Search isPost={true} /> */}
       </section>
     </>
   )

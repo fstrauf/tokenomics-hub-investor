@@ -19,7 +19,7 @@ export default function Intro() {
         </div>
       </section>
       <div className="flex place-content-center mb-10">
-        <Search isPost={false} />
+        {/* <Search isPost={false} /> */}
       </div>
     </div>
   )

@@ -30,7 +30,7 @@ ChartJS.register(
 export default function Calculator() {
  
   const structure = {
-    totalSupply: 100000000,
+    totalSupply: 100,
     months: 60,
     breakdown: [
       {
@@ -111,16 +111,18 @@ export default function Calculator() {
       var cumulativeEmissions: number[] = []
 
       for (let i = 0; i < months; i++) {
-        // for (let i = 0; i < (bd.vestedMonths + bd.lockedMonths); i++) {
         var monthlyEmission = 0
         if (i < bd.lockedMonths) {
-          monthlyEmission = 0
-          // monthlyEmissions.push(0)
+          monthlyEmission = 0          
         } else {
-          if (i < (bd.vestedMonths + bd.lockedMonths)) {
+          if (i < (Number(bd.vestedMonths) + Number(bd.lockedMonths))) {
+            console.log("i " + i + " " + bd.vestedMonths + " " + bd.lockedMonths)
             monthlyEmission = tokenAllocation / bd.vestedMonths
+          } else {
+            monthlyEmission = 0
           }
         }
+
         monthlyEmissions.push(monthlyEmission)
         if (i === 0) {
           cumulativeEmissions.push(monthlyEmission)
@@ -209,6 +211,8 @@ export default function Calculator() {
     setInputFields(data)
   }
 
+  // console.log("areaData " + JSON.strareaData)
+
   return (
     <>
         <h1 className="text-3xl font-bold">
@@ -240,27 +244,131 @@ export default function Calculator() {
               onClick={addFields}>Add More..</button>
             <button className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-1.5 mr-2 mb-2"
               onClick={generateCharts}>Generate Charts</button>
-            <div className="overflow-x-auto relative">
-              <table className="w-full text-sm text-left text-gray-500 mb-5">
+            <div className="overflow-x-auto">
+              <table className="text-sm text-left text-gray-500 mb-5">
                 <thead className="text-xs text-gray-700 uppercase bg-gray-50">
                   <tr>
                     <th scope="col" className="py-3 px-6">
                       Category
                     </th>
-                    <th scope="col" className="py-3 px-6">
+                    <th scope="col" className="py-3 px-6 w-1/6">
                       Lockup Period
                     </th>
-                    <th scope="col" className="py-3 px-6">
+                    <th scope="col" className="py-3 px-6 w-1/6">
                       Vesting Period
                     </th>
                     <th scope="col" className="py-3 px-6">
                       Percentage Allocation
+                    </th>
+                    <th scope="col" className="py-3 px-6 w-1/6">
+                      Token Allocation
                     </th>
                     <th scope="col" className="py-3 px-6">
                       Color
                     </th>
                     <th scope="col" className="py-3 px-6">
 
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {inputFields.map((input, index) => {
+                    return (
+                      <tr key={index} className="bg-white border-b ">
+                        <th scope="row" className="py-2 px-3 font-medium text-gray-900 whitespace-nowrap ">
+                          <input
+                            name='category'
+                            placeholder='Category'
+                            value={input.category}
+                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-1.5"
+                            onChange={event => handleFormChange(index, event)}
+                          />
+                        </th>
+                        <td className="py-2 px-3">
+                          <input
+                            name='lockedMonths'
+                            placeholder='Months locked'
+                            value={input.lockedMonths}
+                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-1.5"
+                            onChange={event => handleFormChange(index, event)}
+                          />
+                        </td>
+                        <td className="py-2 px-3">
+                          <input
+                            name='vestedMonths'
+                            placeholder='Months Vested'
+                            value={input.vestedMonths}
+                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-1.5"
+                            onChange={event => handleFormChange(index, event)}
+                          />
+                        </td>
+                        <td className="py-2 px-3">
+                          <input
+                            name='allocationP'
+                            placeholder='Allocation Percentage'
+                            value={input.allocationP}
+                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-1.5"
+                            onChange={event => handleFormChange(index, event)}
+                          />
+                        </td>
+                        <td className="py-2 px-3">
+                          <p>{input.allocationP/100*totalSupply}</p>
+                        </td>
+                        <td className="py-2 px-3">
+                          <input
+                            name='color'
+                            placeholder='Color'
+                            value={input.color}
+                            type='color'
+                            className=''
+                            onChange={event => handleFormChange(index, event)}
+                          />
+                        </td>
+                        <td className="py-2 px-3">
+                          <button type="button" className="text-white bg-red-500 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-800 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center mr-2"
+                            onClick={e => removeFields(e, index)} >
+                            <svg
+                              fill="white"
+                              viewBox="0 0 16 16"
+                              height="1em"
+                              width="1em"
+                            // {...props}
+                            >
+                              <path d="M4 8a.5.5 0 01.5-.5h7a.5.5 0 010 1h-7A.5.5 0 014 8z" />
+                            </svg>
+                          </button>
+                        </td>
+                      </tr>
+                    )
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </form>
+          <div className='w-full'>
+            <Line options={options} data={areaData} />
+          </div>
+          <div className='flex flex-col m-auto place-items-center w-full'>
+            <div className='w-80'>
+              <Pie data={pieData} />
+            </div>
+          </div>
+        </div>
+        <h1 className="text-xl font-bold">
+          Raw Data
+        </h1>
+        <div>          
+          <table className="w-full text-sm text-left text-gray-500 mb-5">
+                <thead className="text-xs text-gray-700 uppercase bg-gray-50">
+                  <tr>
+                    <th scope="col" className="py-3 px-6">
+                      Month
+                    </th>
+                    <th scope="col" className="py-3 px-6">
+                      Cumulative Emissions
+                    </th>
+                    <th scope="col" className="py-3 px-6">
+                      Monthly Emissions
                     </th>
                   </tr>
                 </thead>
@@ -333,17 +441,6 @@ export default function Calculator() {
                   })}
                 </tbody>
               </table>
-            </div>
-          </form>
-          <div className='w-full'>
-            <Line options={options} data={areaData} />
-          </div>
-          <div className='flex flex-col m-auto place-items-center w-full'>
-            <div className='w-80'>
-              <Pie data={pieData} />
-            </div>
-
-          </div>
         </div>
     </>
   )
