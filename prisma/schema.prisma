@@ -32,16 +32,16 @@ model Post {
   publishedAt           DateTime?
   mainImageUrl          String?
   tokenUtility          String?             @db.TinyText
-  tokenUtilityStrength  Int?
+  tokenUtilityStrength  Float?
   businessModel         String?             @db.TinyText
-  businessModelStrength Int?
+  businessModelStrength Float?
   valueCreation         String?             @db.TinyText
-  valueCreationStrength Int?
+  valueCreationStrength Float?
   valueCapture          String?             @db.TinyText
-  valueCaptureStrength  Int?
+  valueCaptureStrength  Float?
   demandDrivers         String?             @db.TinyText
-  demandDriversStrength Int?
-  tokenStrength         Int?
+  demandDriversStrength Float?
+  tokenStrength         Float?
   threeMonthHorizon     String?             @db.TinyText
   oneYearHorizon        String?             @db.TinyText
   upside                String?             @db.TinyText

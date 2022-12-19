@@ -27,9 +27,9 @@ export default function NewProtocol({ categories, tags, user }) {
   const defaultContent =
   {
     id: '',
-    title: 'Tokenomics DAO',
-    slug: 'tdao',
-    shortDescription: 'A great place to discuss Tokenomics',
+    title: '',
+    slug: '',
+    shortDescription: '',
     categories: [
       // { value: 1, label: 'DeFi' },
       // { value: 2, label: 'DAO' }
@@ -40,37 +40,37 @@ export default function NewProtocol({ categories, tags, user }) {
       // { id: 3, title: 'Yield Bearing' }
     ],
     protocolTimeLine: [
-      { title: 'TGE', date: today, description: 'token generation event' }
+      // { title: 'TGE', date: today, description: 'token generation event' }
     ],
     publishedAt: today,
     breakdown: '',
     mainImageUrl: 'https://storage.googleapis.com/my-bucket-bbc0e24/Logo_Tokenomics_DAO.png',
-    tokenUtility: 'Governance',
-    tokenUtilityStrength: 50,
-    businessModel: 'Consulting, Education, Content',
-    businessModelStrength: 80,
-    valueCreation: 'Produce great content',
-    valueCreationStrength: 70,
-    valueCapture: 'Holders govern over treausry',
-    valueCaptureStrength: 60,
-    demandDrivers: 'Decide over what happens with revenue',
-    demandDriversStrength: 80,
-    totalTokenStrength: 100,
-    threeMonthHorizon: 'bear market',
-    oneYearHorizon: 'will be over soon',
-    upside: 'TDAO creates a ton of revenue',
-    downside: 'tokens are a scam',
-    horizon: 'very long term',
-    metrics: 'revnue, profit, growth',
-    diagramUrl: 'https://viewer.diagrams.net/?tags=%7B%7D&highlight=0000ff&edit=_blank&layers=1&nav=1&title=tokenomics_BanklessDAO.drawio#Uhttps%3A%2F%2Fdrive.google.com%2Fuc%3Fid%3D1w7W4n-NS7DPGq1e-2KaErjTEhjQMQFCs%26export%3Ddownload',
+    tokenUtility: '',
+    tokenUtilityStrength: 1,
+    businessModel: '',
+    businessModelStrength: 1,
+    valueCreation: '',
+    valueCreationStrength: 1,
+    valueCapture: '',
+    valueCaptureStrength: 1,
+    demandDrivers: '',
+    demandDriversStrength: 1,
+    totalTokenStrength: 1,
+    threeMonthHorizon: '',
+    oneYearHorizon: '',
+    upside: '',
+    downside: '',
+    horizon: '',
+    metrics: '',
+    diagramUrl: '',
     ProtocolResources: [
-      { title: 'website', url: 'https://www.tokenomicshub.xyz/', internal: true }
+      // { title: 'website', url: 'https://www.tokenomicshub.xyz/', internal: true }
     ],
     Author: { email: user?.email },
-    strongPoints: 'Please write a concise, bullet point based list showcasing the protocol and tokens strong points',
-    weakPoints: 'Please write a concise, bullet point based list showcasing the protocol and tokens weak points',
-    problemSolution: 'Please indicate what problem the protocol is solving and what is its solution.',
-    parent: 'Please indicate what protocols you are building upon',
+    strongPoints: '',
+    weakPoints: '',
+    problemSolution: '',
+    parent: '',
   }
 
   return (
