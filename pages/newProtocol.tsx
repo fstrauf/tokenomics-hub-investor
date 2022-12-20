@@ -91,21 +91,22 @@ export default function NewProtocol({ categories, tags, user }) {
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   // const session = await getSession({ req });
 
-  // const categories = await prisma.category.findMany()
-  // const tags = await prisma.tag.findMany()
+  const categories = await prisma.category.findMany()
+  const tags = await prisma.tag.findMany()
 
-  // var user = null
+  var user = null
   // if (session) {
-  //   user = await prisma.user.findUnique({
-  //     where: {
-  //       email: session.user.email
-  //     },
-  //   });
+    user = await prisma.user.findUnique({
+      where: {
+        // email: session.user.email
+        email: 'flo@tokenomicsdao.com'
+      },
+    });
   // }
 
-  const categories = null
-  const tags = null
-  const user = null
+  // const categories = null
+  // const tags = null
+  // const user = null
 
   return {
     props: {
