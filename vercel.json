@@ -3,5 +3,6 @@
   "github": { "silent": true, "autoJobCancelation": true },
   "rewrites": [
     { "source": "/studio/(.*)", "destination": "/studio/index.html" }
-  ]
+  ],
+  "regions": ["syd1"]
 }

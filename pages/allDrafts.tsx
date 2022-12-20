@@ -15,7 +15,7 @@ export default function AllDrafts({ posts }) {
         <Layout>
           <Header />
           <h1 className='font-bold text-2xl mb-5'>All Unpublished Drafts</h1>
-          <Drafts posts={posts} />
+          <Drafts posts={posts} context='allDrafts' />
         </Layout>
       </>
     )

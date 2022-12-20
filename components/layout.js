@@ -2,7 +2,7 @@ import Footer from '../components/footer'
 import Meta from '../components/meta'
 import Login from '../components/login'
 
-export default function Layout({ preview, children }) {
+export default function Layout({ children }) {
 
   return (
     <>

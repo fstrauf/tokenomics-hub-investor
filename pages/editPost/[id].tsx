@@ -53,7 +53,7 @@ const EditPost: React.FC<PostProps> = (props) => {
 
   let title = props.post.title;
   if (!props.post.published) {
-    title = `Editing Draft ${title} . `;
+    title = `Editing Draft ${title}.`;
   }
 
   console.log(props.post)

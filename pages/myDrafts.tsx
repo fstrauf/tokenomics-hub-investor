@@ -2,7 +2,7 @@ import Layout from '../components/layout'
 import Header from '../components/header'
 import React from 'react';
 import prisma from '../lib/prisma'
-import Router from "next/router";
+// import Router from "next/router";
 import Drafts from '../components/drafts';
 import { GetServerSideProps } from 'next';
 import { getSession } from 'next-auth/react';
@@ -26,8 +26,8 @@ export default function MyDrafts({ posts }) {
     <>
       <Layout>
         <Header />
-        <h1 className='font-bold text-2xl mb-5'>All Unpublished Drafts</h1>
-        <Drafts posts={posts} />    
+        <h1 className='font-bold text-2xl mb-5'>My Unpublished Drafts</h1>
+        <Drafts posts={posts} context='myDrafts' />    
       </Layout>
     </>
   )

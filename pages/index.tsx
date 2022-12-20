@@ -5,8 +5,9 @@ import Layout from '../components/layout'
 import Head from 'next/head'
 import Table from '../components/table'
 // import prisma from '../lib/prisma';
-import Link from 'next/link';
+// import Link from 'next/link';
 import prisma from '../lib/prisma'
+import { GetServerSideProps } from 'next'
 
 type Props = {
   // rewardRound: any;
@@ -20,7 +21,7 @@ const Index: React.FC<Props> = (props) => {
 
   return (
     <>
-      <Layout preview={props.preview}>
+      <Layout >
         <Head>
           <title>Tokenomics Hub</title>
           <meta name="Explore, compare and evaluate tokenomics of crypto projects." content="Created by Tokenomics DAO" />
@@ -46,7 +47,7 @@ const Index: React.FC<Props> = (props) => {
 
 export default Index
 
-export async function getStaticProps({ preview = false }) {
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   // const allPosts = await getAllPostsForHome(preview)
 
   const allPosts = await prisma.post.findMany({
@@ -99,9 +100,9 @@ export async function getStaticProps({ preview = false }) {
 
   return {
     props: {
-      allPosts, preview,
+      allPosts,
       // rewardRound 
     },
-    revalidate: 1,
+    // revalidate: 1,
   }
 }

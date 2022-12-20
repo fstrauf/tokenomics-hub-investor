@@ -3,7 +3,7 @@ import Router from "next/router";
 import { useForm } from "react-hook-form";
 
 
-export default function Drafts({ posts }) {
+export default function Drafts({ posts, context }) {
     const { handleSubmit, formState } = useForm();
     const { data: session, status } = useSession()
 
@@ -21,7 +21,7 @@ export default function Drafts({ posts }) {
         await fetch(`/api/post/delete/${id}`, {
             method: "PUT",
         });
-        await Router.push("/allDrafts");
+        await Router.push(`/${context}`);
     }
 
     return (

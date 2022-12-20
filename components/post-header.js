@@ -28,7 +28,7 @@ export default function PostHeader({ title, updatedAt, shortDescription, type, t
       <div className="mb-6 text-lg flex flex-auto gap-4">
         <h1 className='font-bold'>Tags:</h1>
         {tags && tags.map((tag) => (
-          <p className='px-3 py-1 text-sm rounded-full bg-gray-600 text-white'>{tag?.label}</p>
+          <p key={tag.value} className='px-3 py-1 text-sm rounded-full bg-gray-600 text-white'>{tag?.label}</p>
         ))}
       </div>
       <div className='px-4 py-1.5 mb-2 w-28 text-white font-medium text-sm leading-tight uppercase rounded-lg shadow-md hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out flex items-center bg-[#1da1f2]'>
