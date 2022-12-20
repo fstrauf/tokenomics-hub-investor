@@ -7,6 +7,8 @@ export default async function handle(req, res) {
   // const notify = () => toast('Here is your toast.');
   const inputFields = values
 
+  console.log("new " + inputFields.breakdown)
+
   const timeLine = inputFields?.protocolTimeLine?.map(tl => {
     return {
       ...tl,
@@ -21,7 +23,7 @@ export default async function handle(req, res) {
         title: inputFields.title,
         slug: inputFields.slug,
         shortDescription: inputFields.shortDescription,
-        breakdown: JSON.stringify(inputFields.breakdown),
+        breakdown: inputFields.breakdown,
         // ourTake: JSON.stringify(ourTake),
         published: false,
         publishedAt: new Date(),

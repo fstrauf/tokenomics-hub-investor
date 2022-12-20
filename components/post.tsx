@@ -33,7 +33,7 @@ export default function Post({ content, categories, tags }) {
     }
 
     const submitData = async (e: React.SyntheticEvent) => {
-        console.log("submit " + inputFields.slug)
+        // console.log("submit " + inputFields.slug)
 
         const body = { ourTake, deepDive, inputFields, selectedCats, selectedTags, tokenStrength };
 
@@ -138,7 +138,7 @@ export default function Post({ content, categories, tags }) {
     }
 
     const handleInputChange = (e) => {
-        console.log(inputFields.slug)
+        // console.log(inputFields.slug)
         setInputFields({ ...inputFields, title: e.target.value })
         debounceSubmit()
     }

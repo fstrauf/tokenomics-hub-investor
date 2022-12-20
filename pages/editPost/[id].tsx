@@ -22,6 +22,8 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     },
   });
 
+  // console.log("edit " + post.breakdown)
+
   const categories = await prisma.category.findMany()
   const tags = await prisma.tag.findMany()
 
@@ -40,6 +42,8 @@ const EditPost: React.FC<PostProps> = (props) => {
     return <div>Authenticating ...</div>;
   }
 
+  // console.log("component " + props.post.breakdown)
+
   if (!session) {
     return (
       <>
@@ -56,15 +60,13 @@ const EditPost: React.FC<PostProps> = (props) => {
     title = `Editing Draft ${title}.`;
   }
 
-  console.log(props.post)
-
   return (
     <Layout>
       <Header />
       <div>
         <h2 className="text-4xl">{title} </h2>
         <p>By {props?.post.author?.name || "Unknown author"}</p>
-        <Post content={props.post} categories={props.categories} tags={props.tags}/>
+        <Post content={props.post} categories={props.categories} tags={props.tags} />
       </div>
     </Layout>
   );

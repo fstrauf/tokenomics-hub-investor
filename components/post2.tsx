@@ -1,25 +1,17 @@
-import React, { Suspense, useState } from 'react';
+import React, { useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
-// import debounce from 'lodash.debounce'
-// import { useFormik, useField, Field } from 'formik';
-import { Field, Form, Formik, FieldArray } from "formik";
-// import * as Yup from 'yup'
-// import { PostCreateSchema } from '../prisma/generated/schemas'
-// import Select from "react-select";
+import { Field, Form, Formik } from "formik";
 import FormSelect from './form/FormSelect';
 import FormText from './form/FormText';
-// import FormTipTap from './form/FormTipTap';
 import FormStrength from './form/FormStrength';
 import FormImageSelect from './form/FormImageSelect';
-// import FormId from './form/FormId';
 import FormDivider from './form/FormDivider';
 import FormAutoSave from './form/FormAutoSave';
-// import FormResources from './form/FormResources';
 import dynamic from 'next/dynamic'
 
 export default function Post2({ content, categories, tags }) {
 
-    // const DynamicComponent1 = dynamic(() => import('../components/hello1'))
+    // console.log("Post2 " + content.breakdown)
 
     const FormTipTap = dynamic(() => import('./form/FormTipTap'), { loading: () => <p>Loading</p> })
     const FormResources = dynamic(() => import('./form/FormResources'), { loading: () => <p>Loading</p> })
@@ -32,6 +24,8 @@ export default function Post2({ content, categories, tags }) {
 
     const submitData = async (values, { setSubmitting }) => {
         const body = { values };
+
+        // console.log("submit " + values.breakdown)
 
         if (values?.id === '') {
             try {
@@ -90,7 +84,6 @@ export default function Post2({ content, categories, tags }) {
             <Formik
                 initialValues={content}
                 onSubmit={submitData}
-            // enableReinitialize={true}
             >
                 {({ isSubmitting, values, setFieldValue }) => (
                     <Form>
@@ -104,7 +97,6 @@ export default function Post2({ content, categories, tags }) {
                                 <label className='block mb-2 text-sm font-medium text-gray-900'>Slug</label>
                                 <p className='text-xs text-gray-500 font-extralight mb-2'>To fetch API data, the slug needs to be API id from Coingecko.</p>
                             </div>
-                            {/* <label className='block mb-2 text-sm font-medium text-gray-900'>Slug</label> */}
                             <Field type="text" name='slug' className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-dao-red focus:border-dao-red block w-full p-2.5" />
                         </div>
                         <div className='mb-6 flex'>
@@ -140,70 +132,6 @@ export default function Post2({ content, categories, tags }) {
                             <label className='block mb-2 text-sm font-medium text-gray-900'>Timeline</label>
                             <p className='text-xs text-gray-500 font-extralight mb-2'>List the major milestones of the token.</p>
                             <FormTimeLine values={values} />
-                            {/* <div className="overflow-x-auto relative">
-                                <table className="w-full text-sm text-left text-gray-500 mb-1">
-                                    <thead className="text-xs text-gray-700 uppercase bg-gray-50">
-                                        <tr>
-                                            <th scope="col" className="py-3 px-6">
-                                                Title
-                                            </th>
-                                            <th scope="col" className="py-3 px-6">
-                                                Date
-                                            </th>
-                                            <th scope="col" className="py-3 px-6">
-                                                Description
-                                            </th>
-                                            <th scope="col" className="py-3 px-6">
-
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <FieldArray name='protocolTimeLine'
-                                        render={arrayHelpers => (
-                                            <>
-                                                <tbody>
-                                                    {values?.protocolTimeLine.length > 0 &&
-                                                        values?.protocolTimeLine?.map((input, index) => (
-                                                            <tr key={index} className="bg-white border-b ">
-                                                                <th scope="row" className="py-2 px-3 font-medium text-gray-900 whitespace-nowrap ">
-                                                                    <Field
-                                                                        name={`protocolTimeLine.${index}.title`}
-                                                                        placeholder="Title"
-                                                                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-1.5"
-                                                                        type="text"
-                                                                    />
-                                                                </th>
-                                                                <td className="py-2 px-3">
-                                                                    <Field name={`protocolTimeLine.${index}.date`} as={FormDate} placeholder="Short description" />
-                                                                </td>
-                                                                <td className="py-2 px-3">
-                                                                    <Field name={`protocolTimeLine.${index}.description`} as={FormText} placeholder="Short description" />
-                                                                </td>
-                                                                <td className="py-2 px-3">
-                                                                    <button type="button" className="text-white bg-red-500 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-800 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center mr-2"
-                                                                        onClick={() => arrayHelpers.remove(index)}
-                                                                    >
-                                                                        <svg
-                                                                            fill="white"
-                                                                            viewBox="0 0 16 16"
-                                                                            height="1em"
-                                                                            width="1em"
-                                                                        >
-                                                                            <path d="M4 8a.5.5 0 01.5-.5h7a.5.5 0 010 1h-7A.5.5 0 014 8z" />
-                                                                        </svg>
-                                                                    </button>
-                                                                </td>
-                                                            </tr>
-                                                        ))}
-
-                                                </tbody>
-                                                <button type="button" className="mt-2 rounded-md bg-dao-red px-2 py-1 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
-                                                    onClick={() => arrayHelpers.push({ title: 'TGE', date: today, description: 'token generation event' })}>Add More..</button>
-                                            </>
-                                        )}
-                                    />
-                                </table>
-                            </div> */}
                         </div>
                         <div className='mb-6 flex'>
                             <div className='basis-1/4'>
@@ -256,7 +184,7 @@ export default function Post2({ content, categories, tags }) {
                         <FormAutoSave debounceMs={10000} />
                         <button className="disabled:opacity-40 rounded-md mt-5 mb-5 bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
                             type="submit"
-                            disabled={isSubmitting}>Submit</button>
+                            disabled={isSubmitting}>Save</button>
                     </Form>
                 )}
             </Formik>

@@ -38,7 +38,7 @@ const Tiptap: React.FC<Props> = (props) => {
         },
         content: content,
         onUpdate({ editor }) {      
-            console.log(editor.getJSON())  
+            // console.log(editor.getJSON())  
             props?.setContent(editor.getJSON())
         },
     })

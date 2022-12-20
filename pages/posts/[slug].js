@@ -33,6 +33,8 @@ import PostMeta from '../../components/postMeta'
 
 export default function Post({ post, morePosts, preview }) {
 
+  // console.log(post)
+
   const { handleSubmit, formState } = useForm();
 
   const { data: session, status } = useSession()
@@ -151,6 +153,8 @@ export async function getStaticProps({ params, preview = false }) {
       author: {},
     }
   })
+
+  // console.log("slug " + data.breakdown)
 
   return {
     props: {
