@@ -13,6 +13,7 @@ import FormStrength from './form/FormStrength';
 import FormImageSelect from './form/FormImageSelect';
 import FormId from './form/FormId';
 import FormDate from './form/FormDate';
+import FormDivider from './form/FormDivider';
 
 export default function Post2({ content, categories, tags }) {
 
@@ -248,6 +249,7 @@ export default function Post2({ content, categories, tags }) {
                                 />
                             </div>
                         </div>
+                        <FormDivider text='Token Strength' />
                         <div className='mb-6 flex'>
                             <div className='basis-1/4'>
                                 <label className='block mb-2 text-sm font-medium text-gray-900'>Token Utility</label>
@@ -306,6 +308,7 @@ export default function Post2({ content, categories, tags }) {
                         <p className='block mb-2 text-sm font-medium text-gray-900'>total Strength:</p>
                         
                         <FormStrength name='tokenStrength' />
+                        <FormDivider text='Token Analysis' />
                         <div className='mb-6 flex'>
                             <div className='basis-1/4'>
                                 <label className='block mb-2 text-sm font-medium text-gray-900'>Strong Points</label>
@@ -334,6 +337,7 @@ export default function Post2({ content, categories, tags }) {
                             </div>
                             <Field name="parent" as={FormText} placeholder="Predecessor" />
                         </div>
+                        <FormDivider text='Investment Take' />
                         <div className='mb-6 flex'>
                             <div className='basis-1/4'>
                                 <label className='block mb-2 text-sm font-medium text-gray-900'>Three Month Horizon</label>
@@ -376,6 +380,7 @@ export default function Post2({ content, categories, tags }) {
                             </div>
                             <Field name="metrics" as={FormText} placeholder="Metrics" />
                         </div>
+                        <FormDivider text='Deep Dive' />
                         <div className='mb-6'>
                             <div className='basis-1/4'>
                                 <label className='block mb-2 text-sm font-medium text-gray-900'>Deep Dive</label>
@@ -385,7 +390,7 @@ export default function Post2({ content, categories, tags }) {
                             <Field name="breakdown" as={FormTipTap} placeholder="Deep Dive" onChange={(e) => setFieldValue("breakdown", e)} />
                         </div>
                         
-
+                        <FormDivider text='Additional Information' />
                         <div className='mb-6'>
                             <div className='basis-1/4'>
                                 <label className='block mb-2 text-sm font-medium text-gray-900'>Diagram</label>

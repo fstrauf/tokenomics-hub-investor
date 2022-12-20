@@ -2,7 +2,7 @@ import Layout from '../components/layout'
 import Header from '../components/header'
 import React from 'react';
 import prisma from '../lib/prisma'
-import Post from '../components/post';
+// import Post from '../components/post';
 import Post2 from '../components/post2';
 import { getSession } from 'next-auth/react';
 import { GetServerSideProps } from 'next';
@@ -28,7 +28,7 @@ export default function NewProtocol({ categories, tags, user }) {
   {
     id: '',
     title: '',
-    slug: '',
+    slug: 'tdao',
     shortDescription: '',
     categories: [
       // { value: 1, label: 'DeFi' },

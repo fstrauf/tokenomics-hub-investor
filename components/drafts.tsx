@@ -14,6 +14,14 @@ export default function Drafts({ posts }) {
             method: "PUT",
         });
         await Router.push("/");
+    }    
+
+    const deleteDraft = async (id: string) => {
+        // console.log(id)
+        await fetch(`/api/post/delete/${id}`, {
+            method: "PUT",
+        });
+        await Router.push("/allDrafts");
     }
 
     return (
@@ -60,7 +68,8 @@ export default function Drafts({ posts }) {
                                 </td>
                                 <td className="py-2 px-3">
                                     <button type="button" className="disabled:opacity-40 text-white bg-red-500 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-800 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center mr-2"
-                                    disabled={!(session?.user?.role === 'admin')}>
+                                    disabled={!(session?.user?.role === 'admin')}
+                                    onClick={handleSubmit(() => deleteDraft(post.id))}>
                                         <svg fill="white" viewBox="0 0 16 16" height="1em" width="1em">
                                             <path d="M4 8a.5.5 0 01.5-.5h7a.5.5 0 010 1h-7A.5.5 0 014 8z" />
                                         </svg>

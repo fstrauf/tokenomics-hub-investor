@@ -20,7 +20,7 @@ model Post {
   id                    String              @id @default(cuid())
   title                 String?
   slug                  String              @unique @default("eth")
-  shortDescription      String?             @db.TinyText
+  shortDescription      String?             @db.Text
   breakdown             String?             @db.Text
   ourTake               String?             @db.Text
   published             Boolean             @default(false)
@@ -31,28 +31,28 @@ model Post {
   protocolTimeLine      ProtocolTimeLine[]
   publishedAt           DateTime?
   mainImageUrl          String?
-  tokenUtility          String?             @db.TinyText
+  tokenUtility          String?             @db.Text
   tokenUtilityStrength  Float?
-  businessModel         String?             @db.TinyText
+  businessModel         String?             @db.Text
   businessModelStrength Float?
-  valueCreation         String?             @db.TinyText
+  valueCreation         String?             @db.Text
   valueCreationStrength Float?
-  valueCapture          String?             @db.TinyText
+  valueCapture          String?             @db.Text
   valueCaptureStrength  Float?
-  demandDrivers         String?             @db.TinyText
+  demandDrivers         String?             @db.Text
   demandDriversStrength Float?
   tokenStrength         Float?
-  threeMonthHorizon     String?             @db.TinyText
-  oneYearHorizon        String?             @db.TinyText
-  upside                String?             @db.TinyText
-  downside              String?             @db.TinyText
-  horizon               String?             @db.TinyText
-  metrics               String?             @db.TinyText
-  diagramUrl            String?             @db.TinyText
-  strongPoints          String?             @db.TinyText
-  weakPoints            String?             @db.TinyText
-  problemSolution       String?             @db.TinyText
-  parent                String?             @db.TinyText
+  threeMonthHorizon     String?             @db.Text
+  oneYearHorizon        String?             @db.Text
+  upside                String?             @db.Text
+  downside              String?             @db.Text
+  horizon               String?             @db.Text
+  metrics               String?             @db.Text
+  diagramUrl            String?             @db.Text
+  strongPoints          String?             @db.Text
+  weakPoints            String?             @db.Text
+  problemSolution       String?             @db.Text
+  parent                String?             @db.Text
   ProtocolResources     ProtocolResources[]
 
   @@index([authorId])

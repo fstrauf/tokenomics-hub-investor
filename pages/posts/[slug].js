@@ -10,7 +10,7 @@ import SectionSeparator from '../../components/section-separator'
 import Layout from '../../components/layout'
 // import { getAllPostsWithSlug, getPostAndMorePosts } from '../../lib/api'
 import PostTitle from '../../components/post-title'
-import Head from 'next/head'
+// import Head from 'next/head'
 import TokenStrength from '../../components/token-strength'
 import ProtocolStats from '../../components/protocol-stats'
 import Resources from '../../components/resources'
@@ -19,16 +19,17 @@ import { Link } from 'react-scroll'
 import Diagram from '../../components/diagram'
 import FeedbackPopup from '../../components/feedback-popup'
 import { useState, useCallback } from 'react'
-import Comments from '../../components/comments'
-import Form from '../../components/form'
+// import Comments from '../../components/comments'
+// import Form from '../../components/form'
 import { useSession } from 'next-auth/react';
 import Login from '../../components/login'
 import AuthorCard from '../../components/authorCard'
 import EditPiece from '../../components/edit-piece'
-import { HOME_OG_IMAGE_URL } from '../../lib/constants'
+// import { HOME_OG_IMAGE_URL } from '../../lib/constants'
 import prisma from '../../lib/prisma'
 import Router from "next/router";
 import { useForm } from "react-hook-form";
+import PostMeta from '../../components/postMeta'
 
 export default function Post({ post, morePosts, preview }) {
 
@@ -62,21 +63,8 @@ export default function Post({ post, morePosts, preview }) {
         ) : (
           <>
             <article className=''>
-              <Head>
-                <title>{post.title}</title>
+              <PostMeta title={post.title} content={post.shortDescription} />
 
-                <meta property='twitter:card' content='summary_large_image' />
-                <meta name="twitter:site" content="@tokenomicsdao" />
-                <meta name="twitter:creator" content="@tokenomicsdao" />
-                <meta property='og:title' content={`Tokenomics Hub: ${post.title}`} />
-                <meta property="og:url" content="https://www.tokenomicshub.xyz/" />
-                <meta property="og:type" content="website" />
-                <meta property="og:image" content={HOME_OG_IMAGE_URL} />
-                <meta
-                  property="og:description"
-                  content={post.shortDescription}
-                />
-              </Head>
               <PostHeader
                 title={post.title}
                 slug={post.slug}
@@ -175,29 +163,13 @@ export async function getStaticProps({ params, preview = false }) {
 }
 
 export async function getStaticPaths() {
-  // const allPosts = await getAllPostsWithSlug()
 
   const allPosts = await prisma.post.findMany({
     select: {
-      // mainImageUrl: true,
-      // title: true,
-      // tokenStrength: true,
       slug: true,
-      // categories: {
-      //   select: {
-      //     title: true,
-      //   }
-
-      // }
     },
   })
 
-
-  // console.log(allPosts?.map((post) => ({
-  //   params: {
-  //     slug: post.slug,
-  //   },
-  // })) || [])
   return {
     paths:
       allPosts?.map((post) => ({

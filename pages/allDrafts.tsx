@@ -4,6 +4,7 @@ import React from 'react';
 import prisma from '../lib/prisma'
 import Drafts from '../components/drafts';
 import { useSession } from "next-auth/react"
+import { GetServerSideProps } from 'next';
 
 export default function AllDrafts({ posts }) {
   const { data: session, status } = useSession();
@@ -30,7 +31,8 @@ export default function AllDrafts({ posts }) {
   }
 }
 
-export async function getStaticProps() {
+// export async function getStaticProps() {
+  export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const posts = await prisma.post.findMany({
     where: {
       published: false,
@@ -49,6 +51,6 @@ export async function getStaticProps() {
     props: {
       posts: posts || null,
     },
-    revalidate: 1,
+    // revalidate: 1,
   }
 }
