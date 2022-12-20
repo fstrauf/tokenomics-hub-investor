@@ -5,7 +5,8 @@ import prisma from '../lib/prisma'
 // import Router from "next/router";
 import Drafts from '../components/drafts';
 import { GetServerSideProps } from 'next';
-import { getSession } from 'next-auth/react';
+import { unstable_getServerSession } from 'next-auth';
+import { authOptions } from './api/auth/[...nextauth]'
 import { useSession } from "next-auth/react"
 
 export default function MyDrafts({ posts }) {
@@ -34,7 +35,7 @@ export default function MyDrafts({ posts }) {
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-  const session = await getSession({ req });
+  const session = await unstable_getServerSession(req, res, authOptions);
 
   const posts = await prisma.post.findMany({
     where: {

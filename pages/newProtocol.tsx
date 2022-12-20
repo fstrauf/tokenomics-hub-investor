@@ -4,9 +4,11 @@ import React from 'react';
 import prisma from '../lib/prisma'
 // import Post from '../components/post';
 import Post2 from '../components/post2';
-import { getSession } from 'next-auth/react';
+// import { getSession } from 'next-auth/react';
 import { GetServerSideProps } from 'next';
 import { useSession } from "next-auth/react"
+import { unstable_getServerSession } from 'next-auth';
+import { authOptions } from './api/auth/[...nextauth]'
 
 export default function NewProtocol({ categories, tags, user }) {
   const { data: session, status } = useSession();
@@ -89,24 +91,21 @@ export default function NewProtocol({ categories, tags, user }) {
 
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-  // const session = await getSession({ req });
+  const session = await unstable_getServerSession(req, res, authOptions);
 
   const categories = await prisma.category.findMany()
   const tags = await prisma.tag.findMany()
 
   var user = null
-  // if (session) {
+  if (session) {
     user = await prisma.user.findUnique({
       where: {
-        // email: session.user.email
-        email: 'flo@tokenomicsdao.com'
+        email: session.user.email        
       },
     });
-  // }
+  }
 
-  // const categories = null
-  // const tags = null
-  // const user = null
+  console.log(user)
 
   return {
     props: {
