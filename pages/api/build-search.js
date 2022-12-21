@@ -12,7 +12,7 @@ export default async function handler(request, response) {
   const index = algoliaInstance.initIndex(process.env['NEXT_PUBLIC_ALGOLIA_INDEX'])
 
   try {
-    console.log(documents)
+    // console.log(documents)
     console.time(`Saving ${documents.length} documents to index:`)
     await index.saveObjects(documents)
     console.timeEnd(`Saving ${documents.length} documents to index:`)

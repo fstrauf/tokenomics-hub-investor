@@ -34,14 +34,14 @@ article a {
 
 .CircularProgressbar .CircularProgressbar-path {
   stroke: #FF6666;
-  stroke-linecap: round;
+  strokeLinecap: round;
   transition: stroke-dashoffset 0.5s ease 0s;
 }
 
 .CircularProgressbar .CircularProgressbar-trail {
   stroke: #d6d6d6;
   /* Used when trail is not full diameter, i.e. when props.circleRatio is set */
-  stroke-linecap: round;
+  strokeLinecap: round;
 }
 
 .CircularProgressbar .CircularProgressbar-text {

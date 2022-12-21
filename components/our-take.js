@@ -1,84 +1,105 @@
-import markdownStyles from './markdown-styles.module.css'
-import { PortableText } from '@portabletext/react'
-import { getImageDimensions } from '@sanity/asset-utils'
-import { urlForImage } from '../lib/sanity'
+import React from 'react'
+import { getJSXReady } from '../lib/helper'
 
-// Barebones lazy-loaded image component
-const SampleImageComponent = ({ value, isInline }) => {
-  const { width, height } = getImageDimensions(value)
-  return (
-    <div className=''>
-      <img
-        className='m-auto'
-        src={urlForImage(value).width(isInline ? 100 : 800).url()}
-        alt={value.alt || ' '}
-        loading="lazy"
-        style={{
-          display: isInline ? 'inline-block' : 'block',
-          aspectRatio: width / height,
-        }}
-      />
-    </div>
-  )
-}
-
-const components = {
-  types: {
-    image: SampleImageComponent,
-  },
-  list: {
-    bullet: ({ children }) => <ul className="list-disc list-inside -indent-6 ml-6">{children}</ul>,
-    number: ({ children }) => <ol className="list-decimal list-inside">{children}</ol>,
-  },
-  listItem: {
-    bullet: ({ children }) => <li>{children}</li>,
-  },
-}
-
-export default function OurTake({ content, investmentTake }) {
+export default function OurTake({ content }) {
   return (
     <>
-      <h1 className='text-xl md:text-2xl lg:text-3xl font-bold mt-10 mb-4 md:mt-20 text-black section-head'>Our Take.</h1>
+      <h1 className='text-xl md:text-2xl lg:text-3xl font-bold mt-10 mb-4 md:mt-20 text-black section-head'>Protocol Analysis.</h1>
       <div className='border-2 rounded-lg bg-white'>
         <div className='ml-2'>
-          <div className="mx-auto max-w-2xl" className={markdownStyles.markdown}>
-            <PortableText value={content}
-              components={components}
-            />
-          </div>
-          {investmentTake ? (
-            <table class="text-sm text-left text-gray-500 dark:text-gray-400 bg-gray-50 m-2">
-              <caption className='section-head'>Investment Take</caption>
-              <tbody>
-                <tr class="">
-                  <th scope="row" class="py-3 px-6 py-4 px-6 font-medium text-gray-900 whitespace-nowrap">3 month time horizon</th>
-                  <td class="py-4 px-6 bg-white border-l text-gray-900">{investmentTake?.threeMonthHorizon}</td>
-                </tr>
-                <tr>
-                  <th scope="row" class="py-3 px-6 py-4 px-6 font-medium text-gray-900 whitespace-nowrap">1 year time horizon</th>
-                  <td class="py-4 px-6 bg-white border-l text-gray-900">{investmentTake?.oneYearHorizon}</td>
-                </tr>
-                <tr>
-                  <th scope="row" class="py-3 px-6 py-4 px-6 font-medium text-gray-900 whitespace-nowrap">Potential Upside</th>
-                  <td class="py-4 px-6 bg-white border-l text-gray-900">{investmentTake?.upside}</td>
-                </tr>
-                <tr>
-                  <th scope="row" class="py-3 px-6 py-4 px-6 font-medium text-gray-900 whitespace-nowrap">Downside / Risk</th>
-                  <td class="py-4 px-6 bg-white border-l text-gray-900">{investmentTake?.downside}</td>
-                </tr>
-                <tr>
-                  <th scope="row" class="py-3 px-6 py-4 px-6 font-medium text-gray-900 whitespace-nowrap">Investment decision horizon</th>
-                  <td class="py-4 px-6 bg-white border-l text-gray-900">{investmentTake?.horizon}</td>
-                </tr>
-                <tr>
-                  <th scope="row" class="py-3 px-6 py-4 px-6 font-medium text-gray-900 whitespace-nowrap">Metrics</th>
-                  <td class="py-4 px-6 bg-white border-l text-gray-900">{investmentTake?.metrics}</td>
-                </tr>
-              </tbody>
-            </table>
-          ) : (
+          <table className="text-sm text-left text-gray-500 dark:text-gray-400 bg-gray-50 m-2">
+            <caption className='section-head'>Details</caption>
+            <tbody>
+              <tr className="">
+                <th scope="row" className="py-3 px-6 font-medium text-gray-900 whitespace-nowrap">Strong Points</th>
+                <td className="py-4 px-6 bg-white border-l text-gray-900">
+                  <pre id="message" className="whitespace-pre-line block p-2.5 w-full font-sans text-sm text-gray-900">
+                    {content.strongPoints}
+                  </pre>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row" className="py-3 px-6 font-medium text-gray-900 whitespace-nowrap">Weak Points</th>
+                <td className="py-4 px-6 bg-white border-l text-gray-900">
+                  <pre id="message" className="whitespace-pre-line block p-2.5 w-full font-sans text-sm text-gray-900">
+                    {content.weakPoints}
+                  </pre>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row" className="py-3 px-6 font-medium text-gray-900 whitespace-nowrap">Problems & Solutions</th>
+                <td className="py-4 px-6 bg-white border-l text-gray-900">
+                  <pre id="message" className="whitespace-pre-line block p-2.5 w-full font-sans text-sm text-gray-900">
+                    {content.problemSolution}
+                  </pre>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row" className="py-3 px-6 font-medium text-gray-900 whitespace-nowrap">Predecessors</th>
+                <td className="py-4 px-6 bg-white border-l text-gray-900">
+                  <pre id="message" className="whitespace-pre-line block p-2.5 w-full font-sans text-sm text-gray-900">
+                    {content.parent}
+                  </pre>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <table className="text-sm text-left text-gray-500 dark:text-gray-400 bg-gray-50 m-2">
+            <caption className='section-head'>Investment Take</caption>
+            <tbody>
+              <tr className="">
+                <th scope="row" className="py-3 px-6 font-medium text-gray-900 whitespace-nowrap">3 month time horizon</th>
+                <td className="py-4 px-6 bg-white border-l text-gray-900">
+                  <pre id="message" className="whitespace-pre-line block p-2.5 w-full font-sans text-sm text-gray-900">
+                    {content?.threeMonthHorizon}
+                  </pre>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row" className="py-3 px-6 font-medium text-gray-900 whitespace-nowrap">1 year time horizon</th>
+                <td className="py-4 px-6 bg-white border-l text-gray-900">
+                  <pre id="message" className="whitespace-pre-line block p-2.5 w-full font-sans text-sm text-gray-900">
+                    {content?.oneYearHorizon}
+                  </pre>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row" className="py-3 px-6 font-medium text-gray-900 whitespace-nowrap">Potential Upside</th>
+                <td className="py-4 px-6 bg-white border-l text-gray-900">
+                  <pre id="message" className="whitespace-pre-line block p-2.5 w-full font-sans text-sm text-gray-900">
+                    {content?.upside}
+                  </pre>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row" className="py-3 px-6 font-medium text-gray-900 whitespace-nowrap">Downside / Risk</th>
+                <td className="py-4 px-6 bg-white border-l text-gray-900">
+                  <pre id="message" className="whitespace-pre-line block p-2.5 w-full font-sans text-sm text-gray-900">
+                    {content?.downside}
+                  </pre>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row" className="py-3 px-6 font-medium text-gray-900 whitespace-nowrap">Investment decision horizon</th>
+                <td className="py-4 px-6 bg-white border-l text-gray-900">
+                  <pre id="message" className="whitespace-pre-line block p-2.5 w-full font-sans text-sm text-gray-900">
+                    {content?.horizon}
+                  </pre>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row" className="py-3 px-6 font-medium text-gray-900 whitespace-nowrap">Metrics</th>
+                <td className="py-4 px-6 bg-white border-l text-gray-900">
+                  <pre id="message" className="whitespace-pre-line block p-2.5 w-full font-sans text-sm text-gray-900">
+                    {content?.metrics}
+                  </pre>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          {/* ) : (
             <></>
-          )}
+          )} */}
         </div>
       </div>
     </>

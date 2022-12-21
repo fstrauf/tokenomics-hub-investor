@@ -1,13 +1,21 @@
 // @ts-check
-// const withBundleAnalyzer = require('@next/bundle-analyzer')({
-//   enabled: process.env.ANALYZE === 'true',
-// })
 /**
  * @type {import('next').NextConfig}
  **/
 const nextConfig = {
   images: {
-    domains: ['cdn.sanity.io', 'source.unsplash.com', 'tokenomicsdao.xyz'],
+    domains: ['source.unsplash.com'],
+  },
+  experimental: {
+    swcPlugins: [
+      [
+        'next-superjson-plugin',
+        {
+          excluded: [],
+        },
+      ],
+    ],
+    domains: ['tokenomicsdao.xyz'],
   },
   typescript: {
     // !! WARN !!
@@ -18,4 +26,9 @@ const nextConfig = {
   },
 }
 
-module.exports = nextConfig
+// module.exports = nextConfig
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true'
+})
+
+module.exports = withBundleAnalyzer(nextConfig)
