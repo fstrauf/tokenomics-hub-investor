@@ -15,6 +15,7 @@ const nextConfig = {
         },
       ],
     ],
+    domains: ['tokenomicsdao.xyz'],
   },
   typescript: {
     // !! WARN !!
