@@ -6,23 +6,31 @@ import prisma from '../lib/prisma'
 import Post2 from '../components/post2';
 // import { getSession } from 'next-auth/react';
 import { GetServerSideProps } from 'next';
-import { useSession } from "next-auth/react"
-import { unstable_getServerSession } from 'next-auth';
-import { authOptions } from './api/auth/[...nextauth]'
+// import { useSession } from "next-auth/react"
+// import { unstable_getServerSession } from 'next-auth';
+// import { authOptions } from './api/auth/[...nextauth]'
+// import { useAuth } from '@clerk/nextjs';
+// import { clerkClient, getAuth, buildClerkProps } from "@clerk/nextjs/server";
+// import type{ AuthData } from '@clerk/nextjs/dist/server/types'
+import { useUser } from '@clerk/nextjs';
 
-export default function NewProtocol({ categories, tags, user }) {
-  const { data: session, status } = useSession();
+export default function NewProtocol({ categories, tags }) {
+  // const { data: session, status } = useSession();
+  // const { isSignedIn } = useAuth();
 
-  if (!session) {
-    return (
-      <>
-        <Layout>
-          <Header />
-          <h1>You need to log in to create a protocol</h1>
-        </Layout>
-      </>
-    )
-  }
+  const { user } = useUser();
+
+  // console.log(user)
+  // if (!isSignedIn) {
+  //   return (
+  //     <>
+  //       <Layout>
+  //         <Header />
+  //         <h1>You need to log in to create a protocol</h1>
+  //       </Layout>
+  //     </>
+  //   )
+  // }
 
   const today = new Date().toLocaleDateString('en-CA')
 
@@ -68,11 +76,12 @@ export default function NewProtocol({ categories, tags, user }) {
     ProtocolResources: [
       // { title: 'website', url: 'https://www.tokenomicshub.xyz/', internal: true }
     ],
-    Author: { email: user?.email },
+    // Author: { email: user?.email },
     strongPoints: '',
     weakPoints: '',
     problemSolution: '',
     parent: '',
+    authorClerkId: user.id
   }
 
   return (
@@ -91,19 +100,28 @@ export default function NewProtocol({ categories, tags, user }) {
 
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-  const session = await unstable_getServerSession(req, res, authOptions);
+  // const session = await unstable_getServerSession(req, res, authOptions);
+  // const { userId }: AuthData = getAuth(req)
+  // const clerkUuser = userId ? await clerkClient.users.getUser(userId) : null;
+  // return { props: { ...buildClerkProps(ctx.req) } }
+  // console.log(clerkUuser?.emailAddresses[0].emailAddress)
 
   const categories = await prisma.category.findMany()
   const tags = await prisma.tag.findMany()
 
-  var user = null
-  if (session) {
-    user = await prisma.user.findUnique({
-      where: {
-        email: session.user.email        
-      },
-    });
-  }
+  // console.log(clerkUuser.primaryEmailAddressId)
+
+  // const primaryEmail = clerkUuser.emailAddresses.find(element => element.id === 'clerkUuser.primaryEmailAddressId').emailAddress
+
+  //this should use some linking with the clerk userid
+  // var user = null
+  // if (clerkUuser?.emailAddresses.length > 0) {
+  //   user = await prisma.user.findUnique({
+  //     where: {
+  //       email: primaryEmail
+  //     },
+  //   });
+  // }
 
   // console.log(user)
 
@@ -111,7 +129,8 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     props: {
       categories: categories || null,
       tags: tags || null,
-      user: user || null
+      // user: user || null,
+      // ...buildClerkProps(req)
     },
     // revalidate: 1,
   }

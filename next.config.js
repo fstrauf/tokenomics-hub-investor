@@ -4,7 +4,7 @@
  **/
 const nextConfig = {
   images: {
-    domains: ['source.unsplash.com'],
+    domains: ['source.unsplash.com', 'tokenomicsdao.xyz'],
   },
   experimental: {
     swcPlugins: [
@@ -15,7 +15,6 @@ const nextConfig = {
         },
       ],
     ],
-    domains: ['tokenomicsdao.xyz'],
   },
   typescript: {
     // !! WARN !!

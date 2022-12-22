@@ -21,7 +21,7 @@ import FeedbackPopup from '../../components/feedback-popup'
 import { useState, useCallback } from 'react'
 // import Comments from '../../components/comments'
 // import Form from '../../components/form'
-import { useSession } from 'next-auth/react';
+// import { useSession } from 'next-auth/react';
 import Login from '../../components/login'
 import AuthorCard from '../../components/authorCard'
 import EditPiece from '../../components/edit-piece'
@@ -30,14 +30,48 @@ import prisma from '../../lib/prisma'
 import Router from "next/router";
 import { useForm } from "react-hook-form";
 import PostMeta from '../../components/postMeta'
+// import { ClerkProvider, SignedIn, SignedOut, RedirectToSignIn } from '@clerk/nextjs';
+// import { useRouter } from 'next/router';
+import { useAuth } from '@clerk/nextjs';
+import { useUser } from '@clerk/nextjs';
+import { clerkClient } from "@clerk/nextjs/server";
+// import type{ AuthData } from '@clerk/nextjs/dist/server/types'
 
-export default function Post({ post, morePosts, preview }) {
+export default function Post({ post, morePosts, author }) {
+  const { getToken, isLoaded, isSignedIn } = useAuth();
+  const { user } = useUser();
+  const { handleSubmit, formState } = useForm();
+
+  // console.log(author)
+
+  // const role = user?.publicMetadata?.role ?? "" 
+
+  // console.log("user " + user)
+  var userIsAuthor = false
+  if(user?.id === post?.authorClerkId)
+  {
+    userIsAuthor = true
+  }
+
+  // var buttoHidden = !(!userIsAuthor || !(user?.publicMetadata?.role === 'contributor'))  || !isSignedIn || formState.isSubmitting
+  // console.log("button "+buttoHidden)
+  // console.log("role "+user?.publicMetadata?.role)
+  // console.log("bool "+ !(userIsAuthor || (user?.publicMetadata?.role === 'contributor')))
+  // console.log("bool " + !isSignedIn)
+  // console.log("bool "+ formState.isSubmitting)
+  // console.log("bool "+ (user?.publicMetadata?.role !== 'contributor'))
+
+  // console.log(user?.publicMetadata?.role)
+  // const { pathname } = useRouter();
+
+  // Check if the current route matches a public page
+  // const isPublicPage = publicPages.includes(pathname);
 
   // console.log(post)
 
-  const { handleSubmit, formState } = useForm();
+  
 
-  const { data: session, status } = useSession()
+  // const { data: session, status } = useSession()
 
   const [isOpen, setIsOpen] = useState(false)
 
@@ -56,8 +90,8 @@ export default function Post({ post, morePosts, preview }) {
   if (!router.isFallback && !post?.slug) {
     return <ErrorPage statusCode={404} />
   }
-  return (
-    <Layout preview={preview}>
+  return (    
+    <Layout>
       <Container>
         <Header />
         {router.isFallback ? (
@@ -76,9 +110,14 @@ export default function Post({ post, morePosts, preview }) {
                 tags={post.tags}
                 tokenStrength={post.tokenStrength}
               />
+              {/* <p>{(!userIsAuthor && !(role === 'contributor'))}  {!isSignedIn} {formState.isSubmitting} {role ==! 'contributor'}</p> */}
               <button onClick={handleSubmit(() => Router.push("/editPost/[id]", `/editPost/${post.id}`))}
-                disabled={!(session?.user?.role === 'admin') || !session?.user || formState.isSubmitting}
-                className="disabled:opacity-40 w-32 rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
+                // disabled={!(role === 'contributor') || !isSignedIn || formState.isSubmitting || !userIsAuthor}
+                disabled={!(userIsAuthor || (user?.publicMetadata?.role === 'contributor'))  || !isSignedIn || formState.isSubmitting}
+                // disabled={(!userIsAuthor && !(user?.publicMetadata?.role === 'contributor')) || !isSignedIn || formState.isSubmitting || user?.publicMetadata?.role ==! 'contributor'}
+                // disabled={buttoHidden}
+                // false && true = false || false || false ||  true
+                className="disabled:opacity-40 mb-3 w-28 rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
                 Edit
               </button>
               <FeedbackPopup isOpen={isOpen} handleIsOpen={handleIsOpen} />
@@ -103,12 +142,12 @@ export default function Post({ post, morePosts, preview }) {
                 />
                 <div id='stats'></div>
                 <ProtocolStats protocol={post.slug} />
-                {!session && (
+                {!isSignedIn && (
                   <div className='mt-10'>
                     <Login message="You need to sign in to see more - it's free" />
                   </div>
                 )}
-                <div className={`${session ? '' : 'blur-sm'}`}>
+                <div className={`${isSignedIn ? '' : 'blur-sm'}`}>
                   <div id='ourTake'></div>
                   <OurTake content={post} />
                   <div id='timeline'></div>
@@ -125,7 +164,8 @@ export default function Post({ post, morePosts, preview }) {
                 </div>
               </main>
               <h1 className='text-xl md:text-2xl lg:text-3xl font-bold mt-10 mb-4 md:mt-20 text-black section-head'>Author.</h1>
-              <AuthorCard author={post.author} />
+              
+              <AuthorCard author={author} />
             </article>
             {/* <Comments comments={post.comments} /> */}
             {/* <Form _id={post._id} /> */}
@@ -138,9 +178,10 @@ export default function Post({ post, morePosts, preview }) {
   )
 }
 
-export async function getStaticProps({ params, preview = false }) {
+export async function getStaticProps({ params }) {
   // const data = await getPostAndMorePosts(params.slug, preview)
-
+  // const user = userId ? await clerkClient.users.getUser('') : null;
+  // console.log(params)
   const data = await prisma.post.findUnique({
     where: {
       slug: params.slug,
@@ -150,17 +191,25 @@ export async function getStaticProps({ params, preview = false }) {
       tags: {},
       ProtocolResources: {},
       protocolTimeLine: {},
-      author: {},
+      author: {},      
     }
   })
-
-  // console.log("slug " + data.breakdown)
+  
+  const clerkUuser = data?.authorClerkId ? await clerkClient.users.getUser(data?.authorClerkId) : null;
+  
+  var properJSON = {}
+  try{
+    properJSON = JSON.parse(JSON.stringify(clerkUuser))
+  } catch {
+    // properJSON = {}
+  }
 
   return {
-    props: {
-      preview,
+    props: { 
       post: data || null,
       morePosts: data?.morePosts || null,
+      // ...buildClerkProps(params.req)
+      author: properJSON || null,
     },
     revalidate: 1,
   }

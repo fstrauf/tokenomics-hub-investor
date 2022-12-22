@@ -1,6 +1,6 @@
 import { GetServerSideProps } from "next";
 import Layout from "../../components/layout";
-import { useSession } from "next-auth/react";
+// import { useSession } from "next-auth/react";
 import prisma from "../../lib/prisma";
 import React from 'react'
 import Post from "../../components/post2";
@@ -37,23 +37,23 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 };
 
 const EditPost: React.FC<PostProps> = (props) => {
-  const { data: session, status } = useSession();
-  if (status === "loading") {
-    return <div>Authenticating ...</div>;
-  }
+  // const { data: session, status } = useSession();
+  // if (status === "loading") {
+  //   return <div>Authenticating ...</div>;
+  // }
 
   // console.log("component " + props.post.breakdown)
 
-  if (!session) {
-    return (
-      <>
-        <Layout>
-          <Header />
-          <h1>You need to log in to create a protocol</h1>
-        </Layout>
-      </>
-    )
-  }
+  // if (!session) {
+  //   return (
+  //     <>
+  //       <Layout>
+  //         <Header />
+  //         <h1>You need to log in to create a protocol</h1>
+  //       </Layout>
+  //     </>
+  //   )
+  // }
 
   let title = props.post.title;
   if (!props.post.published) {

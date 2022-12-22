@@ -3,19 +3,25 @@ import Header from '../components/header'
 import React from 'react';
 import prisma from '../lib/prisma'
 import Drafts from '../components/drafts';
-import { useSession } from "next-auth/react"
+// import { useSession } from "next-auth/react"
 import { GetServerSideProps } from 'next';
+import { useAuth } from '@clerk/nextjs';
+import { useUser } from '@clerk/nextjs';
 
 export default function AllDrafts({ posts }) {
-  const { data: session, status } = useSession();
+  // const { data: session, status } = useSession();
+  const { getToken, isLoaded, isSignedIn } = useAuth();
+  const { user } = useUser();
 
-  if (session && session.user.role === "admin") {
+  const role = user?.publicMetadata?.role ?? "" 
+
+  if (isSignedIn && role === "contributor") {
     return (
       <>
         <Layout>
           <Header />
           <h1 className='font-bold text-2xl mb-5'>All Unpublished Drafts</h1>
-          <Drafts posts={posts} context='allDrafts' />
+          <Drafts posts={posts} context='allDrafts' role={role} />
         </Layout>
       </>
     )
