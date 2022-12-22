@@ -6,7 +6,7 @@ import FormText from './form/FormText';
 import FormStrength from './form/FormStrength';
 import FormImageSelect from './form/FormImageSelect';
 import FormDivider from './form/FormDivider';
-import FormAutoSave from './form/FormAutoSave';
+// import FormAutoSave from './form/FormAutoSave';
 import dynamic from 'next/dynamic'
 
 export default function Post2({ content, categories, tags }) {

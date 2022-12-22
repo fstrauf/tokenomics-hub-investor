@@ -4,6 +4,7 @@ import { CMS_NAME, HOME_OG_IMAGE_URL } from '../lib/constants'
 export default function Meta() {
   return (
     <Head>
+      <meta charSet="utf-8"></meta>
       <link
         rel="apple-touch-icon"
         sizes="180x180"

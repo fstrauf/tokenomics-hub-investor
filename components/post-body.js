@@ -1,8 +1,15 @@
 import React from 'react'
+import dynamic from 'next/dynamic'
 import { getJSXReady } from '../lib/helper';
 
 export default function PostBody({ content }) {
 
+
+  
+
+// const getJSXReady = dynamic(() =>
+//   import('../lib/helper').then((mod) => mod.getJSXReady)
+// )
   return (
     <>
       <h1 className='section-head text-xl md:text-2xl lg:text-3xl font-bold mt-10 md:mt-20 mb-4 text-black'>Deep Dive.</h1>

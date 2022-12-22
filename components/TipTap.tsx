@@ -1,7 +1,22 @@
 import { useEditor, EditorContent } from '@tiptap/react'
-import StarterKit from '@tiptap/starter-kit'
-import React from 'react'
+// import StarterKit from '@tiptap/starter-kit'
+import Blockquote from '@tiptap/extension-blockquote'
+import Bulletlist from '@tiptap/extension-bullet-list'
+import Codeblock from '@tiptap/extension-code-block'
+import Document from '@tiptap/extension-document'
+import Heading from '@tiptap/extension-heading'
+import Listitem from '@tiptap/extension-list-item'
+import Orderedlist from '@tiptap/extension-ordered-list'
+import Paragraph from '@tiptap/extension-paragraph'
+import Text from '@tiptap/extension-text'
+import Bold from '@tiptap/extension-bold'
+import Code from '@tiptap/extension-code'
+import Italic from '@tiptap/extension-italic'
+import Strike from '@tiptap/extension-strike'
+import Dropcursor from '@tiptap/extension-dropcursor'
+import Gapcursor from '@tiptap/extension-gapcursor'
 import Image from '@tiptap/extension-image'
+import React from 'react'
 import { uploadPhoto } from '../lib/fileUpload'
 
 type Props = {
@@ -26,7 +41,23 @@ const Tiptap: React.FC<Props> = (props) => {
 
     const editor = useEditor({
         extensions: [
-            StarterKit,
+            Blockquote,
+            Bulletlist,
+            Codeblock,
+            Document,
+            Heading,
+            Listitem,
+            Orderedlist,
+            Paragraph,
+            Text,
+            Bold,
+            Code,
+            Italic,
+            Strike,
+            Dropcursor,
+            Gapcursor,
+            // StarterKit,
+            // Image,
             Image,
 
         ],
@@ -240,7 +271,7 @@ const MenuBar = ({ editor }) => {
             className='text-sm ml-1 border-2 rounded-lg'>
                 hard break
             </button>
-            <button
+            {/* <button
                 type='button'
                 onClick={() => editor.chain().focus().undo().run()}
                 disabled={
@@ -267,7 +298,7 @@ const MenuBar = ({ editor }) => {
                 className='text-sm ml-1 border-2 rounded-lg'
             >
                 redo
-            </button>
+            </button> */}
         </>
     )
 }

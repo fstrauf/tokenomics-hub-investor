@@ -1,5 +1,5 @@
 import React from 'react'
-import { getJSXReady } from '../lib/helper'
+// import { getJSXReady } from '../lib/helper'
 
 export default function OurTake({ content }) {
   return (

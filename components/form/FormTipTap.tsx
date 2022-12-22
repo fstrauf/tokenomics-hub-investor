@@ -7,6 +7,7 @@ export const FormTipTap = ({
   ...props
 }) => {
   // console.log(props)
+  
   return (
     <div>
       <Tiptap content={props.value}

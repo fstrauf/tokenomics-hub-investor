@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import ErrorPage from 'next/error'
 import Container from '../../components/container'
-import PostBody from '../../components/post-body'
+// import PostBody from '../../components/post-body'
 import OurTake from '../../components/our-take'
 import Header from '../../components/header'
 import PostHeader from '../../components/post-header'
@@ -25,8 +25,13 @@ import { useForm } from "react-hook-form";
 import PostMeta from '../../components/postMeta'
 import { useAuth, useUser } from '@clerk/nextjs';
 import { clerkClient } from "@clerk/nextjs/server";
+import dynamic from 'next/dynamic'
 
 export default function Post({ post, morePosts, author }) {
+
+
+  const PostBody = dynamic(() => import('../../components/post-body'))
+
   const { getToken, isLoaded, isSignedIn } = useAuth();
   const { user } = useUser();
   const { handleSubmit, formState } = useForm();
@@ -37,7 +42,7 @@ export default function Post({ post, morePosts, author }) {
     userIsAuthor = true
   }
 
-  console.log(userIsAuthor)
+  // console.log(userIsAuthor)
 
   const [isOpen, setIsOpen] = useState(false)
 
