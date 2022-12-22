@@ -1,33 +1,55 @@
 import React, { FC } from 'react';
-import { useSession, signOut, signIn } from 'next-auth/react';
+// import { useSession, signOut, signIn } from 'next-auth/react';
 import { Menu, Transition } from '@headlessui/react'
 import { Fragment } from 'react'
 import Link from 'next/link';
-import { useForm } from "react-hook-form";
+// import { useForm } from "react-hook-form";
+import {
+  // ClerkProvider,
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  UserButton
+} from "@clerk/nextjs";
+
+import { useAuth } from '@clerk/nextjs';
+import { useUser } from '@clerk/nextjs';
 
 type Message = string
 
 const Login: FC<{ message: Message }> = ({ message }) => {
-  const { data: session, status } = useSession()
-  const { handleSubmit, formState } = useForm();
+  // const { data: session, status } = useSession()
+  // const { handleSubmit, formState } = useForm();
+  const { isSignedIn } = useAuth();
+  const { user } = useUser();
+
+  const role = user?.publicMetadata?.role ?? ""
 
   return (
     <>
       <div className='block m-auto'>
-        <div className='relative top-0 opacity-100 rounded p-3 m-0 bg-gray-100'>
-          {!session && (
+        <div className='rounded p-3 m-0 bg-gray-100 flex flex-row-reverse'>
+          {/* {!isSignedIn && (
             <span className='align-middle font-bold z-10 left-4 right-24 whitespace-nowrap text-ellipsis overflow-hidden leading-5'>
               {message}
             </span>
-          )}
-          {session?.user && (
+          )} */}
+          {/* {isSignedIn?.user && (
             <span className='align-middle mr-2'>
               <strong className='text-sm'>{session.user.email ?? session.user.name} ({session.user.role})</strong>
             </span>
-          )}
-          <Menu as="div" className="relative inline-block text-left z-60 float-right align-middle">
+          )} */}
+          <div className='align-middle inline-flex'>
+            <SignedIn>
+              <UserButton />
+            </SignedIn>
+            <SignedOut>
+              <SignInButton />
+            </SignedOut>
+          </div>
+          <Menu as="div" className="z-60 w-28">
             <div>
-              <Menu.Button className="align-middle inline-flex w-full justify-center rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
+              <Menu.Button className="align-middle inline-flex justify-center rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
                 Options
               </Menu.Button>
             </div>
@@ -46,7 +68,7 @@ const Login: FC<{ message: Message }> = ({ message }) => {
                     {({ active }) => (
                       <Link href="/newProtocol" className='no-underline'>
                         <button
-                          disabled={!session?.user}
+                          disabled={!isSignedIn}
                           className={`${active ? 'bg-dao-red text-white' : 'text-gray-900'} group flex w-full items-center rounded-md px-2 py-2 text-sm disabled:opacity-70`}>
                           New Protocol
                         </button>
@@ -57,7 +79,7 @@ const Login: FC<{ message: Message }> = ({ message }) => {
                     {({ active }) => (
                       <Link href="/allDrafts" className='no-underline'>
                         <button
-                          disabled={!(session?.user?.role === 'admin')}
+                          disabled={!(role === 'contributor')}
                           className={`${active ? 'bg-dao-red text-white' : 'text-gray-900'} group flex w-full items-center rounded-md px-2 py-2 text-sm disabled:opacity-70`}
                         >
                           All Drafts
@@ -69,7 +91,7 @@ const Login: FC<{ message: Message }> = ({ message }) => {
                     {({ active }) => (
                       <Link href="/myDrafts" className='no-underline'>
                         <button
-                          disabled={!session?.user}
+                          disabled={!isSignedIn}
                           className={`${active ? 'bg-dao-red text-white' : 'text-gray-900'} group flex w-full items-center rounded-md px-2 py-2 text-sm disabled:opacity-70`}
                         >
                           My Drafts
@@ -78,8 +100,8 @@ const Login: FC<{ message: Message }> = ({ message }) => {
                     )}
                   </Menu.Item>
                 </div>
-                <div className="px-1 py-1">
-                  <Menu.Item>
+                {/* <div className="px-1 py-1"> */}
+                {/* <Menu.Item>
                     {({ active }) => (
                       <button className={`${active ? 'bg-dao-red text-white' : 'text-gray-900'} group flex w-full items-center rounded-md px-2 py-2 text-sm disabled:opacity-40 ${formState.isSubmitting ? 'bg-red-200' : ''}`}
                         onClick={() => signOut({ callbackUrl: '/' })}>
@@ -94,8 +116,8 @@ const Login: FC<{ message: Message }> = ({ message }) => {
                         Log In
                       </button>
                     )}
-                  </Menu.Item>
-                </div>
+                  </Menu.Item> */}
+                {/* </div> */}
               </Menu.Items>
             </Transition>
           </Menu>

@@ -2,27 +2,13 @@ import Layout from '../components/layout'
 import Header from '../components/header'
 import React from 'react';
 import prisma from '../lib/prisma'
-// import Post from '../components/post';
 import Post2 from '../components/post2';
-// import { getSession } from 'next-auth/react';
 import { GetServerSideProps } from 'next';
-import { useSession } from "next-auth/react"
-import { unstable_getServerSession } from 'next-auth';
-import { authOptions } from './api/auth/[...nextauth]'
+import { useUser } from '@clerk/nextjs';
 
-export default function NewProtocol({ categories, tags, user }) {
-  const { data: session, status } = useSession();
+export default function NewProtocol({ categories, tags }) {
 
-  if (!session) {
-    return (
-      <>
-        <Layout>
-          <Header />
-          <h1>You need to log in to create a protocol</h1>
-        </Layout>
-      </>
-    )
-  }
+  const { user } = useUser();
 
   const today = new Date().toLocaleDateString('en-CA')
 
@@ -33,16 +19,10 @@ export default function NewProtocol({ categories, tags, user }) {
     slug: 'tdao',
     shortDescription: '',
     categories: [
-      // { value: 1, label: 'DeFi' },
-      // { value: 2, label: 'DAO' }
     ],
     tags: [
-      // { id: 1, title: 'Great DAO' },
-      // { id: 2, title: 'AMM' },
-      // { id: 3, title: 'Yield Bearing' }
     ],
     protocolTimeLine: [
-      // { title: 'TGE', date: today, description: 'token generation event' }
     ],
     publishedAt: today,
     breakdown: '',
@@ -68,11 +48,12 @@ export default function NewProtocol({ categories, tags, user }) {
     ProtocolResources: [
       // { title: 'website', url: 'https://www.tokenomicshub.xyz/', internal: true }
     ],
-    Author: { email: user?.email },
+    // Author: { email: user?.email },
     strongPoints: '',
     weakPoints: '',
     problemSolution: '',
     parent: '',
+    authorClerkId: user.id
   }
 
   return (
@@ -91,28 +72,13 @@ export default function NewProtocol({ categories, tags, user }) {
 
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-  const session = await unstable_getServerSession(req, res, authOptions);
-
   const categories = await prisma.category.findMany()
   const tags = await prisma.tag.findMany()
-
-  var user = null
-  if (session) {
-    user = await prisma.user.findUnique({
-      where: {
-        email: session.user.email        
-      },
-    });
-  }
-
-  // console.log(user)
 
   return {
     props: {
       categories: categories || null,
       tags: tags || null,
-      user: user || null
     },
-    // revalidate: 1,
   }
 }

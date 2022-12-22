@@ -4,10 +4,7 @@ import {  Prisma } from '@prisma/client'
 
 export default async function handle(req, res) {
   const { values } = req.body;
-  // const notify = () => toast('Here is your toast.');
   const inputFields = values
-
-  console.log("new " + inputFields.breakdown)
 
   const timeLine = inputFields?.protocolTimeLine?.map(tl => {
     return {
@@ -50,11 +47,12 @@ export default async function handle(req, res) {
         weakPoints: inputFields.weakPoints,
         problemSolution: inputFields.problemSolution,
         parent: inputFields.parent,
-        author: {
-          connect: {
-            email: inputFields.Author.email,
-          }
-        },
+        authorClerkId: inputFields.authorClerkId,
+        // author: {
+        //   connect: {
+        //     email: inputFields.Author.email,
+        //   }
+        // },
         categories: {
           connect: inputFields.categories.map(cat => { return { value: cat.value } })
         },

@@ -6,11 +6,13 @@ import Image from '@tiptap/extension-image'
 
 export const getJSXReady = (content) => {
 
-  // console.log(content)
-
-  const jsonContent = JSON.parse(content)
-  // console.log(jsonContent)
   var jsxReady = ''
+  // console.log("content "+ typeof content)
+  if(content === ''){
+    return jsxReady
+  }
+  const jsonContent = JSON.parse(content)
+  
   try {
     if (typeof jsonContent !== null) {
       if (Object.keys(jsonContent)?.length > 0) {

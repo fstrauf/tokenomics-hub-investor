@@ -178,10 +178,10 @@ export default function Post2({ content, categories, tags }) {
                         </div>
                         <div className='mb-6'>
                             <label className='block mb-2 text-sm font-medium text-gray-900'>Resources</label>
-                            <p className='text-xs text-gray-500 font-extralight mb-2'>List all links to further reading</p>
-                            <FormResources values={values} postId={postId} />
+                            <p className='text-xs text-gray-500 font-extralight mb-2'>List all links to further reading</p>                            
                         </div>
-                        <FormAutoSave debounceMs={10000} />
+                        <FormResources values={values} postId={postId} />
+                        <Field type="text" name='Author.email' disabled={true} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-dao-red focus:border-dao-red block w-full p-2.5" />
                         <button className="disabled:opacity-40 rounded-md mt-5 mb-5 bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
                             type="submit"
                             disabled={isSubmitting}>Save</button>

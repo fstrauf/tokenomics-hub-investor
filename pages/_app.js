@@ -1,9 +1,18 @@
 import '../styles/index.css'
 import { GoogleAnalytics } from "nextjs-google-analytics";
-import { SessionProvider } from 'next-auth/react';
+// import { SessionProvider } from 'next-auth/react';
 import Head from 'next/head'
+import { ClerkProvider, SignedIn, SignedOut, RedirectToSignIn } from '@clerk/nextjs';
+import { useRouter } from 'next/router';
+
+const publicPages = ["/", "/thub", "/terms", "/calculator", "/posts/[slug]", "/authors/[slug]"];
 
 function MyApp({ Component, pageProps }) {
+
+  const { pathname } = useRouter();
+
+  // Check if the current route matches a public page
+  const isPublicPage = publicPages.includes(pathname);
   return (
     <>
       <Head>
@@ -15,9 +24,22 @@ function MyApp({ Component, pageProps }) {
         <link rel="manifest" href="/site.webmanifest"></link>
       </Head>
       <GoogleAnalytics trackPageViews />
-      <SessionProvider session={pageProps.session}>
+      {/* <SessionProvider session={pageProps.session}> */}
+      <ClerkProvider {...pageProps}>
+      {isPublicPage ? (
         <Component {...pageProps} />
-      </SessionProvider>
+      ) : (
+        <>
+          <SignedIn>
+            <Component {...pageProps} />
+          </SignedIn>
+          <SignedOut>
+            <RedirectToSignIn />
+          </SignedOut>
+        </>
+      )}
+    </ClerkProvider>
+      {/* </SessionProvider> */}
     </>
   )
 }

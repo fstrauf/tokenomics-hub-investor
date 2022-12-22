@@ -1,11 +1,11 @@
-import { useSession } from "next-auth/react";
+// import { useSession } from "next-auth/react";
 import Router from "next/router";
 import { useForm } from "react-hook-form";
 
 
-export default function Drafts({ posts, context }) {
+export default function Drafts({ posts, context, role }) {
     const { handleSubmit, formState } = useForm();
-    const { data: session, status } = useSession()
+    // const { data: session, status } = useSession()
 
 
     const publishPost = async (id: string) => {
@@ -62,13 +62,13 @@ export default function Drafts({ posts, context }) {
                                 <td className="py-2 px-3">
                                     <button onClick={handleSubmit(() => publishPost(post.id))}
                                         className="disabled:opacity-40 w-32 rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
-                                        disabled={formState.isSubmitting || !(session?.user?.role === 'admin')}>
+                                        disabled={formState.isSubmitting || !(role === 'contributor')}>
                                         Publish
                                     </button>
                                 </td>
                                 <td className="py-2 px-3">
                                     <button type="button" className="disabled:opacity-40 text-white bg-red-500 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-800 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center mr-2"
-                                    disabled={!(session?.user?.role === 'admin')}
+                                    disabled={!(role === 'contributor')}
                                     onClick={handleSubmit(() => deleteDraft(post.id))}>
                                         <svg fill="white" viewBox="0 0 16 16" height="1em" width="1em">
                                             <path d="M4 8a.5.5 0 01.5-.5h7a.5.5 0 010 1h-7A.5.5 0 014 8z" />

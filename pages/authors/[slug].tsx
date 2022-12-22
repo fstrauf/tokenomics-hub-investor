@@ -1,58 +1,76 @@
 import Layout from '../../components/layout'
 import Intro from '../../components/intro'
-import ProjectCard from '../..//components/projectCard'
+import ProjectCard from '../../components/projectCard'
 // import { getAllAuthorsWithSlug, getAuthorAndPostsBySlug } from '../../lib/api'
 import PostPreview from '../../components/post-preview'
-import Moralis from 'moralis';
-import { EvmChain } from '@moralisweb3/evm-utils';
+// import Moralis from 'moralis';
+// import { EvmChain } from '@moralisweb3/evm-utils';
 import prisma from '../../lib/prisma'
+import type{ AuthData } from '@clerk/nextjs/dist/server/types'
+import { clerkClient, getAuth } from '@clerk/nextjs/server';
+import { GetServerSideProps } from 'next';
+import { useUser } from '@clerk/nextjs';
 
-export async function getServerSideProps({ params, preview = false }) {
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     // const data = await getAuthorAndPostsBySlug(params.slug, preview)
+    const { userId }: AuthData = getAuth(req)
+    // const clerkUuser = userId ? await clerkClient.users.getUser(userId) : null;
 
-    const data = await prisma.user.findUnique({
-        where: {
-            slug: params.slug,
-        },
-        include: {
-            posts: {},
-        },
-    })
+//get authorclerkid and select posts by that
 
-    await Moralis.start({ apiKey: process.env.MORALIS_API_KEY });
+    const result = await prisma.post.findMany({
+        where: { 
+            authorClerkId: userId
+        },        
+      })
 
-    const contract = '0x9ee89523c1b763563a0ab3f6e85336810290ea14'
+    //   console.log(result)
 
-    var consultingNFT
-    try{
-        const allNFTs = await Moralis.EvmApi.nft.getWalletNFTs({
-            address: data?.author?.wallet,
-            chain: EvmChain.POLYGON
-        });
+    // const data = await prisma.user.findUnique({
+    //     where: {
+    //         slug: params.slug,
+    //     },
+    //     include: {
+    //         posts: {},
+    //     },
+    // })
+
+    // await Moralis.start({ apiKey: process.env.MORALIS_API_KEY });
+
+    // const contract = '0x9ee89523c1b763563a0ab3f6e85336810290ea14'
+
+    // var consultingNFT
+    // try{
+    //     const allNFTs = await Moralis.EvmApi.nft.getWalletNFTs({
+    //         address: data?.author?.wallet,
+    //         chain: EvmChain.POLYGON
+    //     });
     
-        consultingNFT = allNFTs?.raw.result.filter(nft => {
-            if (nft.token_address === contract) {
-                return true
-            } else {
-                return false
-            }
-        })    
-    }catch{
+    //     consultingNFT = allNFTs?.raw.result.filter(nft => {
+    //         if (nft.token_address === contract) {
+    //             return true
+    //         } else {
+    //             return false
+    //         }
+    //     })    
+    // }catch{
 
-    }
+    // }
 
     return {
         props: {
-            preview,
-            authorPosts: data?.posts || null,
-            author: data?.author || null,
-            consultingNFT: consultingNFT || null,
+            // preview,
+            authorPosts: result || null,
+            // author: data?.author || null,
+            consultingNFT: null //consultingNFT || null,
         },
         // revalidate: 1,
     }
 }
 
-export default function UserProfile({ author, authorPosts, consultingNFT }) {
+// export default function UserProfile({ author, authorPosts, consultingNFT }) {
+    export default function UserProfile({ authorPosts, consultingNFT }) {
+        const { user } = useUser();
     return (
         <>
             <Layout>
@@ -87,7 +105,7 @@ export default function UserProfile({ author, authorPosts, consultingNFT }) {
                                 </div>
                                 <div className="text-center mt-12">
                                     <h3 className="text-4xl font-semibold leading-normal mb-2 text-blueGray-700 mb-2">
-                                        {author?.name}
+                                        {user?.username}
                                     </h3>
                                     <div className="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
                                         <i className="fas fa-map-marker-alt mr-2 text-lg text-blueGray-400"></i>
@@ -112,7 +130,7 @@ export default function UserProfile({ author, authorPosts, consultingNFT }) {
                                         <div>
                                             <h1 className='text-3xl mb-5'>Content Created</h1>
                                             {authorPosts?.map((post) => (
-                                                <div className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow-md m-5">
+                                                <div key={post.id} className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow-md m-5">
                                                     <div className="flex justify-center px-4 pt-4">
                                                         <PostPreview
                                                             // key={post.slug}

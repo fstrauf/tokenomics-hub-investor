@@ -26,6 +26,8 @@ model Post {
   published             Boolean             @default(false)
   author                User?               @relation(fields: [authorId], references: [id])
   authorId              String?
+  authorEmail           String?
+  authorClerkId         String?
   categories            Category[]
   tags                  Tag[]
   protocolTimeLine      ProtocolTimeLine[]
