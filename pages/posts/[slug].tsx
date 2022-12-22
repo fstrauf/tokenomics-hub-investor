@@ -37,6 +37,8 @@ export default function Post({ post, morePosts, author }) {
     userIsAuthor = true
   }
 
+  console.log(userIsAuthor)
+
   const [isOpen, setIsOpen] = useState(false)
 
   const handleIsOpen = useCallback((event) => {
