@@ -6,7 +6,8 @@
     "dev": "next",
     "fmt": "prettier --ignore-path .gitignore --write --cache .",
     "start:web": "next start",
-    "analyze": "ANALYZE=true next build"
+    "analyze": "ANALYZE=true next build",
+    "postinstall": "prisma generate"
   },
   "prettier": {
     "semi": false,
