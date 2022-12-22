@@ -5,18 +5,11 @@ import {  Prisma } from '@prisma/client'
 export default async function handle(req, res) {
   const { values } = req.body;
   const inputFields = values
-
-  // console.log("type " + typeof inputFields.breakdown)
-  // console.log("stringify " + JSON.stringify(inputFields.breakdown))
-  // console.log("raw " + inputFields.breakdown)
   
   var breakdown = inputFields.breakdown
   if (typeof inputFields.breakdown === 'object'){
     breakdown = JSON.stringify(inputFields.breakdown)
   }
-  // if (typeof inputFields.breakdown === 'string'){
-  //   const breakdown = inputFields.breakdown
-  // }
 
   const timeLine = inputFields?.protocolTimeLine?.map(tl => {
     return {

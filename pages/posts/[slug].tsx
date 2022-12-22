@@ -3,14 +3,11 @@ import ErrorPage from 'next/error'
 import Container from '../../components/container'
 import PostBody from '../../components/post-body'
 import OurTake from '../../components/our-take'
-// import MoreStories from '../../components/more-stories'
 import Header from '../../components/header'
 import PostHeader from '../../components/post-header'
 import SectionSeparator from '../../components/section-separator'
 import Layout from '../../components/layout'
-// import { getAllPostsWithSlug, getPostAndMorePosts } from '../../lib/api'
 import PostTitle from '../../components/post-title'
-// import Head from 'next/head'
 import TokenStrength from '../../components/token-strength'
 import ProtocolStats from '../../components/protocol-stats'
 import Resources from '../../components/resources'
@@ -19,59 +16,26 @@ import { Link } from 'react-scroll'
 import Diagram from '../../components/diagram'
 import FeedbackPopup from '../../components/feedback-popup'
 import { useState, useCallback } from 'react'
-// import Comments from '../../components/comments'
-// import Form from '../../components/form'
-// import { useSession } from 'next-auth/react';
 import Login from '../../components/login'
 import AuthorCard from '../../components/authorCard'
 import EditPiece from '../../components/edit-piece'
-// import { HOME_OG_IMAGE_URL } from '../../lib/constants'
 import prisma from '../../lib/prisma'
 import Router from "next/router";
 import { useForm } from "react-hook-form";
 import PostMeta from '../../components/postMeta'
-// import { ClerkProvider, SignedIn, SignedOut, RedirectToSignIn } from '@clerk/nextjs';
-// import { useRouter } from 'next/router';
-import { useAuth } from '@clerk/nextjs';
-import { useUser } from '@clerk/nextjs';
+import { useAuth, useUser } from '@clerk/nextjs';
 import { clerkClient } from "@clerk/nextjs/server";
-// import type{ AuthData } from '@clerk/nextjs/dist/server/types'
 
 export default function Post({ post, morePosts, author }) {
   const { getToken, isLoaded, isSignedIn } = useAuth();
   const { user } = useUser();
   const { handleSubmit, formState } = useForm();
 
-  // console.log(author)
-
-  // const role = user?.publicMetadata?.role ?? "" 
-
-  // console.log("user " + user)
   var userIsAuthor = false
   if(user?.id === post?.authorClerkId)
   {
     userIsAuthor = true
   }
-
-  // var buttoHidden = !(!userIsAuthor || !(user?.publicMetadata?.role === 'contributor'))  || !isSignedIn || formState.isSubmitting
-  // console.log("button "+buttoHidden)
-  // console.log("role "+user?.publicMetadata?.role)
-  // console.log("bool "+ !(userIsAuthor || (user?.publicMetadata?.role === 'contributor')))
-  // console.log("bool " + !isSignedIn)
-  // console.log("bool "+ formState.isSubmitting)
-  // console.log("bool "+ (user?.publicMetadata?.role !== 'contributor'))
-
-  // console.log(user?.publicMetadata?.role)
-  // const { pathname } = useRouter();
-
-  // Check if the current route matches a public page
-  // const isPublicPage = publicPages.includes(pathname);
-
-  // console.log(post)
-
-  
-
-  // const { data: session, status } = useSession()
 
   const [isOpen, setIsOpen] = useState(false)
 
@@ -110,13 +74,8 @@ export default function Post({ post, morePosts, author }) {
                 tags={post.tags}
                 tokenStrength={post.tokenStrength}
               />
-              {/* <p>{(!userIsAuthor && !(role === 'contributor'))}  {!isSignedIn} {formState.isSubmitting} {role ==! 'contributor'}</p> */}
               <button onClick={handleSubmit(() => Router.push("/editPost/[id]", `/editPost/${post.id}`))}
-                // disabled={!(role === 'contributor') || !isSignedIn || formState.isSubmitting || !userIsAuthor}
                 disabled={!(userIsAuthor || (user?.publicMetadata?.role === 'contributor'))  || !isSignedIn || formState.isSubmitting}
-                // disabled={(!userIsAuthor && !(user?.publicMetadata?.role === 'contributor')) || !isSignedIn || formState.isSubmitting || user?.publicMetadata?.role ==! 'contributor'}
-                // disabled={buttoHidden}
-                // false && true = false || false || false ||  true
                 className="disabled:opacity-40 mb-3 w-28 rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
                 Edit
               </button>
@@ -179,9 +138,7 @@ export default function Post({ post, morePosts, author }) {
 }
 
 export async function getStaticProps({ params }) {
-  // const data = await getPostAndMorePosts(params.slug, preview)
-  // const user = userId ? await clerkClient.users.getUser('') : null;
-  // console.log(params)
+
   const data = await prisma.post.findUnique({
     where: {
       slug: params.slug,

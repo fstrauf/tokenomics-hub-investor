@@ -4,11 +4,7 @@ import {  Prisma } from '@prisma/client'
 
 export default async function handle(req, res) {
   const { values } = req.body;
-  // const notify = () => toast('Here is your toast.');
   const inputFields = values
-
-  // console.log(inputFields)
-  // console.log("new " + inputFields.breakdown)
 
   const timeLine = inputFields?.protocolTimeLine?.map(tl => {
     return {

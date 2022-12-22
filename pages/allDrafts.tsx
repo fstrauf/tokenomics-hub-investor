@@ -3,13 +3,11 @@ import Header from '../components/header'
 import React from 'react';
 import prisma from '../lib/prisma'
 import Drafts from '../components/drafts';
-// import { useSession } from "next-auth/react"
 import { GetServerSideProps } from 'next';
 import { useAuth } from '@clerk/nextjs';
 import { useUser } from '@clerk/nextjs';
 
 export default function AllDrafts({ posts }) {
-  // const { data: session, status } = useSession();
   const { getToken, isLoaded, isSignedIn } = useAuth();
   const { user } = useUser();
 
