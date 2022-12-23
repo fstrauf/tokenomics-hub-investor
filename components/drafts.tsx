@@ -51,7 +51,7 @@ export default function Drafts({ posts, context, role }) {
                                     <p>{post.title}</p>
                                 </th>
                                 <td className="py-2 px-3">
-                                    <p>{post?.author?.name}</p>
+                                    <p>{post?.author}</p>
                                 </td>
                                 <td className="py-2 px-3">
                                     <button onClick={() => Router.push("/editPost/[id]", `/editPost/${post.id}`)}

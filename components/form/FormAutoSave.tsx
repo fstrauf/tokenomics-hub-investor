@@ -4,7 +4,7 @@ import { useFormikContext } from "formik";
 import debounce from 'lodash.debounce'
 // import Select from "react-select";
 
-export const FormAutoSave = ({ debounceMs = 30000 }) => {
+export const FormAutoSave = ({ debounceMs = 20000 }) => {
         //https://itnext.io/formik-introduction-autosave-react-19d4c15cfb90
         const formik = useFormikContext();
         const [isSaved, setIsSaved] = useState(null);
