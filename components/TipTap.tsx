@@ -23,6 +23,7 @@ type Props = {
     content?: any;
     contentId?: String;
     setContent?: Function;
+    editMode?: boolean;
 }
 
 const Tiptap: React.FC<Props> = (props) => {
@@ -31,12 +32,12 @@ const Tiptap: React.FC<Props> = (props) => {
     // console.log(typeof content)
     // console.log(content)
     // var editorContent = ''
-    if(typeof content === 'string'){
-        try{
+    if (typeof content === 'string') {
+        try {
             content = JSON.parse(content)
         } catch {
 
-        }        
+        }
     }
 
     const editor = useEditor({
@@ -67,8 +68,9 @@ const Tiptap: React.FC<Props> = (props) => {
                 class: 'prose prose-sm sm:prose lg:prose-md xl:prose-lg m-5 focus:outline-none',
             },
         },
+        editable: props.editMode,
         content: content,
-        onUpdate({ editor }) {      
+        onUpdate({ editor }) {
             // console.log(editor.getJSON())  
             props?.setContent(editor.getJSON())
         },
@@ -84,15 +86,19 @@ const Tiptap: React.FC<Props> = (props) => {
 
     return (
         <div>
-            <MenuBar editor={editor} />        
-            <input
-                onChange={addImage}
-                type="file"
-                accept="image/png, image/jpeg"
-                className='text-sm ml-1 border-2 rounded-lg'
-            />
+            {props?.editMode && (
+                <>
+                    <MenuBar editor={editor} />
+                    <input
+                        onChange={addImage}
+                        type="file"
+                        accept="image/png, image/jpeg"
+                        className='text-sm ml-1 border-2 rounded-lg'
+                    />
+                </>
+            )}
             <div className='border-2 rounded-lg m-4'>
-            <EditorContent className='' editor={editor} />
+                <EditorContent className='' editor={editor} />
             </div>
         </div>
     )
@@ -167,12 +173,12 @@ const MenuBar = ({ editor }) => {
             >
                 code
             </button>
-            <button type='button' onClick={() => editor.chain().focus().unsetAllMarks().run()} 
-            className='text-sm ml-1 border-2 rounded-lg'>
+            <button type='button' onClick={() => editor.chain().focus().unsetAllMarks().run()}
+                className='text-sm ml-1 border-2 rounded-lg'>
                 clear marks
             </button>
-            <button type='button' onClick={() => editor.chain().focus().clearNodes().run()} 
-            className='text-sm ml-1 border-2 rounded-lg'>
+            <button type='button' onClick={() => editor.chain().focus().clearNodes().run()}
+                className='text-sm ml-1 border-2 rounded-lg'>
                 clear nodes
             </button>
             <button
@@ -263,12 +269,12 @@ const MenuBar = ({ editor }) => {
             >
                 blockquote
             </button>
-            <button type='button' onClick={() => editor.chain().focus().setHorizontalRule().run()} 
-            className='text-sm ml-1 border-2 rounded-lg'>
+            <button type='button' onClick={() => editor.chain().focus().setHorizontalRule().run()}
+                className='text-sm ml-1 border-2 rounded-lg'>
                 horizontal rule
             </button>
-            <button type='button' onClick={() => editor.chain().focus().setHardBreak().run()} 
-            className='text-sm ml-1 border-2 rounded-lg'>
+            <button type='button' onClick={() => editor.chain().focus().setHardBreak().run()}
+                className='text-sm ml-1 border-2 rounded-lg'>
                 hard break
             </button>
             {/* <button

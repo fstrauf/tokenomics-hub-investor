@@ -36,7 +36,6 @@
     "@tiptap/extension-paragraph": "^2.0.0-beta.209",
     "@tiptap/extension-strike": "^2.0.0-beta.209",
     "@tiptap/extension-text": "^2.0.0-beta.209",
-    "@tiptap/html": "^2.0.0-beta.207",
     "@tiptap/react": "^2.0.0-beta.209",
     "@types/node": "^18.11.3",
     "@types/react": "^18.0.24",

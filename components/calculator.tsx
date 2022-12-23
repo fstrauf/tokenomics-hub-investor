@@ -71,7 +71,7 @@ export default function Calculator() {
     ],
   }
 
-  console.log('LOADING')
+  // console.log('LOADING')
 
   const [inputFields, setInputFields] = useState(structure.breakdown)
   const [totalSupply, setTotalSupply] = useState(structure.totalSupply)
@@ -116,7 +116,7 @@ export default function Calculator() {
           monthlyEmission = 0          
         } else {
           if (i < (Number(bd.vestedMonths) + Number(bd.lockedMonths))) {
-            console.log("i " + i + " " + bd.vestedMonths + " " + bd.lockedMonths)
+            // console.log("i " + i + " " + bd.vestedMonths + " " + bd.lockedMonths)
             monthlyEmission = tokenAllocation / bd.vestedMonths
           } else {
             monthlyEmission = 0

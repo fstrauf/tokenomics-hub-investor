@@ -11,7 +11,7 @@ export const FormTipTap = ({
   return (
     <div>
       <Tiptap content={props.value}
-        setContent={props.onChange}
+        setContent={props.onChange} editMode={true}
       />
     </div>
   )
