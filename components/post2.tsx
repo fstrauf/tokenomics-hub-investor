@@ -6,7 +6,7 @@ import FormText from './form/FormText';
 import FormStrength from './form/FormStrength';
 import FormImageSelect from './form/FormImageSelect';
 import FormDivider from './form/FormDivider';
-// import FormAutoSave from './form/FormAutoSave';
+import FormAutoSave from './form/FormAutoSave';
 import dynamic from 'next/dynamic'
 
 export default function Post2({ content, categories, tags }) {
@@ -88,6 +88,7 @@ export default function Post2({ content, categories, tags }) {
                 {({ isSubmitting, values, setFieldValue }) => (
                     <Form>
                         <Toaster />
+                        <FormAutoSave />
                         <div className='mb-6'>
                             <label className='block mb-2 text-sm font-medium text-gray-900'>Title</label>
                             <Field type="text" name='title' className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-dao-red focus:border-dao-red block w-full p-2.5" />
