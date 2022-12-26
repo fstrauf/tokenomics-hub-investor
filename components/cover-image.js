@@ -1,23 +1,18 @@
 // import cn from 'classnames'
 import Link from 'next/link'
 // import { urlForImage } from '../lib/sanity'
+import Image from 'next/image'
 
 export default function CoverImage({ title, url, slug }) {
   const image = (
-    <img
-      // width='auto'
-      // height='40px'
-      alt={`Cover Image for ${title}`}
-      className='rounded-lg h-10 m-auto'
-      // className={cn('shadow-small', {
-      //   'transition-shadow duration-200 hover:shadow-medium': slug,
-      // })}
-      src={url}
-      // src={urlForImage(imageObject)
-      //   .width(40)
-      //   .height(40)
-      //   .url()}
-    />
+    <div className='rounded-lg h-10 w-10 m-auto relative'>
+      <Image alt={`Cover Image for ${title}`} fill={true} src={url}/>
+    </div>
+    // <img
+    //   alt={`Cover Image for ${title}`}
+    //   className='rounded-lg h-10 m-auto'
+    //   src={url}
+    // />
   )
 
   return (

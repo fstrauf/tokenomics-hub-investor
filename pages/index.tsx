@@ -50,6 +50,11 @@ export default Index
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   // const allPosts = await getAllPostsForHome(preview)
 
+  res.setHeader(
+    'Cache-Control',
+    'public, s-maxage=10, stale-while-revalidate=59'
+  )
+
   const allPosts = await prisma.post.findMany({
     where: {
       published: true,

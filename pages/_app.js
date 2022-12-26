@@ -25,7 +25,9 @@ function MyApp({ Component, pageProps }) {
       </Head>
       <GoogleAnalytics trackPageViews />
       {/* <SessionProvider session={pageProps.session}> */}
-      <ClerkProvider {...pageProps}>
+      {/* <ClerkProvider clerkJSVariant="headless" {...pageProps}>
+       */}
+       <ClerkProvider {...pageProps}>
       {isPublicPage ? (
         <Component {...pageProps} />
       ) : (
