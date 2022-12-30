@@ -54,6 +54,7 @@ export default withTooltip<StackedAreasProps, TooltipData>(
     fields,
     totalSupply,
   }: StackedAreasProps & WithTooltipProvidedProps<TooltipData>) => {
+    console.log("🚀 ~ file: VestingChart.tsx:57 ~ data -- top", data)
 
     // console.log('vestingchart - render')
     const keys = fields.map((f) => {
@@ -114,6 +115,7 @@ export default withTooltip<StackedAreasProps, TooltipData>(
         const { x } = localPoint(event) || { x: 0 }
         const x0 = dateScale.invert(x)
         const index = bisectDate(data, x0, 1)
+        console.log("🚀 ~ file: VestingChart.tsx:118 ~ data", data)
         const d0 = data[index - 1]
         const d1 = data[index]
         let d = d0
@@ -131,8 +133,11 @@ export default withTooltip<StackedAreasProps, TooltipData>(
           tooltipLeft: coords.x,
           tooltipTop: coords.y,
         })
+          console.log("🚀 ~ file: VestingChart.tsx:134 ~ d", d)
+
+        
       },
-      [showTooltip, valueScale, dateScale]
+      [showTooltip, valueScale, dateScale, data]
     )
 
     return width < 10 ? null : (
@@ -241,6 +246,7 @@ export default withTooltip<StackedAreasProps, TooltipData>(
                   <div key={k.category} className='flex justify-end'>                    
                     <p style={{color: k.color}} className='mr-2 font-bold'>{k.category}: </p>
                     <p> {Number(tooltipData[k.category]).toFixed()}</p>
+                    {/* <p> {Number(data[k.category]).toFixed()}</p> */}
                   </div>
                 ))}
               </div>

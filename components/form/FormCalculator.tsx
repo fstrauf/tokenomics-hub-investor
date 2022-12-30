@@ -1,12 +1,8 @@
-// import { FieldProps } from "formik";
 import { Field, FieldArray } from 'formik'
 import React from 'react'
-// import FormId from './FormId'
-// import Select from "react-select";
 
 export const FormCalculator = ({ values }) => (
   <div className="relative">
-    {/* <tbody> */}
     <FieldArray
       name="breakdown"
       render={(arrayHelpers) => (
@@ -21,7 +17,7 @@ export const FormCalculator = ({ values }) => (
                   Lockup Period
                 </th>
                 <th scope="col" className="w-1/6 py-3 px-6">
-                  Vesting Period
+                  Unlocking Period
                 </th>
                 <th scope="col" className="py-3 px-6">
                   Percentage Allocation ({values.breakdown.reduce((a, v) => a = a + Number(v.allocationP), 0)}%)

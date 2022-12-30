@@ -11,21 +11,26 @@ export const FormAreaData = (props) => {
     //calcate cumulative emissions and bring it into chart friendly format
 
     const chartData = getAreaData()
-    
+
     function getAreaData() {
       var chartData: object[] = []
       for (let i = 0; i < months; i++) {
         var categoryLine = {}
         breakdown.forEach((bd) => {
+          //default = no emissions
           var monthlyEmission = 0
-          if (i < bd.lockedMonths) {
+          //locked tokens = no emissions.
+          if (i < bd.lockedMonths) {            
             monthlyEmission = 0
-          } else {
+          } else {           
+            //token not locked, releasing all
+            if (i <= Number(bd.vestedMonths) + Number(bd.lockedMonths) && Number(bd.vestedMonths)==0 ) { 
+                monthlyEmission = (totalSupply * bd.allocationP) / 100
+            }
+            //token not locked, but vesting
             if (i < Number(bd.vestedMonths) + Number(bd.lockedMonths)) {
-              monthlyEmission =
-                (totalSupply * bd.allocationP) / 100 / bd.vestedMonths
-            } else {
-              monthlyEmission = 0
+                monthlyEmission =
+                (totalSupply * bd.allocationP) / 100 / bd.vestedMonths   
             }
           }
 
