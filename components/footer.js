@@ -1,9 +1,12 @@
 import Container from './container'
-import { TWITTER, DISCORD, LINKTREE, YOUTUBE } from '../lib/constants'
-import Feedback from './feedback'
+import { TWITTER, DISCORD, LINKTREE } from '../lib/constants'
+// import Feedback from './feedback'
 import Link from 'next/link';
+import dynamic from 'next/dynamic'
 
 export default function Footer() {
+
+  const Feedback = dynamic(() => import('./feedback'), { loading: () => <p>Loading</p> })
 
   return (
     <footer className="border-t border-accent-2 bg-accent-1">

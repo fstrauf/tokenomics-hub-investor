@@ -1,10 +1,10 @@
 import Head from 'next/head'
-import { CMS_NAME, HOME_OG_IMAGE_URL } from '../lib/constants'
+import { HOME_OG_IMAGE_URL } from '../lib/constants'
 
 export default function Meta() {
   return (
     <Head>
-      <meta charset="UTF-8"/>
+      <meta charSet="UTF-8"/>
       <link
         rel="apple-touch-icon"
         sizes="180x180"

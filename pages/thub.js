@@ -39,7 +39,7 @@ export default function tokenomicshub() {
                     </div>
                     <hr class="my-4 mx-auto w-48 h-1 bg-gray-100 rounded border-0 md:my-10 dark:bg-gray-700"></hr>
                     <div className='mb-5'>
-                        <p className='mt-5 mb-5 font-semibold'>Access the full calculation template here.</p>
+                        <p className='mt-5 mb-5 font-semibold'>Access the full calculation template here. <a href='https://youtu.be/JyaJ0lGk2z4'><p>(see what's included)</p></a></p>
                         <script async src="https://js.stripe.com/v3/pricing-table.js"></script>
                         <stripe-pricing-table pricing-table-id="prctbl_1LmR42Ks0xSuCAmfiO54IWu1"
                             publishable-key="pk_live_51LUqnsKs0xSuCAmfmBBT45ICtEtzj8EkcJK7e2SFncAnbVzjEO4WFY9X3C8Ih1OlevrEAXZmiu86jszeLfQDJ5Xv000IKYBg6T">

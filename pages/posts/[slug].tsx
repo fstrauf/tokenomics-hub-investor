@@ -9,15 +9,15 @@ import SectionSeparator from '../../components/section-separator'
 import Layout from '../../components/layout'
 import PostTitle from '../../components/post-title'
 import TokenStrength from '../../components/token-strength'
-import ProtocolStats from '../../components/protocol-stats'
+// import ProtocolStats from '../../components/protocol-stats'
 import Resources from '../../components/resources'
 import TimeLine from '../../components/timeline'
 import { Link } from 'react-scroll'
-import Diagram from '../../components/diagram'
+// import Diagram from '../../components/diagram'
 import FeedbackPopup from '../../components/feedback-popup'
 import { useState, useCallback } from 'react'
 import Login from '../../components/login'
-import AuthorCard from '../../components/authorCard'
+// import AuthorCard from '../../components/authorCard'
 import EditPiece from '../../components/edit-piece'
 import prisma from '../../lib/prisma'
 import Router from "next/router";
@@ -26,13 +26,22 @@ import PostMeta from '../../components/postMeta'
 import { useAuth, useUser } from '@clerk/nextjs';
 import { clerkClient } from "@clerk/nextjs/server";
 import dynamic from 'next/dynamic'
+// import ParentSize from '@visx/responsive/lib/components/ParentSize';
+
+// import Example from '../../components/example';
 
 export default function Post({ post, morePosts, author }) {
 
+  const PostBody = dynamic(() => import('../../components/post-body'), { loading: () => <p>Loading</p> })
+  const AuthorCard = dynamic(() => import('../../components/authorCard'), { loading: () => <p>Loading</p> })
+  const ProtocolStats = dynamic(() => import('../../components/protocol-stats'), { loading: () => <p>Loading</p> })
+  const Diagram = dynamic(() => import('../../components/diagram'), { loading: () => <p>Loading</p> })
+  // const Example = dynamic(
+  //   () => import('../../components/example'),
+  //   { ssr: false }
+  // )
 
-  const PostBody = dynamic(() => import('../../components/post-body'))
-
-  const { getToken, isLoaded, isSignedIn } = useAuth();
+  const { isSignedIn } = useAuth();
   const { user } = useUser();
   const { handleSubmit, formState } = useForm();
 
@@ -108,6 +117,7 @@ export default function Post({ post, morePosts, author }) {
                 />
                 <div id='stats'></div>
                 <ProtocolStats protocol={post.slug} />
+
                 {!isSignedIn && (
                   <div className='mt-10'>
                     <Login message="You need to sign in to see more - it's free" />

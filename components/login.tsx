@@ -9,11 +9,12 @@ import {
   SignedIn,
   SignedOut,
   SignInButton,
-  UserButton
+  UserButton,
+  useAuth,useUser
 } from "@clerk/nextjs";
 
-import { useAuth } from '@clerk/nextjs';
-import { useUser } from '@clerk/nextjs';
+// import { useAuth } from '@clerk/nextjs';
+// import { useUser } from '@clerk/nextjs';
 
 type Message = string
 
@@ -29,16 +30,6 @@ const Login: FC<{ message: Message }> = ({ message }) => {
     <>
       <div className='block m-auto'>
         <div className='rounded p-3 m-0 bg-gray-100 flex flex-row-reverse'>
-          {/* {!isSignedIn && (
-            <span className='align-middle font-bold z-10 left-4 right-24 whitespace-nowrap text-ellipsis overflow-hidden leading-5'>
-              {message}
-            </span>
-          )} */}
-          {/* {isSignedIn?.user && (
-            <span className='align-middle mr-2'>
-              <strong className='text-sm'>{session.user.email ?? session.user.name} ({session.user.role})</strong>
-            </span>
-          )} */}
           <div className='align-middle inline-flex'>
             <SignedIn>
               <UserButton />
@@ -99,25 +90,7 @@ const Login: FC<{ message: Message }> = ({ message }) => {
                       </Link>
                     )}
                   </Menu.Item>
-                </div>
-                {/* <div className="px-1 py-1"> */}
-                {/* <Menu.Item>
-                    {({ active }) => (
-                      <button className={`${active ? 'bg-dao-red text-white' : 'text-gray-900'} group flex w-full items-center rounded-md px-2 py-2 text-sm disabled:opacity-40 ${formState.isSubmitting ? 'bg-red-200' : ''}`}
-                        onClick={() => signOut({ callbackUrl: '/' })}>
-                        Log out
-                      </button>
-                    )}
-                  </Menu.Item>
-                  <Menu.Item>
-                    {({ active }) => (
-                      <button className={`${active ? 'bg-dao-red text-white' : 'text-gray-900'} group flex w-full items-center rounded-md px-2 py-2 text-sm disabled:opacity-40 ${formState.isSubmitting ? 'bg-red-200' : ''}`}
-                        onClick={() => signIn()}>
-                        Log In
-                      </button>
-                    )}
-                  </Menu.Item> */}
-                {/* </div> */}
+                </div>              
               </Menu.Items>
             </Transition>
           </Menu>

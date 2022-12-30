@@ -23,6 +23,7 @@ const nextConfig = {
     // !! WARN !!
     ignoreBuildErrors: true,
   },
+    // transpilePackages: ['@acme/ui', 'lodash-es'],
 }
 
 // module.exports = nextConfig
