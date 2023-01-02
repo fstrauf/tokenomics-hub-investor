@@ -1,5 +1,6 @@
 import Footer from '../components/footer'
 import Meta from '../components/meta'
+import dynamic from 'next/dynamic'
 // import Login from '../components/login'
 // import { ClerkProvider } from "@clerk/nextjs/app-beta";
 
