@@ -1,11 +1,8 @@
 import React from "react";
 import { Pie } from "@visx/shape";
 import { Group } from "@visx/group";
-// import { scaleOrdinal } from "@visx/scale";
-// import { letterFrequency } from "@visx/mock-data";
 
-// const letters = letterFrequency.slice(0, 4);
-const frequency = (d) => d.allocationP;
+const frequency = (d) => d.percentageAllocation;
 const defaultMargin = { top: 20, right: 20, bottom: 20, left: 20 };
 
 export type PieProps = {
@@ -21,9 +18,7 @@ export default function AllocationChart({
   width,
   height,
   margin = defaultMargin,
-//   data,
   fields,
-//   animate = true,
 }: PieProps) {
 
 const innerWidth = width - margin.left - margin.right;
@@ -65,7 +60,7 @@ return (
                     textAnchor="middle"
                     pointerEvents="none"
                   >
-                    {arc.data.category} ({arc.data.allocationP}%)
+                    {arc.data.category} ({arc.data.percentageAllocation}%)
                   </text>
                   
                 )}

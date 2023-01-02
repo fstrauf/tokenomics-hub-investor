@@ -9,7 +9,8 @@ import prisma from '../../lib/prisma'
 import type{ AuthData } from '@clerk/nextjs/dist/server/types'
 import { clerkClient, getAuth } from '@clerk/nextjs/server';
 import { GetServerSideProps } from 'next';
-import { useUser } from '@clerk/nextjs';
+import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
+// import { useUser } from '@clerk/nextjs';
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     // const data = await getAuthorAndPostsBySlug(params.slug, preview)

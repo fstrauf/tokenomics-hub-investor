@@ -4,8 +4,10 @@ import React from 'react';
 import prisma from '../lib/prisma'
 import Drafts from '../components/drafts';
 import { GetServerSideProps } from 'next';
-import { useAuth, useUser } from '@clerk/nextjs'
+// import { useAuth, useUser } from '@clerk/nextjs'
 import { clerkClient } from "@clerk/nextjs/server";
+import { useAuth } from '@clerk/clerk-react/dist/hooks/useAuth';
+import { useUser } from '@clerk/clerk-react/dist/hooks/useUser';
 
 export default function AllDrafts({ posts }) {
   const { getToken, isLoaded, isSignedIn } = useAuth();

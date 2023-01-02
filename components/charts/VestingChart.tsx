@@ -54,10 +54,9 @@ export default withTooltip<StackedAreasProps, TooltipData>(
     fields,
     totalSupply,
   }: StackedAreasProps & WithTooltipProvidedProps<TooltipData>) => {
-    console.log("🚀 ~ file: VestingChart.tsx:57 ~ data -- top", data)
-
     // console.log('vestingchart - render')
-    const keys = fields.map((f) => {
+    const keys = fields?.map((f) => {      
+      
       return f.category
     })
 
@@ -87,7 +86,7 @@ export default withTooltip<StackedAreasProps, TooltipData>(
       () =>
         scaleOrdinal({
           domain: keys,
-          range: fields.map((f) => {
+          range: fields?.map((f) => {
             return f.color
           }),
         }),
@@ -115,7 +114,6 @@ export default withTooltip<StackedAreasProps, TooltipData>(
         const { x } = localPoint(event) || { x: 0 }
         const x0 = dateScale.invert(x)
         const index = bisectDate(data, x0, 1)
-        console.log("🚀 ~ file: VestingChart.tsx:118 ~ data", data)
         const d0 = data[index - 1]
         const d1 = data[index]
         let d = d0
@@ -132,10 +130,7 @@ export default withTooltip<StackedAreasProps, TooltipData>(
           tooltipData: d,
           tooltipLeft: coords.x,
           tooltipTop: coords.y,
-        })
-          console.log("🚀 ~ file: VestingChart.tsx:134 ~ d", d)
-
-        
+        })        
       },
       [showTooltip, valueScale, dateScale, data]
     )
@@ -150,7 +145,7 @@ export default withTooltip<StackedAreasProps, TooltipData>(
           />
         </div>
         <svg width={width} height={height}>
-          {fields.map((f) => (
+          {fields?.map((f) => (
             <LinearGradient
               key={f.category}
               id={f.category}

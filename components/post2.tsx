@@ -76,7 +76,6 @@ export default function Post2({ content, categories, tags }) {
                 console.error(error);
             }
         }
-
     }    
 
     return (

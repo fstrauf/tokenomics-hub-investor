@@ -4,7 +4,8 @@ import React from 'react';
 import prisma from '../lib/prisma'
 import Post2 from '../components/post2';
 import { GetServerSideProps } from 'next';
-import { useUser } from '@clerk/nextjs';
+import { useUser } from '@clerk/clerk-react/dist/hooks/useUser';
+// import { useUser } from '@clerk/nextjs';
 
 export default function NewProtocol({ categories, tags }) {
 

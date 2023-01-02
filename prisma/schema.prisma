@@ -94,6 +94,26 @@ model ProtocolResources {
   @@index([postId])
 }
 
+model Calculation {
+  id              String            @id @default(cuid())
+  title           String?
+  authorClerkId   String?
+  months          Int?
+  totalSupply     Float?
+  CalculationRows CalculationRows[]
+}
+
+model CalculationRows {
+  id                   String      @id @default(cuid())
+  category             String?
+  lockupPeriod         Float?
+  unlockPeriod         Float?
+  percentageAllocation Float?
+  color                String?
+  calculationId        String
+  calculation          Calculation @relation(fields: [calculationId], references: [id], onDelete: Cascade)
+}
+
 model Account {
   id                 String  @id @default(cuid())
   userId             String  @map("user_id")

@@ -4,7 +4,7 @@ import React from 'react'
 export const FormCalculator = ({ values }) => (
   <div className="relative">
     <FieldArray
-      name="breakdown"
+      name="calculationRows"
       render={(arrayHelpers) => (
         <>
           <table className="mb-1 w-full text-left text-sm text-gray-500">
@@ -20,7 +20,7 @@ export const FormCalculator = ({ values }) => (
                   Unlocking Period
                 </th>
                 <th scope="col" className="py-3 px-6">
-                  Percentage Allocation ({values.breakdown.reduce((a, v) => a = a + Number(v.allocationP), 0)}%)
+                  Percentage Allocation ({values?.calculationRows?.reduce((a, v) => a = a + Number(v?.percentageAllocation), 0)}%)
                 </th>
                 <th scope="col" className="w-1/6 py-3 px-6">
                   Token Allocation
@@ -32,15 +32,15 @@ export const FormCalculator = ({ values }) => (
               </tr>
             </thead>
             <tbody>
-              {values?.breakdown?.length > 0 &&
-                values?.breakdown?.map((input, index) => (
+              {values?.calculationRows?.length > 0 &&
+                values?.calculationRows?.map((input, index) => (
                   <tr key={index} className="border-b bg-white ">
                     <th
                       scope="row"
                       className="whitespace-nowrap py-2 px-3 font-medium text-gray-900 "
                     >
                       <Field
-                        name={`breakdown.${index}.category`}
+                        name={`calculationRows.${index}.category`}
                         placeholder="category"
                         className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
                         type="text"                        
@@ -48,8 +48,8 @@ export const FormCalculator = ({ values }) => (
                     </th>
                     <td className="py-2 px-3">
                       <Field
-                        name={`breakdown.${index}.lockedMonths`}
-                        placeholder="lockedMonths"
+                        name={`calculationRows.${index}.lockupPeriod`}
+                        placeholder="lockupPeriod"
                         className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
                         type="number"
                         onWheel={ event => event.currentTarget.blur() }
@@ -57,8 +57,8 @@ export const FormCalculator = ({ values }) => (
                     </td>
                     <td className="py-2 px-3">
                       <Field
-                        name={`breakdown.${index}.vestedMonths`}
-                        placeholder="vestedMonths"
+                        name={`calculationRows.${index}.unlockPeriod`}
+                        placeholder="unlockPeriod"
                         className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
                         type="number"
                         onWheel={ event => event.currentTarget.blur() }
@@ -66,8 +66,8 @@ export const FormCalculator = ({ values }) => (
                     </td>
                     <td className="py-2 px-3">
                       <Field
-                        name={`breakdown.${index}.allocationP`}
-                        placeholder="allocationP"
+                        name={`calculationRows.${index}.percentageAllocation`}
+                        placeholder="percentageAllocation"
                         className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
                         type="number"
                         onWheel={ event => event.currentTarget.blur() }
@@ -75,12 +75,12 @@ export const FormCalculator = ({ values }) => (
                     </td>
                     <td className="py-2 px-3">
                       <div>
-                        {new Intl.NumberFormat('en',).format(Number((input.allocationP / 100) * values?.totalSupply))}
+                        {new Intl.NumberFormat('en',).format(Number((input.percentageAllocation / 100) * values?.totalSupply))}
                       </div>
                     </td>
                     <td className="py-2 px-3">
                       <Field
-                        name={`breakdown.${index}.color`}
+                        name={`calculationRows.${index}.color`}
                         placeholder="color"
                         className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
                         type="color"
@@ -112,9 +112,9 @@ export const FormCalculator = ({ values }) => (
             onClick={() =>
               arrayHelpers.push({
                 category: 'Treasury',
-                lockedMonths: 5,
-                vestedMonths: 12,
-                allocationP: 10,
+                lockupPeriod: 5,
+                unlockPeriod: 12,
+                percentageAllocation: 10,
                 color: '#823',
               })
             }

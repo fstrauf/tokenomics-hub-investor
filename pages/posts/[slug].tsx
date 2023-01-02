@@ -23,9 +23,11 @@ import prisma from '../../lib/prisma'
 import Router from "next/router";
 import { useForm } from "react-hook-form";
 import PostMeta from '../../components/postMeta'
-import { useAuth, useUser } from '@clerk/nextjs';
+// import { useAuth, useUser } from '@clerk/nextjs';
 import { clerkClient } from "@clerk/nextjs/server";
 import dynamic from 'next/dynamic'
+import { useAuth } from '@clerk/clerk-react/dist/hooks/useAuth'
+import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
 // import ParentSize from '@visx/responsive/lib/components/ParentSize';
 
 // import Example from '../../components/example';

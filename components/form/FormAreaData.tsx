@@ -3,7 +3,7 @@ import { useFormikContext } from 'formik'
 
 export const FormAreaData = (props) => {
   const {
-    values: { breakdown, totalSupply, months },
+    values: { calculationRows, totalSupply, months },
     setFieldValue,
   } = useFormikContext()
 
@@ -16,21 +16,21 @@ export const FormAreaData = (props) => {
       var chartData: object[] = []
       for (let i = 0; i < months; i++) {
         var categoryLine = {}
-        breakdown.forEach((bd) => {
+        calculationRows.forEach((bd) => {
           //default = no emissions
           var monthlyEmission = 0
           //locked tokens = no emissions.
-          if (i < bd.lockedMonths) {            
+          if (i < bd.lockupPeriod) {            
             monthlyEmission = 0
           } else {           
             //token not locked, releasing all
-            if (i <= Number(bd.vestedMonths) + Number(bd.lockedMonths) && Number(bd.vestedMonths)==0 ) { 
-                monthlyEmission = (totalSupply * bd.allocationP) / 100
+            if (i <= Number(bd.unlockPeriod) + Number(bd.lockupPeriod) && Number(bd.unlockPeriod)==0 ) { 
+                monthlyEmission = (totalSupply * bd.percentageAllocation) / 100
             }
             //token not locked, but vesting
-            if (i < Number(bd.vestedMonths) + Number(bd.lockedMonths)) {
+            if (i < Number(bd.unlockPeriod) + Number(bd.lockupPeriod)) {
                 monthlyEmission =
-                (totalSupply * bd.allocationP) / 100 / bd.vestedMonths   
+                (totalSupply * bd.percentageAllocation) / 100 / bd.unlockPeriod   
             }
           }
 
@@ -46,9 +46,10 @@ export const FormAreaData = (props) => {
       }
       return chartData
     }
+    
 
     setFieldValue(props.name, chartData)
-  }, [setFieldValue, props.name, months, breakdown, totalSupply])
+  }, [setFieldValue, props.name, months, calculationRows, totalSupply])
 
   return <></>
 }

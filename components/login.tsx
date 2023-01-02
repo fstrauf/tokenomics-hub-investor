@@ -3,15 +3,20 @@ import React, { FC } from 'react';
 import { Menu, Transition } from '@headlessui/react'
 import { Fragment } from 'react'
 import Link from 'next/link';
+import { useAuth } from '@clerk/clerk-react/dist/hooks/useAuth';
+import { useUser } from '@clerk/clerk-react/dist/hooks/useUser';
+import { SignedIn, SignedOut } from '@clerk/clerk-react/dist/components/controlComponents';
+import { UserButton } from '@clerk/clerk-react/dist/components/uiComponents';
+import { SignInButton } from '@clerk/clerk-react/dist/components/SignInButton';
 // import { useForm } from "react-hook-form";
-import {
-  // ClerkProvider,
-  SignedIn,
-  SignedOut,
-  SignInButton,
-  UserButton,
-  useAuth,useUser
-} from "@clerk/nextjs";
+// import {
+//   // ClerkProvider,
+//   SignedIn,
+//   SignedOut,
+//   SignInButton,
+//   UserButton,
+//   useAuth,useUser
+// } from "@clerk/nextjs";
 
 // import { useAuth } from '@clerk/nextjs';
 // import { useUser } from '@clerk/nextjs';
