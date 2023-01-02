@@ -3,19 +3,10 @@ import ParentSize from '@visx/responsive/lib/components/ParentSize'
 import dynamic from 'next/dynamic'
 import { Field, Form, Formik } from 'formik'
 import toast, { Toaster } from 'react-hot-toast'
-// import prisma from '../lib/prisma'
-// import FormSelect from './form/FormSelect';
-// import { useAuth } from '@clerk/nextjs';
 
 export default function Calculator(props) {
   const { userId, calculations } = props
-  // console.log(
-  //   '🚀 ~ file: calculator.tsx:10 ~ Calculator ~ calculations',
-  //   calculations
-  // )
-  // const { user } = useUser();
-  // const { userId } = useAuth();
-  // console.log("🚀 ~ file: calculator.tsx:11 ~ Calculator ~ userId", userId)
+
   const VestingChart = dynamic(() => import('./charts/VestingChart'), {
     ssr: false,
   })
@@ -133,14 +124,11 @@ export default function Calculator(props) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
     })
-    // console.log("🚀 ~ file: calculator.tsx:114 ~ loadContent ~ response", response)
 
     if (response.ok) {
-      //connect the returned id to the inputfields.id
       const calcRows: any = JSON.parse(await response.text())
-      // console.log("🚀 ~ file: calculator.tsx:119 ~ loadContent ~ calcRows", calcRows.totalSupply)
-      resetForm({
-        // values: structure2
+    
+      resetForm({    
         values: {
           id: calcRows.id,
           totalSupply: calcRows.totalSupply,
@@ -152,8 +140,7 @@ export default function Calculator(props) {
           calculationRows: calcRows.CalculationRows,
         },
       })
-    }
-    // console.log("🚀 ~ file: calculator.tsx:120 ~ loadContent ~ resetForm", resetForm)
+    }    
   }
 
   return (
@@ -175,14 +162,14 @@ export default function Calculator(props) {
                   name="calculations"
                   as="select"                  
                   className="block w-52 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
-                  value=''
+                  // value=''
                 >
-                  <option value="" label="load a calculation">
+                  <option key='loadcalc' value="" label="load a calculation">
                     Load a Calculation{' '}
                   </option>
                   {calculations.map((c) => (
                     <>
-                      <option value={c.id}>
+                      <option key={c.id} value={c.id}>
                         {c.title}
                       </option>
                     </>

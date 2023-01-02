@@ -4,7 +4,7 @@ import {  Prisma } from '@prisma/client'
 
 export default async function handle(req, res) {
   const { values } = req.body;
-  // console.log("🚀 ~ file: newCalculation.ts:7 ~ handle ~ values", values)
+  // console.log("🚀 ~ file: newCalculation.ts:21 ~ handle ~ values.CalculationRows", values.calculationRows)
 
   var response = {}
   try {
@@ -16,8 +16,9 @@ export default async function handle(req, res) {
         totalSupply: values.totalSupply,
         CalculationRows: {
           createMany: {
-            data: values.breakdown,
+            data: values.calculationRows,
           }
+            
         }
       }
     })
