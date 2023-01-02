@@ -1,9 +1,11 @@
 import Footer from '../components/footer'
 import Meta from '../components/meta'
-import Login from '../components/login'
+// import Login from '../components/login'
 // import { ClerkProvider } from "@clerk/nextjs/app-beta";
 
 export default function Layout({ children }) {
+
+  const Login = dynamic(() => import('../components/login'), { loading: () => <p>Loading</p> })
 
   return (
     <>
