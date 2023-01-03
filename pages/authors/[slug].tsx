@@ -7,7 +7,7 @@ import PostPreview from '../../components/post-preview'
 // import { EvmChain } from '@moralisweb3/evm-utils';
 import prisma from '../../lib/prisma'
 import type{ AuthData } from '@clerk/nextjs/dist/server/types'
-import { clerkClient, getAuth } from '@clerk/nextjs/server';
+import { getAuth } from '@clerk/nextjs/server';
 import { GetServerSideProps } from 'next';
 import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
 // import { useUser } from '@clerk/nextjs';
@@ -105,7 +105,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
                                     </div>
                                 </div>
                                 <div className="text-center mt-12">
-                                    <h3 className="text-4xl font-semibold leading-normal mb-2 text-blueGray-700 mb-2">
+                                    <h3 className="text-4xl font-semibold leading-normal mb-2 text-blueGray-700">
                                         {user?.username}
                                     </h3>
                                     <div className="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">

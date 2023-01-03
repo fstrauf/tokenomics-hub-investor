@@ -1,8 +1,4 @@
-// import Avatar from '../components/avatar'
-// import Date from '../components/date'
-// import CoverImage from './cover-image'
 import Link from 'next/link'
-// import { urlForImage } from '../lib/sanity'
 
 export default function PostPreview({
   title,
@@ -22,18 +18,7 @@ export default function PostPreview({
           className='rounded-lg h-10 m-auto'
           src={url}
         />
-        {/* <CoverImage
-          slug={slug}
-          title={title}
-          imageObject={coverImage}
-          url={urlForImage(coverImage).url()}
-        /> */}
       </div>
-      {/* <div className="mb-4 text-lg">
-        <Date dateString={date} />
-      </div>
-      <p className="mb-4 text-lg leading-relaxed">{excerpt}</p>
-      <Avatar name={author?.name} picture={author?.picture} /> */}
     </div>
   )
 }

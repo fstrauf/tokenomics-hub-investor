@@ -1,7 +1,7 @@
 // import { FieldProps } from "formik";
 import { Field, FieldArray } from 'formik'
 import React from 'react'
-import FormId from './FormId'
+
 // import Select from "react-select";
 
 export const FormResources = ({ values, postId }) => (
@@ -97,12 +97,12 @@ export const FormResources = ({ values, postId }) => (
             name="id"
             className="mt-4 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
           />
-          <FormId
+          {/* <FormId
             postId={postId}
             type="text"
             name="id"
             className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
-          />
+          /> */}
         </>
       )}
     />

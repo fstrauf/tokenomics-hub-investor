@@ -26,20 +26,15 @@ export default async function handle(req, res) {
   } catch (e) {
     console.log(e)
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
-      // The .code property can be accessed in a type-safe manner
       if (e.code === 'P2002') {
-        // res.statusText = 'Unique Constraint. Slug might already exist!'
         return res.status(500).send({ error: 'Entry already exists!' })
-        // console.log(
-        //   'There is a unique constraint violation, a new user cannot be created with this email'
-        // )
       }
     }
-    // notify()
     throw e
   }
 
+  return res.status(200).send({ id: response.id })
   // console.log(response)
-  return res.json(response);
+  // return res.json(response);
   // return res.status(200)
 }

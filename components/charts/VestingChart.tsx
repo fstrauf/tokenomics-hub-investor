@@ -3,7 +3,7 @@ import { AreaStack } from '@visx/shape'
 import { LinearGradient } from '@visx/gradient'
 import { scaleTime, scaleLinear, scaleOrdinal } from '@visx/scale'
 import { extent, bisector } from 'd3-array'
-import tinycolor from 'tinycolor2'
+// import tinycolor from 'tinycolor2'
 import { localPoint } from '@visx/event'
 import {
   withTooltip,
@@ -149,7 +149,7 @@ export default withTooltip<StackedAreasProps, TooltipData>(
             <LinearGradient
               key={f.category}
               id={f.category}
-              from={tinycolor(f.color).brighten(20).toString()}
+              from={f.color}
               to={f.color}
             />
           ))}

@@ -7,8 +7,9 @@ import { GetServerSideProps } from 'next';
 import prisma from '../lib/prisma'
 import { buildClerkProps, getAuth } from '@clerk/nextjs/server';
 import { AuthData } from '@clerk/nextjs/dist/server/types';
+// import { loadContent } from '../lib/helper';
 
-export default function CalculationPage({ calculations, userId }) {
+export default function CalculationPage({ initialValues }) {
 
   const Calculator = dynamic(() => import('../components/calculator'), { loading: () => <p>Loading</p> })
   
@@ -16,28 +17,96 @@ export default function CalculationPage({ calculations, userId }) {
     <>
       <Layout>
         <Intro />
-        <Calculator userId={userId} calculations={calculations}/>
+        {/* <Calculator userId={userId} calculations={calculations} calculationId={calculationId}/> */}
+        <Calculator initialValues={initialValues} />
       </Layout>
     </>
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
 
-  const { userId }: AuthData = getAuth(req)
+const calculationId: string = context?.query?.id || ''
+
+  const { userId }: AuthData = getAuth(context.req)
 
   const calculations = await prisma.calculation.findMany({
     where: {
       authorClerkId: userId     
-    },    
-  })
+    },
+    include: {
+      CalculationRows:{
+        where: {
+          calculationId: calculationId,
+        }
+      },
+    },  
+  })  
+
+  const initialValues = {
+    id: '',
+    totalSupply: 100,
+    months: 60,
+    areaData: [],
+    authorClerkId: userId,
+    name: '',
+    calculations: calculations,
+    calculationRows: [
+      {
+        category: 'Treasury',
+        lockupPeriod: 5,
+        unlockPeriod: 12,
+        percentageAllocation: 30,
+        color: '#FF6666',
+      },
+      {
+        category: 'Team',
+        lockupPeriod: 0,
+        unlockPeriod: 12,
+        percentageAllocation: 15,
+        color: '#028090',
+      },
+      {
+        category: 'Investors',
+        lockupPeriod: 0,
+        unlockPeriod: 12,
+        percentageAllocation: 15,
+        color: '#66FFB3',
+      },
+      {
+        category: 'Advisors',
+        lockupPeriod: 0,
+        unlockPeriod: 12,
+        percentageAllocation: 10,
+        color: '#996EFF',
+      },
+      {
+        category: 'Airdrops',
+        lockupPeriod: 0,
+        unlockPeriod: 12,
+        percentageAllocation: 30,
+        color: '#333C45',
+      },
+    ],
+  }
+
+  const calc = calculations.filter(obj => {
+    return obj.id === calculationId
+  })[0]
+
+  if (calc?.CalculationRows.length > 0) {
+    initialValues.id = calc.id
+    initialValues.totalSupply = calc.totalSupply
+    initialValues.months= calc.months
+    initialValues.name = calc.title
+    initialValues.calculationRows = calc.CalculationRows
+    
+  }
   
   return {
     props: {
-      calculations: calculations || null,
-      userId: userId || null,
-      ...buildClerkProps(req)
+      initialValues: initialValues || null ,
+      ...buildClerkProps(context.req)
     },
-    // revalidate: 1,
   }
 }
