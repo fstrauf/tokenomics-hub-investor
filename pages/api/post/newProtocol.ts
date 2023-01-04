@@ -1,15 +1,16 @@
-import prisma from '../../../lib/prisma';
-import {  Prisma } from '@prisma/client'
-// import toast, { Toaster } from 'react-hot-toast';
+import prisma from '../../../lib/prisma'
+import { Prisma } from '@prisma/client'
+import { stringToKey } from '../../../lib/helper';
 
 export default async function handle(req, res) {
-  const { values } = req.body;
+  const { values } = req.body
+  // console.log('🚀 ~ file: newProtocol.ts:7 ~ handle ~ values', values)
   const inputFields = values
 
-  const timeLine = inputFields?.protocolTimeLine?.map(tl => {
+  const timeLine = inputFields?.protocolTimeLine?.map((tl) => {
     return {
       ...tl,
-      date: new Date(tl.date)
+      date: new Date(tl.date),
     }
   })
 
@@ -21,7 +22,6 @@ export default async function handle(req, res) {
         slug: inputFields.slug,
         shortDescription: inputFields.shortDescription,
         breakdown: inputFields.breakdown,
-        // ourTake: JSON.stringify(ourTake),
         published: false,
         publishedAt: new Date(),
         mainImageUrl: inputFields.mainImageUrl,
@@ -48,27 +48,32 @@ export default async function handle(req, res) {
         problemSolution: inputFields.problemSolution,
         parent: inputFields.parent,
         authorClerkId: inputFields.authorClerkId,
-        // author: {
-        //   connect: {
-        //     email: inputFields.Author.email,
-        //   }
-        // },
         categories: {
-          connect: inputFields.categories.map(cat => { return { value: cat.value } })
+          connectOrCreate: inputFields.categories.map((cat) => {
+            return {
+              where: { value: stringToKey(cat.label) },
+              create: { value: stringToKey(cat.label), label: cat.label },
+            }
+          }),
         },
         tags: {
-          connect: inputFields.tags.map(tag => { return { value: tag.value } })
+          connectOrCreate: inputFields.tags.map((tag) => {
+            return {
+              where: { value: stringToKey(tag.label) },
+              create: { value: stringToKey(tag.label), label: tag.label },
+            }
+          }),
         },
         ProtocolResources: {
           createMany: {
-            data: inputFields.ProtocolResources
-          }
+            data: inputFields.ProtocolResources,
+          },
         },
         protocolTimeLine: {
           createMany: {
-            data: timeLine
-          }
-        }
+            data: timeLine,
+          },
+        },
       },
     })
   } catch (e) {

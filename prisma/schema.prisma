@@ -61,13 +61,13 @@ model Post {
 }
 
 model Category {
-  value Int     @id @default(autoincrement())
+  value String  @id
   label String?
   posts Post[]
 }
 
 model Tag {
-  value Int     @id @default(autoincrement())
+  value String  @id
   label String?
   posts Post[]
 }

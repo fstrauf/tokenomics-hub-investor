@@ -54,9 +54,10 @@ export default withTooltip<AreaProps, TooltipData>(
     tooltipTop = 0,
     tooltipLeft = 0,
     data,
-  }: AreaProps & WithTooltipProvidedProps<TooltipData>) => {
+  }: AreaProps & WithTooltipProvidedProps<TooltipData>) => {    
     
     if (width < 10) return null;
+    if (data === undefined) return null;
 
     // bounds
     const innerWidth = width - margin.left - margin.right;

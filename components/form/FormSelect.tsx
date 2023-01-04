@@ -1,13 +1,13 @@
 // import { FieldProps } from "formik";
 import React from "react";
-import Select from "react-select";
+import Select from "react-select/creatable";
 
 const FormSelect = ({
   field,
   form,
   options,
   isMulti = false,
-  placeholder = 'Select'
+  placeholder = 'Select or create'
 }) => {
   function onChange(option) {
     // console.log(option)

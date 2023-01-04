@@ -1,6 +1,7 @@
 
 import prisma from '../../../lib/prisma';
 import {  Prisma } from '@prisma/client'
+import { stringToKey } from '../../../lib/helper';
 
 export default async function handle(req, res) {
   const { values } = req.body;
@@ -77,16 +78,21 @@ export default async function handle(req, res) {
       weakPoints: inputFields.weakPoints,
       problemSolution: inputFields.problemSolution,
       parent: inputFields.parent,
-      // author: {
-      //   connect: {
-      //     email: 'f.strauf@gmail.com',
-      //   }
-      // },
       categories: {
-        connect: inputFields.categories.map(cat => { return { value: cat.value } })
+        connectOrCreate: inputFields.categories.map((cat) => {
+          return {
+            where: { value: stringToKey(cat.label) },
+            create: { value: stringToKey(cat.label), label: cat.label },
+          }
+        }),
       },
       tags: {
-        connect: inputFields.tags.map(tag => { return { value: tag.value } })
+        connectOrCreate: inputFields.tags.map((tag) => {
+          return {
+            where: { value: stringToKey(tag.label) },
+            create: { value: stringToKey(tag.label), label: tag.label },
+          }
+        }),
       },
       ProtocolResources: {
         createMany: {
