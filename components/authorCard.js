@@ -7,8 +7,8 @@ export default function AuthorCard({author}) {
                 <div className="flex justify-end px-4 pt-4">
                 </div>
                 <div className="flex flex-col items-center pb-10">
-                    <img className="w-24 h-24 mb-3 rounded-full shadow-lg" src="https://i.pravatar.cc/300?img=50" />
-                    <h5 className="mb-1 text-xl font-medium text-gray-900">{author?.username}</h5>
+                    <img className="w-24 h-24 mb-3 rounded-full shadow-lg" src={author?.profileImageUrl} />
+                    <h5 className="mb-1 text-xl font-medium text-gray-900">{author?.username ?? author?.firstName}</h5>
                     <span className="text-sm text-gray-500">Tokenomics DAO Contributor</span>
                     <div
                         className="py-4 flex justify-center items-center w-full divide-x divide-gray-400 divide-solid">

@@ -75,7 +75,7 @@ const Index: React.FC<Props> = (props) => {
               placeholder='filter categories'
               name="categories"
               options={props.categories}
-              className='mr-3 w-1/2'
+              className='mr-3 w-1/2 text-xs'
               // classNamePrefix="select"
               onChange={filterCategories}
             />
@@ -85,7 +85,7 @@ const Index: React.FC<Props> = (props) => {
               placeholder='filter tags'
               isMulti
               name="tags"
-              className='w-1/2'
+              className='w-1/2 text-xs'
               options={props.tags}
               onChange={filterTags}
             />

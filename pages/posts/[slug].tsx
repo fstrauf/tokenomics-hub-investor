@@ -1,7 +1,6 @@
 import { useRouter } from 'next/router'
 import ErrorPage from 'next/error'
 import Container from '../../components/container'
-// import PostBody from '../../components/post-body'
 import OurTake from '../../components/our-take'
 import Header from '../../components/header'
 import PostHeader from '../../components/post-header'
@@ -9,28 +8,21 @@ import SectionSeparator from '../../components/section-separator'
 import Layout from '../../components/layout'
 import PostTitle from '../../components/post-title'
 import TokenStrength from '../../components/token-strength'
-// import ProtocolStats from '../../components/protocol-stats'
 import Resources from '../../components/resources'
 import TimeLine from '../../components/timeline'
 import { Link } from 'react-scroll'
-// import Diagram from '../../components/diagram'
 import FeedbackPopup from '../../components/feedback-popup'
 import { useState, useCallback } from 'react'
 import Login from '../../components/login'
-// import AuthorCard from '../../components/authorCard'
 import EditPiece from '../../components/edit-piece'
 import prisma from '../../lib/prisma'
 import Router from "next/router";
 import { useForm } from "react-hook-form";
 import PostMeta from '../../components/postMeta'
-// import { useAuth, useUser } from '@clerk/nextjs';
 import { clerkClient } from "@clerk/nextjs/server";
 import dynamic from 'next/dynamic'
 import { useAuth } from '@clerk/clerk-react/dist/hooks/useAuth'
 import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
-// import ParentSize from '@visx/responsive/lib/components/ParentSize';
-
-// import Example from '../../components/example';
 
 export default function Post({ post, morePosts, author }) {
 
@@ -38,10 +30,6 @@ export default function Post({ post, morePosts, author }) {
   const AuthorCard = dynamic(() => import('../../components/authorCard'), { loading: () => <p>Loading</p> })
   const ProtocolStats = dynamic(() => import('../../components/protocol-stats'), { loading: () => <p>Loading</p> })
   const Diagram = dynamic(() => import('../../components/diagram'), { loading: () => <p>Loading</p> })
-  // const Example = dynamic(
-  //   () => import('../../components/example'),
-  //   { ssr: false }
-  // )
 
   const { isSignedIn } = useAuth();
   const { user } = useUser();
@@ -61,12 +49,6 @@ export default function Post({ post, morePosts, author }) {
     setIsOpen(false);
 
   }, [isOpen]);
-
-  // useEffect(() => {
-  //   const timerId = setTimeout(() => {
-  //     setIsOpen(true)
-  //   }, 30000);
-  // }, []);
 
   const router = useRouter()
   if (!router.isFallback && !post?.slug) {
