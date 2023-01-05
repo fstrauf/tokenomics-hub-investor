@@ -1,13 +1,11 @@
 import Layout from '../components/layout'
 import Intro from '../components/intro'
 import React from 'react';
-// import Calculator from '../components/calculator';
 import dynamic from 'next/dynamic'
 import { GetServerSideProps } from 'next';
 import prisma from '../lib/prisma'
 import { buildClerkProps, getAuth } from '@clerk/nextjs/server';
 import { AuthData } from '@clerk/nextjs/dist/server/types';
-// import { loadContent } from '../lib/helper';
 
 export default function CalculationPage({ initialValues }) {
 
@@ -17,7 +15,6 @@ export default function CalculationPage({ initialValues }) {
     <>
       <Layout>
         <Intro />
-        {/* <Calculator userId={userId} calculations={calculations} calculationId={calculationId}/> */}
         <Calculator initialValues={initialValues} />
       </Layout>
     </>

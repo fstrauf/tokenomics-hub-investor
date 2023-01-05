@@ -71,7 +71,7 @@ export default function NewProtocol({ categories, tags }) {
 }
 
 
-export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+export const getServerSideProps: GetServerSideProps = async () => {
   const categories = await prisma.category.findMany()
   const tags = await prisma.tag.findMany()
 

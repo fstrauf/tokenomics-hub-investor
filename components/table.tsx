@@ -52,7 +52,11 @@ const columns = [
 ]
 
 const Table: React.FC<{ prop: Props }> = ({ prop }) => {
-  const [data, setData] = React.useState(() => [...prop])
+  // console.log("🚀 ~ file: table.tsx:55 ~ prop", prop)
+  // const [data, setData] = React.useState(() => [...prop])
+  // const [data, setData] = React.useState(prop)
+  // console.log("🚀 ~ file: table.tsx:57 ~ data", data)
+  const data = prop
   const [sorting, setSorting] = React.useState<SortingState>([{ id: 'Token Strength', desc: true }])
 
   // console.log(data[0].categories)
