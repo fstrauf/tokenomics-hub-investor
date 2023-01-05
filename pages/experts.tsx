@@ -6,16 +6,15 @@ import { clerkClient } from '@clerk/nextjs/server'
 import AuthorCard from '../components/authorCard'
 
 export default function ExpertsPage(props) {
-  // console.log('🚀 ~ file: experts.tsx:9 ~ ExpertsPage ~ props', props.experts)
 
   return (
     <>
       <Layout>
         <Intro />
-        <div className='flex flex-wrap'>
-        {props.experts.map((e) => {
-          return <AuthorCard author={e} />
-        })}
+        <div className="flex flex-wrap">
+          {props.experts.map((e) => {
+            return <AuthorCard author={e} />
+          })}
         </div>
       </Layout>
     </>
@@ -30,25 +29,49 @@ export async function getStaticProps(context) {
     },
     select: {
       authorClerkId: true,
+      categories: {},
     },
   })
+
+  const catCountPerExpert =
+    await prisma.$queryRaw`select count(A) as count,A as cat,p.authorClerkId from _CategoryToPost join Post as p on p.id = B GROUP BY A, p.authorClerkId`
+  const tagCountPerExpert =
+    await prisma.$queryRaw`SELECT count(B) as count, B as tag, authorClerkId from _PostToTag join Post as p on p.id = A GROUP BY B, authorClerkId`
+
+  const groupByAuthorClerkId = (items) => {
+    const groupedItems = {};
+    items.forEach((item) => {
+      if (!groupedItems[item.authorClerkId]) {
+        groupedItems[item.authorClerkId] = [];
+      }
+      groupedItems[item.authorClerkId].push(item);
+    });
+    return groupedItems;
+  }
+
+  const groupedArray = groupByAuthorClerkId(catCountPerExpert);
 
   const userId = postAuthors.map((post) => {
     return post.authorClerkId
   })
   const users = await clerkClient.users.getUserList({ userId })
 
-  var properJSON = {}
+  var properJSON = []
   try {
     properJSON = JSON.parse(JSON.stringify(users))
   } catch {
-    // properJSON = {}
   }
-  // console.log("🚀 ~ file: experts.tsx:34 ~ getStaticProps ~ users", properJSON)
+
+  const experts = properJSON.map(j => {
+    return{
+      ...j,
+      cat: groupedArray[j.id]
+    }    
+  })
 
   return {
     props: {
-      experts: properJSON || null,
-    }, // will be passed to the page component as props
+      experts: experts || null,
+    },
   }
 }

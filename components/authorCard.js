@@ -1,6 +1,7 @@
 import Link from 'next/link'
 
 export default function AuthorCard({author}) {
+    console.log("🚀 ~ file: authorCard.js:4 ~ AuthorCard ~ author", author)
     return (
         <>
             <div className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow-md m-5">
@@ -21,11 +22,16 @@ export default function AuthorCard({author}) {
                             <span className="text-gray-600"> protocols listed</span>
                         </span>
                     </div>
-                    <div className="flex">
-                        <span className="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800">Metaverse</span>
+                    <div className="flex flex-wrap justify-center">
+                        {author?.cat?.map(c =>{
+                            return (
+                                <span className="bg-blue-100 text-blue-800 mt-1 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800">{c.cat} ({Number(c.count)})</span>        
+                            )
+                        })}
+                        {/* <span className="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800">Metaverse</span>
                         <span className="bg-gray-100 text-gray-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">DeFi</span>
                         <span className="bg-red-100 text-red-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-red-200 dark:text-red-900">DAO</span>
-                        <span className="bg-green-100 text-green-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-green-200 dark:text-green-900">ReFi</span>
+                        <span className="bg-green-100 text-green-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-green-200 dark:text-green-900">ReFi</span> */}
 
                     </div>
                     <div className="flex mt-4 space-x-3 md:mt-6">

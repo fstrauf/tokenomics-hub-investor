@@ -185,6 +185,7 @@ export default function Post2({ content, categories, tags }) {
               </div>
               <div className="flex">
                 <Field
+                  id="mainImageUrl"
                   className="custom-image"
                   name="mainImageUrl"
                   as={FormImageSelect}
@@ -239,10 +240,18 @@ export default function Post2({ content, categories, tags }) {
                     className="underline"
                     href="https://www.notion.so/tokenomicsdao/Creating-Diagrams-ebc097180eb24380ad3e22ebf25f0189#bf3266cdce724102b2c3155d8fb51239"
                   >
-                    (how to)
+                    (how to) 
                   </a>
+                  {' '}or upload your own diagram
                 </p>
               </div>
+              <div className='mb-2'>
+              <Field
+                name="diagramUrl"
+                as={FormImageSelect}
+                onChange={(e) => setFieldValue('diagramUrl', e)}
+              />
+              </div>              
               <Field
                 type="url"
                 name="diagramUrl"
