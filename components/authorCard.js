@@ -24,7 +24,7 @@ export default function AuthorCard({author}) {
                     <div className="flex flex-wrap justify-center">
                         {author?.cat?.map(c =>{
                             return (
-                                <span key={c.cat} className='bg-gray-100 mt-1 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded'>{c.cat} ({Number(c.count)})</span>        
+                                <span key={c.cat} className='mr-2 mb-2 px-3 py-1 text-sm rounded-full font-bold bg-gray-200 text-gray-700 shadow-sm'>{c.cat} ({Number(c.count)})</span>        
                             )
                         })}                       
                     </div>

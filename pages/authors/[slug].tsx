@@ -1,13 +1,18 @@
 import Layout from '../../components/layout'
 import Intro from '../../components/intro'
-import PostPreview from '../../components/post-preview'
+// import PostPreview from '../../components/post-preview'
 // import Moralis from 'moralis';
 // import { EvmChain } from '@moralisweb3/evm-utils';
 import prisma from '../../lib/prisma'
 import { clerkClient } from '@clerk/nextjs/server'
+import Link from 'next/link'
 
-export default function UserProfile({ author, authorPosts, contentCount, catCount }) {
-  // console.log('🚀 ~ file: [slug].tsx:12 ~ UserProfile ~ author', author)
+export default function UserProfile({
+  author,
+  authorPosts,
+  contentCount,
+  catCount,
+}) {
   return (
     <>
       <Layout>
@@ -65,11 +70,17 @@ export default function UserProfile({ author, authorPosts, contentCount, catCoun
                     Tokenomics DAO Contributor
                   </div>
                   <div className="text-blueGray-600 mb-2 mt-10">
-                  {catCount?.map(c =>{
-                            return (
-                                <span key={c.cat} className='bg-gray-100 mt-1 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded'>{c.cat} ({Number(c.count)})</span>        
-                            )
-                        })}  
+                    {catCount?.map((c) => {
+                      return (
+                        // <p className='px-3 py-1 text-sm rounded-full font-bold bg-gray-100 text-gray-700 shadow-sm'>{type}</p>
+                        <span
+                          key={c.cat}
+                          className='mr-2 px-3 py-1 text-sm rounded-full font-bold bg-gray-200 text-gray-700 shadow-sm'
+                        >
+                          {c.cat} ({Number(c.count)})
+                        </span>
+                      )
+                    })}
                   </div>
                 </div>
                 <div className="border-blueGray-200 mt-10 border-t py-10 text-center">
@@ -83,22 +94,39 @@ export default function UserProfile({ author, authorPosts, contentCount, catCoun
                     </div>
                     <div>
                       <h1 className="mb-5 text-3xl">Content Created</h1>
-                      {authorPosts?.map((post) => (
-                        <div
-                          key={post.id}
-                          className="m-5 w-full max-w-sm rounded-lg border border-gray-200 bg-white shadow-md"
-                        >
-                          <div className="flex justify-center px-4 pt-4">
-                            <PostPreview
-                              // key={post.slug}
-                              title={post.title}
-                              url={post.mainImageUrl}
-                              slug={post.slug}
-                              // excerpt={post.excerpt}
-                            />
-                          </div>
-                        </div>
-                      ))}
+                      <div className="container mx-auto mt-10 flex w-full max-w-md flex-col items-center justify-center rounded-lg bg-white shadow">
+                        <ul className="flex w-full flex-col divide-y">
+                          {authorPosts?.map((post) => (
+                            <>
+                              <li className="flex flex-row hover:bg-gray-50">
+                                <Link
+                                  as={`/posts/${post.slug}`}
+                                  href="/posts/[slug]"
+                                  className=""
+                                >
+                                  <div className="flex flex-1 cursor-pointer select-none items-center p-4">
+                                    <div className="mr-4 flex h-10 w-10 flex-col items-center justify-center">
+                                      <img
+                                        alt="profil"
+                                        src={post.mainImageUrl}
+                                        className="m-auto h-7 rounded-lg"
+                                      />
+                                    </div>
+                                    <div className="flex-1 pl-1">
+                                      <div className="font-medium">
+                                        {post.title}
+                                      </div>
+                                      <div className="text-sm text-gray-400">
+                                        {post.categories[0].label}
+                                      </div>
+                                    </div>                                  
+                                  </div>
+                                </Link>
+                              </li>
+                            </>
+                          ))}
+                        </ul>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -119,8 +147,7 @@ export async function getStaticProps({ params }) {
   var properJSON = {}
   try {
     properJSON = JSON.parse(JSON.stringify(clerkUuser))
-  } catch {
-  }
+  } catch {}
 
   const txCalls = []
   txCalls.push(
@@ -130,6 +157,7 @@ export async function getStaticProps({ params }) {
         mainImageUrl: true,
         slug: true,
         id: true,
+        categories: true,
       },
       where: {
         authorClerkId: params?.slug,
@@ -146,10 +174,12 @@ export async function getStaticProps({ params }) {
     })
   )
 
-  txCalls.push(prisma.$queryRaw`select count(A) as count,A as cat,p.authorClerkId from _CategoryToPost join Post as p on p.id = B WHERE p.authorClerkId = ${params?.slug} GROUP BY A, p.authorClerkId`)
+  txCalls.push(
+    prisma.$queryRaw`select count(A) as count,A as cat,p.authorClerkId from _CategoryToPost join Post as p on p.id = B WHERE p.authorClerkId = ${params?.slug} GROUP BY A, p.authorClerkId`
+  )
 
   const response = await prisma.$transaction(txCalls)
-  const authorPosts = response[0] ||null
+  const authorPosts = response[0] || null
 
   return {
     props: {
@@ -182,7 +212,6 @@ export async function getStaticPaths() {
   var properJSON = []
   try {
     properJSON = JSON.parse(JSON.stringify(users))
-    console.log("🚀 ~ file: [slug].tsx:185 ~ getStaticPaths ~ properJSON", properJSON)
   } catch {}
 
   return {
