@@ -11,7 +11,7 @@ export default function ExpertsPage(props) {
     <>
       <Layout>
         <Intro />
-        <div className="flex flex-wrap">
+        <div className="flex flex-wrap m-auto justify-center">
           {props.experts.map((e) => {
             return <AuthorCard author={e} />
           })}
@@ -21,22 +21,22 @@ export default function ExpertsPage(props) {
   )
 }
 
-export async function getStaticProps(context) {
-  const postAuthors = await prisma.post.findMany({
-    distinct: ['authorClerkId'],
+export async function getStaticProps() {
+  
+  const postAuthors = await prisma.post.groupBy({
+    by: ['authorClerkId'],
+    _count:{
+      title: true,
+    },   
     where: {
       published: true,
-    },
-    select: {
-      authorClerkId: true,
-      categories: {},
-    },
-  })
+    }
+  })  
 
   const catCountPerExpert =
     await prisma.$queryRaw`select count(A) as count,A as cat,p.authorClerkId from _CategoryToPost join Post as p on p.id = B GROUP BY A, p.authorClerkId`
-  const tagCountPerExpert =
-    await prisma.$queryRaw`SELECT count(B) as count, B as tag, authorClerkId from _PostToTag join Post as p on p.id = A GROUP BY B, authorClerkId`
+  // const tagCountPerExpert =
+  //   await prisma.$queryRaw`SELECT count(B) as count, B as tag, authorClerkId from _PostToTag join Post as p on p.id = A GROUP BY B, authorClerkId`
 
   const groupByAuthorClerkId = (items) => {
     const groupedItems = {};
@@ -65,7 +65,8 @@ export async function getStaticProps(context) {
   const experts = properJSON.map(j => {
     return{
       ...j,
-      cat: groupedArray[j.id]
+      cat: groupedArray[j.id],
+      articleCount: postAuthors.find(f => (f.authorClerkId === j.id))?._count?.title 
     }    
   })
 

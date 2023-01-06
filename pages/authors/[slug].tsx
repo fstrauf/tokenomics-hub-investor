@@ -6,10 +6,8 @@ import PostPreview from '../../components/post-preview'
 import prisma from '../../lib/prisma'
 import { clerkClient } from '@clerk/nextjs/server'
 
-
-
-export default function UserProfile({ author, authorPosts }) {
-  console.log("🚀 ~ file: [slug].tsx:12 ~ UserProfile ~ author", author)
+export default function UserProfile({ author, authorPosts, contentCount, catCount }) {
+  // console.log('🚀 ~ file: [slug].tsx:12 ~ UserProfile ~ author', author)
   return (
     <>
       <Layout>
@@ -49,7 +47,7 @@ export default function UserProfile({ author, authorPosts }) {
                       </div>
                       <div className="mr-4 p-3 text-center">
                         <span className="text-blueGray-600 block text-xl font-bold uppercase tracking-wide">
-                          10
+                          {contentCount}
                         </span>
                         <span className="text-blueGray-400 text-sm">
                           protocols listed
@@ -67,18 +65,11 @@ export default function UserProfile({ author, authorPosts }) {
                     Tokenomics DAO Contributor
                   </div>
                   <div className="text-blueGray-600 mb-2 mt-10">
-                    <span className="mr-2 rounded bg-blue-100 px-2.5 py-0.5 text-xs font-semibold text-blue-800 dark:bg-blue-200 dark:text-blue-800">
-                      Metaverse
-                    </span>
-                    <span className="mr-2 rounded bg-gray-100 px-2.5 py-0.5 text-xs font-semibold text-gray-800 dark:bg-gray-700 dark:text-gray-300">
-                      DeFi
-                    </span>
-                    <span className="mr-2 rounded bg-red-100 px-2.5 py-0.5 text-xs font-semibold text-red-800 dark:bg-red-200 dark:text-red-900">
-                      DAO
-                    </span>
-                    <span className="mr-2 rounded bg-green-100 px-2.5 py-0.5 text-xs font-semibold text-green-800 dark:bg-green-200 dark:text-green-900">
-                      ReFi
-                    </span>
+                  {catCount.map(c =>{
+                            return (
+                                <span className='bg-gray-100 mt-1 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded'>{c.cat} ({Number(c.count)})</span>        
+                            )
+                        })}  
                   </div>
                 </div>
                 <div className="border-blueGray-200 mt-10 border-t py-10 text-center">
@@ -121,30 +112,50 @@ export default function UserProfile({ author, authorPosts }) {
 }
 
 export async function getStaticProps({ params }) {
-  const clerkUuser = params?.slug    
+  const clerkUuser = params?.slug
     ? await clerkClient.users.getUser(params?.slug)
     : null
-    
+
   var properJSON = {}
   try {
     properJSON = JSON.parse(JSON.stringify(clerkUuser))
   } catch {
-    // properJSON = {}
   }
 
-  const authorPost = await prisma.post.findMany({
-    where: {
+  const txCalls = []
+  txCalls.push(
+    prisma.post.findMany({
+      select: {
+        title: true,
+        mainImageUrl: true,
+        slug: true,
+        id: true,
+      },
+      where: {
         authorClerkId: params?.slug,
         published: true,
-    }
-  })
+      },
+    })
+  )
+  txCalls.push(
+    prisma.post.count({
+      where: {
+        authorClerkId: params?.slug,
+        published: true,
+      },
+    })
+  )
 
-  
+  txCalls.push(prisma.$queryRaw`select count(A) as count,A as cat,p.authorClerkId from _CategoryToPost join Post as p on p.id = B WHERE p.authorClerkId = ${params?.slug} GROUP BY A, p.authorClerkId`)
+
+  const response = await prisma.$transaction(txCalls)
+  const authorPosts = response[0] ||null
+
   return {
     props: {
-      authorPosts: authorPost || null,
-    //   morePosts: data?.morePosts || null,
-      // ...buildClerkProps(params.req)
+      authorPosts: authorPosts || null,
+      contentCount: response[1] || null,
+      catCount: response[2] || null,
       author: properJSON || null,
     },
     revalidate: 1,
@@ -183,7 +194,6 @@ export async function getStaticPaths() {
     fallback: true,
   }
 }
-
 
 // export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 //     // const data = await getAuthorAndPostsBySlug(params.slug, preview)
