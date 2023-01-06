@@ -65,9 +65,9 @@ export default function UserProfile({ author, authorPosts, contentCount, catCoun
                     Tokenomics DAO Contributor
                   </div>
                   <div className="text-blueGray-600 mb-2 mt-10">
-                  {catCount.map(c =>{
+                  {catCount?.map(c =>{
                             return (
-                                <span className='bg-gray-100 mt-1 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded'>{c.cat} ({Number(c.count)})</span>        
+                                <span key={c.cat} className='bg-gray-100 mt-1 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded'>{c.cat} ({Number(c.count)})</span>        
                             )
                         })}  
                   </div>
@@ -182,6 +182,7 @@ export async function getStaticPaths() {
   var properJSON = []
   try {
     properJSON = JSON.parse(JSON.stringify(users))
+    console.log("🚀 ~ file: [slug].tsx:185 ~ getStaticPaths ~ properJSON", properJSON)
   } catch {}
 
   return {
