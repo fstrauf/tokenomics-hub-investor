@@ -19,8 +19,8 @@ export default function AllDrafts({ posts }) {
     return (
       <>
         <Layout>
-          <Header />
-          <h1 className='font-bold text-2xl mb-5'>All Unpublished Drafts</h1>
+          {/* <Header /> */}
+          <h1 className='font-bold text-2xl mb-5 mt-10'>All Unpublished Drafts</h1>
           <Drafts posts={posts} context='allDrafts' role={role} />
         </Layout>
       </>

@@ -67,7 +67,7 @@ const Index: React.FC<Props> = (props) => {
           <h1 className="mb-10 text-center text-2xl md:text-3xl">
             Explore, compare and evaluate tokenomics of crypto projects.
           </h1>
-          <div className="flex w-1/2">
+          <div className="flex w-1/2 max-w-5xl m-auto">
             <Select
               defaultValue={[]}
               id="cat-select"

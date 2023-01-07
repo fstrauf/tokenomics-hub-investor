@@ -1,6 +1,6 @@
 import Footer from '../components/footer'
 import Meta from '../components/meta'
-import dynamic from 'next/dynamic'
+// import dynamic from 'next/dynamic'
 import Header2 from './header2'
 
 export default function Layout({ children }) {

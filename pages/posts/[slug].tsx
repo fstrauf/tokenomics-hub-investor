@@ -57,12 +57,12 @@ export default function Post({ post, morePosts, author }) {
   return (    
     <Layout>
       <Container>
-        <Header />
+        {/* <Header /> */}
         {router.isFallback ? (
           <PostTitle>Loading…</PostTitle>
         ) : (
           <>
-            <article className=''>
+            <article className='mt-10'>
               <PostMeta title={post.title} content={post.shortDescription} />
 
               <PostHeader

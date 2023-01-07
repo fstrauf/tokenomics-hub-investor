@@ -43,10 +43,10 @@ const EditPost: React.FC<PostProps> = (props) => {
 
   return (
     <Layout>
-      <Header />
+      {/* <Header /> */}
       <div>
-        <h2 className="text-4xl">{title} </h2>
-        <p>By {props?.post.author?.name || "Unknown author"}</p>
+        <h2 className="text-4xl mt-10">{title} </h2>
+        <p className="mb-10">By {props?.post.author?.name || "Unknown author"}</p>
         <Post content={props.post} categories={props.categories} tags={props.tags} />
       </div>
     </Layout>

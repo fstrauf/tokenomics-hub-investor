@@ -1,5 +1,5 @@
 import Layout from '../components/layout'
-import Header from '../components/header'
+// import Header from '../components/header'
 import React from 'react';
 import prisma from '../lib/prisma'
 import Drafts from '../components/drafts';
@@ -18,8 +18,8 @@ export default function MyDrafts({ posts }) {
   return (
     <>
       <Layout>
-        <Header />
-        <h1 className='font-bold text-2xl mb-5'>My Unpublished Drafts</h1>
+        {/* <Header /> */}
+        <h1 className='font-bold text-2xl mb-5 mt-10'>My Unpublished Drafts</h1>
         <Drafts posts={posts} context='myDrafts' role={role} />    
       </Layout>
     </>
