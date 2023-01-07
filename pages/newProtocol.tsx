@@ -60,8 +60,8 @@ export default function NewProtocol({ categories, tags }) {
   return (
     <>
       <Layout>
-        <Header />
-        <h1 className="text-3xl font-bold">
+        {/* <Header /> */}
+        <h1 className="text-3xl font-bold mt-10">
           Submit a draft for review
         </h1>
         <Post2 content={defaultContent} categories={categories} tags={tags} />

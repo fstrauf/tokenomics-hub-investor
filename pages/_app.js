@@ -5,7 +5,7 @@ import Head from 'next/head'
 import { ClerkProvider, SignedIn, SignedOut, RedirectToSignIn } from '@clerk/nextjs';
 import { useRouter } from 'next/router';
 
-const publicPages = ["/", "/thub", "/terms", "/calculator", "/posts/[slug]", "/authors/[slug]"];
+const publicPages = ["/", "/thub", "/terms", "/calculator", "/posts/[slug]", "/authors/[slug]", "/experts"];
 
 function MyApp({ Component, pageProps }) {
 

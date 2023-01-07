@@ -114,7 +114,7 @@ export default function Calculator(props) {
 
   return (
     <>
-      <h1 className="mb-10 text-3xl font-bold">
+      <h1 className="mb-10 mt-10 text-3xl font-bold">
         Welcome to the Tokenomics DAO Calculation Template
       </h1>
       <Toaster />

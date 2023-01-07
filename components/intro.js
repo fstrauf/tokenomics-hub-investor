@@ -1,11 +1,11 @@
 import Link from 'next/link'
-import Search from './search'
+// import Search from './search'
 
 export default function Intro() {
   return (
     <div>
-      <section className="lg:mb-30 mt-16 mb-5 flex flex-col items-center md:mb-10 md:flex-row md:justify-between">
-        <a href="/" className="mb-6 h-3.5 w-3.5 md:mb-0">
+      <section className="lg:mb-30 mt-16 mb-5 items-center md:mb-10 md:flex-row">
+        {/* <a href="/" className="mb-6 h-3.5 w-3.5 md:mb-0">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 153 153">
             <rect width="153" height="153" rx="7.66" fill="#f66" />
             <path
@@ -47,18 +47,18 @@ export default function Intro() {
             />
           </svg>
           <span className="sr-only">Website</span>
-        </a>
-        <h1 className="mb-2 text-4xl font-bold leading-tight tracking-tighter md:mb-0 md:pr-8 md:text-6xl lg:text-7xl">
+        </a> */}
+        <h1 className="mb-2 text-4xl text-center font-bold leading-tight tracking-tighter md:mb-0 md:pr-8 md:text-6xl lg:text-7xl">
           Tokenomics Hub
         </h1>
-        <div className=''>
+        {/* <div className=''>
           <div className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
             <Link href="/calculator">Calculator</Link>
           </div>
           <div className="mt-2 rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
             <Link href="/experts">Experts</Link>
           </div>
-        </div>
+        </div> */}
       </section>
       <div className="mb-10 flex place-content-center">
         {/* <Search isPost={false} /> */}

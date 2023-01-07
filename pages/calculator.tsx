@@ -1,5 +1,5 @@
 import Layout from '../components/layout'
-import Intro from '../components/intro'
+// import Intro from '../components/intro'
 import React from 'react';
 import dynamic from 'next/dynamic'
 import { GetServerSideProps } from 'next';
@@ -14,7 +14,7 @@ export default function CalculationPage({ initialValues }) {
   return (
     <>
       <Layout>
-        <Intro />
+        {/* <Intro /> */}
         <Calculator initialValues={initialValues} />
       </Layout>
     </>

@@ -1,17 +1,19 @@
 import Layout from '../components/layout'
-import Intro from '../components/intro'
+// import Intro from '../components/intro'
 import React from 'react'
 import prisma from '../lib/prisma'
 import { clerkClient } from '@clerk/nextjs/server'
 import AuthorCard from '../components/authorCard'
 
 export default function ExpertsPage(props) {
-
   return (
     <>
       <Layout>
-        <Intro />
-        <div className="flex flex-wrap m-auto justify-center">
+        {/* <Intro /> */}
+        <h1 className="mb-10 mt-10 text-3xl font-bold">
+          Find who the right expert to support you project
+        </h1>
+        <div className="m-auto flex flex-wrap justify-center">
           {props.experts.map((e) => {
             return <AuthorCard author={e} />
           })}
@@ -22,16 +24,15 @@ export default function ExpertsPage(props) {
 }
 
 export async function getStaticProps() {
-  
   const postAuthors = await prisma.post.groupBy({
     by: ['authorClerkId'],
-    _count:{
+    _count: {
       title: true,
-    },   
+    },
     where: {
       published: true,
-    }
-  })  
+    },
+  })
 
   const catCountPerExpert =
     await prisma.$queryRaw`select count(A) as count,A as cat,p.authorClerkId from _CategoryToPost join Post as p on p.id = B GROUP BY A, p.authorClerkId`
@@ -39,17 +40,17 @@ export async function getStaticProps() {
   //   await prisma.$queryRaw`SELECT count(B) as count, B as tag, authorClerkId from _PostToTag join Post as p on p.id = A GROUP BY B, authorClerkId`
 
   const groupByAuthorClerkId = (items) => {
-    const groupedItems = {};
+    const groupedItems = {}
     items.forEach((item) => {
       if (!groupedItems[item.authorClerkId]) {
-        groupedItems[item.authorClerkId] = [];
+        groupedItems[item.authorClerkId] = []
       }
-      groupedItems[item.authorClerkId].push(item);
-    });
-    return groupedItems;
+      groupedItems[item.authorClerkId].push(item)
+    })
+    return groupedItems
   }
 
-  const groupedArray = groupByAuthorClerkId(catCountPerExpert);
+  const groupedArray = groupByAuthorClerkId(catCountPerExpert)
 
   const userId = postAuthors.map((post) => {
     return post.authorClerkId
@@ -59,15 +60,15 @@ export async function getStaticProps() {
   var properJSON = []
   try {
     properJSON = JSON.parse(JSON.stringify(users))
-  } catch {
-  }
+  } catch {}
 
-  const experts = properJSON.map(j => {
-    return{
+  const experts = properJSON.map((j) => {
+    return {
       ...j,
       cat: groupedArray[j.id],
-      articleCount: postAuthors.find(f => (f.authorClerkId === j.id))?._count?.title 
-    }    
+      articleCount: postAuthors.find((f) => f.authorClerkId === j.id)?._count
+        ?.title,
+    }
   })
 
   return {

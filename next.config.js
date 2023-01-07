@@ -5,6 +5,7 @@
 const nextConfig = {
   images: {
     domains: ['source.unsplash.com', 'tokenomicsdao.xyz', 'storage.googleapis.com'],
+    minimumCacheTTL: 60,
   },
   experimental: {
     swcPlugins: [
