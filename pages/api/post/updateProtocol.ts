@@ -6,6 +6,7 @@ import { stringToKey } from '../../../lib/helper';
 export default async function handle(req, res) {
   const { values } = req.body;
   const inputFields = values
+  console.log("🚀 ~ file: updateProtocol.ts:9 ~ handle ~ inputFields", inputFields)
   
   var breakdown = inputFields.breakdown
   if (typeof inputFields.breakdown === 'object'){
@@ -94,6 +95,7 @@ export default async function handle(req, res) {
           }
         }),
       },
+      calculationId: inputFields.calculation,
       ProtocolResources: {
         createMany: {
           data: resource,

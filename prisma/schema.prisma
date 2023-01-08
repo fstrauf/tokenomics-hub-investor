@@ -6,10 +6,6 @@ generator client {
   previewFeatures = ["referentialIntegrity"]
 }
 
-// generator yup {
-//   provider = "prisma-yup-generator"
-// }
-
 datasource db {
   provider     = "mysql"
   url          = env("DATABASE_URL")
@@ -56,6 +52,8 @@ model Post {
   problemSolution       String?             @db.Text
   parent                String?             @db.Text
   ProtocolResources     ProtocolResources[]
+  calculationId         String?
+  calculation           Calculation?        @relation(fields: [calculationId], references: [id])
 
   @@index([authorId])
 }
@@ -101,6 +99,7 @@ model Calculation {
   months          Int?
   totalSupply     Float?
   CalculationRows CalculationRows[]
+  Post            Post[]
 }
 
 model CalculationRows {
@@ -112,6 +111,8 @@ model CalculationRows {
   color                String?
   calculationId        String
   calculation          Calculation @relation(fields: [calculationId], references: [id], onDelete: Cascade)
+
+  @@index([calculationId])
 }
 
 model Account {

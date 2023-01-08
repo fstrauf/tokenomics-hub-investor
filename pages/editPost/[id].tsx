@@ -3,10 +3,13 @@ import Layout from "../../components/layout";
 import prisma from "../../lib/prisma";
 import React from 'react'
 import Post from "../../components/post2";
-import Header from '../../components/header'
+// import Header from '../../components/header'
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-  const post = await prisma.post.findUnique({
+
+
+  const txCalls = []
+  txCalls.push(prisma.post.findUnique({
     where: {
       id: String(params?.id),
     },
@@ -19,17 +22,23 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
       protocolTimeLine: {},
       ProtocolResources: {},
     },
-  });
+  }))
 
 
-  const categories = await prisma.category.findMany()
-  const tags = await prisma.tag.findMany()
+  txCalls.push(prisma.category.findMany())
+  txCalls.push(prisma.tag.findMany())
+  txCalls.push(prisma.calculation.findMany())
+
+  const response = await prisma.$transaction(
+    txCalls
+  )
 
   return {
     props: {
-      categories: categories || null,
-      tags: tags || null,
-      post: post || null,
+      categories: response[1] || null,
+      tags: response[2] || null,
+      post: response[0] || null,
+      calculations: response[3] || null,
     }
   };
 };
@@ -47,7 +56,7 @@ const EditPost: React.FC<PostProps> = (props) => {
       <div>
         <h2 className="text-4xl mt-10">{title} </h2>
         <p className="mb-10">By {props?.post.author?.name || "Unknown author"}</p>
-        <Post content={props.post} categories={props.categories} tags={props.tags} />
+        <Post content={props.post} categories={props.categories} tags={props.tags} calculations={props.calculations} />
       </div>
     </Layout>
   );

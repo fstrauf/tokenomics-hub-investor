@@ -17,6 +17,7 @@ import { timeFormat } from 'd3-time-format'
 import { AxisBottom, AxisLeft } from '@visx/axis'
 import { Group } from '@visx/group'
 import { LegendOrdinal } from '@visx/legend'
+import { shortBigNumber } from '../../lib/helper'
 
 export const background = '#FF6666'
 const tooltipStyles = {
@@ -26,7 +27,7 @@ const tooltipStyles = {
 }
 
 const formatDate = timeFormat("%b %d, '%y")
-const formatTicks = value => new Intl.NumberFormat('en', {notation: 'compact'}).format(value)
+// const formatTicks = value => new Intl.NumberFormat('en', {notation: 'compact'}).format(value)
 
 const getDate = (d) => new Date(d.date)
 
@@ -140,8 +141,11 @@ export default withTooltip<StackedAreasProps, TooltipData>(
         <div className="absolute flex w-full justify-center">
           <LegendOrdinal
             scale={colorScale}
-            direction="row"
-            labelMargin="0 15px 0 0"
+            direction='row'
+            labelMargin="0 10px 0 0"
+            className='text-xs'
+            // style={{ 'font-size': '5px 0' }}
+            // font-size: 10px;
           />
         </div>
         <svg width={width} height={height}>
@@ -195,7 +199,7 @@ export default withTooltip<StackedAreasProps, TooltipData>(
             <AxisLeft
               scale={valueScale}
               numTicks={5}
-              tickFormat={formatTicks}                    
+              tickFormat={shortBigNumber}                    
               tickLabelProps={() => axisLeftTickLabelProps}
               tickLength={0}
               hideAxisLine={true}

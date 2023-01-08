@@ -14,6 +14,14 @@ export default async function handle(req, res) {
     }
   })
 
+  // console.log("🚀 ~ file: newProtocol.ts:85 ~ handle ~ inputFields.breakdown", inputFields.breakdown)
+  var breakdown = inputFields.breakdown
+  if(typeof inputFields.breakdown === 'object'){
+    breakdown = JSON.stringify(inputFields.breakdown)
+  }
+  
+// console.log('type ' + typeof breakdown)
+
   var response = {}
   try {
     response = await prisma.post.create({
@@ -21,7 +29,7 @@ export default async function handle(req, res) {
         title: inputFields.title,
         slug: inputFields.slug,
         shortDescription: inputFields.shortDescription,
-        breakdown: inputFields.breakdown,
+        breakdown: breakdown,
         published: false,
         publishedAt: new Date(),
         mainImageUrl: inputFields.mainImageUrl,
@@ -64,6 +72,13 @@ export default async function handle(req, res) {
             }
           }),
         },
+        calculationId: inputFields.calculation,
+        // calculation: {
+        //   connect:{
+        //     id: inputFields.calculation,
+
+        //   }
+        // },
         ProtocolResources: {
           createMany: {
             data: inputFields.ProtocolResources,
@@ -75,6 +90,7 @@ export default async function handle(req, res) {
           },
         },
       },
+        
     })
   } catch (e) {
     console.log(e)

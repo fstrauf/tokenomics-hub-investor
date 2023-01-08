@@ -1,5 +1,5 @@
 import Layout from '../components/layout'
-import Header from '../components/header'
+// import Header from '../components/header'
 import React from 'react';
 import prisma from '../lib/prisma'
 import Post2 from '../components/post2';
@@ -7,7 +7,7 @@ import { GetServerSideProps } from 'next';
 import { useUser } from '@clerk/clerk-react/dist/hooks/useUser';
 // import { useUser } from '@clerk/nextjs';
 
-export default function NewProtocol({ categories, tags }) {
+export default function NewProtocol({ categories, tags, calculations }) {
 
   const { user } = useUser();
 
@@ -64,7 +64,7 @@ export default function NewProtocol({ categories, tags }) {
         <h1 className="text-3xl font-bold mt-10">
           Submit a draft for review
         </h1>
-        <Post2 content={defaultContent} categories={categories} tags={tags} />
+        <Post2 content={defaultContent} categories={categories} tags={tags} calculations={calculations} />
       </Layout>
     </>
   )
@@ -72,13 +72,21 @@ export default function NewProtocol({ categories, tags }) {
 
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const categories = await prisma.category.findMany()
-  const tags = await prisma.tag.findMany()
+
+  const txCalls = []
+  txCalls.push(prisma.category.findMany())
+  txCalls.push(prisma.tag.findMany())
+  txCalls.push(prisma.calculation.findMany())
+
+  const response = await prisma.$transaction(
+    txCalls
+  )
 
   return {
     props: {
-      categories: categories || null,
-      tags: tags || null,
+      categories: response[0] || null,
+      tags: response[1] || null,
+      calculations: response[2] || null,
     },
   }
 }

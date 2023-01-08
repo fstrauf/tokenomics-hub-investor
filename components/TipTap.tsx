@@ -97,7 +97,7 @@ const Tiptap: React.FC<Props> = (props) => {
                     />
                 </>
             )}
-            <div className='border-2 rounded-lg m-4'>
+            <div>
                 <EditorContent className='' editor={editor} />
             </div>
         </div>

@@ -2,7 +2,7 @@ import { useRouter } from 'next/router'
 import ErrorPage from 'next/error'
 import Container from '../../components/container'
 import OurTake from '../../components/our-take'
-import Header from '../../components/header'
+// import Header from '../../components/header'
 import PostHeader from '../../components/post-header'
 import SectionSeparator from '../../components/section-separator'
 import Layout from '../../components/layout'
@@ -23,6 +23,9 @@ import { clerkClient } from "@clerk/nextjs/server";
 import dynamic from 'next/dynamic'
 import { useAuth } from '@clerk/clerk-react/dist/hooks/useAuth'
 import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
+import Calculation from '../../components/calculation'
+
+// import StaticAllocationAndVestingChart from '../../components/charts/StaticAllocationAndVestingChart'
 
 export default function Post({ post, morePosts, author }) {
 
@@ -88,6 +91,7 @@ export default function Post({ post, morePosts, author }) {
                     <li><Link className="flex items-center p-4 text-lg font-bold text-gray-900 hover:rounded hover:text-white hover:bg-gray-700 no-underline" to="ourTake" spy={true} smooth={true}>Our Take</Link></li>
                     <li><Link className="flex items-center p-4 text-lg font-bold text-gray-900 hover:rounded hover:text-white hover:bg-gray-700 no-underline" to="timeline" spy={true} smooth={true}>Timeline</Link></li>
                     <li><Link className="flex items-center p-4 text-lg font-bold text-gray-900 hover:rounded hover:text-white hover:bg-gray-700 no-underline" to="deepDive" spy={true} smooth={true}>Deep Dive</Link></li>
+                    <li><Link className="flex items-center p-4 text-lg font-bold text-gray-900 hover:rounded hover:text-white hover:bg-gray-700 no-underline" to="calculation" spy={true} smooth={true}>Allocation and Emissions</Link></li>
                     <li><Link className="flex items-center p-4 text-lg font-bold text-gray-900 hover:rounded hover:text-white hover:bg-gray-700 no-underline" to="diagram" spy={true} smooth={true}>Diagram</Link></li>
                     <li><Link className="flex items-center p-4 text-lg font-bold text-gray-900 hover:rounded hover:text-white hover:bg-gray-700 no-underline" to="Resources" spy={true} smooth={true}>Resources</Link></li>
                   </ul>
@@ -114,6 +118,8 @@ export default function Post({ post, morePosts, author }) {
                   <TimeLine items={post.protocolTimeLine} />
                   <div id='deepDive'></div>
                   <PostBody content={post.breakdown} />
+                  <div id='calculation'></div>
+                  <Calculation calculation={post.calculation} />
                   <div id='diagram'></div>
                   <Diagram diagram={post.diagramUrl} />
                   <div id='Resources'></div>
@@ -149,7 +155,12 @@ export async function getStaticProps({ params }) {
       tags: {},
       ProtocolResources: {},
       protocolTimeLine: {},
-      author: {},      
+      author: {},   
+      calculation: {
+        include:{
+          CalculationRows:{}
+        }
+      }   
     }
   })
   

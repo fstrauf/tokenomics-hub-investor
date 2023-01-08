@@ -10,7 +10,8 @@ import FormAutoSave from './form/FormAutoSave'
 import dynamic from 'next/dynamic'
 import FormId from './form/FormId'
 
-export default function Post2({ content, categories, tags }) {
+export default function Post2({ content, categories, tags, calculations }) {
+  console.log("🚀 ~ file: post2.tsx:14 ~ Post2 ~ calculations", calculations)
   // console.log("Post2 " + content.breakdown)
 
   const FormTipTap = dynamic(() => import('./form/FormTipTap'), {
@@ -226,8 +227,30 @@ export default function Post2({ content, categories, tags }) {
                 placeholder="Deep Dive"
                 onChange={(e) => setFieldValue('breakdown', e)}
               />
+              <label className="mb-2 block text-sm font-medium text-gray-900">
+                Calculation
+              </label>
+              <p className="mb-2 text-xs font-extralight text-gray-500">
+                If you have created a calculation, you can link it here.
+              </p>
+              <Field
+                  name="calculation"
+                  as="select"
+                  className="block w-52 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
+                  // value=''
+                >
+                  <option key="loadcalc" value="" label="load a calculation">
+                    Link a Calculation{' '}
+                  </option>
+                  {calculations.map((c) => (
+                    <>
+                      <option key={c.id} value={c.id}>
+                        {c.title}
+                      </option>
+                    </>
+                  ))}
+                </Field>
             </div>
-
             <FormDivider text="Additional Information" />
             <div className="mb-6">
               <div className="basis-1/4">
@@ -240,18 +263,18 @@ export default function Post2({ content, categories, tags }) {
                     className="underline"
                     href="https://www.notion.so/tokenomicsdao/Creating-Diagrams-ebc097180eb24380ad3e22ebf25f0189#bf3266cdce724102b2c3155d8fb51239"
                   >
-                    (how to) 
-                  </a>
-                  {' '}or upload your own diagram
+                    (how to)
+                  </a>{' '}
+                  or upload your own diagram
                 </p>
               </div>
-              <div className='mb-2'>
-              <Field
-                name="diagramUrl"
-                as={FormImageSelect}
-                onChange={(e) => setFieldValue('diagramUrl', e)}
-              />
-              </div>              
+              <div className="mb-2">
+                <Field
+                  name="diagramUrl"
+                  as={FormImageSelect}
+                  onChange={(e) => setFieldValue('diagramUrl', e)}
+                />
+              </div>
               <Field
                 type="url"
                 name="diagramUrl"

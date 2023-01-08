@@ -1,5 +1,5 @@
 import Layout from '../components/layout'
-import Header from '../components/header'
+// import Header from '../components/header'
 import React from 'react';
 import prisma from '../lib/prisma'
 import Drafts from '../components/drafts';
