@@ -10,6 +10,17 @@ export const stringToKey = (name) => {
   return name.trim().replace(/\s+/g, '-').toLowerCase()
 }
 
+export const groupByAuthorClerkId = (items) => {
+  const groupedItems = {}
+  items.forEach((item) => {
+    if (!groupedItems[item.authorClerkId]) {
+      groupedItems[item.authorClerkId] = []
+    }
+    groupedItems[item.authorClerkId].push(item)
+  })
+  return groupedItems
+}
+
 export const shortBigNumber = value => new Intl.NumberFormat('en', {notation: 'compact'}).format(value)
 
 export function getAreaData(months, calculationRows, totalSupply) {

@@ -4,18 +4,26 @@ import React from 'react'
 import prisma from '../lib/prisma'
 import { clerkClient } from '@clerk/nextjs/server'
 import AuthorCard from '../components/authorCard'
+import { groupByAuthorClerkId } from '../lib/helper'
+import Link from 'next/link'
 
 export default function ExpertsPage(props) {
+
   return (
     <>
       <Layout>
         {/* <Intro /> */}
-        <h1 className="mb-10 mt-10 text-3xl font-bold">
-          Find who the right expert to support you project
-        </h1>
+        <div className="m-auto flex flex-col justify-center">
+          <h1 className="mb-10 mt-10 text-center text-3xl font-bold">
+            Find who the right expert to support you project
+          </h1>
+          <Link href='/bookAnExpert' className="w-36 self-center rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
+            Book an Expert
+          </Link>
+        </div>
         <div className="m-auto flex flex-wrap justify-center">
           {props.experts.map((e) => {
-            return <AuthorCard author={e} />
+            return <AuthorCard key={e.username} author={e} />
           })}
         </div>
       </Layout>
@@ -36,19 +44,6 @@ export async function getStaticProps() {
 
   const catCountPerExpert =
     await prisma.$queryRaw`select count(A) as count,A as cat,p.authorClerkId from _CategoryToPost join Post as p on p.id = B GROUP BY A, p.authorClerkId`
-  // const tagCountPerExpert =
-  //   await prisma.$queryRaw`SELECT count(B) as count, B as tag, authorClerkId from _PostToTag join Post as p on p.id = A GROUP BY B, authorClerkId`
-
-  const groupByAuthorClerkId = (items) => {
-    const groupedItems = {}
-    items.forEach((item) => {
-      if (!groupedItems[item.authorClerkId]) {
-        groupedItems[item.authorClerkId] = []
-      }
-      groupedItems[item.authorClerkId].push(item)
-    })
-    return groupedItems
-  }
 
   const groupedArray = groupByAuthorClerkId(catCountPerExpert)
 

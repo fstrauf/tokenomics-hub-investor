@@ -65,7 +65,6 @@ export default React.memo(function FeedbackPopup({ isOpen, handleIsOpen }) {
                                         className="text-lg font-medium leading-6 text-gray-700 mb-4"
                                     >
                                         We'd love your feedback!
-                                        <p className='mt-2 text-xs'>(constructive feedback will be rewarded - just enter your email)</p>
                                     </Dialog.Title>
                                     <form action="#" method="POST" onSubmit={handleSubmit}>
                                         <div className="space-y-6 px-4 py-5 sm:p-6">
