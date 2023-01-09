@@ -69,9 +69,10 @@ export default withTooltip<StackedAreasProps, TooltipData>(
       () =>
         scaleTime({
           range: [0, innerWidth],
+          // range: [margin.left, innerWidth],
           domain: extent(data, getDate) as [Date, Date],
         }),
-      [innerWidth]
+      [innerWidth, data]
     )
 
     const valueScale = useMemo(

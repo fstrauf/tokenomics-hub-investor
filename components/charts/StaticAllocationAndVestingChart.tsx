@@ -12,10 +12,10 @@ export default function StaticAllocationAndVestingChart(calculation) {
   })
 
   const calc = calculation?.calculation
-  console.log(
-    '🚀 ~ file: StaticAllocationAndVestingChart.tsx:15 ~ StaticAllocationAndVestingChart ~ calc',
-    calc
-  )
+  // console.log(
+  //   '🚀 ~ file: StaticAllocationAndVestingChart.tsx:15 ~ StaticAllocationAndVestingChart ~ calc',
+  //   calc
+  // )
 
   return (
     <>
@@ -89,7 +89,8 @@ export default function StaticAllocationAndVestingChart(calculation) {
                 data={getAreaData(
                   calc?.months,
                   calc?.CalculationRows,
-                  calc?.totalSupply
+                  calc?.totalSupply,
+                  calc?.startDate
                 )}
                 fields={calc?.CalculationRows}
                 totalSupply={calc?.totalSupply}

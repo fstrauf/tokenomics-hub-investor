@@ -102,6 +102,7 @@ export default function Calculator(props) {
           id: calcRows.id,
           totalSupply: calcRows.totalSupply,
           months: calcRows.months,
+          startDate: new Date(calcRows.startDate).toLocaleDateString('en-CA'),
           areaData: [],
           authorClerkId: calcRows.authorClerkId,
           name: calcRows.title,
@@ -269,6 +270,16 @@ export default function Calculator(props) {
                     <Field
                       type="text"
                       name="name"
+                      className="block w-52 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
+                    />
+                  </div>
+                  <div className="mb-6">
+                    <label className="mb-2 block text-sm font-medium text-gray-900">
+                      Starte Date
+                    </label>
+                    <Field
+                      type="date"
+                      name="startDate"
                       className="block w-52 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
                     />
                   </div>

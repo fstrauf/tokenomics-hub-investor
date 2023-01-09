@@ -47,6 +47,7 @@ const calculationId: string = context?.query?.id || ''
     areaData: [],
     authorClerkId: userId,
     name: '',
+    startDate: new Date().toLocaleDateString('en-CA'),
     calculations: calculations,
     calculationRows: [
       {
@@ -95,6 +96,7 @@ const calculationId: string = context?.query?.id || ''
     initialValues.id = calc.id
     initialValues.totalSupply = calc.totalSupply
     initialValues.months= calc.months
+    initialValues.startDate = new Date(calc.startDate).toLocaleDateString('en-CA')
     initialValues.name = calc.title
     initialValues.calculationRows = calc.CalculationRows
     

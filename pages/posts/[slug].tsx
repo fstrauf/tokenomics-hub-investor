@@ -273,18 +273,19 @@ export async function getStaticProps({ params }) {
     : null
 
   var properJSON = {}
+
   try {
-    properJSON = JSON.parse(JSON.stringify(clerkUuser))
+    properJSON = JSON.parse(JSON.stringify(clerkUuser)) || {}
   } catch {
-    // properJSON = {}
+    properJSON = {}
   }
 
-  properJSON.articleCount = response[0] || null
+  properJSON.articleCount = response[0] || 0
   properJSON.cat = response[1] || null
 
   return {
     props: {
-      post: post|| null,
+      post: post || null,
       author: properJSON || null,
     },
     revalidate: 1,

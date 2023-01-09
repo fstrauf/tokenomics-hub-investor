@@ -23,7 +23,7 @@ export const groupByAuthorClerkId = (items) => {
 
 export const shortBigNumber = value => new Intl.NumberFormat('en', {notation: 'compact'}).format(value)
 
-export function getAreaData(months, calculationRows, totalSupply) {
+export function getAreaData(months, calculationRows, totalSupply, startDate) {
       // console.log("🚀 ~ file: helper.ts:14 ~ getAreaData ~ calculationRows", calculationRows)
       var chartData: object[] = []
       for (let i = 0; i < months; i++) {
@@ -53,7 +53,7 @@ export function getAreaData(months, calculationRows, totalSupply) {
               monthlyEmission + chartData[i - 1][bd.category]
           }
         })
-        categoryLine['date'] = new Date().setMonth(new Date().getMonth() + i)
+        categoryLine['date'] = new Date(startDate).setMonth(new Date(startDate).getMonth() + i)
         chartData.push(categoryLine)
       }
       return chartData

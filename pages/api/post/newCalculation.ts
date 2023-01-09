@@ -13,6 +13,7 @@ export default async function handle(req, res) {
         title: values.name,
         authorClerkId: values.authorClerkId,
         months: values.months,
+        startDate: new Date(values.startDate),
         totalSupply: values.totalSupply,
         CalculationRows: {
           createMany: {

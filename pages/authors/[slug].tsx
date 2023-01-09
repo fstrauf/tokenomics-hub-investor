@@ -108,16 +108,16 @@ export default function UserProfile({
                                     <div className="mr-4 flex h-10 w-10 flex-col items-center justify-center">
                                       <img
                                         alt="profil"
-                                        src={post.mainImageUrl}
+                                        src={post?.mainImageUrl}
                                         className="m-auto h-7 rounded-lg"
                                       />
                                     </div>
                                     <div className="flex-1 pl-1">
                                       <div className="font-medium">
-                                        {post.title}
+                                        {post?.title}
                                       </div>
                                       <div className="text-sm text-gray-400">
-                                        {post.categories[0].label}
+                                        {post?.categories[0]?.label}
                                       </div>
                                     </div>                                  
                                   </div>
