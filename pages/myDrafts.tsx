@@ -8,19 +8,19 @@ import { GetServerSideProps } from 'next';
 // import { useUser } from '@clerk/nextjs';
 import {getAuth } from "@clerk/nextjs/server";
 import type{ AuthData } from '@clerk/nextjs/dist/server/types'
-import { useUser } from '@clerk/clerk-react/dist/hooks/useUser';
+// import { useUser } from '@clerk/clerk-react/dist/hooks/useUser';
 
 export default function MyDrafts({ posts }) {
-  const { user } = useUser();
+  // const { user } = useUser();
 
-  const role = user?.publicMetadata?.role ?? "" 
+  // const role = user?.publicMetadata?.role ?? "" 
 
   return (
     <>
       <Layout>
         {/* <Header /> */}
         <h1 className='font-bold text-2xl mb-5 mt-10'>My Unpublished Drafts</h1>
-        <Drafts posts={posts} context='myDrafts' role={role} />    
+        <Drafts posts={posts} context='myDrafts'  />    
       </Layout>
     </>
   )

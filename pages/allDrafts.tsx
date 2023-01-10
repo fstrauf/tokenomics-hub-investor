@@ -1,27 +1,31 @@
 import Layout from '../components/layout'
 // import Header from '../components/header'
-import React from 'react';
+import React from 'react'
 import prisma from '../lib/prisma'
-import Drafts from '../components/drafts';
-import { GetServerSideProps } from 'next';
+import Drafts from '../components/drafts'
+import { GetServerSideProps } from 'next'
 // import { useAuth, useUser } from '@clerk/nextjs'
-import { clerkClient } from "@clerk/nextjs/server";
-import { useAuth } from '@clerk/clerk-react/dist/hooks/useAuth';
-import { useUser } from '@clerk/clerk-react/dist/hooks/useUser';
+import { clerkClient } from '@clerk/nextjs/server'
+import { useAuth } from '@clerk/clerk-react/dist/hooks/useAuth'
+import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
 
 export default function AllDrafts({ posts }) {
-  const { getToken, isLoaded, isSignedIn } = useAuth();
-  const { user } = useUser();
+  const { isSignedIn } = useAuth()
+  const { user } = useUser()
 
-  const role = user?.publicMetadata?.role ?? ""
+  // const role = user?.publicMetadata?.role ?? ''
+  const contributor = user?.publicMetadata?.contributor || false
+  // const admin = user?.publicMetadata?.admin || false
 
-  if (isSignedIn && role === "contributor") {
+  if (isSignedIn && contributor) {
     return (
       <>
         <Layout>
           {/* <Header /> */}
-          <h1 className='font-bold text-2xl mb-5 mt-10'>All Unpublished Drafts</h1>
-          <Drafts posts={posts} context='allDrafts' role={role} />
+          <h1 className="mb-5 mt-10 text-2xl font-bold">
+            All Unpublished Drafts
+          </h1>
+          <Drafts posts={posts} context="allDrafts" />
         </Layout>
       </>
     )
@@ -46,22 +50,23 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
       categories: {
         select: {
           label: true,
-        }
+        },
       },
-      author: {}
-    }
+      author: {},
+    },
   })
 
-  const userId = posts.map(post => { return (post.authorClerkId) })
-  const users = await clerkClient.users.getUserList({ userId });
+  const userId = posts.map((post) => {
+    return post.authorClerkId
+  })
+  const users = await clerkClient.users.getUserList({ userId })
 
-  const postsWithUserNames = posts.map(post => {
-    const username = users.find(u => u.id === post.authorClerkId)?.username
-    return ({
+  const postsWithUserNames = posts.map((post) => {
+    const username = users.find((u) => u.id === post.authorClerkId)?.username
+    return {
       ...post,
       author: username,
-    })
-
+    }
   })
 
   return {

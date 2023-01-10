@@ -49,6 +49,9 @@ export default function Post({ post, morePosts, author }) {
     userIsAuthor = true
   }
 
+  const contributor = user?.publicMetadata?.contributor || false
+  // const admin = user?.publicMetadata?.admin || false
+
   // console.log(userIsAuthor)
 
   const [isOpen, setIsOpen] = useState(false)
@@ -90,7 +93,12 @@ export default function Post({ post, morePosts, author }) {
                 )}
                 disabled={
                   !(
-                    userIsAuthor || user?.publicMetadata?.role === 'contributor'
+                    // userIsAuthor || user?.publicMetadata?.role === 'contributor'
+                    (
+                      userIsAuthor ||
+                      // user?.publicMetadata?.role === 'contributor'
+                      contributor
+                    )
                   ) ||
                   !isSignedIn ||
                   formState.isSubmitting

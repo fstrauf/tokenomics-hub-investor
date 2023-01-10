@@ -1,34 +1,42 @@
-import React, { FC } from 'react';
-import { Menu, Transition } from '@headlessui/react'
-import { Fragment } from 'react'
-import Link from 'next/link';
-import { useAuth } from '@clerk/clerk-react/dist/hooks/useAuth';
-import { useUser } from '@clerk/clerk-react/dist/hooks/useUser';
-import { SignedIn, SignedOut } from '@clerk/clerk-react/dist/components/controlComponents';
-import { UserButton } from '@clerk/clerk-react/dist/components/uiComponents';
-import { SignInButton } from '@clerk/clerk-react/dist/components/SignInButton';
+import React, { FC } from 'react'
+// import { Menu, Transition } from '@headlessui/react'
+// import { Fragment } from 'react'
+// import Link from 'next/link';
+// import { useAuth } from '@clerk/clerk-react/dist/hooks/useAuth';
+// import { useUser } from '@clerk/clerk-react/dist/hooks/useUser';
+import {
+//   SignedIn,
+  SignedOut,
+} from '@clerk/clerk-react/dist/components/controlComponents'
+// import { UserButton } from '@clerk/clerk-react/dist/components/uiComponents'
+import { SignInButton } from '@clerk/clerk-react/dist/components/SignInButton'
 
 type Message = string
 
 const Login: FC<{ message: Message }> = ({ message }) => {
-  const { isSignedIn } = useAuth();
-  const { user } = useUser();
+  //   const { isSignedIn } = useAuth();
+  //   const { user } = useUser();
 
-  const role = user?.publicMetadata?.role ?? ""
+  //   const role = user?.publicMetadata?.role ?? ""
 
   return (
     <>
-      <div className='block m-auto'>
-        <div className='rounded p-3 m-0 bg-gray-100 flex flex-row-reverse'>
-          <div className='align-middle inline-flex'>
-            <SignedIn>
-              <UserButton />
-            </SignedIn>
-            <SignedOut>
-              <SignInButton />
-            </SignedOut>
-          </div>
-          <Menu as="div" className="z-60 w-28 relative inline-block text-left ">
+      {/* <div className="m-auto"> */}
+        {/* <div className="m-0 flex justify-end rounded bg-gray-100 p-3"> */}
+        <div className="m-0 w-full rounded bg-gray-100 p-3 align-middle">
+          {/* <SignedIn>
+            <UserButton />
+          </SignedIn> */}
+          <SignedOut>
+            <div className='flex justify-between'>
+              <p className="text-left">
+                Please sign in to see remaining report.
+              </p>
+              <SignInButton className='font-bold' />
+            </div>
+          </SignedOut>
+        </div>
+        {/* <Menu as="div" className="z-60 w-28 relative inline-block text-left ">
             <div>
               <Menu.Button className="align-middle inline-flex justify-center rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
                 Options
@@ -83,11 +91,11 @@ const Login: FC<{ message: Message }> = ({ message }) => {
                 </div>              
               </Menu.Items>
             </Transition>
-          </Menu>
-        </div>
-      </div>
+          </Menu> */}
+        {/* </div> */}
+      {/* </div> */}
     </>
   )
 }
 
-export default Login;
+export default Login

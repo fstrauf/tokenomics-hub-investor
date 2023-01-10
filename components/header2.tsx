@@ -22,7 +22,9 @@ export default function Header2() {
   const { isSignedIn } = useAuth()
   const { user } = useUser()
 
-  const role = user?.publicMetadata?.role ?? ''
+  // const role = user?.publicMetadata?.role ?? ''
+    const contributor = user?.publicMetadata?.contributor || false
+    // const admin = user?.publicMetadata?.admin || false
 
   const newProtocolSection = (
     <Link
@@ -66,7 +68,7 @@ export default function Header2() {
     <Link
       href="/allDrafts"
       className={`-m-3 flex items-start rounded-lg p-3 hover:bg-gray-50 ${
-        !(role === 'contributor') ? 'pointer-events-none opacity-50' : ''
+        !(contributor) ? 'pointer-events-none opacity-50' : ''
       }`}
     >
       {/* <item.icon

@@ -17,7 +17,7 @@ import { timeFormat } from 'd3-time-format'
 import { AxisBottom, AxisLeft } from '@visx/axis'
 import { Group } from '@visx/group'
 import { LegendOrdinal } from '@visx/legend'
-import { shortBigNumber } from '../../lib/helper'
+import { shortBigNumber, stringToKey } from '../../lib/helper'
 
 export const background = '#FF6666'
 const tooltipStyles = {
@@ -55,15 +55,17 @@ export default withTooltip<StackedAreasProps, TooltipData>(
     fields,
     totalSupply,
   }: StackedAreasProps & WithTooltipProvidedProps<TooltipData>) => {
-    // console.log('vestingchart - render')
-    const keys = fields?.map((f) => {      
-      
+    const keys = fields?.map((f) => {                  
       return f.category
+    })
+
+    const colors = fields?.map((f) => {
+      
+      return f.color
     })
 
     const innerWidth = width - margin.left - margin.right
     const innerHeight = height - margin.top - margin.bottom
-
 
     const dateScale = useMemo(
       () =>
@@ -88,11 +90,9 @@ export default withTooltip<StackedAreasProps, TooltipData>(
       () =>
         scaleOrdinal({
           domain: keys,
-          range: fields?.map((f) => {
-            return f.color
-          }),
+          range: colors,
         }),
-      [keys]
+      [keys, colors]
     )
 
     const axisLeftTickLabelProps = {
@@ -149,23 +149,7 @@ export default withTooltip<StackedAreasProps, TooltipData>(
             // font-size: 10px;
           />
         </div>
-        <svg width={width} height={height}>
-          {fields?.map((f) => (
-            <LinearGradient
-              key={f.category}
-              id={f.category}
-              from={f.color}
-              to={f.color}
-            />
-          ))}
-          <rect
-            x={0}
-            y={0}
-            width={width}
-            height={height}
-            fill="#FFFF"
-            rx={14}
-          />
+        <svg width={width} height={height}>       
           <Group left={margin.left} top={margin.top}>
             <AreaStack
               top={margin.top}
@@ -174,22 +158,13 @@ export default withTooltip<StackedAreasProps, TooltipData>(
               data={data}
               width={innerWidth}
               height={innerHeight}
+              stroke='white'
+              strokeWidth={1}
               x={(d) => dateScale(getDate(d.data)) ?? 0}
               y0={(d) => valueScale(d[0])}
               y1={d => valueScale(d[1])}
-            >
-              {({ stacks, path }) =>
-                stacks.map((stack) => (
-                  <path
-                    key={`stack-${stack.key}`}
-                    d={path(stack) || ''}
-                    stroke={`url(#${stack.key})`}      
-                    strokeOpacity={0.1}               
-                    fill={`url(#${stack.key})`}          
-                  />
-                ))
-              }
-            </AreaStack>
+              color={d => colorScale(d)}
+            />
             <AxisBottom
               top={innerHeight}
               scale={dateScale}
