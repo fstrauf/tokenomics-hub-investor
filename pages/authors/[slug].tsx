@@ -175,7 +175,7 @@ export async function getStaticProps({ params }) {
   )
 
   txCalls.push(
-    prisma.$queryRaw`select count(A) as count,A as cat,p.authorClerkId from _CategoryToPost join Post as p on p.id = B WHERE p.authorClerkId = ${params?.slug} GROUP BY A, p.authorClerkId`
+    prisma.$queryRaw`select count(A) as count,A as cat,p.authorClerkId from _CategoryToPost join Post as p on p.id = B WHERE p.authorClerkId = ${params?.slug} AND p.published = true GROUP BY A, p.authorClerkId`
   )
 
   const response = await prisma.$transaction(txCalls)

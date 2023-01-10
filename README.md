@@ -5,8 +5,12 @@ npm install
 npm run dev
 
 # Run the Studio
-npm run start:sanity
-```
+Start it locally `pscale connect tutorial-db initial-setup --port 3309`
+TO work on the main branch `pscale connect tutorial-db main --port 3309`
+
+push database `npx prisma db push`
+
+db browser `npx prisma studio`
 
 The blog will be running at `http://localhost:3000`, the Studio will run at `http://localhost:3333`.
 

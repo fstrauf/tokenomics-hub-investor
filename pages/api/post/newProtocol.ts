@@ -1,6 +1,6 @@
 import prisma from '../../../lib/prisma'
 import { Prisma } from '@prisma/client'
-import { stringToKey } from '../../../lib/helper';
+import { stringToKey, postStatus } from '../../../lib/helper';
 
 export default async function handle(req, res) {
   const { values } = req.body
@@ -56,6 +56,7 @@ export default async function handle(req, res) {
         problemSolution: inputFields.problemSolution,
         parent: inputFields.parent,
         authorClerkId: inputFields.authorClerkId,
+        status: postStatus.draft,
         categories: {
           connectOrCreate: inputFields.categories.map((cat) => {
             return {

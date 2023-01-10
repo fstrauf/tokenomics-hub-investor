@@ -9,10 +9,9 @@ import FormDivider from './form/FormDivider'
 import FormAutoSave from './form/FormAutoSave'
 import dynamic from 'next/dynamic'
 import FormId from './form/FormId'
+import { postStatus } from '../lib/helper'
 
 export default function Post2({ content, categories, tags, calculations }) {
-  console.log("🚀 ~ file: post2.tsx:14 ~ Post2 ~ calculations", calculations)
-  // console.log("Post2 " + content.breakdown)
 
   const FormTipTap = dynamic(() => import('./form/FormTipTap'), {
     loading: () => <p>Loading</p>,
@@ -38,8 +37,6 @@ export default function Post2({ content, categories, tags, calculations }) {
 
   const submitData = async (values, { setSubmitting }) => {
     const body = { values }
-
-    // console.log("submit " + values.breakdown)
 
     if (values?.id === '') {
       try {
@@ -90,6 +87,24 @@ export default function Post2({ content, categories, tags, calculations }) {
       } catch (error) {
         console.error(error)
       }
+    }
+  }
+
+  async function sendToReview(event: MouseEvent<HTMLButtonElement, MouseEvent>,postId: string): void {
+    const body = { status: postStatus.review, postId }
+    
+    const response = await fetch('/api/post/updateStatus', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    })
+
+    if (!response.ok) {
+      const error = await response.text()
+      toast.error(JSON.parse(error).error, { position: 'bottom-right' })
+      throw new Error(error)
+    } else {
+      toast.success('Sent to review', { position: 'bottom-right' })
     }
   }
 
@@ -308,6 +323,14 @@ export default function Post2({ content, categories, tags, calculations }) {
               disabled={isSubmitting}
             >
               Save
+            </button>
+            <button
+              className="mt-5 ml-3 mb-5 rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
+              type="button"
+              disabled={isSubmitting}
+              onClick={(e) => sendToReview(e, values.id)}
+            >
+              Send to Review
             </button>
           </Form>
         )}

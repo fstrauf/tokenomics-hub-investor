@@ -43,7 +43,7 @@ export async function getStaticProps() {
   })
 
   const catCountPerExpert =
-    await prisma.$queryRaw`select count(A) as count,A as cat,p.authorClerkId from _CategoryToPost join Post as p on p.id = B GROUP BY A, p.authorClerkId`
+    await prisma.$queryRaw`select count(A) as count,A as cat, p.authorClerkId from _CategoryToPost join Post as p on p.id = B WHERE p.published = true GROUP BY A, p.authorClerkId`
 
   const groupedArray = groupByAuthorClerkId(catCountPerExpert)
 

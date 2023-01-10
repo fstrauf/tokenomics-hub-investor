@@ -6,6 +6,12 @@ export const getLableNumber = (value) => {
   }
 }
 
+export enum postStatus {
+  draft = 'draft',
+  review = 'review',
+  published = 'published',  
+}
+
 export const stringToKey = (name) => {
   return name.trim().replace(/\s+/g, '-').toLowerCase()
 }
