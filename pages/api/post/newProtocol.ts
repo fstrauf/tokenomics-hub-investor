@@ -57,6 +57,7 @@ export default async function handle(req, res) {
         parent: inputFields.parent,
         authorClerkId: inputFields.authorClerkId,
         status: postStatus.draft,
+        ticker: inputFields.ticker,
         categories: {
           connectOrCreate: inputFields.categories.map((cat) => {
             return {

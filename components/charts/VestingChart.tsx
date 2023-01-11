@@ -1,6 +1,6 @@
 import React, { useMemo, useCallback } from 'react'
 import { AreaStack } from '@visx/shape'
-import { LinearGradient } from '@visx/gradient'
+// import { LinearGradient } from '@visx/gradient'
 import { scaleTime, scaleLinear, scaleOrdinal } from '@visx/scale'
 import { extent, bisector } from 'd3-array'
 // import tinycolor from 'tinycolor2'
@@ -17,7 +17,7 @@ import { timeFormat } from 'd3-time-format'
 import { AxisBottom, AxisLeft } from '@visx/axis'
 import { Group } from '@visx/group'
 import { LegendOrdinal } from '@visx/legend'
-import { shortBigNumber, stringToKey } from '../../lib/helper'
+import { shortBigNumber } from '../../lib/helper'
 
 export const background = '#FF6666'
 const tooltipStyles = {
@@ -220,8 +220,7 @@ export default withTooltip<StackedAreasProps, TooltipData>(
                 {fields.map((k) => (
                   <div key={k.category} className='flex justify-end'>                    
                     <p style={{color: k.color}} className='mr-2 font-bold'>{k.category}: </p>
-                    <p> {Number(tooltipData[k.category]).toFixed()}</p>
-                    {/* <p> {Number(data[k.category]).toFixed()}</p> */}
+                    <p> {shortBigNumber(tooltipData[k.category])}</p>
                   </div>
                 ))}
               </div>

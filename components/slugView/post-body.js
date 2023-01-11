@@ -1,5 +1,5 @@
 import React from 'react'
-import Tiptap from './TipTap';
+import Tiptap from '../TipTap';
 
 export default function PostBody({ content }) {
 

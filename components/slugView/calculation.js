@@ -1,4 +1,4 @@
-import StaticAllocationAndVestingChart from './charts/StaticAllocationAndVestingChart'
+import StaticAllocationAndVestingChart from '../charts/StaticAllocationAndVestingChart'
 
 export default function Calculation(calculation) {
 // console.log("🚀 ~ file: calculation.js:4 ~ Calculation ~ calculation", calculation)

@@ -57,7 +57,7 @@ return (
                     y={centroidY}
                     dy=".33em"
                     // fill="#ffffff"
-                    fontSize={14}
+                    fontSize={10}
                     textAnchor="middle"
                     pointerEvents="none"
                   >

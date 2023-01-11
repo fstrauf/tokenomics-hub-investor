@@ -24,6 +24,7 @@ model Post {
   authorId              String?
   status                String?
   authorClerkId         String?
+  ticker                String?
   categories            Category[]
   tags                  Tag[]
   protocolTimeLine      ProtocolTimeLine[]

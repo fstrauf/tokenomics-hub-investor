@@ -16,7 +16,7 @@ export default function ProtocolStats({ protocol }) {
     { refreshInterval: 30000 }
   )
 
-  const PriceChart = dynamic(() => import('./charts/PriceChart'), {
+  const PriceChart = dynamic(() => import('../charts/PriceChart'), {
     ssr: false,
   })
 

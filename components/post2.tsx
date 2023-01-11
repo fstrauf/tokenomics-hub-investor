@@ -146,13 +146,28 @@ export default function Post2({ content, categories, tags, calculations }) {
                   Short Description
                 </label>
                 <p className="mb-2 text-xs font-extralight text-gray-500">
-                  Give a short summary of the project
+                  Give a short summary of the project and the token/tokens.
                 </p>
               </div>
               <Field
                 name="shortDescription"
                 as={FormText}
                 placeholder="Short description"
+              />
+            </div>
+            <div className="mb-6 flex">
+              <div className="basis-1/4">
+                <label className="mb-2 block text-sm font-medium text-gray-900">
+                  Ticker
+                </label>
+                <p className="mb-2 text-xs font-extralight text-gray-500">
+                  What's the ticker used for the token?
+                </p>
+              </div>
+              <Field
+                type="text"
+                name="ticker"
+                className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
               />
             </div>
             <div className="mb-6">

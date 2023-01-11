@@ -1,15 +1,15 @@
 import { useRouter } from 'next/router'
 import ErrorPage from 'next/error'
 import Container from '../../components/container'
-import OurTake from '../../components/our-take'
+import OurTake from '../../components/slugView/our-take'
 // import Header from '../../components/header'
-import PostHeader from '../../components/post-header'
+import PostHeader from '../../components/slugView/post-header'
 import SectionSeparator from '../../components/section-separator'
 import Layout from '../../components/layout'
-import PostTitle from '../../components/post-title'
-import TokenStrength from '../../components/token-strength'
-import Resources from '../../components/resources'
-import TimeLine from '../../components/timeline'
+import PostTitle from '../../components/slugView/post-title'
+import TokenStrength from '../../components/slugView/token-strength'
+import Resources from '../../components/slugView/resources'
+import TimeLine from '../../components/slugView/timeline'
 import { Link } from 'react-scroll'
 import FeedbackPopup from '../../components/feedback-popup'
 import { useState, useCallback } from 'react'
@@ -23,20 +23,20 @@ import { clerkClient } from '@clerk/nextjs/server'
 import dynamic from 'next/dynamic'
 import { useAuth } from '@clerk/clerk-react/dist/hooks/useAuth'
 import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
-import Calculation from '../../components/calculation'
+import Calculation from '../../components/slugView/calculation'
 
 export default function Post({ post, morePosts, author }) {
-  const PostBody = dynamic(() => import('../../components/post-body'), {
+  const PostBody = dynamic(() => import('../../components/slugView/post-body'), {
     loading: () => <p>Loading</p>,
   })
   const AuthorCard = dynamic(() => import('../../components/authorCard'), {
     loading: () => <p>Loading</p>,
   })
   const ProtocolStats = dynamic(
-    () => import('../../components/protocol-stats'),
+    () => import('../../components/slugView/protocol-stats'),
     { loading: () => <p>Loading</p> }
   )
-  const Diagram = dynamic(() => import('../../components/diagram'), {
+  const Diagram = dynamic(() => import('../../components/slugView/diagram'), {
     loading: () => <p>Loading</p>,
   })
 
@@ -86,6 +86,7 @@ export default function Post({ post, morePosts, author }) {
                 type={post.categories[0]?.label}
                 tags={post.tags}
                 tokenStrength={post.tokenStrength}
+                ticker={post.ticker}
               />
               <button
                 onClick={handleSubmit(() =>
@@ -252,7 +253,11 @@ export async function getStaticProps({ params }) {
       categories: {},
       tags: {},
       ProtocolResources: {},
-      protocolTimeLine: {},
+      protocolTimeLine: {
+        orderBy: {
+           date: 'asc'
+        }
+      },
       author: {},
       calculation: {
         include: {
@@ -315,5 +320,6 @@ export async function getStaticPaths() {
         },
       })) || [],
     fallback: true,
+    // revalidate: 10, // In seconds
   }
 }
