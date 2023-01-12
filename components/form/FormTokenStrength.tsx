@@ -7,7 +7,7 @@ import FormText from './FormText';
 export const FormTokenStrength = () => (
     <>
         <div className='mb-6 flex'>
-            <div className='basis-1/4'>
+            <div className='basis-1/4 mr-1'>
                 <label className='block mb-2 text-sm font-medium text-gray-900'>Token Utility</label>
                 <p className='text-xs text-gray-500 font-extralight mb-2'>Describe what the token is used for and the role it plays within the protocol</p>
             </div>
@@ -18,7 +18,7 @@ export const FormTokenStrength = () => (
             </div>
         </div>
         <div className='mb-6 flex'>
-            <div className='basis-1/4'>
+            <div className='basis-1/4 mr-1'>
                 <label className='block mb-2 text-sm font-medium text-gray-900'>Business Model</label>
                 <p className='text-xs text-gray-500 font-extralight mb-2'>How does the protocol make money?</p>
             </div>
@@ -29,7 +29,7 @@ export const FormTokenStrength = () => (
             </div>
         </div>
         <div className='mb-6 flex'>
-            <div className='basis-1/4'>
+            <div className='basis-1/4 mr-1'>
                 <label className='block mb-2 text-sm font-medium text-gray-900'>Value Creation</label>
                 <p className='text-xs text-gray-500 font-extralight mb-2'>What is the value created by the protocol?</p>
             </div>
@@ -40,7 +40,7 @@ export const FormTokenStrength = () => (
             </div>
         </div>
         <div className='mb-6 flex'>
-            <div className='basis-1/4'>
+            <div className='basis-1/4 mr-1'>
                 <label className='block mb-2 text-sm font-medium text-gray-900'>Value Capture</label>
                 <p className='text-xs text-gray-500 font-extralight mb-2'>How does (or does not) the protocol and/or its token capture/reflect the value it creates?</p>
             </div>
@@ -51,7 +51,7 @@ export const FormTokenStrength = () => (
             </div>
         </div>
         <div className='mb-6 flex'>
-            <div className='basis-1/4'>
+            <div className='basis-1/4 mr-1'>
                 <label className='block mb-2 text-sm font-medium text-gray-900'>Demand Drivers</label>
                 <p className='text-xs text-gray-500 font-extralight mb-2'>What is the demand for the token, why will people buy it (or not)?</p>
             </div>

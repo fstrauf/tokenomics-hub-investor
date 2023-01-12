@@ -12,7 +12,6 @@ import FormId from './form/FormId'
 import { postStatus } from '../lib/helper'
 
 export default function Post2({ content, categories, tags, calculations }) {
-
   const FormTipTap = dynamic(() => import('./form/FormTipTap'), {
     loading: () => <p>Loading</p>,
   })
@@ -90,9 +89,12 @@ export default function Post2({ content, categories, tags, calculations }) {
     }
   }
 
-  async function sendToReview(event: MouseEvent<HTMLButtonElement, MouseEvent>,postId: string): void {
+  async function sendToReview(
+    event: MouseEvent<HTMLButtonElement, MouseEvent>,
+    postId: string
+  ): void {
     const body = { status: postStatus.review, postId }
-    
+
     const response = await fetch('/api/post/updateStatus', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -231,9 +233,12 @@ export default function Post2({ content, categories, tags, calculations }) {
             </div>
             <FormDivider text="Token Strength" />
             <FormTokenStrength />
-            <p className="mb-2 block text-sm font-medium text-gray-900">
+            <p className="block text-sm font-medium text-gray-900">
               total Strength:
             </p>
+            <span className="mb-2 justify-end self-end text-right text-xs font-extralight text-gray-500">
+              Leave the strength rating set to 0 to skip the rating
+            </span>
             <FormStrength name="tokenStrength" />
             <FormDivider text="Token Analysis" />
             <FormAnalysis />
@@ -264,22 +269,22 @@ export default function Post2({ content, categories, tags, calculations }) {
                 If you have created a calculation, you can link it here.
               </p>
               <Field
-                  name="calculation"
-                  as="select"
-                  className="block w-52 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
-                  // value=''
-                >
-                  <option key="loadcalc" value="" label="load a calculation">
-                    Link a Calculation{' '}
-                  </option>
-                  {calculations.map((c) => (
-                    <>
-                      <option key={c.id} value={c.id}>
-                        {c.title}
-                      </option>
-                    </>
-                  ))}
-                </Field>
+                name="calculation"
+                as="select"
+                className="block w-52 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
+                // value=''
+              >
+                <option key="loadcalc" value="" label="load a calculation">
+                  Link a Calculation{' '}
+                </option>
+                {calculations.map((c) => (
+                  <>
+                    <option key={c.id} value={c.id}>
+                      {c.title}
+                    </option>
+                  </>
+                ))}
+              </Field>
             </div>
             <FormDivider text="Additional Information" />
             <div className="mb-6">

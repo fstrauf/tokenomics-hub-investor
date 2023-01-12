@@ -6,10 +6,13 @@ import toast, { Toaster } from 'react-hot-toast'
 import { Dialog, Transition } from '@headlessui/react'
 import FormId from './form/FormId'
 import { useAuth } from '@clerk/clerk-react/dist/hooks/useAuth'
+import { useRouter } from 'next/router'
 
 export default function Calculator(props) {
   const { initialValues } = props
   const { isSignedIn } = useAuth()
+
+  const router = useRouter()
 
   const VestingChart = dynamic(() => import('./charts/VestingChart'), {
     ssr: false,
@@ -25,6 +28,7 @@ export default function Calculator(props) {
   })
 
   let [isOpen, setIsOpen] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
   function closeModal() {
     setIsOpen(false)
@@ -101,6 +105,7 @@ export default function Calculator(props) {
 
   const loadContent = async (resetForm, calculationId) => {
     const body = { calculationId }
+    setIsLoading(true)
 
     const response = await fetch('/api/get/getCalculationRows', {
       method: 'POST',
@@ -124,7 +129,13 @@ export default function Calculator(props) {
           calculationRows: calcRows.CalculationRows,
         },
       })
+      // useEffect(() => {
+      //   // Always do navigations after the first render
+      //   router.push('/?counter=10', undefined, { shallow: true })
+      // }, [])
+      // router.push(`/calculator?id=${calcRows.id}`, undefined, { shallow: true })
     }
+    setIsLoading(false)
   }
 
   return (
@@ -233,14 +244,14 @@ export default function Calculator(props) {
                   onClick={() => loadContent(resetForm, values.calculations)}
                   type="button"
                   className="ml-4 rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
-                  disabled={isSubmitting}
+                  disabled={isSubmitting || isLoading}
                 >
                   Load
                 </button>
                 <button
                   className="ml-4 rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
                   type="submit"
-                  disabled={isSubmitting}
+                  disabled={isSubmitting || isLoading}
                 >
                   Save
                 </button>
@@ -253,10 +264,10 @@ export default function Calculator(props) {
                   Share
                 </button>
                 <button
-                  onClick={() => resetForm()}
+                  onClick={() => resetForm({ values: initialValues })}
                   type="button"
                   className="ml-4 rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
-                  disabled={isSubmitting}
+                  disabled={isSubmitting || isLoading}
                 >
                   New
                 </button>
@@ -299,7 +310,7 @@ export default function Calculator(props) {
                   </div>
                   <div className="mb-6">
                     <label className="mb-2 block text-sm font-medium text-gray-900">
-                      Starte Date
+                      Start Date
                     </label>
                     <Field
                       type="date"

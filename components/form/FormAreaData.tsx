@@ -1,6 +1,6 @@
 import React from 'react'
 import { useFormikContext } from 'formik'
-import { getAreaData } from '../../lib/helper'
+import { getAreaData, getEpochAreaData } from '../../lib/helper'
 
 export const FormAreaData = (props) => {
   const {
@@ -10,7 +10,10 @@ export const FormAreaData = (props) => {
 
   React.useEffect(() => {
 
+    // console.log(getEpochAreaData(months, calculationRows, totalSupply, startDate))
     const chartData = getAreaData(months, calculationRows, totalSupply, startDate)
+    // const chartData = getEpochAreaData(months, calculationRows, totalSupply, startDate)
+    // console.log("🚀 ~ file: FormAreaData.tsx:15 ~ React.useEffect ~ chartData", chartData)
 
     setFieldValue(props.name, chartData)
   }, [setFieldValue, props.name, months, calculationRows, totalSupply, startDate])

@@ -7,7 +7,8 @@ export const FormCalculator = ({ values }) => (
       name="calculationRows"
       render={(arrayHelpers) => (
         <>
-          <table className="mb-1 w-full text-left text-sm text-gray-500">
+        <div className='overflow-x-auto'>
+          <table className="mb-1 w-full text-left  text-sm table-auto text-gray-500">
             <thead className="bg-gray-50 text-xs uppercase text-gray-700">
               <tr>
                 <th scope="col" className="py-3 px-6">
@@ -106,6 +107,7 @@ export const FormCalculator = ({ values }) => (
                 ))}
             </tbody>
           </table>
+          </div>
           <button
             type="button"
             className="mt-3 rounded-md bg-dao-red px-2 py-1 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
