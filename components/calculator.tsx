@@ -7,9 +7,11 @@ import { Dialog, Transition } from '@headlessui/react'
 import FormId from './form/FormId'
 import { useAuth } from '@clerk/clerk-react/dist/hooks/useAuth'
 import { useRouter } from 'next/router'
+// import { initialValues } from '../pages/calculator'
+// import Link from 'next/link'
 
 export default function Calculator(props) {
-  const { initialValues } = props
+  const { preloadInitialValues } = props
   const { isSignedIn } = useAuth()
 
   const router = useRouter()
@@ -38,7 +40,7 @@ export default function Calculator(props) {
     setIsOpen(true)
   }
 
-  const [postId, setPostId] = useState(initialValues.id)
+  const [postId, setPostId] = useState(preloadInitialValues.id)
 
   const validateName = async (value) => {
     let error;
@@ -103,39 +105,12 @@ export default function Calculator(props) {
     }
   }
 
-  const loadContent = async (resetForm, calculationId) => {
-    const body = { calculationId }
-    setIsLoading(true)
+  const loadContent = async (calculationId) => {
+    router.push(`/calculator?id=${calculationId}`)    
+  }
 
-    const response = await fetch('/api/get/getCalculationRows', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body),
-    })
-
-    if (response.ok) {
-      const calcRows: any = JSON.parse(await response.text())
-
-      resetForm({
-        values: {
-          id: calcRows.id,
-          totalSupply: calcRows.totalSupply,
-          months: calcRows.months,
-          startDate: new Date(calcRows.startDate).toLocaleDateString('en-CA'),
-          areaData: [],
-          authorClerkId: calcRows.authorClerkId,
-          name: calcRows.title,
-          calculations: initialValues.calculations,
-          calculationRows: calcRows.CalculationRows,
-        },
-      })
-      // useEffect(() => {
-      //   // Always do navigations after the first render
-      //   router.push('/?counter=10', undefined, { shallow: true })
-      // }, [])
-      // router.push(`/calculator?id=${calcRows.id}`, undefined, { shallow: true })
-    }
-    setIsLoading(false)
+  const newForm = async () => {
+    router.push(`/calculator`)    
   }
 
   return (
@@ -147,11 +122,11 @@ export default function Calculator(props) {
 
       <div className="mt-5">
         <Formik
-          initialValues={initialValues}
+          initialValues={preloadInitialValues}
           onSubmit={submitData}
           enableReinitialize={true}
         >
-          {({ isSubmitting, values, resetForm }) => (
+          {({ isSubmitting, values }) => (
             <Form>
               <Transition appear show={isOpen} as={Fragment}>
                 <Dialog as="div" className="relative z-10" onClose={closeModal}>
@@ -232,7 +207,7 @@ export default function Calculator(props) {
                   <option key="loadcalc" value="" label="load a calculation">
                     Load a Calculation{' '}
                   </option>
-                  {initialValues.calculations.map((c) => (
+                  {preloadInitialValues.calculations.map((c) => (
                     <>
                       <option key={c.id} value={c.id}>
                         {c.title}
@@ -241,7 +216,7 @@ export default function Calculator(props) {
                   ))}
                 </Field>
                 <button
-                  onClick={() => loadContent(resetForm, values.calculations)}
+                  onClick={() => loadContent(values.calculations)}
                   type="button"
                   className="ml-4 rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
                   disabled={isSubmitting || isLoading}
@@ -264,7 +239,8 @@ export default function Calculator(props) {
                   Share
                 </button>
                 <button
-                  onClick={() => resetForm({ values: initialValues })}
+                  // onClick={() => resetForm({ values: initialValues })}
+                  onClick={newForm}
                   type="button"
                   className="ml-4 rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
                   disabled={isSubmitting || isLoading}

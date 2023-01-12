@@ -7,7 +7,7 @@ import prisma from '../lib/prisma'
 import { buildClerkProps, getAuth } from '@clerk/nextjs/server'
 import { AuthData } from '@clerk/nextjs/dist/server/types'
 
-export default function CalculationPage({ initialValues }) {
+export default function CalculationPage({ preloadInitialValues }) {
   const Calculator = dynamic(() => import('../components/calculator'), {
     loading: () => <p>Loading</p>,
   })
@@ -16,49 +16,25 @@ export default function CalculationPage({ initialValues }) {
     <>
       <Layout>
         {/* <Intro /> */}
-        <Calculator initialValues={initialValues} />
+        <Calculator preloadInitialValues={preloadInitialValues} />
       </Layout>
     </>
   )
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const calculationId: string = context?.query?.id || ''
-
-  const { userId }: AuthData = getAuth(context.req)
-
-  const txCalls = []
-  //get users calculations
-  txCalls.push(
-    prisma.calculation.findMany({
-      where: {
-        authorClerkId: userId,
-      },
-    })
-  )
-
-  txCalls.push(
-    prisma.calculation.findUnique({
-      where: {
-        id: calculationId,
-      },
-      include: {
-        CalculationRows: true,
-      },
-    })
-  )
-
-  const response = await prisma.$transaction(txCalls)
 
   const initialValues = {
     id: '',
     totalSupply: 100,
     months: 60,
     areaData: [],
-    authorClerkId: userId,
+    // authorClerkId: userId,
+    authorClerkId: '',
     name: '',
     startDate: new Date().toLocaleDateString('en-CA'),
-    calculations: response[0],
+    // calculations: response[0],
+    calculations: '',  
     calculationRows: [
       {
         category: 'Treasury',
@@ -98,20 +74,56 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     ],
   }
 
+  // console.log("🚀 ~ file: calculator.tsx:76 ~ constgetServerSideProps:GetServerSideProps= ~ context", context)
+  const calculationId: string = context?.query?.id || ''
+  console.log("🚀 ~ file: calculator.tsx:78 ~ constgetServerSideProps:GetServerSideProps= ~ calculationId", calculationId)
+
+  const { userId }: AuthData = getAuth(context.req)
+
+  const txCalls = []
+  //get users calculations
+  txCalls.push(
+    prisma.calculation.findMany({
+      where: {
+        authorClerkId: userId,
+      },
+    })
+  )
+
+  txCalls.push(
+    prisma.calculation.findUnique({
+      where: {
+        id: calculationId,
+      },
+      include: {
+        CalculationRows: true,
+      },
+    })
+  )
+
+  const response = await prisma.$transaction(txCalls)
+
+  var preloadInitialValues = initialValues
+  console.log("🚀 ~ file: calculator.tsx:106 ~ constgetServerSideProps:GetServerSideProps= ~ preloadInitialValues", preloadInitialValues)
+  console.log("🚀 ~ file: calculator.tsx:106 ~ constgetServerSideProps:GetServerSideProps= ~ initialValues", initialValues)
+
+  preloadInitialValues.calculations = response[0]
+  preloadInitialValues.authorClerkId = userId
+
   if (response[1] !== null) {
-    initialValues.id = response[1].id
-    initialValues.totalSupply = response[1].totalSupply
-    initialValues.months = response[1].months
-    initialValues.startDate = new Date(
+    preloadInitialValues.id = response[1].id
+    preloadInitialValues.totalSupply = response[1].totalSupply
+    preloadInitialValues.months = response[1].months
+    preloadInitialValues.startDate = new Date(
       response[1].startDate
     ).toLocaleDateString('en-CA')
-    initialValues.name = response[1].title
-    initialValues.calculationRows = response[1].CalculationRows
+    preloadInitialValues.name = response[1].title
+    preloadInitialValues.calculationRows = response[1].CalculationRows
   }
 
   return {
     props: {
-      initialValues: initialValues || null,
+      preloadInitialValues: preloadInitialValues || null,
       ...buildClerkProps(context.req),
     },
   }
