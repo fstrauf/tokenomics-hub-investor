@@ -1,6 +1,7 @@
 // import { FieldProps } from "formik";
 import { Field, FieldArray } from 'formik'
 import React from 'react'
+import { WEBSITE_URL_BASE } from '../../lib/constants'
 
 // import Select from "react-select";
 
@@ -84,7 +85,7 @@ export const FormResources = ({ values, postId }) => (
             onClick={() =>
               arrayHelpers.push({
                 title: 'website',
-                url: 'https://www.tokenomicshub.xyz/',
+                url: WEBSITE_URL_BASE,
                 internal: true,
               })
             }

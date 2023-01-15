@@ -1,11 +1,10 @@
 import Layout from '../components/layout'
-// import Header from '../components/header'
 import React from 'react';
 import prisma from '../lib/prisma'
 import Post2 from '../components/post2';
 import { GetServerSideProps } from 'next';
 import { useUser } from '@clerk/clerk-react/dist/hooks/useUser';
-// import { useUser } from '@clerk/nextjs';
+import { postStatus } from '../lib/helper';
 
 export default function NewProtocol({ categories, tags, calculations }) {
 
@@ -47,23 +46,19 @@ export default function NewProtocol({ categories, tags, calculations }) {
     metrics: '',
     diagramUrl: '',
     ProtocolResources: [
-      // { title: 'website', url: 'https://www.tokenomicshub.xyz/', internal: true }
     ],
     // Author: { email: user?.email },
     strongPoints: '',
     weakPoints: '',
     problemSolution: '',
     parent: '',
-    authorClerkId: user.id
+    authorClerkId: user.id,
+    status: postStatus.draft
   }
 
   return (
     <>
-      <Layout>
-        {/* <Header /> */}
-        <h1 className="text-3xl font-bold mt-10">
-          Submit a draft for review
-        </h1>
+      <Layout>        
         <Post2 content={defaultContent} categories={categories} tags={tags} calculations={calculations} />
       </Layout>
     </>

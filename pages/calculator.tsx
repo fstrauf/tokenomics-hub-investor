@@ -76,7 +76,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   // console.log("🚀 ~ file: calculator.tsx:76 ~ constgetServerSideProps:GetServerSideProps= ~ context", context)
   const calculationId: string = context?.query?.id || ''
-  console.log("🚀 ~ file: calculator.tsx:78 ~ constgetServerSideProps:GetServerSideProps= ~ calculationId", calculationId)
+  // console.log("🚀 ~ file: calculator.tsx:78 ~ constgetServerSideProps:GetServerSideProps= ~ calculationId", calculationId)
 
   const { userId }: AuthData = getAuth(context.req)
 
@@ -104,8 +104,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const response = await prisma.$transaction(txCalls)
 
   var preloadInitialValues = initialValues
-  console.log("🚀 ~ file: calculator.tsx:106 ~ constgetServerSideProps:GetServerSideProps= ~ preloadInitialValues", preloadInitialValues)
-  console.log("🚀 ~ file: calculator.tsx:106 ~ constgetServerSideProps:GetServerSideProps= ~ initialValues", initialValues)
+  // console.log("🚀 ~ file: calculator.tsx:106 ~ constgetServerSideProps:GetServerSideProps= ~ preloadInitialValues", preloadInitialValues)
+  // console.log("🚀 ~ file: calculator.tsx:106 ~ constgetServerSideProps:GetServerSideProps= ~ initialValues", initialValues)
 
   preloadInitialValues.calculations = response[0]
   preloadInitialValues.authorClerkId = userId

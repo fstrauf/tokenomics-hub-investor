@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import { HOME_OG_IMAGE_URL } from '../lib/constants'
+import { HOME_OG_IMAGE_URL, WEBSITE_URL_BASE } from '../lib/constants'
 
 export default function Meta() {
   return (
@@ -46,7 +46,7 @@ export default function Meta() {
       <meta name="twitter:site" content="@tokenomicsdao" />
       <meta name="twitter:creator" content="@tokenomicsdao" />
       <meta property='og:title' content='Tokenomics Hub'/>
-      <meta property="og:url" content="https://www.tokenomicshub.xyz/" />
+      <meta property="og:url" content={WEBSITE_URL_BASE} />
       <meta property="og:type" content="website" />
       <meta property="og:image" content={HOME_OG_IMAGE_URL} />
     </Head>

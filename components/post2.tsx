@@ -9,9 +9,10 @@ import FormDivider from './form/FormDivider'
 import FormAutoSave from './form/FormAutoSave'
 import dynamic from 'next/dynamic'
 import FormId from './form/FormId'
-import { postStatus } from '../lib/helper'
+import { notifyReviewers, postStatus } from '../lib/helper'
+import { WEBSITE_URL_BASE } from '../lib/constants'
 
-export default function Post2({ content, categories, tags, calculations }) {
+export default function Post2({ content, categories, tags, calculations, author }) {
   const FormTipTap = dynamic(() => import('./form/FormTipTap'), {
     loading: () => <p>Loading</p>,
   })
@@ -31,6 +32,8 @@ export default function Post2({ content, categories, tags, calculations }) {
   const FormTimeLine = dynamic(() => import('./form/FormTimeLine'), {
     loading: () => <p>Loading</p>,
   })
+
+  const [isReviewSubmitting, setReviewSubmitting] = useState(false)
 
   const [postId, setPostId] = useState(content.id)
 
@@ -92,8 +95,11 @@ export default function Post2({ content, categories, tags, calculations }) {
   async function sendToReview(
     event: MouseEvent<HTMLButtonElement, MouseEvent>,
     postId: string
+    // post
   ): void {
-    const body = { status: postStatus.review, postId }
+    setReviewSubmitting(true)
+    // const postId = post.id
+    const body = { status: postStatus.reviewRequired, postId }
 
     const response = await fetch('/api/post/updateStatus', {
       method: 'POST',
@@ -107,11 +113,27 @@ export default function Post2({ content, categories, tags, calculations }) {
       throw new Error(error)
     } else {
       toast.success('Sent to review', { position: 'bottom-right' })
+      notifyReviewers(`${WEBSITE_URL_BASE}/editPost/${postId}`)
     }
+    setReviewSubmitting(false)
   }
 
   return (
     <>
+      <div className="flex justify-between">
+        <div>
+          <h2 className="mt-10 text-4xl">
+            Editing Report: {content?.title}{' '}
+          </h2>
+          <p className="mb-10">
+            By {author?.username || 'Unknown author'}
+          </p>
+        </div>
+        <div className="self-center">
+          <span>Status: </span>
+          <span className="font-bold">{content?.status}</span>
+        </div>
+      </div>
       <Formik initialValues={content} onSubmit={submitData}>
         {({ isSubmitting, values, setFieldValue }) => (
           <Form>
@@ -340,14 +362,19 @@ export default function Post2({ content, categories, tags, calculations }) {
             <button
               className="mt-5 mb-5 rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
               type="submit"
-              disabled={isSubmitting}
+              disabled={isSubmitting || isReviewSubmitting}
             >
               Save
             </button>
             <button
               className="mt-5 ml-3 mb-5 rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
               type="button"
-              disabled={isSubmitting}
+              disabled={
+                isSubmitting ||
+                isReviewSubmitting ||
+                values.status === postStatus.reviewRequired ||
+                values.status === postStatus.published
+              }
               onClick={(e) => sendToReview(e, values.id)}
             >
               Send to Review

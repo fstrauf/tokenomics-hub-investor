@@ -4,18 +4,16 @@ import React from 'react'
 import prisma from '../lib/prisma'
 import Drafts from '../components/drafts'
 import { GetServerSideProps } from 'next'
-// import { useAuth, useUser } from '@clerk/nextjs'
-import { clerkClient } from '@clerk/nextjs/server'
 import { useAuth } from '@clerk/clerk-react/dist/hooks/useAuth'
 import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
+import { clerkClient } from '@clerk/nextjs/server'
+import { clerkConvertJSON } from '../lib/helper'
 
 export default function AllDrafts({ posts }) {
   const { isSignedIn } = useAuth()
   const { user } = useUser()
 
-  // const role = user?.publicMetadata?.role ?? ''
   const contributor = user?.publicMetadata?.contributor || false
-  // const admin = user?.publicMetadata?.admin || false
 
   if (isSignedIn && contributor) {
     return (
@@ -46,7 +44,11 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     where: {
       published: false,
     },
-    include: {
+    select: {
+      authorClerkId: true,
+      id: true,
+      title: true,
+      status: true,
       categories: {
         select: {
           label: true,
@@ -59,13 +61,18 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const userId = posts.map((post) => {
     return post.authorClerkId
   })
-  const users = await clerkClient.users.getUserList({ userId })
+
+  let users = clerkConvertJSON(await clerkClient.users.getUserList({ userId }))
 
   const postsWithUserNames = posts.map((post) => {
-    const username = users.find((u) => u.id === post.authorClerkId)?.username
+    const currentUser = users?.find((u) => u.id === post.authorClerkId)
+    const eA = currentUser?.emailAddresses || []
+    const authorEmail = eA.find((email) => email.id === currentUser?.primaryEmailAddressId)?.emailAddress || ''
+    
     return {
       ...post,
-      author: username,
+      author: currentUser?.username,
+      authorEmail: authorEmail
     }
   })
 

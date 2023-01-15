@@ -1,31 +1,48 @@
 import Router from 'next/router'
-import { useForm } from 'react-hook-form'
 import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
-import { postStatus } from '../lib/helper'
+import { postStatus, notifyStatusUpdate } from '../lib/helper'
 import toast, { Toaster } from 'react-hot-toast'
+import { WEBSITE_URL_BASE } from '../lib/constants'
+import { Menu, Transition } from '@headlessui/react'
+import { Fragment, useState } from 'react'
 
 export default function Drafts({ posts, context }) {
-  const { handleSubmit, formState } = useForm()
   const { user } = useUser()
+  const [isSubmitting, setSubmitting] = useState(false)
   const contributor = user?.publicMetadata?.contributor || false
 
-  const publishPost = async (id: string) => {
-    await fetch(`/api/post/publish/${id}`, {
+  const publishPost = async (post) => {
+    setSubmitting(true)
+    await fetch(`/api/post/publish/${post.id}`, {
       method: 'PUT',
     })
+    notifyStatusUpdate(
+      post.authorEmail,
+      postStatus.published,
+      `${WEBSITE_URL_BASE}/posts/${post.slug}`
+    )
+    setSubmitting(false)
     await Router.push('/')
   }
 
   const deleteDraft = async (id: string) => {
+    setSubmitting(true)
     await fetch(`/api/post/delete/${id}`, {
       method: 'PUT',
     })
+    setSubmitting(false)
     await Router.push(`/${context}`)
   }
 
-  async function sendToReview(event: MouseEvent<HTMLButtonElement, MouseEvent>,postId: string): void {
-    const body = { status: postStatus.review, postId }
-    
+  async function sendToReview(
+    // event: MouseEvent<HTMLButtonElement, MouseEvent>,
+    post,
+    close
+  ): void {    
+    setSubmitting(true)
+    const postId = post.id
+    const body = { status: postStatus.reviewRequired, postId }
+
     const response = await fetch('/api/post/updateStatus', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -38,14 +55,52 @@ export default function Drafts({ posts, context }) {
       throw new Error(error)
     } else {
       toast.success('Sent to review', { position: 'bottom-right' })
+      notifyStatusUpdate(
+        post.authorEmail,
+        postStatus.reviewRequired,
+        `${WEBSITE_URL_BASE}/editPost/${postId}`
+      )
     }
-
+    setSubmitting(false)
+    close()
     await Router.replace(Router.asPath)
+  }
 
+  async function reviewComplete(
+    event: MouseEvent<HTMLButtonElement, MouseEvent>,
+    post,
+    close
+  ): void {
+    // console.log("🚀 ~ file: drafts.tsx:29 ~ sendToReview ~ post", post)
+    const postId = post.id
+    const body = { status: postStatus.reviewComplete, postId }
+    setSubmitting(true)
+
+    const response = await fetch('/api/post/updateStatus', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    })
+
+    if (!response.ok) {
+      const error = await response.text()
+      toast.error(JSON.parse(error).error, { position: 'bottom-right' })
+      throw new Error(error)
+    } else {
+      toast.success('Review completed', { position: 'bottom-right' })
+      notifyStatusUpdate(
+        post.authorEmail,
+        postStatus.reviewComplete,
+        `${WEBSITE_URL_BASE}/editPost/${postId}`
+      )
+    }
+    setSubmitting(false)
+    close()    
+    await Router.replace(Router.asPath)
   }
 
   return (
-    <div className="relative overflow-x-auto">
+    <div className="static overflow-x-auto">
       <Toaster />
       <table className="mb-5 w-full text-left text-sm text-gray-500">
         <thead className="bg-gray-50 text-xs uppercase text-gray-700">
@@ -59,8 +114,6 @@ export default function Drafts({ posts, context }) {
             <th scope="col" className="py-3 px-6">
               Status
             </th>
-            <th scope="col" className="py-3 px-6"></th>
-            <th scope="col" className="py-3 px-6"></th>
             <th scope="col" className="py-3 px-6"></th>
             <th scope="col" className="py-3 px-6"></th>
           </tr>
@@ -80,45 +133,109 @@ export default function Drafts({ posts, context }) {
                 </td>
                 <td className="py-2 px-3">
                   <p>{post?.status}</p>
-                </td>
-                <td className="py-2 px-3">
-                  <button
-                    onClick={() =>
-                      Router.push('/editPost/[id]', `/editPost/${post.id}`)
-                    }
-                    className="w-32 rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+                </td>           
+                <td>
+                  <Menu
+                    as="div"
+                    className="z-60 static inline-block w-28 text-left "
                   >
-                    Edit
-                  </button>
-                </td>
-                <td className="py-2 px-3">
-                  <button
-                    onClick={handleSubmit((e) => sendToReview(e, post.id))}
-                    className="w-32 rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
-                    disabled={
-                      formState.isSubmitting || !(contributor)
-                    }
-                  >
-                    To Review
-                  </button>
-                </td>
-                <td className="py-2 px-3">
-                  <button
-                    onClick={handleSubmit(() => publishPost(post.id))}
-                    className="w-32 rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
-                    disabled={
-                      formState.isSubmitting || !(contributor)
-                    }
-                  >
-                    Publish
-                  </button>
+                    {({ close }) => (
+                      <>
+                        <div>
+                          <Menu.Button className="inline-flex justify-center rounded-md bg-dao-red px-4 py-2 align-middle text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
+                            Options
+                          </Menu.Button>
+                        </div>
+                        <Transition
+                          as={Fragment}
+                          enter="transition ease-out duration-100"
+                          enterFrom="transform opacity-0 scale-95"
+                          enterTo="transform opacity-100 scale-100"
+                          leave="transition ease-in duration-75"
+                          leaveFrom="transform opacity-100 scale-100"
+                          leaveTo="transform opacity-0 scale-95"
+                        >
+                          <Menu.Items className="absolute z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                            <div className="px-1 py-1 ">
+                              <Menu.Item>
+                                {({ active }) => (
+                                  <button
+                                    onClick={() =>
+                                      Router.push(
+                                        '/editPost/[id]',
+                                        `/editPost/${post.id}`
+                                      )
+                                    }
+                                    className={`${
+                                      active
+                                        ? 'bg-dao-red text-white'
+                                        : 'text-gray-900'
+                                    } group flex w-full items-center rounded-md px-2 py-2 text-sm disabled:opacity-70`}
+                                  >
+                                    Edit
+                                  </button>
+                                )}
+                              </Menu.Item>
+                              <Menu.Item>
+                                {({ active }) => (
+                                  <button
+                                    onClick={() => sendToReview(post, close)}
+                                    className={`${
+                                      active
+                                        ? 'bg-dao-red text-white'
+                                        : 'text-gray-900'
+                                    } group flex w-full items-center rounded-md px-2 py-2 text-sm disabled:opacity-70`}
+                                    disabled={isSubmitting || !contributor || post.status === postStatus.reviewRequired}
+                                  >
+                                    To Review
+                                  </button>
+                                )}
+                              </Menu.Item>
+                              <Menu.Item>
+                                {({ active }) => (
+                                  <button
+                                    onClick={(e) =>
+                                      reviewComplete(e, post, close)
+                                    }
+                                    className={`${
+                                      active
+                                        ? 'bg-dao-red text-white'
+                                        : 'text-gray-900'
+                                    } group flex w-full items-center rounded-md px-2 py-2 text-sm disabled:opacity-70`}
+                                    disabled={isSubmitting || !contributor || post.status !== postStatus.reviewRequired}
+                                  >
+                                    Review Complete
+                                  </button>
+                                )}
+                              </Menu.Item>
+                              <Menu.Item>
+                                {({ active }) => (
+                                  <button
+                                    onClick={() => publishPost(post)}
+                                    className={`${
+                                      active
+                                        ? 'bg-dao-red text-white'
+                                        : 'text-gray-900'
+                                    } group flex w-full items-center rounded-md px-2 py-2 text-sm disabled:opacity-70`}
+                                    disabled={isSubmitting || !contributor || post.status !== postStatus.reviewComplete}
+                                  >
+                                    Publish
+                                  </button>
+                                )}
+                              </Menu.Item>
+                            </div>
+                          </Menu.Items>
+                        </Transition>
+                      </>
+                    )}
+                  </Menu>
                 </td>
                 <td className="py-2 px-3">
                   <button
                     type="button"
                     className="mr-2 inline-flex items-center rounded-full bg-red-500 p-2.5 text-center text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-800 disabled:opacity-40"
-                    disabled={!(contributor)}
-                    onClick={handleSubmit(() => deleteDraft(post.id))}
+                    disabled={!contributor || isSubmitting}
+                    onClick={() => deleteDraft(post.id)}
                   >
                     <svg
                       fill="white"

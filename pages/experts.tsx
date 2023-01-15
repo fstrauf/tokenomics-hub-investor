@@ -1,11 +1,10 @@
 import Layout from '../components/layout'
-// import Intro from '../components/intro'
 import React from 'react'
 import prisma from '../lib/prisma'
-import { clerkClient } from '@clerk/nextjs/server'
 import AuthorCard from '../components/authorCard'
-import { groupByAuthorClerkId } from '../lib/helper'
+import { groupByAuthorClerkId, clerkConvertJSON } from '../lib/helper'
 import Link from 'next/link'
+import { clerkClient } from '@clerk/nextjs/server'
 
 export default function ExpertsPage(props) {
 
@@ -50,14 +49,9 @@ export async function getStaticProps() {
   const userId = postAuthors.map((post) => {
     return post.authorClerkId
   })
-  const users = await clerkClient.users.getUserList({ userId })
+  const users = clerkConvertJSON(await clerkClient.users.getUserList({ userId }))
 
-  var properJSON = []
-  try {
-    properJSON = JSON.parse(JSON.stringify(users))
-  } catch {}
-
-  const experts = properJSON.map((j) => {
+  const experts = users.map((j) => {
     return {
       ...j,
       cat: groupedArray[j.id],

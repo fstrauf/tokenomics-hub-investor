@@ -4,8 +4,10 @@ import Intro from '../../components/intro'
 // import Moralis from 'moralis';
 // import { EvmChain } from '@moralisweb3/evm-utils';
 import prisma from '../../lib/prisma'
-import { clerkClient } from '@clerk/nextjs/server'
+// import { clerkClient } from '@clerk/nextjs/server'
 import Link from 'next/link'
+import { clerkConvertJSON, getClerkUsers } from '../../lib/helper'
+import { clerkClient } from '@clerk/nextjs/server'
 
 export default function UserProfile({
   author,
@@ -149,6 +151,8 @@ export async function getStaticProps({ params }) {
     properJSON = JSON.parse(JSON.stringify(clerkUuser))
   } catch {}
 
+  // const clerkUser = await getClerkUsers(params?.slug)
+
   const txCalls = []
   txCalls.push(
     prisma.post.findMany({
@@ -207,16 +211,11 @@ export async function getStaticPaths() {
     return post.authorClerkId
   })
 
-  const users = await clerkClient.users.getUserList({ userId })
-
-  var properJSON = []
-  try {
-    properJSON = JSON.parse(JSON.stringify(users))
-  } catch {}
+  const users = clerkConvertJSON(await clerkClient.users.getUserList({ userId }))
 
   return {
     paths:
-      properJSON?.map((author) => ({
+    users?.map((author) => ({
         params: {
           slug: author.id,
         },

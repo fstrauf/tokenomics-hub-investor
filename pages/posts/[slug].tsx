@@ -2,7 +2,6 @@ import { useRouter } from 'next/router'
 import ErrorPage from 'next/error'
 import Container from '../../components/container'
 import OurTake from '../../components/slugView/our-take'
-// import Header from '../../components/header'
 import PostHeader from '../../components/slugView/post-header'
 import SectionSeparator from '../../components/section-separator'
 import Layout from '../../components/layout'
@@ -17,18 +16,21 @@ import Login from '../../components/login'
 import EditPiece from '../../components/edit-piece'
 import prisma from '../../lib/prisma'
 import Router from 'next/router'
-import { useForm } from 'react-hook-form'
 import PostMeta from '../../components/postMeta'
-import { clerkClient } from '@clerk/nextjs/server'
 import dynamic from 'next/dynamic'
 import { useAuth } from '@clerk/clerk-react/dist/hooks/useAuth'
 import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
 import Calculation from '../../components/slugView/calculation'
+import { clerkClient } from '@clerk/nextjs/server'
+import { clerkConvertJSON } from '../../lib/helper'
 
 export default function Post({ post, morePosts, author }) {
-  const PostBody = dynamic(() => import('../../components/slugView/post-body'), {
-    loading: () => <p>Loading</p>,
-  })
+  const PostBody = dynamic(
+    () => import('../../components/slugView/post-body'),
+    {
+      loading: () => <p>Loading</p>,
+    }
+  )
   const AuthorCard = dynamic(() => import('../../components/authorCard'), {
     loading: () => <p>Loading</p>,
   })
@@ -40,9 +42,9 @@ export default function Post({ post, morePosts, author }) {
     loading: () => <p>Loading</p>,
   })
 
+  const [isSubmitting, setSubmitting] = useState(false)
   const { isSignedIn } = useAuth()
   const { user } = useUser()
-  const { handleSubmit, formState } = useForm()
 
   var userIsAuthor = false
   if (user?.id === post?.authorClerkId) {
@@ -50,9 +52,6 @@ export default function Post({ post, morePosts, author }) {
   }
 
   const contributor = user?.publicMetadata?.contributor || false
-  // const admin = user?.publicMetadata?.admin || false
-
-  // console.log(userIsAuthor)
 
   const [isOpen, setIsOpen] = useState(false)
 
@@ -64,6 +63,13 @@ export default function Post({ post, morePosts, author }) {
   )
 
   const router = useRouter()
+
+  function editPost() {
+    setSubmitting(true)
+    Router.push('/editPost/[id]', `/editPost/${post.id}`)
+    setSubmitting(false)
+  }
+
   if (!router.isFallback && !post?.slug) {
     return <ErrorPage statusCode={404} />
   }
@@ -89,9 +95,7 @@ export default function Post({ post, morePosts, author }) {
                 ticker={post.ticker}
               />
               <button
-                onClick={handleSubmit(() =>
-                  Router.push('/editPost/[id]', `/editPost/${post.id}`)
-                )}
+                onClick={() => editPost}
                 disabled={
                   !(
                     // userIsAuthor || user?.publicMetadata?.role === 'contributor'
@@ -102,7 +106,7 @@ export default function Post({ post, morePosts, author }) {
                     )
                   ) ||
                   !isSignedIn ||
-                  formState.isSubmitting
+                  isSubmitting
                 }
                 className="mb-3 w-28 rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
               >
@@ -255,8 +259,8 @@ export async function getStaticProps({ params }) {
       ProtocolResources: {},
       protocolTimeLine: {
         orderBy: {
-           date: 'asc'
-        }
+          date: 'asc',
+        },
       },
       author: {},
       calculation: {
@@ -279,27 +283,21 @@ export async function getStaticProps({ params }) {
     prisma.$queryRaw`select count(A) as count,A as cat,p.authorClerkId from _CategoryToPost join Post as p on p.id = B WHERE p.authorClerkId = ${post?.authorClerkId} AND p.published = true GROUP BY A, p.authorClerkId`
   )
 
-  const response = await prisma.$transaction(txCalls)
+  const response = await prisma.$transaction(txCalls)  
 
-  const clerkUuser = post?.authorClerkId
+  let clerkUser = post?.authorClerkId
     ? await clerkClient.users.getUser(post?.authorClerkId)
-    : null
+    : {}
 
-  var properJSON = {}
+  clerkUser = clerkConvertJSON(clerkUser)
 
-  try {
-    properJSON = JSON.parse(JSON.stringify(clerkUuser)) || {}
-  } catch {
-    properJSON = {}
-  }
-
-  properJSON.articleCount = response[0] || 0
-  properJSON.cat = response[1] || null
+  clerkUser.articleCount = response[0] || 0
+  clerkUser.cat = response[1] || null
 
   return {
     props: {
       post: post || null,
-      author: properJSON || null,
+      author: clerkUser || null,
     },
     revalidate: 1,
   }
