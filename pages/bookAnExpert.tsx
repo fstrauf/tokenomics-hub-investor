@@ -14,24 +14,7 @@ export default function BookAnExpert(props) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
     })
-
-    // fetch(process.env.DISCORD_CONSULTING, {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify({
-    //     content:
-    //       'Name: ' +
-    //       values.name +
-    //       '\nEmail: ' +
-    //       values.email +
-    //       '\nTimeline: ' +
-    //       values.timeline +
-    //       '\nMessage: ' +
-    //       values.message,
-    //   }),
-    // })
-    //   .then((res) => console.log(res))
-    //   .catch((err) => console.error(err))
+     
     setSubmitting(false)
     toast.success('Message sent ', { position: 'bottom-right' })
   }

@@ -5,8 +5,8 @@ npm install
 npm run dev
 
 # Run the Studio
-Start it locally `pscale connect tutorial-db initial-setup --port 3309`
-TO work on the main branch `pscale connect tutorial-db main --port 3309`
+Start it locally `pscale connect tutorial-db test --port 3309 `
+TO work on the main branch `pscale connect tutorial-db main-2023-01-15-22-38-28 --port 3309`
 
 push database `npx prisma db push`
 

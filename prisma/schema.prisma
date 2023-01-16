@@ -55,6 +55,7 @@ model Post {
   ProtocolResources     ProtocolResources[]
   calculationId         String?
   calculation           Calculation?        @relation(fields: [calculationId], references: [id])
+  Comments              Comments[]
 
   @@index([authorId])
 }
@@ -89,6 +90,17 @@ model ProtocolResources {
   internal Boolean?
   postId   String
   post     Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@index([postId])
+}
+
+model Comments {
+  id            String    @id @default(cuid())
+  comment       String?   @db.Text
+  authorClerkId String?
+  date          DateTime?
+  postId        String
+  post          Post      @relation(fields: [postId], references: [id], onDelete: Cascade)
 
   @@index([postId])
 }

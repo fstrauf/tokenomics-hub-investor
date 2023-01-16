@@ -1,12 +1,73 @@
-// import { useState } from 'react'
-// import { useForm } from 'react-hook-form'
-// // import {useSession } from "next-auth/react"
+import toast, { Toaster } from 'react-hot-toast'
+import { Field, Form, Formik } from 'formik'
+import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
+import Router from 'next/router'
 
-// export default function Form({ _id }) {
+export default function CommentForm(props) {
+  
+  const { user } = useUser()
+
+  const submitData = async (values, { setSubmitting, resetForm }) => {
+    // const userId =  user.id
+    // const postId = props.id
+    const body = { values }
+
+    await fetch('/api/post/createComment', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    })
+
+    setSubmitting(false)
+    toast.success('Message sent ', { position: 'bottom-right' })
+    resetForm();
+    await Router.replace(Router.asPath, undefined, {scroll: false})
+  }
+
+  return (
+    <>
+      {/* <Intro /> */}
+      <Toaster />
+      <div className="m-auto flex flex-col">
+        <p className="mb-5">provide feedback for the report</p>
+        <Formik
+          initialValues={{
+            comment: '',
+            date: new Date().toLocaleDateString('en-CA'),
+            user: user.id,
+            postId: props.id
+          }}
+          onSubmit={submitData}
+        >
+          {({ isSubmitting }) => (
+            <Form className="flex w-full max-w-xl flex-col">
+              <Field
+                as="textarea"
+                rows="8"
+                name="comment"
+                placeholder="your feedback / comments"
+                className="mb-3 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
+              />
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="mt-5 w-44 mb-5 rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
+              >
+                Submit Comment
+              </button>
+            </Form>
+          )}
+        </Formik>
+      </div> 
+    </>
+  )
+}
+
+// export default function CommentForm({ _id }) {
 //   const [formData, setFormData] = useState()
 //   const [isSubmitting, setIsSubmitting] = useState(false)
 //   const [hasSubmitted, setHasSubmitted] = useState(false)
-//   const { data: session, status } = useSession()
+// //   const { data: session, status } = useSession()
 //   const {
 //     register,
 //     handleSubmit,

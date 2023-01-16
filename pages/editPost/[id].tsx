@@ -5,6 +5,8 @@ import React from 'react'
 import Post from '../../components/post2'
 import { clerkClient } from '@clerk/nextjs/server'
 import { clerkConvertJSON } from '../../lib/helper'
+import Comments from '../../components/comments'
+import CommentForm from '../../components/commentForm'
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const txCalls = []
@@ -21,6 +23,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
         tags: {},
         protocolTimeLine: {},
         ProtocolResources: {},
+        Comments: { orderBy: { date: 'desc'} },
       },
     })
   )
@@ -37,11 +40,34 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 
   clerkUser = clerkConvertJSON(clerkUser)
 
+  const userId = response[0].Comments.map((comment) => {
+    return comment.authorClerkId
+  })
+
+  let users = clerkConvertJSON(await clerkClient.users.getUserList({ userId }))
+
+  const commentsWithUserNames = response[0].Comments.map((comment) => {
+    const currentUser = users?.find((u) => u.id === comment.authorClerkId)
+    // const eA = currentUser?.emailAddresses || []
+    // const authorEmail = eA.find((email) => email.id === currentUser?.primaryEmailAddressId)?.emailAddress || ''
+
+    return {
+      ...comment,
+      author: currentUser?.username,
+      // authorEmail: authorEmail
+    }
+  })
+  // console.log("🚀 ~ file: [id].tsx:61 ~ commentsWithUserNames ~ commentsWithUserNames", commentsWithUserNames)
+
+  let postWithUpdatedComments = response[0]
+  postWithUpdatedComments.Comments = commentsWithUserNames
+  // console.log("🚀 ~ file: [id].tsx:65 ~ constgetServerSideProps:GetServerSideProps= ~ postWithUpdatedComments", postWithUpdatedComments)
+
   return {
     props: {
       categories: response[1] || null,
       tags: response[2] || null,
-      post: response[0] || null,
+      post: postWithUpdatedComments || null,
       calculations: response[3] || null,
       author: clerkUser || null,
     },
@@ -59,6 +85,11 @@ const EditPost: React.FC<PostProps> = (props) => {
           calculations={props.calculations}
           author={props.author}
         />
+        <h1 className="section-head mt-10 mb-4 text-xl font-bold text-black md:mt-20 md:text-2xl lg:text-3xl">
+          Comments.
+        </h1>
+        <CommentForm id={props?.post?.id} />
+        <Comments comments={props?.post?.Comments} />
       </div>
     </Layout>
   )
