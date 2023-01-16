@@ -1,5 +1,5 @@
-import { DISCORD_EDITING } from './constants'
-import { clerkClient } from '@clerk/nextjs/server'
+// import { DISCORD_EDITING } from './constants'
+// import { clerkClient } from '@clerk/nextjs/server'
 
 export const getLableNumber = (value) => {
   if (isNaN(value)) {
@@ -17,7 +17,7 @@ export enum postStatus {
 }
 
 export const stringToKey = (name) => {
-  return name.trim().replace(/\s+/g, '-').toLowerCase()
+  return name.trim().replace(/\s+/g, '-').toLowerCase().replace(/&/g, "and")
 }
 
 export const groupByAuthorClerkId = (items) => {
@@ -152,7 +152,7 @@ export async function notifyStatusUpdate(
     // html: '<strong>and easy to do anywhere, even with Node.js</strong>',
   }
   const body = { msg }
-  const response = await fetch('/api/sendEmail', {
+  fetch('/api/sendEmail', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
@@ -160,18 +160,13 @@ export async function notifyStatusUpdate(
 }
 
 export async function notifyReviewers(url: string) {
-  fetch(DISCORD_EDITING, {
+  const body = { url }
+
+  fetch('/api/sendDiscord', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      content:
-        '<@&1064017878501822596>: \n\n' +
-        'The following report has been submitted for review: \n\n' +
-        url,
-    }),
+    body: JSON.stringify(body),
   })
-    .then((res) => console.log(res))
-    .catch((err) => console.error(err))
 }
 
 export function clerkConvertJSON(input) {
@@ -192,37 +187,39 @@ export function clerkConvertJSON(input) {
   return properJSON
 }
 
-// export async function getClerkUser(id){
-//   // const clerkUuser = id
-//   //   ? await null //clerkClient.users.getUser(id)
-//   //   : null
+export function mandatoryFormValidate(values) {
+  const errors = {}
+  if (!values.title) {
+    errors.title = 'Required!'
+  }
+  if (!values.shortDescription) {
+    errors.shortDescription = 'Required!'
+  }
+  if (!values.categories) {
+    errors.categories = 'Required!'
+  }
+  if (!values.categories) {
+    errors.categories = 'Required!'
+  }
+  if (!values.tags) {
+    errors.tags = 'Required!'
+  }
+  if (!values.tokenUtility) {
+    errors.tokenUtility = 'Required!'
+  }
+  if (!values.businessModel) {
+    errors.businessModel = 'Required!'
+  }
+  if (!values.valueCreation) {
+    errors.valueCreation = 'Required!'
+  }
+  if (!values.valueCapture) {
+    errors.valueCapture = 'Required!'
+  }
 
-//   const d = clerkClient.users.getUser('user_2JFDV2jZbwYQyVujX4xwCVKqehQ')
+  if (!values.demandDrivers) {
+    errors.demandDrivers = 'Required!'
+  }
 
-//     // console.log("🚀 ~ file: helper.ts:182 ~ getClerkUser ~ clerkUuser", clerkUuser)
-
-//   // var properJSON = {}
-
-//   // try {
-//   //   properJSON = JSON.parse(JSON.stringify(clerkUuser)) || {}
-//   // } catch {
-//   //   properJSON = {}
-//   // }
-
-//   // console.log("🚀 ~ file: helper.ts:193 ~ getClerkUser ~ properJSON", properJSON)
-
-//   // return properJSON
-//   return null
-// }
-
-// export async function getClerkUsers(userIds){
-//   const userId=userIds
-//   const users = await clerkClient.users.getUserList({ userId })
-
-//   var properJSON = []
-//   try {
-//     properJSON = JSON.parse(JSON.stringify(users))
-//   } catch {}
-
-//   return properJSON
-// }
+  return errors
+}

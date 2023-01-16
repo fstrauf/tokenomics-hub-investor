@@ -1,6 +1,10 @@
 import Router from 'next/router'
 import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
-import { postStatus, notifyStatusUpdate } from '../lib/helper'
+import {
+  postStatus,
+  notifyStatusUpdate,
+  mandatoryFormValidate,
+} from '../lib/helper'
 import toast, { Toaster } from 'react-hot-toast'
 import { WEBSITE_URL_BASE } from '../lib/constants'
 import { Menu, Transition } from '@headlessui/react'
@@ -38,32 +42,40 @@ export default function Drafts({ posts, context }) {
     // event: MouseEvent<HTMLButtonElement, MouseEvent>,
     post,
     close
-  ): void {    
-    setSubmitting(true)
-    const postId = post.id
-    const body = { status: postStatus.reviewRequired, postId }
+  ): void {
+    const errors = mandatoryFormValidate(post)
 
-    const response = await fetch('/api/post/updateStatus', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body),
-    })
-
-    if (!response.ok) {
-      const error = await response.text()
-      toast.error(JSON.parse(error).error, { position: 'bottom-right' })
-      throw new Error(error)
+    if (Object.keys(errors).length > 0) {
+      toast.error('Some required fields are missing!', {
+        position: 'bottom-right',
+      })
     } else {
-      toast.success('Sent to review', { position: 'bottom-right' })
-      notifyStatusUpdate(
-        post.authorEmail,
-        postStatus.reviewRequired,
-        `${WEBSITE_URL_BASE}/editPost/${postId}`
-      )
+      setSubmitting(true)
+      const postId = post.id
+      const body = { status: postStatus.reviewRequired, postId }
+
+      const response = await fetch('/api/post/updateStatus', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      })
+
+      if (!response.ok) {
+        const error = await response.text()
+        toast.error(JSON.parse(error).error, { position: 'bottom-right' })
+        throw new Error(error)
+      } else {
+        toast.success('Sent to review', { position: 'bottom-right' })
+        notifyStatusUpdate(
+          post.authorEmail,
+          postStatus.reviewRequired,
+          `${WEBSITE_URL_BASE}/editPost/${postId}`
+        )
+      }
+      setSubmitting(false)
+      close()
+      await Router.replace(Router.asPath)
     }
-    setSubmitting(false)
-    close()
-    await Router.replace(Router.asPath)
   }
 
   async function reviewComplete(
@@ -95,7 +107,7 @@ export default function Drafts({ posts, context }) {
       )
     }
     setSubmitting(false)
-    close()    
+    close()
     await Router.replace(Router.asPath)
   }
 
@@ -133,7 +145,7 @@ export default function Drafts({ posts, context }) {
                 </td>
                 <td className="py-2 px-3">
                   <p>{post?.status}</p>
-                </td>           
+                </td>
                 <td>
                   <Menu
                     as="div"
@@ -185,7 +197,11 @@ export default function Drafts({ posts, context }) {
                                         ? 'bg-dao-red text-white'
                                         : 'text-gray-900'
                                     } group flex w-full items-center rounded-md px-2 py-2 text-sm disabled:opacity-70`}
-                                    disabled={isSubmitting || !contributor || post.status === postStatus.reviewRequired}
+                                    disabled={
+                                      isSubmitting ||
+                                      !contributor ||
+                                      post.status === postStatus.reviewRequired
+                                    }
                                   >
                                     To Review
                                   </button>
@@ -202,7 +218,11 @@ export default function Drafts({ posts, context }) {
                                         ? 'bg-dao-red text-white'
                                         : 'text-gray-900'
                                     } group flex w-full items-center rounded-md px-2 py-2 text-sm disabled:opacity-70`}
-                                    disabled={isSubmitting || !contributor || post.status !== postStatus.reviewRequired}
+                                    disabled={
+                                      isSubmitting ||
+                                      !contributor ||
+                                      post.status !== postStatus.reviewRequired
+                                    }
                                   >
                                     Review Complete
                                   </button>
@@ -217,7 +237,11 @@ export default function Drafts({ posts, context }) {
                                         ? 'bg-dao-red text-white'
                                         : 'text-gray-900'
                                     } group flex w-full items-center rounded-md px-2 py-2 text-sm disabled:opacity-70`}
-                                    disabled={isSubmitting || !contributor || post.status !== postStatus.reviewComplete}
+                                    disabled={
+                                      isSubmitting ||
+                                      !contributor ||
+                                      post.status !== postStatus.reviewComplete
+                                    }
                                   >
                                     Publish
                                   </button>

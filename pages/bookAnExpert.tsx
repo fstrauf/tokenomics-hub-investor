@@ -1,15 +1,13 @@
 import Layout from '../components/layout'
-// import Intro from '../components/intro'
 import React from 'react'
 import toast, { Toaster } from 'react-hot-toast'
 import { Field, Form, Formik } from 'formik'
-import { DISCORD_WEBHOOK } from '../lib/constants'
-// import emailjs from '@emailjs/browser';
+// import { DISCORD_WEBHOOK } from '../lib/constants'
 
 export default function BookAnExpert(props) {
   const submitData = async (values, { setSubmitting }) => {
 
-    fetch(DISCORD_WEBHOOK, {
+    fetch(process.env.DISCORD_CONSULTING, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

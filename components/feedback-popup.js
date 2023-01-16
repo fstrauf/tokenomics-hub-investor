@@ -1,6 +1,6 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, useState } from 'react'
-import { DISCORD_WEBHOOK } from '../lib/constants'
+// import { DISCORD_WEBHOOK } from '../lib/constants'
 import React from 'react'
 
 export default React.memo(function FeedbackPopup({ isOpen, handleIsOpen }) {
@@ -16,7 +16,7 @@ export default React.memo(function FeedbackPopup({ isOpen, handleIsOpen }) {
     }
 
     function handleSubmit(event) {
-        fetch(DISCORD_WEBHOOK, {
+        fetch(process.env.DISCORD_CONSULTING, {
             "method": "POST",
             "headers": { "Content-Type": "application/json" },
             "body": JSON.stringify({

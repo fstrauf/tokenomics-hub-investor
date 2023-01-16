@@ -9,10 +9,17 @@ import FormDivider from './form/FormDivider'
 import FormAutoSave from './form/FormAutoSave'
 import dynamic from 'next/dynamic'
 import FormId from './form/FormId'
-import { notifyReviewers, postStatus } from '../lib/helper'
+import { mandatoryFormValidate, notifyReviewers, postStatus } from '../lib/helper'
 import { WEBSITE_URL_BASE } from '../lib/constants'
+import FormErrorMessage from './form/FormErrorMessage'
 
-export default function Post2({ content, categories, tags, calculations, author }) {
+export default function Post2({
+  content,
+  categories,
+  tags,
+  calculations,
+  author,
+}) {
   const FormTipTap = dynamic(() => import('./form/FormTipTap'), {
     loading: () => <p>Loading</p>,
   })
@@ -36,6 +43,7 @@ export default function Post2({ content, categories, tags, calculations, author 
   const [isReviewSubmitting, setReviewSubmitting] = useState(false)
 
   const [postId, setPostId] = useState(content.id)
+  const [reviewRequiredFields, setreviewRequiredFields] = useState({})
 
   const submitData = async (values, { setSubmitting }) => {
     const body = { values }
@@ -94,40 +102,44 @@ export default function Post2({ content, categories, tags, calculations, author 
 
   async function sendToReview(
     event: MouseEvent<HTMLButtonElement, MouseEvent>,
-    postId: string
-    // post
+    values
   ): void {
-    setReviewSubmitting(true)
-    // const postId = post.id
-    const body = { status: postStatus.reviewRequired, postId }
+    const errors = mandatoryFormValidate(values)
+    setreviewRequiredFields(errors)
 
-    const response = await fetch('/api/post/updateStatus', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body),
-    })
-
-    if (!response.ok) {
-      const error = await response.text()
-      toast.error(JSON.parse(error).error, { position: 'bottom-right' })
-      throw new Error(error)
+    if (Object.keys(errors).length > 0) {
+      toast.error('Some required fields are missing!', {
+        position: 'bottom-right',
+      })
     } else {
-      toast.success('Sent to review', { position: 'bottom-right' })
-      notifyReviewers(`${WEBSITE_URL_BASE}/editPost/${postId}`)
+      const postId = values.id
+      setReviewSubmitting(true)
+      const body = { status: postStatus.reviewRequired, postId }
+
+      const response = await fetch('/api/post/updateStatus', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      })
+
+      if (!response.ok) {
+        const error = await response.text()
+        toast.error(JSON.parse(error).error, { position: 'bottom-right' })
+        throw new Error(error)
+      } else {
+        toast.success('Sent to review', { position: 'bottom-right' })
+        notifyReviewers(`${WEBSITE_URL_BASE}/editPost/${postId}`)
+      }
+      setReviewSubmitting(false)
     }
-    setReviewSubmitting(false)
   }
 
   return (
     <>
       <div className="flex justify-between">
         <div>
-          <h2 className="mt-10 text-4xl">
-            Editing Report: {content?.title}{' '}
-          </h2>
-          <p className="mb-10">
-            By {author?.username || 'Unknown author'}
-          </p>
+          <h2 className="mt-10 text-4xl">Editing Report: {content?.title} </h2>
+          <p className="mb-10">By {author?.username || 'Unknown author'}</p>
         </div>
         <div className="self-center">
           <span>Status: </span>
@@ -143,6 +155,10 @@ export default function Post2({ content, categories, tags, calculations, author 
               <label className="mb-2 block text-sm font-medium text-gray-900">
                 Title
               </label>
+              <FormErrorMessage
+                field="title"
+                reviewRequiredFields={reviewRequiredFields}
+              />
               <Field
                 type="text"
                 name="title"
@@ -164,7 +180,7 @@ export default function Post2({ content, categories, tags, calculations, author 
                 className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
               />
             </div>
-            <div className="mb-6 flex">
+            <div className="mb-t flex">
               <div className="basis-1/4">
                 <label className="mb-2 block text-sm font-medium text-gray-900">
                   Short Description
@@ -172,14 +188,20 @@ export default function Post2({ content, categories, tags, calculations, author 
                 <p className="mb-2 text-xs font-extralight text-gray-500">
                   Give a short summary of the project and the token/tokens.
                 </p>
+                <FormErrorMessage
+                  field="shortDescription"
+                  reviewRequiredFields={reviewRequiredFields}
+                />
               </div>
               <Field
                 name="shortDescription"
                 as={FormText}
                 placeholder="Short description"
               />
+              {/* <FormErrorMessage name="shortDescription" /> */}
             </div>
-            <div className="mb-6 flex">
+
+            <div className="mt-6 flex">
               <div className="basis-1/4">
                 <label className="mb-2 block text-sm font-medium text-gray-900">
                   Ticker
@@ -198,6 +220,10 @@ export default function Post2({ content, categories, tags, calculations, author 
               <label className="mb-2 block text-sm font-medium text-gray-900">
                 Categories
               </label>
+              <FormErrorMessage
+                field="categories"
+                reviewRequiredFields={reviewRequiredFields}
+              />
               <Field
                 className="custom-select"
                 name="categories"
@@ -211,6 +237,10 @@ export default function Post2({ content, categories, tags, calculations, author 
               <label className="mb-2 block text-sm font-medium text-gray-900">
                 Tags
               </label>
+              <FormErrorMessage
+                field="tags"
+                reviewRequiredFields={reviewRequiredFields}
+              />
               <Field
                 className="custom-select"
                 name="tags"
@@ -254,12 +284,13 @@ export default function Post2({ content, categories, tags, calculations, author 
               </div>
             </div>
             <FormDivider text="Token Strength" />
-            <FormTokenStrength />
+            <FormTokenStrength reviewRequiredFields={reviewRequiredFields} />
             <p className="block text-sm font-medium text-gray-900">
               total Strength:
             </p>
             <span className="mb-2 justify-end self-end text-right text-xs font-extralight text-gray-500">
-              Leave the strength rating set to 0 to skip the rating
+              Rating is optional. Leave the strength rating set to 0 to skip the
+              rating
             </span>
             <FormStrength name="tokenStrength" />
             <FormDivider text="Token Analysis" />
@@ -375,7 +406,7 @@ export default function Post2({ content, categories, tags, calculations, author 
                 values.status === postStatus.reviewRequired ||
                 values.status === postStatus.published
               }
-              onClick={(e) => sendToReview(e, values.id)}
+              onClick={(e) => sendToReview(e, values)}
             >
               Send to Review
             </button>

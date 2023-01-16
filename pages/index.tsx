@@ -67,25 +67,25 @@ const Index: React.FC<Props> = (props) => {
           <h1 className="mb-10 text-center text-2xl md:text-3xl">
             Explore, compare and evaluate tokenomics of crypto projects.
           </h1>
-          <div className="flex w-1/2 max-w-5xl m-auto">
+          <div className="m-auto flex w-1/2 max-w-5xl">
             <Select
               defaultValue={[]}
               id="cat-select"
               isMulti
-              placeholder='filter categories'
+              placeholder="filter categories"
               name="categories"
               options={props.categories}
-              className='mr-3 w-1/2 text-xs'
+              className="mr-3 w-1/2 text-xs"
               // classNamePrefix="select"
               onChange={filterCategories}
             />
             <Select
               defaultValue={[]}
               id="tag-select"
-              placeholder='filter tags'
+              placeholder="filter tags"
               isMulti
               name="tags"
-              className='w-1/2 text-xs'
+              className="w-1/2 text-xs"
               options={props.tags}
               onChange={filterTags}
             />
@@ -100,39 +100,44 @@ const Index: React.FC<Props> = (props) => {
 export default Index
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const categories = await prisma.category.findMany()
-  const tags = await prisma.tag.findMany()
-
-  const filterCats = context?.query?.cats?.split(',') || ''
-  const filterTags = context?.query?.tags?.split(',') || ''
-
   context.res.setHeader(
     'Cache-Control',
     'public, s-maxage=10, stale-while-revalidate=59'
   )
 
+  const categories = await prisma.category.findMany()
+  const tags = await prisma.tag.findMany()
+
+  const filterCats = context?.query?.cats?.split(',') || ''
+  const filterTags = context?.query?.tags?.split(',') || ''
+  const filterCatsQuery =
+    filterCats.length > 0
+      ? {
+          categories: {
+            some: {
+              value: { in: filterCats },
+            },
+          },
+        }
+      : {}
+
+  const filterTagsQuery =
+    filterTags.length > 0
+      ? {
+          tags: {
+            some: {
+              value: { in: filterTags },
+            },
+          },
+        }
+      : {}
+
   const allPosts = await prisma.post.findMany({
     // take: 20,
     where: {
       published: true,
-      ...(filterCats.length > 0
-        ? {
-            categories: {
-              every: {
-                value: { in: filterCats },
-              },
-            },
-          }
-        : {}),
-      ...(filterTags.length > 0
-        ? {
-            tags: {
-              every: {
-                value: { in: filterTags },
-              },
-            },
-          }
-        : {}),
+      ...filterCatsQuery,
+      ...filterTagsQuery,
     },
     select: {
       mainImageUrl: true,
