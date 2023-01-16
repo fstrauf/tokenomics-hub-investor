@@ -48,20 +48,15 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 
   const commentsWithUserNames = response[0].Comments.map((comment) => {
     const currentUser = users?.find((u) => u.id === comment.authorClerkId)
-    // const eA = currentUser?.emailAddresses || []
-    // const authorEmail = eA.find((email) => email.id === currentUser?.primaryEmailAddressId)?.emailAddress || ''
 
     return {
       ...comment,
       author: currentUser?.username,
-      // authorEmail: authorEmail
     }
   })
-  // console.log("🚀 ~ file: [id].tsx:61 ~ commentsWithUserNames ~ commentsWithUserNames", commentsWithUserNames)
 
   let postWithUpdatedComments = response[0]
   postWithUpdatedComments.Comments = commentsWithUserNames
-  // console.log("🚀 ~ file: [id].tsx:65 ~ constgetServerSideProps:GetServerSideProps= ~ postWithUpdatedComments", postWithUpdatedComments)
 
   return {
     props: {

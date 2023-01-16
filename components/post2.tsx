@@ -9,7 +9,11 @@ import FormDivider from './form/FormDivider'
 import FormAutoSave from './form/FormAutoSave'
 import dynamic from 'next/dynamic'
 import FormId from './form/FormId'
-import { mandatoryFormValidate, notifyReviewers, postStatus } from '../lib/helper'
+import {
+  mandatoryFormValidate,
+  notifyReviewers,
+  postStatus,
+} from '../lib/helper'
 import { WEBSITE_URL_BASE } from '../lib/constants'
 import FormErrorMessage from './form/FormErrorMessage'
 
@@ -104,33 +108,37 @@ export default function Post2({
     event: MouseEvent<HTMLButtonElement, MouseEvent>,
     values
   ): void {
+    
     const errors = mandatoryFormValidate(values)
     setreviewRequiredFields(errors)
-
-    if (Object.keys(errors).length > 0) {
-      toast.error('Some required fields are missing!', {
-        position: 'bottom-right',
-      })
+    if (values?.id === '') {
+      toast.error('Please save first', { position: 'bottom-right' })
     } else {
-      const postId = values.id
-      setReviewSubmitting(true)
-      const body = { status: postStatus.reviewRequired, postId }
-
-      const response = await fetch('/api/post/updateStatus', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body),
-      })
-
-      if (!response.ok) {
-        const error = await response.text()
-        toast.error(JSON.parse(error).error, { position: 'bottom-right' })
-        throw new Error(error)
+      if (Object.keys(errors).length > 0) {
+        toast.error('Some required fields are missing!', {
+          position: 'bottom-right',
+        })
       } else {
-        toast.success('Sent to review', { position: 'bottom-right' })
-        notifyReviewers(`${WEBSITE_URL_BASE}/editPost/${postId}`)
+        const postId = values.id
+        setReviewSubmitting(true)
+        const body = { status: postStatus.reviewRequired, postId }
+
+        const response = await fetch('/api/post/updateStatus', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body),
+        })
+
+        if (!response.ok) {
+          const error = await response.text()
+          toast.error(JSON.parse(error).error, { position: 'bottom-right' })
+          throw new Error(error)
+        } else {
+          toast.success('Sent to review', { position: 'bottom-right' })
+          notifyReviewers(`${WEBSITE_URL_BASE}/editPost/${postId}`)
+        }
+        setReviewSubmitting(false)
       }
-      setReviewSubmitting(false)
     }
   }
 
@@ -139,7 +147,7 @@ export default function Post2({
       <div className="flex justify-between">
         <div>
           <h2 className="mt-10 text-4xl">Editing Report: {content?.title} </h2>
-          <p className="mb-10">By {author?.username || 'Unknown author'}</p>
+          <p className="mb-10">By {author?.username || '(no username set)'}</p>
         </div>
         <div className="self-center">
           <span>Status: </span>

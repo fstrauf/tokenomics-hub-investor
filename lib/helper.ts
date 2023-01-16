@@ -198,10 +198,10 @@ export function mandatoryFormValidate(values) {
   if (!values.categories) {
     errors.categories = 'Required!'
   }
-  if (!values.categories) {
+  if (values.categories.length === 0) {
     errors.categories = 'Required!'
   }
-  if (!values.tags) {
+  if (values.tags.length === 0) {
     errors.tags = 'Required!'
   }
   if (!values.tokenUtility) {

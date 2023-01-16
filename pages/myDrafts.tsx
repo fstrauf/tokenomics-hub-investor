@@ -34,6 +34,11 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
           label: true,
         }
       },
+      tags: {
+        select: {
+          label: true,
+        }
+      },
       author: {}
     }
   })
