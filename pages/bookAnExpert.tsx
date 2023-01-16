@@ -7,23 +7,31 @@ import { Field, Form, Formik } from 'formik'
 export default function BookAnExpert(props) {
   const submitData = async (values, { setSubmitting }) => {
 
-    fetch(process.env.DISCORD_CONSULTING, {
+    const body = { values }
+
+    fetch('/api/expertContact', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        content:
-          'Name: ' +
-          values.name +
-          '\nEmail: ' +
-          values.email +
-          '\nTimeline: ' +
-          values.timeline +
-          '\nMessage: ' +
-          values.message,
-      }),
+      body: JSON.stringify(body),
     })
-      .then((res) => console.log(res))
-      .catch((err) => console.error(err))
+
+    // fetch(process.env.DISCORD_CONSULTING, {
+    //   method: 'POST',
+    //   headers: { 'Content-Type': 'application/json' },
+    //   body: JSON.stringify({
+    //     content:
+    //       'Name: ' +
+    //       values.name +
+    //       '\nEmail: ' +
+    //       values.email +
+    //       '\nTimeline: ' +
+    //       values.timeline +
+    //       '\nMessage: ' +
+    //       values.message,
+    //   }),
+    // })
+    //   .then((res) => console.log(res))
+    //   .catch((err) => console.error(err))
     setSubmitting(false)
     toast.success('Message sent ', { position: 'bottom-right' })
   }
