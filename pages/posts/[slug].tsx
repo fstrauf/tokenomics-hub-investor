@@ -115,7 +115,7 @@ export default function Post({ post, morePosts, author }) {
               </button>
               <FeedbackPopup isOpen={isOpen} handleIsOpen={handleIsOpen} />
               <div className={`top-3 w-full ${isOpen ? '' : 'sticky z-50'}`}>
-                <div className="overflow-x-scroll border-b-2 border-black bg-white md:px-10">
+                <div className="overflow-x-auto border-b-2 border-black bg-white md:px-10">
                   <ul className="flex">
                     <li>
                       <Link
