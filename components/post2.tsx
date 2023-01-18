@@ -160,130 +160,147 @@ export default function Post2({
           <Form>
             <Toaster />
             <FormAutoSave />
-            <div className="mb-6">
-              <label className="mb-2 block text-sm font-medium text-gray-900">
-                Title
-              </label>
-              <FormErrorMessage
-                field="title"
-                reviewRequiredFields={reviewRequiredFields}
-              />
-              <Field
-                type="text"
-                name="title"
-                className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
-              />
-            </div>
-            <div className="mb-6 flex">
-              <div className="basis-1/4">
-                <label className="mb-2 block text-sm font-medium text-gray-900">
-                  Slug
-                </label>
-                <p className="mb-2 text-xs font-extralight text-gray-500">
-                  To fetch API data, the slug needs to be API id from Coingecko.
-                </p>
-              </div>
-              <Field
-                type="text"
-                name="slug"
-                className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
-              />
-            </div>
-            <div className="mb-t flex">
-              <div className="basis-1/4">
-                <label className="mb-2 block text-sm font-medium text-gray-900">
-                  Short Description
-                </label>
-                <p className="mb-2 text-xs font-extralight text-gray-500">
-                  Give a short summary of the project and the token/tokens.
-                </p>
-                <FormErrorMessage
-                  field="shortDescription"
-                  reviewRequiredFields={reviewRequiredFields}
-                />
-              </div>
-              <Field
-                name="shortDescription"
-                as={FormText}
-                placeholder="Short description"
-              />
-              {/* <FormErrorMessage name="shortDescription" /> */}
-            </div>
+            <Disclosure defaultOpen={true}>
+              {({ open }) => (
+                <>
+                  <div className="mb-3 rounded-lg border-4 border-gray-300 border-opacity-20">
+                    <Disclosure.Button className="flex w-full justify-between rounded-sm bg-gray-300 bg-opacity-20 px-4 py-2 text-left text-sm font-medium hover:bg-opacity-100 focus:outline-none focus-visible:ring focus-visible:ring-gray-500 focus-visible:ring-opacity-75 ">
+                      <FormDivider text="Main Info" />
+                      <ChevronIcon />
+                    </Disclosure.Button>
+                    <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-500">
+                      <div className="mb-6">
+                        <label className="mb-2 block text-sm font-medium text-gray-900">
+                          Title
+                        </label>
+                        <FormErrorMessage
+                          field="title"
+                          reviewRequiredFields={reviewRequiredFields}
+                        />
+                        <Field
+                          type="text"
+                          name="title"
+                          className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
+                        />
+                      </div>
+                      <div className="mb-6 flex">
+                        <div className="basis-1/4">
+                          <label className="mb-2 block text-sm font-medium text-gray-900">
+                            Slug
+                          </label>
+                          <p className="mb-2 text-xs font-extralight text-gray-500">
+                            To fetch API data, the slug needs to be API id from
+                            Coingecko.
+                          </p>
+                        </div>
+                        <Field
+                          type="text"
+                          name="slug"
+                          className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
+                        />
+                      </div>
+                      <div className="mb-t flex">
+                        <div className="basis-1/4">
+                          <label className="mb-2 block text-sm font-medium text-gray-900">
+                            Short Description
+                          </label>
+                          <p className="mb-2 text-xs font-extralight text-gray-500">
+                            Give a short summary of the project and the
+                            token/tokens.
+                          </p>
+                          <FormErrorMessage
+                            field="shortDescription"
+                            reviewRequiredFields={reviewRequiredFields}
+                          />
+                        </div>
+                        <Field
+                          name="shortDescription"
+                          as={FormText}
+                          placeholder="Short description"
+                        />
+                        {/* <FormErrorMessage name="shortDescription" /> */}
+                      </div>
 
-            <div className="mt-6 flex">
-              <div className="basis-1/4">
-                <label className="mb-2 block text-sm font-medium text-gray-900">
-                  Ticker
-                </label>
-                <p className="mb-2 text-xs font-extralight text-gray-500">
-                  What's the ticker used for the token?
-                </p>
-              </div>
-              <Field
-                type="text"
-                name="ticker"
-                className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
-              />
-            </div>
-            <div className="mb-6 mt-4">
-              <label className="mb-2 block text-sm font-medium text-gray-900">
-                Categories
-              </label>
-              <FormErrorMessage
-                field="categories"
-                reviewRequiredFields={reviewRequiredFields}
-              />
-              <Field
-                className="custom-select"
-                name="categories"
-                options={categories}
-                component={FormSelect}
-                placeholder="Select categories"
-                isMulti={true}
-              />
-            </div>
-            <div className="mb-6">
-              <label className="mb-2 block text-sm font-medium text-gray-900">
-                Tags
-              </label>
-              <FormErrorMessage
-                field="tags"
-                reviewRequiredFields={reviewRequiredFields}
-              />
-              <Field
-                className="custom-select"
-                name="tags"
-                options={tags}
-                component={FormSelect}
-                placeholder="Select categories"
-                isMulti={true}
-              />
-            </div>
+                      <div className="mt-6 flex">
+                        <div className="basis-1/4">
+                          <label className="mb-2 block text-sm font-medium text-gray-900">
+                            Ticker
+                          </label>
+                          <p className="mb-2 text-xs font-extralight text-gray-500">
+                            What's the ticker used for the token?
+                          </p>
+                        </div>
+                        <Field
+                          type="text"
+                          name="ticker"
+                          className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
+                        />
+                      </div>
+                      <div className="mb-6 mt-4">
+                        <label className="mb-2 block text-sm font-medium text-gray-900">
+                          Categories
+                        </label>
+                        <FormErrorMessage
+                          field="categories"
+                          reviewRequiredFields={reviewRequiredFields}
+                        />
+                        <Field
+                          className="custom-select"
+                          name="categories"
+                          options={categories}
+                          component={FormSelect}
+                          placeholder="Select categories"
+                          isMulti={true}
+                        />
+                      </div>
+                      <div className="mb-6">
+                        <label className="mb-2 block text-sm font-medium text-gray-900">
+                          Tags
+                        </label>
+                        <FormErrorMessage
+                          field="tags"
+                          reviewRequiredFields={reviewRequiredFields}
+                        />
+                        <Field
+                          className="custom-select"
+                          name="tags"
+                          options={tags}
+                          component={FormSelect}
+                          placeholder="Select categories"
+                          isMulti={true}
+                        />
+                      </div>
 
-            <div className="mb-6 flex">
-              <div className="basis-1/4">
-                <label className="mb-2 block text-sm font-medium text-gray-900">
-                  Main Image
-                </label>
-                <p className="mb-2 text-xs font-extralight text-gray-500">
-                  Upload an SVG or PNG of the protocols logo.
-                </p>
-              </div>
-              <div className="flex">
-                <Field
-                  id="mainImageUrl"
-                  className="custom-image"
-                  name="mainImageUrl"
-                  as={FormImageSelect}
-                  onChange={(e) => setFieldValue('mainImageUrl', e)}
-                />
-                <img
-                  alt={`Cover Image`}
-                  className="m-auto h-10 rounded-lg"
-                  src={values.mainImageUrl}
-                />
-              </div>
-            </div>
+                      <div className="mb-6 flex">
+                        <div className="basis-1/4">
+                          <label className="mb-2 block text-sm font-medium text-gray-900">
+                            Main Image
+                          </label>
+                          <p className="mb-2 text-xs font-extralight text-gray-500">
+                            Upload an SVG or PNG of the protocols logo.
+                          </p>
+                        </div>
+                        <div className="flex">
+                          <Field
+                            id="mainImageUrl"
+                            className="custom-image"
+                            name="mainImageUrl"
+                            as={FormImageSelect}
+                            onChange={(e) => setFieldValue('mainImageUrl', e)}
+                          />
+                          <img
+                            alt={`Cover Image`}
+                            className="m-auto h-10 rounded-lg"
+                            src={values.mainImageUrl}
+                          />
+                        </div>
+                      </div>
+                    </Disclosure.Panel>
+                  </div>
+                </>
+              )}
+            </Disclosure>
+
             <Disclosure>
               {({ open }) => (
                 <>
