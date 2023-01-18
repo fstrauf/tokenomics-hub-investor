@@ -68,6 +68,7 @@ export default function Post({ post, morePosts, author }) {
     setSubmitting(true)
     Router.push('/editPost/[id]', `/editPost/${post.id}`)
     setSubmitting(false)
+    
   }
 
   if (!router.isFallback && !post?.slug) {
@@ -95,7 +96,7 @@ export default function Post({ post, morePosts, author }) {
                 ticker={post.ticker}
               />
               <button
-                onClick={() => editPost}
+                onClick={editPost}
                 disabled={
                   !(
                     // userIsAuthor || user?.publicMetadata?.role === 'contributor'

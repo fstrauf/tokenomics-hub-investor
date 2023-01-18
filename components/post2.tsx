@@ -16,6 +16,8 @@ import {
 } from '../lib/helper'
 import { WEBSITE_URL_BASE } from '../lib/constants'
 import FormErrorMessage from './form/FormErrorMessage'
+import { Disclosure, Switch } from '@headlessui/react'
+import ChevronIcon from '../lib/svg/chevron'
 
 export default function Post2({
   content,
@@ -45,7 +47,7 @@ export default function Post2({
   })
 
   const [isReviewSubmitting, setReviewSubmitting] = useState(false)
-
+  const [ratingEnabled, setRatingEnabled] = useState(false)
   const [postId, setPostId] = useState(content.id)
   const [reviewRequiredFields, setreviewRequiredFields] = useState({})
 
@@ -108,7 +110,6 @@ export default function Post2({
     event: MouseEvent<HTMLButtonElement, MouseEvent>,
     values
   ): void {
-    
     const errors = mandatoryFormValidate(values)
     setreviewRequiredFields(errors)
     if (values?.id === '') {
@@ -224,7 +225,7 @@ export default function Post2({
                 className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
               />
             </div>
-            <div className="mb-6">
+            <div className="mb-6 mt-4">
               <label className="mb-2 block text-sm font-medium text-gray-900">
                 Categories
               </label>
@@ -258,15 +259,7 @@ export default function Post2({
                 isMulti={true}
               />
             </div>
-            <div className="mb-6">
-              <label className="mb-2 block text-sm font-medium text-gray-900">
-                Timeline
-              </label>
-              <p className="mb-2 text-xs font-extralight text-gray-500">
-                List the major milestones of the token.
-              </p>
-              <FormTimeLine values={values} />
-            </div>
+
             <div className="mb-6 flex">
               <div className="basis-1/4">
                 <label className="mb-2 block text-sm font-medium text-gray-900">
@@ -291,113 +284,207 @@ export default function Post2({
                 />
               </div>
             </div>
-            <FormDivider text="Token Strength" />
-            <FormTokenStrength reviewRequiredFields={reviewRequiredFields} />
-            <p className="block text-sm font-medium text-gray-900">
-              total Strength:
-            </p>
-            <span className="mb-2 justify-end self-end text-right text-xs font-extralight text-gray-500">
-              Rating is optional. Leave the strength rating set to 0 to skip the
-              rating
-            </span>
-            <FormStrength name="tokenStrength" />
-            <FormDivider text="Token Analysis" />
-            <FormAnalysis />
-            <FormDivider text="Investment Take" />
-            <FormInvestmentTake />
-            <FormDivider text="Deep Dive" />
-            <div className="mb-6">
-              <div className="basis-1/4">
-                <label className="mb-2 block text-sm font-medium text-gray-900">
-                  Deep Dive
-                </label>
-                <p className="mb-2 text-xs font-extralight text-gray-500">
-                  Provide any additional information as well as Token
-                  Allocation, Vesting and Dsitribution information.
-                </p>
-              </div>
-              {/* <Tiptap content={deepDive} setContent={setDeepDive} /> */}
-              <Field
-                name="breakdown"
-                as={FormTipTap}
-                placeholder="Deep Dive"
-                onChange={(e) => setFieldValue('breakdown', e)}
-              />
-              <label className="mb-2 block text-sm font-medium text-gray-900">
-                Calculation
-              </label>
-              <p className="mb-2 text-xs font-extralight text-gray-500">
-                If you have created a calculation, you can link it here.
-              </p>
-              <Field
-                name="calculation"
-                as="select"
-                className="block w-52 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
-                // value=''
-              >
-                <option key="loadcalc" value="" label="load a calculation">
-                  Link a Calculation{' '}
-                </option>
-                {calculations.map((c) => (
-                  <>
-                    <option key={c.id} value={c.id}>
-                      {c.title}
-                    </option>
-                  </>
-                ))}
-              </Field>
-            </div>
-            <FormDivider text="Additional Information" />
-            <div className="mb-6">
-              <div className="basis-1/4">
-                <label className="mb-2 block text-sm font-medium text-gray-900">
-                  Diagram
-                </label>
-                <p className="mb-2 text-xs font-extralight text-gray-500">
-                  Provide a link to a diagram{' '}
-                  <a
-                    className="underline"
-                    href="https://www.notion.so/tokenomicsdao/Creating-Diagrams-ebc097180eb24380ad3e22ebf25f0189#bf3266cdce724102b2c3155d8fb51239"
-                  >
-                    (how to)
-                  </a>{' '}
-                  or upload your own diagram
-                </p>
-              </div>
-              <div className="mb-2">
-                <Field
-                  name="diagramUrl"
-                  as={FormImageSelect}
-                  onChange={(e) => setFieldValue('diagramUrl', e)}
-                />
-              </div>
-              <Field
-                type="url"
-                name="diagramUrl"
-                className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
-              />
-            </div>
-            <div className="mb-6">
-              <label className="mb-2 block text-sm font-medium text-gray-900">
-                Resources
-              </label>
-              <p className="mb-2 text-xs font-extralight text-gray-500">
-                List all links to further reading
-              </p>
-            </div>
-            <FormResources values={values} postId={postId} />
+            <Disclosure>
+              {({ open }) => (
+                <>
+                  <div className="mb-3 rounded-lg border-4 border-gray-300 border-opacity-20">
+                    <Disclosure.Button className="flex w-full justify-between rounded-sm bg-gray-300 bg-opacity-20 px-4 py-2 text-left text-sm font-medium hover:bg-opacity-100 focus:outline-none focus-visible:ring focus-visible:ring-gray-500 focus-visible:ring-opacity-75 ">
+                      <FormDivider text="Token Strength" />
+                      <ChevronIcon />
+                    </Disclosure.Button>
+                    <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-500">
+                      <div className="flex justify-end py-2">
+                        <span className="mr-2 self-center">Enable rating</span>
+                        <Switch
+                          checked={ratingEnabled}
+                          onChange={setRatingEnabled}
+                          className={`${
+                            ratingEnabled ? 'bg-dao-red' : 'bg-gray-300'
+                          }
+          relative inline-flex h-[34px] w-[74px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2  focus-visible:ring-white focus-visible:ring-opacity-75`}
+                        >
+                          <span className="sr-only">Enable Rating</span>
+                          <span
+                            aria-hidden="true"
+                            className={`${
+                              ratingEnabled ? 'translate-x-9' : 'translate-x-0'
+                            }
+            pointer-events-none inline-block h-[30px] w-[30px] transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out`}
+                          />
+                        </Switch>
+                      </div>
+                      <FormTokenStrength
+                        reviewRequiredFields={reviewRequiredFields}
+                        ratingEnabled={ratingEnabled}
+                      />
+                      {ratingEnabled && (
+                        <>
+                          <p className="block text-sm font-medium text-gray-900">
+                            total Strength:
+                          </p>
+                          <span className="mb-2 justify-end self-end text-right text-xs font-extralight text-gray-500">
+                            Rating is optional. Leave the strength rating set to
+                            0 to skip the rating
+                          </span>
+                          <FormStrength name="tokenStrength" />
+                        </>
+                      )}
+                    </Disclosure.Panel>
+                  </div>
+                </>
+              )}
+            </Disclosure>
+            <Disclosure>
+              {({ open }) => (
+                <>
+                  <div className="mb-3 rounded-lg border-4 border-gray-300 border-opacity-20">
+                    <Disclosure.Button className="flex w-full justify-between rounded-sm bg-gray-300 bg-opacity-20 px-4 py-2 text-left text-sm font-medium hover:bg-opacity-100 focus:outline-none focus-visible:ring focus-visible:ring-gray-500 focus-visible:ring-opacity-75 ">
+                      <FormDivider text="Deep Dive" />
+                      <ChevronIcon />
+                    </Disclosure.Button>
+                    <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-500">
+                      <div className="mb-6">
+                        <div className="basis-1/4">
+                          <label className="mb-2 block text-sm font-medium text-gray-900">
+                            Deep Dive
+                          </label>
+                          <p className="mb-2 text-xs font-extralight text-gray-500">
+                            Provide any additional information as well as Token
+                            Allocation, Vesting and Dsitribution information.
+                          </p>
+                        </div>
+                        <Field
+                          name="breakdown"
+                          as={FormTipTap}
+                          placeholder="Deep Dive"
+                          onChange={(e) => setFieldValue('breakdown', e)}
+                        />
+                        <label className="mb-2 block text-sm font-medium text-gray-900">
+                          Calculation
+                        </label>
+                        <p className="mb-2 text-xs font-extralight text-gray-500">
+                          If you have created a calculation, you can link it
+                          here.
+                        </p>
+                        <Field
+                          name="calculation"
+                          as="select"
+                          className="block w-52 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
+                        >
+                          <option
+                            key="loadcalc"
+                            value=""
+                            label="load a calculation"
+                          >
+                            Link a Calculation{' '}
+                          </option>
+                          {calculations.map((c) => (
+                            <>
+                              <option key={c.id} value={c.id}>
+                                {c.title}
+                              </option>
+                            </>
+                          ))}
+                        </Field>
+                      </div>
+                    </Disclosure.Panel>
+                  </div>
+                </>
+              )}
+            </Disclosure>
+            <Disclosure>
+              {({ open }) => (
+                <>
+                  <div className="mb-3 rounded-lg border-4 border-gray-300 border-opacity-20">
+                    <Disclosure.Button className="flex w-full justify-between rounded-sm bg-gray-300 bg-opacity-20 px-4 py-2 text-left text-sm font-medium hover:bg-opacity-100 focus:outline-none focus-visible:ring focus-visible:ring-gray-500 focus-visible:ring-opacity-75 ">
+                      <FormDivider text="Token Analysis (optional)" />
+                      <ChevronIcon />
+                    </Disclosure.Button>
+                    <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-500">
+                      <FormAnalysis />
+                    </Disclosure.Panel>
+                  </div>
+                </>
+              )}
+            </Disclosure>
+
+            <Disclosure>
+              {({ open }) => (
+                <>
+                  <div className="mb-3 rounded-lg border-4 border-gray-300 border-opacity-20">
+                    <Disclosure.Button className="flex w-full justify-between rounded-sm bg-gray-300 bg-opacity-20 px-4 py-2 text-left text-sm font-medium hover:bg-opacity-100 focus:outline-none focus-visible:ring focus-visible:ring-gray-500 focus-visible:ring-opacity-75 ">
+                      <FormDivider text="Additional Information (optional)" />
+                      <ChevronIcon />
+                    </Disclosure.Button>
+                    <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-500">
+                      <div className="mb-6">
+                        <div className="basis-1/4">
+                          <label className="mb-2 block text-sm font-medium text-gray-900">
+                            Diagram
+                          </label>
+                          <p className="mb-2 text-xs font-extralight text-gray-500">
+                            Provide a link to a diagram{' '}
+                            <a
+                              className="underline"
+                              href="https://www.notion.so/tokenomicsdao/Creating-Diagrams-ebc097180eb24380ad3e22ebf25f0189#bf3266cdce724102b2c3155d8fb51239"
+                            >
+                              (how to)
+                            </a>{' '}
+                            or upload your own diagram
+                          </p>
+                        </div>
+                        <div className="mb-2">
+                          <Field
+                            name="diagramUrl"
+                            as={FormImageSelect}
+                            onChange={(e) => setFieldValue('diagramUrl', e)}
+                          />
+                        </div>
+                        <Field
+                          type="url"
+                          name="diagramUrl"
+                          className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
+                        />
+                      </div>
+                      <div className="mb-6">
+                        <label className="mb-2 block text-sm font-medium text-gray-900">
+                          Timeline
+                        </label>
+                        <p className="mb-2 text-xs font-extralight text-gray-500">
+                          List the major milestones of the token.
+                        </p>
+                        <FormTimeLine values={values} />
+                      </div>
+                      <div className="mb-6">
+                        <label className="mb-2 block text-sm font-medium text-gray-900">
+                          Resources
+                        </label>
+                        <p className="mb-2 text-xs font-extralight text-gray-500">
+                          List all links to further reading
+                        </p>
+                      </div>
+                      <FormResources values={values} postId={postId} />
+                    </Disclosure.Panel>
+                  </div>
+                </>
+              )}
+            </Disclosure>
+
+            {/* <FormDivider text="Investment Take" />
+            <FormInvestmentTake /> */}
+
             <FormId
               postId={postId}
               type="text"
               name="id"
               className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
             />
-            <Field
+            {/* <Field
               type="text"
               name="Author.email"
               disabled={true}
               className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
-            />
+            /> */}
             <button
               className="mt-5 mb-5 rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
               type="submit"

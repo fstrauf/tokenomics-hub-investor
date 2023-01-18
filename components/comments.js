@@ -5,11 +5,8 @@ export default function Comments({ comments = [] }) {
     <>
       <ul>
         {comments?.map((comment) => (
-          <div
-            key={comment?.id}
-            className="rounded-lg bg-white p-6 text-base"
-          >
-            <hr class="h-px my-8 bg-gray-200 border-0"></hr>
+          <div key={comment?.id} className="rounded-lg bg-white p-6 text-base">
+            <hr class="my-8 h-px border-0 bg-gray-200"></hr>
             <footer class="mb-2 flex items-center justify-between">
               <div class="flex items-center">
                 <p className="text-gray-90 mr-3 inline-flex items-center text-sm">
@@ -20,7 +17,12 @@ export default function Comments({ comments = [] }) {
                 </p>
               </div>
             </footer>
-            <p className="text-gray-500">{comment?.comment}</p>
+            <pre
+              id="message"
+              className="block w-full whitespace-pre-line rounded-lg bg-slate-50 p-2.5 font-sans text-sm text-gray-900"
+            >
+              {comment?.comment}
+            </pre>
           </div>
         ))}
       </ul>

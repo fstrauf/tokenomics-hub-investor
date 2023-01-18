@@ -5,7 +5,7 @@ import FormErrorMessage from './FormErrorMessage'
 import FormText from './FormText'
 // import Select from "react-select";
 
-export const FormTokenStrength = ({ reviewRequiredFields }) => {
+export const FormTokenStrength = ({ reviewRequiredFields, ratingEnabled }) => {
   // console.log("🚀 ~ file: FormTokenStrength.tsx:9 ~ FormTokenStrength ~ reviewRequiredFields", reviewRequiredFields)
   return (
     <>
@@ -24,16 +24,18 @@ export const FormTokenStrength = ({ reviewRequiredFields }) => {
           />
         </div>
         <Field name="tokenUtility" as={FormText} placeholder="Token Utility" />
-        <div className="ml-3">
-          <label className="mb-2 block text-sm font-medium text-gray-900 ">
-            Strength
-          </label>
-          <Field
-            type="number"
-            name="tokenUtilityStrength"
-            className="block w-16 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
-          />
-        </div>
+        {ratingEnabled && (
+          <div className="ml-3">
+            <label className="mb-2 block text-sm font-medium text-gray-900 ">
+              Strength
+            </label>
+            <Field
+              type="number"
+              name="tokenUtilityStrength"
+              className="block w-16 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
+            />
+          </div>
+        )}
       </div>
       <div className="mb-6 flex">
         <div className="mr-1 basis-1/4">
@@ -53,6 +55,7 @@ export const FormTokenStrength = ({ reviewRequiredFields }) => {
           as={FormText}
           placeholder="Business Model"
         />
+        {ratingEnabled && (
         <div className="ml-3">
           <label className="mb-2 block text-sm font-medium text-gray-900">
             Strength
@@ -63,6 +66,7 @@ export const FormTokenStrength = ({ reviewRequiredFields }) => {
             className="block w-16 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
           />
         </div>
+        )}
       </div>
       <div className="mb-6 flex">
         <div className="mr-1 basis-1/4">
@@ -82,6 +86,7 @@ export const FormTokenStrength = ({ reviewRequiredFields }) => {
           as={FormText}
           placeholder="Value Creation"
         />
+        {ratingEnabled && (
         <div className="ml-3">
           <label className="mb-2 block text-sm font-medium text-gray-900">
             Strength
@@ -92,6 +97,7 @@ export const FormTokenStrength = ({ reviewRequiredFields }) => {
             className="block w-16 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
           />
         </div>
+        )}
       </div>
       <div className="mb-6 flex">
         <div className="mr-1 basis-1/4">
@@ -108,6 +114,7 @@ export const FormTokenStrength = ({ reviewRequiredFields }) => {
           />
         </div>
         <Field name="valueCapture" as={FormText} placeholder="Value Capture" />
+        {ratingEnabled && (
         <div className="ml-3">
           <label className="mb-2 block text-sm font-medium text-gray-900">
             Strength
@@ -118,6 +125,7 @@ export const FormTokenStrength = ({ reviewRequiredFields }) => {
             className="block w-16 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
           />
         </div>
+        )}
       </div>
       <div className="mb-6 flex">
         <div className="mr-1 basis-1/4">
@@ -137,6 +145,7 @@ export const FormTokenStrength = ({ reviewRequiredFields }) => {
           as={FormText}
           placeholder="Demand Drivers"
         />
+        {ratingEnabled && (
         <div className="ml-3">
           <label className="mb-2 block text-sm font-medium text-gray-900">
             Strength
@@ -147,6 +156,7 @@ export const FormTokenStrength = ({ reviewRequiredFields }) => {
             className="block w-16 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
           />
         </div>
+        )}
       </div>
     </>
   )

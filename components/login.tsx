@@ -10,7 +10,7 @@ const Login: FC<{ message: Message }> = () => {
       <div className="m-0 w-full rounded bg-gray-100 p-3 align-middle">
         <SignedOut>
           <div className="flex justify-between">
-            <p className="text-left">Please sign in to see remaining report.</p>
+            <p className="text-left">Please sign in to see remaining report (it's free).</p>
             <SignInButton className="font-bold" />
           </div>
         </SignedOut>

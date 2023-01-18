@@ -53,7 +53,8 @@ export default function NewProtocol({ categories, tags, calculations }) {
     problemSolution: '',
     parent: '',
     authorClerkId: user.id,
-    status: postStatus.draft
+    status: postStatus.draft,
+    // isMinimal: true,
   }
 
   return (
