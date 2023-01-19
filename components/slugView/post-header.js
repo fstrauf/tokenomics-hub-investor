@@ -7,7 +7,7 @@ export default function PostHeader({
   title,
   updatedAt,
   shortDescription,
-  type,
+  cats,
   tags,
   tokenStrength,
   slug,
@@ -18,7 +18,7 @@ export default function PostHeader({
 
   return (
     <div key={title}>
-      <PostTitle title={title} imageUrl={imageUrl} />      
+      <PostTitle title={title} imageUrl={imageUrl} />
       <div className="flex flex-col justify-between md:flex-row-reverse">
         <div className="mb-4 h-20 w-20 self-center md:h-40 md:w-40">
           <CircularProgressbar
@@ -32,9 +32,12 @@ export default function PostHeader({
       </div>
       <div className="flex flex-auto gap-4 text-lg">
         <h1 className="font-bold">Categories:</h1>
-        <p className="rounded-full bg-gray-100 px-3 py-1 text-sm font-bold text-gray-700 shadow-sm">
-          {type}
-        </p>
+        {cats &&
+          cats.map((cat) => (
+            <p key={cat.value} className="rounded-full bg-gray-100 px-3 py-1 text-sm font-bold text-gray-700 shadow-sm">
+              {cat?.label}
+            </p>
+          ))}
       </div>
       <div className="flex flex-auto gap-4 text-lg">
         <h1 className="font-bold">Updated:</h1>

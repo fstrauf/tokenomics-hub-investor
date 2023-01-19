@@ -90,7 +90,7 @@ export default function Post({ post, morePosts, author }) {
                 slug={post.slug}
                 updatedAt={post.publishedAt}
                 shortDescription={post.shortDescription}
-                type={post.categories[0]?.label}
+                cats={post.categories}
                 tags={post.tags}
                 tokenStrength={post.tokenStrength}
                 ticker={post.ticker}
