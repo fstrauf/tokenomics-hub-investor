@@ -191,34 +191,40 @@ export function mandatoryFormValidate(values) {
   const errors = {}
   if (!values.title) {
     errors.title = 'Required!'
+    errors.mainInfo = true
   }
   if (!values.shortDescription) {
     errors.shortDescription = 'Required!'
-  }
-  if (!values.categories) {
-    errors.categories = 'Required!'
+    errors.mainInfo = true
   }
   if (values.categories.length === 0) {
     errors.categories = 'Required!'
+    errors.mainInfo = true
   }
   if (values.tags.length === 0) {
     errors.tags = 'Required!'
+    errors.mainInfo = true
   }
   if (!values.tokenUtility) {
     errors.tokenUtility = 'Required!'
+    errors.tokenStrength = true
   }
   if (!values.businessModel) {
     errors.businessModel = 'Required!'
+    errors.tokenStrength = true
   }
   if (!values.valueCreation) {
     errors.valueCreation = 'Required!'
+    errors.tokenStrength = true
   }
   if (!values.valueCapture) {
     errors.valueCapture = 'Required!'
+    errors.tokenStrength = true
   }
 
   if (!values.demandDrivers) {
     errors.demandDrivers = 'Required!'
+    errors.tokenStrength = true
   }
 
   return errors

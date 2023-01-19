@@ -44,7 +44,9 @@ export default function OurTake({ content }) {
               </tr>
             </tbody>
           </table>
-          <table className="text-sm text-left text-gray-500 dark:text-gray-400 bg-gray-50 m-2">
+          <p className='section-head text-center'>Investment Take</p>
+          <p className='text-center text-gray-400 mb-4'>... coming soon</p>
+          {/* <table className="text-sm text-left text-gray-500 dark:text-gray-400 bg-gray-50 m-2">
             <caption className='section-head'>Investment Take</caption>
             <tbody>
               <tr className="">
@@ -96,7 +98,7 @@ export default function OurTake({ content }) {
                 </td>
               </tr>
             </tbody>
-          </table>
+          </table> */}
           {/* ) : (
             <></>
           )} */}

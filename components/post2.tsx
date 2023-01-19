@@ -163,7 +163,7 @@ export default function Post2({
             <Disclosure defaultOpen={true}>
               {({ open }) => (
                 <>
-                  <div className="mb-3 rounded-lg border-4 border-gray-300 border-opacity-20">
+                  <div className={`mb-3 rounded-lg border-4  border-opacity-20 ${reviewRequiredFields?.mainInfo ? 'border-dao-red' : 'border-gray-300'}`}>
                     <Disclosure.Button className="flex w-full justify-between rounded-sm bg-gray-300 bg-opacity-20 px-4 py-2 text-left text-sm font-medium hover:bg-opacity-100 focus:outline-none focus-visible:ring focus-visible:ring-gray-500 focus-visible:ring-opacity-75 ">
                       <FormDivider text="Main Info" />
                       <ChevronIcon />
@@ -304,7 +304,7 @@ export default function Post2({
             <Disclosure>
               {({ open }) => (
                 <>
-                  <div className="mb-3 rounded-lg border-4 border-gray-300 border-opacity-20">
+                  <div className={`mb-3 rounded-lg border-4  border-opacity-20 ${reviewRequiredFields?.tokenStrength ? 'border-dao-red' : 'border-gray-300'}`}>
                     <Disclosure.Button className="flex w-full justify-between rounded-sm bg-gray-300 bg-opacity-20 px-4 py-2 text-left text-sm font-medium hover:bg-opacity-100 focus:outline-none focus-visible:ring focus-visible:ring-gray-500 focus-visible:ring-opacity-75 ">
                       <FormDivider text="Token Strength" />
                       <ChevronIcon />

@@ -94,6 +94,7 @@ export default function Post({ post, morePosts, author }) {
                 tags={post.tags}
                 tokenStrength={post.tokenStrength}
                 ticker={post.ticker}
+                imageUrl={post.mainImageUrl}
               />
               <button
                 onClick={editPost}

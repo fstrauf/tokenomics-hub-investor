@@ -53,9 +53,11 @@ const columns = [
     id: 'Token Strength',
     cell: (info) => <TokenStrength value={info.getValue()} />,
   }),
-  columnHelper.accessor((row) => row.categories[0]?.label, {
+  columnHelper.accessor((row) => row.categories, {
+    // columnHelper.accessor((row) => row.categories[0]?.label, {
     id: 'Category',
-    cell: (info) => <StatusPill value={info.getValue()} />,
+    // cell: (info) => <StatusPill value={info.getValue()} />,
+    cell: (info) => <CategoryPills value={info.getValue()} />,
   }),
 ]
 
@@ -153,12 +155,24 @@ const Table: React.FC<{ prop: Props }> = ({ prop }) => {
 
 export default Table
 
-export function StatusPill({ value }) {
-  // console.log(value)
+export function CategoryPill({ value }) {
   return (
     <span className="leading-wide rounded-full bg-gray-100 px-3 py-1 text-xs font-bold uppercase text-gray-700 shadow-sm">
       {value}
     </span>
+  )
+}
+
+function CategoryPills({ value }) {
+  console.log(value[0].label)
+  return (
+    <>
+    <div className="mr-1 mb-1 flex flex-wrap">
+      {value.map((v) => (      
+          <CategoryPill value={v.label} />        
+      ))}
+      </div>
+    </>
   )
 }
 
@@ -168,8 +182,8 @@ function HeaderLink({ value, slug, ticker }) {
   return (
     <div className="ml-2">
       <Link href={url}>
-        <div className="leading-5 text-left">
-          <span className="align-bottom font-bold mr-2">{value}</span>
+        <div className="text-left leading-5">
+          <span className="mr-2 align-bottom font-bold">{value}</span>
           <span className="align-bottom text-xs font-extralight">{ticker}</span>
         </div>
       </Link>
