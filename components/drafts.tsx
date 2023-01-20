@@ -9,6 +9,8 @@ import toast, { Toaster } from 'react-hot-toast'
 import { WEBSITE_URL_BASE } from '../lib/constants'
 import { Menu, Transition } from '@headlessui/react'
 import { Fragment, useState } from 'react'
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css'; 
 
 export default function Drafts({ posts, context }) {
   const { user } = useUser()
@@ -29,13 +31,28 @@ export default function Drafts({ posts, context }) {
     await Router.push('/')
   }
 
-  const deleteDraft = async (id: string) => {
+  const deleteDraft = async (id: String) => {
     setSubmitting(true)
     await fetch(`/api/post/delete/${id}`, {
       method: 'PUT',
     })
     setSubmitting(false)
     await Router.push(`/${context}`)
+  }
+
+  const confirmDelete = async (id: String) => {
+    confirmAlert({
+      message: 'Are you sure to delete this draft?.',
+      buttons: [
+        {
+          label: 'Yes',
+          onClick: () => deleteDraft(id)
+        },
+        {
+          label: 'No',
+        }
+      ]
+    });
   }
 
   async function sendToReview(
@@ -83,7 +100,6 @@ export default function Drafts({ posts, context }) {
     post,
     close
   ): void {
-    // console.log("🚀 ~ file: drafts.tsx:29 ~ sendToReview ~ post", post)
     const postId = post.id
     const body = { status: postStatus.reviewComplete, postId }
     setSubmitting(true)
@@ -114,6 +130,7 @@ export default function Drafts({ posts, context }) {
   return (
     <div className="static overflow-x-auto">
       <Toaster />
+
       <table className="mb-5 w-full text-left text-sm text-gray-500">
         <thead className="bg-gray-50 text-xs uppercase text-gray-700">
           <tr>
@@ -126,7 +143,6 @@ export default function Drafts({ posts, context }) {
             <th scope="col" className="py-3 px-6">
               Status
             </th>
-            <th scope="col" className="py-3 px-6"></th>
             <th scope="col" className="py-3 px-6"></th>
           </tr>
         </thead>
@@ -247,29 +263,27 @@ export default function Drafts({ posts, context }) {
                                   </button>
                                 )}
                               </Menu.Item>
-                            </div>
+                              <Menu.Item>
+                                {({ active }) => (
+                                  <button
+                                    onClick={() => confirmDelete(post.id, close)}
+                                    className={`${
+                                      active
+                                        ? 'bg-dao-red text-white'
+                                        : 'text-gray-900'
+                                    } group flex w-full items-center rounded-md px-2 py-2 text-sm disabled:opacity-70`}
+                                    disabled={!contributor || isSubmitting}
+                                  >
+                                    Delete
+                                  </button>
+                                )}
+                              </Menu.Item>
+                            </div>                           
                           </Menu.Items>
                         </Transition>
                       </>
                     )}
                   </Menu>
-                </td>
-                <td className="py-2 px-3">
-                  <button
-                    type="button"
-                    className="mr-2 inline-flex items-center rounded-full bg-red-500 p-2.5 text-center text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-800 disabled:opacity-40"
-                    disabled={!contributor || isSubmitting}
-                    onClick={() => deleteDraft(post.id)}
-                  >
-                    <svg
-                      fill="white"
-                      viewBox="0 0 16 16"
-                      height="1em"
-                      width="1em"
-                    >
-                      <path d="M4 8a.5.5 0 01.5-.5h7a.5.5 0 010 1h-7A.5.5 0 014 8z" />
-                    </svg>
-                  </button>
                 </td>
               </tr>
             )
