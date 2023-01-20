@@ -11,6 +11,7 @@ import { useRouter } from 'next/router'
 // import Link from 'next/link'
 
 export default function Calculator(props) {
+  console.log("🚀 ~ file: calculator.tsx:14 ~ Calculator ~ props", props)
   const { preloadInitialValues } = props
   const { isSignedIn } = useAuth()
 

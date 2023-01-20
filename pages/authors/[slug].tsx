@@ -6,7 +6,7 @@ import Intro from '../../components/intro'
 import prisma from '../../lib/prisma'
 // import { clerkClient } from '@clerk/nextjs/server'
 import Link from 'next/link'
-import { clerkConvertJSON, getClerkUsers } from '../../lib/helper'
+import { clerkConvertJSON } from '../../lib/helper'
 import { clerkClient } from '@clerk/nextjs/server'
 
 export default function UserProfile({

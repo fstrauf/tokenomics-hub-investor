@@ -18,6 +18,7 @@ import { WEBSITE_URL_BASE } from '../lib/constants'
 import FormErrorMessage from './form/FormErrorMessage'
 import { Disclosure, Switch } from '@headlessui/react'
 import ChevronIcon from '../lib/svg/chevron'
+import Calculator from './calculator'
 
 export default function Post2({
   content,
@@ -25,6 +26,7 @@ export default function Post2({
   tags,
   calculations,
   author,
+  // preloadInitialValues
 }) {
   const FormTipTap = dynamic(() => import('./form/FormTipTap'), {
     loading: () => <p>Loading</p>,
@@ -32,10 +34,10 @@ export default function Post2({
   const FormResources = dynamic(() => import('./form/FormResources'), {
     loading: () => <p>Loading</p>,
   })
-  const FormInvestmentTake = dynamic(
-    () => import('./form/FormInvestmentTake'),
-    { loading: () => <p>Loading</p> }
-  )
+  // const FormInvestmentTake = dynamic(
+  //   () => import('./form/FormInvestmentTake'),
+  //   { loading: () => <p>Loading</p> }
+  // )
   const FormAnalysis = dynamic(() => import('./form/FormAnalysis'), {
     loading: () => <p>Loading</p>,
   })
@@ -163,7 +165,13 @@ export default function Post2({
             <Disclosure defaultOpen={true}>
               {({ open }) => (
                 <>
-                  <div className={`mb-3 rounded-lg border-4  border-opacity-20 ${reviewRequiredFields?.mainInfo ? 'border-dao-red' : 'border-gray-300'}`}>
+                  <div
+                    className={`mb-3 rounded-lg border-4  border-opacity-20 ${
+                      reviewRequiredFields?.mainInfo
+                        ? 'border-dao-red'
+                        : 'border-gray-300'
+                    }`}
+                  >
                     <Disclosure.Button className="flex w-full justify-between rounded-sm bg-gray-300 bg-opacity-20 px-4 py-2 text-left text-sm font-medium hover:bg-opacity-100 focus:outline-none focus-visible:ring focus-visible:ring-gray-500 focus-visible:ring-opacity-75 ">
                       <FormDivider text="Main Info" />
                       <ChevronIcon />
@@ -304,7 +312,13 @@ export default function Post2({
             <Disclosure>
               {({ open }) => (
                 <>
-                  <div className={`mb-3 rounded-lg border-4  border-opacity-20 ${reviewRequiredFields?.tokenStrength ? 'border-dao-red' : 'border-gray-300'}`}>
+                  <div
+                    className={`mb-3 rounded-lg border-4  border-opacity-20 ${
+                      reviewRequiredFields?.tokenStrength
+                        ? 'border-dao-red'
+                        : 'border-gray-300'
+                    }`}
+                  >
                     <Disclosure.Button className="flex w-full justify-between rounded-sm bg-gray-300 bg-opacity-20 px-4 py-2 text-left text-sm font-medium hover:bg-opacity-100 focus:outline-none focus-visible:ring focus-visible:ring-gray-500 focus-visible:ring-opacity-75 ">
                       <FormDivider text="Token Strength" />
                       <ChevronIcon />
@@ -354,7 +368,13 @@ export default function Post2({
             <Disclosure>
               {({ open }) => (
                 <>
-                  <div className="mb-3 rounded-lg border-4 border-gray-300 border-opacity-20">
+                  <div
+                    className={`mb-3 rounded-lg border-4  border-opacity-20 ${
+                      reviewRequiredFields?.deepDive
+                        ? 'border-dao-red'
+                        : 'border-gray-300'
+                    }`}
+                  >
                     <Disclosure.Button className="flex w-full justify-between rounded-sm bg-gray-300 bg-opacity-20 px-4 py-2 text-left text-sm font-medium hover:bg-opacity-100 focus:outline-none focus-visible:ring focus-visible:ring-gray-500 focus-visible:ring-opacity-75 ">
                       <FormDivider text="Deep Dive" />
                       <ChevronIcon />
@@ -365,6 +385,10 @@ export default function Post2({
                           <label className="mb-2 block text-sm font-medium text-gray-900">
                             Deep Dive
                           </label>
+                          <FormErrorMessage
+                            field="breakdown"
+                            reviewRequiredFields={reviewRequiredFields}
+                          />
                           <p className="mb-2 text-xs font-extralight text-gray-500">
                             Provide any additional information as well as Token
                             Allocation, Vesting and Dsitribution information.
@@ -379,6 +403,10 @@ export default function Post2({
                         <label className="mb-2 block text-sm font-medium text-gray-900">
                           Calculation
                         </label>
+                        <FormErrorMessage
+                          field="calculation"
+                          reviewRequiredFields={reviewRequiredFields}
+                        />
                         <p className="mb-2 text-xs font-extralight text-gray-500">
                           If you have created a calculation, you can link it
                           here.
@@ -403,6 +431,7 @@ export default function Post2({
                             </>
                           ))}
                         </Field>
+                        {/* <Calculator preloadInitialValues={preloadInitialValues} /> */}
                       </div>
                     </Disclosure.Panel>
                   </div>
@@ -496,12 +525,6 @@ export default function Post2({
               name="id"
               className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
             />
-            {/* <Field
-              type="text"
-              name="Author.email"
-              disabled={true}
-              className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
-            /> */}
             <button
               className="mt-5 mb-5 rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
               type="submit"

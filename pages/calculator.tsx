@@ -7,7 +7,7 @@ import prisma from '../lib/prisma'
 import { buildClerkProps, getAuth } from '@clerk/nextjs/server'
 import { AuthData } from '@clerk/nextjs/dist/server/types'
 
-export default function CalculationPage({ preloadInitialValues }) {
+export default function CalculationPage({ preloadInitialValues }) {  
   const Calculator = dynamic(() => import('../components/calculator'), {
     loading: () => <p>Loading</p>,
   })
@@ -74,9 +74,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     ],
   }
 
-  // console.log("🚀 ~ file: calculator.tsx:76 ~ constgetServerSideProps:GetServerSideProps= ~ context", context)
   const calculationId: string = context?.query?.id || ''
-  // console.log("🚀 ~ file: calculator.tsx:78 ~ constgetServerSideProps:GetServerSideProps= ~ calculationId", calculationId)
 
   const { userId }: AuthData = getAuth(context.req)
 
@@ -104,8 +102,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const response = await prisma.$transaction(txCalls)
 
   var preloadInitialValues = initialValues
-  // console.log("🚀 ~ file: calculator.tsx:106 ~ constgetServerSideProps:GetServerSideProps= ~ preloadInitialValues", preloadInitialValues)
-  // console.log("🚀 ~ file: calculator.tsx:106 ~ constgetServerSideProps:GetServerSideProps= ~ initialValues", initialValues)
 
   preloadInitialValues.calculations = response[0]
   preloadInitialValues.authorClerkId = userId

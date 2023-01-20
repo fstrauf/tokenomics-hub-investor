@@ -45,18 +45,18 @@ export function getEpochAreaData(
   const initialReward = 50
   let emissions = 0
   let month = 1
-  let reward = initialReward
+  let rewardPerBlock = initialReward
   const epochDurationInMonths = months
   // const mEmissions = 219000
-  const rewardsPerMonth = 4380
+  const blocksPerMonth = 4380
   let halvings = 0
 
   while (emissions < totalSupply) {
     var categoryLine = {}
-    emissions += rewardsPerMonth * reward
+    emissions += blocksPerMonth * rewardPerBlock
     // console.log("🚀 ~ file: helper.ts:51 ~ emissions", emissions)
     if (month === epochDurationInMonths * (halvings + 1)) {
-      reward = reward / 2
+      rewardPerBlock = rewardPerBlock / 2
       halvings++
     }
     categoryLine['date'] = new Date(startDate).setMonth(
@@ -225,6 +225,19 @@ export function mandatoryFormValidate(values) {
   if (!values.demandDrivers) {
     errors.demandDrivers = 'Required!'
     errors.tokenStrength = true
+  }
+
+  console.log("🚀 ~ file: helper.ts:231 ~ mandatoryFormValidate ~ values", values)
+  if (!values.breakdown && values?.calculation === undefined) {    
+    
+    if (!values.breakdown){
+      errors.breakdown = 'Required!'
+    }
+    if(values?.calculation === undefined)
+    {
+      errors.calculation = 'Required!'
+    }
+    errors.deepDive = true
   }
 
   return errors
