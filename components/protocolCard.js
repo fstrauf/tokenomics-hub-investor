@@ -1,21 +1,40 @@
-// import Link from 'next/link'
+import Image from 'next/image'
 
-export default function ProtocolCard({author, post}) {
-    return (
-        <>
-            <div className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow-md m-5">
-                <div className="flex justify-end px-4 pt-4">
-                </div>
-                <div className="flex flex-col items-center pb-10">
-                    <img className="w-24 h-24 mb-3 rounded-full shadow-lg" src={author?.profileImageUrl} />
-                    <h5 className="mb-1 text-xl font-medium text-gray-900">{post?.title}</h5>                    
-                        <p><a href={post?.author?.website}>Website</a></p>
-                        
+export default function ProtocolCard({ author, post }) {
+//   console.log('🚀 ~ file: protocolCard.js:4 ~ ProtocolCard ~ post', post)
+  return (
+    <>
+      <div className="m-5 w-full max-w-sm rounded-lg border border-gray-200 bg-white shadow-md">
+        <div className="flex justify-end px-4 pt-4"></div>
+        <div className="flex flex-col items-center pb-10">
+          {/* <img
+            className="mb-3 h-24 w-24 rounded-full shadow-lg"
+            src={post?.mainImage}
+          /> */}
+          {/* <div className="w-9 sm:w-16"> */}
+          <div className="mb-3 h-24 w-24 rounded-full shadow-lg">
+            <div className="relative m-auto h-24 w-24 rounded-lg">
+              <Image
+                // alt={`Cover Image for ${title}`}
+                className="object-contain"
+                fill={true}
+                src={post?.mainImageUrl}
+              />
+            </div>
+          </div>
+          <h5 className="mb-1 text-xl font-medium text-gray-900">
+            {post?.title}
+          </h5>
+          <p>
+            <a href={post?.author?.website}>Website</a>
+          </p>
 
-                        <p><a href={post?.author?.twitter}>Twitter</a></p>
+          <p>
+            <a href={post?.author?.twitter}>Twitter</a>
+          </p>
 
-                    {/* <span className="text-sm text-gray-500">Tokenomics DAO Contributor</span> */}
-                    {/* <div
+          {/* <span className="text-sm text-gray-500">Tokenomics DAO Contributor</span> */}
+          {/* <div
                         className="py-4 flex justify-center items-center w-full divide-x divide-gray-400 divide-solid">
                         <span className="text-center px-2">
                             <span className="font-bold text-gray-700">7</span>
@@ -26,7 +45,7 @@ export default function ProtocolCard({author, post}) {
                             <span className="text-gray-600"> protocols listed</span>
                         </span>
                     </div> */}
-                    {/* <div className="flex flex-wrap justify-center">
+          {/* <div className="flex flex-wrap justify-center">
                         {author?.cat?.map(c =>{
                             return (
                                 <span key={c.cat} className='mr-2 mb-2 px-3 py-1 text-sm rounded-full font-bold bg-gray-200 text-gray-700 shadow-sm'>{c.cat} ({Number(c.count)})</span>        
@@ -38,8 +57,8 @@ export default function ProtocolCard({author, post}) {
                             See Profile
                         </Link>
                     </div> */}
-                </div>
-            </div>
-        </>
-    )
+        </div>
+      </div>
+    </>
+  )
 }
