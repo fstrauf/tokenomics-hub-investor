@@ -24,7 +24,7 @@ export default function Header2() {
 
   // const role = user?.publicMetadata?.role ?? ''
     const contributor = user?.publicMetadata?.contributor || false
-    // const admin = user?.publicMetadata?.admin || false
+    const admin = user?.publicMetadata?.admin || false
 
   const newProtocolSection = (
     <Link
@@ -143,6 +143,24 @@ export default function Header2() {
     </Link>
   )
 
+  const adminView = (
+    <Link
+      href="/adminView"
+      className={`-m-3 flex items-start rounded-lg p-3 hover:bg-gray-50 ${
+        !(admin) ? 'pointer-events-none opacity-50' : ''
+      }`}
+    >
+      <div className="ml-4">
+        <p className="text-base font-medium text-gray-900">
+          Update posts
+        </p>
+        <p className="mt-1 text-sm text-gray-500">
+          admin only; change authors
+        </p>
+      </div>
+    </Link>
+  )
+
   return (
     <Popover className="relative bg-white">
       <div className="mx-auto max-w-full px-6">
@@ -191,6 +209,7 @@ export default function Header2() {
                           {newProtocolSection}
                           {myDraftsSection}
                           {allDraftsSection}
+                          {adminView}
                         </div>
                       </div>
                     </Popover.Panel>
@@ -232,7 +251,7 @@ export default function Header2() {
                       <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
                         <div className="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
                           {tdfSection}
-                          {calcTemplateSection}
+                          {calcTemplateSection}                          
                         </div>
                       </div>
                     </Popover.Panel>

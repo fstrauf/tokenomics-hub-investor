@@ -34,6 +34,9 @@ export default function Post({ post, morePosts, author }) {
   const AuthorCard = dynamic(() => import('../../components/authorCard'), {
     loading: () => <p>Loading</p>,
   })
+  const ProtocolCard = dynamic(() => import('../../components/protocolCard'), {
+    loading: () => <p>Loading</p>,
+  })
   const ProtocolStats = dynamic(
     () => import('../../components/slugView/protocol-stats'),
     { loading: () => <p>Loading</p> }
@@ -68,7 +71,6 @@ export default function Post({ post, morePosts, author }) {
     setSubmitting(true)
     Router.push('/editPost/[id]', `/editPost/${post.id}`)
     setSubmitting(false)
-    
   }
 
   if (!router.isFallback && !post?.slug) {
@@ -237,7 +239,7 @@ export default function Post({ post, morePosts, author }) {
                 Author.
               </h1>
 
-              <AuthorCard author={author} />
+              {!post.isOfficial ? <AuthorCard author={author} /> : <ProtocolCard author={author} post={post} >hi</ProtocolCard>}
             </article>
             {/* <Comments comments={post.comments} /> */}
             {/* <Form _id={post._id} /> */}
@@ -286,7 +288,7 @@ export async function getStaticProps({ params }) {
     prisma.$queryRaw`select count(A) as count,A as cat,p.authorClerkId from _CategoryToPost join Post as p on p.id = B WHERE p.authorClerkId = ${post?.authorClerkId} AND p.status = ${postStatus.published} GROUP BY A, p.authorClerkId`
   )
 
-  const response = await prisma.$transaction(txCalls)  
+  const response = await prisma.$transaction(txCalls)
 
   let clerkUser = post?.authorClerkId
     ? await clerkClient.users.getUser(post?.authorClerkId)

@@ -185,6 +185,8 @@ model User {
   Vote                  Vote[]
   ContentAuthor         ContentAuthor[]
   wallet                String?                 @unique
+  website               String?
+  twitter               String?
   TeamProposal          TeamsProposal[]
   RewardRoundTeamMember RewardRoundTeamMember[]
   MemberVote            MemberVote[]
