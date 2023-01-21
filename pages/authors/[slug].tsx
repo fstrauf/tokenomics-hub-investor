@@ -6,7 +6,7 @@ import Intro from '../../components/intro'
 import prisma from '../../lib/prisma'
 // import { clerkClient } from '@clerk/nextjs/server'
 import Link from 'next/link'
-import { clerkConvertJSON } from '../../lib/helper'
+import { clerkConvertJSON, postStatus } from '../../lib/helper'
 import { clerkClient } from '@clerk/nextjs/server'
 
 export default function UserProfile({
@@ -165,7 +165,8 @@ export async function getStaticProps({ params }) {
       },
       where: {
         authorClerkId: params?.slug,
-        published: true,
+        // published: true,
+        status: postStatus.published,
       },
     })
   )
@@ -173,13 +174,13 @@ export async function getStaticProps({ params }) {
     prisma.post.count({
       where: {
         authorClerkId: params?.slug,
-        published: true,
+        status: postStatus.published,
       },
     })
   )
 
   txCalls.push(
-    prisma.$queryRaw`select count(A) as count,A as cat,p.authorClerkId from _CategoryToPost join Post as p on p.id = B WHERE p.authorClerkId = ${params?.slug} AND p.published = true GROUP BY A, p.authorClerkId`
+    prisma.$queryRaw`select count(A) as count,A as cat,p.authorClerkId from _CategoryToPost join Post as p on p.id = B WHERE p.authorClerkId = ${params?.slug} AND p.status = ${postStatus.published} GROUP BY A, p.authorClerkId`
   )
 
   const response = await prisma.$transaction(txCalls)
@@ -200,7 +201,7 @@ export async function getStaticPaths() {
   const postAuthors = await prisma.post.findMany({
     distinct: ['authorClerkId'],
     where: {
-      published: true,
+      status: postStatus.published,
     },
     select: {
       authorClerkId: true,

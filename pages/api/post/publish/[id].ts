@@ -6,7 +6,7 @@ export default async function handle(req, res) {
   const postId = req.query.id
   const post = await prisma.post.update({
     where: { id: postId },
-    data: { published: true, status: postStatus.published },
+    data: { status: postStatus.published },
   })
   res.json(post)
 }

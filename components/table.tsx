@@ -164,7 +164,6 @@ export function CategoryPill({ value }) {
 }
 
 function CategoryPills({ value }) {
-  console.log(value[0].label)
   return (
     <>
     <div className="mr-1 mb-1 flex flex-wrap">

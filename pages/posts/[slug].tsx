@@ -22,7 +22,7 @@ import { useAuth } from '@clerk/clerk-react/dist/hooks/useAuth'
 import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
 import Calculation from '../../components/slugView/calculation'
 import { clerkClient } from '@clerk/nextjs/server'
-import { clerkConvertJSON } from '../../lib/helper'
+import { clerkConvertJSON, postStatus } from '../../lib/helper'
 
 export default function Post({ post, morePosts, author }) {
   const PostBody = dynamic(
@@ -95,6 +95,7 @@ export default function Post({ post, morePosts, author }) {
                 tokenStrength={post.tokenStrength}
                 ticker={post.ticker}
                 imageUrl={post.mainImageUrl}
+                isOfficial={post.isOfficial}
               />
               <button
                 onClick={editPost}
@@ -277,12 +278,12 @@ export async function getStaticProps({ params }) {
     prisma.post.count({
       where: {
         authorClerkId: post.authorClerkId,
-        published: true,
+        status: postStatus.published,
       },
     })
   )
   txCalls.push(
-    prisma.$queryRaw`select count(A) as count,A as cat,p.authorClerkId from _CategoryToPost join Post as p on p.id = B WHERE p.authorClerkId = ${post?.authorClerkId} AND p.published = true GROUP BY A, p.authorClerkId`
+    prisma.$queryRaw`select count(A) as count,A as cat,p.authorClerkId from _CategoryToPost join Post as p on p.id = B WHERE p.authorClerkId = ${post?.authorClerkId} AND p.status = ${postStatus.published} GROUP BY A, p.authorClerkId`
   )
 
   const response = await prisma.$transaction(txCalls)  

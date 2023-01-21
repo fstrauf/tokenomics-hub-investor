@@ -19,7 +19,7 @@ model Post {
   shortDescription      String?             @db.Text
   breakdown             String?             @db.Text
   ourTake               String?             @db.Text
-  published             Boolean             @default(false)
+  isOfficial            Boolean             @default(false)
   author                User?               @relation(fields: [authorId], references: [id])
   authorId              String?
   status                String?

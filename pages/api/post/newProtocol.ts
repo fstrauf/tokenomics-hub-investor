@@ -30,7 +30,7 @@ export default async function handle(req, res) {
         slug: inputFields.slug,
         shortDescription: inputFields.shortDescription,
         breakdown: breakdown,
-        published: false,
+        // published: false,
         publishedAt: new Date(),
         mainImageUrl: inputFields.mainImageUrl,
         tokenUtility: inputFields.tokenUtility,

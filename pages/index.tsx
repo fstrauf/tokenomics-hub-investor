@@ -7,6 +7,7 @@ import prisma from '../lib/prisma'
 import { GetServerSideProps } from 'next'
 import Select from 'react-select'
 import { useRouter } from 'next/router'
+import { postStatus } from '../lib/helper'
 
 type Props = {
   // rewardRound: any;
@@ -135,7 +136,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const allPosts = await prisma.post.findMany({
     // take: 20,
     where: {
-      published: true,
+      status: postStatus.published,
       ...filterCatsQuery,
       ...filterTagsQuery,
     },

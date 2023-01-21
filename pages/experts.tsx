@@ -2,7 +2,7 @@ import Layout from '../components/layout'
 import React from 'react'
 import prisma from '../lib/prisma'
 import AuthorCard from '../components/authorCard'
-import { groupByAuthorClerkId, clerkConvertJSON } from '../lib/helper'
+import { groupByAuthorClerkId, clerkConvertJSON, postStatus } from '../lib/helper'
 import Link from 'next/link'
 import { clerkClient } from '@clerk/nextjs/server'
 
@@ -37,7 +37,7 @@ export async function getStaticProps() {
       title: true,
     },
     where: {
-      published: true,
+      status: postStatus.published,
     },
   })
 

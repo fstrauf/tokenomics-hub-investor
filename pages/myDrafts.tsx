@@ -5,7 +5,7 @@ import Drafts from '../components/drafts';
 import { GetServerSideProps } from 'next';
 import {clerkClient, getAuth } from "@clerk/nextjs/server";
 import type{ AuthData } from '@clerk/nextjs/dist/server/types'
-import { clerkConvertJSON } from '../lib/helper';
+import { clerkConvertJSON, postStatus } from '../lib/helper';
 
 export default function MyDrafts({ posts }) {
 
@@ -25,7 +25,9 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 
   const posts = await prisma.post.findMany({
     where: {
-      published: false,
+      status: { 
+        not: postStatus.published,
+      },
       authorClerkId: userId     
     },
     include: {

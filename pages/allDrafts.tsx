@@ -6,7 +6,8 @@ import { GetServerSideProps } from 'next'
 import { useAuth } from '@clerk/clerk-react/dist/hooks/useAuth'
 import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
 import { clerkClient } from '@clerk/nextjs/server'
-import { clerkConvertJSON } from '../lib/helper'
+import { clerkConvertJSON, postStatus } from '../lib/helper'
+import UnAuthorised from '../components/unauthorised'
 
 export default function AllDrafts({ posts }) {
   const { isSignedIn } = useAuth()
@@ -29,10 +30,7 @@ export default function AllDrafts({ posts }) {
   } else {
     return (
       <>
-        <Layout>
-          <Header />
-          <h1>You are not authorized to view this page!</h1>
-        </Layout>
+        <UnAuthorised />
       </>
     )
   }
@@ -41,7 +39,9 @@ export default function AllDrafts({ posts }) {
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const posts = await prisma.post.findMany({
     where: {
-      published: false,
+      status: {
+        not: postStatus.published,
+      },
     },
     select: {
       authorClerkId: true,
@@ -66,12 +66,14 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const postsWithUserNames = posts.map((post) => {
     const currentUser = users?.find((u) => u.id === post.authorClerkId)
     const eA = currentUser?.emailAddresses || []
-    const authorEmail = eA.find((email) => email.id === currentUser?.primaryEmailAddressId)?.emailAddress || ''
-    
+    const authorEmail =
+      eA.find((email) => email.id === currentUser?.primaryEmailAddressId)
+        ?.emailAddress || ''
+
     return {
       ...post,
       author: currentUser?.username,
-      authorEmail: authorEmail
+      authorEmail: authorEmail,
     }
   })
 
