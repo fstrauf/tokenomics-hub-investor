@@ -10,7 +10,7 @@ import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
 
 export default function adminView({ allPosts }) {
   const submitData = async (values, { setSubmitting }) => {
-    console.log('🚀 ~ file: adminView.tsx:10 ~ submitData ~ values', values)
+    // console.log('🚀 ~ file: adminView.tsx:10 ~ submitData ~ values', values)
     const body = { values }
 
     fetch('/api/post/updateAdminFields', {
@@ -33,12 +33,43 @@ export default function adminView({ allPosts }) {
     const [field, meta] = useField(props)
 
     React.useEffect(() => {
-      // set the value of textC, based on textA and textB
       if (typeof protocols === 'string') {
         const matchingPost = allPosts.find((ap) => protocols === ap.id)
         if (matchingPost === undefined) {
         } else {
           setFieldValue(props.name, matchingPost[props.name])
+        }
+      }
+    }, [protocols, touched.protocols, setFieldValue, props.name])
+
+    return (
+      <>
+        <input {...props} {...field} />
+        {!!meta.touched && !!meta.error && <div>{meta.error}</div>}
+      </>
+    )
+  }
+
+  const AuthorDepField = (props) => {
+    const {
+      values: { protocols },
+
+      touched,
+      setFieldValue,
+    } = useFormikContext()
+    const [field, meta] = useField(props)
+
+    React.useEffect(() => {
+      if (typeof protocols === 'string') {
+        const matchingPost = allPosts.find((ap) => protocols === ap.id)
+        if (matchingPost === undefined) {
+        } else {
+          if (matchingPost.isOfficial) {
+            setFieldValue(
+              props.name,
+              matchingPost?.author?.[props.name.split('.')[1]]
+            )
+          }
         }
       }
     }, [protocols, touched.protocols, setFieldValue, props.name])
@@ -75,10 +106,16 @@ export default function adminView({ allPosts }) {
                 authorClerkId: '',
                 isOfficial: false,
                 protocols: '',
+                author: {
+                  id: '',
+                  name: '',
+                  website: '',
+                  twitter: '',
+                },
               }}
               onSubmit={submitData}
             >
-              {({ isSubmitting }) => (
+              {({ isSubmitting, values }) => (
                 <Form className="m-auto mb-10 flex w-full max-w-xl flex-col justify-center">
                   <label className="mb-2 block text-sm font-medium text-gray-900">
                     Select a protocol
@@ -89,7 +126,7 @@ export default function adminView({ allPosts }) {
                     className="block w-52 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
                     // value=''
                   >
-                    <option key="loadcalc" value="" label="load a calculation">
+                    <option key="loadcalc" value="" label="load a protocol">
                       Load a protocol{' '}
                     </option>
                     {allPosts.map((c) => (
@@ -118,6 +155,46 @@ export default function adminView({ allPosts }) {
                     type="checkbox"
                     className="mb-3 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
                   />
+                  {values.isOfficial && (
+                    <div className="rounded-lg border-2 p-2">
+                      <label className="mb-2 block text-sm font-medium text-gray-900">
+                        User Id
+                      </label>
+                      <AuthorDepField
+                        id="author.id"
+                        name="author.id"
+                        placeholder="User Id"
+                        className="mb-3 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
+                      />
+                      <label className="mb-2 block text-sm font-medium text-gray-900">
+                        Protocol Name
+                      </label>
+                      <AuthorDepField
+                        id="author.name"
+                        name="author.name"
+                        placeholder="Username"
+                        className="mb-3 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
+                      />
+                      <label className="mb-2 block text-sm font-medium text-gray-900">
+                        Protocol Website
+                      </label>
+                      <AuthorDepField
+                        id="author.website"
+                        name="author.website"
+                        placeholder="Website"
+                        className="mb-3 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
+                      />
+                      <label className="mb-2 block text-sm font-medium text-gray-900">
+                        Protocol Twitter
+                      </label>
+                      <AuthorDepField
+                        id="author.twitter"
+                        name="author.twitter"
+                        placeholder="Twitter"
+                        className="mb-3 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
+                      />
+                    </div>
+                  )}
                   <label className="mb-2 block text-sm font-medium text-gray-900">
                     Author
                   </label>
@@ -127,6 +204,7 @@ export default function adminView({ allPosts }) {
                     placeholder="Author"
                     className="mb-3 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
                   />
+
                   <label className="mb-2 block text-sm font-medium text-gray-900">
                     Id
                   </label>
@@ -176,6 +254,7 @@ export async function getStaticProps() {
       isOfficial: true,
       authorClerkId: true,
       id: true,
+      author: {},
     },
   })
 

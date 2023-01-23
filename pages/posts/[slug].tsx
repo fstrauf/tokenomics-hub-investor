@@ -103,10 +103,8 @@ export default function Post({ post, morePosts, author }) {
                 onClick={editPost}
                 disabled={
                   !(
-                    // userIsAuthor || user?.publicMetadata?.role === 'contributor'
                     (
                       userIsAuthor ||
-                      // user?.publicMetadata?.role === 'contributor'
                       contributor
                     )
                   ) ||
@@ -241,10 +239,7 @@ export default function Post({ post, morePosts, author }) {
 
               {!post.isOfficial ? <AuthorCard author={author} /> : <ProtocolCard author={author} post={post} >hi</ProtocolCard>}
             </article>
-            {/* <Comments comments={post.comments} /> */}
-            {/* <Form _id={post._id} /> */}
             <SectionSeparator />
-            {/* {morePosts.length > 0 && <MoreStories posts={morePosts} />} */}
           </>
         )}
       </Container>
@@ -311,8 +306,11 @@ export async function getStaticProps({ params }) {
 export async function getStaticPaths() {
   const allPosts = await prisma.post.findMany({
     select: {
-      slug: true,
+      slug: true,      
     },
+    // where: {
+    //   status: postStatus.published
+    // }
   })
 
   return {
