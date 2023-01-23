@@ -20,7 +20,7 @@ export default function AllocationChart({
   margin = defaultMargin,
   fields,
 }: PieProps) {
-  console.log("🚀 ~ file: AllocationChart.tsx:23 ~ fields", fields)
+  // console.log("🚀 ~ file: AllocationChart.tsx:23 ~ fields", fields)
 
 const innerWidth = width - margin.left - margin.right;
 const innerHeight = height - margin.top - margin.bottom;
