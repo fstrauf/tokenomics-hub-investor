@@ -4,7 +4,6 @@ import { stringToKey, postStatus } from '../../../lib/helper';
 
 export default async function handle(req, res) {
   const { values } = req.body
-  // console.log('🚀 ~ file: newProtocol.ts:7 ~ handle ~ values', values)
   const inputFields = values
 
   const timeLine = inputFields?.protocolTimeLine?.map((tl) => {
@@ -14,13 +13,10 @@ export default async function handle(req, res) {
     }
   })
 
-  // console.log("🚀 ~ file: newProtocol.ts:85 ~ handle ~ inputFields.breakdown", inputFields.breakdown)
   var breakdown = inputFields.breakdown
   if(typeof inputFields.breakdown === 'object'){
     breakdown = JSON.stringify(inputFields.breakdown)
   }
-  
-// console.log('type ' + typeof breakdown)
 
   var response = {}
   try {
@@ -75,12 +71,6 @@ export default async function handle(req, res) {
           }),
         },
         calculationId: inputFields.calculation,
-        // calculation: {
-        //   connect:{
-        //     id: inputFields.calculation,
-
-        //   }
-        // },
         ProtocolResources: {
           createMany: {
             data: inputFields.ProtocolResources,
@@ -91,8 +81,22 @@ export default async function handle(req, res) {
             data: timeLine,
           },
         },
-      },
-        
+        UserStrengthRating: {
+          create:{
+            authorClerkId: inputFields.authorClerkId,
+            userReviewUtility: 'initial',
+            userReviewBusinessModel: 'initial',
+            userReviewDemandDriver: 'initial',
+            userReviewValueCapture: 'initial',
+            userReviewValueCreation: 'initial',
+            tokenUtilityStrength: inputFields.tokenUtilityStrength,
+            businessModelStrength: inputFields.businessModelStrength,
+            valueCaptureStrength: inputFields.valueCaptureStrength,
+            valueCreationStrength: inputFields.valueCreationStrength,
+            demandDriversStrength: inputFields.demandDriversStrength,
+          }
+        }
+      },        
     })
   } catch (e) {
     console.log(e)

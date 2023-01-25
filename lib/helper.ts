@@ -20,6 +20,10 @@ export const stringToKey = (name) => {
   return name.trim().replace(/\s+/g, '-').toLowerCase().replace(/&/g, "and")
 }
 
+export const getTotalStrength = (post) => {
+  return (post?.tokenUtilityStrength+post?.demandDriversStrength+post?.valueCreationStrength+post?.valueCaptureStrength+post?.businessModelStrength)/5
+}
+
 export const groupByAuthorClerkId = (items) => {
   const groupedItems = {}
   items.forEach((item) => {

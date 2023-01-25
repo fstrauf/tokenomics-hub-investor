@@ -22,7 +22,7 @@ import { useAuth } from '@clerk/clerk-react/dist/hooks/useAuth'
 import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
 import Calculation from '../../components/slugView/calculation'
 import { clerkClient } from '@clerk/nextjs/server'
-import { clerkConvertJSON, postStatus } from '../../lib/helper'
+import { clerkConvertJSON, getTotalStrength, postStatus } from '../../lib/helper'
 
 export default function Post({ post, morePosts, author }) {
   const PostBody = dynamic(
@@ -48,11 +48,13 @@ export default function Post({ post, morePosts, author }) {
   const [isSubmitting, setSubmitting] = useState(false)
   const { isSignedIn } = useAuth()
   const { user } = useUser()
+  // console.log("🚀 ~ file: [slug].tsx:51 ~ Post ~ user", user)
 
   var userIsAuthor = false
   if (user?.id === post?.authorClerkId) {
     userIsAuthor = true
   }
+  // console.log("🚀 ~ file: [slug].tsx:54 ~ Post ~ user?.id", user?.id)
 
   const contributor = user?.publicMetadata?.contributor || false
 
@@ -94,7 +96,7 @@ export default function Post({ post, morePosts, author }) {
                 shortDescription={post.shortDescription}
                 cats={post.categories}
                 tags={post.tags}
-                tokenStrength={post.tokenStrength}
+                tokenStrength={getTotalStrength(post?._avg)}
                 ticker={post.ticker}
                 imageUrl={post.mainImageUrl}
                 isOfficial={post.isOfficial}
@@ -116,7 +118,7 @@ export default function Post({ post, morePosts, author }) {
                 Edit
               </button>
               <FeedbackPopup isOpen={isOpen} handleIsOpen={handleIsOpen} />
-              <div className={`top-3 w-full ${isOpen ? '' : 'sticky z-50'}`}>
+              <div className={`top-3 w-full ${isOpen ? '' : 'sticky z-30'}`}>
                 <div className="overflow-x-auto border-b-2 border-black bg-white md:px-10">
                   <ul className="flex">
                     <li>
@@ -206,7 +208,7 @@ export default function Post({ post, morePosts, author }) {
               <main className="m-auto flex max-w-4xl flex-col">
                 {/* section header */}
                 <div id="tokenStrength"></div>
-                <TokenStrength tokenStrength={post} />
+                <TokenStrength post={post} contributor={contributor} />
                 <div id="stats"></div>
                 <ProtocolStats protocol={post.slug} />
 
@@ -274,16 +276,34 @@ export async function getStaticProps({ params }) {
   txCalls.push(
     prisma.post.count({
       where: {
-        authorClerkId: post.authorClerkId,
+        authorClerkId: post?.authorClerkId,
         status: postStatus.published,
       },
     })
   )
+
   txCalls.push(
     prisma.$queryRaw`select count(A) as count,A as cat,p.authorClerkId from _CategoryToPost join Post as p on p.id = B WHERE p.authorClerkId = ${post?.authorClerkId} AND p.status = ${postStatus.published} GROUP BY A, p.authorClerkId`
   )
 
+  txCalls.push(
+    prisma.userStrengthRating.aggregate({
+      _avg: {
+        tokenUtilityStrength: true,
+        businessModelStrength: true,
+        valueCreationStrength: true,
+        valueCaptureStrength: true,
+        demandDriversStrength: true,
+      },
+      where: {
+        postId: post.id,
+      }
+    })
+  )
+
   const response = await prisma.$transaction(txCalls)
+
+  // console.log("🚀 ~ file: [slug].tsx:311 ~ getStaticProps ~ response[0]", response[2])
 
   let clerkUser = post?.authorClerkId
     ? await clerkClient.users.getUser(post?.authorClerkId)
@@ -292,11 +312,12 @@ export async function getStaticProps({ params }) {
   clerkUser = clerkConvertJSON(clerkUser)
 
   clerkUser.articleCount = response[0] || 0
+  
   clerkUser.cat = response[1] || null
 
   return {
     props: {
-      post: post || null,
+      post: Object.assign(post, response[2]) || null,
       author: clerkUser || null,
     },
     revalidate: 1,

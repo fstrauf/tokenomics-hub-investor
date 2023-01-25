@@ -8,6 +8,29 @@ import { clerkConvertJSON } from '../../lib/helper'
 import Comments from '../../components/comments'
 import CommentForm from '../../components/commentForm'
 
+const EditPost: React.FC<PostProps> = (props) => {
+  return (
+    <Layout>
+      <div>
+        <Post
+          content={props.post}
+          categories={props.categories}
+          tags={props.tags}
+          calculations={props.calculations}
+          author={props.author}
+        />
+        <h1 className="section-head mt-10 mb-4 text-xl font-bold text-black md:mt-20 md:text-2xl lg:text-3xl">
+          Comments.
+        </h1>
+        <CommentForm id={props?.post?.id} />
+        <Comments comments={props?.post?.Comments} />
+      </div>
+    </Layout>
+  )
+}
+
+export default EditPost
+
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const txCalls = []
   txCalls.push(
@@ -68,26 +91,3 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     },
   }
 }
-
-const EditPost: React.FC<PostProps> = (props) => {
-  return (
-    <Layout>
-      <div>
-        <Post
-          content={props.post}
-          categories={props.categories}
-          tags={props.tags}
-          calculations={props.calculations}
-          author={props.author}
-        />
-        <h1 className="section-head mt-10 mb-4 text-xl font-bold text-black md:mt-20 md:text-2xl lg:text-3xl">
-          Comments.
-        </h1>
-        <CommentForm id={props?.post?.id} />
-        <Comments comments={props?.post?.Comments} />
-      </div>
-    </Layout>
-  )
-}
-
-export default EditPost

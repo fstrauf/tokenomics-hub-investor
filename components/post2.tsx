@@ -324,7 +324,7 @@ export default function Post2({
                       <ChevronIcon />
                     </Disclosure.Button>
                     <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-500">
-                      <div className="flex justify-end py-2">
+                      {/* <div className="flex justify-end py-2">
                         <span className="mr-2 self-center">Enable rating</span>
                         <Switch
                           checked={ratingEnabled}
@@ -343,7 +343,7 @@ export default function Post2({
             pointer-events-none inline-block h-[30px] w-[30px] transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out`}
                           />
                         </Switch>
-                      </div>
+                      </div> */}
                       <FormTokenStrength
                         reviewRequiredFields={reviewRequiredFields}
                         ratingEnabled={ratingEnabled}

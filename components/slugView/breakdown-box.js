@@ -1,8 +1,9 @@
 import { CircularProgressbar } from 'react-circular-progressbar';
 
 export default function BreakdownBox({ value, strength, title }) {
+// console.log("🚀 ~ file: breakdown-box.js:4 ~ BreakdownBox ~ strength", strength)
 
-  const percentageComplete = strength
+  const percentageComplete = strength || 0
 
   return (
     <div className="m-2">

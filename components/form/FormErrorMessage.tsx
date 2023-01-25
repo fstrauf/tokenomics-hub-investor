@@ -1,6 +1,11 @@
 import React from 'react'
 
 export const FormErrorMessage = ({ field, reviewRequiredFields }) => {
+  // console.log("🚀 ~ file: FormErrorMessage.tsx:4 ~ FormErrorMessage ~ reviewRequiredFields", reviewRequiredFields)
+  if(reviewRequiredFields===undefined){
+    return(<></>)
+  }
+
   let message = ''
   if (reviewRequiredFields[field]) {
     message = reviewRequiredFields[field]

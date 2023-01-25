@@ -153,36 +153,18 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       },
     },
   })
-  // console.log("🚀 ~ file: index.tsx:134 ~ constgetServerSideProps:GetServerSideProps= ~ allPosts", allPosts)
-  // console.log(allPosts)
 
-  // const rewardRound = await prisma.rewardRound.findMany({
-  //   take: 3,
-  //   include: {
-  //     Content: {
-  //       include: {
-  //         ContentAuthor: {
-  //           include: {
-  //             user: { }
-  //           }
-
-  //         }
-  //       }
-  //     },
-  //     Payout: {
-  //       include: {
-  //         user: { },
-  //       }
-  //     }
+  // const aggregate = await prisma.userStrengthRating.groupBy({
+  //   by: ['postId'],    
+  //   _avg: {
+  //     tokenUtilityStrength: true,
+  //     businessModelStrength: true,
+  //     valueCreationStrength: true,
+  //     valueCaptureStrength: true,
+  //     demandDriversStrength: true,
   //   },
-  //   orderBy: [
-  //     {
-  //       monthYear: 'desc',
-  //     },
-  //   ]
-  // });
-
-  // console.log(rewardRound)
+  // })
+  // console.log("🚀 ~ file: index.tsx:167 ~ constgetServerSideProps:GetServerSideProps= ~ aggregate", aggregate)
 
   return {
     props: {

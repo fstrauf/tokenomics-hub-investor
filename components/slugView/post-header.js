@@ -16,7 +16,7 @@ export default function PostHeader({
   imageUrl,
   isOfficial,
 }) {
-  const percentageComplete = tokenStrength
+  const percentageComplete = tokenStrength || 0
 
   return (
     <div key={title}>

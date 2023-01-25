@@ -13,14 +13,14 @@ datasource db {
 }
 
 model Post {
-  id                    String              @id @default(cuid())
+  id                    String               @id @default(cuid())
   title                 String?
-  slug                  String              @unique @default("eth")
-  shortDescription      String?             @db.Text
-  breakdown             String?             @db.Text
-  ourTake               String?             @db.Text
-  isOfficial            Boolean             @default(false)
-  author                User?               @relation(fields: [authorId], references: [id])
+  slug                  String               @unique @default("eth")
+  shortDescription      String?              @db.Text
+  breakdown             String?              @db.Text
+  ourTake               String?              @db.Text
+  isOfficial            Boolean              @default(false)
+  author                User?                @relation(fields: [authorId], references: [id])
   authorId              String?
   status                String?
   authorClerkId         String?
@@ -30,32 +30,33 @@ model Post {
   protocolTimeLine      ProtocolTimeLine[]
   publishedAt           DateTime?
   mainImageUrl          String?
-  tokenUtility          String?             @db.Text
+  tokenUtility          String?              @db.Text
   tokenUtilityStrength  Float?
-  businessModel         String?             @db.Text
+  businessModel         String?              @db.Text
   businessModelStrength Float?
-  valueCreation         String?             @db.Text
+  valueCreation         String?              @db.Text
   valueCreationStrength Float?
-  valueCapture          String?             @db.Text
+  valueCapture          String?              @db.Text
   valueCaptureStrength  Float?
-  demandDrivers         String?             @db.Text
+  demandDrivers         String?              @db.Text
   demandDriversStrength Float?
   tokenStrength         Float?
-  threeMonthHorizon     String?             @db.Text
-  oneYearHorizon        String?             @db.Text
-  upside                String?             @db.Text
-  downside              String?             @db.Text
-  horizon               String?             @db.Text
-  metrics               String?             @db.Text
-  diagramUrl            String?             @db.Text
-  strongPoints          String?             @db.Text
-  weakPoints            String?             @db.Text
-  problemSolution       String?             @db.Text
-  parent                String?             @db.Text
+  threeMonthHorizon     String?              @db.Text
+  oneYearHorizon        String?              @db.Text
+  upside                String?              @db.Text
+  downside              String?              @db.Text
+  horizon               String?              @db.Text
+  metrics               String?              @db.Text
+  diagramUrl            String?              @db.Text
+  strongPoints          String?              @db.Text
+  weakPoints            String?              @db.Text
+  problemSolution       String?              @db.Text
+  parent                String?              @db.Text
   ProtocolResources     ProtocolResources[]
   calculationId         String?
-  calculation           Calculation?        @relation(fields: [calculationId], references: [id])
+  calculation           Calculation?         @relation(fields: [calculationId], references: [id])
   Comments              Comments[]
+  UserStrengthRating    UserStrengthRating[]
 
   @@index([authorId])
 }
@@ -103,6 +104,23 @@ model Comments {
   post          Post      @relation(fields: [postId], references: [id], onDelete: Cascade)
 
   @@index([postId])
+}
+
+model UserStrengthRating {
+  id                      String  @id @default(cuid())
+  authorClerkId           String?
+  postId                  String
+  post                    Post    @relation(fields: [postId], references: [id], onDelete: Cascade)
+  userReviewUtility       String? @db.Text
+  userReviewDemandDriver  String? @db.Text
+  userReviewValueCreation String? @db.Text
+  userReviewValueCapture  String? @db.Text
+  userReviewBusinessModel String? @db.Text
+  tokenUtilityStrength    Float?
+  businessModelStrength   Float?
+  valueCreationStrength   Float?
+  valueCaptureStrength    Float?
+  demandDriversStrength   Float?
 }
 
 model Calculation {
