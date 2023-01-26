@@ -9,10 +9,10 @@ import { UserButton } from '@clerk/clerk-react/dist/components/uiComponents'
 import { SignInButton } from '@clerk/clerk-react/dist/components/SignInButton'
 import { useAuth } from '@clerk/clerk-react/dist/hooks/useAuth'
 import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
-import ThubLogo from '../lib/svg/thub-logo'
-import ChevronIcon from '../lib/svg/chevron'
-import Bars3Icon from '../lib/svg/bars3Icon'
-import XMarkIcon from '../lib/svg/xmarkicon'
+import ThubLogo from '../public/svg/thub-logo'
+import ChevronIcon from '../public/svg/chevron'
+import Bars3Icon from '../public/svg/bars3Icon'
+import XMarkIcon from '../public/svg/xmarkicon'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')

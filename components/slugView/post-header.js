@@ -2,7 +2,7 @@ import PostTitle from './post-title'
 import { CircularProgressbar } from 'react-circular-progressbar'
 import { TwitterShareButton } from 'react-share'
 import { WEBSITE_URL_BASE } from '../../lib/constants'
-import Badge from '../../lib/svg/badge'
+import Badge from '../../public/svg/badge'
 
 export default function PostHeader({
   title,

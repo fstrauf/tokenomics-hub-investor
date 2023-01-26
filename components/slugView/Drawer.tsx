@@ -1,5 +1,5 @@
 import React from 'react'
-import XMarkIcon from '../../lib/svg/xmarkicon'
+import XMarkIcon from '../../public/svg/xmarkicon'
 
 export default function Drawer({ children, isOpen, setIsOpen }) {
   return (

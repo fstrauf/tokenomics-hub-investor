@@ -17,7 +17,7 @@ import {
 import { WEBSITE_URL_BASE } from '../lib/constants'
 import FormErrorMessage from './form/FormErrorMessage'
 import { Disclosure, Switch } from '@headlessui/react'
-import ChevronIcon from '../lib/svg/chevron'
+import ChevronIcon from '../public/svg/chevron'
 // import Calculator from './calculator'
 
 export default function Post2({
