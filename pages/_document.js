@@ -5,7 +5,7 @@ export default class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head />
-        <body className='bg-white max-w-7xl m-auto'>
+        <body className='bg-white m-auto'>
           <Main />
           <NextScript />
         </body>
