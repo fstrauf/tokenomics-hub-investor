@@ -11,7 +11,7 @@ import dynamic from 'next/dynamic'
 import FormId from './form/FormId'
 import {
   mandatoryFormValidate,
-  notifyReviewers,
+  notifyDiscord,
   postStatus,
 } from '../lib/helper'
 import { WEBSITE_URL_BASE } from '../lib/constants'
@@ -138,7 +138,7 @@ export default function Post2({
           throw new Error(error)
         } else {
           toast.success('Sent to review', { position: 'bottom-right' })
-          notifyReviewers(`${WEBSITE_URL_BASE}/editPost/${postId}`)
+          notifyDiscord(`${WEBSITE_URL_BASE}/editPost/${postId}`, postStatus.reviewRequired)
         }
         setReviewSubmitting(false)
       }

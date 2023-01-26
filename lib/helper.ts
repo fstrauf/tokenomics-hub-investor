@@ -135,7 +135,7 @@ export async function notifyStatusUpdate(
     }
     case postStatus.reviewRequired: {
       message = `Your report has been sent for review.\n We'll get back with feedback shortly.`
-      notifyReviewers(url)
+      notifyDiscord(url, postStatus.reviewRequired)
       break
     }
     case postStatus.reviewComplete: {
@@ -144,6 +144,7 @@ export async function notifyStatusUpdate(
     }
     case postStatus.published: {
       message = `Your report has been published here ${url}.\n`
+      notifyDiscord(url, postStatus.published)
       break
     }
   }
@@ -163,8 +164,8 @@ export async function notifyStatusUpdate(
   })
 }
 
-export async function notifyReviewers(url: string) {
-  const body = { url }
+export async function notifyDiscord(url: string, status: postStatus) {
+  const body = { url, status }
 
   fetch('/api/sendDiscord', {
     method: 'POST',
@@ -201,11 +202,11 @@ export function mandatoryFormValidate(values) {
     errors.shortDescription = 'Required!'
     errors.mainInfo = true
   }
-  if (values.categories.length === 0) {
+  if (values?.categories?.length === 0) {
     errors.categories = 'Required!'
     errors.mainInfo = true
   }
-  if (values.tags.length === 0) {
+  if (values?.tags?.length === 0) {
     errors.tags = 'Required!'
     errors.mainInfo = true
   }
