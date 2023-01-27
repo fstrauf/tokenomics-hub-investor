@@ -42,6 +42,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         unlockPeriod: 12,
         percentageAllocation: 30,
         color: '#FF6666',
+        isEpochDistro: false,
+        epochDurationInSeconds: 0,
+        initialEmissionPerSecond: 0,
+        emissionReductionPerEpoch: 0
+
       },
       {
         category: 'Team',
@@ -49,6 +54,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         unlockPeriod: 12,
         percentageAllocation: 15,
         color: '#028090',
+        isEpochDistro: false,
+        epochDurationInSeconds: 0,
+        initialEmissionPerSecond: 0,
+        emissionReductionPerEpoch: 0
       },
       {
         category: 'Investors',
@@ -56,6 +65,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         unlockPeriod: 12,
         percentageAllocation: 15,
         color: '#66FFB3',
+        isEpochDistro: false,
+        epochDurationInSeconds: 0,
+        initialEmissionPerSecond: 0,
+        emissionReductionPerEpoch: 0
       },
       {
         category: 'Advisors',
@@ -63,6 +76,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         unlockPeriod: 12,
         percentageAllocation: 10,
         color: '#996EFF',
+        isEpochDistro: false,
+        epochDurationInSeconds: 0,
+        initialEmissionPerSecond: 0,
+        emissionReductionPerEpoch: 0
       },
       {
         category: 'Airdrops',
@@ -70,6 +87,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         unlockPeriod: 12,
         percentageAllocation: 30,
         color: '#333C45',
+        isEpochDistro: true,
+        epochDurationInSeconds: 126144000,
+        initialEmissionPerSecond: 0.2397,
+        emissionReductionPerEpoch: 0.5
       },
     ],
   }

@@ -1,6 +1,8 @@
 // import { DISCORD_EDITING } from './constants'
 // import { clerkClient } from '@clerk/nextjs/server'
 
+import { start } from "repl"
+
 export const getLableNumber = (value) => {
   if (isNaN(value)) {
     return 0
@@ -17,11 +19,18 @@ export enum postStatus {
 }
 
 export const stringToKey = (name) => {
-  return name.trim().replace(/\s+/g, '-').toLowerCase().replace(/&/g, "and")
+  return name.trim().replace(/\s+/g, '-').toLowerCase().replace(/&/g, 'and')
 }
 
 export const getTotalStrength = (post) => {
-  return (post?.tokenUtilityStrength+post?.demandDriversStrength+post?.valueCreationStrength+post?.valueCaptureStrength+post?.businessModelStrength)/5
+  return (
+    (post?.tokenUtilityStrength +
+      post?.demandDriversStrength +
+      post?.valueCreationStrength +
+      post?.valueCaptureStrength +
+      post?.businessModelStrength) /
+    5
+  )
 }
 
 export const groupByAuthorClerkId = (items) => {
@@ -39,82 +48,189 @@ export const shortBigNumber = (value) =>
   new Intl.NumberFormat('en', { notation: 'compact' }).format(value)
 
 export function getEpochAreaData(
+  calculationRow,
   months,
-  calculationRows,
-  totalSupply,
+  rowAllocation,
+  chartData,
   startDate
 ) {
+  // console.log("🚀 ~ file: helper.ts:57 ~ calculationRow", calculationRow)
+  // console.log("🚀 ~ file: helper.ts:57 ~ rowAllocation", rowAllocation)
   // console.log('🚀 ~ file: helper.ts:39 ~ calculationRows', calculationRows)
-  var chartData: object[] = []
-  const initialReward = 50
+  // var chartData: object[] = []
+
+  const secondsPerMonth = 2628000
+  // const initialReward = 50
   let emissions = 0
-  let month = 1
-  let rewardPerBlock = initialReward
-  const epochDurationInMonths = months
+  let month = 0 //1
+  let emissionsPerMonth = calculationRow.initialEmissionPerSecond / secondsPerMonth //hardcode to start with
+  const epochDurationInMonths = calculationRow.epochDurationInSeconds / secondsPerMonth //hardcode to start with
+  const emissionReductionPerEpoch = calculationRow.emissionReductionPerEpoch
+  let emissionsPerSecond = calculationRow.initialEmissionPerSecond
   // const mEmissions = 219000
-  const blocksPerMonth = 4380
-  let halvings = 0
+  // const rewardsPerMonth = 4380
+  let epochs = 0
 
-  while (emissions < totalSupply) {
+  while (emissions < rowAllocation) {
     var categoryLine = {}
-    emissions += blocksPerMonth * rewardPerBlock
-    // console.log("🚀 ~ file: helper.ts:51 ~ emissions", emissions)
-    if (month === epochDurationInMonths * (halvings + 1)) {
-      rewardPerBlock = rewardPerBlock / 2
-      halvings++
-    }
-    categoryLine['date'] = new Date(startDate).setMonth(
-      new Date(startDate).getMonth() + month
-    )
-    categoryLine[calculationRows[0].category] = emissions
 
-    chartData.push(categoryLine)
+    if (chartData[month] === undefined) {      
+      //always initialise the first line
+      chartData[month] = {}
+    }
+
+    // console.log("🚀 ~ file: helper.ts:73 ~ chartData[month]", chartData[month])
+    emissions += secondsPerMonth *  emissionsPerSecond
+    // emissions += blocksPerMonth * rewardPerBlock
+    // console.log("🚀 ~ file: helper.ts:80 ~ emissions", emissions)
+    // console.log("🚀 ~ file: helper.ts:51 ~ emissions", emissions)
+
+    if(month === epochDurationInMonths * (epochs + 1)){
+      emissionsPerSecond = emissionsPerSecond * calculationRow.emissionReductionPerEpoch
+      epochs++
+    }
+
+    // if (month === epochDurationInMonths * (halvings + 1)) {
+    //   rewardPerBlock = rewardPerBlock / 2
+    //   halvings++
+    // }
+    // categoryLine['date'] = new Date(startDate).setMonth(
+    //   new Date(startDate).getMonth() + month
+    // )
+    if (categoryLine['date'] === undefined) {
+      categoryLine['date'] = new Date(startDate).setMonth(
+        new Date(startDate).getMonth() + month
+      )
+    }
+
+    categoryLine[calculationRow.category] = emissions
+    // console.log("🚀 ~ file: helper.ts:96 ~ categoryLine", categoryLine)
+
+    // chartData.push(categoryLine)
+    Object.assign(chartData[month], categoryLine)
     month++
   }
 
-  return chartData
+  // return chartData
   // console.log('🚀 ~ file: helper.ts:60 ~ chartData', chartData)
 }
 
-export function getAreaData(months, calculationRows, totalSupply, startDate) {
-  // console.log("🚀 ~ file: helper.ts:14 ~ getAreaData ~ calculationRows", calculationRows)
-  var chartData: object[] = []
+export function getMonthEpochAreaData(
+  calculationRow,
+  months,
+  rowAllocation,
+  chartData,
+  startDate
+) {
+
+  let emissions = 0
+  const secondsPerMonth = 2628000
+  let emissionsPerSecond = calculationRow.initialEmissionPerSecond
+  const epochDurationInMonths = calculationRow.epochDurationInSeconds / secondsPerMonth //hardcode to start with
+  let epochs = 0
+
   for (let i = 0; i < months; i++) {
     var categoryLine = {}
-    calculationRows.forEach((bd) => {
-      //default = no emissions
-      var monthlyEmission = 0
-      //locked tokens = no emissions.
-      if (i < bd.lockupPeriod) {
-        monthlyEmission = 0
-      } else {
-        //token not locked, releasing all
-        if (
-          i <= Number(bd.unlockPeriod) + Number(bd.lockupPeriod) &&
-          Number(bd.unlockPeriod) == 0
-        ) {
-          monthlyEmission = (totalSupply * bd.percentageAllocation) / 100
-        }
-        //token not locked, but vesting
-        if (i < Number(bd.unlockPeriod) + Number(bd.lockupPeriod)) {
-          monthlyEmission =
-            (totalSupply * bd.percentageAllocation) / 100 / bd.unlockPeriod
-        }
-      }
 
-      if (i === 0) {
-        categoryLine[bd.category] = monthlyEmission
-      } else {
-        categoryLine[bd.category] =
-          monthlyEmission + chartData[i - 1][bd.category]
+    if (chartData[i] === undefined) {      
+      //always initialise the first line
+      chartData[i] = {}
+    }
+
+    if(emissions < rowAllocation){
+      emissions += secondsPerMonth *  emissionsPerSecond
+      if(i === epochDurationInMonths * (epochs + 1)){
+        emissionsPerSecond = emissionsPerSecond * calculationRow.emissionReductionPerEpoch
+        epochs++
       }
-    })
-    categoryLine['date'] = new Date(startDate).setMonth(
-      new Date(startDate).getMonth() + i
-    )
-    chartData.push(categoryLine)
+    }
+
+    if (categoryLine['date'] === undefined) {
+      categoryLine['date'] = new Date(startDate).setMonth(
+        new Date(startDate).getMonth() + i
+      )
+    }
+
+    categoryLine[calculationRow.category] = emissions
+    Object.assign(chartData[i], categoryLine)
   }
+
+}
+
+export function getAreaData(months, calculationRows, totalSupply, startDate) {
+  var chartData: object[] = []
+
+  // console.log(getOldAreaData(months, calculationRows, totalSupply, startDate))
+  calculationRows.forEach((cr) => {
+    // chartData.push({})
+    const rowAllocation = (totalSupply * cr.percentageAllocation) / 100
+    if (cr.isEpochDistro) {
+      getMonthEpochAreaData(cr, months, rowAllocation, chartData, startDate)
+    } else {
+      getLinearAreaData(cr, months, rowAllocation, chartData, startDate)      
+    }
+  })
+
+  // a.map((obj, index) => ({
+  //   ...obj,
+  //   ...b[index]
+  // }))
+  console.log('🚀 ~ file: helper.ts:110 ~ getAreaData ~ chartData', chartData)
   return chartData
+}
+
+export function getLinearAreaData(
+  calculationRow,
+  months,
+  rowAllocation,
+  chartData,
+  startDate
+) {
+  // var chartRow: object[] = []
+  for (let i = 0; i < months; i++) {
+    var monthlyEmission = 0
+    if (i < calculationRow.lockupPeriod) {
+      monthlyEmission = 0
+    } else {
+      //token not locked, releasing all
+      if (
+        i <=
+          Number(calculationRow.unlockPeriod) +
+            Number(calculationRow.lockupPeriod) &&
+        Number(calculationRow.unlockPeriod) == 0
+      ) {
+        monthlyEmission = rowAllocation
+      }
+      //token not locked, but vesting
+      if (
+        i <
+        Number(calculationRow.unlockPeriod) +
+          Number(calculationRow.lockupPeriod)
+      ) {
+        monthlyEmission = rowAllocation / calculationRow.unlockPeriod
+      }
+    }
+    var categoryLine = {}
+
+    if (chartData[i] === undefined) {
+      //always initialise the first line
+      chartData[i] = {}
+    }
+    if (i === 0) {
+      categoryLine[calculationRow.category] = monthlyEmission
+    } else {
+      categoryLine[calculationRow.category] =
+        monthlyEmission + chartData[i - 1][calculationRow.category]
+    }
+
+    if (categoryLine['date'] === undefined) {
+      categoryLine['date'] = new Date(startDate).setMonth(
+        new Date(startDate).getMonth() + i
+      )
+    }
+
+    Object.assign(chartData[i], categoryLine)
+  }
 }
 
 export async function notifyStatusUpdate(
@@ -231,15 +347,11 @@ export function mandatoryFormValidate(values) {
     errors.demandDrivers = 'Required!'
     errors.tokenStrength = true
   }
-
-  console.log("🚀 ~ file: helper.ts:231 ~ mandatoryFormValidate ~ values", values)
-  if (!values.breakdown && values?.calculation === undefined) {    
-    
-    if (!values.breakdown){
+  if (!values.breakdown && values?.calculation === undefined) {
+    if (!values.breakdown) {
       errors.breakdown = 'Required!'
     }
-    if(values?.calculation === undefined)
-    {
+    if (values?.calculation === undefined) {
       errors.calculation = 'Required!'
     }
     errors.deepDive = true
