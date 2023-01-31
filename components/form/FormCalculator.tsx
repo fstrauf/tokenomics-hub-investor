@@ -2,13 +2,13 @@ import { Field, FieldArray } from 'formik'
 import React from 'react'
 
 export const FormCalculator = ({ values }) => {
-
   const monthHeader = (index) => (
     <>
-      <p className="col-span-2">Category</p>
-      <p>Lockup Period</p>
-      <p>Unlocking Period</p>
-      <p>
+      <p className="text-xs uppercase text-gray-700">Category</p>
+      <p></p>
+      <p className="text-xs uppercase text-gray-700 w-16">Lockup Period</p>
+      <p className="text-xs uppercase text-gray-700">Unlocking Period</p>
+      <p className="text-xs uppercase text-gray-700">
         Percentage Allocation (
         {values?.calculationRows?.reduce(
           (a, v) => (a = a + Number(v?.percentageAllocation)),
@@ -16,8 +16,8 @@ export const FormCalculator = ({ values }) => {
         )}
         %)
       </p>{' '}
-      <p>Token Allocation</p>
-      <p>Color</p>
+      <p className="text-xs uppercase text-gray-700">Token Allocation</p>
+      <p className="text-xs uppercase text-gray-700">Color</p>
       <p></p>
     </>
   )
@@ -27,10 +27,10 @@ export const FormCalculator = ({ values }) => {
       <Field
         name={`calculationRows.${index}.category`}
         placeholder="category"
-        className="col-span-2 block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+        className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
         type="text"
       />
-
+      <p></p>
       <Field
         name={`calculationRows.${index}.lockupPeriod`}
         placeholder="lockupPeriod"
@@ -79,11 +79,17 @@ export const FormCalculator = ({ values }) => {
 
   const epochHeader = (index) => (
     <>
-      <p>Category</p>
-      <p>Epoch Duration in Seconds</p>
-      <p>Initial Emission per second</p>
-      <p>Emission Reduction per Epoch</p>
-      <p>
+      <p className="text-xs uppercase text-gray-700">Category</p>
+      <p className="text-xs uppercase text-gray-700">
+        Epoch Duration in Seconds
+      </p>
+      <p className="text-xs uppercase text-gray-700">
+        Initial Emission per second
+      </p>
+      <p className="text-xs uppercase text-gray-700">
+        Emission Reduction per Epoch
+      </p>
+      <p className="text-xs uppercase text-gray-700">
         Percentage Allocation (
         {values?.calculationRows?.reduce(
           (a, v) => (a = a + Number(v?.percentageAllocation)),
@@ -91,8 +97,8 @@ export const FormCalculator = ({ values }) => {
         )}
         %)
       </p>
-      <p>Token Allocation</p>
-      <p>Color</p>
+      <p className="text-xs uppercase text-gray-700">Token Allocation</p>
+      <p className="text-xs uppercase text-gray-700">Color</p>
       <p></p>
     </>
   )
@@ -163,9 +169,10 @@ export const FormCalculator = ({ values }) => {
         name="calculationRows"
         render={(arrayHelpers) => (
           <>
+          <div className='overflow-auto'>
             {values?.calculationRows?.length > 0 &&
               values?.calculationRows?.map((input, index) => (
-                <div className="grid grid-cols-8">
+                <div key={input.id} className="mb-3 grid grid-cols-[auto_150px_150px_150px_150px_150px_80px_40px] gap-3">
                   {input.isEpochDistro
                     ? epochHeader(index)
                     : monthHeader(index)}
@@ -174,9 +181,10 @@ export const FormCalculator = ({ values }) => {
                     : monthRow(index, input, arrayHelpers)}
                 </div>
               ))}
+              </div>
             <button
               type="button"
-              className="mt-3 rounded-md bg-dao-red px-2 py-1 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+              className="mt-3 mr-3 rounded-md bg-dao-red px-2 py-1 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
               onClick={() =>
                 arrayHelpers.push({
                   category: 'Treasury',
@@ -202,7 +210,7 @@ export const FormCalculator = ({ values }) => {
                   lockupPeriod: 5,
                   unlockPeriod: 12,
                   percentageAllocation: 10,
-                  color: '#823',
+                  color: '#Fe1',
                   isEpochDistro: true,
                   epochDurationInSeconds: 126144000,
                   initialEmissionPerSecond: 0.2397,
