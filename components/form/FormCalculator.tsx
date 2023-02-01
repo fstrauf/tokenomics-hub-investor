@@ -2,13 +2,16 @@ import { Field, FieldArray } from 'formik'
 import React from 'react'
 
 export const FormCalculator = ({ values }) => {
-  const monthHeader = (index) => (
+  const monthHeader = (
     <>
-      <p className="text-xs uppercase text-gray-700">Category</p>
-      <p></p>
-      <p className="text-xs uppercase text-gray-700 w-16">Lockup Period</p>
-      <p className="text-xs uppercase text-gray-700">Unlocking Period</p>
-      <p className="text-xs uppercase text-gray-700">
+      <p className="text-xs font-bold uppercase text-gray-700">Category</p>
+      <p className="w-16 text-xs font-bold uppercase text-gray-700">
+        Lockup Period
+      </p>
+      <p className="text-xs font-bold uppercase text-gray-700">
+        Unlocking Period
+      </p>
+      <p className="text-xs font-bold uppercase text-gray-700">
         Percentage Allocation (
         {values?.calculationRows?.reduce(
           (a, v) => (a = a + Number(v?.percentageAllocation)),
@@ -16,8 +19,10 @@ export const FormCalculator = ({ values }) => {
         )}
         %)
       </p>{' '}
-      <p className="text-xs uppercase text-gray-700">Token Allocation</p>
-      <p className="text-xs uppercase text-gray-700">Color</p>
+      <p className="text-xs font-bold uppercase text-gray-700">
+        Token Allocation
+      </p>
+      <p className="text-xs font-bold uppercase text-gray-700">Color</p>
       <p></p>
     </>
   )
@@ -30,7 +35,6 @@ export const FormCalculator = ({ values }) => {
         className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
         type="text"
       />
-      <p></p>
       <Field
         name={`calculationRows.${index}.lockupPeriod`}
         placeholder="lockupPeriod"
@@ -77,19 +81,19 @@ export const FormCalculator = ({ values }) => {
     </>
   )
 
-  const epochHeader = (index) => (
+  const epochHeader = (
     <>
-      <p className="text-xs uppercase text-gray-700">Category</p>
-      <p className="text-xs uppercase text-gray-700">
+      <p className="text-xs font-bold uppercase text-gray-700">Category</p>
+      <p className="text-xs font-bold uppercase text-gray-700">
         Epoch Duration in Seconds
       </p>
-      <p className="text-xs uppercase text-gray-700">
+      <p className="text-xs font-bold uppercase text-gray-700">
         Initial Emission per second
       </p>
-      <p className="text-xs uppercase text-gray-700">
+      <p className="text-xs font-bold uppercase text-gray-700">
         Emission Reduction per Epoch
       </p>
-      <p className="text-xs uppercase text-gray-700">
+      <p className="text-xs font-bold uppercase text-gray-700">
         Percentage Allocation (
         {values?.calculationRows?.reduce(
           (a, v) => (a = a + Number(v?.percentageAllocation)),
@@ -97,8 +101,10 @@ export const FormCalculator = ({ values }) => {
         )}
         %)
       </p>
-      <p className="text-xs uppercase text-gray-700">Token Allocation</p>
-      <p className="text-xs uppercase text-gray-700">Color</p>
+      <p className="text-xs font-bold uppercase text-gray-700">
+        Token Allocation
+      </p>
+      <p className="text-xs font-bold uppercase text-gray-700">Color</p>
       <p></p>
     </>
   )
@@ -169,57 +175,80 @@ export const FormCalculator = ({ values }) => {
         name="calculationRows"
         render={(arrayHelpers) => (
           <>
-          <div className='overflow-auto'>
-            {values?.calculationRows?.length > 0 &&
-              values?.calculationRows?.map((input, index) => (
-                <div key={input.id} className="mb-3 grid grid-cols-[auto_150px_150px_150px_150px_150px_80px_40px] gap-3">
-                  {input.isEpochDistro
-                    ? epochHeader(index)
-                    : monthHeader(index)}
-                  {input.isEpochDistro
-                    ? epochRow(index, input, arrayHelpers)
-                    : monthRow(index, input, arrayHelpers)}
-                </div>
-              ))}
+            <h1 className="mb-4text-black section-head text-base font-bold">
+              Monthly Emissions
+            </h1>
+            <div className="mb-4 overflow-auto rounded-lg border-2 p-2">
+              <div className="mb-3 grid grid-cols-[auto_150px_150px_150px_150px_80px_40px] gap-3">
+                {monthHeader}
+                {values?.calculationRows?.length > 0 &&
+                  values?.calculationRows?.map((input, index) => (
+                    <>
+                      {!input.isEpochDistro ? (
+                        monthRow(index, input, arrayHelpers)
+                      ) : (
+                        <></>
+                      )}
+                    </>
+                  ))}
               </div>
-            <button
-              type="button"
-              className="mt-3 mr-3 rounded-md bg-dao-red px-2 py-1 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
-              onClick={() =>
-                arrayHelpers.push({
-                  category: 'Treasury',
-                  lockupPeriod: 5,
-                  unlockPeriod: 12,
-                  percentageAllocation: 10,
-                  color: '#823',
-                  isEpochDistro: false,
-                  epochDurationInSeconds: 0,
-                  initialRewardPerSecond: 0,
-                  rewardReductionPerEpoch: 0,
-                })
-              }
-            >
-              Add Month Category
-            </button>
-            <button
-              type="button"
-              className="mt-3 rounded-md bg-dao-red px-2 py-1 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
-              onClick={() =>
-                arrayHelpers.push({
-                  category: 'Treasury',
-                  lockupPeriod: 5,
-                  unlockPeriod: 12,
-                  percentageAllocation: 10,
-                  color: '#Fe1',
-                  isEpochDistro: true,
-                  epochDurationInSeconds: 126144000,
-                  initialEmissionPerSecond: 0.2397,
-                  emissionReductionPerEpoch: 0.5,
-                })
-              }
-            >
-              Add Epoch Category
-            </button>
+              <button
+                type="button"
+                className="mt-3 mr-3 rounded-md bg-dao-red px-2 py-1 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+                onClick={() =>
+                  arrayHelpers.push({
+                    category: 'Treasury',
+                    lockupPeriod: 5,
+                    unlockPeriod: 12,
+                    percentageAllocation: 10,
+                    color: '#823',
+                    isEpochDistro: false,
+                    epochDurationInSeconds: 0,
+                    initialRewardPerSecond: 0,
+                    rewardReductionPerEpoch: 0,
+                  })
+                }
+              >
+                Add Month Category
+              </button>
+            </div>
+            <h1 className="mb-4text-black section-head text-base font-bold">
+              Epoch Based Emissions
+            </h1>
+            <div className="mb-4 overflow-auto rounded-lg border-2 p-2">
+              <div className="mb-3 grid grid-cols-[auto_150px_150px_150px_150px_150px_80px_40px] gap-3">
+                {epochHeader}
+                {values?.calculationRows?.length > 0 &&
+                  values?.calculationRows?.map((input, index) => (
+                    <>
+                      {input.isEpochDistro ? (
+                        epochRow(index, input, arrayHelpers)
+                      ) : (
+                        <></>
+                      )}
+                    </>
+                  ))}
+              </div>
+              <button
+                type="button"
+                className="mt-3 rounded-md bg-dao-red px-2 py-1 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+                onClick={() =>
+                  arrayHelpers.push({
+                    category: 'Treasury',
+                    lockupPeriod: 5,
+                    unlockPeriod: 12,
+                    percentageAllocation: 10,
+                    color: '#Fe1',
+                    isEpochDistro: true,
+                    epochDurationInSeconds: 126144000,
+                    initialEmissionPerSecond: 0.2397,
+                    emissionReductionPerEpoch: 0.5,
+                  })
+                }
+              >
+                Add Epoch Category
+              </button>
+            </div>
 
             {/* <div className="overflow-x-auto">
               <table className="mb-1 w-full table-auto  text-left text-sm text-gray-500">
