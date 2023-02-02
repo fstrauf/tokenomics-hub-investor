@@ -7,13 +7,9 @@ import { Dialog, Transition } from '@headlessui/react'
 import FormId from './form/FormId'
 import { useAuth } from '@clerk/clerk-react/dist/hooks/useAuth'
 import { useRouter } from 'next/router'
-// import { initialValues } from '../pages/calculator'
-// import Link from 'next/link'
 
 export default function Calculator(props) {
-  // console.log("🚀 ~ file: calculator.tsx:14 ~ Calculator ~ props", props)
   const { preloadInitialValues } = props
-  // console.log("🚀 ~ file: calculator.tsx:16 ~ Calculator ~ preloadInitialValues", preloadInitialValues.calculationRows)
   const { isSignedIn } = useAuth()
 
   const router = useRouter()

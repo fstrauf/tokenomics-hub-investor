@@ -1,7 +1,10 @@
 // import { DISCORD_EDITING } from './constants'
 // import { clerkClient } from '@clerk/nextjs/server'
 
-import { start } from "repl"
+// import { start } from "repl"
+// import * as duration from'dayjs/plugin/duration'
+// import * as dayjs from 'dayjs'
+// import * as relativeTime from 'dayjs/plugin/relativeTime'
 
 export const getLableNumber = (value) => {
   if (isNaN(value)) {
@@ -43,6 +46,16 @@ export const groupByAuthorClerkId = (items) => {
   })
   return groupedItems
 }
+// export const getInitialEmissionsInMonthOrYear = (initialEmissionPS, epochDuration) => {
+
+//   dayjs.extend(duration)
+//   dayjs.extend(relativeTime)
+
+//   const epochDuration = dayjs.duration(epochDuration, 'seconds')
+
+
+
+// }
 
 export const shortBigNumber = (value) =>
   new Intl.NumberFormat('en', { notation: 'compact' }).format(value)

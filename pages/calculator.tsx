@@ -26,7 +26,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   const initialValues = {
     id: '',
-    totalSupply: 100,
+    totalSupply: 100000000,
     months: 60,
     areaData: [],
     // authorClerkId: userId,
