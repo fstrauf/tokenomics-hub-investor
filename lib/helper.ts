@@ -1,10 +1,4 @@
-// import { DISCORD_EDITING } from './constants'
-// import { clerkClient } from '@clerk/nextjs/server'
 
-// import { start } from "repl"
-// import * as duration from'dayjs/plugin/duration'
-// import * as dayjs from 'dayjs'
-// import * as relativeTime from 'dayjs/plugin/relativeTime'
 
 export const getLableNumber = (value) => {
   if (isNaN(value)) {
@@ -62,26 +56,16 @@ export const shortBigNumber = (value) =>
 
 export function getEpochAreaData(
   calculationRow,
-  months,
   rowAllocation,
   chartData,
   startDate
 ) {
-  // console.log("🚀 ~ file: helper.ts:57 ~ calculationRow", calculationRow)
-  // console.log("🚀 ~ file: helper.ts:57 ~ rowAllocation", rowAllocation)
-  // console.log('🚀 ~ file: helper.ts:39 ~ calculationRows', calculationRows)
-  // var chartData: object[] = []
 
   const secondsPerMonth = 2628000
-  // const initialReward = 50
   let emissions = 0
   let month = 0 //1
-  let emissionsPerMonth = calculationRow.initialEmissionPerSecond / secondsPerMonth //hardcode to start with
   const epochDurationInMonths = calculationRow.epochDurationInSeconds / secondsPerMonth //hardcode to start with
-  const emissionReductionPerEpoch = calculationRow.emissionReductionPerEpoch
   let emissionsPerSecond = calculationRow.initialEmissionPerSecond
-  // const mEmissions = 219000
-  // const rewardsPerMonth = 4380
   let epochs = 0
 
   while (emissions < rowAllocation) {
@@ -92,24 +76,13 @@ export function getEpochAreaData(
       chartData[month] = {}
     }
 
-    // console.log("🚀 ~ file: helper.ts:73 ~ chartData[month]", chartData[month])
     emissions += secondsPerMonth *  emissionsPerSecond
-    // emissions += blocksPerMonth * rewardPerBlock
-    // console.log("🚀 ~ file: helper.ts:80 ~ emissions", emissions)
-    // console.log("🚀 ~ file: helper.ts:51 ~ emissions", emissions)
 
     if(month === epochDurationInMonths * (epochs + 1)){
       emissionsPerSecond = emissionsPerSecond * calculationRow.emissionReductionPerEpoch
       epochs++
     }
 
-    // if (month === epochDurationInMonths * (halvings + 1)) {
-    //   rewardPerBlock = rewardPerBlock / 2
-    //   halvings++
-    // }
-    // categoryLine['date'] = new Date(startDate).setMonth(
-    //   new Date(startDate).getMonth() + month
-    // )
     if (categoryLine['date'] === undefined) {
       categoryLine['date'] = new Date(startDate).setMonth(
         new Date(startDate).getMonth() + month
@@ -117,15 +90,10 @@ export function getEpochAreaData(
     }
 
     categoryLine[calculationRow.category] = emissions
-    // console.log("🚀 ~ file: helper.ts:96 ~ categoryLine", categoryLine)
 
-    // chartData.push(categoryLine)
     Object.assign(chartData[month], categoryLine)
     month++
   }
-
-  // return chartData
-  // console.log('🚀 ~ file: helper.ts:60 ~ chartData', chartData)
 }
 
 export function getMonthEpochAreaData(
@@ -139,7 +107,8 @@ export function getMonthEpochAreaData(
   let emissions = 0
   const secondsPerMonth = 2628000
   let emissionsPerSecond = calculationRow.initialEmissionPerSecond
-  const epochDurationInMonths = calculationRow.epochDurationInSeconds / secondsPerMonth //hardcode to start with
+  console.log("🚀 ~ file: helper.ts:110 ~ emissionsPerSecond", emissionsPerSecond)
+  const epochDurationInMonths = Math.floor(calculationRow.epochDurationInSeconds / secondsPerMonth) //hardcode to start with
   let epochs = 0
 
   for (let i = 0; i < months; i++) {
@@ -149,11 +118,15 @@ export function getMonthEpochAreaData(
       //always initialise the first line
       chartData[i] = {}
     }
-
-    if(emissions < rowAllocation){
+    //prevent over-emitting
+    if((emissions+secondsPerMonth*emissionsPerSecond) < rowAllocation){
       emissions += secondsPerMonth *  emissionsPerSecond
-      if(i === epochDurationInMonths * (epochs + 1)){
-        emissionsPerSecond = emissionsPerSecond * calculationRow.emissionReductionPerEpoch
+      // console.log("🚀 ~ file: helper.ts:124 ~ epochDurationInMonths", epochDurationInMonths)
+      // console.log("🚀 ~ file: helper.ts:125 ~ i", i)
+      if(i === (epochDurationInMonths * (epochs + 1))){        
+        
+        emissionsPerSecond = emissionsPerSecond * (1-calculationRow.emissionReductionPerEpoch/100)
+        console.log("🚀 ~ file: helper.ts:125 ~ emissionsPerSecond", emissionsPerSecond)
         epochs++
       }
     }
@@ -165,6 +138,8 @@ export function getMonthEpochAreaData(
     }
 
     categoryLine[calculationRow.category] = emissions
+    categoryLine['emissionsPerSecond'] = emissionsPerSecond
+    categoryLine['monthlyEmissions'] = secondsPerMonth*emissionsPerSecond
     Object.assign(chartData[i], categoryLine)
   }
 
@@ -173,9 +148,7 @@ export function getMonthEpochAreaData(
 export function getAreaData(months, calculationRows, totalSupply, startDate) {
   var chartData: object[] = []
 
-  // console.log(getOldAreaData(months, calculationRows, totalSupply, startDate))
   calculationRows.forEach((cr) => {
-    // chartData.push({})
     const rowAllocation = (totalSupply * cr.percentageAllocation) / 100
     if (cr.isEpochDistro) {
       getMonthEpochAreaData(cr, months, rowAllocation, chartData, startDate)
@@ -184,13 +157,10 @@ export function getAreaData(months, calculationRows, totalSupply, startDate) {
     }
   })
 
-  // a.map((obj, index) => ({
-  //   ...obj,
-  //   ...b[index]
-  // }))
-  console.log('🚀 ~ file: helper.ts:110 ~ getAreaData ~ chartData', chartData)
+  console.log("🚀 ~ file: helper.ts:155 ~ getAreaData ~ chartData", chartData)
   return chartData
 }
+  
 
 export function getLinearAreaData(
   calculationRow,
@@ -199,7 +169,6 @@ export function getLinearAreaData(
   chartData,
   startDate
 ) {
-  // var chartRow: object[] = []
   for (let i = 0; i < months; i++) {
     var monthlyEmission = 0
     if (i < calculationRow.lockupPeriod) {
@@ -254,9 +223,7 @@ export async function notifyStatusUpdate(
   if (authorEmail === '') {
     return
   }
-  // console.log("🚀 ~ file: helper.ts:118 ~ url", url)
   let message = ''
-  // const draftMessage =
   switch (newStatus) {
     case postStatus.draft: {
       message = `Thanks for creating a report.\n Access it here ${url}.\n Submit it for review once the minumum content is filled.`

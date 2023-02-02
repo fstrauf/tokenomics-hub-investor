@@ -64,7 +64,7 @@ export const FormCalculator = ({ values }) => {
         type="number"
         onWheel={(event) => event.currentTarget.blur()}
       />
-      <div className='text-sm text-center'>
+      <div className="text-center text-sm">
         {new Intl.NumberFormat('en').format(
           Number((input.percentageAllocation / 100) * values?.totalSupply)
         )}
@@ -123,16 +123,17 @@ export const FormCalculator = ({ values }) => {
         className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
         type="text"
       />
-      <div className='flex'>
+      <div className="flex">
         <Field
           name={`calculationRows.${index}.epochDurationInSeconds`}
           placeholder="First Epoch Duration in Seconds"
           className="block w-28 rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
           type="number"
+          min="0"
           onWheel={(event) => event.currentTarget.blur()}
         />
         {/* ({dayjs.duration(input.epochDurationInSeconds, 'seconds').humanize()}) */}
-        <span className="text-xs ml-1 self-center">
+        <span className="ml-1 self-center text-xs">
           (~{' '}
           {Math.floor(
             dayjs.duration(input.epochDurationInSeconds, 'seconds').asMonths()
@@ -140,35 +141,37 @@ export const FormCalculator = ({ values }) => {
           months)
         </span>
       </div>
-      <div className='flex'>
+      <div className="flex">
         <Field
           name={`calculationRows.${index}.initialEmissionPerSecond`}
           placeholder="Initial Emission per Seconds"
           className="block w-24 rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
           type="number"
+          min="0"
           onWheel={(event) => event.currentTarget.blur()}
         />
-        <span className="text-xs ml-1 self-center">
+        <span className="ml-1 self-center text-xs">
           (~ {shortBigNumber(input.initialEmissionPerSecond * secondsPerMonth)}{' '}
           per month)
         </span>
       </div>
       <Field
         name={`calculationRows.${index}.emissionReductionPerEpoch`}
-        placeholder="Reward Reduction per Epoch"
-        className="block rounded-lg border w-24 border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+        placeholder="Emission Reduction per Epoch"
+        className="block w-24 rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
         type="number"
+        max="1"
         onWheel={(event) => event.currentTarget.blur()}
       />
 
       <Field
         name={`calculationRows.${index}.percentageAllocation`}
         placeholder="percentageAllocation"
-        className="block rounded-lg border w-24 border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+        className="block w-24 rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
         type="number"
         onWheel={(event) => event.currentTarget.blur()}
       />
-      <div className='text-sm text-center'>
+      <div className="text-center text-sm">
         {new Intl.NumberFormat('en').format(
           Number((input.percentageAllocation / 100) * values?.totalSupply)
         )}

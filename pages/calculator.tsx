@@ -1,5 +1,4 @@
 import Layout from '../components/layout'
-// import Intro from '../components/intro'
 import React from 'react'
 import dynamic from 'next/dynamic'
 import { GetServerSideProps } from 'next'
@@ -15,7 +14,6 @@ export default function CalculationPage({ preloadInitialValues }) {
   return (
     <>
       <Layout>
-        {/* <Intro /> */}
         <Calculator preloadInitialValues={preloadInitialValues} />
       </Layout>
     </>
@@ -29,11 +27,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     totalSupply: 100000000,
     months: 60,
     areaData: [],
-    // authorClerkId: userId,
     authorClerkId: '',
     name: '',
     startDate: new Date().toLocaleDateString('en-CA'),
-    // calculations: response[0],
     calculations: '',  
     calculationRows: [
       {
