@@ -40,16 +40,6 @@ export const groupByAuthorClerkId = (items) => {
   })
   return groupedItems
 }
-// export const getInitialEmissionsInMonthOrYear = (initialEmissionPS, epochDuration) => {
-
-//   dayjs.extend(duration)
-//   dayjs.extend(relativeTime)
-
-//   const epochDuration = dayjs.duration(epochDuration, 'seconds')
-
-
-
-// }
 
 export const shortBigNumber = (value) =>
   new Intl.NumberFormat('en', { notation: 'compact' }).format(value)
@@ -120,13 +110,12 @@ export function getMonthEpochAreaData(
     }
     //prevent over-emitting
     if((emissions+secondsPerMonth*emissionsPerSecond) < rowAllocation){
+      
       emissions += secondsPerMonth *  emissionsPerSecond
-      // console.log("🚀 ~ file: helper.ts:124 ~ epochDurationInMonths", epochDurationInMonths)
-      // console.log("🚀 ~ file: helper.ts:125 ~ i", i)
+
       if(i === (epochDurationInMonths * (epochs + 1))){        
         
         emissionsPerSecond = emissionsPerSecond * (1-calculationRow.emissionReductionPerEpoch/100)
-        console.log("🚀 ~ file: helper.ts:125 ~ emissionsPerSecond", emissionsPerSecond)
         epochs++
       }
     }

@@ -147,7 +147,6 @@ export const FormCalculator = ({ values }) => {
           placeholder="Initial Emission per Seconds"
           className="block w-24 rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
           type="number"
-          min="0"
           onWheel={(event) => event.currentTarget.blur()}
         />
         <span className="ml-1 self-center text-xs">
@@ -160,7 +159,6 @@ export const FormCalculator = ({ values }) => {
         placeholder="Emission Reduction per Epoch"
         className="block w-24 rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
         type="number"
-        max="1"
         onWheel={(event) => event.currentTarget.blur()}
       />
 
