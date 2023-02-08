@@ -52,8 +52,7 @@ export default function tokenomicshub() {
               data-async="true"
               data-recaptcha="true"
             >
-              <p>
-                {/* <label for="sendfox_form_email">Email: </label> */}
+              <p>                
                 <input
                   type="email"
                   id="sendfox_form_email"
