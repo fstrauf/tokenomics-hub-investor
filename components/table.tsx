@@ -168,7 +168,7 @@ function CategoryPills({ value }) {
     <>
     <div className="mr-1 mb-1 flex flex-wrap">
       {value.map((v) => (      
-          <CategoryPill value={v.label} />        
+          <CategoryPill key={v.value} value={v.label} />        
       ))}
       </div>
     </>

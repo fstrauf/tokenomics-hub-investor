@@ -7,11 +7,8 @@ import { Dialog, Transition } from '@headlessui/react'
 import FormId from './form/FormId'
 import { useAuth } from '@clerk/clerk-react/dist/hooks/useAuth'
 import { useRouter } from 'next/router'
-// import { initialValues } from '../pages/calculator'
-// import Link from 'next/link'
 
 export default function Calculator(props) {
-  console.log("🚀 ~ file: calculator.tsx:14 ~ Calculator ~ props", props)
   const { preloadInitialValues } = props
   const { isSignedIn } = useAuth()
 
@@ -116,9 +113,12 @@ export default function Calculator(props) {
 
   return (
     <>
-      <h1 className="mb-10 mt-10 text-3xl font-bold">
+    <div className='mb-10 mt-10'>
+      <h1 className="text-3xl font-bold">
         Welcome to the Tokenomics DAO Calculator
       </h1>
+      <p className='text-sm'>Please log-in to save calculations</p>
+      </div>
       <Toaster />
 
       <div className="mt-5">

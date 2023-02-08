@@ -135,14 +135,18 @@ model Calculation {
 }
 
 model CalculationRows {
-  id                   String      @id @default(cuid())
-  category             String?
-  lockupPeriod         Float?
-  unlockPeriod         Float?
-  percentageAllocation Float?
-  color                String?
-  calculationId        String
-  calculation          Calculation @relation(fields: [calculationId], references: [id], onDelete: Cascade)
+  id                        String      @id @default(cuid())
+  category                  String?
+  lockupPeriod              Float?
+  unlockPeriod              Float?
+  percentageAllocation      Float?
+  isEpochDistro             Boolean     @default(false)
+  epochDurationInSeconds    Float?
+  initialEmissionPerSecond  Float?
+  emissionReductionPerEpoch Float?
+  color                     String?
+  calculationId             String
+  calculation               Calculation @relation(fields: [calculationId], references: [id], onDelete: Cascade)
 
   @@index([calculationId])
 }
