@@ -57,7 +57,7 @@ export default function StaticAllocationAndVestingChart(calculation) {
                 <tr key={cr.category} className="border-b bg-white ">
                   <th
                     scope="row"
-                    className="whitespace-nowrap py-2 px-3 font-medium text-gray-900 "
+                    className="py-2 px-3 font-medium text-gray-900 "
                   >
                     {cr.category}
                   </th>
