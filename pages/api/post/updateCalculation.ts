@@ -4,7 +4,7 @@ import { Prisma } from '@prisma/client'
 
 export default async function handle(req, res) {
   const { values } = req.body
-  console.log("🚀 ~ file: newCalculation.ts:7 ~ handle ~ values", values)
+  // console.log("🚀 ~ file: newCalculation.ts:7 ~ handle ~ values", values)
 
   var response = {}
   const txCalls = []
@@ -16,6 +16,10 @@ export default async function handle(req, res) {
       unlockPeriod: cr.unlockPeriod,
       percentageAllocation: cr.percentageAllocation,
       color: cr.color, 
+      isEpochDistro: cr.isEpochDistro,
+      epochDurationInSeconds: cr.epochDurationInSeconds,
+      initialEmissionPerSecond: cr.initialEmissionPerSecond,
+      emissionReductionPerEpoch: cr.emissionReductionPerEpoch,
     }
   })
 
