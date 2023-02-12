@@ -28,6 +28,9 @@ export default function Footer() {
             <Link href="/thub" className="hover:underline">
               Tokenomics Design Framework
             </Link>
+            <Link href="/glossary" className="hover:underline">
+              Glossary
+            </Link>
           </div>
           <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
           <div className="sm:flex sm:items-center sm:justify-between">
