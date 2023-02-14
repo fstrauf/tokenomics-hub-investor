@@ -52,12 +52,12 @@ return (
               <g key={`arc-${letter}-${index}`}>
                 <path d={arcPath} fill={arc.data.color} opacity={0.9} />
                 {hasSpaceForLabel && (
+                  
                   <text
                   className="z-50 absolute"
                     x={centroidX}
                     y={centroidY}
                     dy=".33em"
-                    // fill="#ffffff"
                     fontSize={10}
                     textAnchor="middle"
                     pointerEvents="none"                    

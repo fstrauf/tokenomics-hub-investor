@@ -33,7 +33,6 @@ function TextUpdaterNode({ data }) {
     <div className="text-updater-node">
       <Handle type="target" position={Position.Top} />
       <div>
-        {/* <label htmlFor="text">Text:</label> */}
         <input id="text" name="text" onChange={onChange} />
       </div>
       <Handle type="source" position={Position.Bottom} id="a" style={handleStyle} />
