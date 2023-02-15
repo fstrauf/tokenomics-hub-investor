@@ -65,7 +65,7 @@ const Tiptap: React.FC<Props> = (props) => {
         // autofocus: 'all',
         editorProps: {
             attributes: {
-                class: 'prose prose-sm sm:prose lg:prose-md xl:prose-lg m-5 focus:outline-none',
+                class: 'prose prose-sm sm:prose lg:prose-md xl:prose-lg m-5 focus:outline-none min-h-[120px] max-h-[250px] overflow-y-auto',
             },
         },
         editable: props.editMode,
@@ -97,7 +97,7 @@ const Tiptap: React.FC<Props> = (props) => {
                     />
                 </>
             )}
-            <div>
+            <div className='bg-slate-50 rounded-lg h-full'>
                 <EditorContent className='' editor={editor} />
             </div>
         </div>
