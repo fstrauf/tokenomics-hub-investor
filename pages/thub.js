@@ -41,88 +41,13 @@ export default function tokenomicshub() {
           <hr className="my-4 mx-auto h-1 w-48 rounded border-0 bg-gray-100 dark:bg-gray-700 md:my-10"></hr>
           <div>
             <p className="mt-5 font-semibold">
-              Drop your Email below to get the basic calculation template for
-              free here.
+              Get the basic calculation template for free here.
             </p>
-            <form
-              method="post"
-              action="https://sendfox.com/form/m89qv6/m748dd"
-              class="sendfox-form"
-              id="m748dd"
-              data-async="true"
-              data-recaptcha="true"
-            >
-              <p>                
-                <input
-                  type="email"
-                  id="sendfox_form_email"
-                  placeholder="Email"
-                  name="email"
-                  className="mt-2 mb-2 block w-60 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 "
-                  required
-                />
-              </p>
-              {/* <!-- no botz please --> */}
-              <div
-                // style="position: absolute; left: -5000px;"
-                aria-hidden="true"
-              >
-                <input
-                  type="text"
-                  name="a_password"
-                  tabindex="-1"
-                  value=""
-                  autocomplete="off"
-                />
-              </div>
-              <p>
-                <button
-                  className="mt-5 rounded-md bg-dao-red px-6 py-4 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
-                  type="submit"
-                >
-                  Get Access Now!
-                </button>
-              </p>
-            </form>
-            <script src="https://sendfox.com/js/form.js"></script>
-
-            {/* <form method="post" action="https://sendfox.com/form/m89qv6/mn87gq" class="sendfox-form" id="mn87gq" data-async="true" data-recaptcha="true">
-              <p className="mt-5">
-                <label htmlFor="sendfox_form_email">Email: </label>
-                <input
-                  className="block w-60 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 "
-                  type="email"
-                  id="sendfox_form_email"
-                  placeholder="Email"
-                  name="email"
-                  required
-                />
-              </p>
-              <div className="mt-3">
-                <label>
-                  <input type="checkbox" name="gdpr" value="1" required /> I
-                  agree to receive email updates and promotions.
-                </label>
-              </div>
-              <div className="" aria-hidden="true">
-                <input
-                  type="text"
-                  name="a_password"
-                  tabIndex="-1"
-                  value=""
-                  autoComplete="off"
-                />
-              </div>
-              <div>
-                <button
-                  className="mt-5 rounded-md bg-dao-red px-6 py-4 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
-                  type="submit"
-                >
-                  Get Access Now!
-                </button>
-              </div>
-            </form>
-            <script src="https://sendfox.com/js/form.js"></script> */}
+            <Link href="https://docs.google.com/spreadsheets/d/1jzhIrZRCnYY22B8jR65r90dw5N52nXLxIlCZI3JP1pg/edit?usp=sharing">
+              <button className="mt-5 rounded-md bg-dao-red px-6 py-4 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
+                Click Here
+              </button>
+            </Link>
           </div>
           <hr className="my-4 mx-auto h-1 w-48 rounded border-0 bg-gray-100 dark:bg-gray-700 md:my-10"></hr>
           <div className="mb-5">
@@ -132,7 +57,7 @@ export default function tokenomicshub() {
                 <p>(see what's included)</p>
               </a>
             </div>
-            <Script src="https://js.stripe.com/v3/pricing-table.js" async/>
+            <Script src="https://js.stripe.com/v3/pricing-table.js" async />
             {/* <script
               async
               src="https://js.stripe.com/v3/pricing-table.js"
