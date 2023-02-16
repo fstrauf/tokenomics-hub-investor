@@ -25,7 +25,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 
   return {
     props: {
-      categories: || null,
+      categories: null,
       
     },
   }
