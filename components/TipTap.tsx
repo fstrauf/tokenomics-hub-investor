@@ -16,7 +16,7 @@ import Strike from '@tiptap/extension-strike'
 import Dropcursor from '@tiptap/extension-dropcursor'
 import Gapcursor from '@tiptap/extension-gapcursor'
 import Image from '@tiptap/extension-image'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { uploadPhoto } from '../lib/fileUpload'
 
 type Props = {
@@ -35,6 +35,7 @@ const Tiptap: React.FC<Props> = (props) => {
     if (typeof content === 'string') {
         try {
             content = JSON.parse(content)
+            
         } catch {
 
         }
