@@ -33,10 +33,6 @@ export default function Header2() {
         !isSignedIn ? 'pointer-events-none opacity-50' : ''
       }`}
     >
-      {/* <item.icon
-                                className="h-6 w-6 flex-shrink-0 text-indigo-600"
-                                aria-hidden="true"
-                              /> */}
       <div className="ml-4">
         <p className="text-base font-medium text-gray-900">New Protocol</p>
         <p className="mt-1 text-sm text-gray-500">
@@ -53,10 +49,6 @@ export default function Header2() {
         !isSignedIn ? 'pointer-events-none opacity-50' : ''
       }`}
     >
-      {/* <item.icon
-                                className="h-6 w-6 flex-shrink-0 text-indigo-600"
-                                aria-hidden="true"
-                              /> */}
       <div className="ml-4">
         <p className="text-base font-medium text-gray-900">My Drafts</p>
         <p className="mt-1 text-sm text-gray-500">List and edit your drafts.</p>

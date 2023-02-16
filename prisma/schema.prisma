@@ -2,8 +2,7 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["referentialIntegrity"]
+  provider = "prisma-client-js"
 }
 
 datasource db {
@@ -149,6 +148,39 @@ model CalculationRows {
   calculation               Calculation @relation(fields: [calculationId], references: [id], onDelete: Cascade)
 
   @@index([calculationId])
+}
+
+model Design {
+  id            String          @id @default(cuid())
+  title         String?
+  authorClerkId String?
+  status        String?
+  DesignElement DesignElement[]
+}
+
+model DesignElement {
+  id       String  @id @default(cuid())
+  designId String
+  design   Design  @relation(fields: [designId], references: [id], onDelete: Cascade)
+  content  String? @db.Text
+
+  @@index([designId])
+}
+
+// model DesignPhase {
+//   id       Int           @id @default(autoincrement())
+//   title    String?
+//   parentId Int?          @unique
+//   parent   DesignPhase?  @relation("ParentChild", fields: [parentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+//   child    DesignPhase[] @relation("ParentChild")
+// }
+
+model DesignPhases {
+  id            Int            @id @default(autoincrement())
+  name          String?
+  parentPhaseId Int?
+  parentPhase   DesignPhases?  @relation("ParentChild", fields: [parentPhaseId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  childPhase    DesignPhases[] @relation("ParentChild")
 }
 
 model Account {

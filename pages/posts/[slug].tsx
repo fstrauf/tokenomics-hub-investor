@@ -48,13 +48,11 @@ export default function Post({ post, morePosts, author }) {
   const [isSubmitting, setSubmitting] = useState(false)
   const { isSignedIn } = useAuth()
   const { user } = useUser()
-  // console.log("🚀 ~ file: [slug].tsx:51 ~ Post ~ user", user)
 
   var userIsAuthor = false
   if (user?.id === post?.authorClerkId) {
     userIsAuthor = true
   }
-  // console.log("🚀 ~ file: [slug].tsx:54 ~ Post ~ user?.id", user?.id)
 
   const contributor = user?.publicMetadata?.contributor || false
 
