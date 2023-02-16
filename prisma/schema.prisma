@@ -181,6 +181,7 @@ model DesignPhases {
   parentPhaseId Int?
   parentPhase   DesignPhases?  @relation("ParentChild", fields: [parentPhaseId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   childPhase    DesignPhases[] @relation("ParentChild")
+  Resources     String?        @db.Text
 }
 
 model Account {

@@ -1,17 +1,5 @@
-// import { ErrorMessage, Field, Form, Formik } from 'formik'
-// // import dynamic from 'next/dynamic'
-// import toast, { Toaster } from 'react-hot-toast'
-// import FormText from '../form/FormText'
-// import BreakdownBox from '../slugView/breakdown-box'
-// import FormStrength from '../form/FormStrength'
-// import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
-// import { useState } from 'react'
-// import Tooltip from '../slugView/Tooltip'
+
 import TDFSideBar from './TDFSideBar'
-// import Tiptap from '../TipTap'
-// import TDF101 from './TDF101' //dynamically import these based on name
-// import TDF102 from './TDF102'
-// import TDF103 from './TDF103'
 import { useState } from 'react'
 import dynamic from 'next/dynamic'
 
@@ -51,7 +39,6 @@ export default function TDFMain({ props }) {
     <div className="mt-5 mb-5 flex flex-row ">
       <TDFSideBar designPhases={props.designPhases} changePhase={handlePhaseChange} />
       <div>{renderSwitch()}</div>
-      {/* <TDF101 props={props}/> */}
     </div>
   )
 }
