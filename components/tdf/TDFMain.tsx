@@ -9,10 +9,11 @@
 // import Tooltip from '../slugView/Tooltip'
 import TDFSideBar from './TDFSideBar'
 // import Tiptap from '../TipTap'
-import TDF101 from './TDF101' //dynamically import these based on name
-import TDF102 from './TDF102'
-import TDF103 from './TDF103'
+// import TDF101 from './TDF101' //dynamically import these based on name
+// import TDF102 from './TDF102'
+// import TDF103 from './TDF103'
 import { useState } from 'react'
+import dynamic from 'next/dynamic'
 
 export default function TDFMain({ props }) {
   const [activePhase, setActivePhase] = useState(101) //props.design.activePhase
@@ -24,13 +25,25 @@ export default function TDFMain({ props }) {
   function renderSwitch() {
     switch(activePhase) {
       case 101:
+        const TDF101 = dynamic(() => import('./TDF101'), {
+          loading: () => <p>Loading</p>,
+        })
         return <TDF101 props={props} />;
         case 102:
+          const TDF102 = dynamic(() => import('./TDF102'), {
+            loading: () => <p>Loading</p>,
+          })
           return <TDF102 props={props} />
         case 103:
+          const TDF103 = dynamic(() => import('./TDF103'), {
+            loading: () => <p>Loading</p>,
+          })
           return <TDF103 props={props} />
       default:
-        return <TDF101 props={props} />;
+        const DefaultView = dynamic(() => import('./TDF101'), {
+          loading: () => <p>Loading</p>,
+        })
+        return <DefaultView props={props} />;
     }
   }
 
