@@ -164,16 +164,17 @@ model DesignElement {
   design         Design        @relation(fields: [designId], references: [id], onDelete: Cascade)
   content        String?       @db.Text
   designPhase    DesignPhases? @relation(fields: [designPhasesId], references: [id])
-  designPhasesId Int?
+  designPhasesId String?
 
   @@index([designId])
 }
 
 model DesignPhases {
-  id            Int             @id @default(autoincrement())
+  id            String          @id @default(cuid())
   name          String?
+  phaseId       Int?            @unique
   parentPhaseId Int?
-  parentPhase   DesignPhases?   @relation("ParentChild", fields: [parentPhaseId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  parentPhase   DesignPhases?   @relation("ParentChild", fields: [parentPhaseId], references: [phaseId], onDelete: NoAction, onUpdate: NoAction)
   childPhase    DesignPhases[]  @relation("ParentChild")
   Resources     String?         @db.Text
   DesignElement DesignElement[]

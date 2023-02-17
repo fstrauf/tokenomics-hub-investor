@@ -74,9 +74,9 @@ export default function adminTDFPhase({ alldesignPhases }) {
                     ID
                   </label>
                   <Field
-                    id="id"
-                    name="id"
-                    placeholder="id"
+                    id="phaseId"
+                    name="phaseId"
+                    placeholder="phaseId"
                     className="mb-3 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
                   />
                   <label className="mb-2 block text-sm font-medium text-gray-900">

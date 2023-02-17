@@ -10,18 +10,20 @@ export default async function handle(req, res) {
 
   const response = await prisma.designPhases.upsert({
     where: {
-      id: values.id,
+      phaseId: parseInt(values.phaseId),
     },
     update: {
-      id: values.id,
+      // id: parseInt(values.id),
       name: values.name,
-      parentPhaseId: values.parentPhaseId,
+      phaseId: parseInt(values.phaseId),
+      parentPhase: { connect: { phaseId: parseInt(values.parentPhaseId) } },
       Resources: Resources,
     },
     create: {
-      id: values.id,
+      // id: parseInt(values.id),
+      phaseId: parseInt(values.phaseId),
       name: values.name,
-      parentPhaseId: values.parentPhaseId,
+      parentPhase: { connect: { phaseId: parseInt(values.parentPhaseId) } },
       Resources: Resources,
     },
   })
