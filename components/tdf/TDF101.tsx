@@ -3,8 +3,10 @@ import BreakdownBox from '../slugView/breakdown-box'
 // import Tiptap from '../TipTap'
 import ResourceSection from './ResourceSection'
 
-export default function TDF101({ props }) {
-  const designPhase = props.designPhases.find((adp) => String(adp.id) === '101')
+export default function TDF101({ props, values }) {
+  const designPhase = props.designPhases.find(
+    (adp) => String(adp.phaseId) === '101'
+  )
   return (
     <div className="grid w-full grid-cols-2 gap-2 rounded-lg border-2 p-2">
       <div className="col-span-2">
@@ -17,11 +19,12 @@ export default function TDF101({ props }) {
           <p>📜 What is the problem your project is solving?</p>
           <p>📜 How does your project solve the problem?</p>
         </div>
-      {/* fields need to dynamically map  */}
         <Field
           as="textarea"
           rows="4"
-          name="message"
+          name={`DesignElement.${values?.DesignElement?.findIndex(
+            (de) => de.designPhaseId === 101
+          )}.content`} //
           placeholder="tell us about your requirements"
           className="mb-3 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
         />

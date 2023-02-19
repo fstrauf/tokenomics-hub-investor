@@ -3,11 +3,11 @@
 // import toast, { Toaster } from 'react-hot-toast'
 // import FormText from '../form/FormText'
 import BreakdownBox from '../slugView/breakdown-box'
-import Tiptap from '../TipTap'
+// import Tiptap from '../TipTap'
 import ResourceSection from './ResourceSection'
 
 export default function TDF102({ props }) {
-  const designPhase = props.designPhases.find((adp) => String(adp.id) === '102')
+  const designPhase = props.designPhases.find((adp) => String(adp.phaseId) === '102')
   return (
     <div className="grid w-full grid-cols-2 gap-2 rounded-lg border-2 p-2">
       <div className="col-span-2">

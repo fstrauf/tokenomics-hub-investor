@@ -5,7 +5,7 @@ export default function TDFSideBar({ designPhases, changePhase }) {
         <>
           {phase.parentPhaseId ? ( //child
             <button
-              onClick={() => changePhase(phase.id)} //we could navigate by name here
+              onClick={() => changePhase(phase.phaseId)} //we could navigate by name here
               className="block w-full max-w-sm rounded-lg border border-gray-200 bg-white p-2 text-xs shadow hover:bg-gray-100"
             >
               {phase.name}

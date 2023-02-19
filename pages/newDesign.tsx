@@ -7,6 +7,7 @@ import { postStatus } from '../lib/helper'
 import TDFMain from '../components/tdf/TDFMain'
 
 export default function NewDesign(props) {
+  // console.log("🚀 ~ file: newDesign.tsx:10 ~ NewDesign ~ props", props)
   const { user } = useUser()
 
   const defaultContent = {
@@ -15,7 +16,7 @@ export default function NewDesign(props) {
     authorClerkId: user.id,
     status: postStatus.draft,
     DesignElement: props.designPhases.filter(dp => dp.parentPhaseId).map((dp) => {
-        return { id: '', content: '', designPhaseId: dp.id }      
+        return { id: '', content: '', designPhaseId: dp.phaseId }      
     }),
   }
 
@@ -37,7 +38,7 @@ export const getStaticProps: GetServerSideProps = async (context) => {
     })
   )
 
-  txCalls.push(prisma.designPhases.findMany())
+  txCalls.push(prisma.designPhases.findMany({orderBy: {phaseId: 'asc'}}))
 
   const [posts, designPhases] = await prisma.$transaction(txCalls)
 

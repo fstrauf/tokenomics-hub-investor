@@ -71,7 +71,7 @@ export default function adminTDFPhase({ alldesignPhases }) {
               {({ isSubmitting, setFieldValue }) => (
                 <Form>               
                   <label className="mb-2 block text-sm font-medium text-gray-900">
-                    ID
+                    Phase Id
                   </label>
                   <Field
                     id="phaseId"
