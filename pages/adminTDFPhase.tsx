@@ -57,8 +57,10 @@ export default function adminTDFPhase({ alldesignPhases }) {
             >
               {alldesignPhases.map((c) => (
                 <>
-                  <option key={c.id} value={c.id} label={c.name}>
-                    {c.id} - {c.name}
+                  <option key={c.id} value={c.id} 
+                  // label={c.name}
+                  >
+                    {c.phaseId} - {c.name}
                   </option>
                 </>
               ))}
@@ -131,7 +133,7 @@ export default function adminTDFPhase({ alldesignPhases }) {
 }
 
 export async function getStaticProps() {
-  const alldesignPhases = await prisma.designPhases.findMany()
+  const alldesignPhases = await prisma.designPhases.findMany({orderBy:{ phaseId: 'asc'}})
 
   return {
     props: {

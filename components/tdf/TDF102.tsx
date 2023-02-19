@@ -1,18 +1,14 @@
-// import { ErrorMessage, Field, Form, Formik } from 'formik'
-// // import dynamic from 'next/dynamic'
-// import toast, { Toaster } from 'react-hot-toast'
-// import FormText from '../form/FormText'
+import { Field } from 'formik'
 import BreakdownBox from '../slugView/breakdown-box'
-// import Tiptap from '../TipTap'
 import ResourceSection from './ResourceSection'
 
-export default function TDF102({ props }) {
+export default function TDF102({ props, values }) {
   const designPhase = props.designPhases.find((adp) => String(adp.phaseId) === '102')
   return (
     <div className="grid w-full grid-cols-2 gap-2 rounded-lg border-2 p-2">
       <div className="col-span-2">
         <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 ">
-          1. Business Assessment - Value Prop and Creation
+        {designPhase.name}
         </h5>
         <div className="bg-slate-100 text-xs">
           <p>In 1-2 sentences describe the problem and your solution. </p>
@@ -20,6 +16,15 @@ export default function TDF102({ props }) {
           <p>📜 What is the problem your project is solving?</p>
           <p>📜 How does your project solve the problem?</p>
         </div>
+        <Field
+          as="textarea"
+          rows="4"
+          name={`DesignElement.${values?.DesignElement?.findIndex(
+            (de) => de.designPhaseId === 102
+          )}.content`} //
+          placeholder="tell us about your requirements"
+          className="mb-3 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
+        />
       </div>
       <ResourceSection content={designPhase.Resources}/>
       <div>
@@ -30,9 +35,9 @@ export default function TDF102({ props }) {
           <div>
             <div key={post.id}>{post.title}</div>
             <BreakdownBox
-              value={post?.businessModel}
-              strength={post?.businessModelStrength}
-              title="Business Model:"
+              value={post?.valueCreation}
+              strength={post?.valueCreationStrength}
+              title="Value Creation:"
             />
           </div>
         ))}

@@ -1,6 +1,6 @@
 export default function TDFSideBar({ designPhases, changePhase }) {
   return (
-    <div className="h-140 rounded-lg border-2 p-2">
+    <div className="h-140 rounded-lg border-2 p-2 overflow-y-auto">
       {designPhases.map((phase) => (
         <>
           {phase.parentPhaseId ? ( //child
