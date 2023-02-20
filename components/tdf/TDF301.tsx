@@ -15,25 +15,13 @@ export default function TDF301({ props, values }) {
       </h5>
       <ResourceSection content={designPhase.Resources} />
       <div className="">
-        {/* <FormTable /> */}
         <Field
-          className="custom-select"
           name={`DesignElement.${values?.DesignElement?.findIndex(
             (de) => de.designPhaseId === 301
           )}.content`}
-          // options={categories}
           component={FormTable}
           placeholder="Select categories"
-          // isMulti={true}
-        />
-        <Field
-          as="textarea"
-          rows="4"
-          name={`DesignElement.${values?.DesignElement?.findIndex(
-            (de) => de.designPhaseId === 301
-          )}.content`} //
-          placeholder="tell us about your requirements"
-          className="mb-3 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
+          phaseId={designPhase.phaseId}
         />
       </div>
       <div>

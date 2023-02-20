@@ -9,6 +9,7 @@ import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
 import dynamic from 'next/dynamic'
 
 export default function adminTDFPhase({ alldesignPhases }) {
+  // console.log("🚀 ~ file: adminTDFPhase.tsx:12 ~ adminTDFPhase ~ alldesignPhases", alldesignPhases)
   const [initialValues, setInititalValues] = useState(alldesignPhases[0])
 
   const FormTipTap = dynamic(() => import('../components/form/FormTipTap'), {
@@ -16,8 +17,9 @@ export default function adminTDFPhase({ alldesignPhases }) {
   })
 
   function handleChange(e) {
+    console.log("🚀 ~ file: adminTDFPhase.tsx:22 ~ handleChange ~ alldesignPhases.find((adp) => String(adp.id) === e.target.value)", alldesignPhases.find((adp) => String(adp.id) === e.target.value))
     setInititalValues(
-      alldesignPhases.find((adp) => String(adp.id) === e.target.value)
+      alldesignPhases.find((adp) => String(adp.id) === e.target.value)      
     )
   }
 
@@ -97,7 +99,17 @@ export default function adminTDFPhase({ alldesignPhases }) {
                   <Field
                     id="parentPhaseId"
                     name="parentPhaseId"
+                    
                     placeholder="parentPhaseId"
+                    className="mb-3 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
+                  />
+                  <label className="mb-2 block text-sm font-medium text-gray-900">
+                    Phase Order (can be different than phase id)
+                  </label>
+                  <Field
+                    id="phaseOrder"
+                    name="phaseOrder"
+                    placeholder="phaseOrder"
                     className="mb-3 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
                   />
                   <label className="mb-2 block text-sm font-medium text-gray-900">

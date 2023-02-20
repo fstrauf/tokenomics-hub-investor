@@ -167,6 +167,7 @@ model DesignElement {
   designPhasesId String?
 
   @@index([designId])
+  @@index([designPhasesId])
 }
 
 model DesignPhases {
@@ -174,10 +175,13 @@ model DesignPhases {
   name          String?
   phaseId       Int?            @unique
   parentPhaseId Int?
-  parentPhase   DesignPhases?   @relation("ParentChild", fields: [parentPhaseId], references: [phaseId], onDelete: NoAction, onUpdate: NoAction)
-  childPhase    DesignPhases[]  @relation("ParentChild")
+  // parentPhase   DesignPhases?   @relation("ParentChild", fields: [parentPhaseId], references: [phaseId], onDelete: NoAction, onUpdate: NoAction)
+  // childPhase    DesignPhases[]  @relation("ParentChild")
   Resources     String?         @db.Text
   DesignElement DesignElement[]
+  phaseOrder    Int?
+
+  @@index([parentPhaseId])
 }
 
 model Account {

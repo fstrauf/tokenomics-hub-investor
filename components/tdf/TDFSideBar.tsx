@@ -12,9 +12,9 @@ export default function TDFSideBar({ designPhases, changePhase }) {
             </button>
           ) : (
             //parent
-            <h5 className="mb-2 text-lg font-bold tracking-tight text-gray-900 ">
+            <button  className="mb-2 text-lg font-bold tracking-tight text-gray-900 " onClick={() => changePhase(phase.phaseId)}>
               {phase.name}
-            </h5>
+            </button>
           )}
         </div>
       ))}

@@ -12,12 +12,7 @@ export default function TDF101({ props, values }) {
         <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 ">
         {designPhase.name}
         </h5>
-        <div className="bg-slate-100 text-xs">
-          <p>In 1-2 sentences describe the problem and your solution. </p>
-          <p>Ask yourself:</p>
-          <p>📜 What is the problem your project is solving?</p>
-          <p>📜 How does your project solve the problem?</p>
-        </div>
+        <ResourceSection content={designPhase.Resources} />
         <Field
           as="textarea"
           rows="4"
@@ -28,7 +23,7 @@ export default function TDF101({ props, values }) {
           className="mb-3 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
         />
       </div>
-      <ResourceSection content={designPhase.Resources} />
+      
       <div>
         <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 ">
           References
