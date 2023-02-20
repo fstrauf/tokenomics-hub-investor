@@ -8,8 +8,6 @@ export default function TDF301({ props, values }) {
     (adp) => String(adp.phaseId) === '301'
   )
 
-
-
   return (
     <div className="flex w-full flex-col rounded-lg border-2 p-2">
       <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 ">
@@ -17,7 +15,17 @@ export default function TDF301({ props, values }) {
       </h5>
       <ResourceSection content={designPhase.Resources} />
       <div className="">
-        <FormTable />
+        {/* <FormTable /> */}
+        <Field
+          className="custom-select"
+          name={`DesignElement.${values?.DesignElement?.findIndex(
+            (de) => de.designPhaseId === 301
+          )}.content`}
+          // options={categories}
+          component={FormTable}
+          placeholder="Select categories"
+          // isMulti={true}
+        />
         <Field
           as="textarea"
           rows="4"
@@ -34,7 +42,7 @@ export default function TDF301({ props, values }) {
         </h5>
         {props.posts.map((post) => (
           <div key={post.id}>
-            <div >{post.title}</div>
+            <div>{post.title}</div>
             <BreakdownBox
               value={post?.businessModel}
               strength={post?.businessModelStrength}
