@@ -34,8 +34,8 @@ export default function TDF101({ props, values }) {
           References
         </h5>
         {props.posts.map((post) => (
-          <div>
-            <div key={post.id}>{post.title}</div>
+          <div key={post.id}>
+            <div>{post.title}</div>
             <BreakdownBox
               value={post?.businessModel}
               strength={post?.businessModelStrength}

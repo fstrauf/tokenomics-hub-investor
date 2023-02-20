@@ -2,7 +2,7 @@ export default function TDFSideBar({ designPhases, changePhase }) {
   return (
     <div className="h-140 rounded-lg border-2 p-2 overflow-y-auto">
       {designPhases.map((phase) => (
-        <>
+        <div key={phase.id}>
           {phase.parentPhaseId ? ( //child
             <button
               onClick={() => changePhase(phase.phaseId)} //we could navigate by name here
@@ -16,7 +16,7 @@ export default function TDFSideBar({ designPhases, changePhase }) {
               {phase.name}
             </h5>
           )}
-        </>
+        </div>
       ))}
     </div>
   )
