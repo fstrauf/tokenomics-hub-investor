@@ -38,7 +38,7 @@ export const getStaticProps: GetServerSideProps = async (context) => {
     })
   )
 
-  txCalls.push(prisma.designPhases.findMany({orderBy: {phaseId: 'asc'}}))
+  txCalls.push(prisma.designPhases.findMany({orderBy: {phaseOrder: 'asc'}}))
 
   const [posts, designPhases] = await prisma.$transaction(txCalls)
 

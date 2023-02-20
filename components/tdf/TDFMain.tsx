@@ -3,7 +3,7 @@ import { useState } from 'react'
 import dynamic from 'next/dynamic'
 import { Field, FieldArray, Form, Formik } from 'formik'
 import toast, { Toaster } from 'react-hot-toast'
-import TDFHeaders from './TDFHeaders'
+// import TDFHeaders from './TDFHeaders'
 
 export default function TDFMain({ props, content }) {
   // console.log('🚀 ~ file: tdfMain.tsx:9 ~ TDFMainx ~ props', props)
@@ -14,7 +14,7 @@ export default function TDFMain({ props, content }) {
     setActivePhase(phase)
   }
 
-  const TDFHeader = dynamic(() => import('./TDFHeaders'), {
+  const TDFHeaders = dynamic(() => import('./TDFHeaders'), {
     loading: () => <p>Loading</p>,
   })
   const TDF101 = dynamic(() => import('./TDF101'), {
@@ -92,7 +92,15 @@ export default function TDFMain({ props, content }) {
   function renderSwitch(values) {
     switch (activePhase) {
       case 100:
-        return <TDFHeaders props={props} values={values} />
+      case 200:
+      case 300:
+      case 400:
+      case 500:
+      case 600:
+      case 700:
+        return (
+          <TDFHeaders props={props} values={values} activePhase={activePhase} />
+        )
       case 101:
         return <TDF101 props={props} values={values} />
       case 102:
