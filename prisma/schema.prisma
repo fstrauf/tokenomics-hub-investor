@@ -56,6 +56,7 @@ model Post {
   calculation           Calculation?         @relation(fields: [calculationId], references: [id])
   Comments              Comments[]
   UserStrengthRating    UserStrengthRating[]
+  DesignElement         DesignElement[]
 
   @@index([authorId])
 }
@@ -150,23 +151,23 @@ model CalculationRows {
   @@index([calculationId])
 }
 
-model Design {
-  id            String          @id @default(cuid())
-  title         String?
-  authorClerkId String?
-  status        String?
-  DesignElement DesignElement[]
-}
+// model Design {
+//   id            String          @id @default(cuid())
+//   title         String?
+//   authorClerkId String?
+//   status        String?
+//   DesignElement DesignElement[]
+// }
 
 model DesignElement {
   id             String        @id @default(cuid())
-  designId       String
-  design         Design        @relation(fields: [designId], references: [id], onDelete: Cascade)
+  postId         String
+  Post           Post          @relation(fields: [postId], references: [id], onDelete: Cascade)
   content        String?       @db.Text
   designPhase    DesignPhases? @relation(fields: [designPhasesId], references: [id])
   designPhasesId String?
 
-  @@index([designId])
+  @@index([postId])
   @@index([designPhasesId])
 }
 

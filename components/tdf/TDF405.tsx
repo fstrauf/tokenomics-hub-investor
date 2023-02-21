@@ -1,36 +1,43 @@
 import { Field } from 'formik'
 import BreakdownBox from '../slugView/breakdown-box'
 import ResourceSection from './ResourceSection'
+import FormTable from '../form/FormTable'
+import { getActiveDesignPhase } from '../../lib/helper'
+import FormCard from '../form/FormCard'
 
-export default function TDF405({ props, values }) {
-  const designPhase = props.designPhases.find((adp) => String(adp.phaseId) === '405')
+export default function TDF405({ props, values, activePhase }) {
+  const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
   return (
-    <div className="grid w-full grid-cols-2 gap-2 rounded-lg border-2 p-2">
-      <div className="col-span-2">
+    <div className="flex w-full flex-col rounded-lg border-2 p-2">
+      <div>
         <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 ">
-        {designPhase.name}
+          {designPhase.name}
         </h5>
-        <div className="bg-slate-100 text-xs">
-          <p>In 1-2 sentences describe the problem and your solution. </p>
-          <p>Ask yourself:</p>
-          <p>📜 What is the problem your project is solving?</p>
-          <p>📜 How does your project solve the problem?</p>
-        </div>
-        <Field
-          as="textarea"
-          rows="4"
+        <ResourceSection content={designPhase.Resources} />
+      </div>
+      <Field
           name={`DesignElement.${values?.DesignElement?.findIndex(
             (de) => de.designPhaseId === 405
-          )}.content`} //
-          placeholder="tell us about your requirements"
-          className="mb-3 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
+          )}.content`}
+          component={FormCard}
+          placeholder="Select categories"
+          phaseId={designPhase.phaseId}
         />
-      </div>
-      <ResourceSection content={designPhase.Resources}/>
       <div>
         <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 ">
           References
         </h5>
+        <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 ">
+          Incentive Summary
+        </h5>
+        <Field
+          name={`DesignElement.${values?.DesignElement?.findIndex(
+            (de) => de.designPhaseId === 301
+          )}.content`}
+          component={FormTable}
+          placeholder="Select categories"
+          phaseId={designPhase.phaseId}
+        />
         {props.posts.map((post) => (
           <div>
             <div key={post.id}>{post.title}</div>

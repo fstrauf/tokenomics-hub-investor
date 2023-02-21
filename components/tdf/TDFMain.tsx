@@ -150,6 +150,7 @@ export default function TDFMain({ props, content }) {
         <TDFSideBar
           designPhases={props.designPhases}
           changePhase={handlePhaseChange}
+          activePhase={activePhase}
         />
       </div>
       <div className="w-5/6">
