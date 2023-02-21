@@ -37,10 +37,10 @@ export const FormTable = ({ field, form, phaseId }) => {
     <>
       <thead className="bg-gray-50 text-xs text-gray-700">
         <tr>
-          <th scope="col" className="py-3 px-6">
+          <th scope="col" className="py-3">
             User
           </th>
-          <th scope="col" className="py-3 px-6">
+          <th scope="col" className="py-3">
             Task
           </th>
           {phaseId > 301 ? (
@@ -104,6 +104,7 @@ export const FormTable = ({ field, form, phaseId }) => {
               name={`${field.name}.${index}.user`}
               placeholder="user"
               className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+              rows={4}
               as="textarea"
             />
           </th>
@@ -113,6 +114,7 @@ export const FormTable = ({ field, form, phaseId }) => {
               name={`${field.name}.${index}.task`}
               placeholder="task"
               className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+              rows={4}
               as="textarea"
             />
           </td>
@@ -122,6 +124,7 @@ export const FormTable = ({ field, form, phaseId }) => {
                 name={`${field.name}.${index}.why`}
                 placeholder="why"
                 className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+                rows={4}
                 as="textarea"
               />
             </td>
@@ -134,6 +137,7 @@ export const FormTable = ({ field, form, phaseId }) => {
                 name={`${field.name}.${index}.valueCreation`}
                 placeholder="valueCreation"
                 className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+                rows={4}
                 as="textarea"
               />
             </td>
@@ -146,6 +150,7 @@ export const FormTable = ({ field, form, phaseId }) => {
                 name={`${field.name}.${index}.behaviour`}
                 placeholder="behaviour"
                 className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+                rows={4}
                 as="textarea"
               />
             </td>
@@ -158,6 +163,7 @@ export const FormTable = ({ field, form, phaseId }) => {
                 name={`${field.name}.${index}.incentive`}
                 placeholder="incentive"
                 className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+                rows={4}
                 as="textarea"
               />
             </td>
@@ -170,6 +176,7 @@ export const FormTable = ({ field, form, phaseId }) => {
                 name={`${field.name}.${index}.mechanism1`}
                 placeholder="mechanism1"
                 className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+                rows={4}
                 as="textarea"
               />
             </td>
@@ -182,6 +189,7 @@ export const FormTable = ({ field, form, phaseId }) => {
                 name={`${field.name}.${index}.mechanism2`}
                 placeholder="mechanism2"
                 className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+                rows={4}
                 as="textarea"
               />
             </td>

@@ -9,6 +9,7 @@ import Comments from '../../components/comments'
 import CommentForm from '../../components/commentForm'
 
 const EditPost: React.FC<PostProps> = (props) => {
+  console.log("🚀 ~ file: [id].tsx:12 ~ props", props)
   return (
     <Layout>
       <div>
@@ -55,21 +56,21 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   txCalls.push(prisma.tag.findMany())
   txCalls.push(prisma.calculation.findMany())
 
-  const response = await prisma.$transaction(txCalls)
+  const [post, categories, tags, calculations] = await prisma.$transaction(txCalls)
 
-  let clerkUser = response[0]?.authorClerkId
-    ? await clerkClient.users.getUser(response[0]?.authorClerkId)
+  let clerkUser = post?.authorClerkId
+    ? await clerkClient.users.getUser(post?.authorClerkId)
     : {}
 
   clerkUser = clerkConvertJSON(clerkUser)
 
-  const userId = response[0].Comments.map((comment) => {
+  const userId = post.Comments.map((comment) => {
     return comment.authorClerkId
   })
 
   let users = clerkConvertJSON(await clerkClient.users.getUserList({ userId }))
 
-  const commentsWithUserNames = response[0].Comments.map((comment) => {
+  const commentsWithUserNames = post.Comments.map((comment) => {
     const currentUser = users?.find((u) => u.id === comment.authorClerkId)
 
     return {
@@ -78,15 +79,16 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     }
   })
 
-  let postWithUpdatedComments = response[0]
+  let postWithUpdatedComments = post
   postWithUpdatedComments.Comments = commentsWithUserNames
+  postWithUpdatedComments.protocolTimeLine = postWithUpdatedComments.protocolTimeLine.map(ptl => ({...ptl, date: new Date(ptl.date).toLocaleDateString('en-CA')}) )
 
   return {
     props: {
-      categories: response[1] || null,
-      tags: response[2] || null,
+      categories: categories || null,
+      tags: tags || null,
       post: postWithUpdatedComments || null,
-      calculations: response[3] || null,
+      calculations: calculations || null,
       author: clerkUser || null,
     },
   }

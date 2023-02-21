@@ -1,6 +1,6 @@
 import { Field, FieldArray } from 'formik'
 import React from 'react'
-import FormDate from './FormDate'
+// import FormDate from './FormDate'
 import FormText from './FormText'
 
 export const FormTimeLine = ({ values }) => {
@@ -45,8 +45,10 @@ export const FormTimeLine = ({ values }) => {
                       <td className="py-2 px-3">
                         <Field
                           name={`protocolTimeLine.${index}.date`}
-                          as={FormDate}
-                          placeholder="Short description"
+                          // as={FormDate}
+                          type="date"
+                          
+                          // placeholder="Short description"
                         />
                       </td>
                       <td className="py-2 px-3">
