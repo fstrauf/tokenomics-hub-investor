@@ -102,45 +102,45 @@ export default function TDFMain({ props, content }) {
           <TDFHeaders props={props} values={values} activePhase={activePhase} />
         )
       case 101:
-        return <TDF101 props={props} values={values} />
+        return <TDF101 props={props} values={values} activePhase={activePhase} />
       case 102:
-        return <TDF102 props={props} values={values} />
+        return <TDF102 props={props} values={values} activePhase={activePhase} />
       case 103:
-        return <TDF103 props={props} values={values} />
+        return <TDF103 props={props} values={values} activePhase={activePhase} />
       case 201:
-        return <TDF201 props={props} values={values} />
+        return <TDF201 props={props} values={values} activePhase={activePhase} />
       case 301:
-        return <TDF301 props={props} values={values} />
+        return <TDF301 props={props} values={values} activePhase={activePhase} />
       case 302:
-        return <TDF302 props={props} values={values} />
+        return <TDF302 props={props} values={values} activePhase={activePhase} />
       case 303:
-        return <TDF303 props={props} values={values} />
+        return <TDF303 props={props} values={values} activePhase={activePhase} />
       case 401:
-        return <TDF401 props={props} values={values} />
+        return <TDF401 props={props} values={values} activePhase={activePhase} />
       case 402:
-        return <TDF402 props={props} values={values} />
+        return <TDF402 props={props} values={values} activePhase={activePhase} />
       case 403:
-        return <TDF403 props={props} values={values} />
+        return <TDF403 props={props} values={values} activePhase={activePhase} />
       case 404:
-        return <TDF404 props={props} values={values} />
+        return <TDF404 props={props} values={values} activePhase={activePhase}/>
       case 405:
-        return <TDF405 props={props} values={values} />
+        return <TDF405 props={props} values={values} activePhase={activePhase}/>
       case 406:
-        return <TDF406 props={props} values={values} />
+        return <TDF406 props={props} values={values} activePhase={activePhase}/>
       case 501:
-        return <TDF501 props={props} values={values} />
+        return <TDF501 props={props} values={values} activePhase={activePhase}/>
       case 502:
-        return <TDF502 props={props} values={values} />
+        return <TDF502 props={props} values={values} activePhase={activePhase}/>
       case 601:
-        return <TDF601 props={props} values={values} />
+        return <TDF601 props={props} values={values} activePhase={activePhase}/>
       case 602:
-        return <TDF602 props={props} values={values} />
+        return <TDF602 props={props} values={values} activePhase={activePhase}/>
       case 603:
-        return <TDF603 props={props} values={values} />
+        return <TDF603 props={props} values={values} activePhase={activePhase}/>
       case 701:
-        return <TDF701 props={props} values={values} />
+        return <TDF701 props={props} values={values} activePhase={activePhase}/>
       default:
-        return <TDF101 props={props} values={values} />
+        return <TDF101 props={props} values={values} activePhase={activePhase}/>
     }
   }
 

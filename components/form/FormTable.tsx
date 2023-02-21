@@ -29,138 +29,196 @@ const defaultUsers = [
 ]
 
 export const FormTable = ({ field, form, phaseId }) => {
-  console.log("🚀 ~ file: FormTable.tsx:32 ~ FormTable ~ phaseId", phaseId)
   if (field.value === '') {
     form.setFieldValue(field.name, defaultUsers)
   }
 
   const header = (
     <>
-      <p className="text-xs font-bold uppercase text-gray-700">User</p>
-      <p className="w-16 text-xs font-bold uppercase text-gray-700">Task</p>
-      {phaseId > 301 ?? (
-        <p className="w-16 text-xs font-bold uppercase text-gray-700">
-          Motivation
-        </p>
-      )}
-      {phaseId > 302 ?? (
-        <p className="w-16 text-xs font-bold uppercase text-gray-700">
-          Value Creation
-        </p>
-      )}
-      {phaseId > 303 ?? (
-        <p className="w-16 text-xs font-bold uppercase text-gray-700">
-          Behaviour
-        </p>
-      )}
-      {phaseId > 401 ?? (
-        <p className="w-16 text-xs font-bold uppercase text-gray-700">
-          Incentives
-        </p>
-      )}
-      {phaseId > 402 ?? (
-        <p className="w-16 text-xs font-bold uppercase text-gray-700">
-          Mechanism
-        </p>
-      )}
-      {phaseId > 403 ?? (
-        <p className="w-16 text-xs font-bold uppercase text-gray-700">
-          Side Effects
-        </p>
-      )}
-      <p></p>
+      <thead className="bg-gray-50 text-xs text-gray-700">
+        <tr>
+          <th scope="col" className="py-3 px-6">
+            User
+          </th>
+          <th scope="col" className="py-3 px-6">
+            Task
+          </th>
+          {phaseId > 301 ? (
+            <th className="w-16 text-xs text-gray-700">
+              Motivation
+            </th>
+          ) : (
+            <></>
+          )}
+          {phaseId > 302 ? (
+            <th className="w-16 text-xs text-gray-700">
+              Value Creation
+            </th>
+          ) : (
+            <></>
+          )}
+          {phaseId > 303 ? (
+            <th className="w-16 text-xs text-gray-700">
+              Behaviour
+            </th>
+          ) : (
+            <></>
+          )}
+          {phaseId > 401 ? (
+            <th className="w-16 text- text-gray-700">
+              Incentives
+            </th>
+          ) : (
+            <></>
+          )}
+          {phaseId > 402 ? (
+            <th className="w-16 text-xs text-gray-700">
+              Mechanism
+            </th>
+          ) : (
+            <></>
+          )}
+          {phaseId > 403 ? (
+            <th className="w-16 text-xs text-gray-700">
+              Side Effects
+            </th>
+          ) : (
+            <></>
+          )}
+          <th></th>
+        </tr>
+      </thead>      
     </>
   )
 
   const incentiveRow = (input, index, arrayHelpers) => {
     return (
       <>
-        <Field
-          name={`${field.name}.${index}.user`}
-          placeholder="user"
-          className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
-          as="textarea"
-        />
-        <Field
-          name={`${field.name}.${index}.task`}
-          placeholder="task"
-          className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
-          as="textarea"
-        />
-        {phaseId > 301 ?? (
-          <Field
-            name={`${field.name}.${index}.why`}
-            placeholder="why"
-            className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
-            as="textarea"
-          />
-        )}
-        {phaseId > 302 ?? (
-          <Field
-            name={`${field.name}.${index}.valueCreation`}
-            placeholder="valueCreation"
-            className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
-            as="textarea"
-          />
-        )}
-        {phaseId > 303 ?? (
-          <Field
-            name={`${field.name}.${index}.behaviour`}
-            placeholder="behaviour"
-            className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
-            as="textarea"
-          />
-        )}
-        {phaseId > 401 ?? (
-          <Field
-            name={`${field.name}.${index}.incentive`}
-            placeholder="incentive"
-            className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
-            as="textarea"
-          />
-        )}
-        {phaseId > 402 ?? (
-          <Field
-            name={`${field.name}.${index}.mechanism1`}
-            placeholder="mechanism1"
-            className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
-            as="textarea"
-          />
-        )}
-        {phaseId > 403 ?? (
-          <Field
-            name={`${field.name}.${index}.mechanism2`}
-            placeholder="mechanism2"
-            className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
-            as="textarea"
-          />
-        )}
-        <button
-          type="button"
-          className="mr-2 inline-flex h-8 w-8 items-center rounded-full bg-red-500 p-2.5 text-center text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-800"
-          onClick={() => arrayHelpers.remove(index)}
-        >
-          <svg fill="white" viewBox="0 0 16 16" height="1em" width="1em">
-            <path d="M4 8a.5.5 0 01.5-.5h7a.5.5 0 010 1h-7A.5.5 0 014 8z" />
-          </svg>
-        </button>
+        <tr key={index} className="border-b bg-white font-normal text-xs">
+          <th
+            scope="row"
+            className="whitespace-nowrap text-gray-900 "
+          >
+            {' '}
+            <Field
+              name={`${field.name}.${index}.user`}
+              placeholder="user"
+              className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+              as="textarea"
+            />
+          </th>
+          <td className="">
+            {' '}
+            <Field
+              name={`${field.name}.${index}.task`}
+              placeholder="task"
+              className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+              as="textarea"
+            />
+          </td>
+          {phaseId > 301 ? (
+            <td>
+              <Field
+                name={`${field.name}.${index}.why`}
+                placeholder="why"
+                className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+                as="textarea"
+              />
+            </td>
+          ) : (
+            <></>
+          )}
+          {phaseId > 302 ? (
+            <td>
+              <Field
+                name={`${field.name}.${index}.valueCreation`}
+                placeholder="valueCreation"
+                className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+                as="textarea"
+              />
+            </td>
+          ) : (
+            <></>
+          )}
+          {phaseId > 303 ? (
+            <td>
+              <Field
+                name={`${field.name}.${index}.behaviour`}
+                placeholder="behaviour"
+                className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+                as="textarea"
+              />
+            </td>
+          ) : (
+            <></>
+          )}
+          {phaseId > 401 ? (
+            <td>
+              <Field
+                name={`${field.name}.${index}.incentive`}
+                placeholder="incentive"
+                className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+                as="textarea"
+              />
+            </td>
+          ) : (
+            <></>
+          )}
+          {phaseId > 402 ? (
+            <td>
+              <Field
+                name={`${field.name}.${index}.mechanism1`}
+                placeholder="mechanism1"
+                className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+                as="textarea"
+              />
+            </td>
+          ) : (
+            <></>
+          )}
+          {phaseId > 403 ? (
+            <td>
+              <Field
+                name={`${field.name}.${index}.mechanism2`}
+                placeholder="mechanism2"
+                className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+                as="textarea"
+              />
+            </td>
+          ) : (
+            <></>
+          )}
+          <td>
+            <button
+              type="button"
+              className="mr-2 inline-flex h-8 w-8 items-center rounded-full bg-red-500 p-2.5 text-center font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-800"
+              onClick={() => arrayHelpers.remove(index)}
+            >
+              <svg fill="white" viewBox="0 0 16 16" height="1em" width="1em">
+                <path d="M4 8a.5.5 0 01.5-.5h7a.5.5 0 010 1h-7A.5.5 0 014 8z" />
+              </svg>
+            </button>
+          </td>
+        </tr>
       </>
     )
   }
 
   return (
-    <div className="relative">
+    <div className="relative overflow-x-auto">
       <FieldArray
         name={field.name}
         render={(arrayHelpers) => (
-          <div className="mb-4 overflow-auto rounded-lg border-2 p-2">
-            <div className="mb-3 grid grid-cols-3 gap-3">
+          <>
+            <table className="mb-1 text-left text-sm text-gray-500 overflow-x-auto">
               {header}
-              {field.value?.length > 0 &&
-                field.value?.map((input, index) => (
-                  <>{incentiveRow(input, index, arrayHelpers)}</>
-                ))}
-            </div>
+              <tbody>
+                {field.value?.length > 0 &&
+                  field.value?.map((input, index) => (
+                    <>{incentiveRow(input, index, arrayHelpers)}</>
+                  ))}
+              </tbody>
+            </table>
             <button
               type="button"
               className="mt-3 mr-3 rounded-md bg-dao-red px-2 py-1 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
@@ -173,7 +231,17 @@ export const FormTable = ({ field, form, phaseId }) => {
             >
               Add User
             </button>
-          </div>
+          </>
+          // <div className="mb-4 overflow-auto rounded-lg border-2 p-2">
+          //   <div className="mb-3 grid grid-cols-4 gap-3">
+          //     {header}
+          //     {field.value?.length > 0 &&
+          //       field.value?.map((input, index) => (
+          //         <>{incentiveRow(input, index, arrayHelpers)}</>
+          //       ))}
+          //   </div>
+
+          // </div>
         )}
       />
     </div>

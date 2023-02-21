@@ -41,6 +41,11 @@ export const groupByAuthorClerkId = (items) => {
   return groupedItems
 }
 
+export const getActiveDesignPhase = (designPhases, activePhase) => {
+  return designPhases.find(
+    (adp) => adp.phaseId === activePhase)
+}
+
 export const shortBigNumber = (value) =>
   new Intl.NumberFormat('en', { notation: 'compact' }).format(value)
 

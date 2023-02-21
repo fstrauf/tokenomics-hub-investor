@@ -2,9 +2,10 @@ import { Field } from 'formik'
 import BreakdownBox from '../slugView/breakdown-box'
 import ResourceSection from './ResourceSection'
 import FormTable from '../form/FormTable'
+import { getActiveDesignPhase } from '../../lib/helper'
 
-export default function TDF302({ props, values }) {
-  const designPhase = props.designPhases.find((adp) => String(adp.phaseId) === '302')
+export default function TDF302({ props, values, activePhase }) {
+  const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
   return (
     <div className="grid w-full grid-cols-2 gap-2 rounded-lg border-2 p-2">
       <div className="col-span-2">

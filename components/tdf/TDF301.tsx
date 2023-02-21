@@ -2,11 +2,10 @@ import { Field } from 'formik'
 import BreakdownBox from '../slugView/breakdown-box'
 import ResourceSection from './ResourceSection'
 import FormTable from '../form/FormTable'
+import { getActiveDesignPhase } from '../../lib/helper'
 
-export default function TDF301({ props, values }) {
-  const designPhase = props.designPhases.find(
-    (adp) => String(adp.phaseId) === '301'
-  )
+export default function TDF301({ props, values, activePhase }) {
+  const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
 
   return (
     <div className="flex w-full flex-col rounded-lg border-2 p-2">
@@ -17,7 +16,7 @@ export default function TDF301({ props, values }) {
       <div className="">
         <Field
           name={`DesignElement.${values?.DesignElement?.findIndex(
-            (de) => de.designPhaseId === 301
+            (de) => de.designPhaseId === activePhase
           )}.content`}
           component={FormTable}
           placeholder="Select categories"
