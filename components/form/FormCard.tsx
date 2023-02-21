@@ -63,49 +63,102 @@ export const FormCard = ({ field, form, phaseId }) => {
         name={field.name}
         render={(arrayHelpers) => (
           <>
-            <div className="flex flex-row flex-wrap gap-2">
+            <div key={4711} className="flex flex-row flex-wrap gap-2">
               {field.value?.length > 0 &&
                 field.value?.map((input, index) => (
-                  <button
-                    key={index}    
-                    onClick={() => handleEditMechanism(index)}                
+                  <div
+                    key={index}
+                    className="h-44 w-44 rounded-md border-2 border-dao-green"
                   >
-                    <div className="h-44 w-44 rounded-md border-2 border-dao-green">
-                      <button
-                        className="relative float-right"
-                        onClick={() => arrayHelpers.remove(index)}
-                        type="button"
-                      >
-                        <XMarkIcon className="h-3 w-3" aria-hidden="true" />
-                      </button>
+                    <button
+                      className="relative float-right"
+                      onClick={() => arrayHelpers.remove(index)}
+                      type="button"
+                    >
+                      <XMarkIcon className="h-3 w-3" aria-hidden="true" />
+                    </button>
+                    <button
+                      className="h-full w-full"
+                      onClick={() => handleEditMechanism(index)}
+                    >
                       <p className="">{input.user}</p>
                       <p className="">{input.mechanism}</p>
                       <p className="">{input.isSink}</p>
-                    </div>
-                  </button>
+                    </button>
+                  </div>
                 ))}
               <Drawer isOpen={isOpen} setIsOpen={setIsOpen}>
-                <Field
-                  name={`${field.name}.${mechanismIndex}.user`}
-                  placeholder="user"
-                  className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-gray-900 focus:border-blue-500 focus:ring-blue-500"
-                  rows={4}
-                  as="textarea"
-                />
-                <Field
-                  name={`${field.name}.${mechanismIndex}.mechanism`}
-                  placeholder="user"
-                  className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-gray-900 focus:border-blue-500 focus:ring-blue-500"
-                  rows={4}
-                  as="textarea"
-                />
-                <Field
-                  name={`${field.name}.${mechanismIndex}.sellPressure`}
-                  placeholder="user"
-                  className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-gray-900 focus:border-blue-500 focus:ring-blue-500"
-                  rows={4}
-                  as="textarea"
-                />
+                <div className="flex flex-col p-4">
+                  <label className="block text-sm font-medium text-gray-900 ">
+                    User
+                  </label>
+                  <Field
+                    name={`${field.name}.${mechanismIndex}.user`}
+                    placeholder="User"
+                    className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+                    // rows={1}
+                    type="text"
+                  />
+                  <label className="block text-sm font-medium text-gray-900 ">
+                    Mechanism Name
+                  </label>
+                  <Field
+                    name={`${field.name}.${mechanismIndex}.mechanism`}
+                    placeholder="Mechanism Name"
+                    className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+                    type="text"
+                  />
+                  <label className="mb-2 block text-sm font-medium text-gray-900 ">
+                    Sell Pressure?
+                  </label>
+                  <Field
+                    name={`${field.name}.${mechanismIndex}.sellPressure`}
+                    placeholder="Sell Pressure or Buy Pressure"
+                    className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+                    // rows={4}
+                    type="checkbox"
+                  />
+                  <label className="block text-sm font-medium text-gray-900 ">
+                    Describe the mechanism
+                  </label>
+                  <Field
+                    name={`${field.name}.${mechanismIndex}.description`}
+                    placeholder="Describe the mechanism"
+                    className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+                    rows={4}
+                    as="textarea"
+                  />
+                  <label className="block text-sm font-medium text-gray-900 ">
+                    Where do tokens come from?
+                  </label>
+                  <Field
+                    name={`${field.name}.${mechanismIndex}.from`}
+                    placeholder="Where do Tokens come from?"
+                    className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+                    rows={4}
+                    as="textarea"
+                  />
+                  <label className="block text-sm font-medium text-gray-900 ">
+                    Who are tokens distributed to?
+                  </label>
+                  <Field
+                    name={`${field.name}.${mechanismIndex}.to`}
+                    placeholder="Who are tokens distributed to?"
+                    className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+                    rows={4}
+                    as="textarea"
+                  />
+                  <label className="block text-sm font-medium text-gray-900 ">
+                    Impact on other users
+                  </label>
+                  <Field
+                    name={`${field.name}.${mechanismIndex}.impact`}
+                    placeholder="Impact on other users"
+                    className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+                    rows={4}
+                    as="textarea"
+                  />
+                </div>
               </Drawer>
               <button
                 type="button"
