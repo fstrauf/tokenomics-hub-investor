@@ -3,6 +3,7 @@ import BreakdownBox from '../slugView/breakdown-box'
 import ResourceSection from './ResourceSection'
 import { getActiveDesignPhase } from '../../lib/helper'
 
+//taking stock
 export default function TDF501({ props, values,activePhase }) {
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
   return (

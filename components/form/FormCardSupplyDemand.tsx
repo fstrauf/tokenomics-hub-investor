@@ -4,7 +4,7 @@ import XMarkIcon from '../../public/svg/xmarkicon'
 import Drawer from '../slugView/Drawer'
 import MechanismCard from '../tdf/MechanismCard'
 
-export const FormCard = ({ field, form, phaseId, mechanismImpactFactors }) => {
+export const FormCardSupplyDemand = ({ field, form, phaseId, mechanismImpactFactors }) => {
   let [isOpen, setIsOpen] = useState(false)
   let [mechanismIndex, setMechanismIndex] = useState(0)
 
@@ -71,4 +71,4 @@ export const FormCard = ({ field, form, phaseId, mechanismImpactFactors }) => {
   )
 }
 
-export default FormCard
+export default FormCardSupplyDemand
