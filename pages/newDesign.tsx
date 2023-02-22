@@ -40,12 +40,15 @@ export const getStaticProps: GetServerSideProps = async (context) => {
 
   txCalls.push(prisma.designPhases.findMany({orderBy: {phaseOrder: 'asc'}}))
 
-  const [posts, designPhases] = await prisma.$transaction(txCalls)
+  txCalls.push(prisma.mechanismImpactFactors.findMany({}))
+
+  const [posts, designPhases, mechanismImpactFactors] = await prisma.$transaction(txCalls)
 
   return {
     props: {
       posts: posts || null,
       designPhases: designPhases || null,
+      mechanismImpactFactors: mechanismImpactFactors || null,
     },
   }
 }

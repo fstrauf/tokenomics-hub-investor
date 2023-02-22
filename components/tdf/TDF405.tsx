@@ -11,7 +11,7 @@ export default function TDF405({ props, values, activePhase }) {
     <div className="flex w-full flex-col rounded-lg border-2 p-2">
       <div>
         <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 ">
-          {designPhase.name}
+          {designPhase?.name}
         </h5>
         <ResourceSection content={designPhase.Resources} />
       </div>
@@ -22,6 +22,7 @@ export default function TDF405({ props, values, activePhase }) {
           component={FormCard}
           placeholder="Select categories"
           phaseId={designPhase.phaseId}
+          mechanismImpactFactors={props.mechanismImpactFactors}
         />
       <div>
         <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 ">

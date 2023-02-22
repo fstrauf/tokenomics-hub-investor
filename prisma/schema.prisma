@@ -73,6 +73,11 @@ model Tag {
   posts Post[]
 }
 
+model MechanismImpactFactors {
+  value String  @id
+  label String?
+}
+
 model ProtocolTimeLine {
   id          String    @id @default(cuid())
   title       String?
