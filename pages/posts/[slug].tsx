@@ -96,7 +96,7 @@ export default function Post({ post, morePosts, author }) {
                 shortDescription={post.shortDescription}
                 cats={post.categories}
                 tags={post.tags}
-                tokenStrength={getTotalStrength(post?._avg)}
+                tokenStrength={Number(getTotalStrength(post?._avg).toFixed(1))}
                 ticker={post.ticker}
                 imageUrl={post.mainImageUrl}
                 isOfficial={post.isOfficial}

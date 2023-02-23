@@ -194,7 +194,7 @@ function TokenStrength({ value }) {
   const strength = value || 0
   return (
     <div className="m-auto h-10 w-10">
-      <CircularProgressbar value={strength} text={`${strength}`} />
+      <CircularProgressbar value={strength} text={`${Number(strength.toFixed(1))}`} />
     </div>
   )
 }
