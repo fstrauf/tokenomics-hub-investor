@@ -301,9 +301,9 @@ export async function getStaticProps({ params }) {
     })
   )
 
-  const response = await prisma.$transaction(txCalls)
+  const [postCount, catByAuthor, strengthRatingAggregate] = await prisma.$transaction(txCalls)
 
-  // console.log("🚀 ~ file: [slug].tsx:311 ~ getStaticProps ~ response[0]", response[2])
+
 
   let clerkUser = post?.authorClerkId
     ? await clerkClient.users.getUser(post?.authorClerkId)
@@ -311,13 +311,13 @@ export async function getStaticProps({ params }) {
 
   clerkUser = clerkConvertJSON(clerkUser)
 
-  clerkUser.articleCount = response[0] || 0
+  clerkUser.articleCount = postCount || 0
   
-  clerkUser.cat = response[1] || null
+  clerkUser.cat = catByAuthor || null
 
   return {
     props: {
-      post: Object.assign(post, response[2]) || null,
+      post: Object.assign(post, strengthRatingAggregate) || null,
       author: clerkUser || null,
     },
     revalidate: 1,
@@ -329,9 +329,6 @@ export async function getStaticPaths() {
     select: {
       slug: true,      
     },
-    // where: {
-    //   status: postStatus.published
-    // }
   })
 
   return {
@@ -342,6 +339,5 @@ export async function getStaticPaths() {
         },
       })) || [],
     fallback: true,
-    // revalidate: 10, // In seconds
   }
 }

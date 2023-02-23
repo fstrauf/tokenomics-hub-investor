@@ -2,6 +2,7 @@ import BreakdownBox from './breakdown-box'
 import { RatingDialog } from './ratingDialog'
 
 export default function TokenStrength({ post, contributor }) {
+  console.log("🚀 ~ file: token-strength.js:5 ~ TokenStrength ~ post", post)
   return (
     <>
       <div className="mb-4 mt-10 flex justify-between md:mt-20">
@@ -14,27 +15,27 @@ export default function TokenStrength({ post, contributor }) {
       <div className="grid rounded-lg border-2">
         <BreakdownBox
           value={post?.tokenUtility}
-          strength={post?._avg?.tokenUtilityStrength}
+          strength={Number(post?._avg?.tokenUtilityStrength.toFixed(1))}
           title="Token Utility:"
         />
         <BreakdownBox
           value={post?.demandDrivers}
-          strength={post?._avg?.demandDriversStrength}
+          strength={Number(post?._avg?.demandDriversStrength.toFixed(1))}
           title="Demand Driver:"
         />
         <BreakdownBox
           value={post?.valueCreation}
-          strength={post?._avg?.valueCreationStrength}
+          strength={Number(post?._avg?.valueCreationStrength.toFixed(1))}
           title="Value Creation:"
         />
         <BreakdownBox
           value={post?.valueCapture}
-          strength={post?._avg?.valueCaptureStrength}
+          strength={Number(post?._avg?.valueCaptureStrength.toFixed(1))}
           title="Value Capture:"
         />
         <BreakdownBox
           value={post?.businessModel}
-          strength={post?._avg?.businessModelStrength}
+          strength={Number(post?._avg?.businessModelStrength.toFixed(1))}
           title="Business Model:"
         />
       </div>

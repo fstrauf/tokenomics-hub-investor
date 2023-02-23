@@ -93,7 +93,7 @@ export default function FormRating({ post, userReview }) {
             <div className="grid">
               <BreakdownBox
                 value={post?.tokenUtility}
-                strength={post?._avg?.tokenUtilityStrength || 0}
+                strength={Number(post?._avg?.tokenUtilityStrength.toFixed(1)) || 0}
                 title="Token Utility:"
               />
               <div className="flex">
@@ -167,7 +167,7 @@ export default function FormRating({ post, userReview }) {
 
               <BreakdownBox
                 value={post?.demandDrivers}
-                strength={post?._avg?.demandDriversStrength || 0}
+                strength={Number(post?._avg?.demandDriversStrength.toFixed(1)) || 0}
                 title="Demand Driver:"
               />
               <div className="flex">
@@ -244,7 +244,7 @@ export default function FormRating({ post, userReview }) {
               </div>
               <BreakdownBox
                 value={post?.valueCreation}
-                strength={post?._avg?.valueCreationStrength || 0}
+                strength={Number(post?._avg?.valueCreationStrength.toFixed(1)) || 0}
                 title="Value Creation:"
               />
               <div className="flex">
@@ -320,7 +320,7 @@ export default function FormRating({ post, userReview }) {
               </div>
               <BreakdownBox
                 value={post?.valueCapture}
-                strength={post?._avg?.valueCaptureStrength || 0}
+                strength={Number(post?._avg?.valueCaptureStrength.toFixed(1)) || 0}
                 title="Value Capture:"
               />
               <div className="flex">
@@ -402,7 +402,7 @@ export default function FormRating({ post, userReview }) {
               </div>
               <BreakdownBox
                 value={post?.businessModel}
-                strength={post?._avg?.businessModelStrength || 0}
+                strength={Number(post?._avg?.businessModelStrength.toFixed(1)) || 0}
                 title="Business Model:"
               />
               <div className="flex">

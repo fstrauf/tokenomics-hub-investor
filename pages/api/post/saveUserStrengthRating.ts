@@ -76,21 +76,19 @@ export default async function handle(req, res) {
     }
     throw e
   }
-  // console.log("🚀 ~ file: saveUserStrengthRating.ts:93 ~ handle ~ getTotalStrength(response[1]?._avg)", response[1])
 const postUpdate = await prisma.post.update({
   where: {
     // id: values.id,
     id: postId,
   },
   data: {
-    tokenStrength: getTotalStrength(response[1]?._avg),
-    tokenUtilityStrength: response[1]?.tokenUtilityStrength,
-    valueCaptureStrength: response[1]?.valueCaptureStrength,
-    valueCreationStrength: response[1]?.valueCreationStrength,
-    demandDriversStrength: response[1]?.demandDriversStrength,
-    businessModelStrength: response[1]?.businessModelStrength,
-  }
-    
+    tokenStrength: Number(getTotalStrength(response[1]?._avg).toFixed(1)),
+    tokenUtilityStrength: Number(response[1]?.tokenUtilityStrength.toFixed(1)),
+    valueCaptureStrength: Number(response[1]?.valueCaptureStrength.toFixed(1)),
+    valueCreationStrength: Number(response[1]?.valueCreationStrength.toFixed(1)),
+    demandDriversStrength: Number(response[1]?.demandDriversStrength.toFixed(1)),
+    businessModelStrength: Number(response[1]?.businessModelStrength.toFixed(1)),
+  }    
 })
 
   return res.status(200).send({ id: response[0].id })
