@@ -16,7 +16,7 @@ export default function TDF501({ props, values,activePhase }) {
         <ResourceSection content={designPhase.Resources}/>
         <Field
           name={`DesignElement.${values?.DesignElement?.findIndex(
-            (de) => de.designPhaseId === activePhase
+            (de) => de.designPhaseId === 405
           )}.content`}
           component={FormCardSupplyDemand}
           placeholder="Select categories"

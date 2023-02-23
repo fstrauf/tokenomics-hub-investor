@@ -13,13 +13,6 @@ export const MechanismCard = ({
         <tr key={factorIndex} className="border-b bg-white text-xs font-normal">
           <th scope="row" className="whitespace-nowrap text-gray-900 ">
             {' '}
-            {/* this should be a select coming from a database */}
-            {/* <Field
-              name={`${field.name}.${mechanismIndex}.impactFactors.${factorIndex}.factor`}
-              placeholder="Factor that impacts token quantity"
-              className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-gray-900 focus:border-blue-500 focus:ring-blue-500"
-              as="select"
-            /> */}
             <Field
               className="custom-select"
               name={`${field.name}.${mechanismIndex}.impactFactors.${factorIndex}.factor`}
