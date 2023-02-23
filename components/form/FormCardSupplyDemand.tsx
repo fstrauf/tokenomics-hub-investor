@@ -4,7 +4,12 @@ import XMarkIcon from '../../public/svg/xmarkicon'
 import Drawer from '../slugView/Drawer'
 import MechanismCard from '../tdf/MechanismCard'
 
-export const FormCardSupplyDemand = ({ field, form, phaseId, mechanismImpactFactors }) => {
+export const FormCardSupplyDemand = ({
+  field,
+  form,
+  phaseId,
+  mechanismImpactFactors,
+}) => {
   let [isOpen, setIsOpen] = useState(false)
   let [mechanismIndex, setMechanismIndex] = useState(0)
 
@@ -14,7 +19,7 @@ export const FormCardSupplyDemand = ({ field, form, phaseId, mechanismImpactFact
       mechanism: '',
       descriptiom: '',
       isSink: true,
-      impactFactors: [{factor: '', isDynamic: true, impactOnQuantity: ''}],
+      impactFactors: [{ factor: '', isDynamic: true, impactOnQuantity: '' }],
     })
     setMechanismIndex(field.value?.length)
     setIsOpen(true)
@@ -26,48 +31,64 @@ export const FormCardSupplyDemand = ({ field, form, phaseId, mechanismImpactFact
 
   return (
     <div className="relative overflow-x-auto">
+      
       <FieldArray
-        name={field.name} 
+        name={field.name}
         render={(arrayHelpers) => (
           <>
-            <div key={4711} className="flex flex-row flex-wrap gap-2">
-              {field.value?.length > 0 &&
-                field.value?.map((input, index) => (
-                  <div
-                    key={index}
-                    className="h-24 w-44 rounded-md border-2 border-dao-green text-xs"
-                  >
-                    <button
-                      className="relative float-right"
-                      onClick={() => arrayHelpers.remove(index)}
-                      type="button"
+            <div className="flex flex-wrap h-128">
+              <div className="w-1/2 bg-slate-200">
+              <p>Supply</p>
+              </div>
+              <div className="w-1/2 bg-slate-400">
+                <p>Demand</p>
+              </div>
+              <div key={4711} className="flex flex-row flex-wrap gap-2">
+                {field.value?.length > 0 &&
+                  field.value?.map((input, index) => (
+                    <div
+                      key={index}
+                      className="h-24 w-44 rounded-md border-2 border-dao-green text-xs"
                     >
-                      <XMarkIcon className="h-3 w-3" aria-hidden="true" />
-                    </button>
-                    <button
-                      className="h-full w-full"
-                      onClick={() => handleEditMechanism(index)}
-                    >
-                      <p className="">{input.user}</p>
-                      <p className="">{input.mechanism}</p>
-                    </button>
-                  </div>
-                ))}
-              <Drawer isOpen={isOpen} setIsOpen={setIsOpen}>
-                <MechanismCard field={field} mechanismIndex={mechanismIndex} mechanismImpactFactors={mechanismImpactFactors} />
-              </Drawer>
-              <button
-                type="button"
-                className="h-24 w-44 rounded-md border-2 border-dao-green text-xs font-bold"
-                onClick={() => handleNewMechanism(arrayHelpers)}
-              >
-                Add Mechanism
-              </button>
+                      <button
+                        className="relative float-right"
+                        onClick={() => arrayHelpers.remove(index)}
+                        type="button"
+                      >
+                        <XMarkIcon className="h-3 w-3" aria-hidden="true" />
+                      </button>
+                      <button
+                        className="h-full w-full"
+                        onClick={() => handleEditMechanism(index)}
+                      >
+                        <p className="">{input.user}</p>
+                        <p className="">{input.mechanism}</p>
+                      </button>
+                    </div>
+                  ))}
+                <Drawer isOpen={isOpen} setIsOpen={setIsOpen}>
+                  <MechanismCard
+                    field={field}
+                    mechanismIndex={mechanismIndex}
+                    mechanismImpactFactors={mechanismImpactFactors}
+                  />
+                </Drawer>
+                <button
+                  type="button"
+                  className="h-24 w-44 rounded-md border-2 border-dao-green text-xs font-bold"
+                  onClick={() => handleNewMechanism(arrayHelpers)}
+                >
+                  Add Mechanism
+                </button>
+              </div>
             </div>
           </>
         )}
       />
     </div>
+
+    // </div>
+    // </div>
   )
 }
 

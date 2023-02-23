@@ -2,6 +2,7 @@ import { Field } from 'formik'
 import BreakdownBox from '../slugView/breakdown-box'
 import ResourceSection from './ResourceSection'
 import { getActiveDesignPhase } from '../../lib/helper'
+import FormCardSupplyDemand from '../form/FormCardSupplyDemand'
 
 //taking stock
 export default function TDF501({ props, values,activePhase }) {
@@ -14,13 +15,13 @@ export default function TDF501({ props, values,activePhase }) {
         </h5>
         <ResourceSection content={designPhase.Resources}/>
         <Field
-          as="textarea"
-          rows="4"
           name={`DesignElement.${values?.DesignElement?.findIndex(
             (de) => de.designPhaseId === activePhase
-          )}.content`} //
-          placeholder="tell us about your requirements"
-          className="mb-3 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
+          )}.content`}
+          component={FormCardSupplyDemand}
+          placeholder="Select categories"
+          phaseId={designPhase.phaseId}
+          mechanismImpactFactors={props.mechanismImpactFactors}
         />
       </div>
       
