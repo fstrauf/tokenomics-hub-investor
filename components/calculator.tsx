@@ -20,7 +20,7 @@ export default function Calculator(props) {
   const AllocationChart = dynamic(() => import('./charts/AllocationChart'), {
     ssr: false,
   })
-  const FormCalculator = dynamic(() => import('./form/FormCalculator'), {
+  const FormEmission = dynamic(() => import('./form/FormEmission'), {
     loading: () => <p>Loading</p>,
   })
   const FormAreaData = dynamic(() => import('./form/FormAreaData'), {
@@ -103,6 +103,7 @@ export default function Calculator(props) {
     }
   }
 
+  //can't load content via route 
   const loadContent = async (calculationId) => {
     router.push(`/calculator?id=${calculationId}`)    
   }
@@ -311,7 +312,7 @@ export default function Calculator(props) {
                 </div>
               </div>
               <div className="mb-6">
-                <FormCalculator values={values} />
+                <FormEmission values={values} />
               </div>
               <FormAreaData name="areaData" />
               <div className="w-full">

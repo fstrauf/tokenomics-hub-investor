@@ -1,14 +1,15 @@
-import { Field } from 'formik'
+// import { Field } from 'formik'
 import BreakdownBox from '../slugView/breakdown-box'
 import ResourceSection from './ResourceSection'
 import { getActiveDesignPhase } from '../../lib/helper'
 import dynamic from 'next/dynamic'
+import TDFCalculator from './TDFCalculator'
 
-export default function TDF601({ props, values,activePhase }) {
+export default function TDF601({ props, values,activePhase}) {
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
-  const Calculator = dynamic(() => import('../calculator'), {
-    loading: () => <p>Loading</p>,
-  })
+  // const TDFCalculator = dynamic(() => import('./TDFCalculator'), {
+  //   loading: () => <p>Loading</p>,
+  // })
   return (
     <div className="grid w-full grid-cols-2 gap-2 rounded-lg border-2 p-2">
       <div className="col-span-2">
@@ -16,7 +17,7 @@ export default function TDF601({ props, values,activePhase }) {
         {designPhase.name}
         </h5>
         <ResourceSection content={designPhase.Resources}/>
-        <Calculator preloadInitialValues={preloadInitialValues} />
+        <TDFCalculator preloadInitialValues={props.preloadInitialCalcValues} values={values} />
         {/* <Field
           as="textarea"
           rows="4"

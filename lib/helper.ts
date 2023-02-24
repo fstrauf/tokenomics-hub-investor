@@ -1,4 +1,94 @@
 
+export const getMergedInitialCalcValues = (userCalcs, userId, detailedCalc) => {
+
+  var preloadInitialValues = initialCalculatorValues
+
+  preloadInitialValues.calculations = userCalcs
+  preloadInitialValues.authorClerkId = userId
+
+  if (detailedCalc !== null) {
+    preloadInitialValues.id = detailedCalc.id
+    preloadInitialValues.totalSupply = detailedCalc.totalSupply
+    preloadInitialValues.months = detailedCalc.months
+    preloadInitialValues.startDate = new Date(
+      detailedCalc.startDate
+    ).toLocaleDateString('en-CA')
+    preloadInitialValues.name = detailedCalc.title
+    preloadInitialValues.calculationRows = detailedCalc.CalculationRows
+  }
+
+  return preloadInitialValues
+
+}
+
+export const initialCalculatorValues = {
+  id: '',
+  totalSupply: 100000000,
+  months: 60,
+  areaData: [],
+  authorClerkId: '',
+  name: '',
+  startDate: new Date().toLocaleDateString('en-CA'),
+  calculations: '',  
+  calculationRows: [
+    {
+      category: 'Treasury',
+      lockupPeriod: 5,
+      unlockPeriod: 12,
+      percentageAllocation: 30,
+      color: '#FF6666',
+      isEpochDistro: false,
+      epochDurationInSeconds: 0,
+      initialEmissionPerSecond: 0,
+      emissionReductionPerEpoch: 0
+
+    },
+    {
+      category: 'Team',
+      lockupPeriod: 0,
+      unlockPeriod: 12,
+      percentageAllocation: 15,
+      color: '#028090',
+      isEpochDistro: false,
+      epochDurationInSeconds: 0,
+      initialEmissionPerSecond: 0,
+      emissionReductionPerEpoch: 0
+    },
+    {
+      category: 'Investors',
+      lockupPeriod: 0,
+      unlockPeriod: 12,
+      percentageAllocation: 15,
+      color: '#66FFB3',
+      isEpochDistro: false,
+      epochDurationInSeconds: 0,
+      initialEmissionPerSecond: 0,
+      emissionReductionPerEpoch: 0
+    },
+    {
+      category: 'Advisors',
+      lockupPeriod: 0,
+      unlockPeriod: 12,
+      percentageAllocation: 10,
+      color: '#996EFF',
+      isEpochDistro: false,
+      epochDurationInSeconds: 0,
+      initialEmissionPerSecond: 0,
+      emissionReductionPerEpoch: 0
+    },
+    {
+      category: 'Airdrops',
+      lockupPeriod: 0,
+      unlockPeriod: 12,
+      percentageAllocation: 30,
+      color: '#333C45',
+      isEpochDistro: true,
+      epochDurationInSeconds: 126144000,
+      initialEmissionPerSecond: 0.2397,
+      emissionReductionPerEpoch: 0.5
+    },
+  ],
+}
 
 export const getLableNumber = (value) => {
   if (isNaN(value)) {
@@ -142,7 +232,7 @@ export function getMonthEpochAreaData(
 export function getAreaData(months, calculationRows, totalSupply, startDate) {
   var chartData: object[] = []
 
-  calculationRows.forEach((cr) => {
+  calculationRows?.forEach((cr) => {
     const rowAllocation = (totalSupply * cr.percentageAllocation) / 100
     if (cr.isEpochDistro) {
       getMonthEpochAreaData(cr, months, rowAllocation, chartData, startDate)
