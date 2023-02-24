@@ -16,6 +16,11 @@ module.exports = {
       spacing: {
         28: '7rem',
       },
+      gridTemplateRows: {
+        '7' : 'repeat(7, minmax(0, 1fr))',
+        '8' : 'repeat(8, minmax(0, 1fr))',
+        '9' : 'repeat(9, minmax(0, 1fr))'
+      },
       letterSpacing: {
         tighter: '-.04em',
       },
