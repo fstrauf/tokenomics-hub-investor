@@ -5,18 +5,18 @@ import FormText from '../form/FormText'
 import BreakdownBox from './breakdown-box'
 import FormStrength from '../form/FormStrength'
 import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
-import { useState } from 'react'
+// import { useState } from 'react'
 import Tooltip from './Tooltip'
 
 export default function FormRating({ post, userReview }) {
   const { user } = useUser()
-  let initialValues = post
-  Object.assign(initialValues, userReview)
-  const [tooltipStatus, setTooltipStatus] = useState(0)
+  const initialValues = userReview
+
 
   const submitData = async (values, { setSubmitting }) => {
     const userId = user?.id
-    const body = { values, userId }
+    const postId = post?.id
+    const body = { values, userId, postId }
     try {
       const response = await fetch('/api/post/saveUserStrengthRating', {
         method: 'POST',
@@ -26,11 +26,11 @@ export default function FormRating({ post, userReview }) {
 
       if (!response.ok) {
         const error = await response.text()
-        toast.error(JSON.parse(error).error, { position: 'bottom-right' })
+        toast.error(JSON.parse(error).error, { position: 'bottom-left' })
         throw new Error(error)
       } else {
         const id = await response.text()
-        toast.success('rating saved ', { position: 'bottom-right' })
+        toast.success('rating saved ', { position: 'bottom-left' })
         //   setPostId(JSON.parse(id).id)
       }
 
@@ -86,6 +86,7 @@ export default function FormRating({ post, userReview }) {
         initialValues={initialValues}
         onSubmit={submitData}
         validate={validate}
+        enableReinitialize
       >
         {({ isSubmitting, values, setFieldValue }) => (
           <Form>
@@ -110,6 +111,7 @@ export default function FormRating({ post, userReview }) {
                     type="number"
                     name="tokenUtilityStrength"
                     className="block w-16 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
+                    onWheel={(event) => event.currentTarget.blur()}
                   />
                 </div>
                 <Tooltip
@@ -184,6 +186,7 @@ export default function FormRating({ post, userReview }) {
                     type="number"
                     name="demandDriversStrength"
                     className="block w-16 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
+                    onWheel={(event) => event.currentTarget.blur()}
                   />
                 </div>
                 <Tooltip>
@@ -261,6 +264,7 @@ export default function FormRating({ post, userReview }) {
                     type="number"
                     name="valueCreationStrength"
                     className="block w-16 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
+                    onWheel={(event) => event.currentTarget.blur()}
                   />
                 </div>
                 <Tooltip>
@@ -338,6 +342,7 @@ export default function FormRating({ post, userReview }) {
                     type="number"
                     name="valueCaptureStrength"
                     className="block w-16 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
+                    onWheel={(event) => event.currentTarget.blur()}
                   />
                 </div>
                 <Tooltip>
@@ -419,6 +424,7 @@ export default function FormRating({ post, userReview }) {
                     type="number"
                     name="businessModelStrength"
                     className="block w-16 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
+                    onWheel={(event) => event.currentTarget.blur()}
                   />
                 </div>
                 <Tooltip>

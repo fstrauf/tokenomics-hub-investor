@@ -16,6 +16,7 @@ export default function PostHeader({
   imageUrl,
   isOfficial,
 }) {
+  // console.log("🚀 ~ file: post-header.js:19 ~ tokenStrength:", tokenStrength)
   const percentageComplete = tokenStrength || 0
 
   return (

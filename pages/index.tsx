@@ -153,6 +153,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       },
     },
   })
+  console.log("🚀 ~ file: index.tsx:156 ~ constgetServerSideProps:GetServerSideProps= ~ allPosts:", allPosts)
 
   // const aggregate = await prisma.userStrengthRating.groupBy({
   //   by: ['postId'],    

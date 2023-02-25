@@ -2,7 +2,7 @@ import BreakdownBox from './breakdown-box'
 import { RatingDialog } from './ratingDialog'
 
 export default function TokenStrength({ post, contributor }) {
-  console.log("🚀 ~ file: token-strength.js:5 ~ TokenStrength ~ post", post)
+  // console.log("🚀 ~ file: token-strength.js:5 ~ TokenStrength ~ post", post)
   return (
     <>
       <div className="mb-4 mt-10 flex justify-between md:mt-20">
