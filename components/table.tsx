@@ -8,7 +8,7 @@ import {
   createColumnHelper,
   flexRender,
   getCoreRowModel,
-  SortingState,
+  // SortingState,
   getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table'
