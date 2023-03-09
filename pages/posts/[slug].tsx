@@ -330,6 +330,7 @@ export async function getStaticPaths() {
       slug: true,      
     },
   })
+  // console.log("🚀 ~ file: [slug].tsx:333 ~ getStaticPaths ~ allPosts:", allPosts)
 
   return {
     paths:

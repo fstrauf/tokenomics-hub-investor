@@ -153,27 +153,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       },
     },
   })
-  console.log("🚀 ~ file: index.tsx:156 ~ constgetServerSideProps:GetServerSideProps= ~ allPosts:", allPosts)
-
-  // const aggregate = await prisma.userStrengthRating.groupBy({
-  //   by: ['postId'],    
-  //   _avg: {
-  //     tokenUtilityStrength: true,
-  //     businessModelStrength: true,
-  //     valueCreationStrength: true,
-  //     valueCaptureStrength: true,
-  //     demandDriversStrength: true,
-  //   },
-  // })
-  // console.log("🚀 ~ file: index.tsx:167 ~ constgetServerSideProps:GetServerSideProps= ~ aggregate", aggregate)
 
   return {
     props: {
       allPosts,
       categories: categories || null,
-      tags: tags || null,
-      // rewardRound
+      tags: tags || null,    
     },
-    // revalidate: 1,
   }
 }
