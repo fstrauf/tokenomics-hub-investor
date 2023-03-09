@@ -17,7 +17,7 @@ type Protocol = {
   title: string
   // catTitle: object
   // tokenStrength: object
-  tokenStrength: any
+  // tokenStrength: any
   coverImage: object
   mainImageUrl: string
   slug: string
@@ -48,10 +48,10 @@ const columns = [
       />
     ),
   }),
-  columnHelper.accessor((row) => row.tokenStrength, {
-    id: 'Token Strength',
-    cell: (info) => <TokenStrength value={info.getValue()} />,
-  }),
+  // columnHelper.accessor((row) => row.tokenStrength, {
+  //   id: 'Token Strength',
+  //   cell: (info) => <TokenStrength value={info.getValue()} />,
+  // }),
   columnHelper.accessor((row) => row.categories, {
     id: 'Category',
     cell: (info) => <CategoryPills value={info.getValue()} />,
@@ -59,18 +59,20 @@ const columns = [
 ]
 
 const Table: React.FC<{ prop: Props }> = ({ prop }) => {
+
+  // console.log("🚀 ~ file: table.tsx:142 ~ prop:", prop)
   const data = prop
-  const [sorting, setSorting] = React.useState<SortingState>([
-    { id: 'Token Strength', desc: true },
-  ])
+  // const [sorting, setSorting] = React.useState<SortingState>([
+  //   { id: 'Token Strength', desc: true },
+  // ])
 
   const table = useReactTable({
     data,
     columns,
     state: {
-      sorting,
+      // sorting,
     },
-    onSortingChange: setSorting,
+    // onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
   })
@@ -139,6 +141,7 @@ const Table: React.FC<{ prop: Props }> = ({ prop }) => {
     </div>
   )
 }
+
 
 export default Table
 
