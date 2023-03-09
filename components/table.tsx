@@ -48,10 +48,10 @@ const columns = [
       />
     ),
   }),
-  // columnHelper.accessor((row) => row.tokenStrength, {
-  //   id: 'Token Strength',
-  //   cell: (info) => <TokenStrength value={info.getValue()} />,
-  // }),
+  columnHelper.accessor((row) => row.tokenStrength, {
+    id: 'Token Strength',
+    cell: (info) => <TokenStrength value={info.getValue()} />,
+  }),
   columnHelper.accessor((row) => row.categories, {
     id: 'Category',
     cell: (info) => <CategoryPills value={info.getValue()} />,
@@ -118,7 +118,7 @@ const Table: React.FC<{ prop: Props }> = ({ prop }) => {
                 ))}
               </thead>
               <tbody className="divide-y divide-gray-200 bg-white">
-                {table.getRowModel().rows.map((row) => (
+                {table?.getRowModel().rows.map((row) => (
                   <tr key={row.id} className="hover:bg-gray-100">
                     {/* row.original.slug */}
                     {row.getVisibleCells().map((cell) => (
@@ -177,17 +177,17 @@ function HeaderLink({ value, slug, ticker }) {
   )
 }
 
-// function TokenStrength({ value }) {
-//   const strength = value || 0
-//   return (
-//     <div className="m-auto h-10 w-10">
-//       <CircularProgressbar
-//         value={strength}
-//         text={`${Number(strength.toFixed(1))}`}
-//       />
-//     </div>
-//   )
-// }
+function TokenStrength({ value }) {
+  const strength = value || 0
+  return (
+    <div className="m-auto h-10 w-10">
+      <CircularProgressbar
+        value={strength}
+        text={`${Number(strength.toFixed(1))}`}
+      />
+    </div>
+  )
+}
 
 function ProtocolImage({ value, slug }) {
   return (
