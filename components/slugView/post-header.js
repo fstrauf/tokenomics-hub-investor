@@ -16,7 +16,6 @@ export default function PostHeader({
   imageUrl,
   isOfficial,
 }) {
-  // console.log("🚀 ~ file: post-header.js:19 ~ tokenStrength:", tokenStrength)
   const percentageComplete = tokenStrength || 0
 
   return (
@@ -24,10 +23,10 @@ export default function PostHeader({
       <PostTitle title={title} imageUrl={imageUrl} />
       <div className="flex flex-col justify-between md:flex-row-reverse">
         <div className="mb-4 h-20 w-20 self-center md:h-40 md:w-40">
-          <CircularProgressbar
+          {/* <CircularProgressbar
             value={percentageComplete}
             text={`${percentageComplete}`}
-          />
+          /> */}
         </div>
         <div className="mb-6 text-lg md:basis-3/5">
           <h1>{shortDescription}</h1>

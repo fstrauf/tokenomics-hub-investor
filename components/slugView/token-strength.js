@@ -1,5 +1,5 @@
 import BreakdownBox from './breakdown-box'
-import { RatingDialog } from './ratingDialog'
+// import { RatingDialog } from './ratingDialog'
 
 export default function TokenStrength({ post, contributor }) {
   // console.log("🚀 ~ file: token-strength.js:5 ~ TokenStrength ~ post", post)
@@ -9,7 +9,7 @@ export default function TokenStrength({ post, contributor }) {
         <h1 className="text-xl font-bold text-black md:text-2xl lg:text-3xl">
           Token Strength.
         </h1>
-        {contributor && <RatingDialog post={post} />}
+        {/* {contributor && <RatingDialog post={post} />} */}
       </div>
 
       <div className="grid rounded-lg border-2">

@@ -48,41 +48,28 @@ const columns = [
       />
     ),
   }),
-  columnHelper.accessor((row) => row.tokenStrength, {
-    // columnHelper.accessor(row => row.tokenStrength.tokenStrength, {
-    id: 'Token Strength',
-    cell: (info) => <TokenStrength value={info.getValue()} />,
-  }),
+  // columnHelper.accessor((row) => row.tokenStrength, {
+  //   id: 'Token Strength',
+  //   cell: (info) => <TokenStrength value={info.getValue()} />,
+  // }),
   columnHelper.accessor((row) => row.categories, {
-    // columnHelper.accessor((row) => row.categories[0]?.label, {
     id: 'Category',
-    // cell: (info) => <StatusPill value={info.getValue()} />,
     cell: (info) => <CategoryPills value={info.getValue()} />,
   }),
 ]
 
 const Table: React.FC<{ prop: Props }> = ({ prop }) => {
-  // console.log("🚀 ~ file: table.tsx:55 ~ prop", prop)
-  // const [data, setData] = React.useState(() => [...prop])
-  // const [data, setData] = React.useState(prop)
-  // console.log("🚀 ~ file: table.tsx:57 ~ data", data)
   const data = prop
   const [sorting, setSorting] = React.useState<SortingState>([
     { id: 'Token Strength', desc: true },
   ])
 
-  // console.log(data[0].categories)
   const table = useReactTable({
     data,
     columns,
     state: {
       sorting,
     },
-    // initialState: {
-    //   sorting: {
-
-    //   }
-    // },
     onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
@@ -166,10 +153,10 @@ export function CategoryPill({ value }) {
 function CategoryPills({ value }) {
   return (
     <>
-    <div className="mr-1 mb-1 flex flex-wrap">
-      {value.map((v) => (      
-          <CategoryPill key={v.value} value={v.label} />        
-      ))}
+      <div className="mr-1 mb-1 flex flex-wrap">
+        {value.map((v) => (
+          <CategoryPill key={v.value} value={v.label} />
+        ))}
       </div>
     </>
   )
@@ -190,24 +177,25 @@ function HeaderLink({ value, slug, ticker }) {
   )
 }
 
-function TokenStrength({ value }) {
-  const strength = value || 0
-  return (
-    <div className="m-auto h-10 w-10">
-      <CircularProgressbar value={strength} text={`${Number(strength.toFixed(1))}`} />
-    </div>
-  )
-}
+// function TokenStrength({ value }) {
+//   const strength = value || 0
+//   return (
+//     <div className="m-auto h-10 w-10">
+//       <CircularProgressbar
+//         value={strength}
+//         text={`${Number(strength.toFixed(1))}`}
+//       />
+//     </div>
+//   )
+// }
 
 function ProtocolImage({ value, slug }) {
-  // console.log(value)
   return (
     <div className="ml-4 w-4 sm:w-16">
       <CoverImage
         slug={slug}
         title={slug}
         imageObject={value}
-        // url={urlForImage(value).url()}
         url={value}
       />
     </div>
