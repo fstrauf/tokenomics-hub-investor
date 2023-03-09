@@ -220,7 +220,7 @@ export const FormCalculator = ({ values }) => {
                 className="mt-3 mr-3 rounded-md bg-dao-red px-2 py-1 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
                 onClick={() =>
                   arrayHelpers.push({
-                    category: 'Treasury',
+                    category: 'Treasury ' + (values?.calculationRows?.length + 1),
                     lockupPeriod: 5,
                     unlockPeriod: 12,
                     percentageAllocation: 10,
@@ -257,7 +257,7 @@ export const FormCalculator = ({ values }) => {
                 className="mt-3 rounded-md bg-dao-red px-2 py-1 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
                 onClick={() =>
                   arrayHelpers.push({
-                    category: 'Treasury',
+                    category: 'Community ' + (values?.calculationRows?.length + 1),
                     lockupPeriod: 5,
                     unlockPeriod: 12,
                     percentageAllocation: 10,
