@@ -10,6 +10,7 @@ export default async function handle(req, res) {
       id: values.id,
     },
     data:{
+      id: values.newId || values.id,
       slug: values.slug,
       isOfficial: values.isOfficial,
       authorClerkId: values.authorClerkId,

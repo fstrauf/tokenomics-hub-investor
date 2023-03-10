@@ -14,7 +14,7 @@ datasource db {
 model Post {
   id                    String               @id @default(cuid())
   title                 String?
-  slug                  String               @unique @default("eth")
+  slug                  String?
   shortDescription      String?              @db.Text
   breakdown             String?              @db.Text
   ourTake               String?              @db.Text
