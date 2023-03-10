@@ -18,6 +18,7 @@ import Strike from '@tiptap/extension-strike'
 import Dropcursor from '@tiptap/extension-dropcursor'
 import Gapcursor from '@tiptap/extension-gapcursor'
 import Image from '@tiptap/extension-image'
+import HorizontalRule from '@tiptap/extension-horizontal-rule'
 import React, { useCallback, useEffect } from 'react'
 import { uploadPhoto } from '../lib/fileUpload'
 type Props = {
@@ -57,6 +58,7 @@ const Tiptap: React.FC<Props> = (props) => {
       Strike,
       Dropcursor,
       Gapcursor,
+      HorizontalRule,
       // StarterKit,
       // Image,
       Image,
@@ -303,15 +305,6 @@ const MenuBar = ({ editor }) => {
       >
         Link
       </button>
-
-      {/* <button
-        type="button"
-        onClick={() => editor.chain().focus().setLink().run()}
-        disabled={!editor.isActive('link')}
-        className="ml-1 rounded-lg border-2 text-sm"
-      >
-        Link
-      </button> */}
       {/* <button
                 type='button'
                 onClick={() => editor.chain().focus().undo().run()}

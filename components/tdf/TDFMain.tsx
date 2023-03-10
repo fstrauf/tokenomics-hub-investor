@@ -79,7 +79,7 @@ export default function TDFMain({ props, content }) {
   })
 
   const submitData = async (values, { setSubmitting }) => {
-    console.log(values)
+    console.log('data', values)
     // const body = { values }
 
     // fetch('/api/post/updateTDFDesignPhases', {
@@ -177,9 +177,7 @@ export default function TDFMain({ props, content }) {
           <TDF602 props={props} values={values} activePhase={activePhase} />
         )
       case 603:
-        return (
-          <TDF603 props={props} values={values} activePhase={activePhase} />
-        )
+        return <TDF603 props={props} activePhase={activePhase} />
       case 701:
         return (
           <TDF701 props={props} values={values} activePhase={activePhase} />
