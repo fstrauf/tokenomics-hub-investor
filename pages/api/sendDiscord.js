@@ -13,20 +13,20 @@ export default async function handler(req, res) {
       channel = process.env.DISCORD_EDITING
       break
     }
-    case postStatus.published: {
-      message =
-        '<@&957492337200754730>: \n\n A new report has just been published on the Tokenomics Hub, check it out and contribute to the Token Strength Rating \n\n' +
-        url +
-        '\n\n Steps: \n\n' +
-        '1. Go to the Token Strength section\n\n' +
-        '2. Click on Add Rating button\n\n' +
-        '3. Read each section, add a score, a comment and hit Save\n\n' +
-        'Note: hover over the info icon to see the rating guide\n\n' +
-        'Happy rating :)'
+    // case postStatus.published: {
+    //   message =
+    //     '<@&957492337200754730>: \n\n A new report has just been published on the Tokenomics Hub, check it out and contribute to the Token Strength Rating \n\n' +
+    //     url +
+    //     '\n\n Steps: \n\n' +
+    //     '1. Go to the Token Strength section\n\n' +
+    //     '2. Click on Add Rating button\n\n' +
+    //     '3. Read each section, add a score, a comment and hit Save\n\n' +
+    //     'Note: hover over the info icon to see the rating guide\n\n' +
+    //     'Happy rating :)'
 
-      channel = process.env.DISCORD_PUBLISHED
-      break
-    }
+    //   channel = process.env.DISCORD_PUBLISHED
+    //   break
+    // }
   }
 
   fetch(channel, {

@@ -101,6 +101,7 @@ export default function adminView({ allPosts }) {
             <Formik
               initialValues={{
                 id: '',
+                newId: '',
                 title: '',
                 slug: '',
                 authorClerkId: '',
@@ -212,6 +213,15 @@ export default function adminView({ allPosts }) {
                     id="id"
                     name="id"
                     placeholder="id"
+                    className="mb-3 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
+                  />
+                  <label className="mb-2 block text-sm font-medium text-gray-900">
+                    New Id
+                  </label>
+                  <DepField
+                    id="newId"
+                    name="newId"
+                    placeholder="newId"
                     className="mb-3 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
                   />
                   <label className="mb-2 block text-sm font-medium text-gray-900">

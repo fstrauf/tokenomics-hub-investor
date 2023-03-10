@@ -24,7 +24,7 @@ export default async function handle(req, res) {
     update: {
       name: values.name,
       phaseId: parseInt(values.phaseId),
-      parentPhaseId: values.parentPhaseId,
+      parentPhaseId: parseInt(values.parentPhaseId || 0),
       Resources: Resources,
       phaseOrder: parseInt(values.phaseOrder),
     },
@@ -32,7 +32,7 @@ export default async function handle(req, res) {
       phaseId: parseInt(values.phaseId),
       name: values.name,
       // ...parentPhase,
-      parentPhaseId: values.parentPhaseId,
+      parentPhaseId: parseInt(values.parentPhaseId || 0),
       Resources: Resources,
       phaseOrder: parseInt(values.phaseOrder),
     },

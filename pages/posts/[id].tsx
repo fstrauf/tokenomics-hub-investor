@@ -73,7 +73,7 @@ export default function Post({ post, morePosts, author }) {
     setSubmitting(false)
   }
 
-  if (!router.isFallback && !post?.slug) {
+  if (!router.isFallback && !post?.id) {
     return <ErrorPage statusCode={404} />
   }
   return (
@@ -248,10 +248,11 @@ export default function Post({ post, morePosts, author }) {
 }
 
 export async function getStaticProps({ params }) {
+  // console.log("🚀 ~ file: [id].tsx:251 ~ getStaticProps ~ params:", params)
   const txCalls = []
   const post = await prisma.post.findUnique({
     where: {
-      slug: params.slug,
+      id: params.id,
     },
     include: {
       categories: {},
@@ -270,6 +271,7 @@ export async function getStaticProps({ params }) {
       },
     },
   })
+  // console.log("🚀 ~ file: [id].tsx:274 ~ getStaticProps ~ post:", post)
 
   txCalls.push(
     prisma.post.count({
@@ -325,18 +327,19 @@ export async function getStaticProps({ params }) {
 export async function getStaticPaths() {
   const allPosts = await prisma.post.findMany({
     select: {
-      slug: true,      
+      id: true,      
     },
     // where: {
     //   status: postStatus.published
     // }
   })
+  // console.log("🚀 ~ file: [id].tsx:334 ~ getStaticPaths ~ allPosts:", allPosts)
 
   return {
     paths:
       allPosts?.map((post) => ({
         params: {
-          slug: post.slug,
+          id: post.id,
         },
       })) || [],
     fallback: true,
