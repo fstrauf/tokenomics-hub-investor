@@ -94,7 +94,7 @@ export default function Header2() {
     </Link>
   )
 
-  const tdfSection = (
+  const tdfRefSection = (
     <Link
       href="/thub"
       className="-m-3 flex items-start rounded-lg p-3 hover:bg-gray-50"
@@ -109,6 +109,46 @@ export default function Header2() {
         </p>
         <p className="mt-1 text-sm text-gray-500">
           Get access to our FigJam design template to design your own token.
+        </p>
+      </div>
+    </Link>
+  )
+
+  const tdfSection = (
+    <Link
+      href="/newDesign"
+      className="-m-3 flex items-start rounded-lg p-3 hover:bg-gray-50"
+    >
+      {/* <item.icon
+        className="h-6 w-6 flex-shrink-0 text-indigo-600"
+        aria-hidden="true"
+      /> */}
+      <div className="ml-4">
+        <p className="text-base font-medium text-gray-900">
+          Tokenomics Design Framework
+        </p>
+        <p className="mt-1 text-sm text-gray-500">
+          Design your own token using our guided framework.
+        </p>
+      </div>
+    </Link>
+  )
+
+  const tdfPhaseAdminSection = (
+    <Link
+      href="/adminTDFPhase"
+      className="-m-3 flex items-start rounded-lg p-3 hover:bg-gray-50"
+    >
+      {/* <item.icon
+        className="h-6 w-6 flex-shrink-0 text-indigo-600"
+        aria-hidden="true"
+      /> */}
+      <div className="ml-4">
+        <p className="text-base font-medium text-gray-900">
+          Edit TDF Phases
+        </p>
+        <p className="mt-1 text-sm text-gray-500">
+          admin / contributor only
         </p>
       </div>
     </Link>
@@ -234,7 +274,7 @@ export default function Header2() {
                         'group inline-flex items-center rounded-md bg-white text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-dao-red focus:ring-offset-2'
                       )}
                     >
-                      <span className="mr-2">More</span>
+                      <span className="mr-2">Design</span>
                       <ChevronIcon
                         className={`${
                           open
@@ -257,7 +297,7 @@ export default function Header2() {
                         <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
                           <div className="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
                             {tdfSection}
-                            {calcTemplateSection}
+                            {tdfPhaseAdminSection}
                           </div>
                         </div>
                       </Popover.Panel>
