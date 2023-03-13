@@ -190,6 +190,7 @@ model DesignPhases {
   @@index([parentPhaseId])
 }
 
+
 model TemplateMechanism {
   id      String  @id @default(cuid())
   name    String?
