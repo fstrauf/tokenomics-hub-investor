@@ -10,8 +10,6 @@ export default function TDF407({ props, values, activePhase }) {
     (adp) => String(adp.phaseId) === '407',
     activePhase
   )
-
-  console.log('designPhase', props.designPhases)
   return (
     <div className="grid w-full  gap-2 rounded-lg border-2 p-2">
       <div className="col-span-1">
