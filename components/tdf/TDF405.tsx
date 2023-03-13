@@ -22,7 +22,7 @@ export default function TDF405({ props, values, activePhase }) {
           component={FormCard}
           placeholder="Select categories"
           phaseId={designPhase.phaseId}
-          mechanismImpactFactors={props.mechanismImpactFactors}
+          // mechanismImpactFactors={props.mechanismImpactFactors}
         />
       <div>
         <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 ">

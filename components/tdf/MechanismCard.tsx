@@ -5,7 +5,7 @@ import FormSelect from '../form/FormSelect'
 export const MechanismCard = ({
   field,
   mechanismIndex,
-  mechanismImpactFactors,
+  // mechanismImpactFactors,
 }) => {
   const impactFactors = (input, factorIndex, arrayHelpers) => {
     return (
@@ -13,14 +13,14 @@ export const MechanismCard = ({
         <tr key={factorIndex} className="border-b bg-white text-xs font-normal">
           <th scope="row" className="whitespace-nowrap text-gray-900 ">
             {' '}
-            <Field
+            {/* <Field
               className="custom-select"
               name={`${field.name}.${mechanismIndex}.impactFactors.${factorIndex}.factor`}
               options={mechanismImpactFactors}
               component={FormSelect}
               placeholder="Select impact factors"
               isMulti={true}
-            />
+            /> */}
           </th>
           <td className="">
             {' '}

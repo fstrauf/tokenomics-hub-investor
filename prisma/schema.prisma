@@ -57,8 +57,10 @@ model Post {
   Comments              Comments[]
   UserStrengthRating    UserStrengthRating[]
   DesignElement         DesignElement[]
+  Mechanism             Mechanism[]
 
   @@index([authorId])
+  @@index([calculationId])
 }
 
 model Category {
@@ -71,11 +73,6 @@ model Tag {
   value String  @id
   label String?
   posts Post[]
-}
-
-model MechanismImpactFactors {
-  value String  @id
-  label String?
 }
 
 model ProtocolTimeLine {
@@ -140,18 +137,20 @@ model Calculation {
 }
 
 model CalculationRows {
-  id                        String      @id @default(cuid())
+  id                        String                  @id @default(cuid())
   category                  String?
   lockupPeriod              Float?
   unlockPeriod              Float?
   percentageAllocation      Float?
-  isEpochDistro             Boolean     @default(false)
+  isEpochDistro             Boolean                 @default(false)
   epochDurationInSeconds    Float?
   initialEmissionPerSecond  Float?
   emissionReductionPerEpoch Float?
   color                     String?
   calculationId             String
-  calculation               Calculation @relation(fields: [calculationId], references: [id], onDelete: Cascade)
+  calculation               Calculation             @relation(fields: [calculationId], references: [id], onDelete: Cascade)
+  Mechanism                 Mechanism?
+  CalculationTimeSeries     CalculationTimeSeries[]
 
   @@index([calculationId])
 }
@@ -190,11 +189,37 @@ model DesignPhases {
   @@index([parentPhaseId])
 }
 
-model TemplateMechanism {
-  id      String  @id @default(cuid())
-  name    String?
-  summary String? @db.Text
-  details String? @db.Text
+// model TemplateMechanism {
+//   id      String  @id @default(cuid())
+//   name    String?
+//   summary String? @db.Text
+//   details String? @db.Text
+// }
+
+model CalculationTimeSeries {
+  id                String           @id @default(cuid())
+  months            Int?
+  tokens            Float?
+  calculationRowsId String?          @unique
+  CalculationRows   CalculationRows? @relation(fields: [calculationRowsId], references: [id])
+}
+
+model Mechanism {
+  id                String           @id @default(cuid())
+  name              String?
+  summary           String?          @db.Text
+  details           String?          @db.Text
+  isSink            Boolean?
+  user              String?
+  token             String?
+  calculationRowsId String?          @unique
+  CalculationRows   CalculationRows? @relation(fields: [calculationRowsId], references: [id])
+  postId            String
+  post              Post             @relation(fields: [postId], references: [id], onDelete: Cascade)
+  isTemplate        Boolean?         @default(false)
+
+  @@index([calculationRowsId])
+  @@index([postId])
 }
 
 model Account {
