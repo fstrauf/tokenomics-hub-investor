@@ -149,10 +149,8 @@ export default function adminTDFPhase({ alldesignPhases }) {
   }
 }
 
-export async function getStaticProps() {
-  const alldesignPhases = await prisma.designPhases.findMany({
-    orderBy: { phaseId: 'asc' },
-  })
+export async function getServerSideProps() {
+  const alldesignPhases = await prisma.designPhases.findMany({orderBy:{ phaseId: 'asc'}})
 
   return {
     props: {

@@ -21,7 +21,7 @@ export default function TDF501({ props, values,activePhase }) {
           component={FormCardSupplyDemand}
           placeholder="Select categories"
           phaseId={designPhase.phaseId}
-          mechanismImpactFactors={props.mechanismImpactFactors}
+          // mechanismImpactFactors={props.mechanismImpactFactors}
         />
       </div>
       

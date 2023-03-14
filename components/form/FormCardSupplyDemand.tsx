@@ -8,7 +8,7 @@ export const FormCardSupplyDemand = ({
   field,
   // form,
   // phaseId,
-  mechanismImpactFactors,
+  // mechanismImpactFactors,
 }) => {
   let [isOpen, setIsOpen] = useState(false)
   let [mechanismIndex, setMechanismIndex] = useState(0)
@@ -76,7 +76,7 @@ export const FormCardSupplyDemand = ({
         <MechanismCard
           field={field}
           mechanismIndex={mechanismIndex}
-          mechanismImpactFactors={mechanismImpactFactors}
+          // mechanismImpactFactors={mechanismImpactFactors}
         />
       </Drawer>
       <FieldArray

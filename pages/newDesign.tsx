@@ -51,7 +51,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   txCalls.push(prisma.designPhases.findMany({ orderBy: { phaseOrder: 'asc' } }))
 
-  txCalls.push(prisma.mechanismImpactFactors.findMany({}))
+  // txCalls.push(prisma.mechanismImpactFactors.findMany({}))
 
   txCalls.push(
     prisma.calculation.findMany({
@@ -72,7 +72,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   //   })
   // )
 
-  const [posts, designPhases, mechanismImpactFactors, userCalcs] =
+  const [posts, designPhases, userCalcs] =
     await prisma.$transaction(txCalls)
 
   // const preloadInitialCalcValues = null
@@ -81,7 +81,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     props: {
       posts: posts || null,
       designPhases: designPhases || null,
-      mechanismImpactFactors: mechanismImpactFactors || null,
+      // mechanismImpactFactors: mechanismImpactFactors || null,
       preloadInitialCalcValues:
         getMergedInitialCalcValues(userCalcs, userId, null) || null,
     },
