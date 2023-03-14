@@ -58,6 +58,7 @@ model Post {
   UserStrengthRating    UserStrengthRating[]
   DesignElement         DesignElement[]
   Mechanism             Mechanism[]
+  PostUser              PostUser[]
 
   @@index([authorId])
   @@index([calculationId])
@@ -217,8 +218,20 @@ model Mechanism {
   postId            String
   post              Post             @relation(fields: [postId], references: [id], onDelete: Cascade)
   isTemplate        Boolean?         @default(false)
+  PostUser          PostUser[]
 
   @@index([calculationRowsId])
+  @@index([postId])
+}
+
+model PostUser {
+  id        String      @id @default(cuid())
+  name      String?
+  role      String?     @db.Text
+  postId    String
+  Post      Post        @relation(fields: [postId], references: [id], onDelete: Cascade)
+  Mechanism Mechanism[]
+
   @@index([postId])
 }
 
