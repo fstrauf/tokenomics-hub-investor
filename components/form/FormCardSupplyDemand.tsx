@@ -6,20 +6,42 @@ import MechanismCard from '../tdf/MechanismCard'
 
 export const FormCardSupplyDemand = ({
   field,
+  values,
   // form,
   // phaseId,
   // mechanismImpactFactors,
+  setFieldValue,
 }) => {
+  // console.log("🚀 ~ file: FormCardSupplyDemand.tsx:15 ~ values:", values)
+  // console.log("🚀 ~ file: FormCardSupplyDemand.tsx:14 ~ field:", field)
   let [isOpen, setIsOpen] = useState(false)
   let [mechanismIndex, setMechanismIndex] = useState(0)
 
   const handleNewMechanism = (arrayHelpers, isSink) => {
     arrayHelpers.push({
-      user: '',
-      mechanism: '',
-      descriptiom: '',
+      name: '',
+      summary: '',
+      details: '',
       isSink: isSink,
-      impactFactors: [{ factor: '', isDynamic: true, impactOnQuantity: '' }],
+      // user: '',
+      token: '',
+      category: 'Treasury',
+      lockupPeriod: 5,
+      unlockPeriod: 12,
+      percentageAllocation: 30,
+      color: '#FF6666',
+      isEpochDistro: false,
+      epochDurationInSeconds: 0,
+      initialEmissionPerSecond: 0,
+      emissionReductionPerEpoch: 0,
+      CalculationTimeSeries: [
+        { id: 1, months: 6, tokens: 50 },
+        { id: 2, months: 5, tokens: 60 },
+        { id: 3, months: 16, tokens: 100 },
+      ],
+      isTemplate: false,
+      PostUser: values.PostUser,
+      // impactFactors: [{ factor: '', isDynamic: true, impactOnQuantity: '' }],
     })
     setMechanismIndex(field.value?.length)
     setIsOpen(true)
@@ -76,15 +98,15 @@ export const FormCardSupplyDemand = ({
         <MechanismCard
           field={field}
           mechanismIndex={mechanismIndex}
-          // mechanismImpactFactors={mechanismImpactFactors}
+          setFieldValue={setFieldValue} users={values.PostUser}          // mechanismImpactFactors={mechanismImpactFactors}
         />
       </Drawer>
       <FieldArray
         name={field.name}
         render={(arrayHelpers) => (
           <>
-            <div className="flex h-128 flex-wrap">
-              <div className="w-1/2 bg-slate-200">
+            <div className="flex flex-col">
+              <div className="h-96 bg-slate-200">
                 <p>Supply</p>
                 <div key={4711} className="flex flex-row flex-wrap gap-2">
                   {field.value?.length > 0 &&
@@ -106,10 +128,9 @@ export const FormCardSupplyDemand = ({
                     Add Mechanism
                   </button>
                 </div>
-
               </div>
 
-              <div className="w-1/2 bg-slate-400">
+              <div className="h-96 bg-slate-400">
                 <p>Demand</p>
                 <div key={4811} className="flex flex-row flex-wrap gap-2">
                   {field.value?.length > 0 &&

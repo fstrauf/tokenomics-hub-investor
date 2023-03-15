@@ -24,6 +24,8 @@ export default function NewDesign(props) {
         return { id: '', content: '', designPhaseId: dp.phaseId }
       }),
     calculation: initialCalculatorValues,
+    Mechanism: [],
+    PostUser: [{id: 1,name: 'Athlete', role: 'Build and audience on the platform'}]
   }
 
   return (

@@ -135,23 +135,27 @@ model Calculation {
   startDate       DateTime?
   CalculationRows CalculationRows[]
   Post            Post[]
+  Mechanism       Mechanism[]
 }
 
 model CalculationRows {
-  id                        String                  @id @default(cuid())
+  id                        String      @id @default(cuid())
   category                  String?
   lockupPeriod              Float?
   unlockPeriod              Float?
   percentageAllocation      Float?
-  isEpochDistro             Boolean                 @default(false)
+  isEpochDistro             Boolean     @default(false)
   epochDurationInSeconds    Float?
   initialEmissionPerSecond  Float?
   emissionReductionPerEpoch Float?
   color                     String?
   calculationId             String
-  calculation               Calculation             @relation(fields: [calculationId], references: [id], onDelete: Cascade)
-  Mechanism                 Mechanism?
-  CalculationTimeSeries     CalculationTimeSeries[]
+  calculation               Calculation @relation(fields: [calculationId], references: [id], onDelete: Cascade)
+  // Mechanism                 Mechanism?              @relation(fields: [mechanismId], references: [id])
+  // CalculationTimeSeries     CalculationTimeSeries[]
+  // mechanismId               String?
+  // Mechanism                 Mechanism?  @relation(fields: [mechanismId], references: [id])
+  // mechanismId               String?
 
   @@index([calculationId])
 }
@@ -199,30 +203,50 @@ model DesignPhases {
 // }
 
 model CalculationTimeSeries {
-  id                String           @id @default(cuid())
-  months            Int?
-  tokens            Float?
-  calculationRowsId String?          @unique
-  CalculationRows   CalculationRows? @relation(fields: [calculationRowsId], references: [id])
+  id          Int        @id @default(autoincrement())
+  months      Int?
+  tokens      Float?
+  // calculationRowsId String?          @unique
+  // CalculationRows   CalculationRows? @relation(fields: [calculationRowsId], references: [id])
+  // CalculationRows   CalculationRows? @relation(fields: [calculationRowsId], references: [id])
+  // calculationRowsId String?
+  Mechanism   Mechanism? @relation(fields: [mechanismId], references: [id])
+  mechanismId String?
+
+  @@index([mechanismId])
 }
 
 model Mechanism {
-  id                String           @id @default(cuid())
-  name              String?
-  summary           String?          @db.Text
-  details           String?          @db.Text
-  isSink            Boolean?
-  user              String?
-  token             String?
-  calculationRowsId String?          @unique
-  CalculationRows   CalculationRows? @relation(fields: [calculationRowsId], references: [id])
-  postId            String
-  post              Post             @relation(fields: [postId], references: [id], onDelete: Cascade)
-  isTemplate        Boolean?         @default(false)
-  PostUser          PostUser[]
+  id                        String                  @id @default(cuid())
+  name                      String?
+  summary                   String?                 @db.Text
+  details                   String?                 @db.Text
+  isSink                    Boolean?
+  // user              String?
+  token                     String?
+  // calculationRowsId String?          @unique
+  // CalculationRows   CalculationRows? @relation(fields: [calculationRowsId], references: [id])
+  postId                    String
+  post                      Post                    @relation(fields: [postId], references: [id], onDelete: Cascade)
+  isTemplate                Boolean?                @default(false)
+  PostUser                  PostUser[]
+  category                  String?
+  lockupPeriod              Float?
+  unlockPeriod              Float?
+  percentageAllocation      Float?
+  isEpochDistro             Boolean                 @default(false)
+  epochDurationInSeconds    Float?
+  initialEmissionPerSecond  Float?
+  emissionReductionPerEpoch Float?
+  color                     String?
+  calculationId             String?
+  calculation               Calculation?            @relation(fields: [calculationId], references: [id], onDelete: Cascade)
+  CalculationTimeSeries     CalculationTimeSeries[]
+  // CalculationRows           CalculationRows[]
 
-  @@index([calculationRowsId])
+  // @@index([calculationRowsId])
   @@index([postId])
+  @@index([calculationId])
 }
 
 model PostUser {

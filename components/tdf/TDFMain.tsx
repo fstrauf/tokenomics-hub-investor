@@ -147,7 +147,7 @@ export default function TDFMain({ props, content }) {
     }
   }
 
-  function renderSwitch(values) {
+  function renderSwitch(values, setFieldValue) {
     switch (activePhase) {
       case 100:
       case 200:
@@ -217,7 +217,7 @@ export default function TDFMain({ props, content }) {
         )
       case 501:
         return (
-          <TDF501 props={props} values={values} activePhase={activePhase} />
+          <TDF501 props={props} values={values} activePhase={activePhase} setFieldValue={setFieldValue} />
         )
       case 502:
         return (
@@ -264,7 +264,7 @@ export default function TDFMain({ props, content }) {
               <FormAutoSave />
               <FieldArray
                 name="DesignElement"
-                render={() => <div>{renderSwitch(values)}</div>}
+                render={() => <div>{renderSwitch(values, setFieldValue)}</div>}
               />
               <button
                 type="submit"
