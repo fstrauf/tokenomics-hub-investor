@@ -51,60 +51,60 @@ export default function TDFCalculator(props) {
     return error;
   }
 
-  const submitData = async (values, { setSubmitting }) => {
-    const body = { values }
-    if(!isSignedIn){
-      toast.error('Please sign in to save calculations', { position: 'bottom-right' })
-      return
-    }
+  // const submitData = async (values, { setSubmitting }) => {
+  //   const body = { values }
+  //   if(!isSignedIn){
+  //     toast.error('Please sign in to save calculations', { position: 'bottom-right' })
+  //     return
+  //   }
 
-    if (values?.id === '') {
-      try {
-        const response = await fetch('/api/post/newCalculation', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(body),
-        })
+  //   if (values?.id === '') {
+  //     try {
+  //       const response = await fetch('/api/post/newCalculation', {
+  //         method: 'POST',
+  //         headers: { 'Content-Type': 'application/json' },
+  //         body: JSON.stringify(body),
+  //       })
 
-        if (!response.ok) {
-          const error = await response.text()
-          toast.error(JSON.parse(error).error, { position: 'bottom-right' })
-          throw new Error(error)
-        } else {
-          const id = await response.text()
-          toast.success('Calculation saved ', { position: 'bottom-right' })
-          setPostId(JSON.parse(id).id)
-        }
+  //       if (!response.ok) {
+  //         const error = await response.text()
+  //         toast.error(JSON.parse(error).error, { position: 'bottom-right' })
+  //         throw new Error(error)
+  //       } else {
+  //         const id = await response.text()
+  //         toast.success('Calculation saved ', { position: 'bottom-right' })
+  //         setPostId(JSON.parse(id).id)
+  //       }
 
-        setSubmitting(false)
-        console.log('calculation created')
-      } catch (error) {
-        console.error(error)
-      }
-    } else {
-      try {
-        const response = await fetch('/api/post/updateCalculation', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(body),
-        })
+  //       setSubmitting(false)
+  //       console.log('calculation created')
+  //     } catch (error) {
+  //       console.error(error)
+  //     }
+  //   } else {
+  //     try {
+  //       const response = await fetch('/api/post/updateCalculation', {
+  //         method: 'POST',
+  //         headers: { 'Content-Type': 'application/json' },
+  //         body: JSON.stringify(body),
+  //       })
 
-        if (!response.ok) {
-          const error = await response.text()
-          toast.error(JSON.parse(error).error, { position: 'bottom-right' })
-          throw new Error(error)
-        } else {
-          toast.success('Calculation saved ', { position: 'bottom-right' })
-        }
+  //       if (!response.ok) {
+  //         const error = await response.text()
+  //         toast.error(JSON.parse(error).error, { position: 'bottom-right' })
+  //         throw new Error(error)
+  //       } else {
+  //         toast.success('Calculation saved ', { position: 'bottom-right' })
+  //       }
 
-        // await Router.push('/');
-        setSubmitting(false)
-        console.log('calculation updated')
-      } catch (error) {
-        console.error(error)
-      }
-    }
-  }
+  //       // await Router.push('/');
+  //       setSubmitting(false)
+  //       console.log('calculation updated')
+  //     } catch (error) {
+  //       console.error(error)
+  //     }
+  //   }
+  // }
 
   //can't load content via route 
   // const loadContent = async (calculationId) => {
@@ -157,7 +157,7 @@ export default function TDFCalculator(props) {
                       onWheel={(event) => event.currentTarget.blur()}
                     />
                   </div>
-                  <div className="mb-6">
+                  {/* <div className="mb-6">
                     <label className="mb-2 block text-sm font-medium text-gray-900">
                       Calculation name
                     </label>
@@ -168,7 +168,7 @@ export default function TDFCalculator(props) {
                       className="block w-52 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
                     />
                     <ErrorMessage name="name">{msg => <div className='text-red-600 font-bold'>{msg}</div>}</ErrorMessage>
-                  </div>
+                  </div> */}
                   <div className="mb-6">
                     <label className="mb-2 block text-sm font-medium text-gray-900">
                       Start Date
@@ -184,19 +184,20 @@ export default function TDFCalculator(props) {
                   <div className="h-80 w-full">
                     <ParentSize>
                       {({ width, height }) => (
+                        // only show supply here
                         <AllocationChart
                           width={width}
                           height={height}
-                          fields={values?.calculation?.calculationRows}
+                          fields={values?.Mechanism.filter(m => !m.isSink)}
                         />
                       )}
                     </ParentSize>
                   </div>
                 </div>
               </div>
-              <div className="mb-6">
+              {/* <div className="mb-6">
                 <FormEmission values={values?.calculation} navPreFix='calculation.' />
-              </div>
+              </div> */}
               <FormAreaData name="calculation.areaData" />  
               <div className="w-full">
                 <div className="h-96 w-full">
@@ -206,7 +207,7 @@ export default function TDFCalculator(props) {
                         width={width}
                         height={height}
                         data={values?.calculation?.areaData}
-                        fields={values?.calculation?.calculationRows}
+                        fields={values?.Mechanism.filter(m => !m.isSink)}
                         totalSupply={values?.calculation?.totalSupply}
                       />
                     )}

@@ -10,14 +10,16 @@ export const FormAreaData = (props) => {
     values,
     setFieldValue,
   } = useFormikContext()
+    console.log("🚀 ~ file: FormAreaData.tsx:13 ~ FormAreaData ~ values:", values)
 
   console.log("🚀 ~ file: FormAreaData.tsx:8 ~ FormAreaData ~ calculationRows:", values.calculation.calculationRows)
 
   React.useEffect(() => {
-    const chartData = getAreaData(values.calculation.months, values.calculation.calculationRows, values.calculation.totalSupply, values.calculation.startDate)
+    // const chartData = getAreaData(values.calculation.months, values.calculation.calculationRows, values.calculation.totalSupply, values.calculation.startDate)
+    const chartData = getAreaData(values.calculation.months, values?.Mechanism.filter(m => !m.isSink), values.calculation.totalSupply, values.calculation.startDate)
 
     setFieldValue(props.name, chartData)
-  }, [setFieldValue, props.name, values.calculation.months, values.calculation.calculationRows, values.calculation.totalSupply, values.calculation.startDate])
+  }, [setFieldValue, props.name, values.calculation.months, values?.Mechanism, values.calculation.totalSupply, values.calculation.startDate])
 
   return <></>
 }
