@@ -2,7 +2,7 @@
 import React from "react";
 import Select from "react-select/creatable";
 
-const FormSelect = ({
+const FormSelectUser = ({
   field,
   form,
   options,
@@ -50,8 +50,9 @@ const FormSelect = ({
         value={field.value}
         onChange={onChange}
         options={options}
-        // getOptionValue={option => option.id}
-        // getOptionLabel={option => option.name}
+        getOptionValue={option => option.id}
+        getOptionLabel={option => option.name}
+        getNewOptionData={(value, label) => ({ id: value, name: label, __isNew__: true })}
         isMulti={true}
         placeholder={placeholder}
       />
@@ -59,6 +60,6 @@ const FormSelect = ({
   }
 }
 
-export default FormSelect;
+export default FormSelectUser;
 
 
