@@ -7,45 +7,54 @@ import MechanismCard from '../tdf/MechanismCard'
 export const FormCardSupplyDemand = ({
   field,
   values,
-  // form,
-  // phaseId,
-  // mechanismImpactFactors,
+  mechanismTemplates,
   setFieldValue,
 }) => {
-  // console.log("🚀 ~ file: FormCardSupplyDemand.tsx:15 ~ values:", values)
-  // console.log("🚀 ~ file: FormCardSupplyDemand.tsx:14 ~ field:", field)
+  const defaultMechanism = {
+    id: 'none',
+    name: 'none',
+    summary: '',
+    details: '',
+    isSink: true,
+    // user: '',
+    token: '',
+    category: 'Treasury',
+    lockupPeriod: 5,
+    unlockPeriod: 12,
+    percentageAllocation: 30,
+    color: '#FF6666',
+    isEpochDistro: false,
+    epochDurationInSeconds: 0,
+    initialEmissionPerSecond: 0,
+    emissionReductionPerEpoch: 0,
+    CalculationTimeSeries: [
+      { id: 1, months: 6, tokens: 50 },
+      { id: 2, months: 5, tokens: 60 },
+      { id: 3, months: 16, tokens: 100 },
+    ],
+    isTemplate: false,
+    PostUser: values.PostUser,
+  }
+
   let [isOpen, setIsOpen] = useState(false)
   let [mechanismIndex, setMechanismIndex] = useState(0)
+  let [selectedTemplate, setSelectedTemplate] = useState(defaultMechanism)
 
-  const handleNewMechanism = (arrayHelpers, isSink) => {
-    arrayHelpers.push({
-      name: '',
-      summary: '',
-      details: '',
-      isSink: isSink,
-      // user: '',
-      token: '',
-      category: 'Treasury',
-      lockupPeriod: 5,
-      unlockPeriod: 12,
-      percentageAllocation: 30,
-      color: '#FF6666',
-      isEpochDistro: false,
-      epochDurationInSeconds: 0,
-      initialEmissionPerSecond: 0,
-      emissionReductionPerEpoch: 0,
-      CalculationTimeSeries: [
-        { id: 1, months: 6, tokens: 50 },
-        { id: 2, months: 5, tokens: 60 },
-        { id: 3, months: 16, tokens: 100 },
-      ],
-      isTemplate: false,
-      PostUser: values.PostUser,
-      // impactFactors: [{ factor: '', isDynamic: true, impactOnQuantity: '' }],
-    })
+  function handleChange(e) {
+    setSelectedTemplate(
+      mechanismTemplates.find((mt) => String(mt.id) === e.target.value) || defaultMechanism
+    )
+  }
+
+  const handleNewMechanism = (arrayHelpers, isSink: boolean) => {
+    let updateMechanism = selectedTemplate
+    updateMechanism.isSink = isSink
+
+    arrayHelpers.push(updateMechanism)
     setMechanismIndex(field.value?.length)
     setIsOpen(true)
   }
+
   const handleEditMechanism = (index) => {
     setMechanismIndex(index)
     setIsOpen(true)
@@ -75,22 +84,21 @@ export const FormCardSupplyDemand = ({
     )
   }
 
-  const emissionTile = (input, index) => {
-    return (
-      <div
-        key={index}
-        className="h-24 w-44 rounded-md border-2 border-dao-green text-xs"
-      >
-        <div
-          className="h-full w-full"
-          // onClick={() => handleEditMechanism(index)}
-        >
-          <p className="">{input.user}</p>
-          <p className="">{input.mechanism}</p>
-        </div>
-      </div>
-    )
-  }
+  // const emissionTile = (input, index) => {
+  //   return (
+  //     <div
+  //       key={index}
+  //       className="h-24 w-44 rounded-md border-2 border-dao-green text-xs"
+  //     >
+  //       <div
+  //         className="h-full w-full"
+  //       >
+  //         <p className="">{input.user}</p>
+  //         <p className="">{input.mechanism}</p>
+  //       </div>
+  //     </div>
+  //   )
+  // }
 
   return (
     <div className="relative overflow-x-auto">
@@ -98,7 +106,8 @@ export const FormCardSupplyDemand = ({
         <MechanismCard
           field={field}
           mechanismIndex={mechanismIndex}
-          setFieldValue={setFieldValue} users={values.PostUser}          // mechanismImpactFactors={mechanismImpactFactors}
+          setFieldValue={setFieldValue}
+          users={values.PostUser} // mechanismImpactFactors={mechanismImpactFactors}
         />
       </Drawer>
       <FieldArray
@@ -143,13 +152,35 @@ export const FormCardSupplyDemand = ({
                         )}
                       </>
                     ))}
-                  <button
-                    type="button"
-                    className="h-24 w-44 rounded-md border-2 border-dao-green text-xs font-bold"
-                    onClick={() => handleNewMechanism(arrayHelpers, true)}
-                  >
-                    Add Mechanism
-                  </button>
+                  <div className="h-24 w-44 rounded-md border-2 border-dao-green text-xs font-bold">
+                    <p>from Template?</p>
+                    <select
+                      onChange={handleChange}
+                      className="block w-52 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
+                    >
+                      <option key="none" value="none">
+                        None
+                      </option>
+                      {mechanismTemplates?.map((c) => (
+                        <>
+                          <option
+                            key={c.id}
+                            value={c.id}
+                            // label={c.name}
+                          >
+                            {c.name} - {c.summary}
+                          </option>
+                        </>
+                      ))}
+                    </select>
+                    <button
+                      type="button"
+                      className="rounded-md border-2 border-dao-green text-xs font-bold"
+                      onClick={() => handleNewMechanism(arrayHelpers, true)}
+                    >
+                      Add Mechanism
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>

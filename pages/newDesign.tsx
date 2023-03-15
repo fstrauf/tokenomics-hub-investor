@@ -63,6 +63,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     })
   )
 
+  txCalls.push(prisma.mechanism.findMany({
+    where: {
+      isTemplate: true
+    }
+  }))
+
   // txCalls.push(
   //   prisma.calculation.findUnique({
   //     where: {
@@ -74,7 +80,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   //   })
   // )
 
-  const [posts, designPhases, userCalcs] =
+  const [posts, designPhases, userCalcs, mechanismTemplates] =
     await prisma.$transaction(txCalls)
 
   // const preloadInitialCalcValues = null
@@ -86,6 +92,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       // mechanismImpactFactors: mechanismImpactFactors || null,
       preloadInitialCalcValues:
         getMergedInitialCalcValues(userCalcs, userId, null) || null,
+      mechanismTemplates: mechanismTemplates || null,
     },
   }
 }

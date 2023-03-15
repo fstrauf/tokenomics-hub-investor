@@ -36,6 +36,7 @@ export default function TDF501({ props, values, activePhase, setFieldValue }) {
             phaseId={designPhase.phaseId}
             setFieldValue={setFieldValue}
             values={values}
+            mechanismTemplates={props.mechanismTemplates}
             // mechanismImpactFactors={props.mechanismImpactFactors}
           />
         </div>

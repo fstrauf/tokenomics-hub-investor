@@ -226,8 +226,8 @@ model Mechanism {
   token                     String?
   // calculationRowsId String?          @unique
   // CalculationRows   CalculationRows? @relation(fields: [calculationRowsId], references: [id])
-  postId                    String
-  post                      Post                    @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId                    String?
+  post                      Post?                   @relation(fields: [postId], references: [id], onDelete: Cascade)
   isTemplate                Boolean?                @default(false)
   PostUser                  PostUser[]
   category                  String?
