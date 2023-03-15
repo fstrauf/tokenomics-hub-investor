@@ -12,7 +12,10 @@ import FormAreaData from '../form/FormAreaData'
 
 export default function TDFCalculator(props) {
   const { preloadInitialValues, values } = props
-  console.log("🚀 ~ file: TDFCalculator.tsx:13 ~ TDFCalculator ~ values:", values)
+  console.log(
+    '🚀 ~ file: TDFCalculator.tsx:13 ~ TDFCalculator ~ values:',
+    values
+  )
   const { isSignedIn } = useAuth()
 
   // const router = useRouter()
@@ -23,6 +26,12 @@ export default function TDFCalculator(props) {
   const AllocationChart = dynamic(() => import('../charts/AllocationChart'), {
     ssr: false,
   })
+  const SupplyDemandChart = dynamic(
+    () => import('../charts/SupplyDemandChart'),
+    {
+      ssr: false,
+    }
+  )
   // const FormEmission = dynamic(() => import('../form/FormEmission'), {
   //   loading: () => <p>Loading</p>,
   // })
@@ -44,11 +53,11 @@ export default function TDFCalculator(props) {
   const [postId, setPostId] = useState(preloadInitialValues.id)
 
   const validateName = async (value) => {
-    let error;
+    let error
     if (!value) {
-      error = 'Required';      
+      error = 'Required'
     }
-    return error;
+    return error
   }
 
   // const submitData = async (values, { setSubmitting }) => {
@@ -106,18 +115,18 @@ export default function TDFCalculator(props) {
   //   }
   // }
 
-  //can't load content via route 
+  //can't load content via route
   // const loadContent = async (calculationId) => {
-  //   router.push(`/calculator?id=${calculationId}`)    
+  //   router.push(`/calculator?id=${calculationId}`)
   // }
 
   // const newForm = async () => {
-  //   router.push(`/calculator`)    
+  //   router.push(`/calculator`)
   // }
 
   return (
     <>
-    {/* <div className='mb-10 mt-10'>
+      {/* <div className='mb-10 mt-10'>
       <h1 className="text-3xl font-bold">
         Welcome to the Tokenomics DAO Calculator
       </h1>
@@ -131,33 +140,33 @@ export default function TDFCalculator(props) {
           enableReinitialize={true}
         >
           {({ isSubmitting, values }) => ( */}
-            {/* // <Form> */}
-             
-              <div className="flex">
-                <div>
-                  <div className="mb-6">
-                    <label className="mb-2 block text-sm font-medium text-gray-900">
-                      Total Supply
-                    </label>
-                    <Field
-                      type="number"
-                      name="calculation.totalSupply"
-                      className="block w-52 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
-                      onWheel={(event) => event.currentTarget.blur()}
-                    />
-                  </div>
-                  <div className="mb-6">
-                    <label className="mb-2 block text-sm font-medium text-gray-900">
-                      Months
-                    </label>
-                    <Field
-                      type="number"
-                      name="calculation.months"
-                      className="block w-52 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
-                      onWheel={(event) => event.currentTarget.blur()}
-                    />
-                  </div>
-                  {/* <div className="mb-6">
+        {/* // <Form> */}
+
+        <div className="flex">
+          <div>
+            <div className="mb-6">
+              <label className="mb-2 block text-sm font-medium text-gray-900">
+                Total Supply
+              </label>
+              <Field
+                type="number"
+                name="calculation.totalSupply"
+                className="block w-52 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
+                onWheel={(event) => event.currentTarget.blur()}
+              />
+            </div>
+            <div className="mb-6">
+              <label className="mb-2 block text-sm font-medium text-gray-900">
+                Months
+              </label>
+              <Field
+                type="number"
+                name="calculation.months"
+                className="block w-52 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
+                onWheel={(event) => event.currentTarget.blur()}
+              />
+            </div>
+            {/* <div className="mb-6">
                     <label className="mb-2 block text-sm font-medium text-gray-900">
                       Calculation name
                     </label>
@@ -169,58 +178,73 @@ export default function TDFCalculator(props) {
                     />
                     <ErrorMessage name="name">{msg => <div className='text-red-600 font-bold'>{msg}</div>}</ErrorMessage>
                   </div> */}
-                  <div className="mb-6">
-                    <label className="mb-2 block text-sm font-medium text-gray-900">
-                      Start Date
-                    </label>
-                    <Field
-                      type="date"
-                      name="calculation.startDate"
-                      className="block w-52 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
-                    />
-                  </div>
-                </div>
-                <div className="m-auto flex w-full flex-col place-items-center">
-                  <div className="h-80 w-full">
-                    <ParentSize>
-                      {({ width, height }) => (
-                        // only show supply here
-                        <AllocationChart
-                          width={width}
-                          height={height}
-                          fields={values?.Mechanism.filter(m => !m.isSink)}
-                        />
-                      )}
-                    </ParentSize>
-                  </div>
-                </div>
-              </div>
-              {/* <div className="mb-6">
+            <div className="mb-6">
+              <label className="mb-2 block text-sm font-medium text-gray-900">
+                Start Date
+              </label>
+              <Field
+                type="date"
+                name="calculation.startDate"
+                className="block w-52 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
+              />
+            </div>
+          </div>
+          <div className="m-auto flex w-full flex-col place-items-center">
+            <div className="h-80 w-full">
+              <ParentSize>
+                {({ width, height }) => (
+                  // only show supply here
+                  <AllocationChart
+                    width={width}
+                    height={height}
+                    fields={values?.Mechanism.filter((m) => !m.isSink)}
+                  />
+                )}
+              </ParentSize>
+            </div>
+          </div>
+        </div>
+        {/* <div className="mb-6">
                 <FormEmission values={values?.calculation} navPreFix='calculation.' />
               </div> */}
-              <FormAreaData name="calculation.areaData" />  
-              <div className="w-full">
-                <div className="h-96 w-full">
-                  <ParentSize>
-                    {({ width, height }) => (
-                      <VestingChart
-                        width={width}
-                        height={height}
-                        data={values?.calculation?.areaData}
-                        fields={values?.Mechanism.filter(m => !m.isSink)}
-                        totalSupply={values?.calculation?.totalSupply}
-                      />
-                    )}
-                  </ParentSize>
-                </div>
-              </div>
-              <FormId
-                postId={postId}
-                type="text"
-                name="id"
-                className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
+        <FormAreaData name="calculation.areaData" />
+        <div className="w-full">
+          <div className="h-96 w-full">
+            <ParentSize>
+              {({ width, height }) => (
+                <VestingChart
+                  width={width}
+                  height={height}
+                  data={values?.calculation?.areaData}
+                  fields={values?.Mechanism.filter((m) => !m.isSink)}
+                  totalSupply={values?.calculation?.totalSupply}
+                />
+              )}
+            </ParentSize>
+          </div>
+        </div>
+        {/* <div className="w-full">
+          <div className="h-96 w-full">
+            <ParentSize>
+            {({ width, height }) => (
+              <SupplyDemandChart
+                width={width}
+                height={height}
+                data={[]}
+                fields={[]}
+                totalSupply={0}
               />
-            {/* </Form>
+              )}
+            </ParentSize>
+          </div>
+        </div> */}
+        <FormId
+          postId={postId}
+          type="text"
+          name="id"
+          className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
+        />
+        {/* </Form>
            )}
          </Formik> */}
       </div>

@@ -3,16 +3,16 @@ import { useFormikContext } from 'formik'
 import { getAreaData } from '../../lib/helper'
 
 export const FormAreaData = (props) => {
-  console.log("🚀 ~ file: FormAreaData.tsx:6 ~ FormAreaData ~ props:", props)
-  const context = useFormikContext()
-  console.log("🚀 ~ file: FormAreaData.tsx:8 ~ FormAreaData ~ context:", context)
+  // console.log("🚀 ~ file: FormAreaData.tsx:6 ~ FormAreaData ~ props:", props)
+  // const context = useFormikContext()
+  // console.log("🚀 ~ file: FormAreaData.tsx:8 ~ FormAreaData ~ context:", context)
   const {
     values,
     setFieldValue,
   } = useFormikContext()
-    console.log("🚀 ~ file: FormAreaData.tsx:13 ~ FormAreaData ~ values:", values)
+    // console.log("🚀 ~ file: FormAreaData.tsx:13 ~ FormAreaData ~ values:", values)
 
-  console.log("🚀 ~ file: FormAreaData.tsx:8 ~ FormAreaData ~ calculationRows:", values.calculation.calculationRows)
+  // console.log("🚀 ~ file: FormAreaData.tsx:8 ~ FormAreaData ~ calculationRows:", values.calculation.calculationRows)
 
   React.useEffect(() => {
     // const chartData = getAreaData(values.calculation.months, values.calculation.calculationRows, values.calculation.totalSupply, values.calculation.startDate)
