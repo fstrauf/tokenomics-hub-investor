@@ -18,7 +18,7 @@ export default function NewProtocol({ categories, tags, calculations, preloadIni
   {
     id: '',
     title: '',
-    slug: 'tdao',
+    slug: '',
     shortDescription: '',
     categories: [
     ],

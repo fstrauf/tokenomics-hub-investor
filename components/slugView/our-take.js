@@ -10,7 +10,7 @@ export default function OurTake({ content }) {
           <table className="text-sm text-left text-gray-500 dark:text-gray-400 bg-gray-50 m-2">
             <caption className='section-head'>Details</caption>
             <tbody>
-              <tr className="">
+              {/* <tr className="">
                 <th scope="row" className="py-3 px-6 font-medium text-gray-900 whitespace-nowrap">Strong Points</th>
                 <td className="py-4 px-6 bg-white border-l text-gray-900">
                   <pre id="message" className="whitespace-pre-line block p-2.5 w-full font-sans text-sm text-gray-900">
@@ -25,7 +25,7 @@ export default function OurTake({ content }) {
                     {content.weakPoints}
                   </pre>
                 </td>
-              </tr>
+              </tr> */}
               <tr>
                 <th scope="row" className="py-3 px-6 font-medium text-gray-900 whitespace-nowrap">Problems & Solutions</th>
                 <td className="py-4 px-6 bg-white border-l text-gray-900">
