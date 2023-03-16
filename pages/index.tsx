@@ -145,6 +145,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       title: true,
       tokenStrength: true,
       slug: true,
+      id: true,
       ticker: true,
       categories: {
         select: {

@@ -20,7 +20,7 @@ type Protocol = {
   // tokenStrength: any
   coverImage: object
   mainImageUrl: string
-  slug: string
+  id: string
   categories: any
   ticker: string
 }
@@ -34,7 +34,7 @@ const columns = [
     // columnHelper.accessor(row => row.coverImage, {
     id: ' ',
     cell: (info) => (
-      <ProtocolImage value={info.getValue()} slug={info.row.original.slug} />
+      <ProtocolImage value={info.getValue()} id={info.row.original.id} />
     ),
     enableSorting: false,
   }),
@@ -43,7 +43,7 @@ const columns = [
     cell: (info) => (
       <HeaderLink
         value={info.getValue()}
-        slug={info.row.original.slug}
+        id={info.row.original.id}
         ticker={info.row.original.ticker}
       />
     ),
@@ -165,8 +165,8 @@ function CategoryPills({ value }) {
   )
 }
 
-function HeaderLink({ value, slug, ticker }) {
-  const url = 'posts/' + slug
+function HeaderLink({ value, id, ticker }) {
+  const url = 'posts/' + id
 
   return (
     <div className="ml-2">
@@ -192,12 +192,12 @@ function TokenStrength({ value }) {
   )
 }
 
-function ProtocolImage({ value, slug }) {
+function ProtocolImage({ value, id }) {
   return (
     <div className="ml-4 w-4 sm:w-16">
       <CoverImage
-        slug={slug}
-        title={slug}
+        id={id}
+        title={id}
         imageObject={value}
         url={value}
       />
