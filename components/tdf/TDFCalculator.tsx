@@ -12,10 +12,10 @@ import FormAreaData from '../form/FormAreaData'
 
 export default function TDFCalculator(props) {
   const { preloadInitialValues, values } = props
-  console.log(
-    '🚀 ~ file: TDFCalculator.tsx:13 ~ TDFCalculator ~ values:',
-    values
-  )
+  // console.log(
+  //   '🚀 ~ file: TDFCalculator.tsx:13 ~ TDFCalculator ~ values:',
+  //   values
+  // )
   const { isSignedIn } = useAuth()
 
   // const router = useRouter()
@@ -215,7 +215,7 @@ export default function TDFCalculator(props) {
                 <VestingChart
                   width={width}
                   height={height}
-                  data={values?.calculation?.areaData}
+                  data={values?.calculation?.areaData.chartData}
                   fields={values?.Mechanism.filter((m) => !m.isSink)}
                   totalSupply={values?.calculation?.totalSupply}
                 />
@@ -223,21 +223,21 @@ export default function TDFCalculator(props) {
             </ParentSize>
           </div>
         </div>
-        {/* <div className="w-full">
+        <div className="w-full">
           <div className="h-96 w-full">
             <ParentSize>
             {({ width, height }) => (
               <SupplyDemandChart
                 width={width}
                 height={height}
-                data={[]}
-                fields={[]}
-                totalSupply={0}
+                data={values?.calculation?.areaData.supplyDemandTotals}
+                fields={values?.Mechanism}
+                totalSupply={values?.calculation?.totalSupply}
               />
               )}
             </ParentSize>
           </div>
-        </div> */}
+        </div>
         <FormId
           postId={postId}
           type="text"

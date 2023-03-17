@@ -11,12 +11,12 @@ export const MechanismCard = ({
   setFieldValue,
   users,
 }) => {
-  console.log("🚀 ~ file: MechanismCard.tsx:14 ~ users:", users)
-  console.log(
-    '🚀 ~ file: MechanismCard.tsx:10 ~ mechanismIndex:',
-    mechanismIndex
-  )
-  console.log('🚀 ~ file: MechanismCard.tsx:10 ~ field:', field)
+  // console.log("🚀 ~ file: MechanismCard.tsx:14 ~ users:", users)
+  // console.log(
+  //   '🚀 ~ file: MechanismCard.tsx:10 ~ mechanismIndex:',
+  //   mechanismIndex
+  // )
+  // console.log('🚀 ~ file: MechanismCard.tsx:10 ~ field:', field)
 
   const isSink = field.value[mechanismIndex]?.isSink || false
 

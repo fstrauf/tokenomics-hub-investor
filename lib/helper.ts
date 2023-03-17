@@ -1,6 +1,4 @@
-
 export const getMergedInitialCalcValues = (userCalcs, userId, detailedCalc) => {
-
   var preloadInitialValues = initialCalculatorValues
 
   preloadInitialValues.calculations = userCalcs
@@ -18,7 +16,6 @@ export const getMergedInitialCalcValues = (userCalcs, userId, detailedCalc) => {
   }
 
   return preloadInitialValues
-
 }
 
 export const initialCalculatorValues = {
@@ -29,7 +26,7 @@ export const initialCalculatorValues = {
   authorClerkId: '',
   name: '',
   startDate: new Date().toLocaleDateString('en-CA'),
-  calculations: '',  
+  calculations: '',
   calculationRows: [
     {
       category: 'Treasury',
@@ -40,8 +37,7 @@ export const initialCalculatorValues = {
       isEpochDistro: false,
       epochDurationInSeconds: 0,
       initialEmissionPerSecond: 0,
-      emissionReductionPerEpoch: 0
-
+      emissionReductionPerEpoch: 0,
     },
     {
       category: 'Team',
@@ -52,7 +48,7 @@ export const initialCalculatorValues = {
       isEpochDistro: false,
       epochDurationInSeconds: 0,
       initialEmissionPerSecond: 0,
-      emissionReductionPerEpoch: 0
+      emissionReductionPerEpoch: 0,
     },
     {
       category: 'Investors',
@@ -63,7 +59,7 @@ export const initialCalculatorValues = {
       isEpochDistro: false,
       epochDurationInSeconds: 0,
       initialEmissionPerSecond: 0,
-      emissionReductionPerEpoch: 0
+      emissionReductionPerEpoch: 0,
     },
     {
       category: 'Advisors',
@@ -74,7 +70,7 @@ export const initialCalculatorValues = {
       isEpochDistro: false,
       epochDurationInSeconds: 0,
       initialEmissionPerSecond: 0,
-      emissionReductionPerEpoch: 0
+      emissionReductionPerEpoch: 0,
     },
     {
       category: 'Airdrops',
@@ -85,7 +81,7 @@ export const initialCalculatorValues = {
       isEpochDistro: true,
       epochDurationInSeconds: 126144000,
       initialEmissionPerSecond: 0.2397,
-      emissionReductionPerEpoch: 0.5
+      emissionReductionPerEpoch: 0.5,
     },
   ],
 }
@@ -132,8 +128,7 @@ export const groupByAuthorClerkId = (items) => {
 }
 
 export const getActiveDesignPhase = (designPhases, activePhase) => {
-  return designPhases.find(
-    (adp) => adp.phaseId === activePhase)
+  return designPhases.find((adp) => adp.phaseId === activePhase)
 }
 
 export const shortBigNumber = (value) =>
@@ -145,26 +140,27 @@ export function getEpochAreaData(
   chartData,
   startDate
 ) {
-
   const secondsPerMonth = 2628000
   let emissions = 0
   let month = 0 //1
-  const epochDurationInMonths = calculationRow.epochDurationInSeconds / secondsPerMonth //hardcode to start with
+  const epochDurationInMonths =
+    calculationRow.epochDurationInSeconds / secondsPerMonth //hardcode to start with
   let emissionsPerSecond = calculationRow.initialEmissionPerSecond
   let epochs = 0
 
   while (emissions < rowAllocation) {
     var categoryLine = {}
 
-    if (chartData[month] === undefined) {      
+    if (chartData[month] === undefined) {
       //always initialise the first line
       chartData[month] = {}
     }
 
-    emissions += secondsPerMonth *  emissionsPerSecond
+    emissions += secondsPerMonth * emissionsPerSecond
 
-    if(month === epochDurationInMonths * (epochs + 1)){
-      emissionsPerSecond = emissionsPerSecond * calculationRow.emissionReductionPerEpoch
+    if (month === epochDurationInMonths * (epochs + 1)) {
+      emissionsPerSecond =
+        emissionsPerSecond * calculationRow.emissionReductionPerEpoch
       epochs++
     }
 
@@ -186,31 +182,33 @@ export function getMonthEpochAreaData(
   months,
   rowAllocation,
   chartData,
-  startDate
+  startDate,
+  supplyDemandTotals
 ) {
-
   let emissions = 0
   const secondsPerMonth = 2628000
   let emissionsPerSecond = calculationRow.initialEmissionPerSecond
   // console.log("🚀 ~ file: helper.ts:110 ~ emissionsPerSecond", emissionsPerSecond)
-  const epochDurationInMonths = Math.floor(calculationRow.epochDurationInSeconds / secondsPerMonth) //hardcode to start with
+  const epochDurationInMonths = Math.floor(
+    calculationRow.epochDurationInSeconds / secondsPerMonth
+  ) //hardcode to start with
   let epochs = 0
 
   for (let i = 0; i < months; i++) {
     var categoryLine = {}
 
-    if (chartData[i] === undefined) {      
+    if (chartData[i] === undefined) {
       //always initialise the first line
       chartData[i] = {}
     }
     //prevent over-emitting
-    if((emissions+secondsPerMonth*emissionsPerSecond) < rowAllocation){
-      
-      emissions += secondsPerMonth *  emissionsPerSecond
+    if (emissions + secondsPerMonth * emissionsPerSecond < rowAllocation) {
+      emissions += secondsPerMonth * emissionsPerSecond
 
-      if(i === (epochDurationInMonths * (epochs + 1))){        
-        
-        emissionsPerSecond = emissionsPerSecond * (1-calculationRow.emissionReductionPerEpoch/100)
+      if (i === epochDurationInMonths * (epochs + 1)) {
+        emissionsPerSecond =
+          emissionsPerSecond *
+          (1 - calculationRow.emissionReductionPerEpoch / 100)
         epochs++
       }
     }
@@ -223,35 +221,127 @@ export function getMonthEpochAreaData(
 
     categoryLine[calculationRow.category] = emissions
     categoryLine['emissionsPerSecond'] = emissionsPerSecond
-    categoryLine['monthlyEmissions'] = secondsPerMonth*emissionsPerSecond
+    categoryLine['monthlyEmissions'] = secondsPerMonth * emissionsPerSecond
     Object.assign(chartData[i], categoryLine)
-  }
+    console.log('🚀 ~ file: helper.ts:226 ~ categoryLine:', categoryLine)
 
+    if (supplyDemandTotals[i] === undefined) {
+      supplyDemandTotals[i] = {
+        date: new Date(startDate).setMonth(new Date(startDate).getMonth() + i),
+        supply: Number(categoryLine[calculationRow.category]),
+      }
+      console.log(
+        '🚀 ~ file: helper.ts:233 ~ Number(categoryLine[calculationRow.category]):',
+        Number(categoryLine[calculationRow.category])
+      )
+    } else {
+      if (supplyDemandTotals[i].supply === undefined) {
+        supplyDemandTotals[i].supply = 0
+      }
+      supplyDemandTotals[i].supply += Number(
+        categoryLine[calculationRow.category]
+      )
+    }
+  }
 }
 
 export function getAreaData(months, calculationRows, totalSupply, startDate) {
-  var chartData: object[] = []
+  var props = { chartData: [], supplyDemandTotals: [] }
+  // var chartData: object[] = []
+  // var supplyDemandTotals: object[] = []
 
   calculationRows?.forEach((cr) => {
     const rowAllocation = (totalSupply * cr.percentageAllocation) / 100
-    if (cr.isEpochDistro) {
-      getMonthEpochAreaData(cr, months, rowAllocation, chartData, startDate)
+    if (cr?.isSink) {
+      // sum up the demand data for supplydemand totals
+      getDemandAreaData(cr, months, props.supplyDemandTotals, startDate)
     } else {
-      getLinearAreaData(cr, months, rowAllocation, chartData, startDate)      
+      if (cr.isEpochDistro) {
+        // add supply for the supplydemand totals
+        getMonthEpochAreaData(
+          cr,
+          months,
+          rowAllocation,
+          props.chartData,
+          startDate,
+          props.supplyDemandTotals
+        )
+      } else {
+        getLinearAreaData(
+          cr,
+          months,
+          rowAllocation,
+          props.chartData,
+          startDate,
+          props.supplyDemandTotals
+        )
+      }
     }
   })
 
-  // console.log("🚀 ~ file: helper.ts:155 ~ getAreaData ~ chartData", chartData)
-  return chartData
+  console.log(
+    '🚀 ~ file: helper.ts:269 ~ calculationRows?.forEach ~ supplyDemandTotals:',
+    props
+  )
+
+  // console.log('🚀 ~ file: helper.ts:155 ~ getAreaData ~ chartData', chartData)
+  return props
 }
-  
+
+export function getDemandAreaData(
+  calculationRow,
+  months,
+  supplyDemandTotals,
+  startDate
+) {
+  const inputData = calculationRow.CalculationTimeSeries
+
+  // const dataset = []
+  let currentMonth = 0
+
+  for (let i = 0; i < inputData.length; i++) {
+    const row = inputData[i]
+    const endMonth = currentMonth + row.months - 1
+    for (let j = currentMonth; j <= endMonth; j++) {
+      if (supplyDemandTotals[j] === undefined) {
+        supplyDemandTotals[j] = {
+          date: new Date(startDate).setMonth(
+            new Date(startDate).getMonth() + j
+          ),
+          demand: row.tokens,
+        }
+      } else {
+        if (supplyDemandTotals[j].demand === undefined) {
+          supplyDemandTotals[j].demand = 0
+        }
+        supplyDemandTotals[j].demand += row.tokens
+      }
+    }
+    currentMonth = endMonth + 1
+  }
+
+  for (let i = currentMonth; i < months; i++) {
+    if (supplyDemandTotals[i] === undefined) {
+      supplyDemandTotals[i] = {
+        date: new Date(startDate).setMonth(new Date(startDate).getMonth() + i),
+        demand: inputData[inputData.length - 1].tokens,
+      }
+    } else {
+      if (supplyDemandTotals[i].demand === undefined) {
+        supplyDemandTotals[i].demand = 0
+      }
+      supplyDemandTotals[i].demand += inputData[inputData.length - 1].tokens
+    }
+  }
+}
 
 export function getLinearAreaData(
   calculationRow,
   months,
   rowAllocation,
   chartData,
-  startDate
+  startDate,
+  supplyDemandTotals
 ) {
   for (let i = 0; i < months; i++) {
     var monthlyEmission = 0
@@ -296,6 +386,24 @@ export function getLinearAreaData(
     }
 
     Object.assign(chartData[i], categoryLine)
+    // console.log("🚀 ~ file: helper.ts:378 ~ categoryLine[calculationRow.category]:", categoryLine)
+    if (supplyDemandTotals[i] === undefined) {
+      supplyDemandTotals[i] = {
+        date: new Date(startDate).setMonth(new Date(startDate).getMonth() + i),
+        supply: Number(categoryLine[calculationRow.category]),
+      }
+      // console.log("🚀 ~ file: helper.ts:379 ~ Number(categoryLine[calculationRow.category]):", Number(categoryLine[calculationRow.category]))
+    } else {
+      if (supplyDemandTotals[i].supply === undefined) {
+        supplyDemandTotals[i].supply = 0
+      }
+      supplyDemandTotals[i].supply += Number(
+        categoryLine[calculationRow.category]
+      )
+      // supplyDemandTotals[i].supply += Number(categoryLine[calculationRow.category]) || 0
+      // console.log("🚀 ~ file: helper.ts:383 ~ supplyDemandTotals[i].supply:", supplyDemandTotals[i].supply)
+      // console.log("🚀 ~ file: helper.ts:384 ~ Number(categoryLine[calculationRow.category]):", Number(categoryLine[calculationRow.category]))
+    }
   }
 }
 

@@ -49,6 +49,8 @@ export const FormCardSupplyDemand = ({
   const handleNewMechanism = (arrayHelpers, isSink: boolean) => {
     let updateMechanism = selectedTemplate
     updateMechanism.isSink = isSink
+    updateMechanism.name = updateMechanism.name + field.value?.length
+    updateMechanism.category = updateMechanism.category + " " + field.value?.length
 
     arrayHelpers.push(updateMechanism)
     setMechanismIndex(field.value?.length)

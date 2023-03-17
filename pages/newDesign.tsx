@@ -38,7 +38,7 @@ export default function NewDesign(props) {
     PostUser: [
       { id: 1, name: 'Athlete', role: 'Build and audience on the platform' },
     ],
-
+    calculation: initialCalculatorValues,
     slug: '',
     shortDescription: '',
     categories: [],

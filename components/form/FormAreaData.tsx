@@ -16,10 +16,10 @@ export const FormAreaData = (props) => {
 
   React.useEffect(() => {
     // const chartData = getAreaData(values.calculation.months, values.calculation.calculationRows, values.calculation.totalSupply, values.calculation.startDate)
-    const chartData = getAreaData(values.calculation.months, values?.Mechanism.filter(m => !m.isSink), values.calculation.totalSupply, values.calculation.startDate)
+    const chartProps = getAreaData(values.calculation.months, values?.Mechanism, values.calculation.totalSupply, values.calculation.startDate)
 
-    setFieldValue(props.name, chartData)
-  }, [setFieldValue, props.name, values.calculation.months, values?.Mechanism, values.calculation.totalSupply, values.calculation.startDate])
+    setFieldValue(props.name, chartProps)
+  }, [setFieldValue, props.name, values.calculation?.months, values?.Mechanism, values.calculation?.totalSupply, values.calculation.startDate])
 
   return <></>
 }
