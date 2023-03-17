@@ -203,15 +203,15 @@ model DesignPhases {
 // }
 
 model CalculationTimeSeries {
-  id          Int        @id @default(autoincrement())
-  months      Int?
-  tokens      Float?
+  id                Int        @id @default(autoincrement())
+  months            Int?
+  tokens            Float?
   // calculationRowsId String?          @unique
   // CalculationRows   CalculationRows? @relation(fields: [calculationRowsId], references: [id])
   // CalculationRows   CalculationRows? @relation(fields: [calculationRowsId], references: [id])
-  // calculationRowsId String?
-  Mechanism   Mechanism? @relation(fields: [mechanismId], references: [id])
-  mechanismId String?
+  calculationRowsId String?
+  Mechanism         Mechanism? @relation(fields: [mechanismId], references: [id])
+  mechanismId       String?
 
   @@index([mechanismId])
 }
