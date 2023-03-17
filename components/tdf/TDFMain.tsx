@@ -7,7 +7,8 @@ import FormAutoSave from '../form/FormAutoSave'
 // import TDFHeaders from './TDFHeaders'
 
 export default function TDFMain({ props, content }) {
-  // console.log('🚀 ~ file: tdfMain.tsx:9 ~ TDFMainx ~ props', props)
+  console.log('🚀 ~ file: tdfMain.tsx:9 ~ TDFMainx ~ props', props)
+  // console.log('🚀 content', content)
   const [activePhase, setActivePhase] = useState(101) //props.design.activePhase
 
   const initialValues = content
@@ -95,10 +96,10 @@ export default function TDFMain({ props, content }) {
 
   const submitData = async (values, { setSubmitting }) => {
     const body = { values }
-    console.log('val', body)
+    console.log('val TDF mail', body)
     if (values?.id === '') {
       try {
-        const response = await fetch('/api/post/updateTDFDesignPhases', {
+        const response = await fetch('/api/post/newDesign', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(body),
@@ -124,7 +125,7 @@ export default function TDFMain({ props, content }) {
       }
     } else {
       try {
-        const response = await fetch('/api/post/updateTDFDesignPhases', {
+        const response = await fetch('/api/post/newDesign', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(body),
@@ -217,7 +218,12 @@ export default function TDFMain({ props, content }) {
         )
       case 501:
         return (
-          <TDF501 props={props} values={values} activePhase={activePhase} setFieldValue={setFieldValue} />
+          <TDF501
+            props={props}
+            values={values}
+            activePhase={activePhase}
+            setFieldValue={setFieldValue}
+          />
         )
       case 502:
         return (

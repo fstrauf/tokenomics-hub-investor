@@ -1,34 +1,35 @@
 import Layout from '../components/layout'
-import React from 'react';
+import React from 'react'
 import prisma from '../lib/prisma'
-import Post2 from '../components/post2';
-import { GetServerSideProps } from 'next';
-import { useUser } from '@clerk/clerk-react/dist/hooks/useUser';
-import { postStatus } from '../lib/helper';
+import Post2 from '../components/post2'
+import { GetServerSideProps } from 'next'
+import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
+import { postStatus } from '../lib/helper'
 // import { getAuth } from '@clerk/nextjs/server';
 // import { AuthData } from '@clerk/nextjs/dist/server/types'
 
-export default function NewProtocol({ categories, tags, calculations, preloadInitialValues }) {
-
-  const { user } = useUser();
+export default function NewProtocol({
+  categories,
+  tags,
+  calculations,
+  preloadInitialValues,
+}) {
+  const { user } = useUser()
 
   const today = new Date().toLocaleDateString('en-CA')
 
-  const defaultContent =
-  {
+  const defaultContent = {
     id: '',
     title: '',
     slug: '',
     shortDescription: '',
-    categories: [
-    ],
-    tags: [
-    ],
-    protocolTimeLine: [
-    ],
+    categories: [],
+    tags: [],
+    protocolTimeLine: [],
     publishedAt: today,
     breakdown: '',
-    mainImageUrl: 'https://storage.googleapis.com/my-bucket-bbc0e24/Logo_Tokenomics_DAO.png',
+    mainImageUrl:
+      'https://storage.googleapis.com/my-bucket-bbc0e24/Logo_Tokenomics_DAO.png',
     tokenUtility: '',
     tokenUtilityStrength: 0,
     businessModel: '',
@@ -47,8 +48,7 @@ export default function NewProtocol({ categories, tags, calculations, preloadIni
     horizon: '',
     metrics: '',
     diagramUrl: '',
-    ProtocolResources: [
-    ],
+    ProtocolResources: [],
     // Author: { email: user?.email },
     strongPoints: '',
     weakPoints: '',
@@ -61,23 +61,25 @@ export default function NewProtocol({ categories, tags, calculations, preloadIni
 
   return (
     <>
-      <Layout>        
-        <Post2 content={defaultContent} categories={categories} tags={tags} calculations={calculations} />
+      <Layout>
+        <Post2
+          content={defaultContent}
+          categories={categories}
+          tags={tags}
+          calculations={calculations}
+        />
       </Layout>
     </>
   )
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-
   const txCalls = []
   txCalls.push(prisma.category.findMany())
   txCalls.push(prisma.tag.findMany())
   txCalls.push(prisma.calculation.findMany())
 
-  const response = await prisma.$transaction(
-    txCalls
-  )
+  const response = await prisma.$transaction(txCalls)
 
   return {
     props: {

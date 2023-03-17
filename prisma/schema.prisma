@@ -59,6 +59,7 @@ model Post {
   DesignElement         DesignElement[]
   Mechanism             Mechanism[]
   PostUser              PostUser[]
+  PostAuthor            PostAuthor[]
 
   @@index([authorId])
   @@index([calculationId])
@@ -194,7 +195,6 @@ model DesignPhases {
   @@index([parentPhaseId])
 }
 
-
 // model TemplateMechanism {
 //   id      String  @id @default(cuid())
 //   name    String?
@@ -256,6 +256,16 @@ model PostUser {
   postId    String
   Post      Post        @relation(fields: [postId], references: [id], onDelete: Cascade)
   Mechanism Mechanism[]
+
+  @@index([postId])
+}
+
+model PostAuthor {
+  id          String  @id @default(cuid())
+  postId      String
+  clerkUserId String
+  role        String? @db.Text
+  Post        Post    @relation(fields: [postId], references: [id], onDelete: Cascade)
 
   @@index([postId])
 }
