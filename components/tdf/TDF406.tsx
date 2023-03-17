@@ -2,7 +2,7 @@ import { Field } from 'formik'
 import BreakdownBox from '../slugView/breakdown-box'
 import ResourceSection from './ResourceSection'
 
-export default function TDF406({ props, values }) {
+export default function TDF406({ props, values, activePhase }) {
   const designPhase = props.designPhases.find((adp) => String(adp.phaseId) === '406')
   return (
     <div className="grid w-full grid-cols-2 gap-2 rounded-lg border-2 p-2">

@@ -10,7 +10,7 @@ article a {
 
 @layer components {
   .section-head {
-    @apply mt-4 text-xl mb-2 text-gray-500;
+    @apply mt-4 mb-2 text-xl text-gray-500;
   }
 }
 
@@ -19,7 +19,7 @@ article a {
  * All of the styles in this file are configurable!
  */
 
- .CircularProgressbar {
+.CircularProgressbar {
   /*
    * This fixes an issue where the CircularProgressbar svg has
    * 0 width inside a "display: flex" container, and thus not visible.
@@ -33,19 +33,19 @@ article a {
 }
 
 .CircularProgressbar .CircularProgressbar-path {
-  stroke: #FF6666;
-  strokeLinecap: round;
+  stroke: #ff6666;
+  strokelinecap: round;
   transition: stroke-dashoffset 0.5s ease 0s;
 }
 
 .CircularProgressbar .CircularProgressbar-trail {
   stroke: #d6d6d6;
   /* Used when trail is not full diameter, i.e. when props.circleRatio is set */
-  strokeLinecap: round;
+  strokelinecap: round;
 }
 
 .CircularProgressbar .CircularProgressbar-text {
-  fill: #FF6666;
+  fill: #ff6666;
   font-size: 30px;
   dominant-baseline: middle;
   text-anchor: middle;
@@ -64,7 +64,8 @@ article a {
  *     percentage={50}
  *   />
  */
-.CircularProgressbar.CircularProgressbar-inverted .CircularProgressbar-background {
+.CircularProgressbar.CircularProgressbar-inverted
+  .CircularProgressbar-background {
   fill: #3e98c7;
 }
 
@@ -78,4 +79,11 @@ article a {
 
 .CircularProgressbar.CircularProgressbar-inverted .CircularProgressbar-trail {
   stroke: transparent;
+}
+
+.error {
+  font-size: 12px;
+  color: red;
+  margin-top: -0.5rem;
+  margin-bottom: 0.5rem;
 }

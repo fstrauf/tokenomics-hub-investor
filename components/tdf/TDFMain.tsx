@@ -3,10 +3,12 @@ import { useState } from 'react'
 import dynamic from 'next/dynamic'
 import { Field, FieldArray, Form, Formik } from 'formik'
 import toast, { Toaster } from 'react-hot-toast'
+import FormAutoSave from '../form/FormAutoSave'
 // import TDFHeaders from './TDFHeaders'
 
 export default function TDFMain({ props, content }) {
-  // console.log('🚀 ~ file: tdfMain.tsx:9 ~ TDFMainx ~ props', props)
+  console.log('🚀 ~ file: tdfMain.tsx:9 ~ TDFMainx ~ props', props)
+  // console.log('🚀 content', content)
   const [activePhase, setActivePhase] = useState(101) //props.design.activePhase
 
   const initialValues = content
@@ -78,18 +80,72 @@ export default function TDFMain({ props, content }) {
     loading: () => <p>Loading</p>,
   })
 
+  // const submitData = async (values, { setSubmitting }) => {
+  //   const body = { values }
+
+  //   fetch('/api/post/newTDFDesignPhases', {
+  //     method: 'POST',
+  //     headers: { 'Content-Type': 'application/json' },
+  //     body: JSON.stringify(body),
+  //   })
+
+  //   setSubmitting(false)
+  //   toast.success('saved ', { position: 'bottom-right' })
+  //   console.log('tdfSubmit', values)
+  // }
+
   const submitData = async (values, { setSubmitting }) => {
-    console.log('data', values)
-    // const body = { values }
+    const body = { values }
+    console.log('val TDF mail', body)
+    if (values?.id === '') {
+      try {
+        const response = await fetch('/api/post/newDesign', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body),
+        })
 
-    // fetch('/api/post/updateTDFDesignPhases', {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify(body),
-    // })
+        if (!response.ok) {
+          const error = await response.text()
+          toast.error(JSON.parse(error).error, { position: 'bottom-right' })
+          throw new Error(error)
+        } else {
+          //connect the returned id to the inputfields.id
+          const id = await response.text()
+          // console.log(response)
+          toast.success('Changes auto-saved ', {
+            position: 'bottom-right',
+          })
+        }
 
-    // setSubmitting(false)
-    // toast.success('saved ', { position: 'bottom-right' })
+        setSubmitting(false)
+        console.log('TDF created', values)
+      } catch (error) {
+        console.error(error)
+      }
+    } else {
+      try {
+        const response = await fetch('/api/post/newDesign', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body),
+        })
+
+        if (!response.ok) {
+          const error = await response.text()
+          toast.error(JSON.parse(error).error, { position: 'bottom-right' })
+          throw new Error(error)
+        } else {
+          toast.success('Changes auto-saved ', { position: 'bottom-right' })
+        }
+
+        // await Router.push('/');
+        setSubmitting(false)
+        console.log('TDF updated')
+      } catch (error) {
+        console.error(error)
+      }
+    }
   }
 
   function renderSwitch(values, setFieldValue) {
@@ -162,7 +218,12 @@ export default function TDFMain({ props, content }) {
         )
       case 501:
         return (
-          <TDF501 props={props} values={values} activePhase={activePhase} setFieldValue={setFieldValue} />
+          <TDF501
+            props={props}
+            values={values}
+            activePhase={activePhase}
+            setFieldValue={setFieldValue}
+          />
         )
       case 502:
         return (
@@ -206,6 +267,7 @@ export default function TDFMain({ props, content }) {
         >
           {({ isSubmitting, setFieldValue, values }) => (
             <Form>
+              <FormAutoSave />
               <FieldArray
                 name="DesignElement"
                 render={() => <div>{renderSwitch(values, setFieldValue)}</div>}

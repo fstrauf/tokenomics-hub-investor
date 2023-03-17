@@ -17,10 +17,14 @@ export default function adminTDFPhase({ alldesignPhases }) {
   })
 
   function handleChange(e) {
-    console.log("🚀 ~ file: adminTDFPhase.tsx:22 ~ handleChange ~ alldesignPhases.find((adp) => String(adp.id) === e.target.value)", alldesignPhases.find((adp) => String(adp.id) === e.target.value))
-    setInititalValues(
-      alldesignPhases.find((adp) => String(adp.id) === e.target.value)      
+    console.log(
+      '🚀 ~ file: adminTDFPhase.tsx:22 ~ handleChange ~ alldesignPhases.find((adp) => String(adp.id) === e.target.value)',
+      alldesignPhases.find((adp) => String(adp.id) === e.target.value)
     )
+    setInititalValues(
+      alldesignPhases.find((adp) => String(adp.id) === e.target.value)
+    )
+    console.log('e', e)
   }
 
   const submitData = async (values, { setSubmitting }) => {
@@ -59,8 +63,10 @@ export default function adminTDFPhase({ alldesignPhases }) {
             >
               {alldesignPhases.map((c) => (
                 <>
-                  <option key={c.id} value={c.id} 
-                  // label={c.name}
+                  <option
+                    key={c.id}
+                    value={c.id}
+                    // label={c.name}
                   >
                     {c.phaseId} - {c.name}
                   </option>
@@ -73,7 +79,7 @@ export default function adminTDFPhase({ alldesignPhases }) {
               enableReinitialize
             >
               {({ isSubmitting, setFieldValue }) => (
-                <Form>               
+                <Form>
                   <label className="mb-2 block text-sm font-medium text-gray-900">
                     Phase Id
                   </label>
@@ -99,7 +105,6 @@ export default function adminTDFPhase({ alldesignPhases }) {
                   <Field
                     id="parentPhaseId"
                     name="parentPhaseId"
-                    
                     placeholder="parentPhaseId"
                     className="mb-3 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
                   />

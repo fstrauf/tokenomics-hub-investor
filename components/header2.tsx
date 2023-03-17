@@ -144,12 +144,24 @@ export default function Header2() {
         aria-hidden="true"
       /> */}
       <div className="ml-4">
-        <p className="text-base font-medium text-gray-900">
-          Edit TDF Phases
-        </p>
-        <p className="mt-1 text-sm text-gray-500">
-          admin / contributor only
-        </p>
+        <p className="text-base font-medium text-gray-900">Edit TDF Phases</p>
+        <p className="mt-1 text-sm text-gray-500">admin / contributor only</p>
+      </div>
+    </Link>
+  )
+
+  const tdfCoreMechanismSection = (
+    <Link
+      href="/coreMechanisms"
+      className="-m-3 flex items-start rounded-lg p-3 hover:bg-gray-50"
+    >
+      {/* <item.icon
+        className="h-6 w-6 flex-shrink-0 text-indigo-600"
+        aria-hidden="true"
+      /> */}
+      <div className="ml-4">
+        <p className="text-base font-medium text-gray-900">Core Mechanisms</p>
+        <p className="mt-1 text-sm text-gray-500">TDF Core Mechanisms</p>
       </div>
     </Link>
   )
@@ -191,20 +203,18 @@ export default function Header2() {
 
   return (
     <>
-      <div className="bg-dao-green m-auto">
+      <div className="m-auto bg-dao-green">
         <div className="mx-auto max-w-xl py-3 px-3 sm:px-6 lg:px-8">
           {/* <div className="m-auto flex"> */}
-            <p className="ml-3 truncate font-medium text-white self-center text-center">
-              <span className="inline">
-                🥳 We are fundraising. Interested?{' '}
-              </span>
-              <a
-                href="mailto:contact@tokenomicsdao.com"
-                className="hover:underline"
-              >
-                Contact us.
-              </a>
-            </p>
+          <p className="ml-3 self-center truncate text-center font-medium text-white">
+            <span className="inline">🥳 We are fundraising. Interested? </span>
+            <a
+              href="mailto:contact@tokenomicsdao.com"
+              className="hover:underline"
+            >
+              Contact us.
+            </a>
+          </p>
           {/* </div> */}
         </div>
       </div>
@@ -298,6 +308,7 @@ export default function Header2() {
                           <div className="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
                             {tdfSection}
                             {tdfPhaseAdminSection}
+                            {tdfCoreMechanismSection}
                           </div>
                         </div>
                       </Popover.Panel>

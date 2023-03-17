@@ -10,8 +10,9 @@ import { AuthData } from '@clerk/nextjs/dist/server/types'
 import { initialCalculatorValues } from '../lib/helper'
 
 export default function NewDesign(props) {
-  // console.log("🚀 ~ file: newDesign.tsx:10 ~ NewDesign ~ props", props)
+  console.log('🚀 ~ file: newDesign.tsx:10 ~ NewDesign ~ props', props)
   const { user } = useUser()
+  const today = new Date().toLocaleDateString('en-CA')
 
   const defaultContent = {
     id: '',
@@ -19,13 +20,58 @@ export default function NewDesign(props) {
     authorClerkId: user.id,
     status: postStatus.draft,
     DesignElement: props.designPhases
-      .filter((dp) => dp.parentPhaseId)
+      .filter(dp => dp.parentPhaseId)
       .map((dp) => {
         return { id: '', content: '', designPhaseId: dp.phaseId }
       }),
-    calculation: initialCalculatorValues,
-    Mechanism: [],
-    PostUser: [{id: 1,name: 'Athlete', role: 'Build and audience on the platform'}]
+    // calculation: initialCalculatorValues,
+    Mechanism:  props.mechanismTemplates.map(mt => {
+      return {
+        id: mt.id,
+        name: mt.name,
+        summary: mt.summary,
+        details: mt.details,
+        isSink: mt.isSink,
+        isTemplate: mt.isTemplate,
+      }
+    }),
+    PostUser: [
+      { id: 1, name: 'Athlete', role: 'Build and audience on the platform' },
+    ],
+
+    slug: '',
+    shortDescription: '',
+    categories: [],
+    tags: [],
+    protocolTimeLine: [],
+    publishedAt: today,
+    breakdown: '',
+    mainImageUrl:
+      'https://storage.googleapis.com/my-bucket-bbc0e24/Logo_Tokenomics_DAO.png',
+    tokenUtility: '',
+    tokenUtilityStrength: 0,
+    businessModel: '',
+    businessModelStrength: 0,
+    valueCreation: '',
+    valueCreationStrength: 0,
+    valueCapture: '',
+    valueCaptureStrength: 0,
+    demandDrivers: '',
+    demandDriversStrength: 0,
+    totalTokenStrength: 0,
+    threeMonthHorizon: '',
+    oneYearHorizon: '',
+    upside: '',
+    downside: '',
+    horizon: '',
+    metrics: '',
+    diagramUrl: '',
+    ProtocolResources: [],
+    // Author: { email: user?.email },
+    strongPoints: '',
+    weakPoints: '',
+    problemSolution: '',
+    parent: '',
   }
 
   return (
@@ -63,11 +109,13 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     })
   )
 
-  txCalls.push(prisma.mechanism.findMany({
-    where: {
-      isTemplate: true
-    }
-  }))
+  txCalls.push(
+    prisma.mechanism.findMany({
+      where: {
+        isTemplate: true,
+      },
+    })
+  )
 
   // txCalls.push(
   //   prisma.calculation.findUnique({
