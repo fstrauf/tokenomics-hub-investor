@@ -1,9 +1,6 @@
 import React, { useMemo, useCallback } from 'react'
-// import { AreaStack } from '@visx/shape'
-// import { LinearGradient } from '@visx/gradient'
 import { scaleTime, scaleLinear, scaleOrdinal } from '@visx/scale'
 import { extent, bisector } from 'd3-array'
-// import tinycolor from 'tinycolor2'
 import { localPoint } from '@visx/event'
 import {
   withTooltip,
@@ -59,16 +56,14 @@ export default withTooltip<StackedAreasProps, TooltipData>(
     tooltipTop = 0,
     tooltipLeft = 0,
     data,
-    fields,
+    // fields,
     totalSupply,
   }: StackedAreasProps & WithTooltipProvidedProps<TooltipData>) => {
-    // console.log('🚀 ~ file: VestingChart.tsx:58 ~ fields:', fields)
-    console.log('🚀 ~ file: VestingChart.tsx:58 ~ data:', data)
 
     const timeScale = scaleTime<number>({
       domain: [Math.min(...data.map(date)), Math.max(...data.map(date))],
     })
-    const temperatureScale = scaleLinear<number>({
+    const supplyDemandScale = scaleLinear<number>({
       domain: [
         Math.min(...data.map((d) => Math.min(supply(d), demand(d)))),
         Math.max(...data.map((d) => Math.max(supply(d), demand(d)))),
@@ -80,16 +75,15 @@ export default withTooltip<StackedAreasProps, TooltipData>(
     const yMax = height - margin.top - margin.bottom
 
     timeScale.range([0, xMax])
-    temperatureScale.range([yMax, 0])
+    supplyDemandScale.range([yMax, 0])
 
-    // console.log("🚀 ~ file: VestingChart.tsx:58 ~ data", data)
-    const keys = fields?.map((f) => {
-      return f.category
-    })
+    // const keys = fields?.map((f) => {
+    //   return f.category
+    // })
 
-    const colors = fields?.map((f) => {
-      return f.color
-    })
+    // const colors = fields?.map((f) => {
+    //   return f.color
+    // })
 
     const innerWidth = width - margin.left - margin.right
     const innerHeight = height - margin.top - margin.bottom
@@ -113,14 +107,10 @@ export default withTooltip<StackedAreasProps, TooltipData>(
       [innerHeight, totalSupply, margin.top]
     )
 
-    const colorScale = useMemo(
-      () =>
-        scaleOrdinal({
-          domain: keys,
-          range: colors,
-        }),
-      [keys, colors]
-    )
+    const ordinalColorScale = scaleOrdinal({
+      domain: ['supply', 'demamd'],
+      range: ['#be123d', '#15803c'],
+    });
 
     const axisLeftTickLabelProps = {
       fontFamily: 'Arial',
@@ -168,7 +158,7 @@ export default withTooltip<StackedAreasProps, TooltipData>(
       <div>
         <div className="absolute flex w-full justify-center">
           <LegendOrdinal
-            scale={colorScale}
+            scale={ordinalColorScale}
             direction="row"
             labelMargin="0 10px 0 0"
             className="text-xs"
@@ -182,26 +172,26 @@ export default withTooltip<StackedAreasProps, TooltipData>(
               id={`${Math.random()}`}
               data={data}
               x={(d) => timeScale(date(d)) ?? 0}
-              y0={(d) => temperatureScale(supply(d)) ?? 0}
-              y1={(d) => temperatureScale(demand(d)) ?? 0}
+              y0={(d) => supplyDemandScale(supply(d)) ?? 0}
+              y1={(d) => supplyDemandScale(demand(d)) ?? 0}
               clipAboveTo={0}
               clipBelowTo={yMax}
               curve={curveBasis}
               belowAreaProps={{
-                fill: 'violet',
-                fillOpacity: 0.4,
+                fill: '#be123d',
+                fillOpacity: 0.2,
               }}
               aboveAreaProps={{
-                fill: 'green',
-                fillOpacity: 0.4,
+                fill: '#15803c',
+                fillOpacity: 0.2,
               }}
             />
             <LinePath
               data={data}
               curve={curveBasis}
               x={(d) => timeScale(date(d)) ?? 0}
-              y={(d) => temperatureScale(demand(d)) ?? 0}
-              stroke="#222"
+              y={(d) => supplyDemandScale(demand(d)) ?? 0}
+              stroke="#be123d"
               strokeWidth={1.5}
               strokeOpacity={0.8}
               strokeDasharray="1,2"
@@ -210,8 +200,8 @@ export default withTooltip<StackedAreasProps, TooltipData>(
               data={data}
               curve={curveBasis}
               x={(d) => timeScale(date(d)) ?? 0}
-              y={(d) => temperatureScale(supply(d)) ?? 0}
-              stroke="#222"
+              y={(d) => supplyDemandScale(supply(d)) ?? 0}
+              stroke="#15803c"
               strokeWidth={1.5}
             />
             <AxisBottom
@@ -266,14 +256,14 @@ export default withTooltip<StackedAreasProps, TooltipData>(
               style={tooltipStyles}
             >
               <div className="rounded-lg">
-                {fields.map((k) => (
-                  <div key={k.category} className="flex justify-end">
-                    <p style={{ color: k.color }} className="mr-2 font-bold">
-                      {k.category}:{' '}
-                    </p>
-                    <p> {shortBigNumber(tooltipData[k.category])}</p>
-                  </div>
-                ))}
+                <div className="flex justify-end">
+                  <p className="mr-2 font-bold text-rose-700">Supply: </p>
+                  <p> {shortBigNumber(tooltipData['supply'])}</p>
+                </div>
+                <div className="flex justify-end">
+                  <p className="mr-2 font-bold text-green-700">Demand: </p>
+                  <p> {shortBigNumber(tooltipData['demand'])}</p>
+                </div>
               </div>
             </TooltipWithBounds>
             <Tooltip

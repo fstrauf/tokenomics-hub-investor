@@ -10,7 +10,7 @@ import { AuthData } from '@clerk/nextjs/dist/server/types'
 import { initialCalculatorValues } from '../lib/helper'
 
 export default function NewDesign(props) {
-  console.log('🚀 ~ file: newDesign.tsx:10 ~ NewDesign ~ props', props)
+  // console.log('🚀 ~ file: newDesign.tsx:10 ~ NewDesign ~ props', props)
   const { user } = useUser()
   const today = new Date().toLocaleDateString('en-CA')
 
@@ -25,16 +25,17 @@ export default function NewDesign(props) {
         return { id: '', content: '', designPhaseId: dp.phaseId }
       }),
     // calculation: initialCalculatorValues,
-    Mechanism:  props.mechanismTemplates.map(mt => {
-      return {
-        id: mt.id,
-        name: mt.name,
-        summary: mt.summary,
-        details: mt.details,
-        isSink: mt.isSink,
-        isTemplate: mt.isTemplate,
-      }
-    }),
+    Mechanism: [],
+    // Mechanism:  props.mechanismTemplates.map(mt => {
+    //   return {
+    //     id: mt.id,
+    //     name: mt.name,
+    //     summary: mt.summary,
+    //     details: mt.details,
+    //     isSink: mt.isSink,
+    //     isTemplate: mt.isTemplate,
+    //   }
+    // }),
     PostUser: [
       { id: 1, name: 'Athlete', role: 'Build and audience on the platform' },
     ],

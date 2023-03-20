@@ -56,7 +56,7 @@ export default withTooltip<StackedAreasProps, TooltipData>(
     totalSupply,
   }: StackedAreasProps & WithTooltipProvidedProps<TooltipData>) => {
     // console.log("🚀 ~ file: VestingChart.tsx:58 ~ fields:", fields)
-    // console.log("🚀 ~ file: VestingChart.tsx:58 ~ data:", data)
+    // .log("🚀 ~ file: VestingChart.tsx:58 ~ data:", data)
     // console.log("🚀 ~ file: VestingChart.tsx:58 ~ data", data)
     const keys = fields?.map((f) => {                  
       return f.category

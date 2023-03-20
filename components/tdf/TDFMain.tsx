@@ -7,7 +7,7 @@ import FormAutoSave from '../form/FormAutoSave'
 // import TDFHeaders from './TDFHeaders'
 
 export default function TDFMain({ props, content }) {
-  console.log('🚀 ~ file: tdfMain.tsx:9 ~ TDFMainx ~ props', props)
+  // console.log('🚀 ~ file: tdfMain.tsx:9 ~ TDFMainx ~ props', props)
   // console.log('🚀 content', content)
   const [activePhase, setActivePhase] = useState(101) //props.design.activePhase
 
@@ -96,7 +96,7 @@ export default function TDFMain({ props, content }) {
 
   const submitData = async (values, { setSubmitting }) => {
     const body = { values }
-    console.log('val TDF mail', body)
+    // console.log('val TDF mail', body)
     if (values?.id === '') {
       try {
         const response = await fetch('/api/post/newDesign', {

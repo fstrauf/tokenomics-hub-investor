@@ -2,7 +2,7 @@
 import BreakdownBox from '../slugView/breakdown-box'
 import ResourceSection from './ResourceSection'
 import { getActiveDesignPhase } from '../../lib/helper'
-import dynamic from 'next/dynamic'
+// import dynamic from 'next/dynamic'
 import TDFCalculator from './TDFCalculator'
 
 export default function TDF601({ props, values,activePhase}) {

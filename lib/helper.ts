@@ -247,8 +247,11 @@ export function getMonthEpochAreaData(
 
 export function getAreaData(months, calculationRows, totalSupply, startDate) {
   var props = { chartData: [], supplyDemandTotals: [] }
-  // var chartData: object[] = []
-  // var supplyDemandTotals: object[] = []
+
+  console.log(
+    '🚀 ~ file: helper.ts:288 ~ getAreaData ~ calculationRows:',
+    calculationRows
+  )
 
   calculationRows?.forEach((cr) => {
     const rowAllocation = (totalSupply * cr.percentageAllocation) / 100
@@ -294,43 +297,51 @@ export function getDemandAreaData(
   supplyDemandTotals,
   startDate
 ) {
-  const inputData = calculationRow.CalculationTimeSeries
+  console.log(
+    '🚀 ~ file: helper.ts:297 ~ calculationRow:',
+    calculationRow.CalculationTimeSeries
+  )
+  if (calculationRow.CalculationTimeSeries !== undefined) {
+    const inputData = calculationRow.CalculationTimeSeries || []
 
-  // const dataset = []
-  let currentMonth = 0
+    // const dataset = []
+    let currentMonth = 0
 
-  for (let i = 0; i < inputData.length; i++) {
-    const row = inputData[i]
-    const endMonth = currentMonth + row.months - 1
-    for (let j = currentMonth; j <= endMonth; j++) {
-      if (supplyDemandTotals[j] === undefined) {
-        supplyDemandTotals[j] = {
+    for (let i = 0; i < inputData.length; i++) {
+      const row = inputData[i]
+      const endMonth = currentMonth + row.months - 1
+      for (let j = currentMonth; j <= endMonth; j++) {
+        if (supplyDemandTotals[j] === undefined) {
+          supplyDemandTotals[j] = {
+            date: new Date(startDate).setMonth(
+              new Date(startDate).getMonth() + j
+            ),
+            demand: row.tokens,
+          }
+        } else {
+          if (supplyDemandTotals[j].demand === undefined) {
+            supplyDemandTotals[j].demand = 0
+          }
+          supplyDemandTotals[j].demand += row.tokens
+        }
+      }
+      currentMonth = endMonth + 1
+    }
+
+    for (let i = currentMonth; i < months; i++) {
+      if (supplyDemandTotals[i] === undefined) {
+        supplyDemandTotals[i] = {
           date: new Date(startDate).setMonth(
-            new Date(startDate).getMonth() + j
+            new Date(startDate).getMonth() + i
           ),
-          demand: row.tokens,
+          demand: inputData[inputData.length - 1]?.tokens || 0,
         }
       } else {
-        if (supplyDemandTotals[j].demand === undefined) {
-          supplyDemandTotals[j].demand = 0
+        if (supplyDemandTotals[i].demand === undefined) {
+          supplyDemandTotals[i].demand = 0
         }
-        supplyDemandTotals[j].demand += row.tokens
+        supplyDemandTotals[i].demand += inputData[inputData.length - 1]?.tokens
       }
-    }
-    currentMonth = endMonth + 1
-  }
-
-  for (let i = currentMonth; i < months; i++) {
-    if (supplyDemandTotals[i] === undefined) {
-      supplyDemandTotals[i] = {
-        date: new Date(startDate).setMonth(new Date(startDate).getMonth() + i),
-        demand: inputData[inputData.length - 1].tokens,
-      }
-    } else {
-      if (supplyDemandTotals[i].demand === undefined) {
-        supplyDemandTotals[i].demand = 0
-      }
-      supplyDemandTotals[i].demand += inputData[inputData.length - 1].tokens
     }
   }
 }

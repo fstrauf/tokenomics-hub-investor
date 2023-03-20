@@ -28,9 +28,9 @@ export const FormCardSupplyDemand = ({
     initialEmissionPerSecond: 0,
     emissionReductionPerEpoch: 0,
     CalculationTimeSeries: [
-      { id: 1, months: 6, tokens: 50 },
-      { id: 2, months: 5, tokens: 60 },
-      { id: 3, months: 16, tokens: 100 },
+      { id: 1, months: 6, tokens: 5000000 },
+      { id: 2, months: 5, tokens: 6000000 },
+      { id: 3, months: 16, tokens: 50000000 },
     ],
     isTemplate: false,
     PostUser: values.PostUser,
@@ -47,7 +47,9 @@ export const FormCardSupplyDemand = ({
   }
 
   const handleNewMechanism = (arrayHelpers, isSink: boolean) => {
+    console.log("🚀 ~ file: FormCardSupplyDemand.tsx:51 ~ handleNewMechanism ~ selectedTemplate:", selectedTemplate)
     let updateMechanism = selectedTemplate
+    
     updateMechanism.isSink = isSink
     updateMechanism.name = updateMechanism.name + field.value?.length
     updateMechanism.category = updateMechanism.category + " " + field.value?.length
