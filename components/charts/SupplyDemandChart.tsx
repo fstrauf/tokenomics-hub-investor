@@ -59,6 +59,7 @@ export default withTooltip<StackedAreasProps, TooltipData>(
     // fields,
     totalSupply,
   }: StackedAreasProps & WithTooltipProvidedProps<TooltipData>) => {
+    console.log("🚀 ~ file: SupplyDemandChart.tsx:62 ~ data:", data)
 
     const timeScale = scaleTime<number>({
       domain: [Math.min(...data.map(date)), Math.max(...data.map(date))],
@@ -70,6 +71,7 @@ export default withTooltip<StackedAreasProps, TooltipData>(
       ],
       nice: true,
     })
+    console.log("🚀 ~ file: SupplyDemandChart.tsx:74 ~ supplyDemandScale:", supplyDemandScale)
 
     const xMax = width - margin.left - margin.right
     const yMax = height - margin.top - margin.bottom
@@ -151,7 +153,7 @@ export default withTooltip<StackedAreasProps, TooltipData>(
           tooltipTop: coords.y,
         })
       },
-      [showTooltip, valueScale, dateScale, data]
+      [showTooltip, dateScale, data]
     )
 
     return width < 10 ? null : (
@@ -162,8 +164,6 @@ export default withTooltip<StackedAreasProps, TooltipData>(
             direction="row"
             labelMargin="0 10px 0 0"
             className="text-xs"
-            // style={{ 'font-size': '5px 0' }}
-            // font-size: 10px;
           />
         </div>
         <svg width={width} height={height}>
@@ -212,7 +212,7 @@ export default withTooltip<StackedAreasProps, TooltipData>(
               tickLength={0}
             />
             <AxisLeft
-              scale={valueScale}
+              scale={supplyDemandScale}
               numTicks={5}
               tickFormat={shortBigNumber}
               tickLabelProps={() => axisLeftTickLabelProps}
