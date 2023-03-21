@@ -124,7 +124,7 @@ export const FormCardSupplyDemand = ({
                     className="h-24 w-44 rounded-md border-2 border-dao-green text-xs font-bold"
                     onClick={() => handleNewMechanism(arrayHelpers, false)}
                   >
-                    Add Mechanism
+                    Add Incentive
                   </button>
                 </div>
               </div>

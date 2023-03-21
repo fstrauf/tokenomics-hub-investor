@@ -1,24 +1,16 @@
 import React, { useState } from 'react'
 import ParentSize from '@visx/responsive/lib/components/ParentSize'
 import dynamic from 'next/dynamic'
-import { ErrorMessage, Field, Form, Formik } from 'formik'
-import toast, { Toaster } from 'react-hot-toast'
-// import { Dialog, Transition } from '@headlessui/react'
+import { Field } from 'formik'
+import { Toaster } from 'react-hot-toast'
 import FormId from '../form/FormId'
 import { useAuth } from '@clerk/clerk-react/dist/hooks/useAuth'
-// import { useRouter } from 'next/router'
-// import FormEmission from '../form/FormEmission'
-import FormAreaData from '../form/FormAreaData'
+import FormAreaDataMechanism from '../form/FormAreaDataMechanism'
 
 export default function TDFCalculator(props) {
   const { preloadInitialValues, values } = props
-  // console.log(
-  //   '🚀 ~ file: TDFCalculator.tsx:13 ~ TDFCalculator ~ values:',
-  //   values
-  // )
-  const { isSignedIn } = useAuth()
 
-  // const router = useRouter()
+  // const { isSignedIn } = useAuth()
 
   const VestingChart = dynamic(() => import('../charts/VestingChart'), {
     ssr: false,
@@ -52,13 +44,13 @@ export default function TDFCalculator(props) {
 
   const [postId, setPostId] = useState(preloadInitialValues.id)
 
-  const validateName = async (value) => {
-    let error
-    if (!value) {
-      error = 'Required'
-    }
-    return error
-  }
+  // const validateName = async (value) => {
+  //   let error
+  //   if (!value) {
+  //     error = 'Required'
+  //   }
+  //   return error
+  // }
 
   // const submitData = async (values, { setSubmitting }) => {
   //   const body = { values }
@@ -207,7 +199,7 @@ export default function TDFCalculator(props) {
         {/* <div className="mb-6">
                 <FormEmission values={values?.calculation} navPreFix='calculation.' />
               </div> */}
-        <FormAreaData name="calculation.areaData" />
+        <FormAreaDataMechanism name="calculation.areaData" />
         <div className="w-full">
           <div className="h-96 w-full">
             <ParentSize>
