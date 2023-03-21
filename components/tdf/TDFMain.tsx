@@ -9,7 +9,7 @@ import FormAutoSave from '../form/FormAutoSave'
 export default function TDFMain({ props, content }) {
   console.log('🚀 ~ file: tdfMain.tsx:9 ~ TDFMainx ~ props', props)
   // console.log('🚀 content', content)
-  const [activePhase, setActivePhase] = useState(101) //props.design.activePhase
+  const [activePhase, setActivePhase] = useState(11) //props.design.activePhase
 
   const initialValues = content
   function handlePhaseChange(phase) {
@@ -17,6 +17,9 @@ export default function TDFMain({ props, content }) {
   }
 
   const TDFHeaders = dynamic(() => import('./TDFHeaders'), {
+    loading: () => <p>Loading</p>,
+  })
+  const TDF11 = dynamic(() => import('./TDF11'), {
     loading: () => <p>Loading</p>,
   })
   const TDF101 = dynamic(() => import('./TDF101'), {
@@ -29,6 +32,9 @@ export default function TDFMain({ props, content }) {
     loading: () => <p>Loading</p>,
   })
   const TDF201 = dynamic(() => import('./TDF201'), {
+    loading: () => <p>Loading</p>,
+  })
+  const TDF202 = dynamic(() => import('./TDF202'), {
     loading: () => <p>Loading</p>,
   })
   const TDF301 = dynamic(() => import('./TDF301'), {
@@ -52,12 +58,12 @@ export default function TDFMain({ props, content }) {
   const TDF404 = dynamic(() => import('./TDF404'), {
     loading: () => <p>Loading</p>,
   })
-  const TDF405 = dynamic(() => import('./TDF405'), {
-    loading: () => <p>Loading</p>,
-  })
-  const TDF406 = dynamic(() => import('./TDF406'), {
-    loading: () => <p>Loading</p>,
-  })
+  // const TDF405 = dynamic(() => import('./TDF405'), {
+  //   loading: () => <p>Loading</p>,
+  // })
+  // const TDF406 = dynamic(() => import('./TDF406'), {
+  //   loading: () => <p>Loading</p>,
+  // })
   const TDF407 = dynamic(() => import('./TDF407'), {
     loading: () => <p>Loading</p>,
   })
@@ -150,6 +156,7 @@ export default function TDFMain({ props, content }) {
 
   function renderSwitch(values, setFieldValue) {
     switch (activePhase) {
+      case 10:
       case 100:
       case 200:
       case 300:
@@ -159,6 +166,16 @@ export default function TDFMain({ props, content }) {
       case 700:
         return (
           <TDFHeaders props={props} values={values} activePhase={activePhase} />
+        )
+
+      case 11:
+        return (
+          <TDF11
+            props={props}
+            values={values}
+            content={content}
+            activePhase={activePhase}
+          />
         )
       case 101:
         return (
@@ -176,6 +193,11 @@ export default function TDFMain({ props, content }) {
         return (
           <TDF201 props={props} values={values} activePhase={activePhase} />
         )
+      case 202:
+        return (
+          <TDF202 props={props} values={values} activePhase={activePhase} />
+        )
+
       case 301:
         return (
           <TDF301 props={props} values={values} activePhase={activePhase} />
@@ -204,14 +226,14 @@ export default function TDFMain({ props, content }) {
         return (
           <TDF404 props={props} values={values} activePhase={activePhase} />
         )
-      case 405:
-        return (
-          <TDF405 props={props} values={values} activePhase={activePhase} />
-        )
-      case 406:
-        return (
-          <TDF406 props={props} values={values} activePhase={activePhase} />
-        )
+      // case 405:
+      //   return (
+      //     <TDF405 props={props} values={values} activePhase={activePhase} />
+      //   )
+      // case 406:
+      //   return (
+      //     <TDF406 props={props} values={values} activePhase={activePhase} />
+      //   )
       case 407:
         return (
           <TDF407 props={props} values={values} activePhase={activePhase} />
@@ -227,7 +249,12 @@ export default function TDFMain({ props, content }) {
         )
       case 502:
         return (
-          <TDF502 props={props} values={values} activePhase={activePhase} />
+          <TDF502
+            props={props}
+            values={values}
+            activePhase={activePhase}
+            setFieldValue={setFieldValue}
+          />
         )
       case 601:
         return (

@@ -46,8 +46,7 @@ export default function NewDesign(props) {
     protocolTimeLine: [],
     publishedAt: today,
     breakdown: '',
-    mainImageUrl:
-      'https://storage.googleapis.com/my-bucket-bbc0e24/Logo_Tokenomics_DAO.png',
+    mainImageUrl:'',
     tokenUtility: '',
     tokenUtilityStrength: 0,
     businessModel: '',
