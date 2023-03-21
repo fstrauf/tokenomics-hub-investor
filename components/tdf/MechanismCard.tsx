@@ -2,21 +2,13 @@ import { Field, FieldArray } from 'formik'
 import React from 'react'
 import FormSelectUser from '../form/FormSelectUser'
 import FormTipTap from '../form/FormTipTap'
-// import FormSelect from '../form/FormSelect'
 
 export const MechanismCard = ({
   field,
   mechanismIndex,
-  // mechanismImpactFactors,
   setFieldValue,
   users,
 }) => {
-  // console.log("🚀 ~ file: MechanismCard.tsx:14 ~ users:", users)
-  // console.log(
-  //   '🚀 ~ file: MechanismCard.tsx:10 ~ mechanismIndex:',
-  //   mechanismIndex
-  // )
-  // console.log('🚀 ~ file: MechanismCard.tsx:10 ~ field:', field)
 
   const isSink = field.value[mechanismIndex]?.isSink || false
 
@@ -240,7 +232,7 @@ export const MechanismCard = ({
                   arrayHelpers.push({
                     id: field.value[mechanismIndex]?.CalculationTimeSeries?.length +1,
                     months: 6,
-                    tokens: 10,
+                    tokens: 10000000,
                   })
                 }
               >

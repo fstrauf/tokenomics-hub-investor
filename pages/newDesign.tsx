@@ -26,16 +26,7 @@ export default function NewDesign(props) {
       }),
     // calculation: initialCalculatorValues,
     Mechanism: [],
-    // Mechanism:  props.mechanismTemplates.map(mt => {
-    //   return {
-    //     id: mt.id,
-    //     name: mt.name,
-    //     summary: mt.summary,
-    //     details: mt.details,
-    //     isSink: mt.isSink,
-    //     isTemplate: mt.isTemplate,
-    //   }
-    // }),
+    mechanismTemplates:  props.mechanismTemplates,
     PostUser: [
       { id: 1, name: 'Athlete', role: 'Build and audience on the platform' },
     ],

@@ -9,16 +9,18 @@ export const FormCardSupplyDemand = ({
   values,
   mechanismTemplates,
   setFieldValue,
-}) => {
+}) => {  
+
+  let [mechanismIndex, setMechanismIndex] = useState(0)
   const defaultMechanism = {
-    id: 'none',
-    name: 'none',
+    id: '',
+    name: `Mechanism`,
     summary: '',
     details: '',
     isSink: true,
     // user: '',
     token: '',
-    category: 'Treasury',
+    category: `Mechanism`,
     lockupPeriod: 5,
     unlockPeriod: 12,
     percentageAllocation: 30,
@@ -36,27 +38,27 @@ export const FormCardSupplyDemand = ({
     PostUser: values.PostUser,
   }
 
-  let [isOpen, setIsOpen] = useState(false)
-  let [mechanismIndex, setMechanismIndex] = useState(0)
-  let [selectedTemplate, setSelectedTemplate] = useState(defaultMechanism)
+  const mechTemplates = mechanismTemplates.map(obj => ({ ...obj }));  
+  const [isOpen, setIsOpen] = useState(false)
+  const [selectedTemplate, setSelectedTemplate] = useState(defaultMechanism)
 
   function handleChange(e) {
     setSelectedTemplate(
-      mechanismTemplates.find((mt) => String(mt.id) === e.target.value) || defaultMechanism
+      mechTemplates.find((mt) => String(mt.id) === e.target.value) || defaultMechanism      
     )
   }
 
   const handleNewMechanism = (arrayHelpers, isSink: boolean) => {
-    console.log("🚀 ~ file: FormCardSupplyDemand.tsx:51 ~ handleNewMechanism ~ selectedTemplate:", selectedTemplate)
-    let updateMechanism = selectedTemplate
+    const updateMechanism = selectedTemplate
     
     updateMechanism.isSink = isSink
-    updateMechanism.name = updateMechanism.name + field.value?.length
-    updateMechanism.category = updateMechanism.category + " " + field.value?.length
+    updateMechanism.name = updateMechanism.name + " " + (field.value?.length + 1)
+    updateMechanism.category = updateMechanism.category + " " + (field.value?.length + 1)
 
     arrayHelpers.push(updateMechanism)
     setMechanismIndex(field.value?.length)
     setIsOpen(true)
+    setSelectedTemplate(defaultMechanism)
   }
 
   const handleEditMechanism = (index) => {
@@ -87,22 +89,6 @@ export const FormCardSupplyDemand = ({
       </div>
     )
   }
-
-  // const emissionTile = (input, index) => {
-  //   return (
-  //     <div
-  //       key={index}
-  //       className="h-24 w-44 rounded-md border-2 border-dao-green text-xs"
-  //     >
-  //       <div
-  //         className="h-full w-full"
-  //       >
-  //         <p className="">{input.user}</p>
-  //         <p className="">{input.mechanism}</p>
-  //       </div>
-  //     </div>
-  //   )
-  // }
 
   return (
     <div className="relative overflow-x-auto">
@@ -165,14 +151,14 @@ export const FormCardSupplyDemand = ({
                       <option key="none" value="none">
                         None
                       </option>
-                      {mechanismTemplates?.map((c) => (
+                      {mechTemplates?.map((mt) => (
                         <>
                           <option
-                            key={c.id}
-                            value={c.id}
-                            // label={c.name}
+                            key={mt.id}
+                            value={mt.id}
+                            // label={mt.name}
                           >
-                            {c.name} - {c.summary}
+                            {mt.name} - {mt.summary}
                           </option>
                         </>
                       ))}

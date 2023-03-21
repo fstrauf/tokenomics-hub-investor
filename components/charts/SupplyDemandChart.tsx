@@ -59,7 +59,7 @@ export default withTooltip<StackedAreasProps, TooltipData>(
     // fields,
     totalSupply,
   }: StackedAreasProps & WithTooltipProvidedProps<TooltipData>) => {
-    console.log("🚀 ~ file: SupplyDemandChart.tsx:62 ~ data:", data)
+    // console.log("🚀 ~ file: SupplyDemandChart.tsx:62 ~ data:", data)
 
     const timeScale = scaleTime<number>({
       domain: [Math.min(...data.map(date)), Math.max(...data.map(date))],
@@ -71,7 +71,7 @@ export default withTooltip<StackedAreasProps, TooltipData>(
       ],
       nice: true,
     })
-    console.log("🚀 ~ file: SupplyDemandChart.tsx:74 ~ supplyDemandScale:", supplyDemandScale)
+    // console.log("🚀 ~ file: SupplyDemandChart.tsx:74 ~ supplyDemandScale:", supplyDemandScale)
 
     const xMax = width - margin.left - margin.right
     const yMax = height - margin.top - margin.bottom

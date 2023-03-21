@@ -227,7 +227,7 @@ export default function TDFMain({ props, content }) {
         )
       case 502:
         return (
-          <TDF502 props={props} values={values} activePhase={activePhase} />
+          <TDF502 props={props} values={values} activePhase={activePhase} setFieldValue={setFieldValue}/>
         )
       case 601:
         return (
