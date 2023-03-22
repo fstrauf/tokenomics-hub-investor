@@ -2,7 +2,7 @@ import { Field } from 'formik'
 import BreakdownBox from '../slugView/breakdown-box'
 import ResourceSection from './ResourceSection'
 import { getActiveDesignPhase } from '../../lib/helper'
-import FormTable from '../form/FormTable'
+import FormTable from '../form/FormTablePivot'
 
 export default function TDF303({ props, values, activePhase }) {
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
