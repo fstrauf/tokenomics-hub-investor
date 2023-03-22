@@ -24,12 +24,12 @@ export default function TDF502({ props, values, activePhase, setFieldValue }) {
               mechanismTemplates={props.mechanismTemplates}
             />
           </div>
-          <div>
-            <TDFCalculator
-              preloadInitialValues={props.preloadInitialCalcValues}
-              values={values}
-            />
-          </div>
+        </div>
+        <div className="col-span-2">
+          <TDFCalculator
+            preloadInitialValues={props.preloadInitialCalcValues}
+            values={values}
+          />
         </div>
 
         <div className="">

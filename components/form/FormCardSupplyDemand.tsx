@@ -74,10 +74,6 @@ export const FormCardSupplyDemand = ({
   }
 
   const mechanismTile = (input, index, arrayHelpers) => {
-    console.log(
-      '🚀 ~ file: FormCardSupplyDemand.tsx:77 ~ mechanismTile ~ input:',
-      input
-    )
     return (
       <div
         key={index}
@@ -92,7 +88,11 @@ export const FormCardSupplyDemand = ({
             ></div>
             <p className="">{input.name}</p>
           </div>
-          <p className="mt-2">{input.percentageAllocation} %</p>
+          {input.isSink ? (
+            <></>
+          ) : (
+            <p className="mt-2">{input.percentageAllocation} %</p>
+          )}
         </div>
         <div className="flex h-7 border-t-2">
           {' '}
@@ -125,76 +125,82 @@ export const FormCardSupplyDemand = ({
         name={field.name}
         render={(arrayHelpers) => (
           <>
-            <div className="flex flex-col">
-              <div className="flex gap-2 mb-1">
-                {' '}
-                <p>Supply</p>
-                <button
-                  type="button"
-                  className="h-7 w-28 rounded-md border-2 border-dao-green text-xs font-bold"
-                  onClick={() => handleNewMechanism(arrayHelpers, false)}
-                >
-                  Add Incentive
-                </button>
-              </div>
-              <div className="h-96 overflow-auto rounded-lg border-2 border-slate-300">
-                <div
-                  key={4711}
-                  className="flex flex-row flex-wrap gap-2 overflow-auto p-2"
-                >
-                  {field.value?.length > 0 &&
-                    field.value?.map((input, index) => (
-                      <>
-                        {!input.isSink ? (
-                          <>{mechanismTile(input, index, arrayHelpers)}</>
-                        ) : (
-                          <></>
-                        )}
-                      </>
-                    ))}
+            <div className="flex">
+              <div className="w-1/2">
+                <div className="mb-1 flex gap-2">
+                  {' '}
+                  <p>Supply</p>
+                  <button
+                    type="button"
+                    className="h-11 w-28 rounded-md border-2 border-dao-green text-xs font-bold"
+                    onClick={() => handleNewMechanism(arrayHelpers, false)}
+                  >
+                    Add Incentive
+                  </button>
                 </div>
-              </div>
-              <p>Demand</p>
-              <div className="h-96 rounded-lg border-2 border-slate-300">
-                <div key={4811} className="flex flex-row flex-wrap gap-2">
-                  {field.value?.length > 0 &&
-                    field.value?.map((input, index) => (
-                      <>
-                        {input.isSink ? (
-                          <>{mechanismTile(input, index, arrayHelpers)}</>
-                        ) : (
-                          <></>
-                        )}
-                      </>
-                    ))}
-                  <div className="h-24 w-44 rounded-md border-2 border-dao-green text-xs font-bold">
-                    <p>from Template?</p>
-                    <select
-                      onChange={handleChange}
-                      className="block w-52 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
-                    >
-                      <option key="none" value="none">
-                        None
-                      </option>
-                      {mechTemplates?.map((mt) => (
+                <div className="h-60 overflow-auto rounded-lg border-2 border-slate-300">
+                  <div
+                    key={4711}
+                    className="flex flex-row flex-wrap gap-2 overflow-auto p-2"
+                  >
+                    {field.value?.length > 0 &&
+                      field.value?.map((input, index) => (
                         <>
-                          <option
-                            key={mt.id}
-                            value={mt.id}
-                            // label={mt.name}
-                          >
-                            {mt.name} - {mt.summary}
-                          </option>
+                          {!input.isSink ? (
+                            <>{mechanismTile(input, index, arrayHelpers)}</>
+                          ) : (
+                            <></>
+                          )}
                         </>
                       ))}
-                    </select>
-                    <button
-                      type="button"
-                      className="rounded-md border-2 border-dao-green text-xs font-bold"
-                      onClick={() => handleNewMechanism(arrayHelpers, true)}
-                    >
-                      Add Mechanism
-                    </button>
+                  </div>
+                </div>
+              </div>
+              <div className="w-1/2">
+                <div className="mb-1 flex gap-2">
+                  {' '}
+                  <p>Demand</p>
+                  <p className="text-xs">Choose Template</p>
+                  <select
+                    onChange={handleChange}
+                    className="block h-11 w-32 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-xs text-gray-900 focus:border-dao-red focus:ring-dao-red"
+                  >
+                    <option key="none" value="none">
+                      None
+                    </option>
+                    {mechTemplates?.map((mt) => (
+                      <>
+                        <option
+                          key={mt.id}
+                          value={mt.id}
+                          // label={mt.name}
+                        >
+                          {mt.name} - {mt.summary}
+                        </option>
+                      </>
+                    ))}
+                  </select>
+                  <button
+                    type="button"
+                    className="h-11 w-28 rounded-md border-2 border-dao-green text-xs font-bold"
+                    onClick={() => handleNewMechanism(arrayHelpers, true)}
+                  >
+                    Add Mechanism
+                  </button>
+                </div>
+
+                <div className="h-60 rounded-lg border-2 border-slate-300">
+                  <div key={4811} className="flex flex-row flex-wrap gap-2 overflow-auto p-2">
+                    {field.value?.length > 0 &&
+                      field.value?.map((input, index) => (
+                        <>
+                          {input.isSink ? (
+                            <>{mechanismTile(input, index, arrayHelpers)}</>
+                          ) : (
+                            <></>
+                          )}
+                        </>
+                      ))}
                   </div>
                 </div>
               </div>
