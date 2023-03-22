@@ -259,7 +259,7 @@ export default function TDFMain({ props, content }) {
           activePhase={activePhase}
         />
       </div>
-      <div className="w-5/6">
+      <div className="w-5/6 ">
         <Formik
           initialValues={initialValues}
           onSubmit={submitData}
@@ -272,13 +272,13 @@ export default function TDFMain({ props, content }) {
                 name="DesignElement"
                 render={() => <div>{renderSwitch(values, setFieldValue)}</div>}
               />
-              <button
+              {/* <button
                 type="submit"
                 disabled={isSubmitting}
                 className="mt-5 mb-5 rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
               >
                 Submit
-              </button>
+              </button> */}
             </Form>
           )}
         </Formik>
