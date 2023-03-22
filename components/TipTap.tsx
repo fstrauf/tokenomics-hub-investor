@@ -1,5 +1,5 @@
 import { useEditor, EditorContent } from '@tiptap/react'
-import StarterKit from '@tiptap/starter-kit'
+// import StarterKit from '@tiptap/starter-kit'
 import Link from '@tiptap/extension-link'
 import { EditorState } from '@tiptap/pm/state'
 import Blockquote from '@tiptap/extension-blockquote'
@@ -42,7 +42,7 @@ const Tiptap: React.FC<Props> = (props) => {
 
   const editor = useEditor({
     extensions: [
-      StarterKit,
+      // StarterKit,
       Blockquote,
       Bulletlist,
       Codeblock,
@@ -297,11 +297,7 @@ const MenuBar = ({ editor }) => {
         type="button"
         onClick={setLink}
         className="ml-1 rounded-lg border-2 text-sm"
-        // className={
-        //   editor.isActive('link')
-        //     ? 'is-active'
-        //     : ''
-        // }
+      
       >
         Link
       </button>

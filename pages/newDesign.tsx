@@ -20,12 +20,12 @@ export default function NewDesign(props) {
     authorClerkId: user.id,
     status: postStatus.draft,
     DesignElement: props.designPhases
-      .filter(dp => dp.parentPhaseId)
+      .filter((dp) => dp.parentPhaseId)
       .map((dp) => {
         return { id: '', content: '', designPhaseId: dp.phaseId }
       }),
     // calculation: initialCalculatorValues,
-    Mechanism:  props.mechanismTemplates.map(mt => {
+    Mechanism: props.mechanismTemplates.map((mt) => {
       return {
         id: mt.id,
         name: mt.name,
@@ -35,10 +35,10 @@ export default function NewDesign(props) {
         isTemplate: mt.isTemplate,
       }
     }),
-    PostUser: [
-      { id: 1, name: 'Athlete', role: 'Build and audience on the platform' },
-    ],
-
+    // PostUser: props.PostUser.map((pu) => {
+    //   return { id: pu.id, name: pu.name, role: pu.role, postId: pu.postId }
+    // }),
+    PostUser: [{ name: '', role: '' }],
     slug: '',
     shortDescription: '',
     categories: [],
@@ -46,7 +46,7 @@ export default function NewDesign(props) {
     protocolTimeLine: [],
     publishedAt: today,
     breakdown: '',
-    mainImageUrl:'',
+    mainImageUrl: '',
     tokenUtility: '',
     tokenUtilityStrength: 0,
     businessModel: '',
@@ -116,6 +116,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     })
   )
 
+  txCalls.push(
+    prisma.postUser.findMany({
+      where: {},
+    })
+  )
+
   // txCalls.push(
   //   prisma.calculation.findUnique({
   //     where: {
@@ -127,7 +133,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   //   })
   // )
 
-  const [posts, designPhases, userCalcs, mechanismTemplates] =
+  const [posts, designPhases, userCalcs, mechanismTemplates, PostUser] =
     await prisma.$transaction(txCalls)
 
   // const preloadInitialCalcValues = null
@@ -140,6 +146,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       preloadInitialCalcValues:
         getMergedInitialCalcValues(userCalcs, userId, null) || null,
       mechanismTemplates: mechanismTemplates || null,
+      PostUser: PostUser || null,
     },
   }
 }

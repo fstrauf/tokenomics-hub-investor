@@ -1,9 +1,11 @@
 import { Field, FieldArray } from 'formik'
+import { GetServerSideProps } from 'next'
 import React from 'react'
+import FormNormalSelect from './FormNormalSelect'
 
 const defaultUsers = [
   {
-    user: 'Liquidity Provider',
+    user: '',
     task: 'provide liquidity',
     why: 'collect fees on idle capital',
     valueCreation: 'provide deep liquidity on a variety of assets',
@@ -15,7 +17,7 @@ const defaultUsers = [
       'Running this process for too long, will create an artificial demand that is based on stimulus and not real economic activity.',
   },
   {
-    user: 'Liquidity Provider',
+    user: '',
     task: 'set fees',
     why: 'collect fees on idle capital',
     valueCreation: 'provide deep liquidity on a variety of assets',
@@ -28,7 +30,7 @@ const defaultUsers = [
   },
 ]
 
-export const FormTable = ({ field, form, phaseId }) => {
+export const FormTable = ({ field, form, phaseId, users }) => {
   if (field.value === '') {
     form.setFieldValue(field.name, defaultUsers)
   }
@@ -86,17 +88,25 @@ export const FormTable = ({ field, form, phaseId }) => {
       <div className="h-10 w-20 bg-gray-200 text-sm font-bold"></div>
     </>
   )
-
   const incentiveRow = (input, index, arrayHelpers) => {
     return (
       <>
-        <Field
+        {/* <Field
           name={`${field.name}.${index}.user`}
           placeholder="user"
           className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-xs font-bold text-gray-900 focus:border-blue-500 focus:ring-blue-500"
           rows={4}
           as="textarea"
+        /> */}
+
+        <Field
+          className="rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-xs text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+          name={`${field.name}.${index}.user`}
+          options={users}
+          component={FormNormalSelect}
+          placeholder="Select Users"
         />
+
         <Field
           name={`${field.name}.${index}.task`}
           placeholder="task"
@@ -206,7 +216,7 @@ export const FormTable = ({ field, form, phaseId }) => {
                   : phaseId > 301
                   ? 'grid-rows-4'
                   : ''
-              } grid auto-cols-min grid-flow-col max-w-4xl overflow-x-auto`}
+              } grid max-w-4xl auto-cols-min grid-flow-col overflow-x-auto`}
             >
               {header}
               {/* <tbody className="flex flex-row"> */}
@@ -247,3 +257,20 @@ export const FormTable = ({ field, form, phaseId }) => {
 }
 
 export default FormTable
+
+/* export const getServerSideProps: GetServerSideProps = async (context) => {
+  console.log(
+    '🚀 ~ file: TDF302.tsx:35 ~ constgetStaticProps:GetServerSideProps= ~ context:',
+    context.req
+  )
+
+  const users = prisma.postUser.findMany({
+    where: {},
+  })
+
+  return {
+    props: {
+      users: users,
+    },
+  }
+} */

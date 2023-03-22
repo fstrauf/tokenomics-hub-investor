@@ -8,7 +8,6 @@ import FormSelect from '../form/FormSelect'
 import FormImageSelect from '../form/FormImageSelect'
 
 export default function TDF11({ props, values, activePhase, content }) {
-  console.log('designPhase', props.designPhase)
   const designPhase = props.designPhases.find(
     (adp) => String(adp.phaseId) === '11',
     activePhase
@@ -37,7 +36,7 @@ export default function TDF11({ props, values, activePhase, content }) {
       </div>
 
       <div className="mb-6 flex">
-        <div className="basis-1/4">
+        <div className="mr-2 basis-1/4">
           <label className="mb-2 block text-sm font-medium text-gray-900">
             Slug
           </label>
@@ -53,7 +52,7 @@ export default function TDF11({ props, values, activePhase, content }) {
       </div>
 
       <div className="mb-t flex">
-        <div className="basis-1/4">
+        <div className="mr-2 basis-1/4">
           <label className="mb-2 block text-sm font-medium text-gray-900">
             Short Description
           </label>
@@ -70,7 +69,7 @@ export default function TDF11({ props, values, activePhase, content }) {
       </div>
 
       <div className="mt-6 flex">
-        <div className="basis-1/4">
+        <div className="mr-2 basis-1/4">
           <label className="mb-2 block text-sm font-medium text-gray-900">
             Ticker
           </label>
@@ -124,12 +123,14 @@ export default function TDF11({ props, values, activePhase, content }) {
           as={FormImageSelect}
           onChange={(e) => setFieldValue('mainImageUrl', e)}
         />
-        <div className='w-[150px] m-5'>
-          <img
-            alt={`Cover Image`}
-            className="m-auto rounded-lg"
-            src={values.mainImageUrl}
-          />
+        <div className="m-5 w-[150px]">
+          {values.mainImageUrl && (
+            <img
+              alt={`Cover Image`}
+              className="m-auto rounded-lg"
+              src={values.mainImageUrl}
+            />
+          )}
         </div>
       </div>
     </div>

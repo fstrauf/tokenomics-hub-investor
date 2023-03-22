@@ -7,7 +7,7 @@ import FormAutoSave from '../form/FormAutoSave'
 // import TDFHeaders from './TDFHeaders'
 
 export default function TDFMain({ props, content }) {
-  console.log('🚀 ~ file: tdfMain.tsx:9 ~ TDFMainx ~ props', props)
+  console.log('🚀 ~ file: tdfMain.tsx:9 ~ TDFMainx ~ props  -k', props)
   // console.log('🚀 content', content)
   const [activePhase, setActivePhase] = useState(11) //props.design.activePhase
 

@@ -10,22 +10,23 @@ export default function TDF302({ props, values, activePhase }) {
     <div className="flex w-full flex-col rounded-lg border-2 p-2">
       <div className="col-span-2">
         <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 ">
-        {designPhase.name}
+          {designPhase.name}
         </h5>
-        <ResourceSection content={designPhase.Resources}/>
+        <ResourceSection content={designPhase.Resources} />
         <Field
           as="textarea"
           rows="4"
           name={`DesignElement.${values?.DesignElement?.findIndex(
             (de) => de.designPhaseId === 301 //should all use the same db field.
           )}.content`}
+          users={props?.PostUser || []}
           component={FormTable}
           placeholder="tell us about your requirements"
           phaseId={designPhase.phaseId}
           // className="mb-3 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
         />
       </div>
-      
+
       <div>
         <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 ">
           References
