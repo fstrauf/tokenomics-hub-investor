@@ -2,30 +2,69 @@ import { Field, FieldArray } from 'formik'
 import React from 'react'
 import FormSelectUser from '../form/FormSelectUser'
 import FormTipTap from '../form/FormTipTap'
-// import FormSelect from '../form/FormSelect'
 
 export const MechanismCard = ({
   field,
   mechanismIndex,
-  // mechanismImpactFactors,
   setFieldValue,
   users,
 }) => {
-  console.log("🚀 ~ file: MechanismCard.tsx:14 ~ users:", users)
-  console.log(
-    '🚀 ~ file: MechanismCard.tsx:10 ~ mechanismIndex:',
-    mechanismIndex
-  )
-  console.log('🚀 ~ file: MechanismCard.tsx:10 ~ field:', field)
-
   const isSink = field.value[mechanismIndex]?.isSink || false
+
+  // const handleToggle = () => {
+  //   setIsToggleOn(!isToggleOn)
+  // }
 
   const supplyBuilder = () => {
     return (
       <>
         <div>
           {' '}
-          <label className="mb-2 block text-sm font-medium text-gray-900">
+          {/* <div className="flex items-center justify-between">
+            <label htmlFor="toggle" className="mr-4">
+              Toggle:
+            </label>
+            <div className="relative mr-2 inline-block w-10 select-none align-middle">
+              <Field
+                id="isEpochDistro"
+                name={`${field.name}.${mechanismIndex}.isEpochDistro`}
+                type="checkbox"
+                // onChange={handleToggle}
+                // checked={isToggleOn}
+                // className="toggle-checkbox absolute block h-6 w-6 cursor-pointer appearance-none rounded-full border-4 bg-white transition-colors duration-300 ease-in-out"
+              />
+              <label
+                htmlFor="toggle"
+                className="toggle-label block h-6 cursor-pointer overflow-hidden rounded-full bg-gray-300"
+              />
+            </div>
+            <span>
+              {field?.value[mechanismIndex]?.isEpochDistro ? 'On' : 'Off'}
+            </span>
+          </div> */}
+          <div className='flex p-5'>
+          <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">
+            Allocation Based Supply
+          </span>
+          <label class="relative mr-5 inline-flex cursor-pointer items-center">
+            {/* <input type="checkbox" value="" class="peer sr-only" checked /> */}
+
+            <Field
+              id="isEpochDistro"
+              name={`${field.name}.${mechanismIndex}.isEpochDistro`}
+              type="checkbox"
+              class="peer sr-only"
+              // onChange={handleToggle}
+              // checked={isToggleOn}
+              // className="toggle-checkbox absolute block h-6 w-6 cursor-pointer appearance-none rounded-full border-4 bg-white transition-colors duration-300 ease-in-out"
+            />
+            <div class="peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:top-0.5 after:left-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-red-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:ring-4 peer-focus:ring-red-300 dark:border-gray-600 dark:bg-gray-700 dark:peer-focus:ring-red-800"></div>
+          </label>
+          <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">
+            Emission Based Supply
+          </span>
+          </div>
+          {/* <label className="mb-2 block text-sm font-medium text-gray-900">
             Epoch Distro?
           </label>
           <Field
@@ -33,8 +72,8 @@ export const MechanismCard = ({
             name={`${field.name}.${mechanismIndex}.isEpochDistro`}
             type="checkbox"
             className="mb-3 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
-          />
-          <div className="flex">
+          /> */}
+          {/* <div className="flex">
             <p className="text-xs font-bold uppercase text-gray-700">
               Category
             </p>
@@ -44,7 +83,7 @@ export const MechanismCard = ({
               className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
               type="text"
             />
-          </div>
+          </div> */}
           {field?.value[mechanismIndex]?.isEpochDistro ? (
             <>
               {' '}
@@ -238,9 +277,11 @@ export const MechanismCard = ({
                 className="mt-3 mr-3 w-36 rounded-md bg-dao-red px-2 py-1 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
                 onClick={() =>
                   arrayHelpers.push({
-                    id: field.value[mechanismIndex]?.CalculationTimeSeries?.length +1,
+                    id:
+                      field.value[mechanismIndex]?.CalculationTimeSeries
+                        ?.length + 1,
                     months: 6,
-                    tokens: 10,
+                    tokens: 10000000,
                   })
                 }
               >
@@ -259,9 +300,7 @@ export const MechanismCard = ({
       <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 ">
         {isSink ? <>Demand Builder</> : <>Supply Builder</>}
       </h5>
-      <label className="block text-sm font-medium text-gray-900 ">
-        Mechanism Name
-      </label>
+      <label className="block text-sm font-medium text-gray-900 ">Name</label>
       <Field
         name={`${field.name}.${mechanismIndex}.name`}
         placeholder="Name"
@@ -269,7 +308,7 @@ export const MechanismCard = ({
         type="text"
       />
       <label className="block text-sm font-medium text-gray-900 ">
-        Mechanism Summary
+        Summary
       </label>
       <Field
         name={`${field.name}.${mechanismIndex}.summary`}
@@ -277,16 +316,24 @@ export const MechanismCard = ({
         className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-xs text-gray-900 focus:border-blue-500 focus:ring-blue-500"
         as="textarea"
         rows={4}
-      />      
-      <label className="block text-sm font-medium text-gray-900 ">
-        Mechanism Details
-      </label>
-      <Field
-        name={`${field.name}.${mechanismIndex}.details`}
-        as={FormTipTap}
-        placeholder="Details"
-        onChange={(e) => setFieldValue(`${field.name}.${mechanismIndex}.details`, e)}
       />
+      {isSink ? (
+        <>
+          <label className="block text-sm font-medium text-gray-900 ">
+            Details
+          </label>
+          <Field
+            name={`${field.name}.${mechanismIndex}.details`}
+            as={FormTipTap}
+            placeholder="Details"
+            onChange={(e) =>
+              setFieldValue(`${field.name}.${mechanismIndex}.details`, e)
+            }
+          />
+        </>
+      ) : (
+        <></>
+      )}
       <label className="block text-sm font-medium text-gray-900 ">Token</label>
       <Field
         name={`${field.name}.${mechanismIndex}.token`}

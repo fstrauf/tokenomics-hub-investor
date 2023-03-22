@@ -1,7 +1,7 @@
 import { Field, FieldArray } from 'formik'
 import BreakdownBox from '../slugView/breakdown-box'
 import ResourceSection from './ResourceSection'
-import FormTable from '../form/FormTable'
+import FormTable from '../form/FormTablePivot'
 import { getActiveDesignPhase } from '../../lib/helper'
 import FormText from '../form/FormText'
 import { FormAddUser } from '../form/FormAddUser'

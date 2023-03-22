@@ -10,7 +10,7 @@ import { AuthData } from '@clerk/nextjs/dist/server/types'
 import { initialCalculatorValues } from '../lib/helper'
 
 export default function NewDesign(props) {
-  console.log('🚀 ~ file: newDesign.tsx:10 ~ NewDesign ~ props', props)
+  // console.log('🚀 ~ file: newDesign.tsx:10 ~ NewDesign ~ props', props)
   const { user } = useUser()
   const today = new Date().toLocaleDateString('en-CA')
 
@@ -83,22 +83,22 @@ export default function NewDesign(props) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  // console.log("🚀 ~ file: newDesign.tsx:35 ~ constgetStaticProps:GetServerSideProps= ~ context:", context.req)
-
   const { userId }: AuthData = getAuth(context.req)
-
-  // const userId = null
   const txCalls = []
+
   txCalls.push(
     prisma.post.findMany({
-      where: { categories: { every: { label: 'defi' } } },
-      take: 3,
+      where: {
+        categories: { every: { label: 'defi' } },
+        AND: {
+          status: postStatus.published,
+        },
+      },
+      take: 10,
     })
   )
 
   txCalls.push(prisma.designPhases.findMany({ orderBy: { phaseOrder: 'asc' } }))
-
-  // txCalls.push(prisma.mechanismImpactFactors.findMany({}))
 
   txCalls.push(
     prisma.calculation.findMany({

@@ -132,7 +132,7 @@ export default function StaticAllocationAndVestingChart(calculation) {
                   calc?.CalculationRows,
                   calc?.totalSupply,
                   calc?.startDate
-                )}
+                ).chartData}
                 fields={calc?.CalculationRows}
                 totalSupply={calc?.totalSupply}
               />

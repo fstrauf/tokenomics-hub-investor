@@ -15,10 +15,20 @@ export default function TDF501({ props, values, activePhase, setFieldValue }) {
         {designPhase.name}
       </h5>
       <div className="grid w-full grid-cols-2 gap-2 rounded-lg border-2 p-2">
-        <div className="">
-          <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 ">
+        <div className="col-span-2">
+          <Field
+            name="Mechanism"
+            component={FormCardSupplyDemand}
+            phaseId={designPhase.phaseId}
+            setFieldValue={setFieldValue}
+            values={values}
+            mechanismTemplates={props.mechanismTemplates}
+          />
+        </div>
+        <div className="col-span-2">
+          {/* <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 ">
             Incentive Summary
-          </h5>
+          </h5> */}
           <Field
             name={`DesignElement.${values?.DesignElement?.findIndex(
               (de) => de.designPhaseId === 301
@@ -26,18 +36,6 @@ export default function TDF501({ props, values, activePhase, setFieldValue }) {
             component={FormTable}
             placeholder="Select categories"
             phaseId={designPhase.phaseId}
-          />
-        </div>
-        <div>
-          <Field
-            name="Mechanism"
-            component={FormCardSupplyDemand}
-            // placeholder="Select categories"
-            phaseId={designPhase.phaseId}
-            setFieldValue={setFieldValue}
-            values={values}
-            mechanismTemplates={props.mechanismTemplates}
-            // mechanismImpactFactors={props.mechanismImpactFactors}
           />
         </div>
 

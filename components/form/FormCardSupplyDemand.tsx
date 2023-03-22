@@ -10,15 +10,16 @@ export const FormCardSupplyDemand = ({
   mechanismTemplates,
   setFieldValue,
 }) => {
+  let [mechanismIndex, setMechanismIndex] = useState(0)
   const defaultMechanism = {
-    id: 'none',
-    name: 'none',
+    id: '',
+    name: `Mechanism`,
     summary: '',
     details: '',
     isSink: true,
     // user: '',
     token: '',
-    category: 'Treasury',
+    category: `Mechanism`,
     lockupPeriod: 5,
     unlockPeriod: 12,
     percentageAllocation: 30,
@@ -28,31 +29,43 @@ export const FormCardSupplyDemand = ({
     initialEmissionPerSecond: 0,
     emissionReductionPerEpoch: 0,
     CalculationTimeSeries: [
-      { id: 1, months: 6, tokens: 50 },
-      { id: 2, months: 5, tokens: 60 },
-      { id: 3, months: 16, tokens: 100 },
+      { id: 1, months: 6, tokens: 5000000 },
+      { id: 2, months: 5, tokens: 6000000 },
+      { id: 3, months: 16, tokens: 50000000 },
     ],
     isTemplate: false,
     PostUser: values.PostUser,
   }
 
-  let [isOpen, setIsOpen] = useState(false)
-  let [mechanismIndex, setMechanismIndex] = useState(0)
-  let [selectedTemplate, setSelectedTemplate] = useState(defaultMechanism)
+  const mechTemplates = mechanismTemplates.map((obj) => ({ ...obj }))
+  const [isOpen, setIsOpen] = useState(false)
+  const [selectedTemplate, setSelectedTemplate] = useState(defaultMechanism)
 
   function handleChange(e) {
     setSelectedTemplate(
-      mechanismTemplates.find((mt) => String(mt.id) === e.target.value) || defaultMechanism
+      mechTemplates.find((mt) => String(mt.id) === e.target.value) ||
+        defaultMechanism
     )
   }
 
   const handleNewMechanism = (arrayHelpers, isSink: boolean) => {
-    let updateMechanism = selectedTemplate
+    const updateMechanism = selectedTemplate
+
     updateMechanism.isSink = isSink
+    if (isSink) {
+      updateMechanism.name =
+        updateMechanism.name + ' ' + (field.value?.length + 1)
+      updateMechanism.category =
+        updateMechanism.category + ' ' + (field.value?.length + 1)
+    } else {
+      updateMechanism.name = 'Incentive ' + (field.value?.length + 1)
+      updateMechanism.category = 'Incentive ' + (field.value?.length + 1)
+    }
 
     arrayHelpers.push(updateMechanism)
     setMechanismIndex(field.value?.length)
     setIsOpen(true)
+    setSelectedTemplate(defaultMechanism)
   }
 
   const handleEditMechanism = (index) => {
@@ -64,41 +77,39 @@ export const FormCardSupplyDemand = ({
     return (
       <div
         key={index}
-        className="h-24 w-44 rounded-md border-2 border-dao-green text-xs"
+        className="grid h-24 w-36 content-between rounded-md border-2 border-dao-green p-1 text-xs"
       >
-        <button
-          className="relative float-right"
-          onClick={() => arrayHelpers.remove(index)}
-          type="button"
-        >
-          <XMarkIcon className="h-3 w-3" aria-hidden="true" />
-        </button>
-        <button
-          className="h-full w-full"
-          onClick={() => handleEditMechanism(index)}
-        >
-          <p className="">{input.user}</p>
-          <p className="">{input.mechanism}</p>
-        </button>
+        {' '}
+        <div>
+          <div className="flex">
+            <div
+              className="mr-2 h-5 w-5 bg-slate-600"
+              style={{ background: input.color }}
+            ></div>
+            <p className="">{input.name}</p>
+          </div>
+          {input.isSink ? (
+            <></>
+          ) : (
+            <p className="mt-2">{input.percentageAllocation} %</p>
+          )}
+        </div>
+        <div className="flex h-7 border-t-2">
+          {' '}
+          <button className="w-full" onClick={() => handleEditMechanism(index)}>
+            Edit
+          </button>
+          <button
+            className="relative float-right"
+            onClick={() => arrayHelpers.remove(index)}
+            type="button"
+          >
+            <XMarkIcon className="h-3 w-3" aria-hidden="true" />
+          </button>
+        </div>
       </div>
     )
   }
-
-  // const emissionTile = (input, index) => {
-  //   return (
-  //     <div
-  //       key={index}
-  //       className="h-24 w-44 rounded-md border-2 border-dao-green text-xs"
-  //     >
-  //       <div
-  //         className="h-full w-full"
-  //       >
-  //         <p className="">{input.user}</p>
-  //         <p className="">{input.mechanism}</p>
-  //       </div>
-  //     </div>
-  //   )
-  // }
 
   return (
     <div className="relative overflow-x-auto">
@@ -114,72 +125,82 @@ export const FormCardSupplyDemand = ({
         name={field.name}
         render={(arrayHelpers) => (
           <>
-            <div className="flex flex-col">
-              <div className="h-96 bg-slate-200">
-                <p>Supply</p>
-                <div key={4711} className="flex flex-row flex-wrap gap-2">
-                  {field.value?.length > 0 &&
-                    field.value?.map((input, index) => (
-                      <>
-                        {!input.isSink ? (
-                          <>{mechanismTile(input, index, arrayHelpers)}</>
-                        ) : (
-                          <></>
-                        )}
-                      </>
-                    ))}
-
+            <div className="flex">
+              <div className="w-1/2">
+                <div className="mb-1 flex gap-2">
+                  {' '}
+                  <p>Supply</p>
                   <button
                     type="button"
-                    className="h-24 w-44 rounded-md border-2 border-dao-green text-xs font-bold"
+                    className="h-11 w-28 rounded-md border-2 border-dao-green text-xs font-bold"
                     onClick={() => handleNewMechanism(arrayHelpers, false)}
+                  >
+                    Add Incentive
+                  </button>
+                </div>
+                <div className="h-60 overflow-auto rounded-lg border-2 border-slate-300">
+                  <div
+                    key={4711}
+                    className="flex flex-row flex-wrap gap-2 overflow-auto p-2"
+                  >
+                    {field.value?.length > 0 &&
+                      field.value?.map((input, index) => (
+                        <>
+                          {!input.isSink ? (
+                            <>{mechanismTile(input, index, arrayHelpers)}</>
+                          ) : (
+                            <></>
+                          )}
+                        </>
+                      ))}
+                  </div>
+                </div>
+              </div>
+              <div className="w-1/2">
+                <div className="mb-1 flex gap-2">
+                  {' '}
+                  <p>Demand</p>
+                  <p className="text-xs">Choose Template</p>
+                  <select
+                    onChange={handleChange}
+                    className="block h-11 w-32 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-xs text-gray-900 focus:border-dao-red focus:ring-dao-red"
+                  >
+                    <option key="none" value="none">
+                      None
+                    </option>
+                    {mechTemplates?.map((mt) => (
+                      <>
+                        <option
+                          key={mt.id}
+                          value={mt.id}
+                          // label={mt.name}
+                        >
+                          {mt.name} - {mt.summary}
+                        </option>
+                      </>
+                    ))}
+                  </select>
+                  <button
+                    type="button"
+                    className="h-11 w-28 rounded-md border-2 border-dao-green text-xs font-bold"
+                    onClick={() => handleNewMechanism(arrayHelpers, true)}
                   >
                     Add Mechanism
                   </button>
                 </div>
-              </div>
 
-              <div className="h-96 bg-slate-400">
-                <p>Demand</p>
-                <div key={4811} className="flex flex-row flex-wrap gap-2">
-                  {field.value?.length > 0 &&
-                    field.value?.map((input, index) => (
-                      <>
-                        {input.isSink ? (
-                          <>{mechanismTile(input, index, arrayHelpers)}</>
-                        ) : (
-                          <></>
-                        )}
-                      </>
-                    ))}
-                  <div className="h-24 w-44 rounded-md border-2 border-dao-green text-xs font-bold">
-                    <p>from Template?</p>
-                    <select
-                      onChange={handleChange}
-                      className="block w-52 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
-                    >
-                      <option key="none" value="none">
-                        None
-                      </option>
-                      {mechanismTemplates?.map((c) => (
+                <div className="h-60 rounded-lg border-2 border-slate-300">
+                  <div key={4811} className="flex flex-row flex-wrap gap-2 overflow-auto p-2">
+                    {field.value?.length > 0 &&
+                      field.value?.map((input, index) => (
                         <>
-                          <option
-                            key={c.id}
-                            value={c.id}
-                            // label={c.name}
-                          >
-                            {c.name} - {c.summary}
-                          </option>
+                          {input.isSink ? (
+                            <>{mechanismTile(input, index, arrayHelpers)}</>
+                          ) : (
+                            <></>
+                          )}
                         </>
                       ))}
-                    </select>
-                    <button
-                      type="button"
-                      className="rounded-md border-2 border-dao-green text-xs font-bold"
-                      onClick={() => handleNewMechanism(arrayHelpers, true)}
-                    >
-                      Add Mechanism
-                    </button>
                   </div>
                 </div>
               </div>
