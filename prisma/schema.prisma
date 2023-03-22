@@ -182,15 +182,16 @@ model DesignElement {
 }
 
 model DesignPhases {
-  id            String          @id @default(cuid())
-  name          String?
-  phaseId       Int?            @unique
-  parentPhaseId Int?
+  id              String          @id @default(cuid())
+  name            String?
+  phaseId         Int?            @unique
+  parentPhaseId   Int?
   // parentPhase   DesignPhases?   @relation("ParentChild", fields: [parentPhaseId], references: [phaseId], onDelete: NoAction, onUpdate: NoAction)
   // childPhase    DesignPhases[]  @relation("ParentChild")
-  Resources     String?         @db.Text
-  DesignElement DesignElement[]
-  phaseOrder    Int?
+  Resources       String?         @db.Text
+  DesignElement   DesignElement[]
+  phaseOrder      Int?
+  postDataElement String?
 
   @@index([parentPhaseId])
 }
