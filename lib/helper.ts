@@ -99,6 +99,7 @@ export enum postStatus {
   reviewRequired = 'Review Required',
   reviewComplete = 'Review Complete',
   published = 'Published',
+  example = 'Example',
 }
 
 export const stringToKey = (name) => {
