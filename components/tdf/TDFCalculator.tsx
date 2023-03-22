@@ -4,7 +4,7 @@ import dynamic from 'next/dynamic'
 import { Field } from 'formik'
 import { Toaster } from 'react-hot-toast'
 import FormId from '../form/FormId'
-import { useAuth } from '@clerk/clerk-react/dist/hooks/useAuth'
+// import { useAuth } from '@clerk/clerk-react/dist/hooks/useAuth'
 import FormAreaDataMechanism from '../form/FormAreaDataMechanism'
 
 export default function TDFCalculator(props) {
@@ -136,53 +136,41 @@ export default function TDFCalculator(props) {
 
         <div className="flex">
           <div>
-            <div className="mb-6">
-              <label className="mb-2 block text-sm font-medium text-gray-900">
+            <div className="mb-1">
+              <label className="mb-2 block text-xs font-medium text-gray-900">
                 Total Supply
               </label>
               <Field
                 type="number"
                 name="calculation.totalSupply"
-                className="block w-52 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
+                className="block w-36 rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-xs text-gray-900 focus:border-dao-red focus:ring-dao-red"
                 onWheel={(event) => event.currentTarget.blur()}
               />
             </div>
-            <div className="mb-6">
-              <label className="mb-2 block text-sm font-medium text-gray-900">
+            <div className="mb-1">
+              <label className="mb-2 block text-xs font-medium text-gray-900">
                 Months
               </label>
               <Field
                 type="number"
                 name="calculation.months"
-                className="block w-52 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
+                className="block w-36 rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-xs text-gray-900 focus:border-dao-red focus:ring-dao-red"
                 onWheel={(event) => event.currentTarget.blur()}
               />
             </div>
-            {/* <div className="mb-6">
-                    <label className="mb-2 block text-sm font-medium text-gray-900">
-                      Calculation name
-                    </label>
-                    <Field
-                      type="text"
-                      name="calculation.name"    
-                      validate={validateName}                                       
-                      className="block w-52 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
-                    />
-                    <ErrorMessage name="name">{msg => <div className='text-red-600 font-bold'>{msg}</div>}</ErrorMessage>
-                  </div> */}
-            <div className="mb-6">
-              <label className="mb-2 block text-sm font-medium text-gray-900">
+            <div className="mb-1">
+              <label className="mb-2 block text-xs font-medium text-gray-900">
                 Start Date
               </label>
               <Field
                 type="date"
                 name="calculation.startDate"
-                className="block w-52 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
+                className="block w-36 rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-xs text-gray-900 focus:border-dao-red focus:ring-dao-red"
               />
             </div>
           </div>
           <div className="m-auto flex w-full flex-col place-items-center">
-            <div className="h-80 w-full">
+            <div className="h-52 w-full">
               <ParentSize>
                 {({ width, height }) => (
                   // only show supply here
@@ -196,9 +184,6 @@ export default function TDFCalculator(props) {
             </div>
           </div>
         </div>
-        {/* <div className="mb-6">
-                <FormEmission values={values?.calculation} navPreFix='calculation.' />
-              </div> */}
         <FormAreaDataMechanism name="calculation.areaData" />
         <div className="w-full">
           <div className="h-96 w-full">
@@ -236,9 +221,6 @@ export default function TDFCalculator(props) {
           name="id"
           className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
         />
-        {/* </Form>
-           )}
-         </Formik> */}
       </div>
     </>
   )

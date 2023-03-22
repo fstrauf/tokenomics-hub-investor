@@ -9,8 +9,7 @@ export const FormCardSupplyDemand = ({
   values,
   mechanismTemplates,
   setFieldValue,
-}) => {  
-
+}) => {
   let [mechanismIndex, setMechanismIndex] = useState(0)
   const defaultMechanism = {
     id: '',
@@ -38,22 +37,30 @@ export const FormCardSupplyDemand = ({
     PostUser: values.PostUser,
   }
 
-  const mechTemplates = mechanismTemplates.map(obj => ({ ...obj }));  
+  const mechTemplates = mechanismTemplates.map((obj) => ({ ...obj }))
   const [isOpen, setIsOpen] = useState(false)
   const [selectedTemplate, setSelectedTemplate] = useState(defaultMechanism)
 
   function handleChange(e) {
     setSelectedTemplate(
-      mechTemplates.find((mt) => String(mt.id) === e.target.value) || defaultMechanism      
+      mechTemplates.find((mt) => String(mt.id) === e.target.value) ||
+        defaultMechanism
     )
   }
 
   const handleNewMechanism = (arrayHelpers, isSink: boolean) => {
     const updateMechanism = selectedTemplate
-    
+
     updateMechanism.isSink = isSink
-    updateMechanism.name = updateMechanism.name + " " + (field.value?.length + 1)
-    updateMechanism.category = updateMechanism.category + " " + (field.value?.length + 1)
+    if (isSink) {
+      updateMechanism.name =
+        updateMechanism.name + ' ' + (field.value?.length + 1)
+      updateMechanism.category =
+        updateMechanism.category + ' ' + (field.value?.length + 1)
+    } else {
+      updateMechanism.name = 'Incentive ' + (field.value?.length + 1)
+      updateMechanism.category = 'Incentive ' + (field.value?.length + 1)
+    }
 
     arrayHelpers.push(updateMechanism)
     setMechanismIndex(field.value?.length)
@@ -67,25 +74,39 @@ export const FormCardSupplyDemand = ({
   }
 
   const mechanismTile = (input, index, arrayHelpers) => {
+    console.log(
+      '🚀 ~ file: FormCardSupplyDemand.tsx:77 ~ mechanismTile ~ input:',
+      input
+    )
     return (
       <div
         key={index}
-        className="h-24 w-44 rounded-md border-2 border-dao-green text-xs"
+        className="grid h-24 w-36 content-between rounded-md border-2 border-dao-green p-1 text-xs"
       >
-        <button
-          className="relative float-right"
-          onClick={() => arrayHelpers.remove(index)}
-          type="button"
-        >
-          <XMarkIcon className="h-3 w-3" aria-hidden="true" />
-        </button>
-        <button
-          className="h-full w-full"
-          onClick={() => handleEditMechanism(index)}
-        >
-          <p className="">{input.user}</p>
-          <p className="">{input.mechanism}</p>
-        </button>
+        {' '}
+        <div>
+          <div className="flex">
+            <div
+              className="mr-2 h-5 w-5 bg-slate-600"
+              style={{ background: input.color }}
+            ></div>
+            <p className="">{input.name}</p>
+          </div>
+          <p className="mt-2">{input.percentageAllocation} %</p>
+        </div>
+        <div className="flex h-7 border-t-2">
+          {' '}
+          <button className="w-full" onClick={() => handleEditMechanism(index)}>
+            Edit
+          </button>
+          <button
+            className="relative float-right"
+            onClick={() => arrayHelpers.remove(index)}
+            type="button"
+          >
+            <XMarkIcon className="h-3 w-3" aria-hidden="true" />
+          </button>
+        </div>
       </div>
     )
   }
@@ -105,9 +126,22 @@ export const FormCardSupplyDemand = ({
         render={(arrayHelpers) => (
           <>
             <div className="flex flex-col">
-              <div className="h-96 bg-slate-200">
+              <div className="flex gap-2 mb-1">
+                {' '}
                 <p>Supply</p>
-                <div key={4711} className="flex flex-row flex-wrap gap-2">
+                <button
+                  type="button"
+                  className="h-7 w-28 rounded-md border-2 border-dao-green text-xs font-bold"
+                  onClick={() => handleNewMechanism(arrayHelpers, false)}
+                >
+                  Add Incentive
+                </button>
+              </div>
+              <div className="h-96 overflow-auto rounded-lg border-2 border-slate-300">
+                <div
+                  key={4711}
+                  className="flex flex-row flex-wrap gap-2 overflow-auto p-2"
+                >
                   {field.value?.length > 0 &&
                     field.value?.map((input, index) => (
                       <>
@@ -118,19 +152,10 @@ export const FormCardSupplyDemand = ({
                         )}
                       </>
                     ))}
-
-                  <button
-                    type="button"
-                    className="h-24 w-44 rounded-md border-2 border-dao-green text-xs font-bold"
-                    onClick={() => handleNewMechanism(arrayHelpers, false)}
-                  >
-                    Add Incentive
-                  </button>
                 </div>
               </div>
-
-              <div className="h-96 bg-slate-400">
-                <p>Demand</p>
+              <p>Demand</p>
+              <div className="h-96 rounded-lg border-2 border-slate-300">
                 <div key={4811} className="flex flex-row flex-wrap gap-2">
                   {field.value?.length > 0 &&
                     field.value?.map((input, index) => (

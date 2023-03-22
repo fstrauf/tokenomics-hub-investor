@@ -13,21 +13,23 @@ export default function TDF502({ props, values, activePhase, setFieldValue }) {
         {designPhase.name}
       </h5>
       <div className="grid w-full grid-cols-2 gap-2 rounded-lg border-2 p-2">
-        <div>
-          <TDFCalculator
-            preloadInitialValues={props.preloadInitialCalcValues}
-            values={values}
-          />
-        </div>
-        <div>
-          <Field
-            name="Mechanism"
-            component={FormCardSupplyDemand}
-            phaseId={designPhase.phaseId}
-            setFieldValue={setFieldValue}
-            values={values}
-            mechanismTemplates={props.mechanismTemplates}
-          />
+        <div className="col-span-2">
+          <div>
+            <Field
+              name="Mechanism"
+              component={FormCardSupplyDemand}
+              phaseId={designPhase.phaseId}
+              setFieldValue={setFieldValue}
+              values={values}
+              mechanismTemplates={props.mechanismTemplates}
+            />
+          </div>
+          <div>
+            <TDFCalculator
+              preloadInitialValues={props.preloadInitialCalcValues}
+              values={values}
+            />
+          </div>
         </div>
 
         <div className="">

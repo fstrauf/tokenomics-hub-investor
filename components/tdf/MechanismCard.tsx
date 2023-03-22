@@ -11,9 +11,9 @@ export const MechanismCard = ({
 }) => {
   const isSink = field.value[mechanismIndex]?.isSink || false
 
-  const handleToggle = () => {
-    setIsToggleOn(!isToggleOn)
-  }
+  // const handleToggle = () => {
+  //   setIsToggleOn(!isToggleOn)
+  // }
 
   const supplyBuilder = () => {
     return (
