@@ -122,6 +122,18 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     })
   )
 
+  txCalls.push(
+    prisma.category.findMany({
+      where: {},
+    })
+  )
+
+  txCalls.push(
+    prisma.tag.findMany({
+      where: {},
+    })
+  )
+
   // txCalls.push(
   //   prisma.calculation.findUnique({
   //     where: {
@@ -133,8 +145,15 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   //   })
   // )
 
-  const [posts, designPhases, userCalcs, mechanismTemplates, PostUser] =
-    await prisma.$transaction(txCalls)
+  const [
+    posts,
+    designPhases,
+    userCalcs,
+    mechanismTemplates,
+    PostUser,
+    Category,
+    Tag,
+  ] = await prisma.$transaction(txCalls)
 
   // const preloadInitialCalcValues = null
 
@@ -147,6 +166,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         getMergedInitialCalcValues(userCalcs, userId, null) || null,
       mechanismTemplates: mechanismTemplates || null,
       PostUser: PostUser || null,
+      Category: Category || null,
+      Tag: Tag || null,
     },
   }
 }

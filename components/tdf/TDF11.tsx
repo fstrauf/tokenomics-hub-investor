@@ -8,6 +8,9 @@ import FormSelect from '../form/FormSelect'
 import FormImageSelect from '../form/FormImageSelect'
 
 export default function TDF11({ props, values, activePhase, content }) {
+  console.log('props', props)
+  console.log('content', content)
+  console.log('values', values)
   const designPhase = props.designPhases.find(
     (adp) => String(adp.phaseId) === '11',
     activePhase
@@ -91,7 +94,7 @@ export default function TDF11({ props, values, activePhase, content }) {
         <Field
           className="custom-select"
           name="categories"
-          options={content.categories}
+          options={props.Category}
           component={FormSelect}
           placeholder="Select categories"
           isMulti={true}
@@ -105,7 +108,7 @@ export default function TDF11({ props, values, activePhase, content }) {
         <Field
           className="custom-select"
           name="tags"
-          options={content.tags}
+          options={props.Tag}
           component={FormSelect}
           placeholder="Select categories"
           isMulti={true}
