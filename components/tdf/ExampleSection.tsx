@@ -10,8 +10,31 @@ export default function ExampleSection({ content, exampleField, exampleDetail })
     setIsSubelementClicked(true)
   }
 
-  if(exampleDetail !== null){
+  let ExampleDetail = ({onGoBack, example, exampleField}) => {
+    return (
+      <div className="flex flex-col justify-between">
+        <div>
+          <div className="mb-6 font-bold">{example.title}</div>
+          <pre
+            id="message"
+            className="block w-full whitespace-pre-line rounded-lg bg-slate-50 p-2.5 font-sans text-sm text-gray-900"
+          >
+            {example[exampleField]}
+          </pre>
+        </div>
+        <button
+          className="mt-20 w-16 rounded-md border-2 border-dao-red px-1 py-1 text-xs font-medium text-dao-red"
+          onClick={onGoBack}
+        >
+          go back
+        </button>
+      </div>
+    )
   }
+  
+  if(exampleDetail !== undefined){
+    ExampleDetail = exampleDetail
+  } 
 
   function ExamplesSelector() {
     return (
@@ -46,27 +69,7 @@ export default function ExampleSection({ content, exampleField, exampleDetail })
     )
   }
 
-  function ExampleDetail(props) {
-    return (
-      <div className="flex flex-col justify-between">
-        <div>
-          <div className="mb-6 font-bold">{example.title}</div>
-          <pre
-            id="message"
-            className="block w-full whitespace-pre-line rounded-lg bg-slate-50 p-2.5 font-sans text-sm text-gray-900"
-          >
-            {example[exampleField]}
-          </pre>
-        </div>
-        <button
-          className="mt-20 w-16 rounded-md border-2 border-dao-red px-1 py-1 text-xs font-medium text-dao-red"
-          onClick={props.onGoBack}
-        >
-          go back
-        </button>
-      </div>
-    )
-  }
+
 
   return (
     <div className="">
@@ -75,7 +78,7 @@ export default function ExampleSection({ content, exampleField, exampleDetail })
       </h5>
 
       {isSubelementClicked ? (
-        <ExampleDetail onGoBack={() => setIsSubelementClicked(false)} />
+        <ExampleDetail onGoBack={() => setIsSubelementClicked(false)} example={example} exampleField={exampleField} />
       ) : (
         <ExamplesSelector />
       )}

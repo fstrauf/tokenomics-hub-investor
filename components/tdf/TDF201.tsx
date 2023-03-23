@@ -1,8 +1,6 @@
 import { Field } from 'formik'
-// import BreakdownBox from '../slugView/breakdown-box'
 import ResourceSection from './ResourceSection'
 import { getActiveDesignPhase } from '../../lib/helper'
-// import ExampleSection from './ExampleSection'
 
 export default function TDF201({ props, values, activePhase }) {
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
