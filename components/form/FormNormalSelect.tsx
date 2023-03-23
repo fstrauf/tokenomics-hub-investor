@@ -9,15 +9,7 @@ const FormNormalSelect = ({ field, form, options, placeholder }) => {
 
   return (
     <select
-      style={{
-        fontSize: '12px',
-        border: '1px solid lightgray',
-        borderRadius: '8px',
-        height: "80px",
-        fontWeight: 'normal',
-        width: "120px",
-        backgroundColor: '#f9fafb',
-      }}
+      className="h-[80px] w-[120px] rounded-[8px] border-[1px] border-gray-300 bg-[#f9fafb] text-[12px] font-normal "
       name={field.name}
       id={field.id}
       value={field.value}
