@@ -170,7 +170,7 @@ export default function DesignCard({ posts, context }) {
   return (
     <div className="static overflow-x-auto rounded-[10px] bg-white px-8 py-6">
       <Toaster />
-      <div className="mb-2 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3  xl:grid-cols-4">
+      <div className="mb-2 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3  xl:grid-cols-4 h-screen">
         {posts?.map((post, index) => {
           return (
             <div key={index} className="h-120  rounded-[10px] border">
