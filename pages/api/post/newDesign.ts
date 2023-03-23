@@ -79,6 +79,11 @@ export default async function handle(req, res) {
             data: inputFields.ProtocolResources,
           },
         },
+        PostUser: {
+          createMany: {
+            data: inputFields.PostUser,
+          },
+        },
         protocolTimeLine: {
           createMany: {
             data: timeLine,

@@ -1,9 +1,11 @@
 import { Field, FieldArray } from 'formik'
+import { GetServerSideProps } from 'next'
 import React from 'react'
+import FormNormalSelect from './FormNormalSelect'
 
 const defaultUsers = [
   {
-    user: 'Liquidity Provider',
+    user: '',
     task: 'provide liquidity',
     why: 'collect fees on idle capital',
     valueCreation: 'provide deep liquidity on a variety of assets',
@@ -15,7 +17,7 @@ const defaultUsers = [
       'Running this process for too long, will create an artificial demand that is based on stimulus and not real economic activity.',
   },
   {
-    user: 'Liquidity Provider',
+    user: '',
     task: 'set fees',
     why: 'collect fees on idle capital',
     valueCreation: 'provide deep liquidity on a variety of assets',
@@ -28,7 +30,7 @@ const defaultUsers = [
   },
 ]
 
-export const FormTable = ({ field, form, phaseId }) => {
+export const FormTable = ({ field, form, phaseId, users }) => {
   if (field.value === '') {
     form.setFieldValue(field.name, defaultUsers)
   }
@@ -90,7 +92,6 @@ export const FormTable = ({ field, form, phaseId }) => {
       </thead>      
     </>
   )
-
   const incentiveRow = (input, index, arrayHelpers) => {
     return (
       <>
@@ -100,17 +101,26 @@ export const FormTable = ({ field, form, phaseId }) => {
             className="whitespace-nowrap text-gray-900 "
           >
             {' '}
-            <Field
+            {/* <Field
               name={`${field.name}.${index}.user`}
               placeholder="user"
               className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-gray-900 focus:border-blue-500 focus:ring-blue-500"
               rows={4}
               as="textarea"
-            />
+            /> */}
+
+        <Field
+          className="rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-xs text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+          name={`${field.name}.${index}.user`}
+          options={users}
+          component={FormNormalSelect}
+          placeholder="Select Users"
+        />
           </th>
           <td className="">
             {' '}
-            <Field
+    
+        <Field
               name={`${field.name}.${index}.task`}
               placeholder="task"
               className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-gray-900 focus:border-blue-500 focus:ring-blue-500"
