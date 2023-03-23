@@ -48,6 +48,7 @@ export default function TDF501({ props, values, activePhase, setFieldValue }) {
               (de) => de.designPhaseId === 301
             )}.content`}
             component={FormTable}
+            users={props?.PostUser || []}
             placeholder="Select categories"
             phaseId={designPhase.phaseId}
           />

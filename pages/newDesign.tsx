@@ -25,12 +25,20 @@ export default function NewDesign(props) {
         return { id: '', content: '', designPhaseId: dp.phaseId }
       }),
     // calculation: initialCalculatorValues,
-    Mechanism: [],
-    mechanismTemplates: props.mechanismTemplates,
-    PostUser: [
-      { id: 1, name: 'Athlete', role: 'Build and audience on the platform' },
-    ],
-    calculation: initialCalculatorValues,
+    Mechanism: props.mechanismTemplates.map((mt) => {
+      return {
+        id: mt.id,
+        name: mt.name,
+        summary: mt.summary,
+        details: mt.details,
+        isSink: mt.isSink,
+        isTemplate: mt.isTemplate,
+      }
+    }),
+    // PostUser: props.PostUser.map((pu) => {
+    //   return { id: pu.id, name: pu.name, role: pu.role, postId: pu.postId }
+    // }),
+    PostUser: [{ name: '', role: '' }],
     slug: '',
     shortDescription: '',
     categories: [],
@@ -38,8 +46,7 @@ export default function NewDesign(props) {
     protocolTimeLine: [],
     publishedAt: today,
     breakdown: '',
-    mainImageUrl:
-      'https://storage.googleapis.com/my-bucket-bbc0e24/Logo_Tokenomics_DAO.png',
+    mainImageUrl: '',
     tokenUtility: '',
     tokenUtilityStrength: 0,
     businessModel: '',
@@ -109,7 +116,24 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     })
   )
 
-  const [posts, designPhases, userCalcs, mechanismTemplates] =
+  txCalls.push(
+    prisma.postUser.findMany({
+      where: {},
+    })
+  )
+
+  // txCalls.push(
+  //   prisma.calculation.findUnique({
+  //     where: {
+  //       id: calculationId,
+  //     },
+  //     include: {
+  //       CalculationRows: true,
+  //     },
+  //   })
+  // )
+
+  const [posts, designPhases, userCalcs, mechanismTemplates, PostUser] =
     await prisma.$transaction(txCalls)
 
   // const preloadInitialCalcValues = null
@@ -122,6 +146,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       preloadInitialCalcValues:
         getMergedInitialCalcValues(userCalcs, userId, null) || null,
       mechanismTemplates: mechanismTemplates || null,
+      PostUser: PostUser || null,
     },
   }
 }

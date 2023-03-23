@@ -18,6 +18,7 @@ export default function TDF404({ props, values, activePhase }) {
             name={`DesignElement.${values?.DesignElement?.findIndex(
               (de) => de.designPhaseId === 301
             )}.content`}
+            users={props?.PostUser || []}
             component={FormTable}
             placeholder="Select categories"
             phaseId={designPhase.phaseId}
