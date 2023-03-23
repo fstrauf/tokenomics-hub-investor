@@ -22,15 +22,15 @@ export default function TDFMain({ props, content }) {
   const TDF11 = dynamic(() => import('./TDF11'), {
     loading: () => <p>Loading</p>,
   })
-  const TDF101 = dynamic(() => import('./TDF101'), {
+  const TDFGenericOneField = dynamic(() => import('./TDFGenericOneField'), {
     loading: () => <p>Loading</p>,
   })
-  const TDF102 = dynamic(() => import('./TDF102'), {
-    loading: () => <p>Loading</p>,
-  })
-  const TDF103 = dynamic(() => import('./TDF103'), {
-    loading: () => <p>Loading</p>,
-  })
+  // const TDF102 = dynamic(() => import('./TDF102'), {
+  //   loading: () => <p>Loading</p>,
+  // })
+  // const TDF103 = dynamic(() => import('./TDF103'), {
+  //   loading: () => <p>Loading</p>,
+  // })
   const TDF201 = dynamic(() => import('./TDF201'), {
     loading: () => <p>Loading</p>,
   })
@@ -178,17 +178,11 @@ export default function TDFMain({ props, content }) {
           />
         )
       case 101:
-        return (
-          <TDF101 props={props} values={values} activePhase={activePhase} />
-        )
       case 102:
-        return (
-          <TDF102 props={props} values={values} activePhase={activePhase} />
-        )
       case 103:
-        return (
-          <TDF103 props={props} values={values} activePhase={activePhase} />
-        )
+      case 202:
+        return <TDFGenericOneField props={props} activePhase={activePhase} />
+
       case 201:
         return (
           <TDF201 props={props} values={values} activePhase={activePhase} />
@@ -250,10 +244,15 @@ export default function TDFMain({ props, content }) {
       case 502:
         return (
           <TDF502
+           
             props={props}
+           
             values={values}
+           
             activePhase={activePhase}
+           
             setFieldValue={setFieldValue}
+          
           />
         )
       case 601:
@@ -271,9 +270,7 @@ export default function TDFMain({ props, content }) {
           <TDF701 props={props} values={values} activePhase={activePhase} />
         )
       default:
-        return (
-          <TDF101 props={props} values={values} activePhase={activePhase} />
-        )
+        return <TDFGenericOneField props={props} activePhase={activePhase} />
     }
   }
 
@@ -286,7 +283,7 @@ export default function TDFMain({ props, content }) {
           activePhase={activePhase}
         />
       </div>
-      <div className="w-5/6 ">
+      <div className="h-140 w-5/6">
         <Formik
           initialValues={initialValues}
           onSubmit={submitData}
@@ -299,13 +296,13 @@ export default function TDFMain({ props, content }) {
                 name="DesignElement"
                 render={() => <div>{renderSwitch(values, setFieldValue)}</div>}
               />
-              {/* <button
+              <button
                 type="submit"
                 disabled={isSubmitting}
                 className="mt-5 mb-5 rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
               >
                 Submit
-              </button> */}
+              </button>
             </Form>
           )}
         </Formik>

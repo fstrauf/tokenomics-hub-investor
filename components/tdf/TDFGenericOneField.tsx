@@ -4,7 +4,7 @@ import ResourceSection from './ResourceSection'
 import { getActiveDesignPhase } from '../../lib/helper'
 import ExampleSection from './ExampleSection'
 
-export default function TDF101({ props, values, activePhase }) {
+export default function TDFGenericOneField({ props, activePhase }) {
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
   return (
     <div className='flex flex-col'>
@@ -16,15 +16,13 @@ export default function TDF101({ props, values, activePhase }) {
           <Field
             as="textarea"
             rows="4"
-            name={`DesignElement.${values?.DesignElement?.findIndex(
-              (de) => de.designPhaseId === activePhase
-            )}.content`} //
-            placeholder="Problem / Solution Statement"
+            name={designPhase.postDataElement}
+            placeholder={designPhase.name}
             className="mb-3 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
           />
         </div>
         <ResourceSection content={designPhase.Resources} />
-        <ExampleSection content={props.posts} exampleField='problemSolution' />
+        <ExampleSection content={props.posts} exampleField={designPhase.postDataElement} />
       </div>
     </div>
   )

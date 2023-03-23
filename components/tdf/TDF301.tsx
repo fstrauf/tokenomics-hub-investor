@@ -1,5 +1,5 @@
 import { Field, FieldArray } from 'formik'
-import BreakdownBox from '../slugView/breakdown-box'
+// import BreakdownBox from '../slugView/breakdown-box'
 import ResourceSection from './ResourceSection'
 import FormTable from '../form/FormTablePivot'
 import { getActiveDesignPhase } from '../../lib/helper'
@@ -25,21 +25,7 @@ export default function TDF301({ props, values, activePhase }) {
         </p>
         <FormAddUser values={values} />
       </div>
-      <div>
-        <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 ">
-          References
-        </h5>
-        {props.posts.map((post) => (
-          <div key={post.id}>
-            <div>{post.title}</div>
-            <BreakdownBox
-              value={post?.businessModel}
-              strength={post?.businessModelStrength}
-              title="Business Model:"
-            />
-          </div>
-        ))}
-      </div>
+
     </div>
   )
 }
