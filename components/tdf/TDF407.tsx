@@ -1,13 +1,33 @@
 import { Field } from 'formik'
-
 import ResourceSection from './ResourceSection'
 import React from 'react'
 import FormText from '../form/FormText'
 import { getActiveDesignPhase } from '../../lib/helper'
 import ExampleSection from './ExampleSection'
+import BreakdownBox from '../slugView/breakdown-box'
 
 export default function TDF407({ props, values, activePhase }) {
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
+
+  let ExampleDetail = ({ onGoBack, example, exampleField }) => {
+    return (
+      <div className="flex flex-col justify-between">
+        <BreakdownBox value={example['valueCapture']} title="Value Capture:" />
+        <BreakdownBox value={example['tokenUtility']} title="Token Utility:" />
+        <BreakdownBox
+          value={example['demandDrivers']}
+          title="Demand Drivers:"
+        />
+        <button
+          className="mt-20 w-16 rounded-md border-2 border-dao-red px-1 py-1 text-xs font-medium text-dao-red"
+          onClick={onGoBack}
+        >
+          go back
+        </button>
+      </div>
+    )
+  }
+
   return (
     <div className="grid w-full  gap-2 rounded-lg border-2 p-2">
       <div className="col-span-1">
@@ -61,7 +81,7 @@ export default function TDF407({ props, values, activePhase }) {
       <ExampleSection
         content={props.posts}
         exampleField={designPhase.postDataElement}
-        exampleDetail={null}
+        exampleDetail={ExampleDetail}
       />
     </div>
   )
