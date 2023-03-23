@@ -8,9 +8,6 @@ import FormSelect from '../form/FormSelect'
 import FormImageSelect from '../form/FormImageSelect'
 
 export default function TDF11({ props, values, activePhase, content }) {
-  console.log('props', props)
-  console.log('content', content)
-  console.log('values', values)
   const designPhase = props.designPhases.find(
     (adp) => String(adp.phaseId) === '11',
     activePhase
