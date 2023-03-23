@@ -1,15 +1,13 @@
 import { Field } from 'formik'
-import BreakdownBox from '../slugView/breakdown-box'
+
 import ResourceSection from './ResourceSection'
 import React from 'react'
-import FormErrorMessage from '../form/FormErrorMessage'
 import FormText from '../form/FormText'
+import { getActiveDesignPhase } from '../../lib/helper'
+import ExampleSection from './ExampleSection'
 
 export default function TDF407({ props, values, activePhase }) {
-  const designPhase = props.designPhases.find(
-    (adp) => String(adp.phaseId) === '407',
-    activePhase
-  )
+  const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
   return (
     <div className="grid w-full  gap-2 rounded-lg border-2 p-2">
       <div className="col-span-1">
@@ -17,12 +15,7 @@ export default function TDF407({ props, values, activePhase }) {
           {designPhase?.name}
         </h5>
       </div>
-      <div>
-        <label className="mb-2 block text-sm font-medium text-gray-900">
-          Resources
-        </label>
-        <ResourceSection content={designPhase.Resources} />
-      </div>
+
       <div className="mb-6 flex">
         <div className="mr-1 basis-1/4">
           <label className="mb-2 block text-sm font-medium text-gray-900">
@@ -64,6 +57,12 @@ export default function TDF407({ props, values, activePhase }) {
           placeholder="Demand Drivers"
         />
       </div>
+      <ResourceSection content={designPhase.Resources} />
+      <ExampleSection
+        content={props.posts}
+        exampleField={designPhase.postDataElement}
+        exampleDetail={null}
+      />
     </div>
   )
 }
