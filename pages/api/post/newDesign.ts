@@ -73,7 +73,7 @@ export default async function handle(req, res) {
             }
           }),
         },
-        calculationId: inputFields.calculation,
+        // calculationId: inputFields.calculation,
         ProtocolResources: {
           createMany: {
             data: inputFields.ProtocolResources,
@@ -89,21 +89,21 @@ export default async function handle(req, res) {
             data: timeLine,
           },
         },
-        UserStrengthRating: {
-          create: {
-            authorClerkId: inputFields.authorClerkId,
-            userReviewUtility: 'initial',
-            userReviewBusinessModel: 'initial',
-            userReviewDemandDriver: 'initial',
-            userReviewValueCapture: 'initial',
-            userReviewValueCreation: 'initial',
-            tokenUtilityStrength: inputFields.tokenUtilityStrength,
-            businessModelStrength: inputFields.businessModelStrength,
-            valueCaptureStrength: inputFields.valueCaptureStrength,
-            valueCreationStrength: inputFields.valueCreationStrength,
-            demandDriversStrength: inputFields.demandDriversStrength,
-          },
-        },
+        // UserStrengthRating: {
+        //   create: {
+        //     authorClerkId: inputFields.authorClerkId,
+        //     userReviewUtility: 'initial',
+        //     userReviewBusinessModel: 'initial',
+        //     userReviewDemandDriver: 'initial',
+        //     userReviewValueCapture: 'initial',
+        //     userReviewValueCreation: 'initial',
+        //     tokenUtilityStrength: inputFields.tokenUtilityStrength,
+        //     businessModelStrength: inputFields.businessModelStrength,
+        //     valueCaptureStrength: inputFields.valueCaptureStrength,
+        //     valueCreationStrength: inputFields.valueCreationStrength,
+        //     demandDriversStrength: inputFields.demandDriversStrength,
+        //   },
+        // },
       },
     })
   } catch (e) {
