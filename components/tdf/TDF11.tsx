@@ -91,7 +91,7 @@ export default function TDF11({ props, values, activePhase, content }) {
         <Field
           className="custom-select"
           name="categories"
-          options={content.categories}
+          options={props.Category}
           component={FormSelect}
           placeholder="Select categories"
           isMulti={true}
@@ -105,7 +105,7 @@ export default function TDF11({ props, values, activePhase, content }) {
         <Field
           className="custom-select"
           name="tags"
-          options={content.tags}
+          options={props.Tag}
           component={FormSelect}
           placeholder="Select categories"
           isMulti={true}
