@@ -16,9 +16,9 @@ export default function TDF401({ props, values, activePhase }) {
         <div className="">
           <Field
             name={`DesignElement.${values?.DesignElement?.findIndex(
-              (de) => de.designPhaseId === 301
+              (de) => de.designPhaseId === 401
             )}.content`}
-            users={props?.PostUser || []}
+            users={values?.PostUser || []}
             component={FormTable}
             placeholder="Select categories"
             phaseId={designPhase.phaseId}

@@ -5,6 +5,7 @@ import FormTable from '../form/FormTablePivot'
 import { getActiveDesignPhase } from '../../lib/helper'
 
 export default function TDF302({ props, values, activePhase }) {
+  console.log('props, value in TDF302', props, values)
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
   return (
     <div className="flex w-full flex-col rounded-lg border-2 p-2">
@@ -17,9 +18,9 @@ export default function TDF302({ props, values, activePhase }) {
           as="textarea"
           rows="4"
           name={`DesignElement.${values?.DesignElement?.findIndex(
-            (de) => de.designPhaseId === 301 //should all use the same db field.
+            (de) => de.designPhaseId === 302 //should all use the same db field.
           )}.content`}
-          users={props?.PostUser || []}
+          users={values?.PostUser || []}
           component={FormTable}
           placeholder="tell us about your requirements"
           phaseId={designPhase.phaseId}

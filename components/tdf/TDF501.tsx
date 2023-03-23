@@ -45,10 +45,10 @@ export default function TDF501({ props, values, activePhase, setFieldValue }) {
           </h5> */}
           <Field
             name={`DesignElement.${values?.DesignElement?.findIndex(
-              (de) => de.designPhaseId === 301
+              (de) => de.designPhaseId === 501
             )}.content`}
             component={FormTable}
-            users={props?.PostUser || []}
+            users={values?.PostUser || []}
             placeholder="Select categories"
             phaseId={designPhase.phaseId}
           />
