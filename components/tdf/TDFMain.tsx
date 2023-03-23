@@ -283,7 +283,7 @@ export default function TDFMain({ props, content }) {
           activePhase={activePhase}
         />
       </div>
-      <div className="h-140 w-5/6">
+      <div className="w-5/6">
         <Formik
           initialValues={initialValues}
           onSubmit={submitData}

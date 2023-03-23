@@ -1,13 +1,16 @@
 import Image from 'next/image'
 import { useState } from 'react'
 
-export default function ExampleSection({ content, exampleField }) {
+export default function ExampleSection({ content, exampleField, exampleDetail }) {
   const [example, setExample] = useState({})
   const [isSubelementClicked, setIsSubelementClicked] = useState(false)
 
   function handleDetailClicked(c) {
     setExample(c)
     setIsSubelementClicked(true)
+  }
+
+  if(exampleDetail !== null){
   }
 
   function ExamplesSelector() {
