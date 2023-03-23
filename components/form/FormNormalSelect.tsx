@@ -13,6 +13,9 @@ const FormNormalSelect = ({ field, form, options, placeholder }) => {
         fontSize: '12px',
         border: '1px solid lightgray',
         borderRadius: '8px',
+        height: "80px",
+        fontWeight: 'normal',
+        width: "120px",
         backgroundColor: '#f9fafb',
       }}
       name={field.name}
