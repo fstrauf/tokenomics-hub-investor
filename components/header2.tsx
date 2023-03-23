@@ -79,7 +79,7 @@ export default function Header2() {
   const calculatorSection = (
     <Link
       href="/calculator"
-      className="text-base font-medium text-gray-500 hover:text-gray-900"
+      className="text-base font-medium text-white hover:text-gray-900"
     >
       Calculator
     </Link>
@@ -88,7 +88,7 @@ export default function Header2() {
   const expertsSection = (
     <Link
       href="/experts"
-      className="text-base font-medium text-gray-500 hover:text-gray-900"
+      className="text-base font-medium text-white hover:text-gray-900"
     >
       Experts
     </Link>
@@ -144,9 +144,7 @@ export default function Header2() {
         aria-hidden="true"
       /> */}
       <div className="ml-4">
-        <p className="text-base font-medium text-gray-900">
-          My Designs
-        </p>
+        <p className="text-base font-medium text-gray-900">My Designs</p>
         <p className="mt-1 text-sm text-gray-500">
           Overview of all your designs.
         </p>
@@ -221,37 +219,45 @@ export default function Header2() {
     </Link>
   )
 
+  const fundRaiseBar = (
+    <div className="m-auto bg-dao-green">
+      <div className="mx-auto max-w-xl py-3 px-3 sm:px-6 lg:px-8">
+        {/* <div className="m-auto flex"> */}
+        <p className="ml-3 self-center truncate text-center font-medium text-white">
+          <span className="inline">🥳 We are fundraising. Interested? </span>
+          <a
+            href="mailto:contact@tokenomicsdao.com"
+            className="hover:underline"
+          >
+            Contact us.
+          </a>
+        </p>
+        {/* </div> */}
+      </div>
+    </div>
+  )
+
   return (
     <>
-      <div className="m-auto bg-dao-green">
-        <div className="mx-auto max-w-xl py-3 px-3 sm:px-6 lg:px-8">
-          {/* <div className="m-auto flex"> */}
-          <p className="ml-3 self-center truncate text-center font-medium text-white">
-            <span className="inline">🥳 We are fundraising. Interested? </span>
-            <a
-              href="mailto:contact@tokenomicsdao.com"
-              className="hover:underline"
-            >
-              Contact us.
-            </a>
-          </p>
-          {/* </div> */}
-        </div>
-      </div>
-      <Popover className="relative bg-white">
+      {fundRaiseBar}
+      <Popover className="relative bg-dark-tdao">
         <div className="mx-auto max-w-full px-6">
-          <div className="flex items-center justify-between border-b-2 border-gray-100 py-6 md:justify-start md:space-x-10">
+          <div className="flex items-center justify-between py-2 md:justify-start md:space-x-10">
             <div className="flex justify-start lg:w-0 lg:flex-1">
               <ThubLogo />
+              <div className="hidden md:ml-2 md:flex md:items-center">
+                <p className="text-2xl text-white">Tokenomics Hub</p>
+              </div>
             </div>
             <div className="-my-2 -mr-2 md:hidden">
-              <Popover.Button className="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-dao-red">
+              <Popover.Button className="inline-flex items-center justify-center rounded-md bg-dark-tdao p-2 text-gray-200 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-dao-red">
                 <span className="sr-only">Open menu</span>
                 <Bars3Icon className="h-6 w-6" aria-hidden="true" />
               </Popover.Button>
             </div>
+
             <Popover.Group as="nav" className="hidden space-x-10 md:flex">
-              <Popover className="relative">
+              {/* <Popover className="relative">
                 {({ open }) => (
                   <>
                     <Popover.Button
@@ -292,10 +298,10 @@ export default function Header2() {
                     </Transition>
                   </>
                 )}
-              </Popover>
+              </Popover> */}
               {calculatorSection}
               {expertsSection}
-              <Popover className="relative">
+              {/* <Popover className="relative">
                 {({ open }) => (
                   <>
                     <Popover.Button
@@ -336,7 +342,7 @@ export default function Header2() {
                     </Transition>
                   </>
                 )}
-              </Popover>
+              </Popover> */}
             </Popover.Group>
             <div className="hidden items-center justify-end md:flex md:flex-1 lg:w-0">
               <SignedIn>
@@ -361,31 +367,31 @@ export default function Header2() {
             focus
             className="absolute inset-x-0 top-0 z-50 origin-top-right transform p-2 transition md:hidden"
           >
-            <div className="divide-y-2 divide-gray-50 rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5">
+            <div className="divide-y-2 divide-gray-700 rounded-lg bg-dark-tdao shadow-lg ring-1 ring-black ring-opacity-5">
               <div className="px-5 pt-5 pb-6">
                 <div className="flex items-center justify-between">
                   <div className="h-10 w-10">
                     <ThubLogo />
                   </div>
-                  <div className="-mr-2">
-                    <Popover.Button className="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
+                  <div className="-mr-2 bg-dark-tdao">
+                    <Popover.Button className="inline-flex items-center justify-center rounded-md bg-dark-tdao p-2 text-gray-200 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
                       <span className="sr-only">Close menu</span>
                       <XMarkIcon className="h-6 w-6" aria-hidden="true" />
                     </Popover.Button>
                   </div>
                 </div>
-                <div className="mt-6">
+                <div className="mt-20">
                   <nav className="grid gap-y-8">
-                    {newProtocolSection}
-                    {myDraftsSection}
-                    {allDraftsSection}
+                    {calculatorSection}
+                    {expertsSection}
                   </nav>
                 </div>
               </div>
               <div className="space-y-6 py-6 px-5">
-                {tdfSection}
-                {tdfMyDesigns}
-                {calcTemplateSection}
+                {/* {tdfSection} */}
+                {/* {tdfMyDesigns} */}
+                {/* {calcTemplateSection}
+                {expertsSection} */}
                 <div className="flex w-full justify-end">
                   <SignedIn>
                     <UserButton />

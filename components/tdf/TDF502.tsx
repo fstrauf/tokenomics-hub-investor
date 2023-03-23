@@ -13,6 +13,7 @@ export default function TDF502({ props, values, activePhase, setFieldValue }) {
   let ExampleDetail = ({ onGoBack, example, exampleField }) => {
     return (
       <div className="flex flex-col justify-between">
+        <div className="mb-6 mt-6 font-bold">{example.title}</div>
         <div className="ml-2">
           <Tiptap content={example[exampleField]} editMode={false} />
         </div>
