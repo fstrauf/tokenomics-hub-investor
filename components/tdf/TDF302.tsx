@@ -5,7 +5,6 @@ import FormTable from '../form/FormTablePivot'
 import { getActiveDesignPhase } from '../../lib/helper'
 
 export default function TDF302({ props, values, activePhase }) {
-  console.log('props, value in TDF302', props, values)
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
   return (
     <div className="flex w-full flex-col rounded-lg border-2 p-2">

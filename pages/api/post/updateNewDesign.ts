@@ -47,7 +47,7 @@ export default async function handle(req, res) {
       },
       data: {
         categories: { set: [] },
-        tags: { set: []},
+        tags: { set: [] },
       },
     })
   )
@@ -71,8 +71,16 @@ export default async function handle(req, res) {
         // ourTake: JSON.stringify(ourTake),
         // published: false,
         publishedAt: new Date(),
-        Mechanism: {},
-        DesignElement: {},
+        Mechanism: {
+          createMany: {
+            data: inputFields.Mechanism,
+          },
+        },
+        DesignElement: {
+          createMany: {
+            data: inputFields.DesignElement,
+          },
+        },
         mainImageUrl: inputFields.mainImageUrl,
         tokenUtility: inputFields.tokenUtility,
         tokenUtilityStrength: inputFields.tokenUtilityStrength,
@@ -100,10 +108,13 @@ export default async function handle(req, res) {
         status: postStatus.draft,
         ticker: inputFields.ticker,
         categories: {
-          connectOrCreate: inputFields.categories.map((cat) => {
+          connectOrCreate: inputFields.categories.map((category) => {
             return {
-              where: { value: stringToKey(cat.label) },
-              create: { value: stringToKey(cat.label), label: cat.label },
+              where: { value: category.value },
+              create: {
+                value: category.value,
+                label: category.label,
+              },
             }
           }),
         },
@@ -121,9 +132,29 @@ export default async function handle(req, res) {
             data: resource,
           },
         },
+        PostUser: {
+          createMany: {
+            data: inputFields.PostUser,
+          },
+        },
         protocolTimeLine: {
           createMany: {
             data: timeLine,
+          },
+        },
+        UserStrengthRating: {
+          create: {
+            authorClerkId: inputFields.authorClerkId,
+            userReviewUtility: 'initial',
+            userReviewBusinessModel: 'initial',
+            userReviewDemandDriver: 'initial',
+            userReviewValueCapture: 'initial',
+            userReviewValueCreation: 'initial',
+            tokenUtilityStrength: inputFields.tokenUtilityStrength,
+            businessModelStrength: inputFields.businessModelStrength,
+            valueCaptureStrength: inputFields.valueCaptureStrength,
+            valueCreationStrength: inputFields.valueCreationStrength,
+            demandDriversStrength: inputFields.demandDriversStrength,
           },
         },
       },

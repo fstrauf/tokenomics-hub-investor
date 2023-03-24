@@ -29,8 +29,16 @@ export default async function handle(req, res) {
         // published: false,
         // PostUser: inputFields.PostUser,
         publishedAt: new Date(),
-        Mechanism: {},
-        DesignElement: {},
+        Mechanism: {
+          createMany: {
+            data: inputFields.Mechanism,
+          },
+        },
+        DesignElement: {
+          createMany: {
+            data: inputFields.DesignElement,
+          },
+        },
         mainImageUrl: inputFields.mainImageUrl,
         tokenUtility: inputFields.tokenUtility,
         tokenUtilityStrength: inputFields.tokenUtilityStrength,
@@ -58,12 +66,15 @@ export default async function handle(req, res) {
         status: postStatus.draft,
         ticker: inputFields.ticker,
         categories: {
-          // connectOrCreate: inputFields.categories.map((cat) => {
-          //   return {
-          //     where: { value: stringToKey(cat.label) },
-          //     create: { value: stringToKey(cat.label), label: cat.label },
-          //   }
-          // }),
+          connectOrCreate: inputFields.categories.map((category) => {
+            return {
+              where: { value: category.value },
+              create: {
+                value: category.value,
+                label: category.label,
+              },
+            }
+          }),
         },
         tags: {
           connectOrCreate: inputFields.tags.map((tag) => {

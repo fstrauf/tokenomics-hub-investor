@@ -142,10 +142,6 @@ export default function DesignCard({ posts, context }) {
     await Router.replace(Router.asPath)
   }
 
-  const clickOnGreaterThanArrow = () => {
-    console.log('clicked on greater arrow')
-  }
-
   const clickOnAddUser = () => {
     console.log('clicked on add user')
   }
@@ -170,7 +166,7 @@ export default function DesignCard({ posts, context }) {
   return (
     <div className="static overflow-x-auto rounded-[10px] bg-white px-8 py-6">
       <Toaster />
-      <div className="mb-2 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3  xl:grid-cols-4 h-screen">
+      <div className="mb-2 grid h-screen grid-cols-1 gap-8 sm:grid-cols-2  lg:grid-cols-3 xl:grid-cols-4">
         {posts?.map((post, index) => {
           return (
             <div key={index} className="h-120  rounded-[10px] border">
@@ -179,7 +175,9 @@ export default function DesignCard({ posts, context }) {
                 <div className="mt-[11px] mr-2 flex  justify-end text-lg font-bold">
                   <span
                     className="cursor-pointer"
-                    onClick={clickOnGreaterThanArrow}
+                    onClick={() =>
+                      Router.push('/editDesign/[id]', `/editDesign/${post.id}`)
+                    }
                   >
                     {<GreaterThanArrow />}
                   </span>

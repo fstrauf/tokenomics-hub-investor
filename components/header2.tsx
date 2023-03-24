@@ -166,6 +166,23 @@ export default function Header2() {
     </Link>
   )
 
+  const myDesignSection = (
+    <Link
+      href="/myDesigns"
+      className="-m-3 flex items-start rounded-lg p-3 hover:bg-gray-50"
+    >
+      {/* <item.icon
+        className="h-6 w-6 flex-shrink-0 text-indigo-600"
+        aria-hidden="true"
+      /> */}
+      <div className="ml-4">
+        <p className="text-base font-medium text-gray-900">My Designs</p>
+        <p className="mt-1 text-sm text-gray-500">View, edit all the saved designs </p>
+      </div>
+    </Link>
+  )
+
+
   const calcTemplateSection = (
     <Link
       href="/thub"
@@ -309,6 +326,7 @@ export default function Header2() {
                             {tdfSection}
                             {tdfPhaseAdminSection}
                             {tdfCoreMechanismSection}
+                            {myDesignSection}
                           </div>
                         </div>
                       </Popover.Panel>

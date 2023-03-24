@@ -131,7 +131,7 @@ export default function TDFMain({ props, content }) {
       }
     } else {
       try {
-        const response = await fetch('/api/post/newDesign', {
+        const response = await fetch('/api/post/updateNewDesign', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(body),
