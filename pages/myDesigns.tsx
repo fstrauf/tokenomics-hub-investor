@@ -10,7 +10,7 @@ import DesignCard from '../components/tdf/designCard'
 import { Router } from 'next/router'
 import Link from 'next/link'
 
-export default function MyDrafts({ posts }) {
+export default function MyDesigns({ posts }) {
   return (
     <Layout>
       <>

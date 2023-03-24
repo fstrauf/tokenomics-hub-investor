@@ -8,6 +8,7 @@ import { GetServerSideProps } from 'next'
 import Select from 'react-select'
 import { useRouter } from 'next/router'
 import { postStatus } from '../lib/helper'
+import Link from 'next/link'
 
 type Props = {
   // rewardRound: any;
@@ -68,6 +69,20 @@ const Index: React.FC<Props> = (props) => {
           <h1 className="mb-10 text-center text-2xl md:text-3xl">
             Explore, compare and evaluate tokenomics of crypto projects.
           </h1>
+          <div className="flex gap-4 mt-10 mb-10 text-center justify-center">
+            <Link
+              href="/myDrafts"
+              className="w-44 self-center rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+            >
+              Add a Token Report
+            </Link>
+            <Link
+              href="/myDesigns"
+              className="w-44 self-center rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+            >
+              Design a Token
+            </Link>
+          </div>
           <div className="m-auto flex w-1/2 max-w-5xl">
             <Select
               defaultValue={[]}
@@ -156,7 +171,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   })
 
   // const aggregate = await prisma.userStrengthRating.groupBy({
-  //   by: ['postId'],    
+  //   by: ['postId'],
   //   _avg: {
   //     tokenUtilityStrength: true,
   //     businessModelStrength: true,

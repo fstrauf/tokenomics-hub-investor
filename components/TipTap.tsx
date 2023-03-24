@@ -1,7 +1,7 @@
 import { useEditor, EditorContent } from '@tiptap/react'
 // import StarterKit from '@tiptap/starter-kit'
 import Link from '@tiptap/extension-link'
-import { EditorState } from '@tiptap/pm/state'
+// import { EditorState } from '@tiptap/pm/state'
 import Blockquote from '@tiptap/extension-blockquote'
 import Bulletlist from '@tiptap/extension-bullet-list'
 import Codeblock from '@tiptap/extension-code-block'

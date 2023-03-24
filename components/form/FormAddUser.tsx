@@ -17,7 +17,6 @@ export const FormAddUser = ({ values }) => {
                   <th scope="col" className="py-3 px-6">
                     Role
                   </th>
-
                   <th scope="col" className="py-3 px-6"></th>
                 </tr>
               </thead>
@@ -40,9 +39,10 @@ export const FormAddUser = ({ values }) => {
                       <td className="py-2 px-3">
                         <Field
                           name={`PostUser.${index}.role`}
-                          type="text"
-                          className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+                          as="textarea"
+                          className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
                           placeholder="Role"
+                          rows="4"
                         />
                       </td>
                       <td className="py-2 px-3">

@@ -4,9 +4,29 @@ import FormCardSupplyDemand from '../form/FormCardSupplyDemand'
 import BreakdownBox from '../slugView/breakdown-box'
 import ResourceSection from './ResourceSection'
 import TDFCalculator from './TDFCalculator'
+import Tiptap from '../TipTap'
+import ExampleSection from './ExampleSection'
 
 export default function TDF502({ props, values, activePhase, setFieldValue }) {
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
+
+  let ExampleDetail = ({ onGoBack, example, exampleField }) => {
+    return (
+      <div className="flex flex-col justify-between">
+        <div className="mb-6 mt-6 font-bold">{example.title}</div>
+        <div className="ml-2">
+          <Tiptap content={example[exampleField]} editMode={false} />
+        </div>
+        <button
+          className="mt-20 w-16 rounded-md border-2 border-dao-red px-1 py-1 text-xs font-medium text-dao-red"
+          onClick={onGoBack}
+        >
+          go back
+        </button>
+      </div>
+    )
+  }
+
   return (
     <div>
       <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 ">
@@ -32,27 +52,12 @@ export default function TDF502({ props, values, activePhase, setFieldValue }) {
           />
         </div>
 
-        <div className="">
-          <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 ">
-            Resources
-          </h5>
-          <ResourceSection content={designPhase.Resources} />
-        </div>
-        <div className="">
-          <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 ">
-            Examples
-          </h5>
-          {props.posts.map((post) => (
-            <div>
-              <div key={post.id}>{post.title}</div>
-              <BreakdownBox
-                value={post?.businessModel}
-                strength={post?.businessModelStrength}
-                title="Business Model:"
-              />
-            </div>
-          ))}
-        </div>
+        <ResourceSection content={designPhase.Resources} />
+        <ExampleSection
+          content={props.posts}
+          exampleField={designPhase.postDataElement}
+          exampleDetail={ExampleDetail}
+        />
       </div>
     </div>
   )

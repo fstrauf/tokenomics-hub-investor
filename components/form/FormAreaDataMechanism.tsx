@@ -10,7 +10,7 @@ export const FormAreaDataMechanism = (props) => {
     values,
     setFieldValue,
   } = useFormikContext()
-    // console.log("🚀 ~ file: FormAreaData.tsx:13 ~ FormAreaData ~ values:", values)
+    console.log("🚀 ~ file: FormAreaData.tsx:13 ~ FormAreaData ~ values:", values)
 
   // console.log("🚀 ~ file: FormAreaData.tsx:8 ~ FormAreaData ~ calculationRows:", values.calculation.calculationRows)
 

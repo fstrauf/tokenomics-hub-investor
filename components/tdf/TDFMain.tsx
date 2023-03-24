@@ -1,7 +1,7 @@
 import TDFSideBar from './TDFSideBar'
 import { useState } from 'react'
 import dynamic from 'next/dynamic'
-import { Field, FieldArray, Form, Formik } from 'formik'
+import { FieldArray, Form, Formik } from 'formik'
 import toast, { Toaster } from 'react-hot-toast'
 import FormAutoSave from '../form/FormAutoSave'
 // import TDFHeaders from './TDFHeaders'
@@ -25,16 +25,7 @@ export default function TDFMain({ props, content }) {
   const TDFGenericOneField = dynamic(() => import('./TDFGenericOneField'), {
     loading: () => <p>Loading</p>,
   })
-  // const TDF102 = dynamic(() => import('./TDF102'), {
-  //   loading: () => <p>Loading</p>,
-  // })
-  // const TDF103 = dynamic(() => import('./TDF103'), {
-  //   loading: () => <p>Loading</p>,
-  // })
   const TDF201 = dynamic(() => import('./TDF201'), {
-    loading: () => <p>Loading</p>,
-  })
-  const TDF202 = dynamic(() => import('./TDF202'), {
     loading: () => <p>Loading</p>,
   })
   const TDF301 = dynamic(() => import('./TDF301'), {
@@ -58,12 +49,6 @@ export default function TDFMain({ props, content }) {
   const TDF404 = dynamic(() => import('./TDF404'), {
     loading: () => <p>Loading</p>,
   })
-  // const TDF405 = dynamic(() => import('./TDF405'), {
-  //   loading: () => <p>Loading</p>,
-  // })
-  // const TDF406 = dynamic(() => import('./TDF406'), {
-  //   loading: () => <p>Loading</p>,
-  // })
   const TDF407 = dynamic(() => import('./TDF407'), {
     loading: () => <p>Loading</p>,
   })
@@ -72,33 +57,13 @@ export default function TDFMain({ props, content }) {
   })
   const TDF502 = dynamic(() => import('./TDF502'), {
     loading: () => <p>Loading</p>,
-  })
-  const TDF601 = dynamic(() => import('./TDF601'), {
-    loading: () => <p>Loading</p>,
-  })
-  const TDF602 = dynamic(() => import('./TDF602'), {
-    loading: () => <p>Loading</p>,
-  })
+  })  
   const TDF603 = dynamic(() => import('./TDF603'), {
     loading: () => <p>Loading</p>,
   })
   const TDF701 = dynamic(() => import('./TDF701'), {
     loading: () => <p>Loading</p>,
   })
-
-  // const submitData = async (values, { setSubmitting }) => {
-  //   const body = { values }
-
-  //   fetch('/api/post/newTDFDesignPhases', {
-  //     method: 'POST',
-  //     headers: { 'Content-Type': 'application/json' },
-  //     body: JSON.stringify(body),
-  //   })
-
-  //   setSubmitting(false)
-  //   toast.success('saved ', { position: 'bottom-right' })
-  //   console.log('tdfSubmit', values)
-  // }
 
   const submitData = async (values, { setSubmitting }) => {
     const body = { values }
@@ -187,11 +152,6 @@ export default function TDFMain({ props, content }) {
         return (
           <TDF201 props={props} values={values} activePhase={activePhase} />
         )
-      case 202:
-        return (
-          <TDF202 props={props} values={values} activePhase={activePhase} />
-        )
-
       case 301:
         return (
           <TDF301 props={props} values={values} activePhase={activePhase} />
@@ -220,14 +180,6 @@ export default function TDFMain({ props, content }) {
         return (
           <TDF404 props={props} values={values} activePhase={activePhase} />
         )
-      // case 405:
-      //   return (
-      //     <TDF405 props={props} values={values} activePhase={activePhase} />
-      //   )
-      // case 406:
-      //   return (
-      //     <TDF406 props={props} values={values} activePhase={activePhase} />
-      //   )
       case 407:
         return (
           <TDF407 props={props} values={values} activePhase={activePhase} />
@@ -254,15 +206,7 @@ export default function TDFMain({ props, content }) {
             setFieldValue={setFieldValue}
           
           />
-        )
-      case 601:
-        return (
-          <TDF601 props={props} values={values} activePhase={activePhase} />
-        )
-      case 602:
-        return (
-          <TDF602 props={props} values={values} activePhase={activePhase} />
-        )
+        )      
       case 603:
         return <TDF603 props={props} activePhase={activePhase} />
       case 701:

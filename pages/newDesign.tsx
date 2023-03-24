@@ -24,7 +24,7 @@ export default function NewDesign(props) {
       .map((dp) => {
         return { content: '', designPhasesId: String(dp.phaseId) }
       }),
-    // calculation: initialCalculatorValues,
+    calculation: initialCalculatorValues,
     Mechanism: props.mechanismTemplates.map((mt) => {
       return {
         name: mt.name,

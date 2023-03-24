@@ -1,8 +1,8 @@
 import { Field } from 'formik'
-import BreakdownBox from '../slugView/breakdown-box'
 import ResourceSection from './ResourceSection'
 import { getActiveDesignPhase } from '../../lib/helper'
 import FormTable from '../form/FormTablePivot'
+// import ExampleSection from './ExampleSection'
 
 export default function TDF303({ props, values, activePhase }) {
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
@@ -12,34 +12,22 @@ export default function TDF303({ props, values, activePhase }) {
         <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 ">
           {designPhase.name}
         </h5>
-        <ResourceSection content={designPhase.Resources} />
-        <div className="">
-          <Field
-            name={`DesignElement.${values?.DesignElement?.findIndex(
-              (de) => de.designPhaseId === 303
-            )}.content`}
-            users={values?.PostUser || []}
-            component={FormTable}
-            placeholder="Select categories"
-            phaseId={designPhase.phaseId}
-          />
-        </div>
+        <Field
+          name={`DesignElement.${values?.DesignElement?.findIndex(
+            (de) => de.designPhaseId === 303
+          )}.content`}
+          users={values?.PostUser || []}
+          component={FormTable}
+          placeholder="Select categories"
+          phaseId={designPhase.phaseId}
+        />
       </div>
-      <div>
-        <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 ">
-          References
-        </h5>
-        {props.posts.map((post) => (
-          <div>
-            <div key={post.id}>{post.title}</div>
-            <BreakdownBox
-              value={post?.businessModel}
-              strength={post?.businessModelStrength}
-              title="Business Model:"
-            />
-          </div>
-        ))}
-      </div>
+      <ResourceSection content={designPhase.Resources} />
+      {/* <ExampleSection
+        content={props.posts}
+        exampleField={designPhase.postDataElement}
+        exampleDetail={null}
+      /> */}
     </div>
   )
 }
