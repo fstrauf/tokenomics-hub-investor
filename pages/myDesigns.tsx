@@ -1,18 +1,18 @@
 import Layout from '../components/layout'
 import React from 'react'
 import prisma from '../lib/prisma'
-import Drafts from '../components/drafts'
+// import Drafts from '../components/drafts'
 import { GetServerSideProps } from 'next'
 import { clerkClient, getAuth } from '@clerk/nextjs/server'
 import type { AuthData } from '@clerk/nextjs/dist/server/types'
-import { clerkConvertJSON, postStatus } from '../lib/helper'
+import { clerkConvertJSON, headerStatus, postStatus } from '../lib/helper'
 import DesignCard from '../components/tdf/designCard'
-import { Router } from 'next/router'
+// import { Router } from 'next/router'
 import Link from 'next/link'
 
 export default function MyDesigns({ posts }) {
   return (
-    <Layout>
+    <Layout mode={headerStatus.design}>
       <>
         <div className="rounded-[10px] bg-[#F0F0F0]">
           <div className="m-2 mt-4">

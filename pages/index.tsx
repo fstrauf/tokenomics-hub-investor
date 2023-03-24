@@ -7,7 +7,7 @@ import prisma from '../lib/prisma'
 import { GetServerSideProps } from 'next'
 import Select from 'react-select'
 import { useRouter } from 'next/router'
-import { postStatus } from '../lib/helper'
+import { headerStatus, postStatus } from '../lib/helper'
 import Link from 'next/link'
 
 type Props = {
@@ -42,7 +42,7 @@ const Index: React.FC<Props> = (props) => {
 
   return (
     <>
-      <Layout>
+      <Layout mode={headerStatus.main}>
         <Head>
           <title>Tokenomics Hub</title>
           <meta

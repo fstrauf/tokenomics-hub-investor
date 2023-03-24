@@ -102,6 +102,12 @@ export enum postStatus {
   example = 'Example',
 }
 
+export enum headerStatus {
+  main = 'main',
+  design = 'design',
+  report = 'report',
+}
+
 export const stringToKey = (name) => {
   return name.trim().replace(/\s+/g, '-').toLowerCase().replace(/&/g, 'and')
 }

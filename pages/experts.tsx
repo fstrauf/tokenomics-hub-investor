@@ -1,7 +1,7 @@
 import Layout from '../components/layout'
 import React from 'react'
 import prisma from '../lib/prisma'
-import AuthorCard from '../components/authorCard'
+// import AuthorCard from '../components/authorCard'
 import { groupByAuthorClerkId, clerkConvertJSON, postStatus } from '../lib/helper'
 import Link from 'next/link'
 import { clerkClient } from '@clerk/nextjs/server'
@@ -14,17 +14,17 @@ export default function ExpertsPage(props) {
         {/* <Intro /> */}
         <div className="m-auto flex flex-col justify-center">
           <h1 className="mb-10 mt-10 text-center text-3xl font-bold">
-            Find who the right expert to support you project
+            Find the right expert to support your project
           </h1>
           <Link href='/bookAnExpert' className="w-36 self-center rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
             Book an Expert
           </Link>
         </div>
-        <div className="m-auto flex flex-wrap justify-center">
+        {/* <div className="m-auto flex flex-wrap justify-center">
           {props.experts.map((e) => {
             return <AuthorCard key={e.username} author={e} />
           })}
-        </div>
+        </div> */}
       </Layout>
     </>
   )
