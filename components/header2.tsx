@@ -79,7 +79,7 @@ export default function Header2() {
   const calculatorSection = (
     <Link
       href="/calculator"
-      className="text-base font-medium text-white hover:text-gray-900"
+      className="text-base font-medium text-gray-100 hover:text-white"
     >
       Calculator
     </Link>
@@ -88,7 +88,7 @@ export default function Header2() {
   const expertsSection = (
     <Link
       href="/experts"
-      className="text-base font-medium text-white hover:text-gray-900"
+      className="text-base font-medium text-gray-100 hover:text-white"
     >
       Experts
     </Link>

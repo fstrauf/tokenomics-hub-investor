@@ -5,6 +5,7 @@ import { postStatus, stringToKey } from '../../../lib/helper'
 export default async function handle(req, res) {
   const { values } = req.body
   const inputFields = values
+  console.log('values EditNewDesign', values)
 
   var breakdown = inputFields.breakdown
   if (typeof inputFields.breakdown === 'object') {
@@ -126,7 +127,7 @@ export default async function handle(req, res) {
             }
           }),
         },
-        calculationId: inputFields.calculation,
+        // calculationId: inputFields.calculation,
         ProtocolResources: {
           createMany: {
             data: resource,

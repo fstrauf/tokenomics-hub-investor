@@ -57,7 +57,7 @@ export default function TDFMain({ props, content }) {
   })
   const TDF502 = dynamic(() => import('./TDF502'), {
     loading: () => <p>Loading</p>,
-  })  
+  })
   const TDF603 = dynamic(() => import('./TDF603'), {
     loading: () => <p>Loading</p>,
   })
@@ -196,17 +196,12 @@ export default function TDFMain({ props, content }) {
       case 502:
         return (
           <TDF502
-           
             props={props}
-           
             values={values}
-           
             activePhase={activePhase}
-           
             setFieldValue={setFieldValue}
-          
           />
-        )      
+        )
       case 603:
         return <TDF603 props={props} activePhase={activePhase} />
       case 701:

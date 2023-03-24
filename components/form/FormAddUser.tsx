@@ -31,7 +31,7 @@ export const FormAddUser = ({ values }) => {
                         <Field
                           name={`PostUser.${index}.name`}
                           placeholder="Name"
-                          className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+                          className="block  w-full rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
                           type="text"
                         />
                       </th>
@@ -39,7 +39,8 @@ export const FormAddUser = ({ values }) => {
                       <td className="py-2 px-3">
                         <Field
                           name={`PostUser.${index}.role`}
-                          as="textarea"
+                          // as="textarea"
+                          type="text"
                           className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
                           placeholder="Role"
                           rows="4"
