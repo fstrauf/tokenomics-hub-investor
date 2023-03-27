@@ -34,7 +34,7 @@ export const FormCardSupplyDemand = ({
       { id: 3, months: 16, tokens: 50000000 },
     ],
     isTemplate: false,
-    PostUser: values.PostUser,
+    PostUser: [],
   }
 
   const mechTemplates = mechanismTemplates.map((obj) => ({ ...obj }))

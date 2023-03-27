@@ -68,7 +68,7 @@ export default function Header2({ mode }) {
 
   const mechanismAdmin = (
     <Link
-      href="/thub"
+      href="/coreMechanisms"
       className="-m-3 flex items-start rounded-lg p-3 hover:bg-gray-700"
     >
       <div className="ml-4">
@@ -79,7 +79,7 @@ export default function Header2({ mode }) {
 
   const postAdmin = (
     <Link
-      href="/thub"
+      href="/adminView"
       className="-m-3 flex items-start rounded-lg p-3 hover:bg-gray-700"
     >
       <div className="ml-4">

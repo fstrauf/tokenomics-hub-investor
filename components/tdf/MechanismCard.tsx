@@ -11,52 +11,21 @@ export const MechanismCard = ({
 }) => {
   const isSink = field.value[mechanismIndex]?.isSink || false
 
-  // const handleToggle = () => {
-  //   setIsToggleOn(!isToggleOn)
-  // }
-
   const supplyBuilder = () => {
     return (
       <>
         <div>
-          {' '}
-          {/* <div className="flex items-center justify-between">
-            <label htmlFor="toggle" className="mr-4">
-              Toggle:
-            </label>
-            <div className="relative mr-2 inline-block w-10 select-none align-middle">
-              <Field
-                id="isEpochDistro"
-                name={`${field.name}.${mechanismIndex}.isEpochDistro`}
-                type="checkbox"
-                // onChange={handleToggle}
-                // checked={isToggleOn}
-                // className="toggle-checkbox absolute block h-6 w-6 cursor-pointer appearance-none rounded-full border-4 bg-white transition-colors duration-300 ease-in-out"
-              />
-              <label
-                htmlFor="toggle"
-                className="toggle-label block h-6 cursor-pointer overflow-hidden rounded-full bg-gray-300"
-              />
-            </div>
-            <span>
-              {field?.value[mechanismIndex]?.isEpochDistro ? 'On' : 'Off'}
-            </span>
-          </div> */}
+          {' '}         
           <div className='flex p-5'>
           <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">
             Allocation Based Supply
           </span>
           <label class="relative mr-5 inline-flex cursor-pointer items-center">
-            {/* <input type="checkbox" value="" class="peer sr-only" checked /> */}
-
             <Field
               id="isEpochDistro"
               name={`${field.name}.${mechanismIndex}.isEpochDistro`}
               type="checkbox"
-              class="peer sr-only"
-              // onChange={handleToggle}
-              // checked={isToggleOn}
-              // className="toggle-checkbox absolute block h-6 w-6 cursor-pointer appearance-none rounded-full border-4 bg-white transition-colors duration-300 ease-in-out"
+              class="peer sr-only"            
             />
             <div class="peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:top-0.5 after:left-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-red-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:ring-4 peer-focus:ring-red-300 dark:border-gray-600 dark:bg-gray-700 dark:peer-focus:ring-red-800"></div>
           </label>
@@ -64,26 +33,6 @@ export const MechanismCard = ({
             Emission Based Supply
           </span>
           </div>
-          {/* <label className="mb-2 block text-sm font-medium text-gray-900">
-            Epoch Distro?
-          </label>
-          <Field
-            id="isEpochDistro"
-            name={`${field.name}.${mechanismIndex}.isEpochDistro`}
-            type="checkbox"
-            className="mb-3 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
-          /> */}
-          {/* <div className="flex">
-            <p className="text-xs font-bold uppercase text-gray-700">
-              Category
-            </p>
-            <Field
-              name={`${field.name}.${mechanismIndex}.category`}
-              placeholder="category"
-              className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
-              type="text"
-            />
-          </div> */}
           {field?.value[mechanismIndex]?.isEpochDistro ? (
             <>
               {' '}
@@ -296,7 +245,7 @@ export const MechanismCard = ({
   }
 
   return (
-    <div className="flex flex-col p-4">
+    <div className="flex flex-col p-4 max-w-xl ml-auto mr-auto">
       <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 ">
         {isSink ? <>Demand Builder</> : <>Supply Builder</>}
       </h5>

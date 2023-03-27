@@ -5,7 +5,6 @@ import { stringToKey, postStatus } from '../../../lib/helper'
 export default async function handle(req, res) {
   const { values } = req.body
   const inputFields = values
-  console.log('values NewDesign', values)
   const timeLine = inputFields?.protocolTimeLine?.map((tl) => {
     return {
       ...tl,
@@ -81,7 +80,7 @@ export default async function handle(req, res) {
         },
         PostUser: {
           createMany: {
-            data: inputFields.PostUser,
+            data: inputFields.PostUser.map(({ name, role }) => ({ name, role })),
           },
         },
         protocolTimeLine: {
@@ -89,21 +88,6 @@ export default async function handle(req, res) {
             data: timeLine,
           },
         },
-        // UserStrengthRating: {
-        //   create: {
-        //     authorClerkId: inputFields.authorClerkId,
-        //     userReviewUtility: 'initial',
-        //     userReviewBusinessModel: 'initial',
-        //     userReviewDemandDriver: 'initial',
-        //     userReviewValueCapture: 'initial',
-        //     userReviewValueCreation: 'initial',
-        //     tokenUtilityStrength: inputFields.tokenUtilityStrength,
-        //     businessModelStrength: inputFields.businessModelStrength,
-        //     valueCaptureStrength: inputFields.valueCaptureStrength,
-        //     valueCreationStrength: inputFields.valueCreationStrength,
-        //     demandDriversStrength: inputFields.demandDriversStrength,
-        //   },
-        // },
       },
     })
   } catch (e) {
