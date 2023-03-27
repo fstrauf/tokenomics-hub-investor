@@ -79,7 +79,7 @@ export default function NewDesign(props) {
 
   return (
     <>
-      <Layout>
+      <Layout mode='design'>
         <TDFMain props={props} content={defaultContent} />
       </Layout>
     </>

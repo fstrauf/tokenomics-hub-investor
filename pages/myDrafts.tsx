@@ -5,13 +5,13 @@ import Drafts from '../components/drafts'
 import { GetServerSideProps } from 'next'
 import { clerkClient, getAuth } from '@clerk/nextjs/server'
 import type { AuthData } from '@clerk/nextjs/dist/server/types'
-import { clerkConvertJSON, postStatus } from '../lib/helper'
+import { clerkConvertJSON, headerStatus, postStatus } from '../lib/helper'
 import Link from 'next/link'
 
 export default function MyDrafts({ posts }) {
   return (
     <>
-      <Layout>
+      <Layout mode={headerStatus.report}>
         {/* <Header /> */}
         <div className="flex justify-between items-center">
           <h1 className="mb-5 mt-10 text-2xl font-bold">
