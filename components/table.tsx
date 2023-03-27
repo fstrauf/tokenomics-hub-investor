@@ -8,7 +8,7 @@ import {
   createColumnHelper,
   flexRender,
   getCoreRowModel,
-  SortingState,
+  // SortingState,
   getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table'
@@ -69,23 +69,23 @@ const Table: React.FC<{ prop: Props }> = ({ prop }) => {
   
   const data = prop
   // console.log("🚀 ~ file: table.tsx:57 ~ data", data)
-  const [sorting, setSorting] = React.useState<SortingState>([
-    { id: 'Token Strength', desc: true },
-  ])
+  // const [sorting, setSorting] = React.useState<SortingState>([
+  //   { id: 'Token Strength', desc: true },
+  // ])
 
   // console.log(data[0].categories)
   const table = useReactTable({
     data,
     columns,
-    state: {
-      sorting,
-    },
+    // state: {
+    //   sorting,
+    // },
     // initialState: {
     //   sorting: {
 
     //   }
     // },
-    onSortingChange: setSorting,
+    // onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
   })

@@ -168,6 +168,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         },
       },
     },
+    orderBy: {title: 'asc'}
   })
 
   // const aggregate = await prisma.userStrengthRating.groupBy({
