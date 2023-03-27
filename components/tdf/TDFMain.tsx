@@ -57,7 +57,7 @@ export default function TDFMain({ props, content }) {
   })
   const TDF502 = dynamic(() => import('./TDF502'), {
     loading: () => <p>Loading</p>,
-  })  
+  })
   const TDF603 = dynamic(() => import('./TDF603'), {
     loading: () => <p>Loading</p>,
   })
@@ -143,8 +143,40 @@ export default function TDFMain({ props, content }) {
           />
         )
       case 101:
+        return (
+          <TDFGenericOneField
+            props={props}
+            activePhase={activePhase}
+            placeholder={`Problem:
+        - State the problem that the protocol is trying to solve        
+Solution:
+        - State the solution that the protocol provides`}
+          />
+        )
       case 102:
+        return (
+          <TDFGenericOneField
+            props={props}
+            activePhase={activePhase}
+            placeholder={`The value created by [protocol] is...`}
+          />
+        )
       case 103:
+        return (
+          <TDFGenericOneField
+            props={props}
+            activePhase={activePhase}
+            placeholder={`The business model for [protocol]:
+Revenue comes from:
+[Explanation]
+
+Revenue is denominated in:
+[Explanation]
+
+Revenue goes to:
+[Explanation, include any percentages if there is a revenue split between different users/parties]`}
+          />
+        )
       case 202:
         return <TDFGenericOneField props={props} activePhase={activePhase} />
 
@@ -196,17 +228,12 @@ export default function TDFMain({ props, content }) {
       case 502:
         return (
           <TDF502
-           
             props={props}
-           
             values={values}
-           
             activePhase={activePhase}
-           
             setFieldValue={setFieldValue}
-          
           />
-        )      
+        )
       case 603:
         return <TDF603 props={props} activePhase={activePhase} />
       case 701:

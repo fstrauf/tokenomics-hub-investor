@@ -41,7 +41,7 @@ export const FormAddUser = ({ values }) => {
                           name={`PostUser.${index}.role`}
                           as="textarea"
                           className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
-                          placeholder="Role"
+                          placeholder="1-2 line explanation of the role they play in the ecosystem"
                           rows="4"
                         />
                       </td>

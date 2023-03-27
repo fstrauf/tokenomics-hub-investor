@@ -4,7 +4,7 @@ import ResourceSection from './ResourceSection'
 import { getActiveDesignPhase } from '../../lib/helper'
 import ExampleSection from './ExampleSection'
 
-export default function TDFGenericOneField({ props, activePhase }) {
+export default function TDFGenericOneField({ props, activePhase, placeholder }) {
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
   return (
     <div className='flex flex-col'>
@@ -17,7 +17,8 @@ export default function TDFGenericOneField({ props, activePhase }) {
             as="textarea"
             rows="4"
             name={designPhase.postDataElement}
-            placeholder={designPhase.name}
+            // placeholder={designPhase.name}
+            placeholder={placeholder}
             className="mb-3 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
           />
         </div>
