@@ -4,6 +4,7 @@ import { stringToKey, postStatus } from '../../../lib/helper'
 
 export default async function handle(req, res) {
   const { values } = req.body
+  console.log("🚀 ~ file: newDesign.ts:7 ~ handle ~ values:", values)
   const inputFields = values
   const timeLine = inputFields?.protocolTimeLine?.map((tl) => {
     return {
