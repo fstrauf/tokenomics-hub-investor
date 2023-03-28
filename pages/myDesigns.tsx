@@ -12,19 +12,18 @@ export default function MyDesigns({ posts }) {
   return (
     <Layout mode={headerStatus.design}>
       <>
-        <div className="rounded-lg bg-slate-200">
-          <div className="m-2 mt-4">
-            <div className="flex w-full">
-              <div className="font-semiBold mb-3 mt-2 w-11/12 text-xl sm:w-9/12 md:w-9/12 lg:w-10/12 xl:w-10/12 2xl:w-11/12">
-                My Projects
-              </div>
-              <Link href={'/newDesign'}>
-                <div className="ml-2 mt-2 h-8 cursor-pointer rounded bg-dao-red px-4 py-2 text-sm text-white">
-                  New Design
-                </div>
+        <div className="mt-4 mb-4 rounded-lg bg-gray-100 p-1">
+          <div className="flex items-center justify-between rounded-lg p-2 py-2">
+            <p className="text-xl font-bold">My Designs</p>
+            <div className="flex gap-1">
+              {' '}
+              <Link href='/newDesign' className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40">
+                New Design
               </Link>
             </div>
-            <div className="static overflow-x-auto rounded-[10px] bg-white px-8 py-6">
+          </div>
+          <div className="">
+            <div className="static overflow-x-auto rounded-lg bg-white px-8 py-6">
               <div className="mb-2 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3  xl:grid-cols-4">
                 {posts?.map((post, index) => {
                   return (

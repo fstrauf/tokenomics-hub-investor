@@ -85,7 +85,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
           status: postStatus.published,
         },
       },
-      take: 10,
+      take: 20,
     })
   )
 

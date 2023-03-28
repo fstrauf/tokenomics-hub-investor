@@ -247,7 +247,7 @@ Revenue goes to:
 
   return (
     // <div>
-    <div>
+    <div className='bg-gray-100 rounded-lg p-1 mt-4 mb-4'>
       <Formik
         initialValues={initialValues}
         onSubmit={submitData}
@@ -255,8 +255,9 @@ Revenue goes to:
       >
         {({ isSubmitting, setFieldValue, values }) => (
           <Form>
-            <div className="mt-5 flex items-center justify-between rounded-lg bg-gray-100 p-2 py-2">
-              <p>header</p>
+            <FormAutoSave />
+            <div className="flex items-center justify-between rounded-lg py-2 p-2">
+              <p className='font-bold text-xl'>{values.title}</p>
               <div className='flex gap-1'>
                 {' '}
                 <button
@@ -271,7 +272,7 @@ Revenue goes to:
                 </button>
               </div>
             </div>
-            <div className="mb-5 flex">
+            <div className="mb-5 flex gap-1">
               <div className="w-1/6">
                 <TDFSideBar
                   designPhases={props.designPhases}
@@ -279,9 +280,7 @@ Revenue goes to:
                   activePhase={activePhase}
                 />
               </div>
-              <div className="w-5/6">
-                {' '}
-                <FormAutoSave />
+              <div className="w-5/6 bg-white rounded-lg p-1">                
                 <FieldArray
                   name="DesignElement"
                   render={() => (
