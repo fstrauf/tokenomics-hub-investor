@@ -42,7 +42,7 @@ export const FormAddUser = ({ values }) => {
                           // as="textarea"
                           type="text"
                           className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
-                          placeholder="Role"
+                          placeholder="1-2 line explanation of the role they play in the ecosystem"
                           rows="4"
                         />
                       </td>
@@ -71,9 +71,10 @@ export const FormAddUser = ({ values }) => {
               className="mt-2 rounded-md bg-dao-red px-2 py-1 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
               onClick={() =>
                 arrayHelpers.push({
-                  name: values.name,
-                  role: values.role,
-                  postId: values.postId,
+                  id: values.length,
+                  name: values.name || '',
+                  role: values.role || '',
+                  // postId: values.postId || '',
                 })
               }
             >

@@ -1,7 +1,7 @@
 export default function TDFSideBar({ designPhases, changePhase, activePhase }) {
-  console.log("🚀 ~ file: tdfSideBar.tsx:2 ~ TDFSideBar ~ designPhases", designPhases)
+  // console.log("🚀 ~ file: tdfSideBar.tsx:2 ~ TDFSideBar ~ designPhases", designPhases)
   return (
-    <div className="h-140 rounded-lg border-2 p-2 overflow-y-auto">
+    <div className="rounded-lg border-2 p-2 overflow-y-auto">
       {designPhases.map((phase) => (
         <div key={phase.id}>
           {phase.parentPhaseId ? ( //child

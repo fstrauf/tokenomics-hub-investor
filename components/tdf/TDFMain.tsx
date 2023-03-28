@@ -143,8 +143,40 @@ export default function TDFMain({ props, content }) {
           />
         )
       case 101:
+        return (
+          <TDFGenericOneField
+            props={props}
+            activePhase={activePhase}
+            placeholder={`Problem:
+        - State the problem that the protocol is trying to solve        
+Solution:
+        - State the solution that the protocol provides`}
+          />
+        )
       case 102:
+        return (
+          <TDFGenericOneField
+            props={props}
+            activePhase={activePhase}
+            placeholder={`The value created by [protocol] is...`}
+          />
+        )
       case 103:
+        return (
+          <TDFGenericOneField
+            props={props}
+            activePhase={activePhase}
+            placeholder={`The business model for [protocol]:
+Revenue comes from:
+[Explanation]
+
+Revenue is denominated in:
+[Explanation]
+
+Revenue goes to:
+[Explanation, include any percentages if there is a revenue split between different users/parties]`}
+          />
+        )
       case 202:
         return <TDFGenericOneField props={props} activePhase={activePhase} />
 
@@ -214,39 +246,47 @@ export default function TDFMain({ props, content }) {
   }
 
   return (
-    <div className="mt-5 mb-5 flex">
-      <div className="w-1/6">
-        <TDFSideBar
-          designPhases={props.designPhases}
-          changePhase={handlePhaseChange}
-          activePhase={activePhase}
-        />
+    <div>
+      <div className='mt-5'>header</div>
+      <div className="mb-5 flex">
+        <div className="w-1/6">
+          <TDFSideBar
+            designPhases={props.designPhases}
+            changePhase={handlePhaseChange}
+            activePhase={activePhase}
+          />
+        </div>
+        <div className="w-5/6">
+          <div>
+            <Formik
+              initialValues={initialValues}
+              onSubmit={submitData}
+              enableReinitialize
+            >
+              {({ isSubmitting, setFieldValue, values }) => (
+                <Form>
+                  <FormAutoSave />
+                  <FieldArray
+                    name="DesignElement"
+                    render={() => (
+                      <div>{renderSwitch(values, setFieldValue)}</div>
+                    )}
+                  />
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="mt-5 mb-5 rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
+                  >
+                    Submit
+                  </button>
+                </Form>
+              )}
+            </Formik>
+          </div>
+        </div>
+
+        <Toaster />
       </div>
-      <div className="w-5/6">
-        <Formik
-          initialValues={initialValues}
-          onSubmit={submitData}
-          enableReinitialize
-        >
-          {({ isSubmitting, setFieldValue, values }) => (
-            <Form>
-              <FormAutoSave />
-              <FieldArray
-                name="DesignElement"
-                render={() => <div>{renderSwitch(values, setFieldValue)}</div>}
-              />
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="mt-5 mb-5 rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
-              >
-                Submit
-              </button>
-            </Form>
-          )}
-        </Formik>
-      </div>
-      <Toaster />
     </div>
   )
 }

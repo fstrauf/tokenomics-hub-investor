@@ -47,7 +47,15 @@ export default function TDF407({ props, values, activePhase }) {
             the value it creates?
           </p>
         </div>
-        <Field name="valueCapture" as={FormText} placeholder="Value Capture" />
+        <Field
+          name="valueCapture"
+          as={FormText}
+          placeholder={`Value accrual to token (if any)
+[briefly explain any mechanism that allow token to map the value created]
+
+Value accrual to protocol (if any)
+[briefly explain any ways in which value is directed back to the protool itself, normally to the treasury]`}
+        />
       </div>
 
       <div className="mb-6 flex">
@@ -60,7 +68,17 @@ export default function TDF407({ props, values, activePhase }) {
             protocol
           </p>
         </div>
-        <Field name="tokenUtility" as={FormText} placeholder="Token Utility" />
+        <Field
+          name="tokenUtility"
+          as={FormText}
+          placeholder={`$Token 1
+- Utility Name
+[brief explanation of the utility] 
+
+$Token 2
+- Utility Name
+[brief explanation of the utility] `}
+        />
       </div>
 
       <div className="mb-6 flex">
@@ -75,7 +93,11 @@ export default function TDF407({ props, values, activePhase }) {
         <Field
           name="demandDrivers"
           as={FormText}
-          placeholder="Demand Drivers"
+          placeholder={`Demand Name 1
+[explain who is buying/holding this token and why]
+
+Demand Name 2
+[explain who is buying/holding this token and why]`}
         />
       </div>
       <ResourceSection content={designPhase.Resources} />

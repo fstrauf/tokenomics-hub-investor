@@ -1,6 +1,6 @@
 // import { FieldProps } from "formik";
 import React from "react";
-import Select from "react-select/creatable";
+import Select from "react-select";
 
 const FormSelectUser = ({
   field,
@@ -9,6 +9,7 @@ const FormSelectUser = ({
   isMulti = false,
   placeholder = 'Select or create'
 }) => {
+  console.log("🚀 ~ file: FormSelectUser.tsx:12 ~ options:", options)
   function onChange(option) {
 
     form.setFieldValue(
@@ -16,19 +17,6 @@ const FormSelectUser = ({
       option ? (option).map((item) => item) : [],
     );
   }
-
-  // const getValue = () => {
-  //   console.log(JSON.stringify(options))
-  //   console.log('field ' + JSON.stringify(field.value))
-  //   console.log(options.find(option => option.value === field.value))
-  //   if (options) {
-  //     return isMulti
-  //       ? options.filter((option) => field?.value?.indexOf(option.value) >= 0)
-  //       : options.find((option) => option.value === field.value);
-  //   } else {
-  //     return isMulti ? [] : ('');
-  //   }
-  // };
 
   if (!isMulti) {
     return (
@@ -52,7 +40,7 @@ const FormSelectUser = ({
         options={options}
         getOptionValue={option => option.id}
         getOptionLabel={option => option.name}
-        getNewOptionData={(value, label) => ({ id: value, name: label, __isNew__: true })}
+        // getNewOptionData={(value, label) => ({ id: value, name: label, __isNew__: true })}
         isMulti={true}
         placeholder={placeholder}
       />
