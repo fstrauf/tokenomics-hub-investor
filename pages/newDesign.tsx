@@ -25,15 +25,8 @@ export default function NewDesign(props) {
         return { content: '', designPhasesId: String(dp.phaseId) }
       }),
     calculation: initialCalculatorValues,
-    Mechanism: props.mechanismTemplates.map((mt) => {
-      return {
-        name: mt.name,
-        summary: mt.summary,
-        details: mt.details,
-        isSink: mt.isSink,
-        isTemplate: mt.isTemplate,
-      }
-    }),
+    Mechanism: [],
+    mechanismTemplates: props.mechanismTemplates,
     // PostUser: props.PostUser.map((pu) => {
     //   return { id: pu.id, name: pu.name, role: pu.role, postId: pu.postId }
     // }),
