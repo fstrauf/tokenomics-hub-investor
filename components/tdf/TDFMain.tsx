@@ -246,39 +246,47 @@ Revenue goes to:
   }
 
   return (
-    <div className="mt-5 mb-5 flex">
-      <div className="w-1/6">
-        <TDFSideBar
-          designPhases={props.designPhases}
-          changePhase={handlePhaseChange}
-          activePhase={activePhase}
-        />
+    <div>
+      <div className='mt-5'>header</div>
+      <div className="mb-5 flex">
+        <div className="w-1/6">
+          <TDFSideBar
+            designPhases={props.designPhases}
+            changePhase={handlePhaseChange}
+            activePhase={activePhase}
+          />
+        </div>
+        <div className="w-5/6">
+          <div>
+            <Formik
+              initialValues={initialValues}
+              onSubmit={submitData}
+              enableReinitialize
+            >
+              {({ isSubmitting, setFieldValue, values }) => (
+                <Form>
+                  <FormAutoSave />
+                  <FieldArray
+                    name="DesignElement"
+                    render={() => (
+                      <div>{renderSwitch(values, setFieldValue)}</div>
+                    )}
+                  />
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="mt-5 mb-5 rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
+                  >
+                    Submit
+                  </button>
+                </Form>
+              )}
+            </Formik>
+          </div>
+        </div>
+
+        <Toaster />
       </div>
-      <div className="w-5/6">
-        <Formik
-          initialValues={initialValues}
-          onSubmit={submitData}
-          enableReinitialize
-        >
-          {({ isSubmitting, setFieldValue, values }) => (
-            <Form>
-              <FormAutoSave />
-              <FieldArray
-                name="DesignElement"
-                render={() => <div>{renderSwitch(values, setFieldValue)}</div>}
-              />
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="mt-5 mb-5 rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
-              >
-                Submit
-              </button>
-            </Form>
-          )}
-        </Formik>
-      </div>
-      <Toaster />
     </div>
   )
 }

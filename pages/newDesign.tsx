@@ -21,7 +21,7 @@ export default function NewDesign(props) {
     DesignElement: props.designPhases
       .filter((dp) => dp.parentPhaseId)
       .map((dp) => {
-        return { id: '', content: '', designPhaseId: dp.phaseId }
+        return { id: '', content: '', designPhasesId: dp.phaseId }
       }),
     Mechanism: [],
     mechanismTemplates: props.mechanismTemplates,

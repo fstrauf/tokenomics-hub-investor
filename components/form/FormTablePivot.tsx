@@ -30,6 +30,10 @@ const defaultUsers = [
 ]
 
 export const FormTablePivot = ({ field, form, phaseId, users }) => {
+  console.log("🚀 ~ file: FormTablePivot.tsx:33 ~ FormTablePivot ~ users:", users)
+  console.log("🚀 ~ file: FormTablePivot.tsx:33 ~ FormTablePivot ~ phaseId:", phaseId)
+  console.log("🚀 ~ file: FormTablePivot.tsx:33 ~ FormTablePivot ~ form:", form)
+  console.log("🚀 ~ file: FormTablePivot.tsx:33 ~ FormTablePivot ~ field:", field)
   if (field.value === '') {
     form.setFieldValue(field.name, defaultUsers)
   }

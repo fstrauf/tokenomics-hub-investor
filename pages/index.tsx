@@ -80,7 +80,7 @@ const Index: React.FC<Props> = (props) => {
               href="/myDesigns"
               className="w-44 self-center rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
             >
-              Design a Token
+              Design a Token (early beta)
             </Link>
           </div>
           <div className="m-auto flex w-1/2 max-w-5xl">
