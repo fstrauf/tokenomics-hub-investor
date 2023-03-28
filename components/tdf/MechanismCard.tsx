@@ -9,6 +9,8 @@ export const MechanismCard = ({
   setFieldValue,
   users,
 }) => {
+  console.log("🚀 ~ file: MechanismCard.tsx:12 ~ mechanismIndex:", mechanismIndex)
+  console.log("🚀 ~ file: MechanismCard.tsx:12 ~ field:", field)
   const isSink = field.value[mechanismIndex]?.isSink || false
 
   const supplyBuilder = () => {
@@ -245,7 +247,7 @@ export const MechanismCard = ({
   }
 
   return (
-    <div className="flex flex-col p-4 max-w-xl ml-auto mr-auto">
+    <div key={mechanismIndex} className="flex flex-col p-4 max-w-xl ml-auto mr-auto">
       <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 ">
         {isSink ? <>Demand Builder</> : <>Supply Builder</>}
       </h5>

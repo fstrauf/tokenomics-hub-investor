@@ -6,7 +6,8 @@ export const FormTipTap = ({
   form, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
   ...props
 }) => {
-  // console.log(props)
+  console.log("🚀 ~ file: FormTipTap.tsx:9 ~ props:", props)
+  console.log("🚀 ~ file: FormTipTap.tsx:9 ~ field:", field)
   
   return (
     <div>

@@ -30,6 +30,7 @@ type Props = {
 
 const Tiptap: React.FC<Props> = (props) => {
   var content = props?.content ?? ''
+  // console.log("🚀 ~ file: TipTap.tsx:33 ~ content:", content)
   // console.log('tiptap')
   // console.log(typeof content)
   // console.log(content)
@@ -80,10 +81,13 @@ const Tiptap: React.FC<Props> = (props) => {
     editable: props.editMode,
     content: content,
     onUpdate({ editor }) {
+      console.log("🚀 ~ file: TipTap.tsx:84 ~ onUpdate ~ editor:", editor)
       // console.log(editor.getJSON())
       props?.setContent(editor.getJSON())
     },
   })
+
+  // editor.commands.setContent(content)
 
   const addImage = async (e) => {
     const url = await uploadPhoto(e)

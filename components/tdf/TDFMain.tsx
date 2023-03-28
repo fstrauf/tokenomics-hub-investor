@@ -90,7 +90,6 @@ export default function TDFMain({ props, content }) {
         }
 
         setSubmitting(false)
-        console.log('TDF created', values)
       } catch (error) {
         console.error(error)
       }

@@ -31,10 +31,10 @@ const defaultUsers = [
 ]
 
 export const FormTable = ({ field, form, phaseId, users }) => {
-  console.log("🚀 ~ file: FormTable.tsx:34 ~ FormTable ~ users:", users)
-  console.log("🚀 ~ file: FormTable.tsx:34 ~ FormTable ~ phaseId:", phaseId)
-  console.log("🚀 ~ file: FormTable.tsx:34 ~ FormTable ~ field:", field)
-  console.log("🚀 ~ file: FormTable.tsx:34 ~ FormTable ~ field:", field)
+  // console.log("🚀 ~ file: FormTable.tsx:34 ~ FormTable ~ users:", users)
+  // console.log("🚀 ~ file: FormTable.tsx:34 ~ FormTable ~ phaseId:", phaseId)
+  // console.log("🚀 ~ file: FormTable.tsx:34 ~ FormTable ~ field:", field)
+  // console.log("🚀 ~ file: FormTable.tsx:34 ~ FormTable ~ field:", field)
   if (field.value === '') {
     form.setFieldValue(field.name, defaultUsers)
   }

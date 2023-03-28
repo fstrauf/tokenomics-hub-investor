@@ -9,7 +9,7 @@ const FormSelectUser = ({
   isMulti = false,
   placeholder = 'Select or create'
 }) => {
-  console.log("🚀 ~ file: FormSelectUser.tsx:12 ~ options:", options)
+  // console.log("🚀 ~ file: FormSelectUser.tsx:12 ~ options:", options)
   function onChange(option) {
 
     form.setFieldValue(
