@@ -11,6 +11,7 @@ import {
 import toast from 'react-hot-toast'
 import { WEBSITE_URL_BASE } from '../../lib/constants'
 import { confirmAlert } from 'react-confirm-alert'
+import 'react-confirm-alert/src/react-confirm-alert.css'
 
 export default function DesignCard({ post, context }) {
   const { user } = useUser()
@@ -41,6 +42,7 @@ export default function DesignCard({ post, context }) {
   }
 
   const deleteDraft = async (id: String) => {
+    console.log("🚀 ~ file: designCard.tsx:44 ~ deleteDraft ~ id:", id)
     setSubmitting(true)
     await fetch(`/api/post/delete/${id}`, {
       method: 'PUT',
@@ -137,10 +139,11 @@ export default function DesignCard({ post, context }) {
     }
   }
   return (
-    <div className="m-5 h-64 w-80 max-w-sm rounded-lg border border-gray-200 bg-white shadow-md">
-      <div className="flex justify-end px-4 pt-4"></div>
-      <div className="flex flex-col items-center pb-10">
-        <span className="text-sm text-gray-500">{post.title}</span>
+    <div className="m-5 h-64 w-80 max-w-sm rounded-lg border border-gray-200 bg-white shadow-md grid content-between">
+      <span className="px-2 text-center">
+            <span className="font-bold text-gray-700">Title: </span>
+            <span className="text-gray-600">{post.title}</span>
+          </span>
         <div className="flex w-full items-center justify-center divide-x divide-solid divide-gray-400 py-4">
           <span className="px-2 text-center">
             <span className="font-bold text-gray-700">Author: </span>
@@ -371,6 +374,5 @@ export default function DesignCard({ post, context }) {
           </Menu>
         </div>
       </div>
-    </div>
   )
 }
