@@ -1,7 +1,7 @@
 import Link from 'next/link'
 
 export default function DesignCard({ post, context }) {
-  console.log("🚀 ~ file: designCard.tsx:4 ~ DesignCard ~ post:", post)
+  // console.log("🚀 ~ file: designCard.tsx:4 ~ DesignCard ~ post:", post)
   return (    
       <div className="m-5 w-80 h-64 max-w-sm rounded-lg border border-gray-200 bg-white shadow-md">
         <div className="flex justify-end px-4 pt-4"></div>
@@ -46,7 +46,14 @@ export default function DesignCard({ post, context }) {
               href="/posts/[slug]"
               className="inline-flex items-center rounded-lg bg-dao-red px-4 py-2 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300"
             >
-              Edit
+              Edit Design
+            </Link>
+            <Link
+              as={`/posts/${post?.id}`}
+              href="/posts/[slug]"
+              className="inline-flex items-center rounded-lg bg-dao-red px-4 py-2 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300"
+            >
+              Report View
             </Link>
           </div>
         </div>
