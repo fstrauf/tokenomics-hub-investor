@@ -322,7 +322,7 @@ export default function Calculator(props) {
                       <VestingChart
                         width={width}
                         height={height}
-                        data={values.areaData}
+                        data={values.areaData.chartData}
                         fields={values.calculationRows}
                         totalSupply={values.totalSupply}
                       />

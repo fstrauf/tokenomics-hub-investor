@@ -7,18 +7,19 @@ import UnAuthorised from '../components/unauthorised'
 import { useAuth } from '@clerk/clerk-react/dist/hooks/useAuth'
 import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
 import dynamic from 'next/dynamic'
-import * as yup from 'yup'
+// import * as yup from 'yup'
 
-export default function coreMechanisms({ alldesignPhases }) {
+export default function coreMechanisms({ allMechanisms }) {
   // console.log("🚀 ~ file: coreMechanisms.tsx:12 ~ coreMechanisms ~ alldesignPhases", alldesignPhases)
-  const [initialValues, setInititalValues] = useState({
-    name: '',
-    summary: '',
-    details: '',
-    isSink: false,
-    isTemplate: true,
-  
-  })
+  const [initialValues, setInititalValues] = useState(
+    allMechanisms[0] || {
+      name: '',
+      summary: '',
+      details: '',
+      isSink: false,
+      isTemplate: true,
+    }
+  )
 
   const FormTipTap = dynamic(() => import('../components/form/FormTipTap'), {
     loading: () => <p>Loading</p>,
@@ -32,9 +33,7 @@ export default function coreMechanisms({ alldesignPhases }) {
       body: JSON.stringify(body),
     })
     setSubmitting(false)
-    setInititalValues(
-      body.values
-    )
+    setInititalValues(body.values)
     toast.success('saved ', { position: 'bottom-right' })
     
   }
@@ -44,20 +43,12 @@ export default function coreMechanisms({ alldesignPhases }) {
 
   const admin = user?.publicMetadata?.admin || false
 
-  function validateName(value) {
-    let error
-    if (!value) {
-      error = 'Required'
-    }
-    return error
+  function handleChange(e) {
+    setInititalValues(
+      allMechanisms.find((adp) => String(adp.id) === e.target.value)
+    )
+    console.log('e', e)
   }
-
-  // const validationSchema = yup.object({
-  //   name: yup.string().required('Name is required'),
-  //   summary: yup.string().required('Summary is required'),
-  //   // isSink: yup.boolean().required('is Sink is required'),
-  //   // details: yup.string().required('Details is required'),
-  // })
 
   if (isSignedIn && admin) {
     return (
@@ -67,16 +58,40 @@ export default function coreMechanisms({ alldesignPhases }) {
           <h1 className="mb-10 mt-10 text-center text-3xl font-bold">
             Core Mechanisms
           </h1>
-
+          <select
+              onChange={handleChange}
+              className="block w-52 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
+            >
+              {allMechanisms.map((c) => (
+                <>
+                  <option
+                    key={c.id}
+                    value={c.id}
+                    // label={c.name}
+                  >
+                    {c.name}
+                  </option>
+                </>
+              ))}
+            </select>
           <Formik
             initialValues={initialValues}
             onSubmit={submitData}
             // validationSchema={validationSchema}
             enableReinitialize
           >
-            {({ isSubmitting, setFieldValue, errors, touched }) => (
+            {({ isSubmitting, setFieldValue }) => (
               <Form>
                 <div>
+                <label className="mb-2 block text-sm font-medium text-gray-900">
+                    Id
+                  </label>
+                  <Field
+                    id="id"
+                    name="id"
+                    placeholder="id"
+                    className="mb-3 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
+                  />
                   <label className="mb-2 block text-sm font-medium text-gray-900">
                     Name
                   </label>
@@ -152,13 +167,11 @@ export default function coreMechanisms({ alldesignPhases }) {
 }
 
 export async function getStaticProps() {
-  const alldesignPhases = await prisma.designPhases.findMany({
-    orderBy: { phaseId: 'asc' },
-  })
+  const allMechanisms = await prisma.mechanism.findMany()
 
   return {
     props: {
-      alldesignPhases: alldesignPhases || null,
+      allMechanisms: allMechanisms || null,
     },
   }
 }

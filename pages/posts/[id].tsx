@@ -23,6 +23,8 @@ import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
 import Calculation from '../../components/slugView/calculation'
 import { clerkClient } from '@clerk/nextjs/server'
 import { clerkConvertJSON, getTotalStrength, postStatus } from '../../lib/helper'
+import MechanismViewer from '../../components/slugView/MechanismViewer'
+import UserViewer from '../../components/slugView/UserViewer'
 
 export default function Post({ post, morePosts, author }) {
   const PostBody = dynamic(
@@ -117,11 +119,11 @@ export default function Post({ post, morePosts, author }) {
               </button>
               <FeedbackPopup isOpen={isOpen} handleIsOpen={handleIsOpen} />
               <div className={`top-3 w-full ${isOpen ? '' : 'sticky z-30'}`}>
-                <div className="overflow-x-auto border-b-2 border-black bg-white md:px-10">
-                  <ul className="flex">
+                <div className="overflow-x-auto border-b-2 border-black bg-white">
+                  <ul className="flex gap-3 justify-evenly text-xs py-2">
                     <li>
                       <Link
-                        className="flex items-center p-4 text-lg font-bold text-gray-900 no-underline hover:rounded hover:bg-gray-700 hover:text-white"
+                        className="flex items-center font-bold text-gray-900 no-underline hover:rounded hover:bg-gray-700 hover:text-white"
                         activeClass="active"
                         to="tokenStrength"
                         spy={true}
@@ -132,7 +134,7 @@ export default function Post({ post, morePosts, author }) {
                     </li>
                     <li>
                       <Link
-                        className="flex items-center p-4 text-lg font-bold text-gray-900 no-underline hover:rounded hover:bg-gray-700 hover:text-white"
+                        className="flex items-center font-bold text-gray-900 no-underline hover:rounded hover:bg-gray-700 hover:text-white"
                         to="stats"
                         spy={true}
                         smooth={true}
@@ -142,7 +144,7 @@ export default function Post({ post, morePosts, author }) {
                     </li>
                     <li>
                       <Link
-                        className="flex items-center p-4 text-lg font-bold text-gray-900 no-underline hover:rounded hover:bg-gray-700 hover:text-white"
+                        className="flex items-center font-bold text-gray-900 no-underline hover:rounded hover:bg-gray-700 hover:text-white"
                         to="ourTake"
                         spy={true}
                         smooth={true}
@@ -152,7 +154,7 @@ export default function Post({ post, morePosts, author }) {
                     </li>
                     <li>
                       <Link
-                        className="flex items-center p-4 text-lg font-bold text-gray-900 no-underline hover:rounded hover:bg-gray-700 hover:text-white"
+                        className="flex items-center font-bold text-gray-900 no-underline hover:rounded hover:bg-gray-700 hover:text-white"
                         to="timeline"
                         spy={true}
                         smooth={true}
@@ -162,7 +164,7 @@ export default function Post({ post, morePosts, author }) {
                     </li>
                     <li>
                       <Link
-                        className="flex items-center p-4 text-lg font-bold text-gray-900 no-underline hover:rounded hover:bg-gray-700 hover:text-white"
+                        className="flex items-center font-bold text-gray-900 no-underline hover:rounded hover:bg-gray-700 hover:text-white"
                         to="deepDive"
                         spy={true}
                         smooth={true}
@@ -172,7 +174,7 @@ export default function Post({ post, morePosts, author }) {
                     </li>
                     <li>
                       <Link
-                        className="flex items-center p-4 text-lg font-bold text-gray-900 no-underline hover:rounded hover:bg-gray-700 hover:text-white"
+                        className="flex items-center font-bold text-gray-900 no-underline hover:rounded hover:bg-gray-700 hover:text-white"
                         to="calculation"
                         spy={true}
                         smooth={true}
@@ -182,7 +184,7 @@ export default function Post({ post, morePosts, author }) {
                     </li>
                     <li>
                       <Link
-                        className="flex items-center p-4 text-lg font-bold text-gray-900 no-underline hover:rounded hover:bg-gray-700 hover:text-white"
+                        className="flex items-center font-bold text-gray-900 no-underline hover:rounded hover:bg-gray-700 hover:text-white"
                         to="diagram"
                         spy={true}
                         smooth={true}
@@ -192,7 +194,27 @@ export default function Post({ post, morePosts, author }) {
                     </li>
                     <li>
                       <Link
-                        className="flex items-center p-4 text-lg font-bold text-gray-900 no-underline hover:rounded hover:bg-gray-700 hover:text-white"
+                        className="flex items-center font-bold text-gray-900 no-underline hover:rounded hover:bg-gray-700 hover:text-white"
+                        to="supplyDemand"
+                        spy={true}
+                        smooth={true}
+                      >
+                        Supply and Demand
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        className="flex items-center font-bold text-gray-900 no-underline hover:rounded hover:bg-gray-700 hover:text-white"
+                        to="users"
+                        spy={true}
+                        smooth={true}
+                      >
+                        Ecosystem Users
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        className="flex items-center font-bold text-gray-900 no-underline hover:rounded hover:bg-gray-700 hover:text-white"
                         to="Resources"
                         spy={true}
                         smooth={true}
@@ -226,6 +248,10 @@ export default function Post({ post, morePosts, author }) {
                   <Calculation calculation={post.calculation} />
                   <div id="diagram"></div>
                   <Diagram diagram={post.diagramUrl} />
+                  <div id="supplyDemand"></div>
+                  <MechanismViewer mechanisms={post.Mechanism} />
+                  <div id="users"></div>
+                  <UserViewer users={post.PostUser} />
                   <div id="Resources"></div>
                   <Resources resources={post.ProtocolResources} />
                   <div className="mt-10">
@@ -263,6 +289,8 @@ export async function getStaticProps({ params }) {
           date: 'asc',
         },
       },
+      Mechanism: {},
+      PostUser: {},
       author: {},
       calculation: {
         include: {

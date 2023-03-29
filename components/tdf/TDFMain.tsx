@@ -90,7 +90,6 @@ export default function TDFMain({ props, content }) {
         }
 
         setSubmitting(false)
-        console.log('TDF created', values)
       } catch (error) {
         console.error(error)
       }
@@ -246,47 +245,53 @@ Revenue goes to:
   }
 
   return (
-    <div>
-      <div className='mt-5'>header</div>
-      <div className="mb-5 flex">
-        <div className="w-1/6">
-          <TDFSideBar
-            designPhases={props.designPhases}
-            changePhase={handlePhaseChange}
-            activePhase={activePhase}
-          />
-        </div>
-        <div className="w-5/6">
-          <div>
-            <Formik
-              initialValues={initialValues}
-              onSubmit={submitData}
-              enableReinitialize
-            >
-              {({ isSubmitting, setFieldValue, values }) => (
-                <Form>
-                  <FormAutoSave />
-                  <FieldArray
-                    name="DesignElement"
-                    render={() => (
-                      <div>{renderSwitch(values, setFieldValue)}</div>
-                    )}
-                  />
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="mt-5 mb-5 rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
-                  >
-                    Submit
-                  </button>
-                </Form>
-              )}
-            </Formik>
-          </div>
-        </div>
-
-        <Toaster />
-      </div>
+    // <div>
+    <div className='bg-gray-100 rounded-lg p-1 mt-4 mb-4'>
+      <Formik
+        initialValues={initialValues}
+        onSubmit={submitData}
+        enableReinitialize
+      >
+        {({ isSubmitting, setFieldValue, values }) => (
+          <Form>
+            <FormAutoSave />
+            <div className="flex items-center justify-between rounded-lg py-2 p-2">
+              <p className='font-bold text-xl'>{values.title}</p>
+              <div className='flex gap-1'>
+                {' '}
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
+                >
+                  Save
+                </button>
+                <button className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40">
+                  Share Report
+                </button>
+              </div>
+            </div>
+            <div className="mb-5 flex gap-1">
+              <div className="w-1/6">
+                <TDFSideBar
+                  designPhases={props.designPhases}
+                  changePhase={handlePhaseChange}
+                  activePhase={activePhase}
+                />
+              </div>
+              <div className="w-5/6 bg-white rounded-lg p-1">                
+                <FieldArray
+                  name="DesignElement"
+                  render={() => (
+                    <div>{renderSwitch(values, setFieldValue)}</div>
+                  )}
+                />
+              </div>
+            </div>
+          </Form>
+        )}
+      </Formik>
+      <Toaster />
     </div>
   )
 }
