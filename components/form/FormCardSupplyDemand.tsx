@@ -54,12 +54,7 @@ export const FormCardSupplyDemand = ({
   }
 
   const handleNewMechanism = (arrayHelpers, isSink: boolean) => {
-    console.log("🚀 ~ file: FormCardSupplyDemand.tsx:54 ~ handleNewMechanism ~ defaultMechanism:", defaultMechanism)
-    console.log("🚀 ~ file: FormCardSupplyDemand.tsx:63 ~ handleNewMechanism ~ selectedTemplate:", selectedTemplate)
-
     const updateMechanism = selectedTemplate
-    console.log("🚀 ~ file: FormCardSupplyDemand.tsx:61 ~ handleNewMechanism ~ updateMechanism:", updateMechanism)
-    
 
     updateMechanism.isSink = isSink
     if (isSink) {
@@ -74,12 +69,8 @@ export const FormCardSupplyDemand = ({
     }
 
     arrayHelpers.push(updateMechanism)
-    console.log("🚀 ~ file: FormCardSupplyDemand.tsx:83 ~ handleNewMechanism ~ field.value:", field)
     
     setMechanismIndex(field.value?.length)
-    //set tiptapfield to trigger an update
-    // setFieldValue(field.name, )
-    console.log("🚀 ~ file: FormCardSupplyDemand.tsx:83 ~ handleNewMechanism ~ field.value?.length:", field.value?.length)
     setIsOpen(true)
     setSelectedTemplate(defaultMechanism)
   }
