@@ -12,6 +12,13 @@ export default async function handle(req, res) {
     breakdown = JSON.stringify(inputFields.breakdown)
   }
 
+  var DesignElement = inputFields.DesignElement.map((de) => {
+    return {
+      content: JSON.stringify(de.content),
+      designPhasesId: de.designPhasesId,
+    }
+  })
+
   const timeLine = inputFields?.protocolTimeLine?.map((tl) => {
     return {
       // ...tl,
@@ -40,6 +47,7 @@ export default async function handle(req, res) {
       },
     })
   )
+
   //disconnect
   txCalls.push(
     prisma.post.update({
@@ -52,6 +60,31 @@ export default async function handle(req, res) {
       },
     })
   )
+
+  txCalls.push(
+    prisma.designElement.deleteMany({
+      where: {
+        postId: inputFields?.id,
+      },
+    })
+  )
+
+  txCalls.push(
+    prisma.postUser.deleteMany({
+      where: {
+        postId: inputFields?.id,
+      },
+    })
+  )
+
+  txCalls.push(
+    prisma.mechanism.deleteMany({
+      where: {
+        postId: inputFields?.id,
+      },
+    })
+  )
+
   txCalls.push(
     prisma.protocolResources.deleteMany({
       where: {
@@ -79,7 +112,7 @@ export default async function handle(req, res) {
         },
         DesignElement: {
           createMany: {
-            data: inputFields.DesignElement,
+            data: DesignElement,
           },
         },
         mainImageUrl: inputFields.mainImageUrl,

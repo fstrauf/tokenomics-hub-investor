@@ -1,7 +1,7 @@
 import { GetServerSideProps } from 'next'
 import Layout from '../../components/layout'
 // import prisma from '../../lib/prisma'
-import React from 'react'
+import React, { useEffect } from 'react'
 import TDFMain from '../../components/tdf/TDFMain'
 import {
   clerkConvertJSON,
@@ -15,7 +15,6 @@ import { AuthData } from '@clerk/nextjs/dist/server/types'
 import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
 
 const EditDesign: React.FC<UpdateNewDesignProps> = (props) => {
-  console.log('props in edit', props)
   const today = new Date().toLocaleDateString('en-CA')
   const { user } = useUser()
 
@@ -29,7 +28,7 @@ const EditDesign: React.FC<UpdateNewDesignProps> = (props) => {
     ).map((dp) => {
       return {
         id: dp.id,
-        content: dp.content,
+        content: JSON.parse(dp.content),
         designPhasesId: dp.designPhasesId,
       }
     }),
@@ -43,10 +42,10 @@ const EditDesign: React.FC<UpdateNewDesignProps> = (props) => {
         isTemplate: mt.isTemplate,
       }
     }),
-    // PostUser: props.PostUser.map((pu) => {
-    //   return { id: pu.id, name: pu.name, role: pu.role, postId: pu.postId }
-    // }),
-    PostUser: [{ name: '', role: '' }],
+    PostUser: props.post.PostUser.map((pu) => {
+      return { name: pu.name, role: pu.role }
+    }),
+    // PostUser: [{ name: '', role: '' }],
     slug: props.post.slug,
     shortDescription: props.post.shortDescription,
     categories: props.post.categories.map((cd) => {

@@ -15,23 +15,22 @@ export const MechanismCard = ({
     return (
       <>
         <div>
-          {' '}         
-          <div className='flex p-5'>
-          <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">
-            Allocation Based Supply
-          </span>
-          <label class="relative mr-5 inline-flex cursor-pointer items-center">
-            <Field
-              id="isEpochDistro"
-              name={`${field.name}.${mechanismIndex}.isEpochDistro`}
-              type="checkbox"
-              class="peer sr-only"            
-            />
-            <div class="peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:top-0.5 after:left-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-red-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:ring-4 peer-focus:ring-red-300 dark:border-gray-600 dark:bg-gray-700 dark:peer-focus:ring-red-800"></div>
-          </label>
-          <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">
-            Emission Based Supply
-          </span>
+          <div className="flex p-5">
+            <span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">
+              Allocation Based Supply
+            </span>
+            <label className="relative mr-5 inline-flex cursor-pointer items-center">
+              <Field
+                id="isEpochDistro"
+                name={`${field.name}.${mechanismIndex}.isEpochDistro`}
+                type="checkbox"
+                class="peer sr-only"
+              />
+              <div className="peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:top-0.5 after:left-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-red-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:ring-4 peer-focus:ring-red-300 dark:border-gray-600 dark:bg-gray-700 dark:peer-focus:ring-red-800"></div>
+            </label>
+            <span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">
+              Emission Based Supply
+            </span>
           </div>
           {field?.value[mechanismIndex]?.isEpochDistro ? (
             <>
@@ -245,7 +244,7 @@ export const MechanismCard = ({
   }
 
   return (
-    <div className="flex flex-col p-4 max-w-xl ml-auto mr-auto">
+    <div className="ml-auto mr-auto flex max-w-xl flex-col p-4">
       <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 ">
         {isSink ? <>Demand Builder</> : <>Supply Builder</>}
       </h5>
@@ -272,12 +271,14 @@ export const MechanismCard = ({
             Details
           </label>
           <Field
+            id={`${field.name}.${mechanismIndex}.details`}
             name={`${field.name}.${mechanismIndex}.details`}
+            // value={field.value[mechanismIndex].details}
             as={FormTipTap}
             placeholder="Details"
-            onChange={(e) =>
+            onChange={(e) => {
               setFieldValue(`${field.name}.${mechanismIndex}.details`, e)
-            }
+            }}
           />
         </>
       ) : (

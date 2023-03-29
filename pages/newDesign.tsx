@@ -10,6 +10,7 @@ import { AuthData } from '@clerk/nextjs/dist/server/types'
 import { initialCalculatorValues } from '../lib/helper'
 
 export default function NewDesign(props) {
+  console.log("🚀 ~ file: newDesign.tsx:13 ~ NewDesign ~ props:", props)
   const { user } = useUser()
   const today = new Date().toLocaleDateString('en-CA')
 
@@ -21,7 +22,7 @@ export default function NewDesign(props) {
     DesignElement: props.designPhases
       .filter((dp) => dp.parentPhaseId)
       .map((dp) => {
-        return { id: '', content: '', designPhasesId: dp.phaseId }
+        return { id: '', content: '', designPhasesId: String(dp.phaseId) }
       }),
     calculation: initialCalculatorValues,
     Mechanism: [],

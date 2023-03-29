@@ -3,6 +3,9 @@ import ResourceSection from './ResourceSection'
 import { getActiveDesignPhase } from '../../lib/helper'
 
 export default function TDF201({ props, values, activePhase }) {
+  console.log("🚀 ~ file: TDF201.tsx:6 ~ TDF201 ~ activePhase:", activePhase)
+  console.log("🚀 ~ file: TDF201.tsx:6 ~ TDF201 ~ values:", values.DesignElement)
+  
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
   return (
     <div className="grid w-full grid-cols-2 gap-2 rounded-lg border-2 p-2">
@@ -11,12 +14,13 @@ export default function TDF201({ props, values, activePhase }) {
           {designPhase.name}
         </h5>
         <Field
-          as="textarea"
-          rows="4"
+          // as="textarea"
+          // rows="4"
           name={`DesignElement.${values?.DesignElement?.findIndex(
-            (de) => de.designPhaseId === activePhase
+            (de) => de.designPhasesId.toString() === '201'
           )}.content`} //
           placeholder="tell us about your requirements"
+          phaseId={designPhase.phaseId}
           className="mb-3 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
         />
       </div>

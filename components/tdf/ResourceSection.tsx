@@ -5,7 +5,7 @@ import FormDivider from '../form/FormDivider'
 
 export default function ResourceSection({ content }) {
   return (
-    <Disclosure>
+    <Disclosure defaultOpen>
       {({ open }) => (
         <>
           <div className="mt-2 rounded-lg border-4  border-gray-300 border-opacity-20">
@@ -16,7 +16,7 @@ export default function ResourceSection({ content }) {
                 Resources
               </h5> */}
             </Disclosure.Button>
-            <Disclosure.Panel className="px-2 pt-2 pb-2 text-sm text-gray-500">
+            <Disclosure.Panel className="px-2 text-sm text-gray-500">
               <div>
                 <div>
                   <Tiptap content={content} editMode={false} />

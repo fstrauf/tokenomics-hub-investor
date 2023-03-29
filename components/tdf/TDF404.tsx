@@ -14,7 +14,7 @@ export default function TDF404({ props, values, activePhase }) {
         </h5>
           <Field
             name={`DesignElement.${values?.DesignElement?.findIndex(
-              (de) => de.designPhaseId === 404
+              (de) => de.designPhasesId.toString() === '302'
             )}.content`}
             users={values?.PostUser || []}
             component={FormTable}

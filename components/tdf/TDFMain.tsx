@@ -8,7 +8,6 @@ import FormAutoSave from '../form/FormAutoSave'
 
 export default function TDFMain({ props, content }) {
   // console.log('🚀 ~ file: tdfMain.tsx:9 ~ TDFMainx ~ props', props)
-  // console.log('🚀 content', content)
   const [activePhase, setActivePhase] = useState(11) //props.design.activePhase
 
   const initialValues = content
@@ -67,6 +66,7 @@ export default function TDFMain({ props, content }) {
 
   const submitData = async (values, { setSubmitting }) => {
     const body = { values }
+    console.log("🚀 ~ file: TDFMain.tsx:70 ~ submitData ~ body:", body)
     // console.log('val TDF mail', body)
     if (values?.id === '') {
       try {

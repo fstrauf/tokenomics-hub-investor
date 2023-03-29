@@ -13,7 +13,7 @@ export default function TDF403({ props, values, activePhase }) {
         </h5>
         <Field
           name={`DesignElement.${values?.DesignElement?.findIndex(
-            (de) => de.designPhaseId === 403
+            (de) => de.designPhasesId.toString() === '302'
           )}.content`}
           users={values?.PostUser || []}
           component={FormTable}

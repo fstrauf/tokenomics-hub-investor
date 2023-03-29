@@ -4,6 +4,8 @@ import { stringToKey, postStatus } from '../../../lib/helper'
 
 export default async function handle(req, res) {
   const { values } = req.body
+  console.log('🚀 ~ file: newDesign.ts:8 ~ handle ~ values:', values)
+
   const inputFields = values
   const timeLine = inputFields?.protocolTimeLine?.map((tl) => {
     return {
@@ -16,6 +18,25 @@ export default async function handle(req, res) {
   if (typeof inputFields.breakdown === 'object') {
     breakdown = JSON.stringify(inputFields.breakdown)
   }
+
+  var DesignElement = inputFields.DesignElement.map((de) => {
+    return {
+      content: JSON.stringify(de.content),
+      designPhasesId: de.designPhasesId,
+    }
+  })
+  console.log(
+    '🚀 ~ file: newDesign.ts:24 ~ handle ~ designElement:',
+    DesignElement
+  )
+
+  // if (typeof inputFields.DesignElement === 'object') {
+  //   DesignElement = JSON.stringify(inputFields.DesignElement)
+  //   console.log(
+  //     '🚀 ~ file: newDesign.ts:28 ~ handle ~ designElement:',
+  //     DesignElement
+  //   )
+  // }
 
   var response = {}
   try {
@@ -35,7 +56,7 @@ export default async function handle(req, res) {
         },
         DesignElement: {
           createMany: {
-            data: inputFields.DesignElement,
+            data: DesignElement,
           },
         },
         mainImageUrl: inputFields.mainImageUrl,
@@ -91,7 +112,10 @@ export default async function handle(req, res) {
         },
         PostUser: {
           createMany: {
-            data: inputFields.PostUser.map(({ name, role }) => ({ name, role })),
+            data: inputFields.PostUser.map(({ name, role }) => ({
+              name,
+              role,
+            })),
           },
         },
         protocolTimeLine: {

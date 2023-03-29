@@ -5,7 +5,7 @@ import FormNormalSelect from './FormNormalSelect'
 
 const defaultUsers = [
   {
-    user: '',
+    user: 'user1',
     task: 'provide liquidity',
     why: 'collect fees on idle capital',
     valueCreation: 'provide deep liquidity on a variety of assets',
@@ -17,7 +17,7 @@ const defaultUsers = [
       'Running this process for too long, will create an artificial demand that is based on stimulus and not real economic activity.',
   },
   {
-    user: '',
+    user: 'user2',
     task: 'set fees',
     why: 'collect fees on idle capital',
     valueCreation: 'provide deep liquidity on a variety of assets',
@@ -31,10 +31,6 @@ const defaultUsers = [
 ]
 
 export const FormTable = ({ field, form, phaseId, users }) => {
-  console.log("🚀 ~ file: FormTable.tsx:34 ~ FormTable ~ users:", users)
-  console.log("🚀 ~ file: FormTable.tsx:34 ~ FormTable ~ phaseId:", phaseId)
-  console.log("🚀 ~ file: FormTable.tsx:34 ~ FormTable ~ field:", field)
-  console.log("🚀 ~ file: FormTable.tsx:34 ~ FormTable ~ field:", field)
   if (field.value === '') {
     form.setFieldValue(field.name, defaultUsers)
   }
@@ -50,60 +46,45 @@ export const FormTable = ({ field, form, phaseId, users }) => {
             Task
           </th>
           {phaseId > 301 ? (
-            <th className="w-16 text-xs text-gray-700">
-              Motivation
-            </th>
+            <th className="w-16 text-xs text-gray-700">Motivation</th>
           ) : (
             <></>
           )}
           {phaseId > 302 ? (
-            <th className="w-16 text-xs text-gray-700">
-              Value Creation
-            </th>
+            <th className="w-16 text-xs text-gray-700">Value Creation</th>
           ) : (
             <></>
           )}
           {phaseId > 303 ? (
-            <th className="w-16 text-xs text-gray-700">
-              Behaviour
-            </th>
+            <th className="w-16 text-xs text-gray-700">Behaviour</th>
           ) : (
             <></>
           )}
           {phaseId > 401 ? (
-            <th className="w-16 text- text-gray-700">
-              Incentives
-            </th>
+            <th className="text- w-16 text-gray-700">Incentives</th>
           ) : (
             <></>
           )}
           {phaseId > 402 ? (
-            <th className="w-16 text-xs text-gray-700">
-              Mechanism
-            </th>
+            <th className="w-16 text-xs text-gray-700">Mechanism</th>
           ) : (
             <></>
           )}
           {phaseId > 403 ? (
-            <th className="w-16 text-xs text-gray-700">
-              Side Effects
-            </th>
+            <th className="w-16 text-xs text-gray-700">Side Effects</th>
           ) : (
             <></>
           )}
           <th></th>
         </tr>
-      </thead>      
+      </thead>
     </>
   )
   const incentiveRow = (input, index, arrayHelpers) => {
     return (
       <>
-        <tr key={index} className="border-b bg-white font-normal text-xs">
-          <th
-            scope="row"
-            className="whitespace-nowrap text-gray-900 "
-          >
+        <tr key={index} className="border-b bg-white text-xs font-normal">
+          <th scope="row" className="whitespace-nowrap text-gray-900 ">
             {' '}
             {/* <Field
               name={`${field.name}.${index}.user`}
@@ -112,19 +93,17 @@ export const FormTable = ({ field, form, phaseId, users }) => {
               rows={4}
               as="textarea"
             /> */}
-
-        <Field
-          className="rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-xs text-gray-900 focus:border-blue-500 focus:ring-blue-500"
-          name={`${field.name}.${index}.user`}
-          options={users}
-          component={FormNormalSelect}
-          placeholder="Select Users"
-        />
+            <Field
+              className="rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-xs text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+              name={`${field.name}.${index}.user`}
+              options={users}
+              component={FormNormalSelect}
+              placeholder="Select Users"
+            />
           </th>
           <td className="">
             {' '}
-    
-        <Field
+            <Field
               name={`${field.name}.${index}.task`}
               placeholder="task"
               className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-gray-900 focus:border-blue-500 focus:ring-blue-500"
@@ -232,7 +211,7 @@ export const FormTable = ({ field, form, phaseId, users }) => {
         name={field.name}
         render={(arrayHelpers) => (
           <>
-            <table className="mb-1 text-left text-sm text-gray-500 overflow-x-auto">
+            <table className="mb-1 overflow-x-auto text-left text-sm text-gray-500">
               {header}
               <tbody>
                 {field.value?.length > 0 &&

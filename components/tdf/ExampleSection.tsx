@@ -76,7 +76,7 @@ export default function ExampleSection({
   }
 
   return (
-    <Disclosure>
+    <Disclosure defaultOpen>
       {({ open }) => (
         <>
           <div className="mt-2 rounded-lg border-4  border-gray-300 border-opacity-20">
