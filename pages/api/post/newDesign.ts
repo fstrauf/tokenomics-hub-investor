@@ -18,6 +18,25 @@ export default async function handle(req, res) {
     breakdown = JSON.stringify(inputFields.breakdown)
   }
 
+  var DesignElement = inputFields.DesignElement.map((de) => {
+    return {
+      content: JSON.stringify(de.content),
+      designPhasesId: de.designPhasesId,
+    }
+  })
+  console.log(
+    '🚀 ~ file: newDesign.ts:24 ~ handle ~ designElement:',
+    DesignElement
+  )
+
+  // if (typeof inputFields.DesignElement === 'object') {
+  //   DesignElement = JSON.stringify(inputFields.DesignElement)
+  //   console.log(
+  //     '🚀 ~ file: newDesign.ts:28 ~ handle ~ designElement:',
+  //     DesignElement
+  //   )
+  // }
+
   var response = {}
   try {
     response = await prisma.post.create({
@@ -29,8 +48,16 @@ export default async function handle(req, res) {
         // published: false,
         // PostUser: inputFields.PostUser,
         publishedAt: new Date(),
-        Mechanism: {},
-        DesignElement: {},
+        Mechanism: {
+          createMany: {
+            data: inputFields.Mechanism,
+          },
+        },
+        DesignElement: {
+          createMany: {
+            data: DesignElement,
+          },
+        },
         mainImageUrl: inputFields.mainImageUrl,
         tokenUtility: inputFields.tokenUtility,
         tokenUtilityStrength: inputFields.tokenUtilityStrength,
@@ -58,12 +85,15 @@ export default async function handle(req, res) {
         status: postStatus.draft,
         ticker: inputFields.ticker,
         categories: {
-          // connectOrCreate: inputFields.categories.map((cat) => {
-          //   return {
-          //     where: { value: stringToKey(cat.label) },
-          //     create: { value: stringToKey(cat.label), label: cat.label },
-          //   }
-          // }),
+          connectOrCreate: inputFields.categories.map((category) => {
+            return {
+              where: { value: category.value },
+              create: {
+                value: category.value,
+                label: category.label,
+              },
+            }
+          }),
         },
         tags: {
           connectOrCreate: inputFields.tags.map((tag) => {
@@ -81,7 +111,10 @@ export default async function handle(req, res) {
         },
         PostUser: {
           createMany: {
-            data: inputFields.PostUser.map(({ name, role }) => ({ name, role })),
+            data: inputFields.PostUser.map(({ name, role }) => ({
+              name,
+              role,
+            })),
           },
         },
         protocolTimeLine: {

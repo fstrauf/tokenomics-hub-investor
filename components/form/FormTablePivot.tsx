@@ -4,7 +4,7 @@ import FormNormalSelect from './FormNormalSelect'
 
 const defaultUsers = [
   {
-    user: 'Liquidity Provider',
+    user: 'user1',
     task: 'provide liquidity',
     why: 'collect fees on idle capital',
     valueCreation: 'provide deep liquidity on a variety of assets',
@@ -16,7 +16,7 @@ const defaultUsers = [
       'Running this process for too long, will create an artificial demand that is based on stimulus and not real economic activity.',
   },
   {
-    user: 'Liquidity Provider',
+    user: 'user2',
     task: 'set fees',
     why: 'collect fees on idle capital',
     valueCreation: 'provide deep liquidity on a variety of assets',
@@ -30,10 +30,9 @@ const defaultUsers = [
 ]
 
 export const FormTablePivot = ({ field, form, phaseId, users }) => {
-  console.log("🚀 ~ file: FormTablePivot.tsx:33 ~ FormTablePivot ~ users:", users)
-  console.log("🚀 ~ file: FormTablePivot.tsx:33 ~ FormTablePivot ~ phaseId:", phaseId)
-  console.log("🚀 ~ file: FormTablePivot.tsx:33 ~ FormTablePivot ~ form:", form)
-  console.log("🚀 ~ file: FormTablePivot.tsx:33 ~ FormTablePivot ~ field:", field)
+// console.log("🚀 ~ file: FormTablePivot.tsx:33 ~ FormTablePivot ~ field:", field)
+
+
   if (field.value === '') {
     form.setFieldValue(field.name, defaultUsers)
   }

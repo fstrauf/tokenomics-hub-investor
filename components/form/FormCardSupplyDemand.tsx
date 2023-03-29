@@ -10,6 +10,7 @@ export const FormCardSupplyDemand = ({
   mechanismTemplates,
   setFieldValue,
 }) => {
+
   let [mechanismIndex, setMechanismIndex] = useState(0)
   const defaultMechanism = {
     id: '',
@@ -121,12 +122,14 @@ export const FormCardSupplyDemand = ({
   return (
     <div className="relative overflow-x-auto">
       <Drawer isOpen={isOpen} setIsOpen={setIsOpen}>
-        <MechanismCard
-          field={field}
-          mechanismIndex={mechanismIndex}
-          setFieldValue={setFieldValue}
-          users={values.PostUser} // mechanismImpactFactors={mechanismImpactFactors}
-        />
+        {isOpen && (
+          <MechanismCard
+            field={field}
+            mechanismIndex={mechanismIndex}
+            setFieldValue={setFieldValue}
+            users={values.PostUser} // mechanismImpactFactors={mechanismImpactFactors}
+          />
+        )}
       </Drawer>
       <FieldArray
         name={field.name}

@@ -35,6 +35,7 @@ export default function coreMechanisms({ allMechanisms }) {
     setSubmitting(false)
     setInititalValues(body.values)
     toast.success('saved ', { position: 'bottom-right' })
+    
   }
 
   const { isSignedIn } = useAuth()

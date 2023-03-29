@@ -31,7 +31,7 @@ export default function TDF11({ props, values, activePhase, content }) {
         <Field
           type="text"
           name="title"
-          className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
+          className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-xs text-gray-900 focus:border-dao-red focus:ring-dao-red"
         />
       </div>
 
@@ -47,7 +47,7 @@ export default function TDF11({ props, values, activePhase, content }) {
         <Field
           type="text"
           name="slug"
-          className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
+          className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-xs text-gray-900 focus:border-dao-red focus:ring-dao-red"
         />
       </div>
 
@@ -80,7 +80,7 @@ export default function TDF11({ props, values, activePhase, content }) {
         <Field
           type="text"
           name="ticker"
-          className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
+          className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-xs text-gray-900 focus:border-dao-red focus:ring-dao-red"
         />
       </div>
       <div className="mb-6 mt-4">

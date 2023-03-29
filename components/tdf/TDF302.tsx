@@ -6,7 +6,6 @@ import { getActiveDesignPhase } from '../../lib/helper'
 // import ExampleSection from './ExampleSection'
 
 export default function TDF302({ props, values, activePhase }) {
-  console.log("🚀 ~ file: TDF302.tsx:9 ~ TDF302 ~ values:", values)
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
   return (
     <div className="flex w-full flex-col rounded-lg border-2 p-2">
@@ -18,9 +17,9 @@ export default function TDF302({ props, values, activePhase }) {
           // as="textarea"
           // rows="4"
           name={`DesignElement.${values?.DesignElement?.findIndex(
-            (de) => de.designPhasesId === 301 //should all use the same db field.
+            (de) => de.designPhasesId.toString() === '302' //should all use the same db field.
           )}.content`}
-          users={props?.PostUser || []}
+          users={values?.PostUser || []}
           component={FormTable}
           placeholder="tell us about your requirements"
           phaseId={designPhase.phaseId}

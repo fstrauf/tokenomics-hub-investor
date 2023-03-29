@@ -5,11 +5,19 @@ import { postStatus, stringToKey } from '../../../lib/helper'
 export default async function handle(req, res) {
   const { values } = req.body
   const inputFields = values
+  console.log('values EditNewDesign', values)
 
   var breakdown = inputFields.breakdown
   if (typeof inputFields.breakdown === 'object') {
     breakdown = JSON.stringify(inputFields.breakdown)
   }
+
+  var DesignElement = inputFields.DesignElement.map((de) => {
+    return {
+      content: JSON.stringify(de.content),
+      designPhasesId: de.designPhasesId,
+    }
+  })
 
   const timeLine = inputFields?.protocolTimeLine?.map((tl) => {
     return {
@@ -39,6 +47,7 @@ export default async function handle(req, res) {
       },
     })
   )
+
   //disconnect
   txCalls.push(
     prisma.post.update({
@@ -47,10 +56,35 @@ export default async function handle(req, res) {
       },
       data: {
         categories: { set: [] },
-        tags: { set: []},
+        tags: { set: [] },
       },
     })
   )
+
+  txCalls.push(
+    prisma.designElement.deleteMany({
+      where: {
+        postId: inputFields?.id,
+      },
+    })
+  )
+
+  txCalls.push(
+    prisma.postUser.deleteMany({
+      where: {
+        postId: inputFields?.id,
+      },
+    })
+  )
+
+  txCalls.push(
+    prisma.mechanism.deleteMany({
+      where: {
+        postId: inputFields?.id,
+      },
+    })
+  )
+
   txCalls.push(
     prisma.protocolResources.deleteMany({
       where: {
@@ -71,8 +105,16 @@ export default async function handle(req, res) {
         // ourTake: JSON.stringify(ourTake),
         // published: false,
         publishedAt: new Date(),
-        Mechanism: {},
-        DesignElement: {},
+        Mechanism: {
+          createMany: {
+            data: inputFields.Mechanism,
+          },
+        },
+        DesignElement: {
+          createMany: {
+            data: DesignElement,
+          },
+        },
         mainImageUrl: inputFields.mainImageUrl,
         tokenUtility: inputFields.tokenUtility,
         tokenUtilityStrength: inputFields.tokenUtilityStrength,
@@ -100,10 +142,13 @@ export default async function handle(req, res) {
         status: postStatus.draft,
         ticker: inputFields.ticker,
         categories: {
-          connectOrCreate: inputFields.categories.map((cat) => {
+          connectOrCreate: inputFields.categories.map((category) => {
             return {
-              where: { value: stringToKey(cat.label) },
-              create: { value: stringToKey(cat.label), label: cat.label },
+              where: { value: category.value },
+              create: {
+                value: category.value,
+                label: category.label,
+              },
             }
           }),
         },
@@ -115,15 +160,35 @@ export default async function handle(req, res) {
             }
           }),
         },
-        calculationId: inputFields.calculation,
+        // calculationId: inputFields.calculation,
         ProtocolResources: {
           createMany: {
             data: resource,
           },
         },
+        PostUser: {
+          createMany: {
+            data: inputFields.PostUser,
+          },
+        },
         protocolTimeLine: {
           createMany: {
             data: timeLine,
+          },
+        },
+        UserStrengthRating: {
+          create: {
+            authorClerkId: inputFields.authorClerkId,
+            userReviewUtility: 'initial',
+            userReviewBusinessModel: 'initial',
+            userReviewDemandDriver: 'initial',
+            userReviewValueCapture: 'initial',
+            userReviewValueCreation: 'initial',
+            tokenUtilityStrength: inputFields.tokenUtilityStrength,
+            businessModelStrength: inputFields.businessModelStrength,
+            valueCaptureStrength: inputFields.valueCaptureStrength,
+            valueCreationStrength: inputFields.valueCreationStrength,
+            demandDriversStrength: inputFields.demandDriversStrength,
           },
         },
       },
