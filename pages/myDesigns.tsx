@@ -8,7 +8,10 @@ import { clerkConvertJSON, headerStatus, postStatus } from '../lib/helper'
 import DesignCard from '../components/tdf/designCard'
 import Link from 'next/link'
 
+
 export default function MyDesigns({ posts }) {
+  
+
   return (
     <Layout mode={headerStatus.design}>
       <>
@@ -22,9 +25,9 @@ export default function MyDesigns({ posts }) {
               </Link>
             </div>
           </div>
-          <div className="">
-            <div className="static overflow-x-auto rounded-lg bg-white px-8 py-6">
-              <div className="mb-2 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3  xl:grid-cols-4">
+          {/* <div className=""> */}
+            <div className="overflow-x-auto rounded-lg bg-white">
+              <div className="flex flex-wrap items-center justify-center">
                 {posts?.map((post, index) => {
                   return (
                     <div key={index}>
@@ -34,7 +37,7 @@ export default function MyDesigns({ posts }) {
                 })}
               </div>
             </div>
-          </div>
+          {/* </div> */}
         </div>
       </>
     </Layout>
@@ -64,6 +67,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
       },
       author: {},
     },
+    take: 20,
   })
 
   let user = userId ? await clerkClient.users.getUser(userId) : {}
