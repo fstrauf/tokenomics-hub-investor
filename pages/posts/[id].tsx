@@ -292,7 +292,7 @@ export async function getStaticProps({ params }) {
       Mechanism: {},
       PostUser: {},
       author: {},
-      calculation: {
+      Calculation: {
         include: {
           CalculationRows: {},
         },
