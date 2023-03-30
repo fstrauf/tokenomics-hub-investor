@@ -132,7 +132,7 @@ export const getServerSideProps: GetServerSideProps = async ({
         protocolTimeLine: {},
         ProtocolResources: {},
         Comments: { orderBy: { date: 'desc' } },
-        calculation: {},
+        Calculation: {},
         // UserStrengthRating: {},
         PostUser: {},
         PostAuthor: {},

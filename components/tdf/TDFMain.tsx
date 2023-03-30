@@ -7,7 +7,7 @@ import FormAutoSave from '../form/FormAutoSave'
 // import TDFHeaders from './TDFHeaders'
 
 export default function TDFMain({ props }) {
-  // console.log('🚀 ~ file: tdfMain.tsx:9 ~ TDFMainx ~ props', props)
+  console.log('🚀 ~ file: tdfMain.tsx:9 ~ TDFMainx ~ props', props)
   const [activePhase, setActivePhase] = useState(11) //props.design.activePhase
 
   const initialValues = props.post
@@ -256,7 +256,7 @@ Revenue goes to:
           <Form>
             <FormAutoSave />
             <div className="flex items-center justify-between rounded-lg py-2 p-2">
-              <p className='font-bold text-xl'>{values.title}</p>
+              <p className='font-bold text-xl'>{values?.title}</p>
               <div className='flex gap-1'>
                 {' '}
                 <button

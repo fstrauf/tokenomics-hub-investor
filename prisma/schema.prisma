@@ -53,7 +53,7 @@ model Post {
   parent                String?              @db.Text
   ProtocolResources     ProtocolResources[]
   calculationId         String?
-  calculation           Calculation?         @relation(fields: [calculationId], references: [id])
+  Calculation           Calculation?         @relation(fields: [calculationId], references: [id])
   Comments              Comments[]
   UserStrengthRating    UserStrengthRating[]
   DesignElement         DesignElement[]

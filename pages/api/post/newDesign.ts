@@ -4,7 +4,6 @@ import { stringToKey, postStatus } from '../../../lib/helper'
 
 export default async function handle(req, res) {
   const { values } = req.body
-  // console.log("🚀 ~ file: newDesign.ts:7 ~ handle ~ values:", values)
   const inputFields = values
   const timeLine = inputFields?.protocolTimeLine?.map((tl) => {
     return {
@@ -107,6 +106,15 @@ export default async function handle(req, res) {
         authorClerkId: inputFields.authorClerkId,
         status: postStatus.draft,
         ticker: inputFields.ticker,
+        Calculation: {
+          create: {
+            authorClerkId: inputFields.calculation.authorClerkId,
+            months: inputFields.calculation.months,
+            startDate: new Date(inputFields.calculation.startDate),
+            title: inputFields.calculation.title,
+            totalSupply: inputFields.calculation.totalSupply,
+          }
+        },
         categories: {
           connectOrCreate: inputFields.categories.map((category) => {
             return {
@@ -163,7 +171,16 @@ export default async function handle(req, res) {
     throw e
   }
 
-  console.log(response)
+  // inputFields.calculation
+  // const res2 = await prisma.calculation.create({
+  //   data: {
+  //     Post: { connect: {
+  //       id: 
+  //     }}
+  //   }
+    
+  // })
+
   // return res.json(response);
   return res.status(200).send({ id: response.id })
 }
