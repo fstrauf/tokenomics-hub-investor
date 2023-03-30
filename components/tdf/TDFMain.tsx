@@ -6,11 +6,11 @@ import toast, { Toaster } from 'react-hot-toast'
 import FormAutoSave from '../form/FormAutoSave'
 // import TDFHeaders from './TDFHeaders'
 
-export default function TDFMain({ props, content }) {
+export default function TDFMain({ props }) {
   // console.log('🚀 ~ file: tdfMain.tsx:9 ~ TDFMainx ~ props', props)
   const [activePhase, setActivePhase] = useState(11) //props.design.activePhase
 
-  const initialValues = content
+  const initialValues = props.post
   function handlePhaseChange(phase) {
     setActivePhase(phase)
   }
@@ -137,7 +137,7 @@ export default function TDFMain({ props, content }) {
           <TDF11
             props={props}
             values={values}
-            content={content}
+            // content={content}
             activePhase={activePhase}
           />
         )

@@ -208,7 +208,7 @@ export default async function handle(req, res) {
         },
         PostUser: {
           createMany: {
-            data: inputFields.PostUser,
+            data: inputFields.PostUser.map(({ name, role }) => ({ name, role })),
           },
         },
         protocolTimeLine: {
