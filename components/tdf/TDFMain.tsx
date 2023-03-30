@@ -4,11 +4,12 @@ import dynamic from 'next/dynamic'
 import { FieldArray, Form, Formik } from 'formik'
 import toast, { Toaster } from 'react-hot-toast'
 import FormAutoSave from '../form/FormAutoSave'
+import FormId from '../form/FormId'
 // import TDFHeaders from './TDFHeaders'
 
 export default function TDFMain({ props }) {
-  console.log('🚀 ~ file: tdfMain.tsx:9 ~ TDFMainx ~ props', props)
   const [activePhase, setActivePhase] = useState(11) //props.design.activePhase
+  const [postId, setPostId] = useState(props.post.id || '')
 
   const initialValues = props.post
   function handlePhaseChange(phase) {
@@ -66,7 +67,7 @@ export default function TDFMain({ props }) {
 
   const submitData = async (values, { setSubmitting }) => {
     const body = { values }
-    console.log("🚀 ~ file: TDFMain.tsx:70 ~ submitData ~ body:", body)
+    console.log('🚀 ~ file: TDFMain.tsx:70 ~ submitData ~ body:', body)
     // console.log('val TDF mail', body)
     if (values?.id === '') {
       try {
@@ -87,6 +88,7 @@ export default function TDFMain({ props }) {
           toast.success('Changes auto-saved ', {
             position: 'bottom-right',
           })
+          setPostId(JSON.parse(id).id)
         }
 
         setSubmitting(false)
@@ -246,7 +248,7 @@ Revenue goes to:
 
   return (
     // <div>
-    <div className='bg-gray-100 rounded-lg p-1 mt-4 mb-4'>
+    <div className="mt-4 mb-4 rounded-lg bg-gray-100 p-1">
       <Formik
         initialValues={initialValues}
         onSubmit={submitData}
@@ -255,9 +257,9 @@ Revenue goes to:
         {({ isSubmitting, setFieldValue, values }) => (
           <Form>
             <FormAutoSave />
-            <div className="flex items-center justify-between rounded-lg py-2 p-2">
-              <p className='font-bold text-xl'>{values?.title}</p>
-              <div className='flex gap-1'>
+            <div className="flex items-center justify-between rounded-lg p-2 py-2">
+              <p className="text-xl font-bold">{values?.title}</p>
+              <div className="flex gap-1">
                 {' '}
                 <button
                   type="submit"
@@ -279,12 +281,18 @@ Revenue goes to:
                   activePhase={activePhase}
                 />
               </div>
-              <div className="w-5/6 bg-white rounded-lg p-1">                
+              <div className="w-5/6 rounded-lg bg-white p-1">
                 <FieldArray
                   name="DesignElement"
                   render={() => (
                     <div>{renderSwitch(values, setFieldValue)}</div>
                   )}
+                />
+                <FormId
+                  postId={postId}
+                  type="text"
+                  name="id"
+                  className="hidden w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
                 />
               </div>
             </div>
