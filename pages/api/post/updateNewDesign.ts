@@ -5,12 +5,54 @@ import { postStatus, stringToKey } from '../../../lib/helper'
 export default async function handle(req, res) {
   const { values } = req.body
   const inputFields = values
-  console.log('values EditNewDesign', values)
 
   var breakdown = inputFields.breakdown
   if (typeof inputFields.breakdown === 'object') {
     breakdown = JSON.stringify(inputFields.breakdown)
   }
+
+  const mechanisms = inputFields.Mechanism.map((m) => {
+    const postUsers =
+      m?.PostUser?.map((pu) => ({
+        name: pu.name,
+        role: pu.role,
+        postId: m.postId,
+      })) || {}
+    const calculationTimeSeries =
+      m?.CalculationTimeSeries?.map((cts) => ({
+        months: cts.months,
+        tokens: cts.tokens,
+      })) || {}
+    return {
+      name: m.name,
+      summary: m.summary,
+      details: m.details,
+      isSink: m.isSink,
+      token: m.token,
+      postId: m.postId,
+      isTemplate: m.isTemplate,
+      category: m.category,
+      lockupPeriod: m.lockupPeriod,
+      unlockPeriod: m.unlockPeriod,
+      percentageAllocation: m.percentageAllocation,
+      isEpochDistro: m.isEpochDistro,
+      epochDurationInSeconds: m.epochDurationInSeconds,
+      initialEmissionPerSecond: m.initialEmissionPerSecond,
+      emissionReductionPerEpoch: m.emissionReductionPerEpoch,
+      color: m.color,
+      calculationId: m.calculationId,
+      // PostUser: {
+      //   create: postUsers
+      // },
+      // CalculationTimeSeries: {
+      //   create: calculationTimeSeries
+      // }
+    }
+  })
+
+  // prisma.mechanism.createMany({
+  //   data: mechanisms
+  // });
 
   var DesignElement = inputFields.DesignElement.map((de) => {
     return {
@@ -77,6 +119,7 @@ export default async function handle(req, res) {
     })
   )
 
+  //this should delete the timeseries too
   txCalls.push(
     prisma.mechanism.deleteMany({
       where: {
@@ -105,11 +148,11 @@ export default async function handle(req, res) {
         // ourTake: JSON.stringify(ourTake),
         // published: false,
         publishedAt: new Date(),
-        Mechanism: {
-          createMany: {
-            data: inputFields.Mechanism,
-          },
-        },
+        // Mechanism: {
+        //   createMany: {
+        //     data: mechanisms,
+        //   },
+        // },
         DesignElement: {
           createMany: {
             data: DesignElement,
@@ -117,16 +160,16 @@ export default async function handle(req, res) {
         },
         mainImageUrl: inputFields.mainImageUrl,
         tokenUtility: inputFields.tokenUtility,
-        tokenUtilityStrength: inputFields.tokenUtilityStrength,
+        // tokenUtilityStrength: inputFields.tokenUtilityStrength,
         businessModel: inputFields.businessModel,
-        businessModelStrength: inputFields.businessModelStrength,
+        // businessModelStrength: inputFields.businessModelStrength,
         valueCreation: inputFields.valueCreation,
-        valueCreationStrength: inputFields.valueCreationStrength,
+        // valueCreationStrength: inputFields.valueCreationStrength,
         valueCapture: inputFields.valueCapture,
-        valueCaptureStrength: inputFields.valueCaptureStrength,
+        // valueCaptureStrength: inputFields.valueCaptureStrength,
         demandDrivers: inputFields.demandDrivers,
-        demandDriversStrength: inputFields.demandDriversStrength,
-        tokenStrength: inputFields.tokenStrength,
+        // demandDriversStrength: inputFields.demandDriversStrength,
+        // tokenStrength: inputFields.tokenStrength,
         threeMonthHorizon: inputFields.threeMonthHorizon,
         oneYearHorizon: inputFields.oneYearHorizon,
         upside: inputFields.upside,
@@ -176,27 +219,37 @@ export default async function handle(req, res) {
             data: timeLine,
           },
         },
-        UserStrengthRating: {
-          create: {
-            authorClerkId: inputFields.authorClerkId,
-            userReviewUtility: 'initial',
-            userReviewBusinessModel: 'initial',
-            userReviewDemandDriver: 'initial',
-            userReviewValueCapture: 'initial',
-            userReviewValueCreation: 'initial',
-            tokenUtilityStrength: inputFields.tokenUtilityStrength,
-            businessModelStrength: inputFields.businessModelStrength,
-            valueCaptureStrength: inputFields.valueCaptureStrength,
-            valueCreationStrength: inputFields.valueCreationStrength,
-            demandDriversStrength: inputFields.demandDriversStrength,
-          },
-        },
+        // UserStrengthRating: {
+        //   create: {
+        //     authorClerkId: inputFields.authorClerkId,
+        //     userReviewUtility: 'initial',
+        //     userReviewBusinessModel: 'initial',
+        //     userReviewDemandDriver: 'initial',
+        //     userReviewValueCapture: 'initial',
+        //     userReviewValueCreation: 'initial',
+        //     tokenUtilityStrength: inputFields.tokenUtilityStrength,
+        //     businessModelStrength: inputFields.businessModelStrength,
+        //     valueCaptureStrength: inputFields.valueCaptureStrength,
+        //     valueCreationStrength: inputFields.valueCreationStrength,
+        //     demandDriversStrength: inputFields.demandDriversStrength,
+        //   },
+        // },
       },
+    })
+  )
+
+  txCalls.push(
+    prisma.mechanism.createMany({
+      data: mechanisms,
     })
   )
 
   try {
     response = await prisma.$transaction(txCalls)
+    console.log(
+      '🚀 ~ file: updateNewDesign.ts:242 ~ handle ~ response:',
+      response
+    )
   } catch (e) {
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
       // The .code property can be accessed in a type-safe manner
@@ -210,6 +263,12 @@ export default async function handle(req, res) {
     }
     throw e
   }
+
+  // const mechUpdateRes = prisma.calculationTimeSeries.createMany({
+  //   data: {
+  //     mechanismId:
+  //   }
+  // })
 
   res.json(response)
 }

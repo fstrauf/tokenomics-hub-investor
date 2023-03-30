@@ -196,23 +196,13 @@ model DesignPhases {
   @@index([parentPhaseId])
 }
 
-// model TemplateMechanism {
-//   id      String  @id @default(cuid())
-//   name    String?
-//   summary String? @db.Text
-//   details String? @db.Text
-// }
-
 model CalculationTimeSeries {
-  id                Int        @id @default(autoincrement())
+  id                String    @id @default(cuid())
   months            Int?
   tokens            Float?
-  // calculationRowsId String?          @unique
-  // CalculationRows   CalculationRows? @relation(fields: [calculationRowsId], references: [id])
-  // CalculationRows   CalculationRows? @relation(fields: [calculationRowsId], references: [id])
   calculationRowsId String?
-  Mechanism         Mechanism? @relation(fields: [mechanismId], references: [id])
-  mechanismId       String?
+  Mechanism         Mechanism @relation(fields: [mechanismId], references: [id], onDelete: Cascade)
+  mechanismId       String
 
   @@index([mechanismId])
 }
@@ -223,10 +213,7 @@ model Mechanism {
   summary                   String?                 @db.Text
   details                   String?                 @db.Text
   isSink                    Boolean?
-  // user              String?
   token                     String?
-  // calculationRowsId String?          @unique
-  // CalculationRows   CalculationRows? @relation(fields: [calculationRowsId], references: [id])
   postId                    String?
   post                      Post?                   @relation(fields: [postId], references: [id], onDelete: Cascade)
   isTemplate                Boolean?                @default(false)
@@ -243,9 +230,7 @@ model Mechanism {
   calculationId             String?
   calculation               Calculation?            @relation(fields: [calculationId], references: [id], onDelete: Cascade)
   CalculationTimeSeries     CalculationTimeSeries[]
-  // CalculationRows           CalculationRows[]
 
-  // @@index([calculationRowsId])
   @@index([postId])
   @@index([calculationId])
 }
