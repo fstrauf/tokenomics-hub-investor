@@ -6,49 +6,16 @@ export default async function handle(req, res) {
   const { values } = req.body
   // console.log("🚀 ~ file: newDesign.ts:7 ~ handle ~ values:", values)
   const inputFields = values
+
+  prisma.$executeRaw`INSERT INTO post (title, content) VALUES ('My Post', 'This is my first post')`
+
+  prisma.$queryRaw`INSER INTO post (title, content, )`
+
+
   const timeLine = inputFields?.protocolTimeLine?.map((tl) => {
     return {
       ...tl,
       date: new Date(tl.date),
-    }
-  })
-
-  const mechanisms = inputFields.Mechanism.map((m) => {
-    // const postUsers =
-    //   m?.PostUser?.map((pu) => ({
-    //     name: pu.name,
-    //     role: pu.role,
-    //     // postId: m.postId,
-    //   })) || {}
-    const calculationTimeSeries =
-      m?.CalculationTimeSeries?.map((cts) => ({
-        months: cts.months,
-        tokens: cts.tokens,
-      })) || {}
-    return {
-      name: m.name,
-      summary: m.summary,
-      details: m.details,
-      isSink: m.isSink,
-      token: m.token,
-      // postId: m.postId,
-      isTemplate: m.isTemplate,
-      category: m.category,
-      lockupPeriod: m.lockupPeriod,
-      unlockPeriod: m.unlockPeriod,
-      percentageAllocation: m.percentageAllocation,
-      isEpochDistro: m.isEpochDistro,
-      epochDurationInSeconds: m.epochDurationInSeconds,
-      initialEmissionPerSecond: m.initialEmissionPerSecond,
-      emissionReductionPerEpoch: m.emissionReductionPerEpoch,
-      color: m.color,
-      // calculationId: m.calculationId,
-      // PostUser: {
-      //   create: postUsers
-      // },
-      CalculationTimeSeries: {
-        create: calculationTimeSeries
-      }
     }
   })
 
@@ -76,18 +43,9 @@ export default async function handle(req, res) {
         // PostUser: inputFields.PostUser,
         publishedAt: new Date(),
         Mechanism: {
-          create: mechanisms,
-          
-          // [
-          //   { CalculationTimeSeries: {
-          //     create: {
-          //       tokens: 10,
-          //     }
-          //   }}
-          // ]
-          // createMany: {
-          //   data: inputFields.Mechanism,
-          // },
+          createMany: {
+            data: inputFields.Mechanism,
+          },
         },
         DesignElement: {
           createMany: {

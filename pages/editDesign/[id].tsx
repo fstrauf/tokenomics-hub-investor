@@ -7,11 +7,11 @@ import {
   clerkConvertJSON,
   getMergedInitialCalcValues,
   initialCalculatorValues,
-  postStatus,
+  // postStatus,
 } from '../../lib/helper'
 import { clerkClient, getAuth } from '@clerk/nextjs/server'
 import prisma from '../../lib/prisma'
-import { AuthData } from '@clerk/nextjs/dist/server/types'
+// import { AuthData } from '@clerk/nextjs/dist/server/types'
 import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
 
 const EditDesign: React.FC<UpdateNewDesignProps> = (props) => {

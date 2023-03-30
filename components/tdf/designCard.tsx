@@ -166,8 +166,8 @@ export default function DesignCard({ post, context }) {
         </div>
         <div className="mt-4 flex space-x-3 md:mt-6">
           <Link
-            as={`/posts/${post?.id}`}
-            href="/posts/[slug]"
+            as={`/editDesign/${post?.id}`}
+            href="/editDesign/[slug]"
             className="inline-flex items-center rounded-lg bg-dao-red px-4 py-2 text-center text-xs font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300"
           >
             Edit
