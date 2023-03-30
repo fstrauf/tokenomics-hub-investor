@@ -198,6 +198,7 @@ model DesignPhases {
 
 model CalculationTimeSeries {
   id                String    @id @default(cuid())
+  phase             Int?
   months            Int?
   tokens            Float?
   calculationRowsId String?

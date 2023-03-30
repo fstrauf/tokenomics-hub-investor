@@ -10,7 +10,6 @@ export const FormCardSupplyDemand = ({
   mechanismTemplates,
   setFieldValue,
 }) => {
-
   let [mechanismIndex, setMechanismIndex] = useState(0)
   const defaultMechanism = {
     id: '',
@@ -31,11 +30,7 @@ export const FormCardSupplyDemand = ({
     epochDurationInSeconds: 0,
     initialEmissionPerSecond: 0,
     emissionReductionPerEpoch: 0,
-    CalculationTimeSeries: [
-      { id: 1, months: 6, tokens: 5000000 },
-      { id: 2, months: 5, tokens: 6000000 },
-      { id: 3, months: 16, tokens: 50000000 },
-    ],
+    CalculationTimeSeries: [],
     isTemplate: false,
     PostUser: [],
   }
@@ -43,7 +38,7 @@ export const FormCardSupplyDemand = ({
   const mechTemplates = mechanismTemplates.map((obj) => ({ ...obj }))
   const [isOpen, setIsOpen] = useState(false)
   const [selectedTemplate, setSelectedTemplate] = useState(defaultMechanism)
-  
+
   function handleChange(e) {
     if (e.target.value === 'none') {
       setSelectedTemplate(defaultMechanism)
@@ -56,7 +51,10 @@ export const FormCardSupplyDemand = ({
 
   const handleNewMechanism = (arrayHelpers, isSink: boolean) => {
     const updateMechanism = selectedTemplate
-    console.log("🚀 ~ file: FormCardSupplyDemand.tsx:59 ~ handleNewMechanism ~ updateMechanism:", updateMechanism)
+    console.log(
+      '🚀 ~ file: FormCardSupplyDemand.tsx:59 ~ handleNewMechanism ~ updateMechanism:',
+      updateMechanism
+    )
 
     updateMechanism.isSink = isSink
     if (isSink) {
@@ -71,12 +69,12 @@ export const FormCardSupplyDemand = ({
     }
 
     arrayHelpers.push(updateMechanism)
-    
+
     setMechanismIndex(field.value?.length)
     setIsOpen(true)
     setSelectedTemplate(defaultMechanism)
   }
-    
+
   const handleEditMechanism = (index) => {
     setMechanismIndex(index)
     setIsOpen(true)

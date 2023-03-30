@@ -173,31 +173,28 @@ export const MechanismCard = ({
                             >
                               {' '}
                               <Field
-                                name={`${field.name}.${mechanismIndex}.CalculationTimeSeries.${factorIndex}.id`}
-                                //   placeholder="label"
+                                name={`${field.name}.${mechanismIndex}.CalculationTimeSeries.${factorIndex}.phase`}
                                 className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-gray-900 focus:border-blue-500 focus:ring-blue-500"
-                                //   rows={4}
                                 type="number"
+                                onWheel={(event) => event.currentTarget.blur()}
                               />
                             </th>
                             <td className="">
                               {' '}
                               <Field
                                 name={`${field.name}.${mechanismIndex}.CalculationTimeSeries.${factorIndex}.months`}
-                                //   placeholder="label"
                                 className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-gray-900 focus:border-blue-500 focus:ring-blue-500"
-                                //   rows={4}
                                 type="number"
+                                onWheel={(event) => event.currentTarget.blur()}
                               />
                             </td>
                             <td className="">
                               {' '}
                               <Field
                                 name={`${field.name}.${mechanismIndex}.CalculationTimeSeries.${factorIndex}.tokens`}
-                                //   placeholder="label"
                                 className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-gray-900 focus:border-blue-500 focus:ring-blue-500"
-                                //   rows={4}
                                 type="number"
+                                onWheel={(event) => event.currentTarget.blur()}
                               />
                             </td>
                             <td>
@@ -227,7 +224,7 @@ export const MechanismCard = ({
                 className="mt-3 mr-3 w-36 rounded-md bg-dao-red px-2 py-1 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
                 onClick={() =>
                   arrayHelpers.push({
-                    id:
+                    phase:
                       field.value[mechanismIndex]?.CalculationTimeSeries
                         ?.length + 1,
                     months: 6,

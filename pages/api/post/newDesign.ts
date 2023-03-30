@@ -22,6 +22,7 @@ export default async function handle(req, res) {
     //   })) || {}
     const calculationTimeSeries =
       m?.CalculationTimeSeries?.map((cts) => ({
+        phase: cts.phase,
         months: cts.months,
         tokens: cts.tokens,
       })) || {}
@@ -71,23 +72,9 @@ export default async function handle(req, res) {
         title: inputFields.title,
         slug: inputFields.slug,
         shortDescription: inputFields.shortDescription,
-        breakdown: inputFields.breakdown,
-        // published: false,
-        // PostUser: inputFields.PostUser,
         publishedAt: new Date(),
         Mechanism: {
           create: mechanisms,
-          
-          // [
-          //   { CalculationTimeSeries: {
-          //     create: {
-          //       tokens: 10,
-          //     }
-          //   }}
-          // ]
-          // createMany: {
-          //   data: inputFields.Mechanism,
-          // },
         },
         DesignElement: {
           createMany: {

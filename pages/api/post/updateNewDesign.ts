@@ -12,14 +12,15 @@ export default async function handle(req, res) {
   }
 
   const mechanisms = inputFields.Mechanism.map((m) => {
-    const postUsers =
-      m?.PostUser?.map((pu) => ({
-        name: pu.name,
-        role: pu.role,
-        postId: m.postId,
-      })) || {}
+    // const postUsers =
+    //   m?.PostUser?.map((pu) => ({
+    //     name: pu.name,
+    //     role: pu.role,
+    //     postId: m.postId,
+    //   })) || {}
     const calculationTimeSeries =
       m?.CalculationTimeSeries?.map((cts) => ({
+        phase: cts.phase,
         months: cts.months,
         tokens: cts.tokens,
       })) || {}
@@ -29,7 +30,7 @@ export default async function handle(req, res) {
       details: m.details,
       isSink: m.isSink,
       token: m.token,
-      postId: m.postId,
+      // postId: m.postId,
       isTemplate: m.isTemplate,
       category: m.category,
       lockupPeriod: m.lockupPeriod,
@@ -40,13 +41,13 @@ export default async function handle(req, res) {
       initialEmissionPerSecond: m.initialEmissionPerSecond,
       emissionReductionPerEpoch: m.emissionReductionPerEpoch,
       color: m.color,
-      calculationId: m.calculationId,
+      // calculationId: m.calculationId,
       // PostUser: {
       //   create: postUsers
       // },
-      // CalculationTimeSeries: {
-      //   create: calculationTimeSeries
-      // }
+      CalculationTimeSeries: {
+        create: calculationTimeSeries
+      }
     }
   })
 
@@ -145,14 +146,10 @@ export default async function handle(req, res) {
         slug: inputFields.slug,
         shortDescription: inputFields.shortDescription,
         breakdown: breakdown,
-        // ourTake: JSON.stringify(ourTake),
-        // published: false,
         publishedAt: new Date(),
-        // Mechanism: {
-        //   createMany: {
-        //     data: mechanisms,
-        //   },
-        // },
+        Mechanism: {
+          create: mechanisms,
+        },
         DesignElement: {
           createMany: {
             data: DesignElement,
@@ -238,11 +235,11 @@ export default async function handle(req, res) {
     })
   )
 
-  txCalls.push(
-    prisma.mechanism.createMany({
-      data: mechanisms,
-    })
-  )
+  // txCalls.push(
+  //   prisma.mechanism.createMany({
+  //     data: mechanisms,
+  //   })
+  // )
 
   try {
     response = await prisma.$transaction(txCalls)
