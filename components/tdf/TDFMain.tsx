@@ -242,10 +242,11 @@ Revenue goes to:
         return <TDFGenericOneField props={props} activePhase={activePhase} />
     }
   }
-
   const formRef = useRef<FormikProps<any>>(null)
   console.log('🚀 ~ file: TDFMain.tsx:248 ~ TDFMain ~ formRef:', formRef)
+
   const handleSubmit = () => {
+    console.log('isSubmitting:', formRef.current.isSubmitting)
     if (formRef.current) {
       formRef.current.handleSubmit()
     }
@@ -258,7 +259,7 @@ Revenue goes to:
         <div className="flex justify-end gap-1">
           <button
             type="submit"
-            // disabled={isSubmitting}
+            // disabled={isSubmittings}
             onClick={handleSubmit}
             className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
           >
