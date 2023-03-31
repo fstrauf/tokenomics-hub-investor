@@ -7,7 +7,7 @@ import { getMergedInitialCalcValues, postStatus } from '../lib/helper'
 import TDFMain from '../components/tdf/TDFMain'
 import { getAuth } from '@clerk/nextjs/server'
 import { AuthData } from '@clerk/nextjs/dist/server/types'
-import { initialCalculatorValues } from '../lib/helper'
+// import { initialCalculatorValues } from '../lib/helper'
 
 export default function NewDesign(props) {
   // console.log("🚀 ~ file: newDesign.tsx:13 ~ NewDesign ~ props:", props)

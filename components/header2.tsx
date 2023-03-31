@@ -228,7 +228,9 @@ export default function Header2({ mode }) {
                 <UserButton />
               </SignedIn>
               <SignedOut>
-                <SignInButton />
+                <div className="text-white">
+                  <SignInButton />
+                </div>
               </SignedOut>
             </div>
           </div>

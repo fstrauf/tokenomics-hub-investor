@@ -4,11 +4,13 @@ import dynamic from 'next/dynamic'
 import { FieldArray, Form, Formik, FormikProps } from 'formik'
 import toast, { Toaster } from 'react-hot-toast'
 import FormAutoSave from '../form/FormAutoSave'
+import FormId from '../form/FormId'
 // import TDFHeaders from './TDFHeaders'
 
 export default function TDFMain({ props }) {
   // console.log('🚀 ~ file: tdfMain.tsx:9 ~ TDFMainx ~ props', props)
   const [activePhase, setActivePhase] = useState(11) //props.design.activePhase
+  const [postId, setPostId] = useState(props.post.id || '')
 
   const initialValues = props.post
   function handlePhaseChange(phase) {
@@ -66,6 +68,7 @@ export default function TDFMain({ props }) {
 
   const submitData = async (values, { setSubmitting }) => {
     const body = { values }
+    console.log('🚀 ~ file: TDFMain.tsx:70 ~ submitData ~ body:', body)
     // console.log('val TDF mail', body)
     if (values?.id === '') {
       try {
@@ -86,6 +89,7 @@ export default function TDFMain({ props }) {
           toast.success('Changes auto-saved ', {
             position: 'bottom-right',
           })
+          setPostId(JSON.parse(id).id)
         }
 
         setSubmitting(false)
@@ -296,6 +300,12 @@ Revenue goes to:
                       <div>{renderSwitch(values, setFieldValue)}</div>
                     )}
                   />
+                   <FormId
+                  postId={postId}
+                  type="text"
+                  name="id"
+                  className="hidden w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
+                />
                 </Form>
               )}
             </Formik>
