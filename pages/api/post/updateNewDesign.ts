@@ -56,10 +56,18 @@ export default async function handle(req, res) {
   // });
 
   var DesignElement = inputFields.DesignElement.map((de) => {
-    return {
-      content: JSON.stringify(de.content),
-      designPhasesId: de.designPhasesId,
+    if (typeof de.content === 'object') {
+      return {
+        content: JSON.stringify(de.content),
+        designPhasesId: de.designPhasesId,
+      }
+    } else {
+      return {
+        content: de.content,
+        designPhasesId: de.designPhasesId,
+      }
     }
+
   })
 
   const timeLine = inputFields?.protocolTimeLine?.map((tl) => {
@@ -243,10 +251,6 @@ export default async function handle(req, res) {
 
   try {
     response = await prisma.$transaction(txCalls)
-    console.log(
-      '🚀 ~ file: updateNewDesign.ts:242 ~ handle ~ response:',
-      response
-    )
   } catch (e) {
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
       // The .code property can be accessed in a type-safe manner

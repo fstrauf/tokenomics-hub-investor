@@ -1,7 +1,7 @@
 import { Field } from 'formik'
 import { getActiveDesignPhase } from '../../lib/helper'
 import FormCardSupplyDemand from '../form/FormCardSupplyDemand'
-import BreakdownBox from '../slugView/breakdown-box'
+// import BreakdownBox from '../slugView/breakdown-box'
 import ResourceSection from './ResourceSection'
 import TDFCalculator from './TDFCalculator'
 import Tiptap from '../TipTap'
@@ -47,7 +47,7 @@ export default function TDF502({ props, values, activePhase, setFieldValue }) {
         </div>
         <div className="col-span-2">
           <TDFCalculator
-            preloadInitialValues={props.preloadInitialCalcValues}
+            // preloadInitialValues={props.preloadInitialCalcValues}
             values={values}
           />
         </div>

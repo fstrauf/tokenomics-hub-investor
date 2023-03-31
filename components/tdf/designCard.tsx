@@ -14,6 +14,7 @@ import { confirmAlert } from 'react-confirm-alert'
 import 'react-confirm-alert/src/react-confirm-alert.css'
 
 export default function DesignCard({ post, context }) {
+  console.log('🚀 ~ file: designCard.tsx:17 ~ DesignCard ~ post:', post)
   const { user } = useUser()
   const [isSubmitting, setSubmitting] = useState(false)
   let [isOpen, setIsOpen] = useState(false)
@@ -42,7 +43,7 @@ export default function DesignCard({ post, context }) {
   }
 
   const deleteDraft = async (id: String) => {
-    console.log("🚀 ~ file: designCard.tsx:44 ~ deleteDraft ~ id:", id)
+    console.log('🚀 ~ file: designCard.tsx:44 ~ deleteDraft ~ id:', id)
     setSubmitting(true)
     await fetch(`/api/post/delete/${id}`, {
       method: 'PUT',
@@ -139,47 +140,44 @@ export default function DesignCard({ post, context }) {
     }
   }
   return (
-    <div className="m-5 h-64 w-80 max-w-sm rounded-lg border border-gray-200 bg-white shadow-md grid content-between">
-      <span className="px-2 text-center">
-            <span className="font-bold text-gray-700">Title: </span>
-            <span className="text-gray-600">{post.title}</span>
-          </span>
-        <div className="flex w-full items-center justify-center divide-x divide-solid divide-gray-400 py-4">
-          <span className="px-2 text-center">
-            <span className="font-bold text-gray-700">Author: </span>
-            <span className="text-gray-600">{post.author}</span>
-          </span>
-          <span className="px-2 text-center">
-          </span>
-        </div>
-        <div className="flex flex-wrap justify-center">
-          {post?.cat?.map((c) => {
-            return (
-              <span
-                key={c.cat}
-                className="mr-2 mb-2 rounded-full bg-gray-200 px-3 py-1 text-sm font-bold text-gray-700 shadow-sm"
-              >
-                {c.cat} ({Number(c.count)})
-              </span>
-            )
-          })}
-        </div>
-        <div className="mt-4 flex space-x-3 md:mt-6">
-          <Link
-            as={`/editDesign/${post?.id}`}
-            href="/editDesign/[slug]"
-            className="inline-flex items-center rounded-lg bg-dao-red px-4 py-2 text-center text-xs font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300"
-          >
-            Edit
-          </Link>
-          <Link
-            as={`/posts/${post?.id}`}
-            href="/posts/[slug]"
-            className="inline-flex items-center rounded-lg bg-dao-red px-4 py-2 text-center text-xs font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300"
-          >
-            View
-          </Link>
-          <Menu as="div" className="z-60 static inline-block w-28 text-left ">
+    <div className="m-5 grid h-64 w-80 max-w-sm content-between rounded-lg border border-gray-200 bg-white p-2 shadow-md">
+      <div className="">
+        <span className="font-bold text-gray-700">Title: </span>
+        <span className="text-gray-600">{post.title}</span>
+      </div>
+      <div className="">
+        <span className="font-bold text-gray-700">Author: </span>
+        <span className="text-gray-600">{post.author}</span>
+      </div>
+      <div className="flex flex-auto gap-4">
+        <h1 className="font-bold text-gray-700">Categories:</h1>
+        {post?.categories &&
+          post?.categories.map((cat) => (
+            <p
+              key={cat.value}
+              className="rounded-full bg-gray-100 px-3 py-1 text-sm font-bold text-gray-700 shadow-sm"
+            >
+              {cat?.label}
+            </p>
+          ))}
+      </div>
+      <div className="m-auto mt-4 flex justify-center space-x-3 p-2 md:mt-6">
+        <Link
+          as={`/editDesign/${post?.id}`}
+          href="/editDesign/[slug]"
+          className=" rounded-lg bg-dao-red px-4 py-2 text-center text-xs font-medium text-white"
+        >
+          Edit
+        </Link>
+        <Link
+          as={`/posts/${post?.id}`}
+          href="/posts/[slug]"
+          className=" rounded-lg bg-dao-red px-4 py-2 text-center text-xs font-medium text-white"
+        >
+          View
+        </Link>
+        <div className=''>
+          <Menu as="div" className="z-60 static inline-block text-left">
             {({ close }) => (
               <>
                 <div>
@@ -374,5 +372,6 @@ export default function DesignCard({ post, context }) {
           </Menu>
         </div>
       </div>
+    </div>
   )
 }

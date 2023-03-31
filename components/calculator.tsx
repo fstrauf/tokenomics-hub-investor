@@ -9,6 +9,7 @@ import { useAuth } from '@clerk/clerk-react/dist/hooks/useAuth'
 import { useRouter } from 'next/router'
 
 export default function Calculator(props) {
+  console.log("🚀 ~ file: calculator.tsx:12 ~ Calculator ~ props:", props)
   const { preloadInitialValues } = props
   const { isSignedIn } = useAuth()
 

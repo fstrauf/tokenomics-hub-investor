@@ -230,17 +230,13 @@ export function getMonthEpochAreaData(
     categoryLine['emissionsPerSecond'] = emissionsPerSecond
     categoryLine['monthlyEmissions'] = secondsPerMonth * emissionsPerSecond
     Object.assign(chartData[i], categoryLine)
-    console.log('🚀 ~ file: helper.ts:226 ~ categoryLine:', categoryLine)
+  
 
     if (supplyDemandTotals[i] === undefined) {
       supplyDemandTotals[i] = {
         date: new Date(startDate).setMonth(new Date(startDate).getMonth() + i),
         supply: Number(categoryLine[calculationRow.category]),
       }
-      console.log(
-        '🚀 ~ file: helper.ts:233 ~ Number(categoryLine[calculationRow.category]):',
-        Number(categoryLine[calculationRow.category])
-      )
     } else {
       if (supplyDemandTotals[i].supply === undefined) {
         supplyDemandTotals[i].supply = 0
@@ -254,11 +250,6 @@ export function getMonthEpochAreaData(
 
 export function getAreaData(months, calculationRows, totalSupply, startDate) {
   var props = { chartData: [], supplyDemandTotals: [] }
-
-  console.log(
-    '🚀 ~ file: helper.ts:288 ~ getAreaData ~ calculationRows:',
-    calculationRows
-  )
 
   calculationRows?.forEach((cr) => {
     const rowAllocation = (totalSupply * cr.percentageAllocation) / 100
@@ -289,12 +280,6 @@ export function getAreaData(months, calculationRows, totalSupply, startDate) {
     }
   })
 
-  console.log(
-    '🚀 ~ file: helper.ts:269 ~ calculationRows?.forEach ~ supplyDemandTotals:',
-    props
-  )
-
-  // console.log('🚀 ~ file: helper.ts:155 ~ getAreaData ~ chartData', chartData)
   return props
 }
 
@@ -304,10 +289,6 @@ export function getDemandAreaData(
   supplyDemandTotals,
   startDate
 ) {
-  console.log(
-    '🚀 ~ file: helper.ts:297 ~ calculationRow:',
-    calculationRow.CalculationTimeSeries
-  )
   if (calculationRow.CalculationTimeSeries !== undefined) {
     const inputData = calculationRow.CalculationTimeSeries || []
 

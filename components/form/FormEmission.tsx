@@ -5,7 +5,6 @@ import * as dayjs from 'dayjs'
 import { shortBigNumber } from '../../lib/helper'
 
 export const FormEmission = ({ values, navPreFix = '' }) => {
-  console.log("🚀 ~ file: FormEmission.tsx:8 ~ FormEmission ~ values:", values)
   dayjs.extend(duration)
   const secondsPerMonth = 2628000
 

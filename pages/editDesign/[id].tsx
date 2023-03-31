@@ -1,98 +1,17 @@
 import { GetServerSideProps } from 'next'
 import Layout from '../../components/layout'
-// import prisma from '../../lib/prisma'
 import React from 'react'
 import TDFMain from '../../components/tdf/TDFMain'
 import {
   clerkConvertJSON,
-  // getMergedInitialCalcValues,
+  getMergedInitialCalcValues,
   headerStatus,
-  // initialCalculatorValues,
-  // postStatus,
 } from '../../lib/helper'
-import { clerkClient, getAuth } from '@clerk/nextjs/server'
+import { clerkClient } from '@clerk/nextjs/server'
 import prisma from '../../lib/prisma'
-// import { AuthData } from '@clerk/nextjs/dist/server/types'
-// import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
 
 const EditDesign: React.FC<UpdateNewDesignProps> = (props) => {
-  console.log("🚀 ~ file: [id].tsx:19 ~ props:", props)
-  // const today = new Date().toLocaleDateString('en-CA')
-  // const { user } = useUser()
-
-  // const editContent = {
-  //   id: props.post.id,
-  //   title: props.post.title,
-  //   authorClerkId: props.post.authorClerkId,
-  //   status: props.post.status,
-  //   DesignElement: props.post.DesignElement.filter(
-  //     (dp) => dp.designPhasesId
-  //   ).map((dp) => {
-  //     return {
-  //       id: dp.id,
-  //       content: JSON.parse(dp.content),
-  //       designPhasesId: dp.designPhasesId,
-  //     }
-  //   }),
-  //   calculation: initialCalculatorValues,
-  //   Mechanism: props.post.Mechanism.map((mt) => {
-  //     return {
-  //       name: mt.name,
-  //       summary: mt.summary,
-  //       details: mt.details,
-  //       isSink: mt.isSink,
-  //       isTemplate: mt.isTemplate,
-  //     }
-  //   }),
-  //   PostUser: props.post.PostUser.map((pu) => {
-  //     return { name: pu.name, role: pu.role }
-  //   }),
-  //   // PostUser: [{ name: '', role: '' }],
-  //   slug: props.post.slug,
-  //   shortDescription: props.post.shortDescription,
-  //   categories: props.post.categories.map((cd) => {
-  //     return {
-  //       value: cd.value,
-  //       label: cd.label,
-  //     }
-  //   }),
-  //   // tags: [],
-  //   tags: props.post.tags.map((td) => {
-  //     return {
-  //       value: td.value,
-  //       label: td.label,
-  //     }
-  //   }),
-  //   protocolTimeLine: [],
-  //   publishedAt: today,
-  //   breakdown: props.post.breakdown,
-  //   mainImageUrl: props.post.mainImageUrl,
-  //   tokenUtility: props.post.tokenUtility,
-  //   tokenUtilityStrength: props.post.tokenUtilityStrength,
-  //   businessModel: props.post.businessModel,
-  //   businessModelStrength: props.post.businessModelStrength,
-  //   valueCreation: props.post.valueCreation,
-  //   valueCreationStrength: props.post.valueCreationStrength,
-  //   valueCapture: props.post.valueCapture,
-  //   valueCaptureStrength: props.post.valueCaptureStrength,
-  //   demandDrivers: props.post.demandDrivers,
-  //   demandDriversStrength: props.post.demandDriversStrength,
-  //   totalTokenStrength: props.post.totalTokenStrength,
-  //   threeMonthHorizon: props.post.threeMonthHorizon,
-  //   oneYearHorizon: props.post.oneYearHorizon,
-  //   upside: props.post.upside,
-  //   downside: props.post.downside,
-  //   horizon: props.post.horizon,
-  //   metrics: props.post.metrics,
-  //   diagramUrl: props.post.diagramUrl,
-  //   ProtocolResources: [],
-  //   // Author: { email: user?.email },
-  //   strongPoints: props.post.strongPoints,
-  //   weakPoints: props.post.weakPoints,
-  //   problemSolution: props.post.problemSolution,
-  //   parent: props.post.parent,
-  //   ticker: props.post.ticker,
-  // }
+  // console.log("🚀 ~ file: [id].tsx:19 ~ props:", props)
 
   return (
     <Layout mode={headerStatus.design}>
@@ -124,9 +43,9 @@ export const getServerSideProps: GetServerSideProps = async ({
           select: { value: true, label: true },
         },
         Mechanism: {
-          include:{
-            CalculationTimeSeries:{},
-          }
+          include: {
+            CalculationTimeSeries: {},
+          },
         },
         DesignElement: {},
         protocolTimeLine: {},
@@ -203,15 +122,18 @@ export const getServerSideProps: GetServerSideProps = async ({
       ...ptl,
       date: new Date(ptl.date).toLocaleDateString('en-CA'),
     }))
+  postWithUpdatedComments.Calculation.startDate = new Date(
+    postWithUpdatedComments.Calculation.startDate
+  ).toLocaleDateString('en-CA')
 
   return {
     props: {
       // categories: categories || null,
       // tags: tags || null,
-      post: post || null,
+      post: postWithUpdatedComments || null,
       designPhases: designPhases || null,
       // preloadInitialCalcValues:
-      //   getMergedInitialCalcValues(userCalcs, userId, null) || null,
+      //   getMergedInitialCalcValues(calculation, userId, null) || null,
       mechanismTemplates: mechanismTemplates || null,
       // PostUser: PostUser || null,
       Category: Category || null,

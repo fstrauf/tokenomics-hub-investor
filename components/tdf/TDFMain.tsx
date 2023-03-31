@@ -8,6 +8,7 @@ import FormId from '../form/FormId'
 // import TDFHeaders from './TDFHeaders'
 
 export default function TDFMain({ props }) {
+  console.log("🚀 ~ file: TDFMain.tsx:11 ~ TDFMain ~ props:", props)
   const [activePhase, setActivePhase] = useState(11) //props.design.activePhase
   const [postId, setPostId] = useState(props.post.id || '')
 
