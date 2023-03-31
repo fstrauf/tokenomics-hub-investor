@@ -16,7 +16,7 @@ export default function ResourceSection({ content }) {
                 Resources
               </h5> */}
             </Disclosure.Button>
-            <Disclosure.Panel className="px-2 text-sm text-gray-500">
+            <Disclosure.Panel className="my-2 px-2 text-sm text-gray-500">
               <div>
                 <div>
                   <Tiptap content={content} editMode={false} />
