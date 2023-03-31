@@ -50,6 +50,7 @@ export default function TDF407({ props, values, activePhase }) {
         <Field
           name="valueCapture"
           as={FormText}
+          rows={6}
           placeholder={`Value accrual to token (if any)
 [briefly explain any mechanism that allow token to map the value created]
 
@@ -71,6 +72,7 @@ Value accrual to protocol (if any)
         <Field
           name="tokenUtility"
           as={FormText}
+          rows={6}
           placeholder={`$Token 1
 - Utility Name
 [brief explanation of the utility] 
@@ -93,6 +95,7 @@ $Token 2
         <Field
           name="demandDrivers"
           as={FormText}
+          rows={6}
           placeholder={`Demand Name 1
 [explain who is buying/holding this token and why]
 

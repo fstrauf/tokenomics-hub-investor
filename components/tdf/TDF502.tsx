@@ -28,37 +28,31 @@ export default function TDF502({ props, values, activePhase, setFieldValue }) {
   }
 
   return (
-    <div>
+    <div className="flex flex-col">
       <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 ">
         {designPhase.name}
       </h5>
-      <div className="grid w-full grid-cols-2 gap-2 rounded-lg border-2 p-2">
-        <div className="col-span-2">
-          <div>
-            <Field
-              name="Mechanism"
-              component={FormCardSupplyDemand}
-              phaseId={designPhase.phaseId}
-              setFieldValue={setFieldValue}
-              values={values}
-              mechanismTemplates={props.mechanismTemplates}
-            />
-          </div>
-        </div>
-        <div className="col-span-2">
-          <TDFCalculator
-            // preloadInitialValues={props.preloadInitialCalcValues}
-            values={values}
-          />
-        </div>
 
-        <ResourceSection content={designPhase.Resources} />
-        <ExampleSection
-          content={props.posts}
-          exampleField={designPhase.postDataElement}
-          exampleDetail={ExampleDetail}
-        />
-      </div>
+      <Field
+        name="Mechanism"
+        component={FormCardSupplyDemand}
+        phaseId={designPhase.phaseId}
+        setFieldValue={setFieldValue}
+        values={values}
+        mechanismTemplates={props.mechanismTemplates}
+      />
+
+      <TDFCalculator
+        // preloadInitialValues={props.preloadInitialCalcValues}
+        values={values}
+      />
+
+      <ResourceSection content={designPhase.Resources} />
+      <ExampleSection
+        content={props.posts}
+        exampleField={designPhase.postDataElement}
+        exampleDetail={ExampleDetail}
+      />
     </div>
   )
 }

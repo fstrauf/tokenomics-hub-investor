@@ -155,7 +155,15 @@ Solution:
         - State the solution that the protocol provides`}
           />
         )
-      case 102:
+        case 102:
+        return (
+          <TDFGenericOneField
+            props={props}
+            activePhase={activePhase}
+            placeholder={`Similar projects include...`}
+          />
+        )
+      case 103:
         return (
           <TDFGenericOneField
             props={props}
@@ -163,7 +171,7 @@ Solution:
             placeholder={`The value created by [protocol] is...`}
           />
         )
-      case 103:
+      case 104:
         return (
           <TDFGenericOneField
             props={props}
@@ -179,8 +187,8 @@ Revenue goes to:
 [Explanation, include any percentages if there is a revenue split between different users/parties]`}
           />
         )
-      case 202:
-        return <TDFGenericOneField props={props} activePhase={activePhase} />
+      // case 202:
+      //   return <TDFGenericOneField props={props} activePhase={activePhase} />
 
       case 201:
         return (

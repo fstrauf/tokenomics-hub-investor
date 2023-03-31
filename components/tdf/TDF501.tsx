@@ -9,7 +9,6 @@ import Tiptap from '../TipTap'
 
 //taking stock
 export default function TDF501({ props, values, activePhase, setFieldValue }) {
-  console.log("🚀 ~ file: TDF501.tsx:12 ~ TDF501 ~ values:", values)
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
 
   let ExampleDetail = ({ onGoBack, example, exampleField }) => {
@@ -30,43 +29,34 @@ export default function TDF501({ props, values, activePhase, setFieldValue }) {
   }
 
   return (
-    <div>
+    <div className="flex flex-col">
       <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 ">
         {designPhase.name}
       </h5>
-      <div className="grid w-full grid-cols-2 gap-2 rounded-lg border-2 p-2">
-        <div className="col-span-2">
-          <Field
-            name="Mechanism"
-            component={FormCardSupplyDemand}
-            phaseId={designPhase.phaseId}
-            setFieldValue={setFieldValue}
-            values={values}
-            mechanismTemplates={props.mechanismTemplates}
-          />
-        </div>
-        <div className="col-span-2">
-          {/* <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 ">
-            Incentive Summary
-          </h5> */}
-          <Field
-            name={`DesignElement.${values?.DesignElement?.findIndex(
-              (de) => de.designPhasesId.toString() === '302'
-            )}.content`}
-            component={FormTable}
-            users={values?.PostUser || []}
-            placeholder="Select categories"
-            phaseId={designPhase.phaseId}
-          />
-        </div>
+      <Field
+        name="Mechanism"
+        component={FormCardSupplyDemand}
+        phaseId={designPhase.phaseId}
+        setFieldValue={setFieldValue}
+        values={values}
+        mechanismTemplates={props.mechanismTemplates}
+      />
+      <Field
+        name={`DesignElement.${values?.DesignElement?.findIndex(
+          (de) => de.designPhasesId.toString() === '302'
+        )}.content`}
+        component={FormTable}
+        users={values?.PostUser || []}
+        placeholder="Select categories"
+        phaseId={designPhase.phaseId}
+      />
 
-        <ResourceSection content={designPhase.Resources} />
-        <ExampleSection
-          content={props.posts}
-          exampleField={designPhase.postDataElement}
-          exampleDetail={ExampleDetail}
-        />
-      </div>
+      <ResourceSection content={designPhase.Resources} />
+      <ExampleSection
+        content={props.posts}
+        exampleField={designPhase.postDataElement}
+        exampleDetail={ExampleDetail}
+      />
     </div>
   )
 }

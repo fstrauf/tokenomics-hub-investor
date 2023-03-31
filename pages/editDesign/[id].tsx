@@ -94,6 +94,8 @@ export const getServerSideProps: GetServerSideProps = async ({
     // calculation
   ] = await prisma.$transaction(txCalls)
 
+  console.log("🚀 ~ file: [id].tsx:144 ~ post:", post)
+
   let clerkUser = post?.authorClerkId
     ? await clerkClient.users.getUser(post?.authorClerkId)
     : {}
@@ -123,7 +125,7 @@ export const getServerSideProps: GetServerSideProps = async ({
       date: new Date(ptl.date).toLocaleDateString('en-CA'),
     }))
   postWithUpdatedComments.Calculation.startDate = new Date(
-    postWithUpdatedComments.Calculation.startDate
+    postWithUpdatedComments?.Calculation?.startDate || ''
   ).toLocaleDateString('en-CA')
 
   return {
@@ -141,3 +143,4 @@ export const getServerSideProps: GetServerSideProps = async ({
     },
   }
 }
+    
