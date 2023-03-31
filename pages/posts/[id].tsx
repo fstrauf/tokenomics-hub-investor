@@ -289,7 +289,12 @@ export async function getStaticProps({ params }) {
           date: 'asc',
         },
       },
-      Mechanism: {},
+      Mechanism: { 
+        include: {
+          CalculationTimeSeries: {},
+          PostUser: {},
+        }
+      },
       PostUser: {},
       author: {},
       Calculation: {

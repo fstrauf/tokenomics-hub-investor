@@ -1,5 +1,5 @@
 import { Field, FieldArray } from 'formik'
-import { GetServerSideProps } from 'next'
+// import { GetServerSideProps } from 'next'
 import React from 'react'
 import FormNormalSelect from './FormNormalSelect'
 
@@ -31,6 +31,7 @@ const defaultUsers = [
 ]
 
 export const FormTable = ({ field, form, phaseId, users }) => {
+  console.log("🚀 ~ file: FormTable.tsx:34 ~ FormTable ~ field:", field)
   if (field.value === '') {
     form.setFieldValue(field.name, defaultUsers)
   }

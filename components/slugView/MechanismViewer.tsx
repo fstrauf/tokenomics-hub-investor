@@ -1,6 +1,7 @@
 import { useState } from "react"
-import MechanismCard from "../tdf/MechanismCard"
+// import MechanismCardViewer from "../slugView/MechanismCardViewer"
 import Drawer from "./Drawer"
+import { MechanismCardViewer } from "./MechanismCardViewer"
 
 export default function MechanismViewer({ mechanisms }) {
   console.log(
@@ -10,6 +11,7 @@ export default function MechanismViewer({ mechanisms }) {
   let [mechanismIndex, setMechanismIndex] = useState(0)
   const [isOpen, setIsOpen] = useState(false)
   const handleViewMechanism = (index) => {
+    console.log("🚀 ~ file: MechanismViewer.tsx:14 ~ handleViewMechanism ~ index:", index)
     setMechanismIndex(index)
     setIsOpen(true)
   }
@@ -38,7 +40,7 @@ export default function MechanismViewer({ mechanisms }) {
         <div className="flex h-7 border-t-2">
           {' '}
           <button className="w-full" onClick={() => handleViewMechanism(index)}>
-            View
+            Details
           </button>
         </div>
       </div>
@@ -52,8 +54,8 @@ export default function MechanismViewer({ mechanisms }) {
       </h1>
       <Drawer isOpen={isOpen} setIsOpen={setIsOpen}>
         {isOpen && (
-          <MechanismCard
-            field={field}
+          <MechanismCardViewer
+            mechanism={mechanisms[mechanismIndex]}
             // mechanismIndex={mechanismIndex}
             // setFieldValue={setFieldValue}
             // users={values.PostUser} // mechanismImpactFactors={mechanismImpactFactors}
