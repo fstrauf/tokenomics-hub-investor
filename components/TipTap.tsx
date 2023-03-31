@@ -35,7 +35,7 @@ import {
 } from 'react-icons/fa'
 import { MdFormatClear, MdHorizontalRule } from 'react-icons/md'
 import { VscClearAll } from 'react-icons/vsc'
-import  { FiCode } from 'react-icons/fi'
+import { FiCode } from 'react-icons/fi'
 import { BsFileBreak } from 'react-icons/bs'
 type Props = {
   content?: any
@@ -122,7 +122,7 @@ const Tiptap: React.FC<Props> = (props) => {
             onChange={addImage}
             type="file"
             accept="image/png, image/jpeg"
-            className="ml-1 rounded-lg border-2 text-sm p-[2px]"
+            className="ml-1 rounded-lg border-2 p-[2px] text-sm"
           />
         </>
       )}
@@ -222,31 +222,27 @@ const MenuBar = ({ editor }) => {
       >
         <FaParagraph />
       </button>
-     
-     
-    
-     
-      
+
       <button
         type="button"
         onClick={() => editor.chain().focus().toggleHeading({ level: 6 }).run()}
-          className={editor.isActive('heading', { level: 6 }) ? 'is-active' : ''}
+        className={editor.isActive('heading', { level: 6 }) ? 'is-active' : ''}
         // className="ml-1 rounded-lg border-2 text-sm"
       >
-         <FaHeading size={9}  />
+        <FaHeading size={9} />
       </button>
       <button
         type="button"
         onClick={() => editor.chain().focus().toggleHeading({ level: 5 }).run()}
-          className={editor.isActive('heading', { level: 5 }) ? 'is-active' : ''}
+        className={editor.isActive('heading', { level: 5 }) ? 'is-active' : ''}
         // className="ml-1 rounded-lg border-2 text-sm"
       >
-         <FaHeading size={11}/>
+        <FaHeading size={11} />
       </button>
       <button
         type="button"
         onClick={() => editor.chain().focus().toggleHeading({ level: 4 }).run()}
-          className={editor.isActive('heading', { level: 4 }) ? 'is-active' : ''}
+        className={editor.isActive('heading', { level: 4 }) ? 'is-active' : ''}
         // className="ml-1 rounded-lg border-2 text-sm"
       >
         <FaHeading size={12.8} />
@@ -254,7 +250,7 @@ const MenuBar = ({ editor }) => {
       <button
         type="button"
         onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
-          className={editor.isActive('heading', { level: 3 }) ? 'is-active' : ''}
+        className={editor.isActive('heading', { level: 3 }) ? 'is-active' : ''}
         // className="ml-1 rounded-lg border-2 text-sm"
       >
         <FaHeading size={15} />
@@ -262,17 +258,17 @@ const MenuBar = ({ editor }) => {
       <button
         type="button"
         onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
-          className={editor.isActive('heading', { level: 2 }) ? 'is-active' : ''}
+        className={editor.isActive('heading', { level: 2 }) ? 'is-active' : ''}
         // className="ml-1 rounded-lg border-2 text-sm"
       >
-        <FaHeading size={16}/>
+        <FaHeading size={16} />
       </button>
       <button
         type="button"
         onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
         className={
           editor.isActive('heading', { level: 1 })
-            ? 'is-active text-[10px] flex'
+            ? 'is-active flex text-[10px]'
             : ''
         }
         // className="ml-1 rounded-lg border-2 text-sm"
@@ -282,7 +278,7 @@ const MenuBar = ({ editor }) => {
       <button
         type="button"
         onClick={() => editor.chain().focus().toggleBulletList().run()}
-          className={editor.isActive('bulletList') ? 'is-active' : ''}
+        className={editor.isActive('bulletList') ? 'is-active' : ''}
         // className="ml-1 rounded-lg border-2 text-sm"
       >
         <FaListUl />
@@ -290,33 +286,33 @@ const MenuBar = ({ editor }) => {
       <button
         type="button"
         onClick={() => editor.chain().focus().toggleOrderedList().run()}
-          className={editor.isActive('orderedList') ? 'is-active' : ''}
+        className={editor.isActive('orderedList') ? 'is-active' : ''}
         // className="ml-1 rounded-lg border-2 text-sm"
       >
-       <FaListOl/>
+        <FaListOl />
       </button>
       <button
         type="button"
         onClick={() => editor.chain().focus().toggleCodeBlock().run()}
-          className={editor.isActive('codeBlock') ? 'is-active' : ''}
+        className={editor.isActive('codeBlock') ? 'is-active' : ''}
         // className="ml-1 rounded-lg border-2 text-sm"
       >
-        <FaCode/>
+        <FaCode />
       </button>
       <button
         type="button"
         onClick={() => editor.chain().focus().toggleBlockquote().run()}
-          className={editor.isActive('blockquote') ? 'is-active' : ''}
+        className={editor.isActive('blockquote') ? 'is-active' : ''}
         // className="ml-1 rounded-lg border-2 text-sm"
       >
-        <FaQuoteLeft/>
+        <FaQuoteLeft />
       </button>
       <button
         type="button"
         onClick={() => editor.chain().focus().setHorizontalRule().run()}
         className="ml-1 rounded-lg border-2 text-sm"
       >
-       <MdHorizontalRule />
+        <MdHorizontalRule />
       </button>
       <button
         type="button"
@@ -331,7 +327,7 @@ const MenuBar = ({ editor }) => {
         className={editor.isActive('link') ? 'is-active' : ''}
         // className="ml-1 rounded-lg border-2 text-sm"
       >
-        <FaLink/>
+        <FaLink />
       </button>
       {/* <button
                 type='button'

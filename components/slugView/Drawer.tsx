@@ -19,6 +19,7 @@ export default function Drawer({ children, isOpen, setIsOpen }) {
       >
         <div className="flex flex-col">
           <button
+            type="button"
             className="mt-4 mr-4 self-end"
             onClick={() => {
               setIsOpen(false)

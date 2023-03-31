@@ -243,7 +243,7 @@ Revenue goes to:
           <TDF701 props={props} values={values} activePhase={activePhase} />
         )
       default:
-        return <TDFGenericOneField props={props} activePhase={activePhase} />
+        return <TDFGenericOneField  props={props} activePhase={activePhase} />
     }
   }
   const formRef = useRef<FormikProps<any>>(null)
