@@ -58,9 +58,16 @@ export default async function handle(req, res) {
   }
 
   var DesignElement = inputFields.DesignElement.map((de) => {
-    return {
-      content: JSON.stringify(de.content),
-      designPhasesId: de.designPhasesId,
+    if (typeof de.content === 'object') {
+      return {
+        content: JSON.stringify(de.content),
+        designPhasesId: de.designPhasesId,
+      }
+    } else {
+      return {
+        content: de.content,
+        designPhasesId: de.designPhasesId,
+      }
     }
   })
 
@@ -108,11 +115,11 @@ export default async function handle(req, res) {
         ticker: inputFields.ticker,
         Calculation: {
           create: {
-            authorClerkId: inputFields.calculation.authorClerkId,
-            months: inputFields.calculation.months,
-            startDate: new Date(inputFields.calculation.startDate),
-            title: inputFields.calculation.title,
-            totalSupply: inputFields.calculation.totalSupply,
+            authorClerkId: inputFields.Calculation.authorClerkId,
+            months: inputFields.Calculation.months,
+            startDate: new Date(inputFields.Calculation.startDate),
+            title: inputFields.Calculation.title,
+            totalSupply: inputFields.Calculation.totalSupply,
           }
         },
         categories: {

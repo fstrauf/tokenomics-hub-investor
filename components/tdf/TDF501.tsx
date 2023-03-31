@@ -9,6 +9,7 @@ import Tiptap from '../TipTap'
 
 //taking stock
 export default function TDF501({ props, values, activePhase, setFieldValue }) {
+  console.log("🚀 ~ file: TDF501.tsx:12 ~ TDF501 ~ values:", values)
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
 
   let ExampleDetail = ({ onGoBack, example, exampleField }) => {

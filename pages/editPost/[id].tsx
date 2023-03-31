@@ -1,4 +1,4 @@
-import { GetServerSideProps } from 'next'
+ import { GetServerSideProps } from 'next'
 import Layout from '../../components/layout'
 import prisma from '../../lib/prisma'
 import React from 'react'

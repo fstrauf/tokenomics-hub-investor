@@ -9,7 +9,7 @@ import FormAreaDataMechanism from '../form/FormAreaDataMechanism'
 
 export default function TDFCalculator(props) {
   console.log("🚀 ~ file: TDFCalculator.tsx:11 ~ props:", props)
-  const { preloadInitialValues, values } = props
+  const { values } = props
 
   // const { isSignedIn } = useAuth()
 
@@ -26,8 +26,7 @@ export default function TDFCalculator(props) {
     }
   )
 
-  const [postId, setPostId] = useState(preloadInitialValues?.id || values.id)
-
+  const [postId, setPostId] = useState(values.id || '')
 
   return (
     <>
@@ -41,7 +40,7 @@ export default function TDFCalculator(props) {
               </label>
               <Field
                 type="number"
-                name="calculation.totalSupply"
+                name="Calculation.totalSupply"
                 className="block w-36 rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-xs text-gray-900 focus:border-dao-red focus:ring-dao-red"
                 onWheel={(event) => event.currentTarget.blur()}
               />
@@ -52,7 +51,7 @@ export default function TDFCalculator(props) {
               </label>
               <Field
                 type="number"
-                name="calculation.months"
+                name="Calculation.months"
                 className="block w-36 rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-xs text-gray-900 focus:border-dao-red focus:ring-dao-red"
                 onWheel={(event) => event.currentTarget.blur()}
               />
@@ -63,7 +62,7 @@ export default function TDFCalculator(props) {
               </label>
               <Field
                 type="date"
-                name="calculation.startDate"
+                name="Calculation.startDate"
                 className="block w-36 rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-xs text-gray-900 focus:border-dao-red focus:ring-dao-red"
               />
             </div>
@@ -83,7 +82,7 @@ export default function TDFCalculator(props) {
             </div>
           </div>
         </div>
-        <FormAreaDataMechanism name="calculation.areaData" />
+        <FormAreaDataMechanism name="Calculation.areaData" />
         <div className="w-full">
           <div className="h-96 w-full">
             <ParentSize>
@@ -91,9 +90,9 @@ export default function TDFCalculator(props) {
                 <VestingChart
                   width={width}
                   height={height}
-                  data={values?.calculation?.areaData.chartData}
+                  data={values?.Calculation?.areaData?.chartData}
                   fields={values?.Mechanism.filter((m) => !m.isSink)}
-                  totalSupply={values?.calculation?.totalSupply}
+                  totalSupply={values?.Calculation?.totalSupply}
                 />
               )}
             </ParentSize>
@@ -106,9 +105,9 @@ export default function TDFCalculator(props) {
               <SupplyDemandChart
                 width={width}
                 height={height}
-                data={values?.calculation?.areaData.supplyDemandTotals}
+                data={values?.Calculation?.areaData?.supplyDemandTotals}
                 fields={values?.Mechanism}
-                totalSupply={values?.calculation?.totalSupply}
+                totalSupply={values?.Calculation?.totalSupply}
               />
               )}
             </ParentSize>

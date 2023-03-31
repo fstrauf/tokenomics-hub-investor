@@ -138,7 +138,7 @@ export const FormCardSupplyDemand = ({
         name={field.name}
         render={(arrayHelpers) => (
           <>
-            <div className="flex">
+            <div key={87944} className="flex">
               <div className="w-1/2">
                 <div className="mb-1 flex gap-2">
                   {' '}

@@ -98,6 +98,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     Tag,
   ] = await prisma.$transaction(txCalls)
 
+
+  console.log("🚀 ~ file: newDesign.tsx:183 ~ constgetServerSideProps:GetServerSideProps= ~ userCalcs:", userCalcs)
   // const preloadInitialCalcValues = null
   const defaultContent = {
     id: '',
@@ -109,7 +111,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       .map((dp) => {
         return { id: '', content: '', designPhasesId: String(dp.phaseId) }
       }),
-    calculation: {
+    Calculation: {
       id: '',
       title: '',
       authorClerkId: '',
@@ -180,3 +182,4 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     },
   }
 }
+    
