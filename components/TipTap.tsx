@@ -21,6 +21,22 @@ import Image from '@tiptap/extension-image'
 import HorizontalRule from '@tiptap/extension-horizontal-rule'
 import React, { useCallback, useEffect } from 'react'
 import { uploadPhoto } from '../lib/fileUpload'
+import {
+  FaBold,
+  FaItalic,
+  FaCode,
+  FaParagraph,
+  FaHeading,
+  FaListOl,
+  FaListUl,
+  FaQuoteLeft,
+  FaLink,
+  FaStrikethrough,
+} from 'react-icons/fa'
+import { MdFormatClear, MdHorizontalRule } from 'react-icons/md'
+import { VscClearAll } from 'react-icons/vsc'
+import { FiCode } from 'react-icons/fi'
+import { BsFileBreak } from 'react-icons/bs'
 type Props = {
   content?: any
   contentId?: String
@@ -81,7 +97,7 @@ const Tiptap: React.FC<Props> = (props) => {
     editable: props.editMode,
     content: content,
     onUpdate({ editor }) {
-      console.log("🚀 ~ file: TipTap.tsx:84 ~ onUpdate ~ editor:", editor)
+      console.log('🚀 ~ file: TipTap.tsx:84 ~ onUpdate ~ editor:', editor)
       // console.log(editor.getJSON())
       props?.setContent(editor.getJSON())
     },
@@ -98,7 +114,7 @@ const Tiptap: React.FC<Props> = (props) => {
   }
 
   return (
-    <div>
+    <div className="textEditor">
       {props?.editMode && (
         <>
           <MenuBar editor={editor} />
@@ -106,7 +122,7 @@ const Tiptap: React.FC<Props> = (props) => {
             onChange={addImage}
             type="file"
             accept="image/png, image/jpeg"
-            className="ml-1 rounded-lg border-2 text-sm"
+            className="ml-1 rounded-lg border-2 p-[2px] text-sm"
           />
         </>
       )}
@@ -143,167 +159,175 @@ const MenuBar = ({ editor }) => {
     editor.chain().focus().extendMarkRange('link').setLink({ href: url }).run()
   }, [editor])
 
+  console.log('editor.isActive', editor.isActive)
   return (
-    <>
+    <div className="menuBar">
       <button
         onClick={() => editor.chain().focus().toggleBold().run()}
         type="button"
         disabled={!editor.can().chain().focus().toggleBold().run()}
-        //   className={editor.isActive('bold') ? 'is-active' : ''}
-        className="ml-1 rounded-lg border-2 text-sm"
+        className={editor.isActive('bold') ? 'is-active' : ''}
+        // className="ml-1 rounded-lg border-2 text-sm"
       >
-        bold
+        <FaBold />
       </button>
       <button
         onClick={() => editor.chain().focus().toggleItalic().run()}
         type="button"
         disabled={!editor.can().chain().focus().toggleItalic().run()}
-        //   className={editor.isActive('italic') ? 'is-active' : ''}
-        className="ml-1 rounded-lg border-2 text-sm"
+        className={editor.isActive('italic') ? 'is-active' : ''}
+        // className="ml-1 rounded-lg border-2 text-sm"
       >
-        italic
+        <FaItalic />
       </button>
       <button
         onClick={() => editor.chain().focus().toggleStrike().run()}
         type="button"
         disabled={!editor.can().chain().focus().toggleStrike().run()}
-        //   className={editor.isActive('strike') ? 'is-active' : ''}
-        className="ml-1 rounded-lg border-2 text-sm"
+        className={editor.isActive('strike') ? 'is-active' : ''}
+        // className="ml-1 rounded-lg border-2 text-sm"
       >
-        strike
+        <FaStrikethrough />
       </button>
       <button
         onClick={() => editor.chain().focus().toggleCode().run()}
         type="button"
         disabled={!editor.can().chain().focus().toggleCode().run()}
-        //   className={editor.isActive('code') ? 'is-active' : ''}
-        className="ml-1 rounded-lg border-2 text-sm"
+        className={editor.isActive('code') ? 'is-active' : ''}
+        // className="ml-1 rounded-lg border-2 text-sm"
       >
-        code
+        <FiCode />
       </button>
       <button
         type="button"
         onClick={() => editor.chain().focus().unsetAllMarks().run()}
-        className="ml-1 rounded-lg border-2 text-sm"
+        className={editor.isActive('clear') ? 'is-active' : ''}
+        // className="ml-1 rounded-lg border-2 text-sm"
       >
-        clear marks
+        <MdFormatClear />
       </button>
       <button
         type="button"
         onClick={() => editor.chain().focus().clearNodes().run()}
-        className="ml-1 rounded-lg border-2 text-sm"
+        // className="ml-1 rounded-lg border-2 text-sm"
+        className={editor.isActive('clearNodes') ? 'is-active' : ''}
       >
-        clear nodes
+        <VscClearAll />
       </button>
       <button
         type="button"
         onClick={() => editor.chain().focus().setParagraph().run()}
-        //   className={editor.isActive('paragraph') ? 'is-active' : ''}
-        className="ml-1 rounded-lg border-2 text-sm"
+        className={editor.isActive('paragraph') ? 'is-active' : ''}
+        // className="ml-1 rounded-lg border-2 text-sm"
       >
-        paragraph
+        <FaParagraph />
       </button>
+
       <button
         type="button"
-        onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
-        //   className={editor.isActive('heading', { level: 1 }) ? 'is-active' : ''}
-        className="ml-1 rounded-lg border-2 text-sm"
+        onClick={() => editor.chain().focus().toggleHeading({ level: 6 }).run()}
+        className={editor.isActive('heading', { level: 6 }) ? 'is-active' : ''}
+        // className="ml-1 rounded-lg border-2 text-sm"
       >
-        h1
-      </button>
-      <button
-        type="button"
-        onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
-        //   className={editor.isActive('heading', { level: 2 }) ? 'is-active' : ''}
-        className="ml-1 rounded-lg border-2 text-sm"
-      >
-        h2
-      </button>
-      <button
-        type="button"
-        onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
-        //   className={editor.isActive('heading', { level: 3 }) ? 'is-active' : ''}
-        className="ml-1 rounded-lg border-2 text-sm"
-      >
-        h3
-      </button>
-      <button
-        type="button"
-        onClick={() => editor.chain().focus().toggleHeading({ level: 4 }).run()}
-        //   className={editor.isActive('heading', { level: 4 }) ? 'is-active' : ''}
-        className="ml-1 rounded-lg border-2 text-sm"
-      >
-        h4
+        <FaHeading size={9} />
       </button>
       <button
         type="button"
         onClick={() => editor.chain().focus().toggleHeading({ level: 5 }).run()}
-        //   className={editor.isActive('heading', { level: 5 }) ? 'is-active' : ''}
-        className="ml-1 rounded-lg border-2 text-sm"
+        className={editor.isActive('heading', { level: 5 }) ? 'is-active' : ''}
+        // className="ml-1 rounded-lg border-2 text-sm"
       >
-        h5
+        <FaHeading size={11} />
       </button>
       <button
         type="button"
-        onClick={() => editor.chain().focus().toggleHeading({ level: 6 }).run()}
-        //   className={editor.isActive('heading', { level: 6 }) ? 'is-active' : ''}
-        className="ml-1 rounded-lg border-2 text-sm"
+        onClick={() => editor.chain().focus().toggleHeading({ level: 4 }).run()}
+        className={editor.isActive('heading', { level: 4 }) ? 'is-active' : ''}
+        // className="ml-1 rounded-lg border-2 text-sm"
       >
-        h6
+        <FaHeading size={12.8} />
+      </button>
+      <button
+        type="button"
+        onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
+        className={editor.isActive('heading', { level: 3 }) ? 'is-active' : ''}
+        // className="ml-1 rounded-lg border-2 text-sm"
+      >
+        <FaHeading size={15} />
+      </button>
+      <button
+        type="button"
+        onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
+        className={editor.isActive('heading', { level: 2 }) ? 'is-active' : ''}
+        // className="ml-1 rounded-lg border-2 text-sm"
+      >
+        <FaHeading size={16} />
+      </button>
+      <button
+        type="button"
+        onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
+        className={
+          editor.isActive('heading', { level: 1 })
+            ? 'is-active flex text-[10px]'
+            : ''
+        }
+        // className="ml-1 rounded-lg border-2 text-sm"
+      >
+        <FaHeading size={18} />
       </button>
       <button
         type="button"
         onClick={() => editor.chain().focus().toggleBulletList().run()}
-        //   className={editor.isActive('bulletList') ? 'is-active' : ''}
-        className="ml-1 rounded-lg border-2 text-sm"
+        className={editor.isActive('bulletList') ? 'is-active' : ''}
+        // className="ml-1 rounded-lg border-2 text-sm"
       >
-        bullet list
+        <FaListUl />
       </button>
       <button
         type="button"
         onClick={() => editor.chain().focus().toggleOrderedList().run()}
-        //   className={editor.isActive('orderedList') ? 'is-active' : ''}
-        className="ml-1 rounded-lg border-2 text-sm"
+        className={editor.isActive('orderedList') ? 'is-active' : ''}
+        // className="ml-1 rounded-lg border-2 text-sm"
       >
-        ordered list
+        <FaListOl />
       </button>
       <button
         type="button"
         onClick={() => editor.chain().focus().toggleCodeBlock().run()}
-        //   className={editor.isActive('codeBlock') ? 'is-active' : ''}
-        className="ml-1 rounded-lg border-2 text-sm"
+        className={editor.isActive('codeBlock') ? 'is-active' : ''}
+        // className="ml-1 rounded-lg border-2 text-sm"
       >
-        code block
+        <FaCode />
       </button>
       <button
         type="button"
         onClick={() => editor.chain().focus().toggleBlockquote().run()}
-        //   className={editor.isActive('blockquote') ? 'is-active' : ''}
-        className="ml-1 rounded-lg border-2 text-sm"
+        className={editor.isActive('blockquote') ? 'is-active' : ''}
+        // className="ml-1 rounded-lg border-2 text-sm"
       >
-        blockquote
+        <FaQuoteLeft />
       </button>
       <button
         type="button"
         onClick={() => editor.chain().focus().setHorizontalRule().run()}
         className="ml-1 rounded-lg border-2 text-sm"
       >
-        horizontal rule
+        <MdHorizontalRule />
       </button>
       <button
         type="button"
         onClick={() => editor.chain().focus().setHardBreak().run()}
         className="ml-1 rounded-lg border-2 text-sm"
       >
-        hard break
+        <BsFileBreak />
       </button>
       <button
         type="button"
         onClick={setLink}
-        className="ml-1 rounded-lg border-2 text-sm"
-      
+        className={editor.isActive('link') ? 'is-active' : ''}
+        // className="ml-1 rounded-lg border-2 text-sm"
       >
-        Link
+        <FaLink />
       </button>
       {/* <button
                 type='button'
@@ -333,6 +357,6 @@ const MenuBar = ({ editor }) => {
             >
                 redo
             </button> */}
-    </>
+    </div>
   )
 }

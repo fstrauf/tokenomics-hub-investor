@@ -103,7 +103,11 @@ export const FormCardSupplyDemand = ({
         </div>
         <div className="flex h-7 border-t-2">
           {' '}
-          <button className="w-full" onClick={() => handleEditMechanism(index)}>
+          <button
+            type="button"
+            className="w-full"
+            onClick={() => handleEditMechanism(index)}
+          >
             Edit
           </button>
           <button
