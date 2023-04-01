@@ -58,7 +58,7 @@ export default async function handle(req, res) {
   }
 
   var DesignElement = inputFields.DesignElement.map((de) => {
-    if (typeof de.content === 'object') {
+    if (typeof de.content === 'object') {      
       return {
         content: JSON.stringify(de.content),
         designPhasesId: de.designPhasesId,

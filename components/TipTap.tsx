@@ -90,15 +90,14 @@ const Tiptap: React.FC<Props> = (props) => {
     editorProps: {
       attributes: {
         class:
-          'prose prose-sm m-5 focus:outline-none min-h-[120px] max-h-[250px] overflow-y-auto',
+          // 'prose prose-sm m-5 focus:outline-none min-h-[120px] max-h-[350px] overflow-y-auto',
+          'prose prose-sm sm:prose-sm m-5 focus:outline-none m-auto'
       },
     },
 
     editable: props.editMode,
     content: content,
     onUpdate({ editor }) {
-      console.log('🚀 ~ file: TipTap.tsx:84 ~ onUpdate ~ editor:', editor)
-      // console.log(editor.getJSON())
       props?.setContent(editor.getJSON())
     },
   })

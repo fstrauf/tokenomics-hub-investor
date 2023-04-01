@@ -4,14 +4,13 @@ import React from 'react'
 import TDFMain from '../../components/tdf/TDFMain'
 import {
   clerkConvertJSON,
-  getMergedInitialCalcValues,
+  // getMergedInitialCalcValues,
   headerStatus,
 } from '../../lib/helper'
 import { clerkClient } from '@clerk/nextjs/server'
 import prisma from '../../lib/prisma'
 
 const EditDesign: React.FC<UpdateNewDesignProps> = (props) => {
-  // console.log("🚀 ~ file: [id].tsx:19 ~ props:", props)
 
   return (
     <Layout mode={headerStatus.design}>
@@ -94,8 +93,6 @@ export const getServerSideProps: GetServerSideProps = async ({
     // calculation
   ] = await prisma.$transaction(txCalls)
 
-  console.log("🚀 ~ file: [id].tsx:144 ~ post:", post)
-
   let clerkUser = post?.authorClerkId
     ? await clerkClient.users.getUser(post?.authorClerkId)
     : {}
@@ -127,17 +124,34 @@ export const getServerSideProps: GetServerSideProps = async ({
   postWithUpdatedComments.Calculation.startDate = new Date(
     postWithUpdatedComments?.Calculation?.startDate || ''
   ).toLocaleDateString('en-CA')
+  postWithUpdatedComments.DesignElement = postWithUpdatedComments?.DesignElement?.map((de) => {        
+    // if (typeof de.content === 'object') {      
+      console.log("🚀 ~ file: [id].tsx:133 ~ postWithUpdatedComments.DesignElement=postWithUpdatedComments?.DesignElement?.map ~ de.content:", typeof(de.content))
+
+      try{
+        var content = JSON.parse(de.content)
+      } catch {
+
+      }
+      return {
+        ...de,
+        content: content,                
+      }
+    // } else {
+    //   return {
+    //     content: de.content,
+    //     designPhasesId: de.designPhasesId,
+    //   }
+    // }
+  })
+
+  console.log("🚀 ~ file: [id].tsx:130 ~ postWithUpdatedComments.DesignElements=postWithUpdatedComments?.DesignElements?.map ~ postWithUpdatedComments:", postWithUpdatedComments)
 
   return {
     props: {
-      // categories: categories || null,
-      // tags: tags || null,
       post: postWithUpdatedComments || null,
       designPhases: designPhases || null,
-      // preloadInitialCalcValues:
-      //   getMergedInitialCalcValues(calculation, userId, null) || null,
       mechanismTemplates: mechanismTemplates || null,
-      // PostUser: PostUser || null,
       Category: Category || null,
       Tag: Tag || null,
     },

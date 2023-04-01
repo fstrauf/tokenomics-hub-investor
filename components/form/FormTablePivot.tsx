@@ -30,8 +30,6 @@ const defaultUsers = [
 ]
 
 export const FormTablePivot = ({ field, form, phaseId, users }) => {
-// console.log("🚀 ~ file: FormTablePivot.tsx:33 ~ FormTablePivot ~ field:", field)
-
 
   if (field.value === '') {
     form.setFieldValue(field.name, defaultUsers)
@@ -236,8 +234,8 @@ export const FormTablePivot = ({ field, form, phaseId, users }) => {
             <table className="mb-1 overflow-x-auto text-left text-sm text-gray-500">
               {header}
               <tbody>
-                {field.value?.length > 0 &&
-                  field.value?.map((input, index) => (
+                {field?.value?.length > 0 &&
+                  field?.value?.map((input, index) => (
                     <>{incentiveRow(input, index, arrayHelpers)}</>
                   ))}
               </tbody>
