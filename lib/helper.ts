@@ -250,6 +250,7 @@ export function getMonthEpochAreaData(
 
 export function getAreaData(months, calculationRows, totalSupply, startDate) {
   var props = { chartData: [], supplyDemandTotals: [] }
+  console.log("🚀 ~ file: helper.ts:285 ~ getAreaData ~ calculationRows:", calculationRows)
 
   calculationRows?.forEach((cr) => {
     const rowAllocation = (totalSupply * cr.percentageAllocation) / 100
@@ -279,9 +280,11 @@ export function getAreaData(months, calculationRows, totalSupply, startDate) {
       }
     }
   })
-
+  console.log("🚀 ~ file: helper.ts:285 ~ getAreaData ~ props:", props)
   return props
 }
+  
+  
 
 export function getDemandAreaData(
   calculationRow,
