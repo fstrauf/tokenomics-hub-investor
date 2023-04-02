@@ -11,7 +11,6 @@ import { clerkClient } from '@clerk/nextjs/server'
 import prisma from '../../lib/prisma'
 
 const EditDesign: React.FC<UpdateNewDesignProps> = (props) => {
-
   return (
     <Layout mode={headerStatus.design}>
       <TDFMain props={props} />
@@ -66,23 +65,10 @@ export const getServerSideProps: GetServerSideProps = async ({
     })
   )
 
-  // txCalls.push(
-  //   prisma.postUser.findMany({
-  //     where: {},
-  //   })
-  // )
-
   txCalls.push(prisma.designPhases.findMany({ orderBy: { phaseOrder: 'asc' } }))
-
-  // txCalls.push(
-  //   prisma.tag.findMany({
-  //     where: {},
-  //   })
-  // )
 
   txCalls.push(prisma.category.findMany())
   txCalls.push(prisma.tag.findMany())
-  // txCalls.push(prisma.calculation.findMany())
 
   const [
     post,
@@ -90,7 +76,6 @@ export const getServerSideProps: GetServerSideProps = async ({
     designPhases,
     Category,
     Tag,
-    // calculation
   ] = await prisma.$transaction(txCalls)
 
   let clerkUser = post?.authorClerkId
@@ -124,28 +109,16 @@ export const getServerSideProps: GetServerSideProps = async ({
   postWithUpdatedComments.Calculation.startDate = new Date(
     postWithUpdatedComments?.Calculation?.startDate || ''
   ).toLocaleDateString('en-CA')
-  postWithUpdatedComments.DesignElement = postWithUpdatedComments?.DesignElement?.map((de) => {        
-    // if (typeof de.content === 'object') {      
-      console.log("🚀 ~ file: [id].tsx:133 ~ postWithUpdatedComments.DesignElement=postWithUpdatedComments?.DesignElement?.map ~ de.content:", typeof(de.content))
-
-      try{
+  postWithUpdatedComments.DesignElement =
+    postWithUpdatedComments?.DesignElement?.map((de) => {
+      try {
         var content = JSON.parse(de.content)
-      } catch {
-
-      }
+      } catch {}
       return {
         ...de,
-        content: content,                
+        content: content,
       }
-    // } else {
-    //   return {
-    //     content: de.content,
-    //     designPhasesId: de.designPhasesId,
-    //   }
-    // }
-  })
-
-  console.log("🚀 ~ file: [id].tsx:130 ~ postWithUpdatedComments.DesignElements=postWithUpdatedComments?.DesignElements?.map ~ postWithUpdatedComments:", postWithUpdatedComments)
+    })
 
   return {
     props: {
@@ -157,4 +130,3 @@ export const getServerSideProps: GetServerSideProps = async ({
     },
   }
 }
-    

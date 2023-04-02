@@ -67,8 +67,6 @@ export default function TDFMain({ props }) {
 
   const submitData = async (values, { setSubmitting }) => {
     const body = { values }
-    console.log('🚀 ~ file: TDFMain.tsx:70 ~ submitData ~ body:', body)
-    // console.log('val TDF mail', body)
     if (values?.id === '') {
       try {
         const response = await fetch('/api/post/newDesign', {
@@ -154,7 +152,7 @@ Solution:
         - State the solution that the protocol provides`}
           />
         )
-        case 102:
+      case 102:
         return (
           <TDFGenericOneField
             props={props}
@@ -250,7 +248,7 @@ Revenue goes to:
           <TDF701 props={props} values={values} activePhase={activePhase} />
         )
       default:
-        return <TDFGenericOneField  props={props} activePhase={activePhase} />
+        return <TDFGenericOneField props={props} activePhase={activePhase} />
     }
   }
   const formRef = useRef<FormikProps<any>>(null)
@@ -306,12 +304,12 @@ Revenue goes to:
                       <div>{renderSwitch(values, setFieldValue)}</div>
                     )}
                   />
-                   <FormId
-                  postId={postId}
-                  type="text"
-                  name="id"
-                  className="hidden w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
-                />
+                  <FormId
+                    postId={postId}
+                    type="text"
+                    name="id"
+                    className="hidden w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
+                  />
                 </Form>
               )}
             </Formik>
