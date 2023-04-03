@@ -13,7 +13,7 @@ export default function TDFSideBar({ designPhases, changePhase, activePhase }) {
             </button>
           ) : (
             //parent
-            <button  className={`${phase.phaseId===activePhase ? 'focus:ring-dao-red focus:ring-2 rounded-md' : ''} mb-2 text-lg font-bold tracking-tight text-gray-900`} onClick={() => changePhase(phase.phaseId)}>
+            <button  className={`${phase.phaseId===activePhase ? 'bg-dao-red' : ''} mt-2 text-lg block w-full  font-bold rounded-lg border border-gray-200 tracking-tight text-gray-900 hover:bg-gray-100`} onClick={() => changePhase(phase.phaseId)}>
               {phase.name}
             </button>
           )}
