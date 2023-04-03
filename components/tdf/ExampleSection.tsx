@@ -3,13 +3,35 @@ import Image from 'next/image'
 import { useState } from 'react'
 import ChevronIcon from '../../public/svg/chevron'
 import FormDivider from '../form/FormDivider'
+import useSWR from 'swr'
+import Select from 'react-select'
+
+export const fetcher = async (url, param) => {
+  console.log("🚀 ~ file: ExampleSection.tsx:11 ~ fetcher ~ param:", param)
+  console.log("🚀 ~ file: ExampleSection.tsx:11 ~ fetcher ~ url:", url)
+  const body = { param }
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  })
+
+  if (!res.ok) {
+    throw new Error(`Failed to fetch data from ${url}`)
+  }
+  const data = await res.json()
+  return data
+}
 
 export default function ExampleSection({
-  content,
+  props,
+  presetFilters,
   exampleField,
   exampleDetail,
 }) {
   const [example, setExample] = useState({})
+  const [tagFilters, setTagFilters] = useState({})
+  const [catFilters, setCatFilters] = useState({})
   const [isSubelementClicked, setIsSubelementClicked] = useState(false)
 
   function handleDetailClicked(c) {
@@ -43,11 +65,58 @@ export default function ExampleSection({
     ExampleDetail = exampleDetail
   }
 
+  function filterCategories(newValue: MultiValue<any>): void {
+    console.log("🚀 ~ file: ExampleSection.tsx:70 ~ filterCategories ~ newValue:", newValue)
+    if (newValue.length === 0) {
+      setCatFilters({})
+    } else {
+      setCatFilters(newValue.map((nv) => nv.value))
+    }
+  }
+
+  function filterTags(newValue: MultiValue<any>): void {
+    console.log("🚀 ~ file: ExampleSection.tsx:79 ~ filterTags ~ newValue:", newValue)
+    if (newValue.length === 0) {
+      setTagFilters({})
+    } else {
+      setTagFilters(newValue.map((nv) => nv.value))
+    }
+  }
+
   function ExamplesSelector() {
+    const key = tagFilters && catFilters ? `/api/get/getExamplePostData/?category=${catFilters}?tags=${tagFilters}` : null;
+    const { data, error } = useSWR(key,fetcher, { revalidateOnMount: true }
+    )
+    console.log(
+      '🚀 ~ file: ExampleSection.tsx:29 ~ ExampleDetail ~ data:',
+      data
+    )
     return (
       <div>
+        <div className="m-auto flex lg:w-1/2 max-w-5xl mt-3">
+          <Select
+            defaultValue={presetFilters?.categories}
+            id="cat-select"
+            isMulti
+            placeholder="filter categories"
+            name="categories"
+            options={props?.Category}
+            className="mr-3 w-1/2 text-xs"
+            onChange={filterCategories}
+          />
+          <Select
+            defaultValue={presetFilters?.tags}
+            id="tag-select"
+            placeholder="filter tags"
+            isMulti
+            name="tags"
+            className="w-1/2 text-xs"
+            options={props?.Tag}
+            onChange={filterTags}
+          />
+        </div>
         <div className="flex gap-6 overflow-x-auto">
-          {content?.map((c) => (
+          {data?.map((c) => (
             <div className="flex h-52 flex-col justify-between">
               <div className="m-auto w-9 sm:w-16">
                 <div className="relative m-auto h-24 rounded-lg">

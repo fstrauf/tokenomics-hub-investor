@@ -11,7 +11,6 @@ import { headerStatus, postStatus } from '../lib/helper'
 import Link from 'next/link'
 
 type Props = {
-  // rewardRound: any;
   allPosts: any
   preview: any
   categories: object[]
@@ -19,7 +18,6 @@ type Props = {
 }
 
 const Index: React.FC<Props> = (props) => {
-  // console.log('🚀 ~ file: index.tsx:20 ~ props', props.allPosts)
   const router = useRouter()
 
   function filterCategories(newValue: MultiValue<any>): void {
@@ -49,7 +47,6 @@ const Index: React.FC<Props> = (props) => {
             name="Explore, compare and evaluate tokenomics of crypto projects."
             content="Created by Tokenomics DAO"
           />
-          {/* <link rel="icon" href="/favicon.ico" /> */}
           <link
             rel="icon"
             type="image/png"

@@ -25,9 +25,12 @@ export default function TDFMain({ props }) {
   const TDFGenericOneField = dynamic(() => import('./TDFGenericOneField'), {
     loading: () => <p>Loading</p>,
   })
-  const TDF201 = dynamic(() => import('./TDF201'), {
+  const TDF105 = dynamic(() => import('./TDF105'), {
     loading: () => <p>Loading</p>,
   })
+  // const TDF201 = dynamic(() => import('./TDF201'), {
+  //   loading: () => <p>Loading</p>,
+  // })
   const TDF301 = dynamic(() => import('./TDF301'), {
     loading: () => <p>Loading</p>,
   })
@@ -49,7 +52,7 @@ export default function TDFMain({ props }) {
   const TDF404 = dynamic(() => import('./TDF404'), {
     loading: () => <p>Loading</p>,
   })
-  const TDF407 = dynamic(() => import('./TDF407'), {
+  const TDF_valueDemandUtility = dynamic(() => import('./TDF_valueDemandUtility'), {
     loading: () => <p>Loading</p>,
   })
   const TDF501 = dynamic(() => import('./TDF501'), {
@@ -187,9 +190,9 @@ Revenue goes to:
       // case 202:
       //   return <TDFGenericOneField props={props} activePhase={activePhase} />
 
-      case 201:
+      case 105:
         return (
-          <TDF201 props={props} values={values} activePhase={activePhase} />
+          <TDF105 props={props} values={values} activePhase={activePhase} />
         )
       case 301:
         return (
@@ -219,9 +222,9 @@ Revenue goes to:
         return (
           <TDF404 props={props} values={values} activePhase={activePhase} />
         )
-      case 407:
+      case 801:
         return (
-          <TDF407 props={props} values={values} activePhase={activePhase} />
+          <TDF_valueDemandUtility props={props} values={values} activePhase={activePhase} />
         )
       case 501:
         return (

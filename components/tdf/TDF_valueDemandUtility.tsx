@@ -6,7 +6,7 @@ import { getActiveDesignPhase } from '../../lib/helper'
 import ExampleSection from './ExampleSection'
 import BreakdownBox from '../slugView/breakdown-box'
 
-export default function TDF407({ props, values, activePhase }) {
+export default function TDF_valueDemandUtility({ props, values, activePhase }) {
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
 
   let ExampleDetail = ({ onGoBack, example, exampleField }) => {
@@ -30,15 +30,13 @@ export default function TDF407({ props, values, activePhase }) {
   }
 
   return (
-    <div className="grid w-full  gap-2 rounded-lg border-2 p-2">
-      <div className="col-span-1">
-        <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 ">
-          {designPhase?.name}
-        </h5>
-      </div>
+    <div className="flex flex-col rounded-lg border-2 p-2">
+      <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 ">
+        {designPhase?.name}
+      </h5>
 
-      <div className="mb-6 flex">
-        <div className="mr-1 basis-1/4">
+      <div className="mb-6 flex gap-4">
+        <div className="basis-1/4">
           <label className="mb-2 block text-sm font-medium text-gray-900">
             Value Capture
           </label>
@@ -59,8 +57,8 @@ Value accrual to protocol (if any)
         />
       </div>
 
-      <div className="mb-6 flex">
-        <div className="mr-1 basis-1/4">
+      <div className="mb-6 flex gap-4">
+        <div className="basis-1/4">
           <label className="mb-2 block text-sm font-medium text-gray-900">
             Token Utility
           </label>
@@ -83,8 +81,8 @@ $Token 2
         />
       </div>
 
-      <div className="mb-6 flex">
-        <div className="mr-1 basis-1/4">
+      <div className="mb-6 flex gap-4">
+        <div className="basis-1/4">
           <label className="mb-2 block text-sm font-medium text-gray-900">
             Demand Drivers
           </label>
