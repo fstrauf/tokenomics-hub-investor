@@ -243,7 +243,7 @@ export const MechanismCard = ({
   }
 
   return (
-    <div key={mechanismIndex} className="flex flex-col p-4 max-w-xl ml-auto mr-auto">
+    <div key={mechanismIndex} className="flex flex-col p-4 max-w-2xl ml-auto mr-auto">
       <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 ">
         {isSink ? <>Demand Builder</> : <>Supply Builder</>}
       </h5>

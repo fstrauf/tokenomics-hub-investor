@@ -3,8 +3,6 @@ import ResourceSection from './ResourceSection'
 import { getActiveDesignPhase } from '../../lib/helper'
 
 export default function TDF201({ props, values, activePhase }) {
-  console.log("🚀 ~ file: TDF201.tsx:6 ~ TDF201 ~ activePhase:", activePhase)
-  console.log("🚀 ~ file: TDF201.tsx:6 ~ TDF201 ~ values:", values.DesignElement)
   
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
   return (
@@ -14,8 +12,8 @@ export default function TDF201({ props, values, activePhase }) {
           {designPhase.name}
         </h5>
         <Field
-          // as="textarea"
-          // rows="4"
+          as="textarea"
+          rows="6"
           name={`DesignElement.${values?.DesignElement?.findIndex(
             (de) => de.designPhasesId.toString() === '201'
           )}.content`} //

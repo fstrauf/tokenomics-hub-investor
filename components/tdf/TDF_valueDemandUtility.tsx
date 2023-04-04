@@ -6,7 +6,8 @@ import { getActiveDesignPhase } from '../../lib/helper'
 import ExampleSection from './ExampleSection'
 import BreakdownBox from '../slugView/breakdown-box'
 
-export default function TDF407({ props, values, activePhase }) {
+export default function TDF_valueDemandUtility({ props, values, activePhase }) {
+  console.log("🚀 ~ file: TDF_valueDemandUtility.tsx:10 ~ TDF_valueDemandUtility ~ values:", values)
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
 
   let ExampleDetail = ({ onGoBack, example, exampleField }) => {
@@ -30,15 +31,13 @@ export default function TDF407({ props, values, activePhase }) {
   }
 
   return (
-    <div className="grid w-full  gap-2 rounded-lg border-2 p-2">
-      <div className="col-span-1">
-        <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 ">
-          {designPhase?.name}
-        </h5>
-      </div>
+    <div className="flex flex-col rounded-lg border-2 p-2">
+      <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 ">
+        {designPhase?.name}
+      </h5>
 
-      <div className="mb-6 flex">
-        <div className="mr-1 basis-1/4">
+      <div className="mb-6 flex gap-4">
+        <div className="basis-1/4">
           <label className="mb-2 block text-sm font-medium text-gray-900">
             Value Capture
           </label>
@@ -50,6 +49,7 @@ export default function TDF407({ props, values, activePhase }) {
         <Field
           name="valueCapture"
           as={FormText}
+          rows={6}
           placeholder={`Value accrual to token (if any)
 [briefly explain any mechanism that allow token to map the value created]
 
@@ -58,8 +58,8 @@ Value accrual to protocol (if any)
         />
       </div>
 
-      <div className="mb-6 flex">
-        <div className="mr-1 basis-1/4">
+      <div className="mb-6 flex gap-4">
+        <div className="basis-1/4">
           <label className="mb-2 block text-sm font-medium text-gray-900">
             Token Utility
           </label>
@@ -71,6 +71,7 @@ Value accrual to protocol (if any)
         <Field
           name="tokenUtility"
           as={FormText}
+          rows={6}
           placeholder={`$Token 1
 - Utility Name
 [brief explanation of the utility] 
@@ -81,8 +82,8 @@ $Token 2
         />
       </div>
 
-      <div className="mb-6 flex">
-        <div className="mr-1 basis-1/4">
+      <div className="mb-6 flex gap-4">
+        <div className="basis-1/4">
           <label className="mb-2 block text-sm font-medium text-gray-900">
             Demand Drivers
           </label>
@@ -93,6 +94,7 @@ $Token 2
         <Field
           name="demandDrivers"
           as={FormText}
+          rows={6}
           placeholder={`Demand Name 1
 [explain who is buying/holding this token and why]
 
@@ -103,6 +105,8 @@ Demand Name 2
       <ResourceSection content={designPhase.Resources} />
       <ExampleSection
         content={props.posts}
+        presetCategories={values.categories}
+        presetTags={values.tags}
         exampleField={designPhase.postDataElement}
         exampleDetail={ExampleDetail}
       />

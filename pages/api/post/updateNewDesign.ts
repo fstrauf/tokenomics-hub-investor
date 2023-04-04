@@ -12,12 +12,15 @@ export default async function handle(req, res) {
   }
 
   const mechanisms = inputFields.Mechanism.map((m) => {
-    // const postUsers =
-    //   m?.PostUser?.map((pu) => ({
-    //     name: pu.name,
-    //     role: pu.role,
-    //     postId: m.postId,
-    //   })) || {}
+    var postUsers = {}
+    if(m?.PostUser === undefined){      
+
+    } else {
+      postUsers = {connect: m?.PostUser?.map((pu) => ({
+        id: pu.postId + '_' + pu.name,
+      }))}
+    }
+
     const calculationTimeSeries =
       m?.CalculationTimeSeries?.map((cts) => ({
         phase: cts.phase,
@@ -30,7 +33,6 @@ export default async function handle(req, res) {
       details: m.details,
       isSink: m.isSink,
       token: m.token,
-      // postId: m.postId,
       isTemplate: m.isTemplate,
       category: m.category,
       lockupPeriod: m.lockupPeriod,
@@ -41,19 +43,12 @@ export default async function handle(req, res) {
       initialEmissionPerSecond: m.initialEmissionPerSecond,
       emissionReductionPerEpoch: m.emissionReductionPerEpoch,
       color: m.color,
-      // calculationId: m.calculationId,
-      // PostUser: {
-      //   create: postUsers
-      // },
       CalculationTimeSeries: {
-        create: calculationTimeSeries
-      }
+        create: calculationTimeSeries,
+      },
+      PostUser: postUsers,
     }
   })
-
-  // prisma.mechanism.createMany({
-  //   data: mechanisms
-  // });
 
   var DesignElement = inputFields.DesignElement.map((de) => {
     if (typeof de.content === 'object') {
@@ -67,12 +62,10 @@ export default async function handle(req, res) {
         designPhasesId: de.designPhasesId,
       }
     }
-
   })
 
   const timeLine = inputFields?.protocolTimeLine?.map((tl) => {
     return {
-      // ...tl,
       title: tl.title,
       date: new Date(tl.date),
       description: tl.description,
@@ -155,9 +148,6 @@ export default async function handle(req, res) {
         shortDescription: inputFields.shortDescription,
         breakdown: breakdown,
         publishedAt: new Date(),
-        Mechanism: {
-          create: mechanisms,
-        },
         DesignElement: {
           createMany: {
             data: DesignElement,
@@ -165,16 +155,10 @@ export default async function handle(req, res) {
         },
         mainImageUrl: inputFields.mainImageUrl,
         tokenUtility: inputFields.tokenUtility,
-        // tokenUtilityStrength: inputFields.tokenUtilityStrength,
         businessModel: inputFields.businessModel,
-        // businessModelStrength: inputFields.businessModelStrength,
         valueCreation: inputFields.valueCreation,
-        // valueCreationStrength: inputFields.valueCreationStrength,
         valueCapture: inputFields.valueCapture,
-        // valueCaptureStrength: inputFields.valueCaptureStrength,
         demandDrivers: inputFields.demandDrivers,
-        // demandDriversStrength: inputFields.demandDriversStrength,
-        // tokenStrength: inputFields.tokenStrength,
         threeMonthHorizon: inputFields.threeMonthHorizon,
         oneYearHorizon: inputFields.oneYearHorizon,
         upside: inputFields.upside,
@@ -208,7 +192,6 @@ export default async function handle(req, res) {
             }
           }),
         },
-        // calculationId: inputFields.calculation,
         ProtocolResources: {
           createMany: {
             data: resource,
@@ -216,29 +199,22 @@ export default async function handle(req, res) {
         },
         PostUser: {
           createMany: {
-            data: inputFields.PostUser.map(({ name, role }) => ({ name, role })),
+            // data: inputFields.PostUser.map(({ name, role }) => ({ name, role })),
+            data: inputFields.PostUser.map((pu) => ({
+              id: pu.postId + '_' + pu.name,
+              name: pu.name,
+              role: pu.role,
+            })),
           },
+        },
+        Mechanism: {
+          create: mechanisms,
         },
         protocolTimeLine: {
           createMany: {
             data: timeLine,
           },
         },
-        // UserStrengthRating: {
-        //   create: {
-        //     authorClerkId: inputFields.authorClerkId,
-        //     userReviewUtility: 'initial',
-        //     userReviewBusinessModel: 'initial',
-        //     userReviewDemandDriver: 'initial',
-        //     userReviewValueCapture: 'initial',
-        //     userReviewValueCreation: 'initial',
-        //     tokenUtilityStrength: inputFields.tokenUtilityStrength,
-        //     businessModelStrength: inputFields.businessModelStrength,
-        //     valueCaptureStrength: inputFields.valueCaptureStrength,
-        //     valueCreationStrength: inputFields.valueCreationStrength,
-        //     demandDriversStrength: inputFields.demandDriversStrength,
-        //   },
-        // },
       },
     })
   )
@@ -257,19 +233,10 @@ export default async function handle(req, res) {
       if (e.code === 'P2002') {
         // res.statusText = 'Unique Constraint. Slug might already exist!'
         return res.status(500).send({ error: 'Slug might already exist!' })
-        // console.log(
-        //   'There is a unique constraint violation, a new user cannot be created with this email'
-        // )
       }
     }
     throw e
   }
-
-  // const mechUpdateRes = prisma.calculationTimeSeries.createMany({
-  //   data: {
-  //     mechanismId:
-  //   }
-  // })
 
   res.json(response)
 }

@@ -23,6 +23,8 @@ export default function TDF301({ props, values, activePhase }) {
       <ResourceSection content={designPhase.Resources} />
       <ExampleSection
         content={props.posts}
+        presetCategories={values.categories}
+        presetTags={values.tags}
         exampleField={designPhase.postDataElement}
         exampleDetail={null}
       />

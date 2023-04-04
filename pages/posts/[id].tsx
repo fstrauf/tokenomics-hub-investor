@@ -277,7 +277,7 @@ export default function Post({ post, morePosts, author }) {
                   <div id="deepDive"></div>
                   <PostBody content={post.breakdown} />
                   <div id="calculation"></div>
-                  <Calculation calculation={post.calculation} />
+                  <Calculation calculation={post.Calculation} />
                   <div id="diagram"></div>
                   <Diagram diagram={post.diagramUrl} />
                   <div id="supplyDemand"></div>

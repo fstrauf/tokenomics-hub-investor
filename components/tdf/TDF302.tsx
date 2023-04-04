@@ -1,11 +1,13 @@
 import { Field } from 'formik'
 // import BreakdownBox from '../slugView/breakdown-box'
 import ResourceSection from './ResourceSection'
-import FormTable from '../form/FormTablePivot'
+import FormTablePivot from '../form/FormTablePivot'
 import { getActiveDesignPhase } from '../../lib/helper'
 // import ExampleSection from './ExampleSection'
 
 export default function TDF302({ props, values, activePhase }) {
+  // console.log("🚀 ~ file: TDF302.tsx:9 ~ TDF302 ~ values:", JSON.parse(values.DesignElement[7].content))
+  // console.log("🚀 ~ file: TDF302.tsx:9 ~ TDF302 ~ props:", props)
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
   return (
     <div className="flex w-full flex-col rounded-lg border-2 p-2">
@@ -20,7 +22,7 @@ export default function TDF302({ props, values, activePhase }) {
             (de) => de.designPhasesId.toString() === '302' //should all use the same db field.
           )}.content`}
           users={values?.PostUser || []}
-          component={FormTable}
+          component={FormTablePivot}
           placeholder="tell us about your requirements"
           phaseId={designPhase.phaseId}
           // className="mb-3 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"

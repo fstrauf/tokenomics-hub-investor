@@ -4,15 +4,13 @@ import React from 'react'
 import TDFMain from '../../components/tdf/TDFMain'
 import {
   clerkConvertJSON,
-  getMergedInitialCalcValues,
+  // getMergedInitialCalcValues,
   headerStatus,
 } from '../../lib/helper'
 import { clerkClient } from '@clerk/nextjs/server'
 import prisma from '../../lib/prisma'
 
 const EditDesign: React.FC<UpdateNewDesignProps> = (props) => {
-  // console.log("🚀 ~ file: [id].tsx:19 ~ props:", props)
-
   return (
     <Layout mode={headerStatus.design}>
       <TDFMain props={props} />
@@ -67,23 +65,10 @@ export const getServerSideProps: GetServerSideProps = async ({
     })
   )
 
-  // txCalls.push(
-  //   prisma.postUser.findMany({
-  //     where: {},
-  //   })
-  // )
-
   txCalls.push(prisma.designPhases.findMany({ orderBy: { phaseOrder: 'asc' } }))
-
-  // txCalls.push(
-  //   prisma.tag.findMany({
-  //     where: {},
-  //   })
-  // )
 
   txCalls.push(prisma.category.findMany())
   txCalls.push(prisma.tag.findMany())
-  // txCalls.push(prisma.calculation.findMany())
 
   const [
     post,
@@ -91,7 +76,6 @@ export const getServerSideProps: GetServerSideProps = async ({
     designPhases,
     Category,
     Tag,
-    // calculation
   ] = await prisma.$transaction(txCalls)
 
   let clerkUser = post?.authorClerkId
@@ -123,19 +107,24 @@ export const getServerSideProps: GetServerSideProps = async ({
       date: new Date(ptl.date).toLocaleDateString('en-CA'),
     }))
   postWithUpdatedComments.Calculation.startDate = new Date(
-    postWithUpdatedComments.Calculation.startDate
+    postWithUpdatedComments?.Calculation?.startDate || ''
   ).toLocaleDateString('en-CA')
+  postWithUpdatedComments.DesignElement =
+    postWithUpdatedComments?.DesignElement?.map((de) => {
+      try {
+        var content = JSON.parse(de.content)
+      } catch {}
+      return {
+        ...de,
+        content: content,
+      }
+    })
 
   return {
     props: {
-      // categories: categories || null,
-      // tags: tags || null,
       post: postWithUpdatedComments || null,
       designPhases: designPhases || null,
-      // preloadInitialCalcValues:
-      //   getMergedInitialCalcValues(calculation, userId, null) || null,
       mechanismTemplates: mechanismTemplates || null,
-      // PostUser: PostUser || null,
       Category: Category || null,
       Tag: Tag || null,
     },

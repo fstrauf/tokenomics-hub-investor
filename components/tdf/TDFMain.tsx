@@ -8,7 +8,6 @@ import FormId from '../form/FormId'
 // import TDFHeaders from './TDFHeaders'
 
 export default function TDFMain({ props }) {
-  console.log('🚀 ~ file: TDFMain.tsx:11 ~ TDFMain ~ props:', props)
   const [activePhase, setActivePhase] = useState(11) //props.design.activePhase
   const [postId, setPostId] = useState(props.post.id || '')
 
@@ -26,9 +25,12 @@ export default function TDFMain({ props }) {
   const TDFGenericOneField = dynamic(() => import('./TDFGenericOneField'), {
     loading: () => <p>Loading</p>,
   })
-  const TDF201 = dynamic(() => import('./TDF201'), {
+  const TDF105 = dynamic(() => import('./TDF105'), {
     loading: () => <p>Loading</p>,
   })
+  // const TDF201 = dynamic(() => import('./TDF201'), {
+  //   loading: () => <p>Loading</p>,
+  // })
   const TDF301 = dynamic(() => import('./TDF301'), {
     loading: () => <p>Loading</p>,
   })
@@ -50,7 +52,7 @@ export default function TDFMain({ props }) {
   const TDF404 = dynamic(() => import('./TDF404'), {
     loading: () => <p>Loading</p>,
   })
-  const TDF407 = dynamic(() => import('./TDF407'), {
+  const TDF_valueDemandUtility = dynamic(() => import('./TDF_valueDemandUtility'), {
     loading: () => <p>Loading</p>,
   })
   const TDF501 = dynamic(() => import('./TDF501'), {
@@ -68,8 +70,6 @@ export default function TDFMain({ props }) {
 
   const submitData = async (values, { setSubmitting }) => {
     const body = { values }
-    console.log('🚀 ~ file: TDFMain.tsx:70 ~ submitData ~ body:', body)
-    // console.log('val TDF mail', body)
     if (values?.id === '') {
       try {
         const response = await fetch('/api/post/newDesign', {
@@ -149,6 +149,7 @@ export default function TDFMain({ props }) {
           <TDFGenericOneField
             props={props}
             activePhase={activePhase}
+            values={values}
             placeholder={`Problem:
         - State the problem that the protocol is trying to solve        
 Solution:
@@ -160,7 +161,8 @@ Solution:
           <TDFGenericOneField
             props={props}
             activePhase={activePhase}
-            placeholder={`The value created by [protocol] is...`}
+            values={values}
+            placeholder={`Similar projects include...`}
           />
         )
       case 103:
@@ -168,6 +170,16 @@ Solution:
           <TDFGenericOneField
             props={props}
             activePhase={activePhase}
+            values={values}
+            placeholder={`The value created by [protocol] is...`}
+          />
+        )
+      case 104:
+        return (
+          <TDFGenericOneField
+            props={props}
+            activePhase={activePhase}
+            values={values}
             placeholder={`The business model for [protocol]:
 Revenue comes from:
 [Explanation]
@@ -179,12 +191,12 @@ Revenue goes to:
 [Explanation, include any percentages if there is a revenue split between different users/parties]`}
           />
         )
-      case 202:
-        return <TDFGenericOneField props={props} activePhase={activePhase} />
+      // case 202:
+      //   return <TDFGenericOneField props={props} activePhase={activePhase} />
 
-      case 201:
+      case 105:
         return (
-          <TDF201 props={props} values={values} activePhase={activePhase} />
+          <TDF105 props={props} values={values} activePhase={activePhase} />
         )
       case 301:
         return (
@@ -214,9 +226,9 @@ Revenue goes to:
         return (
           <TDF404 props={props} values={values} activePhase={activePhase} />
         )
-      case 407:
+      case 801:
         return (
-          <TDF407 props={props} values={values} activePhase={activePhase} />
+          <TDF_valueDemandUtility props={props} values={values} activePhase={activePhase} />
         )
       case 501:
         return (
@@ -243,7 +255,7 @@ Revenue goes to:
           <TDF701 props={props} values={values} activePhase={activePhase} />
         )
       default:
-        return <TDFGenericOneField props={props} activePhase={activePhase} />
+        return <TDFGenericOneField props={props} values={values} activePhase={activePhase} />
     }
   }
   // const formRef = useRef<FormikProps<any>>(null)
@@ -314,27 +326,6 @@ Revenue goes to:
                     name="id"
                     className="hidden w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
                   />
-
-                  <div className="absolute top-[124px] right-[-140px] left-10 grid grid-cols-6 rounded-lg p-2 py-2 ">
-                    <div className="col-span-4">
-                      <p className="mt-2 text-xl font-bold ml-[154px] ">
-                        {values?.title}
-                      </p>
-                    </div>
-                    <div className="flex justify-end gap-1">
-                      <button
-                        type="submit"
-                        disabled={isSubmitting}
-                        // onClick={formik.handleSubmit}
-                        className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
-                      >
-                        Save
-                      </button>
-                      <button className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40">
-                        Share Report
-                      </button>
-                    </div>
-                  </div>
                 </Form>
               )}
             </Formik>

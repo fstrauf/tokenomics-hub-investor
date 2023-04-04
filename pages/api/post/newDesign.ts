@@ -13,12 +13,15 @@ export default async function handle(req, res) {
   })
 
   const mechanisms = inputFields.Mechanism.map((m) => {
-    // const postUsers =
-    //   m?.PostUser?.map((pu) => ({
-    //     name: pu.name,
-    //     role: pu.role,
-    //     // postId: m.postId,
-    //   })) || {}
+    var postUsers = {}
+    if (m?.PostUser === undefined) {
+    } else {
+      postUsers = {
+        connect: m?.PostUser?.map((pu) => ({
+          id: pu.postId + '_' + pu.name,
+        })),
+      }
+    }
     const calculationTimeSeries =
       m?.CalculationTimeSeries?.map((cts) => ({
         phase: cts.phase,
@@ -42,13 +45,10 @@ export default async function handle(req, res) {
       initialEmissionPerSecond: m.initialEmissionPerSecond,
       emissionReductionPerEpoch: m.emissionReductionPerEpoch,
       color: m.color,
-      // calculationId: m.calculationId,
-      // PostUser: {
-      //   create: postUsers
-      // },
       CalculationTimeSeries: {
-        create: calculationTimeSeries
-      }
+        create: calculationTimeSeries,
+      },
+      PostUser: postUsers,
     }
   })
 
@@ -79,9 +79,7 @@ export default async function handle(req, res) {
         slug: inputFields.slug,
         shortDescription: inputFields.shortDescription,
         publishedAt: new Date(),
-        Mechanism: {
-          create: mechanisms,
-        },
+
         DesignElement: {
           createMany: {
             data: DesignElement,
@@ -120,7 +118,7 @@ export default async function handle(req, res) {
             startDate: new Date(inputFields.Calculation.startDate),
             title: inputFields.Calculation.title,
             totalSupply: inputFields.Calculation.totalSupply,
-          }
+          },
         },
         categories: {
           connectOrCreate: inputFields.categories.map((category) => {
@@ -141,7 +139,6 @@ export default async function handle(req, res) {
             }
           }),
         },
-        // calculationId: inputFields.calculation,
         ProtocolResources: {
           createMany: {
             data: inputFields.ProtocolResources,
@@ -149,11 +146,15 @@ export default async function handle(req, res) {
         },
         PostUser: {
           createMany: {
-            data: inputFields.PostUser.map(({ name, role }) => ({
-              name,
-              role,
+            data: inputFields.PostUser.map((pu) => ({
+              id: pu.postId + '_' + pu.name,
+              name: pu.name,
+              role: pu.role,
             })),
           },
+        },
+        Mechanism: {
+          create: mechanisms,
         },
         protocolTimeLine: {
           createMany: {
@@ -182,10 +183,10 @@ export default async function handle(req, res) {
   // const res2 = await prisma.calculation.create({
   //   data: {
   //     Post: { connect: {
-  //       id: 
+  //       id:
   //     }}
   //   }
-    
+
   // })
 
   // return res.json(response);

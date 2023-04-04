@@ -11,7 +11,6 @@ import { headerStatus, postStatus } from '../lib/helper'
 import Link from 'next/link'
 
 type Props = {
-  // rewardRound: any;
   allPosts: any
   preview: any
   categories: object[]
@@ -19,7 +18,6 @@ type Props = {
 }
 
 const Index: React.FC<Props> = (props) => {
-  // console.log('🚀 ~ file: index.tsx:20 ~ props', props.allPosts)
   const router = useRouter()
 
   function filterCategories(newValue: MultiValue<any>): void {
@@ -49,7 +47,6 @@ const Index: React.FC<Props> = (props) => {
             name="Explore, compare and evaluate tokenomics of crypto projects."
             content="Created by Tokenomics DAO"
           />
-          {/* <link rel="icon" href="/favicon.ico" /> */}
           <link
             rel="icon"
             type="image/png"
@@ -126,7 +123,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const tags = await prisma.tag.findMany()
 
   const filterCats = context?.query?.cats?.split(',') || ''
+  console.log("🚀 ~ file: index.tsx:126 ~ constgetServerSideProps:GetServerSideProps= ~ filterCats:", filterCats)
   const filterTags = context?.query?.tags?.split(',') || ''
+  console.log("🚀 ~ file: index.tsx:128 ~ constgetServerSideProps:GetServerSideProps= ~ filterTags:", filterTags)
   const filterCatsQuery =
     filterCats.length > 0
       ? {

@@ -167,7 +167,7 @@ export default function coreMechanisms({ allMechanisms }) {
 }
 
 export async function getStaticProps() {
-  const allMechanisms = await prisma.mechanism.findMany()
+  const allMechanisms = await prisma.mechanism.findMany({ where: {isTemplate: true}})
 
   return {
     props: {

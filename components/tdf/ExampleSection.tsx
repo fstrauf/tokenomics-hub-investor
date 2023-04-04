@@ -3,13 +3,35 @@ import Image from 'next/image'
 import { useState } from 'react'
 import ChevronIcon from '../../public/svg/chevron'
 import FormDivider from '../form/FormDivider'
+import useSWR from 'swr'
+import Select from 'react-select'
+
+export const fetcher = async (url, param) => {
+  const body = { param }
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  })
+
+  if (!res.ok) {
+    throw new Error(`Failed to fetch data from ${url}`)
+  }
+  const data = await res.json()
+  return data
+}
 
 export default function ExampleSection({
-  content,
+  props,
+  presetTags,
+  presetCategories,
   exampleField,
   exampleDetail,
 }) {
   const [example, setExample] = useState({})
+  const [tagFilters, setTagFilters] = useState(presetTags || null)
+  const [catFilters, setCatFilters] = useState(presetCategories || null)
+  
   const [isSubelementClicked, setIsSubelementClicked] = useState(false)
 
   function handleDetailClicked(c) {
@@ -43,11 +65,45 @@ export default function ExampleSection({
     ExampleDetail = exampleDetail
   }
 
+  const key =
+    
+    tagFilters && catFilters
+      ? `/api/get/getExamplePostData/?categories=${JSON.stringify(catFilters.map((nv) => nv.value))}&tags=${JSON.stringify(tagFilters.map((nv) => nv.value))}`
+      : null
+
+      console.log("🚀 ~ file: ExampleSection.tsx:69 ~ key:", key)
+  const { data, error, isLoading, isValidating } = useSWR(key, fetcher, { revalidateOnMount: true })
+  console.log("🚀 ~ file: ExampleSection.tsx:76 ~ data:", data)
+  // const data = []
+
   function ExamplesSelector() {
+    if (isLoading) return <div className="skeleton">loading</div>;
     return (
       <div>
+        <div className="m-auto mt-3 flex max-w-5xl lg:w-1/2">
+          <Select
+            defaultValue={catFilters}
+            id="cat-select"
+            isMulti
+            placeholder="filter categories"
+            name="categories"
+            options={props?.Category}
+            className="mr-3 w-1/2 text-xs"
+            onChange={setCatFilters}
+          />
+          <Select
+            defaultValue={tagFilters}
+            id="tag-select"
+            placeholder="filter tags"
+            isMulti
+            name="tags"
+            className="w-1/2 text-xs"
+            options={props?.Tag}
+            onChange={setTagFilters}
+          />
+        </div>
         <div className="flex gap-6 overflow-x-auto">
-          {content?.map((c) => (
+          {data?.map((c) => (
             <div className="flex h-52 flex-col justify-between">
               <div className="m-auto w-9 sm:w-16">
                 <div className="relative m-auto h-24 rounded-lg">
@@ -86,10 +142,6 @@ export default function ExampleSection({
             </Disclosure.Button>
             <Disclosure.Panel className="px-2 pb-2 text-sm text-gray-500">
               <div className="">
-                {/* <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 ">
-        Examples
-      </h5> */}
-
                 {isSubelementClicked ? (
                   <ExampleDetail
                     onGoBack={() => setIsSubelementClicked(false)}
