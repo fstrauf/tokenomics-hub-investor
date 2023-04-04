@@ -1,14 +1,14 @@
 import TDFSideBar from './TDFSideBar'
 import { useRef, useState } from 'react'
 import dynamic from 'next/dynamic'
-import { FieldArray, Form, Formik, FormikProps } from 'formik'
+import { FieldArray, Form, Formik, FormikProps, useFormik } from 'formik'
 import toast, { Toaster } from 'react-hot-toast'
 import FormAutoSave from '../form/FormAutoSave'
 import FormId from '../form/FormId'
 // import TDFHeaders from './TDFHeaders'
 
 export default function TDFMain({ props }) {
-  console.log("🚀 ~ file: TDFMain.tsx:11 ~ TDFMain ~ props:", props)
+  console.log('🚀 ~ file: TDFMain.tsx:11 ~ TDFMain ~ props:', props)
   const [activePhase, setActivePhase] = useState(11) //props.design.activePhase
   const [postId, setPostId] = useState(props.post.id || '')
 
@@ -243,28 +243,36 @@ Revenue goes to:
           <TDF701 props={props} values={values} activePhase={activePhase} />
         )
       default:
-        return <TDFGenericOneField  props={props} activePhase={activePhase} />
+        return <TDFGenericOneField props={props} activePhase={activePhase} />
     }
   }
-  const formRef = useRef<FormikProps<any>>(null)
-  console.log('🚀 ~ file: TDFMain.tsx:248 ~ TDFMain ~ formRef:', formRef)
+  // const formRef = useRef<FormikProps<any>>(null)
+  // console.log('🚀 ~ file: TDFMain.tsx:248 ~ TDFMain ~ formRef:', formRef)
 
-  const handleSubmit = () => {
-    console.log('isSubmitting:', formRef.current.isSubmitting)
-    if (formRef.current) {
-      formRef.current.handleSubmit()
-    }
-  }
+  // const formik = useFormik({
+  //   initialValues: initialValues,
+  //   onSubmit: submitData,
+  // })
+
+  // const handleSubmit = () => {
+  //   console.log('isSubmitting:', formRef.current.isSubmitting)
+  //   if (formRef.current) {
+  //     formRef.current.handleSubmit()
+  //   }
+  // }
+
+  // console.log('formik', formik)
 
   return (
     <div className="mt-4 mb-4 rounded-lg bg-gray-100 p-1">
-      <div className="rounded-lg p-2 py-2">
-        {/* <p className='font-bold text-xl'>{values?.title}</p> */}
+      <div className="h-12 w-[100%]"></div>
+      {/* <div className="rounded-lg p-2 py-2">
+        <p className="text-xl font-bold">{formik.values?.title}</p>
         <div className="flex justify-end gap-1">
           <button
             type="submit"
-            // disabled={isSubmittings}
-            onClick={handleSubmit}
+            disabled={formik.isSubmitting}
+            onClick={formik.handleSubmit}
             className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
           >
             Save
@@ -273,7 +281,7 @@ Revenue goes to:
             Share Report
           </button>
         </div>
-      </div>
+      </div> */}
       {/* <div className="mt-5">header</div> */}
       <div className="mb-5 flex gap-1">
         <div className="w-1/6">
@@ -289,7 +297,7 @@ Revenue goes to:
               initialValues={initialValues}
               onSubmit={submitData}
               enableReinitialize
-              innerRef={formRef}
+              // innerRef={formRef}
             >
               {({ isSubmitting, setFieldValue, values }) => (
                 <Form>
@@ -300,12 +308,33 @@ Revenue goes to:
                       <div>{renderSwitch(values, setFieldValue)}</div>
                     )}
                   />
-                   <FormId
-                  postId={postId}
-                  type="text"
-                  name="id"
-                  className="hidden w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
-                />
+                  <FormId
+                    postId={postId}
+                    type="text"
+                    name="id"
+                    className="hidden w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
+                  />
+
+                  <div className="absolute top-[124px] right-[-140px] left-10 grid grid-cols-6 rounded-lg p-2 py-2 ">
+                    <div className="col-span-4">
+                      <p className="mt-2 text-xl font-bold ml-[154px] ">
+                        {values?.title}
+                      </p>
+                    </div>
+                    <div className="flex justify-end gap-1">
+                      <button
+                        type="submit"
+                        disabled={isSubmitting}
+                        // onClick={formik.handleSubmit}
+                        className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
+                      >
+                        Save
+                      </button>
+                      <button className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40">
+                        Share Report
+                      </button>
+                    </div>
+                  </div>
                 </Form>
               )}
             </Formik>
