@@ -149,6 +149,7 @@ export default function TDFMain({ props }) {
           <TDFGenericOneField
             props={props}
             activePhase={activePhase}
+            values={values}
             placeholder={`Problem:
         - State the problem that the protocol is trying to solve        
 Solution:
@@ -160,6 +161,7 @@ Solution:
           <TDFGenericOneField
             props={props}
             activePhase={activePhase}
+            values={values}
             placeholder={`Similar projects include...`}
           />
         )
@@ -168,6 +170,7 @@ Solution:
           <TDFGenericOneField
             props={props}
             activePhase={activePhase}
+            values={values}
             placeholder={`The value created by [protocol] is...`}
           />
         )
@@ -176,6 +179,7 @@ Solution:
           <TDFGenericOneField
             props={props}
             activePhase={activePhase}
+            values={values}
             placeholder={`The business model for [protocol]:
 Revenue comes from:
 [Explanation]
@@ -251,7 +255,7 @@ Revenue goes to:
           <TDF701 props={props} values={values} activePhase={activePhase} />
         )
       default:
-        return <TDFGenericOneField props={props} activePhase={activePhase} />
+        return <TDFGenericOneField props={props} values={values} activePhase={activePhase} />
     }
   }
   const formRef = useRef<FormikProps<any>>(null)

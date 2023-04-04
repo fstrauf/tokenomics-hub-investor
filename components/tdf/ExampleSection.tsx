@@ -7,8 +7,6 @@ import useSWR from 'swr'
 import Select from 'react-select'
 
 export const fetcher = async (url, param) => {
-  console.log("🚀 ~ file: ExampleSection.tsx:11 ~ fetcher ~ param:", param)
-  console.log("🚀 ~ file: ExampleSection.tsx:11 ~ fetcher ~ url:", url)
   const body = { param }
   const res = await fetch(url, {
     method: 'POST',
@@ -25,13 +23,15 @@ export const fetcher = async (url, param) => {
 
 export default function ExampleSection({
   props,
-  presetFilters,
+  presetTags,
+  presetCategories,
   exampleField,
   exampleDetail,
 }) {
   const [example, setExample] = useState({})
-  const [tagFilters, setTagFilters] = useState({})
-  const [catFilters, setCatFilters] = useState({})
+  const [tagFilters, setTagFilters] = useState(presetCategories || null)
+  const [catFilters, setCatFilters] = useState(presetTags || null)
+  
   const [isSubelementClicked, setIsSubelementClicked] = useState(false)
 
   function handleDetailClicked(c) {
@@ -65,54 +65,37 @@ export default function ExampleSection({
     ExampleDetail = exampleDetail
   }
 
-  function filterCategories(newValue: MultiValue<any>): void {
-    console.log("🚀 ~ file: ExampleSection.tsx:70 ~ filterCategories ~ newValue:", newValue)
-    if (newValue.length === 0) {
-      setCatFilters({})
-    } else {
-      setCatFilters(newValue.map((nv) => nv.value))
-    }
-  }
-
-  function filterTags(newValue: MultiValue<any>): void {
-    console.log("🚀 ~ file: ExampleSection.tsx:79 ~ filterTags ~ newValue:", newValue)
-    if (newValue.length === 0) {
-      setTagFilters({})
-    } else {
-      setTagFilters(newValue.map((nv) => nv.value))
-    }
-  }
+  const key =
+    tagFilters && catFilters
+      ? `/api/get/getExamplePostData/?categories=${JSON.stringify(catFilters.map((nv) => nv.value))}&tags=${JSON.stringify(tagFilters.map((nv) => nv.value))}`
+      : null
+  const { data, error, isLoading, isValidating } = useSWR(key, fetcher, { revalidateOnMount: true })
+  // const data = []
 
   function ExamplesSelector() {
-    const key = tagFilters && catFilters ? `/api/get/getExamplePostData/?category=${catFilters}?tags=${tagFilters}` : null;
-    const { data, error } = useSWR(key,fetcher, { revalidateOnMount: true }
-    )
-    console.log(
-      '🚀 ~ file: ExampleSection.tsx:29 ~ ExampleDetail ~ data:',
-      data
-    )
+    if (isLoading) return <div className="skeleton">loading</div>;
     return (
       <div>
-        <div className="m-auto flex lg:w-1/2 max-w-5xl mt-3">
+        <div className="m-auto mt-3 flex max-w-5xl lg:w-1/2">
           <Select
-            defaultValue={presetFilters?.categories}
+            defaultValue={catFilters}
             id="cat-select"
             isMulti
             placeholder="filter categories"
             name="categories"
             options={props?.Category}
             className="mr-3 w-1/2 text-xs"
-            onChange={filterCategories}
+            onChange={setCatFilters}
           />
           <Select
-            defaultValue={presetFilters?.tags}
+            defaultValue={tagFilters}
             id="tag-select"
             placeholder="filter tags"
             isMulti
             name="tags"
             className="w-1/2 text-xs"
             options={props?.Tag}
-            onChange={filterTags}
+            onChange={setTagFilters}
           />
         </div>
         <div className="flex gap-6 overflow-x-auto">
@@ -155,10 +138,6 @@ export default function ExampleSection({
             </Disclosure.Button>
             <Disclosure.Panel className="px-2 pb-2 text-sm text-gray-500">
               <div className="">
-                {/* <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 ">
-        Examples
-      </h5> */}
-
                 {isSubelementClicked ? (
                   <ExampleDetail
                     onGoBack={() => setIsSubelementClicked(false)}

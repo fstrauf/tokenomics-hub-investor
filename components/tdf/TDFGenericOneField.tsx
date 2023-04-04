@@ -8,6 +8,7 @@ export default function TDFGenericOneField({
   props,
   activePhase,
   placeholder,
+  values
 }) {
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
   return (
@@ -24,7 +25,10 @@ export default function TDFGenericOneField({
       />
       <ResourceSection content={designPhase.Resources} />
       <ExampleSection
+        presetCategories={values.categories}
+        presetTags={values.tags}
         props={props}
+        presetFilters={null}
         exampleField={designPhase.postDataElement}
         exampleDetail={undefined}
       />
