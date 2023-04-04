@@ -9,7 +9,7 @@ export default function ResourceSection({ content }) {
       {({ open }) => (
         <>
           <div className="mt-2 rounded-lg border-4  border-gray-300 border-opacity-20">
-            <Disclosure.Button className="flex w-full justify-between rounded-sm bg-gray-300 bg-opacity-20 px-4 py-2 text-left text-sm font-medium hover:bg-opacity-100 focus:outline-none focus-visible:ring focus-visible:ring-gray-500 focus-visible:ring-opacity-75">
+            <Disclosure.Button className="flex w-full justify-between rounded-sm bg-gray-300 bg-opacity-20 px-4 py-1 text-left text-sm font-medium hover:bg-opacity-100 focus:outline-none focus-visible:ring focus-visible:ring-gray-500 focus-visible:ring-opacity-75">
               <FormDivider text="Resources" />
               <ChevronIcon />
               {/* <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 ">
