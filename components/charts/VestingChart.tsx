@@ -55,7 +55,6 @@ export default withTooltip<StackedAreasProps, TooltipData>(
     fields,
     totalSupply,
   }: StackedAreasProps & WithTooltipProvidedProps<TooltipData>) => {
-    console.log("🚀 ~ file: VestingChart.tsx:58 ~ data:", data)
 
     if(data===undefined){
       return null
