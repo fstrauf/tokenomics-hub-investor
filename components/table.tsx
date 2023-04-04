@@ -1,27 +1,21 @@
 import React from 'react'
 import Link from 'next/link'
-import { CircularProgressbar } from 'react-circular-progressbar'
 import CoverImage from './cover-image'
-// import { urlForImage } from '../lib/sanity'
 
 import {
   createColumnHelper,
   flexRender,
   getCoreRowModel,
-  // SortingState,
   getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table'
 
 type Protocol = {
   title: string
-  // catTitle: object
-  // tokenStrength: object
   tokenStrength: any
   coverImage: object
   mainImageUrl: string
   id: string
-  // slug: string
   categories: any
   ticker: string
 }
@@ -49,43 +43,17 @@ const columns = [
       />
     ),
   }),
-  columnHelper.accessor((row) => row.tokenStrength, {
-    // columnHelper.accessor(row => row.tokenStrength.tokenStrength, {
-    id: 'Token Strength',
-    cell: (info) => <TokenStrength value={info.getValue()} />,
-  }),
   columnHelper.accessor((row) => row.categories, {
-    // columnHelper.accessor((row) => row.categories[0]?.label, {
     id: 'Category',
-    // cell: (info) => <StatusPill value={info.getValue()} />,
     cell: (info) => <CategoryPills value={info.getValue()} />,
   }),
 ]
 
 const Table: React.FC<{ prop: Props }> = ({ prop }) => {
-  // console.log("🚀 ~ file: table.tsx:55 ~ prop", prop)
-  // const [data, setData] = React.useState(() => [...prop])
-  // const [data, setData] = React.useState(prop)
-  
   const data = prop
-  // console.log("🚀 ~ file: table.tsx:57 ~ data", data)
-  // const [sorting, setSorting] = React.useState<SortingState>([
-  //   { id: 'Token Strength', desc: true },
-  // ])
-
-  // console.log(data[0].categories)
   const table = useReactTable({
     data,
     columns,
-    // state: {
-    //   sorting,
-    // },
-    // initialState: {
-    //   sorting: {
-
-    //   }
-    // },
-    // onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
   })
@@ -192,24 +160,13 @@ function HeaderLink({ value, id, ticker }) {
   )
 }
 
-function TokenStrength({ value }) {
-  const strength = value
-  return (
-    <div className="m-auto h-10 w-10">
-      <CircularProgressbar value={strength} text={`${strength}`} />
-    </div>
-  )
-}
-
 function ProtocolImage({ value, id }) {
-  // console.log(value)
   return (
     <div className="ml-4 w-4 sm:w-16">
       <CoverImage
         id={id}
         title={id}
         imageObject={value}
-        // url={urlForImage(value).url()}
         url={value}
       />
     </div>
