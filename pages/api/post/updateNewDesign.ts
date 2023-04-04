@@ -33,7 +33,7 @@ export default async function handle(req, res) {
       details: m.details,
       isSink: m.isSink,
       token: m.token,
-      isTemplate: m.isTemplate,
+      isTemplate: false,
       category: m.category,
       lockupPeriod: m.lockupPeriod,
       unlockPeriod: m.unlockPeriod,

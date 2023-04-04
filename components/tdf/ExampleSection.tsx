@@ -65,16 +65,11 @@ export default function ExampleSection({
     ExampleDetail = exampleDetail
   }
 
-  const key =
-    
+  const key =    
     tagFilters && catFilters
       ? `/api/get/getExamplePostData/?categories=${JSON.stringify(catFilters.map((nv) => nv.value))}&tags=${JSON.stringify(tagFilters.map((nv) => nv.value))}`
       : null
-
-      console.log("🚀 ~ file: ExampleSection.tsx:69 ~ key:", key)
   const { data, error, isLoading, isValidating } = useSWR(key, fetcher, { revalidateOnMount: true })
-  console.log("🚀 ~ file: ExampleSection.tsx:76 ~ data:", data)
-  // const data = []
 
   function ExamplesSelector() {
     if (isLoading) return <div className="skeleton">loading</div>;
