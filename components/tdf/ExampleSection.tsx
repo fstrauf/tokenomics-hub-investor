@@ -29,8 +29,8 @@ export default function ExampleSection({
   exampleDetail,
 }) {
   const [example, setExample] = useState({})
-  const [tagFilters, setTagFilters] = useState(presetCategories || null)
-  const [catFilters, setCatFilters] = useState(presetTags || null)
+  const [tagFilters, setTagFilters] = useState(presetTags || null)
+  const [catFilters, setCatFilters] = useState(presetCategories || null)
   
   const [isSubelementClicked, setIsSubelementClicked] = useState(false)
 
@@ -66,10 +66,14 @@ export default function ExampleSection({
   }
 
   const key =
+    
     tagFilters && catFilters
       ? `/api/get/getExamplePostData/?categories=${JSON.stringify(catFilters.map((nv) => nv.value))}&tags=${JSON.stringify(tagFilters.map((nv) => nv.value))}`
       : null
+
+      console.log("🚀 ~ file: ExampleSection.tsx:69 ~ key:", key)
   const { data, error, isLoading, isValidating } = useSWR(key, fetcher, { revalidateOnMount: true })
+  console.log("🚀 ~ file: ExampleSection.tsx:76 ~ data:", data)
   // const data = []
 
   function ExamplesSelector() {
