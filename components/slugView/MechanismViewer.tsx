@@ -1,17 +1,18 @@
-import { useState } from "react"
+import { useState } from 'react'
 // import MechanismCardViewer from "../slugView/MechanismCardViewer"
-import Drawer from "./Drawer"
-import { MechanismCardViewer } from "./MechanismCardViewer"
+import Drawer from './Drawer'
+import { MechanismCardViewer } from './MechanismCardViewer'
+// import StaticAllocationAndVestingChart from '../charts/StaticAllocationAndVestingChart'
+import TDFCalculatorViewer from './TDFCalculatorViewer'
 
-export default function MechanismViewer({ mechanisms }) {
+export default function MechanismViewer({ post }) {
   console.log(
     '🚀 ~ file: MechanismViewer.tsx:2 ~ MechanismViewer ~ mechanisms:',
-    mechanisms
+    post
   )
   let [mechanismIndex, setMechanismIndex] = useState(0)
   const [isOpen, setIsOpen] = useState(false)
   const handleViewMechanism = (index) => {
-    console.log("🚀 ~ file: MechanismViewer.tsx:14 ~ handleViewMechanism ~ index:", index)
     setMechanismIndex(index)
     setIsOpen(true)
   }
@@ -54,67 +55,65 @@ export default function MechanismViewer({ mechanisms }) {
       </h1>
       <Drawer isOpen={isOpen} setIsOpen={setIsOpen}>
         {isOpen && (
-          <MechanismCardViewer
-            mechanism={mechanisms[mechanismIndex]}
-            // mechanismIndex={mechanismIndex}
-            // setFieldValue={setFieldValue}
-            // users={values.PostUser} // mechanismImpactFactors={mechanismImpactFactors}
-          />
+          <MechanismCardViewer mechanism={post.Mechanism[mechanismIndex]} />
         )}
       </Drawer>
-      <div className="flex justify-center rounded-lg border-2 p-2">
-        <div className="w-1/2">
-          <div className="mb-1 flex gap-2">
-            {' '}
-            <p>Supply</p>
-            {/* <button
-                    type="button"
-                    className="h-11 w-28 rounded-md border-2 border-dao-green text-xs font-bold"
-                    onClick={() => handleNewMechanism(arrayHelpers, false)}
-                  >
-                    Add Incentive
-                  </button> */}
+      <div className="rounded-lg border-2 p-2">
+        <div className="flex justify-center">
+          <div className="w-1/2">
+            <div className="mb-1 flex gap-2">
+              {' '}
+              <p>Supply</p>
+            </div>
+            <div className="h-60 overflow-auto rounded-lg border-2 border-slate-300">
+              <div
+                key={4711}
+                className="flex flex-row flex-wrap gap-2 overflow-auto p-2"
+              >
+                {post.Mechanism.length > 0 &&
+                  post.Mechanism.map((input, index) => (
+                    <>
+                      {!input.isSink ? (
+                        <>{mechanismTile(input, index)}</>
+                      ) : (
+                        <></>
+                      )}
+                    </>
+                  ))}
+              </div>
+            </div>
           </div>
-          <div className="h-60 overflow-auto rounded-lg border-2 border-slate-300">
-            <div
-              key={4711}
-              className="flex flex-row flex-wrap gap-2 overflow-auto p-2"
-            >
-              {mechanisms.length > 0 &&
-                mechanisms.map((input, index) => (
-                  <>
-                    {!input.isSink ? <>{mechanismTile(input, index)}</> : <></>}
-                  </>
-                ))}
+          <div className="w-1/2">
+            <div className="mb-1 flex gap-2">
+              {' '}
+              <p>Demand</p>
+            </div>
+
+            <div className="h-60 rounded-lg border-2 border-slate-300">
+              <div
+                key={4811}
+                className="flex flex-row flex-wrap gap-2 overflow-auto p-2"
+              >
+                {post.Mechanism.length > 0 &&
+                  post.Mechanism.map((input, index) => (
+                    <>
+                      {input.isSink ? (
+                        <>{mechanismTile(input, index)}</>
+                      ) : (
+                        <></>
+                      )}
+                    </>
+                  ))}
+              </div>
             </div>
           </div>
         </div>
-        <div className="w-1/2">
-          <div className="mb-1 flex gap-2">
-            {' '}
-            <p>Demand</p>
-            {/* <button
-                    type="button"
-                    className="h-11 w-28 rounded-md border-2 border-dao-green text-xs font-bold"
-                    onClick={() => handleNewMechanism(arrayHelpers, true)}
-                  >
-                    Add Mechanism
-                  </button> */}
-          </div>
-
-          <div className="h-60 rounded-lg border-2 border-slate-300">
-            <div
-              key={4811}
-              className="flex flex-row flex-wrap gap-2 overflow-auto p-2"
-            >
-              {mechanisms.length > 0 &&
-                mechanisms.map((input, index) => (
-                  <>
-                    {input.isSink ? <>{mechanismTile(input, index)}</> : <></>}
-                  </>
-                ))}
-            </div>
-          </div>
+        <div>
+          <TDFCalculatorViewer values={post} />
+          {/* <StaticAllocationAndVestingChart
+            calculation={calculation}
+            mechanisms={mechanisms}
+          /> */}
         </div>
       </div>
     </section>

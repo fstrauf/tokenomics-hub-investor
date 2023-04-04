@@ -22,7 +22,11 @@ import { useAuth } from '@clerk/clerk-react/dist/hooks/useAuth'
 import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
 import Calculation from '../../components/slugView/calculation'
 import { clerkClient } from '@clerk/nextjs/server'
-import { clerkConvertJSON, getTotalStrength, postStatus } from '../../lib/helper'
+import {
+  clerkConvertJSON,
+  getTotalStrength,
+  postStatus,
+} from '../../lib/helper'
 import MechanismViewer from '../../components/slugView/MechanismViewer'
 import UserViewer from '../../components/slugView/UserViewer'
 
@@ -104,14 +108,7 @@ export default function Post({ post, morePosts, author }) {
               <button
                 onClick={editPost}
                 disabled={
-                  !(
-                    (
-                      userIsAuthor ||
-                      contributor
-                    )
-                  ) ||
-                  !isSignedIn ||
-                  isSubmitting
+                  !(userIsAuthor || contributor) || !isSignedIn || isSubmitting
                 }
                 className="mb-3 w-28 rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
               >
@@ -120,7 +117,7 @@ export default function Post({ post, morePosts, author }) {
               <FeedbackPopup isOpen={isOpen} handleIsOpen={handleIsOpen} />
               <div className={`top-3 w-full ${isOpen ? '' : 'sticky z-30'}`}>
                 <div className="overflow-x-auto border-b-2 border-black bg-white">
-                  <ul className="flex gap-3 justify-evenly text-xs py-2">
+                  <ul className="flex justify-evenly gap-3 py-2 text-xs">
                     <li>
                       <Link
                         className="flex items-center font-bold text-gray-900 no-underline hover:rounded hover:bg-gray-700 hover:text-white"
@@ -249,7 +246,7 @@ export default function Post({ post, morePosts, author }) {
                   <div id="diagram"></div>
                   <Diagram diagram={post.diagramUrl} />
                   <div id="supplyDemand"></div>
-                  <MechanismViewer mechanisms={post.Mechanism} />
+                  <MechanismViewer post={post} />
                   <div id="users"></div>
                   <UserViewer users={post.PostUser} />
                   <div id="Resources"></div>
@@ -263,7 +260,13 @@ export default function Post({ post, morePosts, author }) {
                 Author.
               </h1>
 
-              {!post.isOfficial ? <AuthorCard author={author} /> : <ProtocolCard author={author} post={post} >hi</ProtocolCard>}
+              {!post.isOfficial ? (
+                <AuthorCard author={author} />
+              ) : (
+                <ProtocolCard author={author} post={post}>
+                  hi
+                </ProtocolCard>
+              )}
             </article>
             <SectionSeparator />
           </>
@@ -289,11 +292,11 @@ export async function getStaticProps({ params }) {
           date: 'asc',
         },
       },
-      Mechanism: { 
+      Mechanism: {
         include: {
           CalculationTimeSeries: {},
           PostUser: {},
-        }
+        },
       },
       PostUser: {},
       author: {},
@@ -330,7 +333,7 @@ export async function getStaticProps({ params }) {
       },
       where: {
         postId: post.id,
-      }
+      },
     })
   )
 
@@ -345,7 +348,7 @@ export async function getStaticProps({ params }) {
   clerkUser = clerkConvertJSON(clerkUser)
 
   clerkUser.articleCount = response[0] || 0
-  
+
   clerkUser.cat = response[1] || null
 
   return {
@@ -360,7 +363,7 @@ export async function getStaticProps({ params }) {
 export async function getStaticPaths() {
   const allPosts = await prisma.post.findMany({
     select: {
-      id: true,      
+      id: true,
     },
     // where: {
     //   status: postStatus.published

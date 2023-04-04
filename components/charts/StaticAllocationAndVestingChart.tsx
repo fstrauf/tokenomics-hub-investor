@@ -4,7 +4,8 @@ import { getAreaData, shortBigNumber } from '../../lib/helper'
 import * as duration from 'dayjs/plugin/duration'
 import * as dayjs from 'dayjs'
 
-export default function StaticAllocationAndVestingChart(calculation) {
+export default function StaticAllocationAndVestingChart({calculation, mechanisms}) {
+  console.log("🚀 ~ file: StaticAllocationAndVestingChart.tsx:8 ~ calculation:", calculation)
   dayjs.extend(duration)
   const secondsPerMonth = 2628000
 
@@ -93,7 +94,7 @@ export default function StaticAllocationAndVestingChart(calculation) {
             )}
           </ParentSize>
         </div>
-        <div>
+        {/* <div>
           <h1 className="mb-4text-black section-head text-base font-bold">
             Monthly Emissions
           </h1>
@@ -101,8 +102,6 @@ export default function StaticAllocationAndVestingChart(calculation) {
             <div className="mb-3 grid grid-cols-[auto_auto_auto_auto_auto] gap-1">
               {monthHeader}
               {calc?.CalculationRows.map((cr) => (
-                // {values?.calculationRows?.length > 0 &&
-                //   values?.calculationRows?.map((input, index) => (
                 <>{!cr.isEpochDistro ? monthRow(cr) : <></>}</>
               ))}
             </div>
@@ -118,7 +117,7 @@ export default function StaticAllocationAndVestingChart(calculation) {
               ))}
             </div>
           </div>
-        </div>      
+        </div>       */}
       </div>
       <div className="w-full">
         <div className="h-96 w-full">

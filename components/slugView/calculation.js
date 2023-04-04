@@ -1,6 +1,7 @@
 import StaticAllocationAndVestingChart from '../charts/StaticAllocationAndVestingChart'
 
 export default function Calculation(calculation) {
+  // console.log("🚀 ~ file: calculation.js:4 ~ Calculation ~ calculation:", calculation)
   if (calculation.calculation === undefined || calculation.calculation === null ) {
     return (
       <>

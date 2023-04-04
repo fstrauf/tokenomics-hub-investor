@@ -14,7 +14,6 @@ import { confirmAlert } from 'react-confirm-alert'
 import 'react-confirm-alert/src/react-confirm-alert.css'
 
 export default function DesignCard({ post, context }) {
-  console.log('🚀 ~ file: designCard.tsx:17 ~ DesignCard ~ post:', post)
   const { user } = useUser()
   const [isSubmitting, setSubmitting] = useState(false)
   let [isOpen, setIsOpen] = useState(false)
