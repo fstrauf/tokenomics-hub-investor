@@ -22,10 +22,14 @@ import { useAuth } from '@clerk/clerk-react/dist/hooks/useAuth'
 import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
 import Calculation from '../../components/slugView/calculation'
 import { clerkClient } from '@clerk/nextjs/server'
-import { clerkConvertJSON, getTotalStrength, postStatus } from '../../lib/helper'
+import {
+  clerkConvertJSON,
+  getTotalStrength,
+  postStatus,
+} from '../../lib/helper'
 import MechanismViewer from '../../components/slugView/MechanismViewer'
 import UserViewer from '../../components/slugView/UserViewer'
-
+import ExportPopup from '../../components/exportPopup.jsx'
 export default function Post({ post, morePosts, author }) {
   const PostBody = dynamic(
     () => import('../../components/slugView/post-body'),
@@ -50,7 +54,15 @@ export default function Post({ post, morePosts, author }) {
   const [isSubmitting, setSubmitting] = useState(false)
   const { isSignedIn } = useAuth()
   const { user } = useUser()
+  let [isExportOpen, setExportIsOpen] = useState(false)
 
+  function closeExportModal() {
+    setExportIsOpen(false)
+  }
+
+  function openExportModal() {
+    setExportIsOpen(true)
+  }
   var userIsAuthor = false
   if (user?.id === post?.authorClerkId) {
     userIsAuthor = true
@@ -63,6 +75,13 @@ export default function Post({ post, morePosts, author }) {
   const handleIsOpen = useCallback(
     (event) => {
       setIsOpen(false)
+    },
+    [isOpen]
+  )
+
+  const handleExportIsOpen = useCallback(
+    (event) => {
+      setExportIsOpen(false)
     },
     [isOpen]
   )
@@ -87,7 +106,7 @@ export default function Post({ post, morePosts, author }) {
         ) : (
           <>
             <article className="mt-10">
-              <PostMeta title={post.title} content={post.shortDescription} />
+              <PostMeta title={post.title} />
 
               <PostHeader
                 title={post.title}
@@ -104,23 +123,36 @@ export default function Post({ post, morePosts, author }) {
               <button
                 onClick={editPost}
                 disabled={
-                  !(
-                    (
-                      userIsAuthor ||
-                      contributor
-                    )
-                  ) ||
-                  !isSignedIn ||
-                  isSubmitting
+                  !(userIsAuthor || contributor) || !isSignedIn || isSubmitting
                 }
                 className="mb-3 w-28 rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
               >
                 Edit
               </button>
+              <button
+                type="button"
+                onClick={openExportModal}
+                disabled={
+                  !(userIsAuthor || contributor) || !isSignedIn || isSubmitting
+                }
+                className="mb-3 flex w-28 justify-center rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
+              >
+                Export
+              </button>
+
+              <ExportPopup
+                isOpen={isExportOpen}
+                handleIsOpen={handleExportIsOpen}
+                component={<TimeLine items={post.protocolTimeLine} />}
+              />
               <FeedbackPopup isOpen={isOpen} handleIsOpen={handleIsOpen} />
-              <div className={`top-3 w-full ${isOpen ? '' : 'sticky z-30'}`}>
+              <div
+                className={`top-3 w-full ${
+                  isOpen || isExportOpen ? '' : ''
+                }`}
+              >
                 <div className="overflow-x-auto border-b-2 border-black bg-white">
-                  <ul className="flex gap-3 justify-evenly text-xs py-2">
+                  <ul className="flex justify-evenly gap-3 py-2 text-xs">
                     <li>
                       <Link
                         className="flex items-center font-bold text-gray-900 no-underline hover:rounded hover:bg-gray-700 hover:text-white"
@@ -263,7 +295,13 @@ export default function Post({ post, morePosts, author }) {
                 Author.
               </h1>
 
-              {!post.isOfficial ? <AuthorCard author={author} /> : <ProtocolCard author={author} post={post} >hi</ProtocolCard>}
+              {!post.isOfficial ? (
+                <AuthorCard author={author} />
+              ) : (
+                <ProtocolCard author={author} post={post}>
+                  hi
+                </ProtocolCard>
+              )}
             </article>
             <SectionSeparator />
           </>
@@ -289,11 +327,11 @@ export async function getStaticProps({ params }) {
           date: 'asc',
         },
       },
-      Mechanism: { 
+      Mechanism: {
         include: {
           CalculationTimeSeries: {},
           PostUser: {},
-        }
+        },
       },
       PostUser: {},
       author: {},
@@ -330,7 +368,7 @@ export async function getStaticProps({ params }) {
       },
       where: {
         postId: post.id,
-      }
+      },
     })
   )
 
@@ -345,7 +383,7 @@ export async function getStaticProps({ params }) {
   clerkUser = clerkConvertJSON(clerkUser)
 
   clerkUser.articleCount = response[0] || 0
-  
+
   clerkUser.cat = response[1] || null
 
   return {
@@ -360,7 +398,7 @@ export async function getStaticProps({ params }) {
 export async function getStaticPaths() {
   const allPosts = await prisma.post.findMany({
     select: {
-      id: true,      
+      id: true,
     },
     // where: {
     //   status: postStatus.published

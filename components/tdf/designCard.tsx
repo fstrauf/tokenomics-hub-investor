@@ -161,7 +161,7 @@ export default function DesignCard({ post, context }) {
             </p>
           ))}
       </div>
-      <div className="m-auto mt-4 flex justify-center space-x-3 p-2 md:mt-6">
+      <div className="mt-4 flex justify-center space-x-3 p-2 md:mt-6">
         <Link
           as={`/editDesign/${post?.id}`}
           href="/editDesign/[slug]"
@@ -333,8 +333,8 @@ export default function DesignCard({ post, context }) {
                             <div className="mt-2">
                               {/* {values.slug ? ( */}
                               <pre className="text-xs text-gray-500">
-                                http://tokenomicshub.xyz/posts/
-                                {post.slug}
+                                http://tokenomicshub.xyz/editDesign/
+                                {post.id}
                               </pre>
                               {/* ) : (
                                                 <pre className="text-sm text-gray-500">
@@ -347,7 +347,7 @@ export default function DesignCard({ post, context }) {
                                 className="mr-2 inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:bg-dao-red focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                                 onClick={() =>
                                   navigator.clipboard.writeText(
-                                    `http://tokenomicshub.xyz/posts/${post.id}`
+                                    `http://tokenomicshub.xyz/editDesign/${post.id}`
                                   )
                                 }
                               >
