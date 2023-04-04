@@ -77,6 +77,17 @@ export default function Header2({ mode }) {
     </Link>
   )
 
+  const allDraftsAdmin = (
+    <Link
+      href="/allDrafts"
+      className="-m-3 flex items-start rounded-lg p-3 hover:bg-gray-700"
+    >
+      <div className="ml-4">
+        <p className="text-base font-medium text-white">Report Drafts Admin</p>
+      </div>
+    </Link>
+  )
+
   const postAdmin = (
     <Link
       href="/adminView"
@@ -212,6 +223,7 @@ export default function Header2({ mode }) {
                               {tdsPhaseAdmin}
                               {postAdmin}
                               {mechanismAdmin}
+                              {allDraftsAdmin}
                             </div>
                           </div>
                         </Popover.Panel>
