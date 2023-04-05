@@ -343,7 +343,7 @@ Revenue goes to:
                     name="id"
                     className="hidden w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
                   />
-                  <div className="absolute top-[124px] right-[-140px] left-10 grid grid-cols-6 rounded-lg p-2 py-2 ">
+                  <div className="absolute top-[75px] right-[-140px] left-10 grid grid-cols-6 rounded-lg p-2 py-2 ">
                     <div className="col-span-4">
                       <p className="mt-2 ml-[154px] text-xl font-bold ">
                         {values?.title}
@@ -365,11 +365,11 @@ Revenue goes to:
                       >
                         View
                       </Link>
-                      <button className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40">
+                      <button
+                        type="button"
+                        className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
+                      >
                         Share
-                      </button>
-                      <button className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40">
-                        Share Report
                       </button>
                     </div>
                   </div>
