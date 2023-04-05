@@ -53,9 +53,12 @@ export default function TDFMain({ props }) {
   const TDF404 = dynamic(() => import('./TDF404'), {
     loading: () => <p>Loading</p>,
   })
-  const TDF_valueDemandUtility = dynamic(() => import('./TDF_valueDemandUtility'), {
-    loading: () => <p>Loading</p>,
-  })
+  const TDF_valueDemandUtility = dynamic(
+    () => import('./TDF_valueDemandUtility'),
+    {
+      loading: () => <p>Loading</p>,
+    }
+  )
   const TDF501 = dynamic(() => import('./TDF501'), {
     loading: () => <p>Loading</p>,
   })
@@ -229,7 +232,11 @@ Revenue goes to:
         )
       case 801:
         return (
-          <TDF_valueDemandUtility props={props} values={values} activePhase={activePhase} />
+          <TDF_valueDemandUtility
+            props={props}
+            values={values}
+            activePhase={activePhase}
+          />
         )
       case 501:
         return (
@@ -256,7 +263,13 @@ Revenue goes to:
           <TDF701 props={props} values={values} activePhase={activePhase} />
         )
       default:
-        return <TDFGenericOneField props={props} values={values} activePhase={activePhase} />
+        return (
+          <TDFGenericOneField
+            props={props}
+            values={values}
+            activePhase={activePhase}
+          />
+        )
     }
   }
   const formRef = useRef<FormikProps<any>>(null)
@@ -282,12 +295,12 @@ Revenue goes to:
             Save
           </button>
           <Link
-          as={`/posts/${postId}`}
-          href="/posts/[id]]"
-          className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
-        >
-          View
-        </Link>
+            as={`/posts/${postId}`}
+            href="/posts/[id]]"
+            className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
+          >
+            View
+          </Link>
           <button className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40">
             Share
           </button>
