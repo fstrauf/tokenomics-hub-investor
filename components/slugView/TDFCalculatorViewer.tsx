@@ -25,24 +25,24 @@ export default function TDFCalculatorViewer(props) {
       <Toaster />
       <div className="mt-5">      
         <div className="flex">
-          <div>
-            <div className="mb-1 flex">
-              <label className="mb-2 block text-xs font-medium text-gray-900">
+          <div className='w-3/12'>
+            <div className="gap-2 flex">
+              <label className="mb-2 w-20 text-xs font-medium text-gray-900">
                 Total Supply
               </label>
-              <p className="">{values?.Calculation?.totalSupply}</p>
+              <p className="text-xs">{values?.Calculation?.totalSupply}</p>
             </div>
-            <div className="mb-1 flex">
-              <label className="mb-2 block text-xs font-medium text-gray-900">
+            <div className="gap-2 flex">
+              <label className="mb-2 w-20 block text-xs font-medium text-gray-900">
                 Months
               </label>
-              <p className="">{values?.Calculation?.months}</p>
+              <p className="text-xs">{values?.Calculation?.months}</p>
             </div>
-            <div className="mb-1 flex">
-              <label className="mb-2 block text-xs font-medium text-gray-900">
+            <div className="gap-2 flex">
+              <label className="mb-2 w-20 block text-xs font-medium text-gray-900">
                 Start Date
               </label>
-              <p className="">{String(new Date(values?.Calculation?.startDate).toLocaleDateString('en-CA'))}</p>
+              <p className="text-xs">{String(new Date(values?.Calculation?.startDate).toLocaleDateString('en-AU'))}</p>
             </div>
           </div>
           <div className="m-auto flex w-full flex-col place-items-center">
