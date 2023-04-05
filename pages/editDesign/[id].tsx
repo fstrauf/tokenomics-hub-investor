@@ -84,13 +84,13 @@ export const getServerSideProps: GetServerSideProps = async ({
 
   clerkUser = clerkConvertJSON(clerkUser)
 
-  const userId = post.Comments.map((comment) => {
+  const userId = post?.Comments?.map((comment) => {
     return comment.authorClerkId
   })
 
   let users = clerkConvertJSON(await clerkClient.users.getUserList({ userId }))
 
-  const commentsWithUserNames = post.Comments.map((comment) => {
+  const commentsWithUserNames = post?.Comments?.map((comment) => {
     const currentUser = users?.find((u) => u.id === comment.authorClerkId)
 
     return {
@@ -100,7 +100,7 @@ export const getServerSideProps: GetServerSideProps = async ({
   })
 
   let postWithUpdatedComments = post
-  postWithUpdatedComments.Comments = commentsWithUserNames
+postWithUpdatedComments.Comments = commentsWithUserNames
   postWithUpdatedComments.protocolTimeLine =
     postWithUpdatedComments.protocolTimeLine.map((ptl) => ({
       ...ptl,

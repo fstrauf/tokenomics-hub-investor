@@ -8,7 +8,6 @@ import { getAuth } from '@clerk/nextjs/server'
 import { AuthData } from '@clerk/nextjs/dist/server/types'
 
 export default function NewDesign(props) {
-
   return (
     <>
       <Layout mode="design">
@@ -19,6 +18,13 @@ export default function NewDesign(props) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
+  console.log(
+    '🚀 ~ file: newDesign.tsx:22 ~ constgetServerSideProps:GetServerSideProps= ~ context:',
+    context
+  )
+
+  const postId: string = context?.query?.id || ''
+
   const { userId }: AuthData = getAuth(context.req)
 
   const txCalls = []
@@ -36,6 +42,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   // )
 
   txCalls.push(prisma.designPhases.findMany({ orderBy: { phaseOrder: 'asc' } }))
+  // txCalls.push(prisma.designPhases.findUnique({ where: { id: postId } }))
 
   txCalls.push(
     prisma.calculation.findMany({
@@ -91,7 +98,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     Category,
     Tag,
   ] = await prisma.$transaction(txCalls)
-
 
   // console.log("🚀 ~ file: newDesign.tsx:183 ~ constgetServerSideProps:GetServerSideProps= ~ userCalcs:", userCalcs)
   // const preloadInitialCalcValues = null
@@ -176,4 +182,3 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     },
   }
 }
-    
