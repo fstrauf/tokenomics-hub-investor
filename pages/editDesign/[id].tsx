@@ -70,13 +70,8 @@ export const getServerSideProps: GetServerSideProps = async ({
   txCalls.push(prisma.category.findMany())
   txCalls.push(prisma.tag.findMany())
 
-  const [
-    post,
-    mechanismTemplates,
-    designPhases,
-    Category,
-    Tag,
-  ] = await prisma.$transaction(txCalls)
+  const [post, mechanismTemplates, designPhases, Category, Tag] =
+    await prisma.$transaction(txCalls)
 
   let clerkUser = post?.authorClerkId
     ? await clerkClient.users.getUser(post?.authorClerkId)
@@ -100,12 +95,16 @@ export const getServerSideProps: GetServerSideProps = async ({
   })
 
   let postWithUpdatedComments = post
+
 postWithUpdatedComments.Comments = commentsWithUserNames
   postWithUpdatedComments.protocolTimeLine =
     postWithUpdatedComments.protocolTimeLine.map((ptl) => ({
       ...ptl,
       date: new Date(ptl.date).toLocaleDateString('en-CA'),
     }))
+  if (postWithUpdatedComments.Calculation === null) {
+    postWithUpdatedComments.Calculation = {}
+  }
   postWithUpdatedComments.Calculation.startDate = new Date(
     postWithUpdatedComments?.Calculation?.startDate || ''
   ).toLocaleDateString('en-CA')
