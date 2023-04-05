@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react'
+import { Fragment } from 'react'
 import { Popover, Transition } from '@headlessui/react'
 import Link from 'next/link'
 import {
@@ -7,28 +7,23 @@ import {
 } from '@clerk/clerk-react/dist/components/controlComponents'
 import { UserButton } from '@clerk/clerk-react/dist/components/uiComponents'
 import { SignInButton } from '@clerk/clerk-react/dist/components/SignInButton'
-// import { useAuth } from '@clerk/clerk-react/dist/hooks/useAuth'
 import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
 import ThubLogo from '../public/svg/thub-logo'
-// import ChevronIcon from '../public/svg/chevron'
 import Bars3Icon from '../public/svg/bars3Icon'
 import XMarkIcon from '../public/svg/xmarkicon'
 import { headerStatus } from '../lib/helper'
 import ChevronIcon from '../public/svg/chevron'
+// import { createContext } from 'react';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
 export default function Header2({ mode }) {
-  // const { isSignedIn } = useAuth()
   const { user } = useUser()
-
-  const [showBanner, setShowBanner] = useState(true)
-
-  // const role = user?.publicMetadata?.role ?? ''
-  // const contributor = user?.publicMetadata?.contributor || false
+  // const [showBanner, setShowBanner] = useState(true)
   const admin = user?.publicMetadata?.admin || false
+  // const showBanner = useContext(BannerContext);
 
   const calculatorSection = (
     <Link
@@ -110,33 +105,33 @@ export default function Header2({ mode }) {
     </Link>
   )
 
-  const fundRaiseBar = (
-    <div
-      className={`${
-        showBanner ? 'm-auto flex items-center bg-dao-green' : 'hidden'
-      }`}
-    >
-      <div className="mx-auto max-w-xl py-3 px-3 sm:px-6 lg:px-8">
-        <p className="ml-3 self-center truncate text-center font-medium text-white">
-          <span className="inline">🥳 We are fundraising. Interested? </span>
-          <a
-            href="mailto:contact@tokenomicsdao.com"
-            className="hover:underline"
-          >
-            Contact us.
-          </a>
-        </p>
-      </div>
-      <button
-        className="text-gray-200"
-        onClick={() => {
-          setShowBanner(false)
-        }}
-      >
-        <XMarkIcon className="h-6 w-6 text-gray-200" aria-hidden="true" />
-      </button>
-    </div>
-  )
+  // const fundRaiseBar = (
+  //   <div
+  //     className={`${
+  //       showBanner ? 'm-auto flex items-center bg-dao-green' : 'hidden'
+  //     }`}
+  //   >
+  //     <div className="mx-auto max-w-xl py-3 px-3 sm:px-6 lg:px-8">
+  //       <p className="ml-3 self-center truncate text-center font-medium text-white">
+  //         <span className="inline">🥳 We are fundraising. Interested? </span>
+  //         <a
+  //           href="mailto:contact@tokenomicsdao.com"
+  //           className="hover:underline"
+  //         >
+  //           Contact us.
+  //         </a>
+  //       </p>
+  //     </div>
+  //     <button
+  //       className="text-gray-200"
+  //       onClick={() => {
+  //         setShowBanner(false)
+  //       }}
+  //     >
+  //       <XMarkIcon className="h-6 w-6 text-gray-200" aria-hidden="true" />
+  //     </button>
+  //   </div>
+  // )
 
   function renderSwitch() {
     switch (mode) {
@@ -152,6 +147,7 @@ export default function Header2({ mode }) {
           <>
             {calculatorSection}
             {expertsSection}
+            {myDesign}
           </>
         )
       case headerStatus.report:
@@ -167,7 +163,7 @@ export default function Header2({ mode }) {
 
   return (
     <>
-      {fundRaiseBar}
+      {/* {fundRaiseBar} */}
       <Popover className="relative bg-dark-tdao">
         <div className="mx-auto max-w-full px-6">
           <div className="flex items-center justify-between py-1 md:justify-start md:space-x-10">

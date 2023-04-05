@@ -42,7 +42,7 @@ export default function DesignCard({ post, context }) {
   }
 
   const deleteDraft = async (id: String) => {
-    console.log('🚀 ~ file: designCard.tsx:44 ~ deleteDraft ~ id:', id)
+    // console.log('🚀 ~ file: designCard.tsx:44 ~ deleteDraft ~ id:', id)
     setSubmitting(true)
     await fetch(`/api/post/delete/${id}`, {
       method: 'PUT',
@@ -163,14 +163,14 @@ export default function DesignCard({ post, context }) {
       <div className="m-auto mt-4 flex justify-center space-x-3 p-2 md:mt-6">
         <Link
           as={`/editDesign/${post?.id}`}
-          href="/editDesign/[slug]"
+          href="/editDesign/[id]"
           className=" rounded-lg bg-dao-red px-4 py-2 text-center text-xs font-medium text-white"
         >
           Edit
         </Link>
         <Link
           as={`/posts/${post?.id}`}
-          href="/posts/[slug]"
+          href="/posts/[id]]"
           className=" rounded-lg bg-dao-red px-4 py-2 text-center text-xs font-medium text-white"
         >
           View
