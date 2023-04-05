@@ -7,24 +7,27 @@ import UnAuthorised from '../components/unauthorised'
 import { useAuth } from '@clerk/clerk-react/dist/hooks/useAuth'
 import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
 import dynamic from 'next/dynamic'
+import Router from 'next/router'
+import { confirmAlert } from 'react-confirm-alert'
+import 'react-confirm-alert/src/react-confirm-alert.css'
 
 export default function adminTDFPhase({ alldesignPhases }) {
-  // console.log("🚀 ~ file: adminTDFPhase.tsx:12 ~ adminTDFPhase ~ alldesignPhases", alldesignPhases)
   const [initialValues, setInititalValues] = useState(alldesignPhases[0])
+  const [isDeleteSubmitting, setIsDeleteSubmitting] = useState(false)
+  const [adminPhaseId, setAdminPhaseId] = useState('')
+  const { isSignedIn } = useAuth()
+  const { user } = useUser()
 
+  const admin = user?.publicMetadata?.admin || false
   const FormTipTap = dynamic(() => import('../components/form/FormTipTap'), {
     loading: () => <p>Loading</p>,
   })
 
   function handleChange(e) {
-    console.log(
-      '🚀 ~ file: adminTDFPhase.tsx:22 ~ handleChange ~ alldesignPhases.find((adp) => String(adp.id) === e.target.value)',
-      alldesignPhases.find((adp) => String(adp.id) === e.target.value)
-    )
     setInititalValues(
       alldesignPhases.find((adp) => String(adp.id) === e.target.value)
     )
-    console.log('e', e)
+    setAdminPhaseId(e.target.value)
   }
 
   const submitData = async (values, { setSubmitting }) => {
@@ -40,10 +43,29 @@ export default function adminTDFPhase({ alldesignPhases }) {
     toast.success('saved ', { position: 'bottom-right' })
   }
 
-  const { isSignedIn } = useAuth()
-  const { user } = useUser()
-
-  const admin = user?.publicMetadata?.admin || false
+  const deleteTDFPhaseHandle = async (id: String) => {
+    setIsDeleteSubmitting(true)
+    await fetch(`/api/post/deleteTDFDesign/${id}`, {
+      method: 'PUT',
+    })
+    setIsDeleteSubmitting(false)
+    await Router.push(`/adminTDFPhase`)
+    //  await router.refresh();
+  }
+  const confirmDelete = async (id: String) => {
+    confirmAlert({
+      message: 'Are you sure to delete this designPhase?.',
+      buttons: [
+        {
+          label: 'Yes',
+          onClick: () => deleteTDFPhaseHandle(id),
+        },
+        {
+          label: 'No',
+        },
+      ],
+    })
+  }
 
   if (isSignedIn && admin) {
     return (
@@ -126,13 +148,24 @@ export default function adminTDFPhase({ alldesignPhases }) {
                     placeholder="Deep Dive"
                     onChange={(e) => setFieldValue('Resources', e)}
                   />
-                  <button
-                    className="w-32 rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
-                    type="submit"
-                    disabled={isSubmitting}
-                  >
-                    Save
-                  </button>
+                  <div className="mt-2 flex ">
+                    <button
+                      className="mr-2 w-32 rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
+                      type="submit"
+                      disabled={isSubmitting}
+                    >
+                      Save
+                    </button>
+                    <button
+                      className="w-32 rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
+                      type="button"
+                      onClick={() => confirmDelete(adminPhaseId, close)}
+                      // onClick={deleteTDFPhaseHandle}
+                      disabled={!adminPhaseId || isDeleteSubmitting}
+                    >
+                      Delete
+                    </button>
+                  </div>
                 </Form>
               )}
             </Formik>
@@ -150,7 +183,9 @@ export default function adminTDFPhase({ alldesignPhases }) {
 }
 
 export async function getServerSideProps() {
-  const alldesignPhases = await prisma.designPhases.findMany({orderBy:{ phaseId: 'asc'}})
+  const alldesignPhases = await prisma.designPhases.findMany({
+    orderBy: { phaseId: 'asc' },
+  })
 
   return {
     props: {
