@@ -1,7 +1,7 @@
 import TDFSideBar from './TDFSideBar'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
-import { FieldArray, Form, Formik, FormikProps, useFormik } from 'formik'
+import { FieldArray, Form, Formik } from 'formik'
 import toast, { Toaster } from 'react-hot-toast'
 import FormAutoSave from '../form/FormAutoSave'
 import FormId from '../form/FormId'
@@ -37,9 +37,12 @@ export default function TDFMain({ props }) {
   const TDFGenericOneField = dynamic(() => import('./TDFGenericOneField'), {
     loading: () => <p>Loading</p>,
   })
-  const TDF105 = dynamic(() => import('./TDF105'), {
+  const TDFDynamicOneField = dynamic(() => import('./TDFDynamicOneField'), {
     loading: () => <p>Loading</p>,
   })
+  // const TDF105 = dynamic(() => import('./TDF105'), {
+  //   loading: () => <p>Loading</p>,
+  // })
   // const TDF201 = dynamic(() => import('./TDF201'), {
   //   loading: () => <p>Loading</p>,
   // })
@@ -65,13 +68,11 @@ export default function TDFMain({ props }) {
     loading: () => <p>Loading</p>,
   })
   const TDF_valueDemandUtility = dynamic(
-    
     () => import('./TDF_valueDemandUtility'),
-   
+
     {
-        loading: () => <p>Loading</p>,
-      }
-  
+      loading: () => <p>Loading</p>,
+    }
   )
   const TDF501 = dynamic(() => import('./TDF501'), {
     loading: () => <p>Loading</p>,
@@ -79,9 +80,9 @@ export default function TDFMain({ props }) {
   const TDF502 = dynamic(() => import('./TDF502'), {
     loading: () => <p>Loading</p>,
   })
-  const TDF603 = dynamic(() => import('./TDF603'), {
-    loading: () => <p>Loading</p>,
-  })
+  // const TDF603 = dynamic(() => import('./TDF603'), {
+  //   loading: () => <p>Loading</p>,
+  // })
   const TDF701 = dynamic(() => import('./TDF701'), {
     loading: () => <p>Loading</p>,
   })
@@ -150,6 +151,7 @@ export default function TDFMain({ props }) {
       case 500:
       case 600:
       case 700:
+      case 800:
         return (
           <TDFHeaders props={props} values={values} activePhase={activePhase} />
         )
@@ -210,12 +212,25 @@ Revenue goes to:
 [Explanation, include any percentages if there is a revenue split between different users/parties]`}
           />
         )
-      // case 202:
-      //   return <TDFGenericOneField props={props} activePhase={activePhase} />
-
+      case 603:
+        return (
+          // <TDF105 props={props} values={values} activePhase={activePhase} />
+          <TDFDynamicOneField
+            props={props}
+            values={values}
+            activePhase={activePhase}
+            placeholder="Token Launch"
+          />
+        )
       case 105:
         return (
-          <TDF105 props={props} values={values} activePhase={activePhase} />
+          // <TDF105 props={props} values={values} activePhase={activePhase} />
+          <TDFDynamicOneField
+            props={props}
+            values={values}
+            activePhase={activePhase}
+            placeholder="Token Evaluation"
+          />
         )
       case 301:
         return (
@@ -271,8 +286,8 @@ Revenue goes to:
             setFieldValue={setFieldValue}
           />
         )
-      case 603:
-        return <TDF603 props={props} activePhase={activePhase} />
+      // case 603:
+      //   return <TDF603 props={props} activePhase={activePhase} />
       case 701:
         return (
           <TDF701 props={props} values={values} activePhase={activePhase} />
@@ -290,31 +305,7 @@ Revenue goes to:
 
   return (
     <div className="mt-4 mb-4 rounded-lg bg-gray-100 p-1">
-      <div className="h-12 w-[100%]"></div>
-      {/* <div className="rounded-lg p-2 py-2">
-        <p className="text-xl font-bold">{formik.values?.title}</p>
-        <div className="flex justify-end gap-1">
-          <button
-            type="submit"
-            disabled={formik.isSubmitting}
-            onClick={formik.handleSubmit}
-            className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
-          >
-            Save
-          </button>
-          <Link
-            as={`/posts/${postId}`}
-            href="/posts/[id]]"
-            className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
-          >
-            View
-          </Link>
-          <button className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40">
-            Share
-          </button>
-        </div>
-      </div> */}
-      {/* <div className="mt-5">header</div> */}
+      <div className="h-12 w-full"></div>
       <div className="mb-5 flex gap-1">
         <div className="w-1/6">
           <TDFSideBar
