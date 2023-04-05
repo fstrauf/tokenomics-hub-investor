@@ -5,6 +5,7 @@ import { FieldArray, Form, Formik, FormikProps, useFormik } from 'formik'
 import toast, { Toaster } from 'react-hot-toast'
 import FormAutoSave from '../form/FormAutoSave'
 import FormId from '../form/FormId'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 // import TDFHeaders from './TDFHeaders'
 
@@ -298,8 +299,15 @@ Revenue goes to:
           >
             Save
           </button>
+          <Link
+          as={`/posts/${postId}`}
+          href="/posts/[id]]"
+          className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
+        >
+          View
+        </Link>
           <button className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40">
-            Share Report
+            Share
           </button>
         </div>
       </div> */}
@@ -349,6 +357,16 @@ Revenue goes to:
                         className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
                       >
                         Save
+                      </button>
+                      <Link
+                        as={`/posts/${postId}`}
+                        href="/posts/[id]]"
+                        className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
+                      >
+                        View
+                      </Link>
+                      <button className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40">
+                        Share
                       </button>
                       <button className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40">
                         Share Report

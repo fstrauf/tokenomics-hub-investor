@@ -204,7 +204,7 @@ export default function Post({ post, morePosts, author }) {
                         Deep Dive
                       </Link>
                     </li>
-                    <li>
+                    {/* <li>
                       <Link
                         className="flex items-center font-bold text-gray-900 no-underline hover:rounded hover:bg-gray-700 hover:text-white"
                         to="calculation"
@@ -213,7 +213,7 @@ export default function Post({ post, morePosts, author }) {
                       >
                         Allocation and Emissions
                       </Link>
-                    </li>
+                    </li> */}
                     <li>
                       <Link
                         className="flex items-center font-bold text-gray-900 no-underline hover:rounded hover:bg-gray-700 hover:text-white"
@@ -276,12 +276,12 @@ export default function Post({ post, morePosts, author }) {
                   <TimeLine items={post.protocolTimeLine} />
                   <div id="deepDive"></div>
                   <PostBody content={post.breakdown} />
-                  <div id="calculation"></div>
-                  <Calculation calculation={post.Calculation} />
+                  {/* <div id="calculation"></div> */}
+                  {/* <Calculation calculation={post.Calculation} /> */}
                   <div id="diagram"></div>
                   <Diagram diagram={post.diagramUrl} />
                   <div id="supplyDemand"></div>
-                  <MechanismViewer mechanisms={post.Mechanism} />
+                  <MechanismViewer post={post} />
                   <div id="users"></div>
                   <UserViewer users={post.PostUser} />
                   <div id="Resources"></div>

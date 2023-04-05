@@ -28,7 +28,6 @@ export default function TDFGenericOneField({
         presetCategories={values.categories}
         presetTags={values.tags}
         props={props}
-        presetFilters={null}
         exampleField={designPhase.postDataElement}
         exampleDetail={undefined}
       />

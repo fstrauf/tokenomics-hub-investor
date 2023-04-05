@@ -230,7 +230,6 @@ export function getMonthEpochAreaData(
     categoryLine['emissionsPerSecond'] = emissionsPerSecond
     categoryLine['monthlyEmissions'] = secondsPerMonth * emissionsPerSecond
     Object.assign(chartData[i], categoryLine)
-  
 
     if (supplyDemandTotals[i] === undefined) {
       supplyDemandTotals[i] = {
@@ -250,7 +249,6 @@ export function getMonthEpochAreaData(
 
 export function getAreaData(months, calculationRows, totalSupply, startDate) {
   var props = { chartData: [], supplyDemandTotals: [] }
-  console.log("🚀 ~ file: helper.ts:285 ~ getAreaData ~ calculationRows:", calculationRows)
 
   calculationRows?.forEach((cr) => {
     const rowAllocation = (totalSupply * cr.percentageAllocation) / 100
@@ -280,11 +278,8 @@ export function getAreaData(months, calculationRows, totalSupply, startDate) {
       }
     }
   })
-  console.log("🚀 ~ file: helper.ts:285 ~ getAreaData ~ props:", props)
   return props
 }
-  
-  
 
 export function getDemandAreaData(
   calculationRow,
@@ -388,13 +383,12 @@ export function getLinearAreaData(
     }
 
     Object.assign(chartData[i], categoryLine)
-    // console.log("🚀 ~ file: helper.ts:378 ~ categoryLine[calculationRow.category]:", categoryLine)
+
     if (supplyDemandTotals[i] === undefined) {
       supplyDemandTotals[i] = {
         date: new Date(startDate).setMonth(new Date(startDate).getMonth() + i),
         supply: Number(categoryLine[calculationRow.category]),
       }
-      // console.log("🚀 ~ file: helper.ts:379 ~ Number(categoryLine[calculationRow.category]):", Number(categoryLine[calculationRow.category]))
     } else {
       if (supplyDemandTotals[i].supply === undefined) {
         supplyDemandTotals[i].supply = 0
@@ -402,9 +396,6 @@ export function getLinearAreaData(
       supplyDemandTotals[i].supply += Number(
         categoryLine[calculationRow.category]
       )
-      // supplyDemandTotals[i].supply += Number(categoryLine[calculationRow.category]) || 0
-      // console.log("🚀 ~ file: helper.ts:383 ~ supplyDemandTotals[i].supply:", supplyDemandTotals[i].supply)
-      // console.log("🚀 ~ file: helper.ts:384 ~ Number(categoryLine[calculationRow.category]):", Number(categoryLine[calculationRow.category]))
     }
   }
 }

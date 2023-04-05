@@ -226,7 +226,7 @@ export const MechanismCard = ({
                   arrayHelpers.push({
                     phase:
                       field.value[mechanismIndex]?.CalculationTimeSeries
-                        ?.length + 1,
+                        ?.length + 1 || 1,
                     months: 6,
                     tokens: 10000000,
                   })

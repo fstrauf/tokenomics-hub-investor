@@ -35,7 +35,7 @@ export default async function handle(req, res) {
       isSink: m.isSink,
       token: m.token,
       // postId: m.postId,
-      isTemplate: m.isTemplate,
+      isTemplate: false,
       category: m.category,
       lockupPeriod: m.lockupPeriod,
       unlockPeriod: m.unlockPeriod,

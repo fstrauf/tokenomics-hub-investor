@@ -55,7 +55,8 @@ export default function TDF501({ props, values, activePhase, setFieldValue }) {
       <ExampleSection
         presetCategories={values.categories}
         presetTags={values.tags}
-        content={props.posts}
+        // content={props.posts}
+        props={props}
         exampleField={designPhase.postDataElement}
         exampleDetail={ExampleDetail}
       />

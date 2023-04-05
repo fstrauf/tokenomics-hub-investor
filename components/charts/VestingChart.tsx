@@ -61,7 +61,6 @@ export default withTooltip<StackedAreasProps, TooltipData>(
       return null
     }
 
-
     const keys = fields?.map((f) => {                  
       return f.category
     })

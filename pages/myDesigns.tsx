@@ -8,10 +8,8 @@ import { clerkConvertJSON, headerStatus, postStatus } from '../lib/helper'
 import DesignCard from '../components/tdf/designCard'
 import Link from 'next/link'
 
-
 export default function MyDesigns({ posts }) {
   
-
   return (
     <Layout mode={headerStatus.design}>
       <>
