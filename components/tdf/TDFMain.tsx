@@ -1,5 +1,5 @@
 import TDFSideBar from './TDFSideBar'
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import dynamic from 'next/dynamic'
 import { FieldArray, Form, Formik, FormikProps, useFormik } from 'formik'
 import toast, { Toaster } from 'react-hot-toast'
@@ -8,14 +8,17 @@ import FormId from '../form/FormId'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 // import TDFHeaders from './TDFHeaders'
+import RequestReviewModal from '../../components/requestReviewPopup'
 
 export default function TDFMain({ props }) {
+  console.log("🚀 ~ file: TDFMain.tsx:14 ~ TDFMain ~ props:", props)
   const router = useRouter()
 
   const [activePhase, setActivePhase] = useState(
     router.query.phase ? +router.query.phase : 11
   ) //props.design.activePhase
   const [postId, setPostId] = useState(props.post.id || '')
+  const [isRequestReviewOpen, setIsRequestReviewOpen] = useState(false)
 
   const initialValues = props.post
   function handlePhaseChange(phase) {
@@ -84,6 +87,7 @@ export default function TDFMain({ props }) {
   })
 
   const submitData = async (values, { setSubmitting }) => {
+    console.log("🚀 ~ file: TDFMain.tsx:90 ~ submitData ~ values:", values)
     const body = { values }
     if (values?.id === '') {
       try {
@@ -285,6 +289,16 @@ Revenue goes to:
     }
   }
 
+  function openRequestReviewModal() {
+    setIsRequestReviewOpen(true)
+  }
+
+  const handleRequestReviewIsOpen = useCallback(
+    (event) => {
+      setIsRequestReviewOpen(false)
+    },
+    [isRequestReviewOpen]
+  )
   return (
     <div className="mt-4 mb-4 rounded-lg bg-gray-100 p-1">
       <div className="h-12 w-[100%]"></div>
@@ -349,7 +363,7 @@ Revenue goes to:
                         {values?.title}
                       </p>
                     </div>
-                    <div className="flex justify-end gap-1">
+                    <div className="container flex w-full justify-end gap-1">
                       <button
                         type="submit"
                         disabled={isSubmitting}
@@ -365,12 +379,27 @@ Revenue goes to:
                       >
                         View
                       </Link>
+                      {postId && (
+                        <button
+                          type="button"
+                          onClick={openRequestReviewModal}
+                          className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
+                        >
+                          RequestReview
+                        </button>
+                      )}
+
                       <button
                         type="button"
                         className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
                       >
                         Share
                       </button>
+
+                      <RequestReviewModal
+                        isOpen={isRequestReviewOpen}
+                        handleIsOpen={handleRequestReviewIsOpen}
+                      />
                     </div>
                   </div>
                 </Form>
