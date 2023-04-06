@@ -18,6 +18,7 @@ import { AxisBottom, AxisLeft } from '@visx/axis'
 import { Group } from '@visx/group'
 import { LegendOrdinal } from '@visx/legend'
 import { shortBigNumber } from '../../lib/helper'
+import { curveBasis, curveCardinal, curveMonotoneX, curveNatural } from '@visx/curve'
 
 export const background = '#FF6666'
 const tooltipStyles = {
@@ -170,6 +171,7 @@ export default withTooltip<StackedAreasProps, TooltipData>(
               y0={(d) => valueScale(d[0])}
               y1={d => valueScale(d[1])}
               color={d => colorScale(d)}
+              curve={curveBasis}
             />
             <AxisBottom
               top={innerHeight}
