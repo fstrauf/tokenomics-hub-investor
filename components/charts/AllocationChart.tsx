@@ -21,7 +21,6 @@ export default function AllocationChart({
   margin = defaultMargin,
   fields,
 }: PieProps) {
-  // console.log("🚀 ~ file: AllocationChart.tsx:23 ~ fields", fields)
 
   const innerWidth = width - margin.left - margin.right
   const innerHeight = height - margin.top - margin.bottom
@@ -68,7 +67,7 @@ export default function AllocationChart({
   })
 
   const keys = fields?.map((f) => {
-    return f.category
+    return f.name || f.category
   })
 
   const pieColorScale = useMemo(
@@ -129,7 +128,7 @@ export default function AllocationChart({
       </svg>
       {tooltipData && (
         <Tooltip top={tooltipTop} left={tooltipLeft} style={tooltipStyles}>
-          <p>{tooltipData.category}</p>
+          <p>{tooltipData.name || tooltipData.category}</p>
           <p>{`${tooltipData.percentageAllocation}%`}</p>
         </Tooltip>
       )}

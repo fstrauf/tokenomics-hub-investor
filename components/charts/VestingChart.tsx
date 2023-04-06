@@ -55,14 +55,14 @@ export default withTooltip<StackedAreasProps, TooltipData>(
     fields,
     totalSupply,
   }: StackedAreasProps & WithTooltipProvidedProps<TooltipData>) => {
-    console.log("🚀 ~ file: VestingChart.tsx:58 ~ data:", data)
+    // console.log("🚀 ~ file: VestingChart.tsx:58 ~ data:", data)
 
     if(data===undefined){
       return null
     }
 
     const keys = fields?.map((f) => {                  
-      return f.category
+      return f.name || f.category
     })
 
     const colors = fields?.map((f) => {
@@ -225,8 +225,8 @@ export default withTooltip<StackedAreasProps, TooltipData>(
               <div className='rounded-lg'>
                 {fields.map((k) => (
                   <div key={k.category} className='flex justify-end'>                    
-                    <p style={{color: k.color}} className='mr-2 font-bold'>{k.category}: </p>
-                    <p> {shortBigNumber(tooltipData[k.category])}</p>
+                    <p style={{color: k.color}} className='mr-2 font-bold'>{k.name || k.category}: </p>
+                    <p> {shortBigNumber(tooltipData[k.name || k.category])}</p>
                   </div>
                 ))}
               </div>

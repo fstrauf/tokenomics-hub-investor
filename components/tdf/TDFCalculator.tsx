@@ -8,7 +8,6 @@ import FormId from '../form/FormId'
 import FormAreaDataMechanism from '../form/FormAreaDataMechanism'
 
 export default function TDFCalculator(props) {
-  console.log("🚀 ~ file: TDFCalculator.tsx:11 ~ props:", props)
   const { values } = props
 
   // const { isSignedIn } = useAuth()

@@ -9,8 +9,6 @@ export const MechanismCard = ({
   setFieldValue,
   users,
 }) => {
-  // console.log("🚀 ~ file: MechanismCard.tsx:12 ~ mechanismIndex:", mechanismIndex)
-  // console.log("🚀 ~ file: MechanismCard.tsx:12 ~ field:", field)
   const isSink = field.value[mechanismIndex]?.isSink || false
 
   const supplyBuilder = () => {
