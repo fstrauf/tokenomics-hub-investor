@@ -192,6 +192,7 @@ model DesignPhases {
   DesignElement   DesignElement[]
   phaseOrder      Int?
   postDataElement String?
+  isReport        Boolean?        @default(false)
 
   @@index([parentPhaseId])
 }
