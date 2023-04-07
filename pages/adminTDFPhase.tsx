@@ -32,6 +32,10 @@ export default function adminTDFPhase({ alldesignPhases }) {
 
   const submitData = async (values, { setSubmitting }) => {
     const body = { values }
+    console.log(
+      '🚀 ~ file: adminTDFPhase.tsx:35 ~ submitData ~ values:',
+      values
+    )
 
     fetch('/api/post/updateTDFDesignPhases', {
       method: 'POST',
@@ -133,11 +137,21 @@ export default function adminTDFPhase({ alldesignPhases }) {
                   <label className="mb-2 block text-sm font-medium text-gray-900">
                     Phase Order (can be different than phase id)
                   </label>
+
                   <Field
                     id="phaseOrder"
                     name="phaseOrder"
                     placeholder="phaseOrder"
                     className="mb-3 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
+                  />
+                  <label className=" mr-2 text-sm font-medium text-gray-900">
+                    Is Report
+                  </label>
+                  <Field
+                    name="isReport"
+                    type="checkbox"
+                    className="mb-4"
+                    placeholder="report"
                   />
                   <label className="mb-2 block text-sm font-medium text-gray-900">
                     Resources
