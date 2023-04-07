@@ -19,7 +19,7 @@ export default React.memo(function RequestReviewPopup({
   }
 
   function handleSubmit(event) {
-    fetch('/api/expertContact', {
+    fetch('/api/requestReview', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
 

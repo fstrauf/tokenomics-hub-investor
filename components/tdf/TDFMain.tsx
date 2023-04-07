@@ -9,9 +9,10 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 // import TDFHeaders from './TDFHeaders'
 import RequestReviewModal from '../../components/requestReviewPopup'
+import TDF901 from './TDF901'
 
 export default function TDFMain({ props }) {
-  console.log("🚀 ~ file: TDFMain.tsx:14 ~ TDFMain ~ props:", props)
+  console.log('🚀 ~ file: TDFMain.tsx:14 ~ TDFMain ~ props:', props)
   const router = useRouter()
 
   const [activePhase, setActivePhase] = useState(
@@ -86,8 +87,12 @@ export default function TDFMain({ props }) {
     loading: () => <p>Loading</p>,
   })
 
+  const TDF901 = dynamic(() => import('./TDF901'), {
+    loading: () => <p>Loading</p>,
+  })
+
   const submitData = async (values, { setSubmitting }) => {
-    console.log("🚀 ~ file: TDFMain.tsx:90 ~ submitData ~ values:", values)
+    console.log('🚀 ~ file: TDFMain.tsx:90 ~ submitData ~ values:', values)
     const body = { values }
     if (values?.id === '') {
       try {
@@ -151,6 +156,7 @@ export default function TDFMain({ props }) {
       case 500:
       case 600:
       case 700:
+      case 900:
         return (
           <TDFHeaders props={props} values={values} activePhase={activePhase} />
         )
@@ -277,6 +283,11 @@ Revenue goes to:
       case 701:
         return (
           <TDF701 props={props} values={values} activePhase={activePhase} />
+        )
+
+      case 901:
+        return (
+          <TDF901 props={props} values={values} activePhase={activePhase} />
         )
       default:
         return (
