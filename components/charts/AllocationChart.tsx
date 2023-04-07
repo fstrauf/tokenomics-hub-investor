@@ -13,6 +13,7 @@ export type PieProps = {
   margin?: typeof defaultMargin
   animate?: boolean
   fields: object[]
+  hideLegend: boolean
 }
 
 export default function AllocationChart({
@@ -20,8 +21,8 @@ export default function AllocationChart({
   height,
   margin = defaultMargin,
   fields,
+  hideLegend = false,
 }: PieProps) {
-
   const innerWidth = width - margin.left - margin.right
   const innerHeight = height - margin.top - margin.bottom
   const radius = Math.min(innerWidth, innerHeight) / 2
@@ -81,14 +82,17 @@ export default function AllocationChart({
 
   return (
     <>
-      <LegendOrdinal
-        className="flex w-full justify-center text-xs"
-        scale={pieColorScale}
-        direction="row"
-        labelMargin="0 10px 0 0"
-        shapeMargin="2px 3px"
-        // onClick={(keys) => setActiveLabel(keys)}
-      />
+      {hideLegend ? (
+        <></>
+      ) : (
+        <LegendOrdinal
+          className="flex w-full justify-center text-xs"
+          scale={pieColorScale}
+          direction="row"
+          labelMargin="0 10px 0 0"
+          shapeMargin="2px 3px"
+        />
+      )}
 
       <svg width={width} height={height}>
         <Group top={top} left={left}>

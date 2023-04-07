@@ -75,6 +75,7 @@ export default function TDFCalculator(props) {
                     width={width}
                     height={height}
                     fields={values?.Mechanism.filter((m) => !m.isSink)}
+                    hideLegend={true}
                   />
                 )}
               </ParentSize>

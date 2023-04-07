@@ -19,7 +19,6 @@ export default function TDFMain({ props }) {
 
   const initialValues = props.post
   function handlePhaseChange(phase) {
-    console.log('🚀 ~ file: TDFMain.tsx:19 ~ handlePhaseChange ~ phase:', phase)
     if (postId) {
       router.push(`/editDesign/${postId}?phase=${phase}`)
     }
@@ -305,16 +304,17 @@ Revenue goes to:
 
   return (
     <div className="mt-4 mb-4 rounded-lg bg-gray-100 p-1">
-      <div className="h-12 w-full"></div>
-      <div className="mb-5 flex gap-1">
+      {/* <div className="h-12 w-full"></div> */}
+      <div className="mb-5 flex gap-1 ">
         <div className="w-1/6">
+          <div className='h-10 bg-gray-100 p-1 '></div>
           <TDFSideBar
             designPhases={props.designPhases}
             changePhase={handlePhaseChange}
             activePhase={activePhase}
           />
         </div>
-        <div className="w-5/6 rounded-lg bg-white p-1">
+        <div className="w-5/6 rounded-lg bg-white">
           <div>
             <Formik
               initialValues={initialValues}
@@ -324,11 +324,37 @@ Revenue goes to:
             >
               {({ isSubmitting, setFieldValue, values }) => (
                 <Form>
+                  <div className="h-10 bg-gray-100 p-1 flex justify-between">
+                    <p className="text-xl font-bold ">{values?.title}</p>
+                      <div className="flex justify-end gap-1">
+                        <button
+                          type="submit"
+                          disabled={isSubmitting}
+                          // onClick={formik.handleSubmit}
+                          className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
+                        >
+                          Save
+                        </button>
+                        <Link
+                          as={`/posts/${postId}`}
+                          href="/posts/[id]]"
+                          className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
+                        >
+                          View
+                        </Link>
+                        <button
+                          type="button"
+                          className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
+                        >
+                          Share
+                        </button>
+                    </div>
+                  </div>
                   <FormAutoSave />
                   <FieldArray
                     name="DesignElement"
                     render={() => (
-                      <div>{renderSwitch(values, setFieldValue)}</div>
+                      <div className='bg-white rounded-lg'>{renderSwitch(values, setFieldValue)}</div>
                     )}
                   />
                   <FormId
@@ -337,36 +363,6 @@ Revenue goes to:
                     name="id"
                     className="hidden w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
                   />
-                  <div className="absolute top-[75px] right-[-140px] left-10 grid grid-cols-6 rounded-lg p-2 py-2 ">
-                    <div className="col-span-4">
-                      <p className="mt-2 ml-[154px] text-xl font-bold ">
-                        {values?.title}
-                      </p>
-                    </div>
-                    <div className="flex justify-end gap-1">
-                      <button
-                        type="submit"
-                        disabled={isSubmitting}
-                        // onClick={formik.handleSubmit}
-                        className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
-                      >
-                        Save
-                      </button>
-                      <Link
-                        as={`/posts/${postId}`}
-                        href="/posts/[id]]"
-                        className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
-                      >
-                        View
-                      </Link>
-                      <button
-                        type="button"
-                        className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
-                      >
-                        Share
-                      </button>
-                    </div>
-                  </div>
                 </Form>
               )}
             </Formik>
