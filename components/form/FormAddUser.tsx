@@ -15,7 +15,7 @@ export const FormAddUser = ({ values }) => {
                     Name
                   </th>
                   <th scope="col" className="py-3 px-6">
-                    Role
+                    Description
                   </th>
                   <th scope="col" className="py-3 px-6"></th>
                 </tr>
