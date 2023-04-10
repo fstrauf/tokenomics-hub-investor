@@ -54,7 +54,7 @@ export default function TDFSideBar({ designPhases, changePhase, activePhase }) {
                 <button
                   className={`${
                     phase.phaseId === activePhase ? 'bg-dao-red' : ''
-                  } mt-2 block w-full rounded-lg  border border-gray-200 text-lg font-bold tracking-tight text-gray-900 hover:bg-gray-100`}
+                  } mt-2 block w-full rounded-lg border border-gray-200 text-lg font-bold tracking-tight text-gray-900 hover:bg-gray-100`}
                   onClick={() => changePhase(phase.phaseId)}
                 >
                   {phase.name}
