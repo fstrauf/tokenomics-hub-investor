@@ -148,7 +148,7 @@ export const FormCardSupplyDemand = ({
                     className="h-11 w-28 rounded-md border-2 border-dao-green text-xs font-bold"
                     onClick={() => handleNewMechanism(arrayHelpers, false)}
                   >
-                    Add Incentive
+                    Add Supply
                   </button>
                 </div>
                 <div className="h-60 overflow-auto rounded-lg border-2 border-slate-300">
@@ -198,7 +198,7 @@ export const FormCardSupplyDemand = ({
                     className="h-11 w-28 rounded-md border-2 border-dao-green text-xs font-bold"
                     onClick={() => handleNewMechanism(arrayHelpers, true)}
                   >
-                    Add Mechanism
+                    Add Demand
                   </button>
                 </div>
 

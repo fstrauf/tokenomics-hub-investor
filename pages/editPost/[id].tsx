@@ -81,7 +81,8 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 
   let postWithUpdatedComments = post
   postWithUpdatedComments.Comments = commentsWithUserNames
-  postWithUpdatedComments.protocolTimeLine = postWithUpdatedComments.protocolTimeLine.map(ptl => ({...ptl, date: new Date(ptl.date).toLocaleDateString('en-CA')}) )
+  
+  postWithUpdatedComments.protocolTimeLine = postWithUpdatedComments.protocolTimeLine.map(ptl => ({...ptl, date: new Date(ptl?.date).toLocaleDateString('en-CA')}) )
 
   return {
     props: {

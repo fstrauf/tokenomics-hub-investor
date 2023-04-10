@@ -7,6 +7,7 @@ import FormText from '../form/FormText'
 import FormSelect from '../form/FormSelect'
 import FormImageSelect from '../form/FormImageSelect'
 
+
 export default function TDF11({ props, values, activePhase }) {
   const designPhase = props.designPhases.find(
     (adp) => String(adp.phaseId) === '11',
@@ -14,6 +15,35 @@ export default function TDF11({ props, values, activePhase }) {
   )
 
   const { setFieldValue } = useFormikContext()
+
+  async function generateSuggestions(event) {
+    event.preventDefault();
+    try {
+      const response = await fetch("/api/generate", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ animal: values.title }),
+        
+      });
+
+      const data = await response.json();
+      if (response.status !== 200) {
+        throw data.error || new Error(`Request failed with status ${response.status}`);
+      }
+
+      setFieldValue('shortDescription', data.result)
+      // setResult(data.result);
+      // setAnimalInput("");
+    } catch(error) {
+      // Consider implementing your own error handling logic here
+      console.error(error);
+      alert(error.message);
+    }
+  }
+
+  
 
   return (
     <div className="grid w-full  gap-2 rounded-lg border-2 p-2">
@@ -59,6 +89,7 @@ export default function TDF11({ props, values, activePhase }) {
           <p className="mb-2 text-xs font-extralight text-gray-500">
             Give a short summary of the project and the token/tokens.
           </p>
+          <button onClick={generateSuggestions}>Generate</button>
         </div>
         <Field
           name="shortDescription"

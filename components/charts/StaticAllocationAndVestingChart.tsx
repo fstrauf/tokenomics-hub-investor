@@ -94,30 +94,6 @@ export default function StaticAllocationAndVestingChart({calculation, mechanisms
             )}
           </ParentSize>
         </div>
-        {/* <div>
-          <h1 className="mb-4text-black section-head text-base font-bold">
-            Monthly Emissions
-          </h1>
-          <div className="mb-4 overflow-auto p-1">
-            <div className="mb-3 grid grid-cols-[auto_auto_auto_auto_auto] gap-1">
-              {monthHeader}
-              {calc?.CalculationRows.map((cr) => (
-                <>{!cr.isEpochDistro ? monthRow(cr) : <></>}</>
-              ))}
-            </div>
-          </div>
-          <h1 className="mb-4text-black section-head text-base font-bold">
-            Epoch Based Emissions
-          </h1>
-          <div className="mb-4 overflow-auto p-1">
-            <div className="mb-3 grid grid-cols-[auto_auto_auto_auto_auto_auto] gap-1">
-              {epochHeader}
-              {calc?.CalculationRows.map((cr) => (
-                <>{cr.isEpochDistro ? epochRow(cr) : <></>}</>
-              ))}
-            </div>
-          </div>
-        </div>       */}
       </div>
       <div className="w-full">
         <div className="h-96 w-full">
