@@ -9,11 +9,13 @@ export default async function handle(req, res) {
     Resources = JSON.stringify(values.Resources)
   }
 
-  // const parentPhase = values.parentPhaseId
+  // const parentPhase = values.parentPhaseId    
   //   ? {
   //       parentPhase: {connect: { phaseId: parseInt(values.parentPhaseId) }},
   //     }
   //   : {}
+
+
 
   const response = await prisma.designPhases.upsert({
     where: {
@@ -24,7 +26,6 @@ export default async function handle(req, res) {
       phaseId: parseInt(values.phaseId),
       parentPhaseId: parseInt(values.parentPhaseId || 0),
       Resources: Resources,
-      isReport: values.isReport,
       phaseOrder: parseInt(values.phaseOrder),
     },
     create: {
@@ -33,7 +34,6 @@ export default async function handle(req, res) {
       // ...parentPhase,
       parentPhaseId: parseInt(values.parentPhaseId || 0),
       Resources: Resources,
-      isReport: values.isReport,
       phaseOrder: parseInt(values.phaseOrder),
     },
   })

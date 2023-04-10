@@ -1,29 +1,22 @@
 import Layout from '../components/layout'
-import React, { useState } from 'react'
+import React from 'react'
 import toast, { Toaster } from 'react-hot-toast'
 import { Field, Form, Formik } from 'formik'
 // import { DISCORD_WEBHOOK } from '../lib/constants'
 
 export default function BookAnExpert(props) {
-  const [isSubmittingForm, setIsSubmittingForm] = useState(false)
-  const submitData = async (values, { resetForm }) => {
-    setIsSubmittingForm(true)
+  const submitData = async (values, { setSubmitting }) => {
+
     const body = { values }
 
-    try {
-      await fetch('/api/expertContact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body),
-      })
-      toast.success('Message sent', { position: 'bottom-right' })
-      resetForm() // clear the form's input fields after successful submission
-    } catch (error) {
-      console.error(error)
-      toast.error('An error occurred', { position: 'bottom-right' })
-    } finally {
-      setIsSubmittingForm(false)
-    }
+    fetch('/api/expertContact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    })
+     
+    setSubmitting(false)
+    toast.success('Message sent ', { position: 'bottom-right' })
   }
 
   return (
@@ -40,7 +33,7 @@ export default function BookAnExpert(props) {
             initialValues={{
               name: '',
               email: '',
-              timeline: new Date().toLocaleDateString('en-CA'),
+              timeframe: new Date().toLocaleDateString('en-CA'),
               message: '',
             }}
             onSubmit={submitData}
@@ -62,7 +55,7 @@ export default function BookAnExpert(props) {
                 />
                 <Field
                   type="date"
-                  name="timeline"
+                  name="timeframe"
                   className="mb-3 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
                 />
                 <Field
@@ -74,7 +67,7 @@ export default function BookAnExpert(props) {
                 />
                 <button
                   type="submit"
-                  disabled={isSubmittingForm}
+                  disabled={isSubmitting}
                   className="mt-5 mb-5 rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
                 >
                   Submit

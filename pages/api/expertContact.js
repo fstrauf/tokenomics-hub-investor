@@ -1,4 +1,5 @@
 export default async function handler(req, res) {
+
   const { values } = req.body
 
   fetch(process.env.DISCORD_CONSULTING, {
@@ -18,4 +19,5 @@ export default async function handler(req, res) {
   })
     .then((res) => console.log(res))
     .catch((err) => console.error(err))
+
 }

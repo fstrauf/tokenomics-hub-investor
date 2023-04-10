@@ -1,14 +1,13 @@
 import TDFSideBar from './TDFSideBar'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
-import { FieldArray, Form, Formik, FormikProps, useFormik } from 'formik'
+import { FieldArray, Form, Formik } from 'formik'
 import toast, { Toaster } from 'react-hot-toast'
 import FormAutoSave from '../form/FormAutoSave'
 import FormId from '../form/FormId'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 // import TDFHeaders from './TDFHeaders'
-import RequestReviewModal from '../../components/requestReviewPopup'
 
 export default function TDFMain({ props }) {
   const router = useRouter()
@@ -17,11 +16,9 @@ export default function TDFMain({ props }) {
     router.query.phase ? +router.query.phase : 11
   ) //props.design.activePhase
   const [postId, setPostId] = useState(props.post.id || '')
-  const [isRequestReviewOpen, setIsRequestReviewOpen] = useState(false)
 
   const initialValues = props.post
   function handlePhaseChange(phase) {
-    console.log('🚀 ~ file: TDFMain.tsx:19 ~ handlePhaseChange ~ phase:', phase)
     if (postId) {
       router.push(`/editDesign/${postId}?phase=${phase}`)
     }
@@ -39,7 +36,6 @@ export default function TDFMain({ props }) {
   const TDFGenericOneField = dynamic(() => import('./TDFGenericOneField'), {
     loading: () => <p>Loading</p>,
   })
-
   const TDFDynamicOneField = dynamic(() => import('./TDFDynamicOneField'), {
     loading: () => <p>Loading</p>,
   })
@@ -72,6 +68,7 @@ export default function TDFMain({ props }) {
   })
   const TDF_valueDemandUtility = dynamic(
     () => import('./TDF_valueDemandUtility'),
+
     {
       loading: () => <p>Loading</p>,
     }
@@ -89,18 +86,7 @@ export default function TDFMain({ props }) {
     loading: () => <p>Loading</p>,
   })
 
-  const TDF802 = dynamic(() => import('./TDF802'), {
-    loading: () => <p>Loading</p>,
-  })
-  const TDF803 = dynamic(() => import('./TDF803'), {
-    loading: () => <p>Loading</p>,
-  })
-  const TDF901 = dynamic(() => import('./TDF901'), {
-    loading: () => <p>Loading</p>,
-  })
-
   const submitData = async (values, { setSubmitting }) => {
-    console.log('🚀 ~ file: TDFMain.tsx:90 ~ submitData ~ values:', values)
     const body = { values }
     if (values?.id === '') {
       try {
@@ -165,7 +151,6 @@ export default function TDFMain({ props }) {
       case 600:
       case 700:
       case 800:
-      case 900:
         return (
           <TDFHeaders props={props} values={values} activePhase={activePhase} />
         )
@@ -189,6 +174,11 @@ export default function TDFMain({ props }) {
         - State the problem that the protocol is trying to solve        
 Solution:
         - State the solution that the protocol provides`}
+            format={`Problem:
+        - 
+        
+        Solution:
+        - `}
           />
         )
       case 102:
@@ -207,6 +197,7 @@ Solution:
             activePhase={activePhase}
             values={values}
             placeholder={`The value created by [protocol] is...`}
+            format={`The value created by...`}
           />
         )
       case 104:
@@ -224,11 +215,27 @@ Revenue is denominated in:
 
 Revenue goes to:
 [Explanation, include any percentages if there is a revenue split between different users/parties]`}
+            format={`The business model for protocol
+- Revenue comes from:
+explanation
+
+- Revenue is denominated in:
+explanation
+
+- Revenue goes to:
+explanation`}
           />
         )
-      // case 202:
-      //   return <TDFGenericOneField props={props} activePhase={activePhase} />
-
+      case 603:
+        return (
+          // <TDF105 props={props} values={values} activePhase={activePhase} />
+          <TDFDynamicOneField
+            props={props}
+            values={values}
+            activePhase={activePhase}
+            placeholder="Token Launch"
+          />
+        )
       case 105:
         return (
           // <TDF105 props={props} values={values} activePhase={activePhase} />
@@ -299,24 +306,9 @@ Revenue goes to:
         return (
           <TDF701 props={props} values={values} activePhase={activePhase} />
         )
-
-      case 802:
-        return (
-          <TDF802 props={props} values={values} activePhase={activePhase} />
-        )
-      case 803:
-        return (
-          <TDF803 props={props} values={values} activePhase={activePhase} />
-        )
-
-      case 901:
-        return (
-          <TDF901 props={props} values={values} activePhase={activePhase} />
-        )
       default:
         return (
           <TDFGenericOneField
-            placeholder=""
             props={props}
             values={values}
             activePhase={activePhase}
@@ -325,29 +317,19 @@ Revenue goes to:
     }
   }
 
-  function openRequestReviewModal() {
-    setIsRequestReviewOpen(true)
-  }
-
-  const handleRequestReviewIsOpen = useCallback(
-    (event) => {
-      setIsRequestReviewOpen(false)
-    },
-    [isRequestReviewOpen]
-  )
   return (
     <div className="mt-4 mb-4 rounded-lg bg-gray-100 p-1">
-      <div className="h-12 w-[100%]"></div>
-
-      <div className="mb-5 flex gap-1">
+      {/* <div className="h-12 w-full"></div> */}
+      <div className="mb-5 flex gap-1 ">
         <div className="w-1/6">
+          <div className="h-10 bg-gray-100 p-1 "></div>
           <TDFSideBar
             designPhases={props.designPhases}
             changePhase={handlePhaseChange}
             activePhase={activePhase}
           />
         </div>
-        <div className="w-5/6 rounded-lg bg-white p-1">
+        <div className="w-5/6 rounded-lg bg-white">
           <div>
             <Formik
               initialValues={initialValues}
@@ -357,33 +339,16 @@ Revenue goes to:
             >
               {({ isSubmitting, setFieldValue, values }) => (
                 <Form>
-                  <FormAutoSave />
-                  <FieldArray
-                    name="DesignElement"
-                    render={() => (
-                      <div>{renderSwitch(values, setFieldValue)}</div>
-                    )}
-                  />
-                  <FormId
-                    postId={postId}
-                    type="text"
-                    name="id"
-                    className="hidden w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
-                  />
-                  <div className="absolute top-[75px] right-[-140px] left-10 grid grid-cols-6 rounded-lg p-2 py-2 ">
-                    <div className="col-span-4">
-                      <p className="mt-2 ml-[154px] text-xl font-bold ">
-                        {values?.title}
-                      </p>
-                    </div>
-                    <div className="container flex w-full justify-end gap-1">
+                  <div className="flex h-10 justify-between bg-gray-100 p-1">
+                    <p className="text-xl font-bold ">{values?.title}</p>
+                    <div className="flex justify-end gap-1">
                       <button
                         type="submit"
                         disabled={isSubmitting}
                         // onClick={formik.handleSubmit}
                         className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
                       >
-                        {values?.id ? 'Update' : 'Save'}
+                        Save
                       </button>
                       <Link
                         as={`/posts/${postId}`}
@@ -392,29 +357,29 @@ Revenue goes to:
                       >
                         View
                       </Link>
-                      {postId && (
-                        <button
-                          type="button"
-                          onClick={openRequestReviewModal}
-                          className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
-                        >
-                          RequestReview
-                        </button>
-                      )}
-
                       <button
                         type="button"
                         className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
                       >
                         Share
                       </button>
-
-                      <RequestReviewModal
-                        isOpen={isRequestReviewOpen}
-                        handleIsOpen={handleRequestReviewIsOpen}
-                      />
                     </div>
                   </div>
+                  <FormAutoSave />
+                  <FieldArray
+                    name="DesignElement"
+                    render={() => (
+                      <div className="rounded-lg bg-white">
+                        {renderSwitch(values, setFieldValue)}
+                      </div>
+                    )}
+                  />
+                  <FormId
+                    postId={postId}
+                    type="text"
+                    name="id"
+                    className="hidden w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
+                  />
                 </Form>
               )}
             </Formik>
