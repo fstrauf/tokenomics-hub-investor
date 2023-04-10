@@ -174,6 +174,11 @@ export default function TDFMain({ props }) {
         - State the problem that the protocol is trying to solve        
 Solution:
         - State the solution that the protocol provides`}
+            format={`Problem:
+        - 
+        
+        Solution:
+        - `}
           />
         )
       case 102:
@@ -192,6 +197,7 @@ Solution:
             activePhase={activePhase}
             values={values}
             placeholder={`The value created by [protocol] is...`}
+            format={`The value created by...`}
           />
         )
       case 104:
@@ -209,6 +215,15 @@ Revenue is denominated in:
 
 Revenue goes to:
 [Explanation, include any percentages if there is a revenue split between different users/parties]`}
+            format={`The business model for protocol
+- Revenue comes from:
+explanation
+
+- Revenue is denominated in:
+explanation
+
+- Revenue goes to:
+explanation`}
           />
         )
       case 603:
@@ -307,7 +322,7 @@ Revenue goes to:
       {/* <div className="h-12 w-full"></div> */}
       <div className="mb-5 flex gap-1 ">
         <div className="w-1/6">
-          <div className='h-10 bg-gray-100 p-1 '></div>
+          <div className="h-10 bg-gray-100 p-1 "></div>
           <TDFSideBar
             designPhases={props.designPhases}
             changePhase={handlePhaseChange}
@@ -324,37 +339,39 @@ Revenue goes to:
             >
               {({ isSubmitting, setFieldValue, values }) => (
                 <Form>
-                  <div className="h-10 bg-gray-100 p-1 flex justify-between">
+                  <div className="flex h-10 justify-between bg-gray-100 p-1">
                     <p className="text-xl font-bold ">{values?.title}</p>
-                      <div className="flex justify-end gap-1">
-                        <button
-                          type="submit"
-                          disabled={isSubmitting}
-                          // onClick={formik.handleSubmit}
-                          className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
-                        >
-                          Save
-                        </button>
-                        <Link
-                          as={`/posts/${postId}`}
-                          href="/posts/[id]]"
-                          className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
-                        >
-                          View
-                        </Link>
-                        <button
-                          type="button"
-                          className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
-                        >
-                          Share
-                        </button>
+                    <div className="flex justify-end gap-1">
+                      <button
+                        type="submit"
+                        disabled={isSubmitting}
+                        // onClick={formik.handleSubmit}
+                        className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
+                      >
+                        Save
+                      </button>
+                      <Link
+                        as={`/posts/${postId}`}
+                        href="/posts/[id]]"
+                        className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
+                      >
+                        View
+                      </Link>
+                      <button
+                        type="button"
+                        className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
+                      >
+                        Share
+                      </button>
                     </div>
                   </div>
                   <FormAutoSave />
                   <FieldArray
                     name="DesignElement"
                     render={() => (
-                      <div className='bg-white rounded-lg'>{renderSwitch(values, setFieldValue)}</div>
+                      <div className="rounded-lg bg-white">
+                        {renderSwitch(values, setFieldValue)}
+                      </div>
                     )}
                   />
                   <FormId
