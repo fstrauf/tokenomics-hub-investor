@@ -3,7 +3,6 @@ import { getActiveDesignPhase } from '../../lib/helper'
 import FormImageSelect from '../form/FormImageSelect'
 
 export default function TDF803({ props, values, activePhase }) {
-  console.log('🚀 ~ file: TDF803.tsx:6 ~ TDF803 ~ values:', values)
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
   const { setFieldValue } = useFormikContext()
   return (

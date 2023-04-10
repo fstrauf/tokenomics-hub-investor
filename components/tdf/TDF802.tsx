@@ -3,7 +3,6 @@ import { getActiveDesignPhase } from '../../lib/helper'
 import FormTipTap from '../form/FormTipTap'
 
 export default function TDF802({ props, values, activePhase }) {
-  console.log('🚀 ~ file: TDF802.tsx:6 ~ TDF802 ~ values:', values)
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
   const { setFieldValue } = useFormikContext()
   return (

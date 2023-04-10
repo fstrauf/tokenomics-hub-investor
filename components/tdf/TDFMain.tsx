@@ -11,7 +11,6 @@ import { useRouter } from 'next/router'
 import RequestReviewModal from '../../components/requestReviewPopup'
 
 export default function TDFMain({ props }) {
-  console.log('🚀 ~ file: TDFMain.tsx:14 ~ TDFMain ~ props:', props)
   const router = useRouter()
 
   const [activePhase, setActivePhase] = useState(
@@ -40,9 +39,13 @@ export default function TDFMain({ props }) {
   const TDFGenericOneField = dynamic(() => import('./TDFGenericOneField'), {
     loading: () => <p>Loading</p>,
   })
-  const TDF105 = dynamic(() => import('./TDF105'), {
+
+  const TDFDynamicOneField = dynamic(() => import('./TDFDynamicOneField'), {
     loading: () => <p>Loading</p>,
   })
+  // const TDF105 = dynamic(() => import('./TDF105'), {
+  //   loading: () => <p>Loading</p>,
+  // })
   // const TDF201 = dynamic(() => import('./TDF201'), {
   //   loading: () => <p>Loading</p>,
   // })
@@ -228,7 +231,13 @@ Revenue goes to:
 
       case 105:
         return (
-          <TDF105 props={props} values={values} activePhase={activePhase} />
+          // <TDF105 props={props} values={values} activePhase={activePhase} />
+          <TDFDynamicOneField
+            props={props}
+            values={values}
+            activePhase={activePhase}
+            placeholder="Token Evaluation"
+          />
         )
       case 301:
         return (
@@ -329,30 +338,7 @@ Revenue goes to:
   return (
     <div className="mt-4 mb-4 rounded-lg bg-gray-100 p-1">
       <div className="h-12 w-[100%]"></div>
-      {/* <div className="rounded-lg p-2 py-2">
-        <p className="text-xl font-bold">{formik.values?.title}</p>
-        <div className="flex justify-end gap-1">
-          <button
-            type="submit"
-            disabled={formik.isSubmitting}
-            onClick={formik.handleSubmit}
-            className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
-          >
-            Save
-          </button>
-          <Link
-          as={`/posts/${postId}`}
-          href="/posts/[id]]"
-          className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
-        >
-          View
-        </Link>
-          <button className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40">
-            Share
-          </button>
-        </div>
-      </div> */}
-      {/* <div className="mt-5">header</div> */}
+
       <div className="mb-5 flex gap-1">
         <div className="w-1/6">
           <TDFSideBar

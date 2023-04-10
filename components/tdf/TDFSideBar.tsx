@@ -3,11 +3,6 @@ import { useRouter } from 'next/router'
 export default function TDFSideBar({ designPhases, changePhase, activePhase }) {
   const router = useRouter()
 
-  console.log(
-    '🚀 ~ file: TDFSideBar.tsx:2 ~ TDFSideBar ~ designPhases:',
-    designPhases
-  )
-
   const filteredPhases = designPhases.filter((phase) => phase.isReport)
   // const DesignPhase = designPhases.filter((phase) => phase.isReport === false)
 
