@@ -1,7 +1,6 @@
 import Image from 'next/image'
 
 export default function ProtocolCard({ author, post }) {
-//   console.log('🚀 ~ file: protocolCard.js:4 ~ ProtocolCard ~ post', post)
   return (
     <>
       <div className="m-5 w-full max-w-sm rounded-lg border border-gray-200 bg-white shadow-md">

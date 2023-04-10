@@ -9,7 +9,6 @@ import Comments from '../../components/comments'
 import CommentForm from '../../components/commentForm'
 
 const EditPost: React.FC<PostProps> = (props) => {
-  console.log("🚀 ~ file: [id].tsx:12 ~ props", props)
   return (
     <Layout>
       <div>

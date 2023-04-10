@@ -71,7 +71,6 @@ export default function Post2({
         } else {
           //connect the returned id to the inputfields.id
           const id = await response.text()
-          // console.log(response)
           toast.success('Changes auto-saved ' + JSON.parse(id).id, {
             position: 'bottom-right',
           })
@@ -79,7 +78,6 @@ export default function Post2({
         }
 
         setSubmitting(false)
-        console.log('protocol created')
       } catch (error) {
         console.error(error)
       }
@@ -101,7 +99,6 @@ export default function Post2({
 
         // await Router.push('/');
         setSubmitting(false)
-        console.log('protocol updated')
       } catch (error) {
         console.error(error)
       }

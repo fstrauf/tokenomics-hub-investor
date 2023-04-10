@@ -17,22 +17,16 @@ export default function AllDrafts({ posts }) {
 
   if (isSignedIn && contributor) {
     return (
-      <>
-        <Layout>
-          {/* <Header /> */}
-          <h1 className="mb-5 mt-10 text-2xl font-bold">
-            All Unpublished Drafts
-          </h1>
-          <Drafts posts={posts} context="allDrafts" />
-        </Layout>
-      </>
+      <Layout>
+        {/* <Header /> */}
+        <h1 className="mb-5 mt-10 text-2xl font-bold">
+          All Unpublished Drafts
+        </h1>
+        <Drafts posts={posts} context="allDrafts" />
+      </Layout>
     )
   } else {
-    return (
-      <>
-        <UnAuthorised />
-      </>
-    )
+    return <UnAuthorised />
   }
 }
 

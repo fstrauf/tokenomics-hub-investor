@@ -5,7 +5,6 @@ import { getActiveDesignPhase } from '../../lib/helper'
 // import ExampleSection from './ExampleSection'
 
 export default function TDF401({ props, values, activePhase }) {
-  console.log("🚀 ~ file: TDF401.tsx:8 ~ TDF401 ~ values:", values)
   
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
   return (

@@ -42,7 +42,6 @@ export default function DesignCard({ post, context }) {
   }
 
   const deleteDraft = async (id: String) => {
-    // console.log('🚀 ~ file: designCard.tsx:44 ~ deleteDraft ~ id:', id)
     setSubmitting(true)
     await fetch(`/api/post/delete/${id}`, {
       method: 'PUT',

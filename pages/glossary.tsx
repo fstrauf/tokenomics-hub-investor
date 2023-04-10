@@ -6,19 +6,17 @@ import { micromark } from 'micromark'
 
 export default function Glossary(props) {
   return (
-    <>
-      <Layout>
-        <article className="prose mt-5 mb-5 lg:prose-xl">
-          <div dangerouslySetInnerHTML={{ __html: props.htmlContent }} />
-        </article>
-      </Layout>
-    </>
+    <Layout>
+      <article className="prose mt-5 mb-5 lg:prose-xl">
+        <div dangerouslySetInnerHTML={{ __html: props.htmlContent }} />
+      </article>
+    </Layout>
   )
 }
 
 export async function getStaticProps() {
   var path = require('path')
-//   const configDirectory = path.resolve(process.cwd(), 'pages')
+  //   const configDirectory = path.resolve(process.cwd(), 'pages')
   const configDirectory = path.resolve(process.cwd(), 'components/glossary')
 
   const file = fs.readFileSync(

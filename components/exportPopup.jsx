@@ -48,7 +48,6 @@ export default React.memo(function ExportPopup({ isOpen, handleIsOpen }) {
   // }
 
   return (
-    <>
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog as="div" className="z-60" onClose={closeModal}>
           <Transition.Child
@@ -114,6 +113,5 @@ export default React.memo(function ExportPopup({ isOpen, handleIsOpen }) {
           </div>
         </Dialog>
       </Transition>
-    </>
   )
 })

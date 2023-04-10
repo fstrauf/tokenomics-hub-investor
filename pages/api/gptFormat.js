@@ -54,6 +54,5 @@ function generatePrompt(text, format) {
   //   animal[0].toUpperCase() + animal.slice(1).toLowerCase()
   const combinedPrompt = `Format the following text: ${text} use this format: ${format} limit output to 500 characters`
 
-  console.log("🚀 ~ file: gptFormat.js:57 ~ generatePrompt ~ combinedPrompt:", combinedPrompt)
   return combinedPrompt
 }

@@ -155,9 +155,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const tags = await prisma.tag.findMany()
 
   const filterCats = context?.query?.cats?.split(',') || ''
-  // console.log("🚀 ~ file: index.tsx:126 ~ constgetServerSideProps:GetServerSideProps= ~ filterCats:", filterCats)
   const filterTags = context?.query?.tags?.split(',') || ''
-  // console.log("🚀 ~ file: index.tsx:128 ~ constgetServerSideProps:GetServerSideProps= ~ filterTags:", filterTags)
   const filterCatsQuery =
     filterCats.length > 0
       ? {
@@ -213,7 +211,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   //     demandDriversStrength: true,
   //   },
   // })
-  // console.log("🚀 ~ file: index.tsx:167 ~ constgetServerSideProps:GetServerSideProps= ~ aggregate", aggregate)
 
   return {
     props: {

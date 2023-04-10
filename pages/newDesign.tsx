@@ -9,20 +9,13 @@ import { AuthData } from '@clerk/nextjs/dist/server/types'
 
 export default function NewDesign(props) {
   return (
-    <>
-      <Layout mode="design">
-        <TDFMain props={props} />
-      </Layout>
-    </>
+    <Layout mode="design">
+      <TDFMain props={props} />
+    </Layout>
   )
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  console.log(
-    '🚀 ~ file: newDesign.tsx:22 ~ constgetServerSideProps:GetServerSideProps= ~ context:',
-    context
-  )
-
   const postId: string = context?.query?.id || ''
 
   const { userId }: AuthData = getAuth(context.req)
@@ -99,7 +92,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     Tag,
   ] = await prisma.$transaction(txCalls)
 
-  // console.log("🚀 ~ file: newDesign.tsx:183 ~ constgetServerSideProps:GetServerSideProps= ~ userCalcs:", userCalcs)
   // const preloadInitialCalcValues = null
   const defaultContent = {
     id: '',
@@ -108,9 +100,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     status: postStatus.draft,
     DesignElement: designPhases
       .filter((dp) => dp.parentPhaseId)
-      .map((dp) => {
-        return { id: '', content: '', designPhasesId: String(dp.phaseId) }
-      }),
+      .map((dp) => ({
+        id: '',
+        content: '',
+        designPhasesId: String(dp.phaseId),
+      })),
     Calculation: {
       id: '',
       title: '',

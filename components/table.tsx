@@ -135,13 +135,11 @@ export function CategoryPill({ value }) {
 
 function CategoryPills({ value }) {
   return (
-    <>
     <div className="mr-1 mb-1 flex flex-wrap">
-      {value.map((v) => (      
-          <CategoryPill key={v.value} value={v.label} />        
+      {value.map((v) => (
+        <CategoryPill key={v.value} value={v.label} />
       ))}
-      </div>
-    </>
+    </div>
   )
 }
 
@@ -163,12 +161,7 @@ function HeaderLink({ value, id, ticker }) {
 function ProtocolImage({ value, id }) {
   return (
     <div className="ml-4 w-4 sm:w-16">
-      <CoverImage
-        id={id}
-        title={id}
-        imageObject={value}
-        url={value}
-      />
+      <CoverImage id={id} title={id} imageObject={value} url={value} />
     </div>
   )
 }

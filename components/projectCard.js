@@ -5,7 +5,6 @@ export default function ProjectCard({ consultingNFT }) {
     const metadata = JSON.parse(consultingNFT.metadata)
 
     return (
-        <>
             <div className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow-md m-5">
                 <div className="flex justify-end px-4 pt-4">
                 </div>
@@ -25,7 +24,6 @@ export default function ProjectCard({ consultingNFT }) {
                     </div>
                 </div>
             </div>
-        </>
     )
 }
 

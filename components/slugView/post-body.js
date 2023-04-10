@@ -2,7 +2,6 @@ import React from 'react'
 import Tiptap from '../TipTap';
 
 export default function PostBody({ content }) {
-console.log("🚀 ~ file: post-body.js:5 ~ PostBody ~ content:", content)
 
   return (
     <>

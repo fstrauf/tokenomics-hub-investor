@@ -46,11 +46,7 @@ type Props = {
 
 const Tiptap: React.FC<Props> = (props) => {
   var content = props?.content ?? ''
-  // console.log("🚀 ~ file: TipTap.tsx:33 ~ content:", content)
-  // console.log('tiptap')
-  // console.log(typeof content)
-  // console.log(content)
-  // var editorContent = ''
+
   if (typeof content === 'string') {
     try {
       content = JSON.parse(content)
@@ -158,7 +154,6 @@ const MenuBar = ({ editor }) => {
     editor.chain().focus().extendMarkRange('link').setLink({ href: url }).run()
   }, [editor])
 
-  console.log('editor.isActive', editor.isActive)
   return (
     <div className="menuBar">
       <button

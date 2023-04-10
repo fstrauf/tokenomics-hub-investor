@@ -312,7 +312,6 @@ export default function Post({ post, morePosts, author }) {
 }
 
 export async function getStaticProps({ params }) {
-  // console.log("🚀 ~ file: [id].tsx:251 ~ getStaticProps ~ params:", params)
   const txCalls = []
   const post = await prisma.post.findUnique({
     where: {
@@ -342,7 +341,6 @@ export async function getStaticProps({ params }) {
       },
     },
   })
-  // console.log("🚀 ~ file: [id].tsx:274 ~ getStaticProps ~ post:", post)
 
   txCalls.push(
     prisma.post.count({
@@ -374,7 +372,6 @@ export async function getStaticProps({ params }) {
 
   const response = await prisma.$transaction(txCalls)
 
-  // console.log("🚀 ~ file: [slug].tsx:311 ~ getStaticProps ~ response[0]", response[2])
 
   let clerkUser = post?.authorClerkId
     ? await clerkClient.users.getUser(post?.authorClerkId)
@@ -404,7 +401,6 @@ export async function getStaticPaths() {
     //   status: postStatus.published
     // }
   })
-  // console.log("🚀 ~ file: [id].tsx:334 ~ getStaticPaths ~ allPosts:", allPosts)
 
   return {
     paths:

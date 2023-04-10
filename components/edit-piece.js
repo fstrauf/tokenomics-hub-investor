@@ -5,7 +5,6 @@ export default function EditPiece() {
     const [isOpen, setIsOpen] = useState(false)
 
     const handleIsOpen = useCallback((event) => {
-        // console.log(event)
         setIsOpen(false);
         
       }, [isOpen]);

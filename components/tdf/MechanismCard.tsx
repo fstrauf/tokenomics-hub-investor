@@ -13,7 +13,6 @@ export const MechanismCard = ({
 
   const supplyBuilder = () => {
     return (
-      <>
         <div>
           <div className="flex p-5">
             <span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">
@@ -128,7 +127,6 @@ export const MechanismCard = ({
             />
           </div>
         </div>
-      </>
     )
   }
 

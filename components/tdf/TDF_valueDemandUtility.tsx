@@ -7,7 +7,6 @@ import ExampleSection from './ExampleSection'
 import BreakdownBox from '../slugView/breakdown-box'
 
 export default function TDF_valueDemandUtility({ props, values, activePhase }) {
-  console.log("🚀 ~ file: TDF_valueDemandUtility.tsx:10 ~ TDF_valueDemandUtility ~ values:", values)
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
 
   let ExampleDetail = ({ onGoBack, example, exampleField }) => {

@@ -10,7 +10,6 @@ import dynamic from 'next/dynamic'
 // import * as yup from 'yup'
 
 export default function coreMechanisms({ allMechanisms }) {
-  // console.log("🚀 ~ file: coreMechanisms.tsx:12 ~ coreMechanisms ~ alldesignPhases", alldesignPhases)
   const [initialValues, setInititalValues] = useState(
     allMechanisms[0] || {
       name: '',
@@ -47,7 +46,6 @@ export default function coreMechanisms({ allMechanisms }) {
     setInititalValues(
       allMechanisms.find((adp) => String(adp.id) === e.target.value)
     )
-    console.log('e', e)
   }
 
   if (isSignedIn && admin) {

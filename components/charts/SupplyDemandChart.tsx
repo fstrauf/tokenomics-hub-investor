@@ -74,7 +74,6 @@ export default withTooltip<StackedAreasProps, TooltipData>(
       ],
       nice: true,
     })
-    // console.log("🚀 ~ file: SupplyDemandChart.tsx:74 ~ supplyDemandScale:", supplyDemandScale)
 
     const xMax = width - margin.left - margin.right
     const yMax = height - margin.top - margin.bottom

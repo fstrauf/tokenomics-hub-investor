@@ -99,7 +99,6 @@ export default async function handle(req, res) {
       },        
     })
   } catch (e) {
-    console.log(e)
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
       // The .code property can be accessed in a type-safe manner
       if (e.code === 'P2002') {
@@ -114,7 +113,6 @@ export default async function handle(req, res) {
     throw e
   }
 
-  console.log(response)
   // return res.json(response);
   return res.status(200).send({ id: response.id })
 }

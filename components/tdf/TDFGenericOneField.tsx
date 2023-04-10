@@ -11,9 +11,7 @@ export default function TDFGenericOneField({
   values,
   format = null,
 }) {
-  // console.log("🚀 ~ file: TDFGenericOneField.tsx:13 ~ values:", values)
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
-  // console.log("🚀 ~ file: TDFGenericOneField.tsx:15 ~ designPhase:", designPhase)
   const { setFieldValue } = useFormikContext()
   // async function generateSuggestions(event) {
   //   event.preventDefault();

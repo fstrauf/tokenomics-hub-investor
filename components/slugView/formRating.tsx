@@ -35,7 +35,6 @@ export default function FormRating({ post, userReview }) {
       }
 
       setSubmitting(false)
-      console.log('Rating saved')
     } catch (error) {
       console.error(error)
     }
