@@ -13,9 +13,11 @@ export default function CalculationPage({ preloadInitialValues }) {
   })
 
   return (
+    <>
       <Layout>
         <Calculator preloadInitialValues={preloadInitialValues} />
       </Layout>
+    </>
   )
 }
 

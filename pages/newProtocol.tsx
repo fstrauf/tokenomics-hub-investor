@@ -60,14 +60,16 @@ export default function NewProtocol({
   }
 
   return (
-    <Layout>
-      <Post2
-        content={defaultContent}
-        categories={categories}
-        tags={tags}
-        calculations={calculations}
-      />
-    </Layout>
+    <>
+      <Layout>
+        <Post2
+          content={defaultContent}
+          categories={categories}
+          tags={tags}
+          calculations={calculations}
+        />
+      </Layout>
+    </>
   )
 }
 

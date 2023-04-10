@@ -42,6 +42,7 @@ export default React.memo(function RequestReviewPopup({
   }
 
   return (
+    <>
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog as="div" className="z-60 relative" onClose={closeModal}>
           <Transition.Child
@@ -160,5 +161,6 @@ export default React.memo(function RequestReviewPopup({
           </div>
         </Dialog>
       </Transition>
+    </>
   )
 })

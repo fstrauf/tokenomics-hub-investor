@@ -193,9 +193,11 @@ export function getMonthEpochAreaData(
   startDate,
   supplyDemandTotals
 ) {
+  console.log("🚀 ~ file: helper.ts:196 ~ calculationRow:", calculationRow)
   let emissions = 0
   const secondsPerMonth = 2628000
   let emissionsPerSecond = calculationRow.initialEmissionPerSecond
+  // console.log("🚀 ~ file: helper.ts:110 ~ emissionsPerSecond", emissionsPerSecond)
   const epochDurationInMonths = Math.floor(
     calculationRow.epochDurationInSeconds / secondsPerMonth
   ) //hardcode to start with
@@ -278,6 +280,7 @@ export function getAreaData(months, calculationRows, totalSupply, startDate) {
       }
     }
   })
+  console.log("🚀 ~ file: helper.ts:285 ~ getAreaData ~ props:", props)
   return props
 }
   

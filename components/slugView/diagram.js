@@ -1,6 +1,7 @@
 import Image from 'next/image'
 
 export default function Diagram({ diagram }) {
+  // console.log('🚀 ~ file: diagram.js:4 ~ Diagram ~ diagram', diagram)
   // check for https://viewer.diagrams.net/?tags=%7B%7D&highlight=0000ff&edit=_blank&layers=1&nav=1&title=redacted_cartel_tokenomics_diagram_final_version.drawio#Uhttps%3A%2F%2Fdrive.google.com%2Fuc%3Fid%3D1cATvV6SwisbAa5C3T8NT8vQFIteRI_6o%26export%3Ddownload
   //if not, just use an image.
   const diagramUrl = diagram || null

@@ -5,6 +5,7 @@ import * as duration from 'dayjs/plugin/duration'
 import * as dayjs from 'dayjs'
 
 export default function StaticAllocationAndVestingChart({calculation, mechanisms}) {
+  console.log("🚀 ~ file: StaticAllocationAndVestingChart.tsx:8 ~ calculation:", calculation)
   dayjs.extend(duration)
   const secondsPerMonth = 2628000
 

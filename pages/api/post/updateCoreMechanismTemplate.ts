@@ -28,5 +28,6 @@ export default async function handle(req, res) {
     },
   })
 
+  console.log('response', response)
   res.json(response)
 }

@@ -10,20 +10,24 @@ import Link from 'next/link'
 
 export default function MyDrafts({ posts }) {
   return (
-    <Layout mode={headerStatus.report}>
-      {/* <Header /> */}
-      <div className="flex items-center justify-between">
-        <h1 className="mb-5 mt-10 text-2xl font-bold">My Unpublished Drafts</h1>{' '}
-        <Link
-          href="/newProtocol"
-          className="w-32 self-center rounded-md bg-dao-red px-4 py-2 text-center text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
-        >
-          New Draft
-        </Link>
-      </div>
+    <>
+      <Layout mode={headerStatus.report}>
+        {/* <Header /> */}
+        <div className="flex justify-between items-center">
+          <h1 className="mb-5 mt-10 text-2xl font-bold">
+            My Unpublished Drafts
+          </h1>{' '}
+          <Link
+            href="/newProtocol"
+            className="w-32 text-center self-center rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+          >
+            New Draft
+          </Link>
+        </div>
 
-      <Drafts posts={posts} context="myDrafts" />
-    </Layout>
+        <Drafts posts={posts} context="myDrafts" />
+      </Layout>
+    </>
   )
 }
 

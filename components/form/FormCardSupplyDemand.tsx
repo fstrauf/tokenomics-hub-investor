@@ -51,7 +51,10 @@ export const FormCardSupplyDemand = ({
 
   const handleNewMechanism = (arrayHelpers, isSink: boolean) => {
     const updateMechanism = selectedTemplate
-   
+    console.log(
+      '🚀 ~ file: FormCardSupplyDemand.tsx:59 ~ handleNewMechanism ~ updateMechanism:',
+      updateMechanism
+    )
 
     updateMechanism.isSink = isSink
     if (isSink) {

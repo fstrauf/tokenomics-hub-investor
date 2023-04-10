@@ -9,6 +9,7 @@ import { clerkClient } from '@clerk/nextjs/server'
 export default function ExpertsPage(props) {
 
   return (
+    <>
       <Layout>
         {/* <Intro /> */}
         <div className="m-auto flex flex-col justify-center">
@@ -25,6 +26,7 @@ export default function ExpertsPage(props) {
           })}
         </div> */}
       </Layout>
+    </>
   )
 }
 

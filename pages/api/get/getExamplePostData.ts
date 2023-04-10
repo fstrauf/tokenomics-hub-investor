@@ -3,7 +3,11 @@ import prisma from '../../../lib/prisma'
 
 export default async function handle(req, res) {
   const { categories, tags } = req.query
-
+  // console.log('🚀 ~ file: getExamplePostData.ts:6 ~ handle ~ tags:', tags)
+  // console.log(
+  //   '🚀 ~ file: getExamplePostData.ts:6 ~ handle ~ categories:',
+  //   categories
+  // )
 
   var filterCats = []
   var filterTags = []

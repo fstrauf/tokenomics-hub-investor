@@ -9,6 +9,7 @@ import { useAuth } from '@clerk/clerk-react/dist/hooks/useAuth'
 import { useRouter } from 'next/router'
 
 export default function Calculator(props) {
+  console.log("🚀 ~ file: calculator.tsx:12 ~ Calculator ~ props:", props)
   const { preloadInitialValues } = props
   const { isSignedIn } = useAuth()
 
@@ -41,19 +42,17 @@ export default function Calculator(props) {
   const [postId, setPostId] = useState(preloadInitialValues.id)
 
   const validateName = async (value) => {
-    let error
+    let error;
     if (!value) {
-      error = 'Required'
+      error = 'Required';      
     }
-    return error
+    return error;
   }
 
   const submitData = async (values, { setSubmitting }) => {
     const body = { values }
-    if (!isSignedIn) {
-      toast.error('Please sign in to save calculations', {
-        position: 'bottom-right',
-      })
+    if(!isSignedIn){
+      toast.error('Please sign in to save calculations', { position: 'bottom-right' })
       return
     }
 
@@ -76,6 +75,7 @@ export default function Calculator(props) {
         }
 
         setSubmitting(false)
+        console.log('calculation created')
       } catch (error) {
         console.error(error)
       }
@@ -97,28 +97,29 @@ export default function Calculator(props) {
 
         // await Router.push('/');
         setSubmitting(false)
+        console.log('calculation updated')
       } catch (error) {
         console.error(error)
       }
     }
   }
 
-  //can't load content via route
+  //can't load content via route 
   const loadContent = async (calculationId) => {
-    router.push(`/calculator?id=${calculationId}`)
+    router.push(`/calculator?id=${calculationId}`)    
   }
 
   const newForm = async () => {
-    router.push(`/calculator`)
+    router.push(`/calculator`)    
   }
 
   return (
     <>
-      <div className="mb-10 mt-10">
-        <h1 className="text-3xl font-bold">
-          Welcome to the Tokenomics DAO Calculator
-        </h1>
-        <p className="text-sm">Please log-in to save calculations</p>
+    <div className='mb-10 mt-10'>
+      <h1 className="text-3xl font-bold">
+        Welcome to the Tokenomics DAO Calculator
+      </h1>
+      <p className='text-sm'>Please log-in to save calculations</p>
       </div>
       <Toaster />
 
@@ -210,9 +211,11 @@ export default function Calculator(props) {
                     Load a Calculation{' '}
                   </option>
                   {preloadInitialValues.calculations.map((c) => (
-                    <option key={c.id} value={c.id}>
-                      {c.title}
-                    </option>
+                    <>
+                      <option key={c.id} value={c.id}>
+                        {c.title}
+                      </option>
+                    </>
                   ))}
                 </Field>
                 <button
@@ -278,15 +281,11 @@ export default function Calculator(props) {
                     </label>
                     <Field
                       type="text"
-                      name="name"
-                      validate={validateName}
+                      name="name"    
+                      validate={validateName}                                       
                       className="block w-52 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
                     />
-                    <ErrorMessage name="name">
-                      {(msg) => (
-                        <div className="font-bold text-red-600">{msg}</div>
-                      )}
-                    </ErrorMessage>
+                    <ErrorMessage name="name">{msg => <div className='text-red-600 font-bold'>{msg}</div>}</ErrorMessage>
                   </div>
                   <div className="mb-6">
                     <label className="mb-2 block text-sm font-medium text-gray-900">

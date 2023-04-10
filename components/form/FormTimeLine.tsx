@@ -4,6 +4,7 @@ import FormDate from './FormDate'
 import FormText from './FormText'
 
 export const FormTimeLine = ({ values }) => {
+  console.log('🚀 ~ file: FormTimeLine.tsx:7 ~ FormTimeLine ~ values:', values)
   const today = new Date().toLocaleDateString('en-CA')
 
   return (

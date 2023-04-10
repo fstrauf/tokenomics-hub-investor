@@ -5,6 +5,7 @@ import UserViewer from './UserViewer'
 export const MechanismCardViewer = ({
   mechanism,
 }) => {
+  // console.log('🚀 ~ file: MechanismCardViewer.tsx:12 ~ mechanism:', mechanism)
 
   const isSink = mechanism.isSink || false
 

@@ -25,7 +25,7 @@ export default async function handle(req, res) {
     })
   
   } catch (e) {
-    // console.log(e)
+    console.log(e)
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
       if (e.code === 'P2002') {
         return res.status(500).send({ error: 'Entry already exists!' })

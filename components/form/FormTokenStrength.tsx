@@ -6,6 +6,7 @@ import FormText from './FormText'
 // import Select from "react-select";
 
 export const FormTokenStrength = ({ reviewRequiredFields, ratingEnabled }) => {
+  // console.log("🚀 ~ file: FormTokenStrength.tsx:9 ~ FormTokenStrength ~ reviewRequiredFields", reviewRequiredFields)
   return (
     <>
       <div className="mb-6 flex">

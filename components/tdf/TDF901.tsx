@@ -3,6 +3,7 @@ import FormTimeLine from '../form/FormTimeLine'
 import ResourceSection from './ResourceSection'
 
 export default function TDF901({ props, values, activePhase }) {
+  console.log('🚀 ~ file: TDF901.tsx:6 ~ TDF901 ~ values:', values)
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
   return (
     <div className="">

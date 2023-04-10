@@ -4,6 +4,8 @@ import { getTotalStrength } from '../../../lib/helper'
 
 export default async function handle(req, res) {
   const { values, userId } = req.body
+  console.log("🚀 ~ file: saveUserStrengthRating.ts:7 ~ handle ~ userId", userId)
+  console.log("🚀 ~ file: saveUserStrengthRating.ts:7 ~ handle ~ values", values)
 
   //load the strength rating on slug page
   var response = {}
@@ -66,7 +68,7 @@ export default async function handle(req, res) {
   try {
     response = await prisma.$transaction(txCalls)
   } catch (e) {
-    // console.log(e)
+    console.log(e)
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
       if (e.code === 'P2002') {
         return res.status(500).send({ error: 'Slug might already exist!' })
@@ -74,6 +76,7 @@ export default async function handle(req, res) {
     }
     throw e
   }
+  // console.log("🚀 ~ file: saveUserStrengthRating.ts:93 ~ handle ~ getTotalStrength(response[1]?._avg)", response[1])
 const postUpdate = await prisma.post.update({
   where: {
     // id: values.id,

@@ -6,6 +6,8 @@ import { getActiveDesignPhase } from '../../lib/helper'
 // import ExampleSection from './ExampleSection'
 
 export default function TDF302({ props, values, activePhase }) {
+  // console.log("🚀 ~ file: TDF302.tsx:9 ~ TDF302 ~ values:", JSON.parse(values.DesignElement[7].content))
+  // console.log("🚀 ~ file: TDF302.tsx:9 ~ TDF302 ~ props:", props)
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
   return (
     <div className="flex w-full flex-col rounded-lg border-2 p-2">

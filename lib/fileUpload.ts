@@ -17,11 +17,13 @@ export const generateUUID = () => {
 
 export const uploadPhoto = async (e) => {
   const file = e.target.files[0];
+  // console.log(file)
   const filename = encodeURIComponent(file.name);
   const target = generateUUID() + '.' + filename.split('.').pop()
   const res = await fetch(`/api/upload-url?file=${filename}&target=${target}`);  
   const { url, fields } = await res.json();
   const formData = new FormData();
+  // console.log(url + " " + fields)
   Object.entries({ ...fields, file }).forEach(([key, value]) => {
       formData.append(key, value);
   });
@@ -32,8 +34,10 @@ export const uploadPhoto = async (e) => {
   });
 
   if (upload.ok) {
+      console.log('Uploaded successfully!');
       return(url + target)
   } else {
+      console.error('Upload failed.');
       return null
   }
 };

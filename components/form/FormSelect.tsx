@@ -18,7 +18,9 @@ const FormSelect = ({
   }
 
   // const getValue = () => {
-
+  //   console.log(JSON.stringify(options))
+  //   console.log('field ' + JSON.stringify(field.value))
+  //   console.log(options.find(option => option.value === field.value))
   //   if (options) {
   //     return isMulti
   //       ? options.filter((option) => field?.value?.indexOf(option.value) >= 0)

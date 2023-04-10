@@ -34,6 +34,7 @@ export const FormCalculator = (props) => {
         }
 
         setSubmitting(false)
+        console.log('calculation created')
       } catch (error) {
         console.error(error)
       }
@@ -55,6 +56,7 @@ export const FormCalculator = (props) => {
 
         // await Router.push('/');
         setSubmitting(false)
+        console.log('calculation updated')
       } catch (error) {
         console.error(error)
       }
