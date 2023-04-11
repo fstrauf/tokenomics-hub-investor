@@ -139,6 +139,15 @@ export default function adminTDFPhase({ alldesignPhases }) {
                     placeholder="phaseOrder"
                     className="mb-3 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
                   />
+                  <label className=" mr-2 text-sm font-medium text-gray-900">
+                    Is Report
+                  </label>
+                  <Field
+                    name="isReport"
+                    type="checkbox"
+                    className="mb-4"
+                    placeholder="report"
+                  />
                   <label className="mb-2 block text-sm font-medium text-gray-900">
                     Resources
                   </label>

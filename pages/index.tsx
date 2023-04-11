@@ -100,7 +100,7 @@ const Index: React.FC<Props> = (props) => {
           </h1>
           <div className="flex gap-4 mt-10 mb-10 text-center justify-center">
             <Link
-              href="/myDrafts"
+              href="/newPost"
               className="w-44 h-14 text-center self-center rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
             >
               Add a Token Report
