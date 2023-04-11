@@ -95,6 +95,10 @@ export default function TDFMain({ props }) {
   const TDF803 = dynamic(() => import('./TDF803'), {
     loading: () => <p>Loading</p>,
   })
+
+  const TDF804 = dynamic(() => import('./TDF804'), {
+    loading: () => <p>Loading</p>,
+  })
   const TDF901 = dynamic(() => import('./TDF901'), {
     loading: () => <p>Loading</p>,
   })
@@ -308,6 +312,11 @@ Revenue goes to:
         return (
           <TDF803 props={props} values={values} activePhase={activePhase} />
         )
+
+        case 804:
+          return (
+            <TDF804 props={props} values={values} activePhase={activePhase} />
+          )
 
       case 901:
         return (
