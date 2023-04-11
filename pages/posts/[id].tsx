@@ -377,7 +377,7 @@ export async function getStaticProps({ params }) {
   // console.log("🚀 ~ file: [slug].tsx:311 ~ getStaticProps ~ response[0]", response[2])
   let clerkUser = {}
   try {
-    let clerkUser = post?.authorClerkId
+    clerkUser = post?.authorClerkId
     ? await clerkClient.users.getUser(post?.authorClerkId)
     : {}    
   } catch (error) {
