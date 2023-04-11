@@ -20,7 +20,7 @@ import PostMeta from '../../components/postMeta'
 import dynamic from 'next/dynamic'
 import { useAuth } from '@clerk/clerk-react/dist/hooks/useAuth'
 import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
-import Calculation from '../../components/slugView/calculation'
+// import Calculation from '../../components/slugView/calculation'
 import { clerkClient } from '@clerk/nextjs/server'
 import {
   clerkConvertJSON,
@@ -56,17 +56,17 @@ export default function Post({ post, morePosts, author }) {
   const { user } = useUser()
   let [isExportOpen, setExportIsOpen] = useState(false)
 
-  function closeExportModal() {
-    setExportIsOpen(false)
-  }
+  // function closeExportModal() {
+  //   setExportIsOpen(false)
+  // }
 
-  function openExportModal() {
-    setExportIsOpen(true)
-  }
-  var userIsAuthor = false
-  if (user?.id === post?.authorClerkId) {
-    userIsAuthor = true
-  }
+  // function openExportModal() {
+  //   setExportIsOpen(true)
+  // }
+  // var userIsAuthor = false
+  // if (user?.id === post?.authorClerkId) {
+  //   userIsAuthor = true
+  // }
 
   const contributor = user?.publicMetadata?.contributor || false
 
@@ -129,7 +129,7 @@ export default function Post({ post, morePosts, author }) {
               >
                 Edit
               </button>
-              <button
+              {/* <button
                 type="button"
                 onClick={openExportModal}
                 disabled={
@@ -138,13 +138,13 @@ export default function Post({ post, morePosts, author }) {
                 className="mb-3 flex w-28 justify-center rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
               >
                 Export
-              </button>
+              </button> */}
 
-              <ExportPopup
+              {/* <ExportPopup
                 isOpen={isExportOpen}
                 handleIsOpen={handleExportIsOpen}
                 component={<TimeLine items={post.protocolTimeLine} />}
-              />
+              /> */}
               <FeedbackPopup isOpen={isOpen} handleIsOpen={handleIsOpen} />
               <div
                 className={`top-3 w-full ${
@@ -357,38 +357,44 @@ export async function getStaticProps({ params }) {
     prisma.$queryRaw`select count(A) as count,A as cat,p.authorClerkId from _CategoryToPost join Post as p on p.id = B WHERE p.authorClerkId = ${post?.authorClerkId} AND p.status = ${postStatus.published} GROUP BY A, p.authorClerkId`
   )
 
-  txCalls.push(
-    prisma.userStrengthRating.aggregate({
-      _avg: {
-        tokenUtilityStrength: true,
-        businessModelStrength: true,
-        valueCreationStrength: true,
-        valueCaptureStrength: true,
-        demandDriversStrength: true,
-      },
-      where: {
-        postId: post.id,
-      },
-    })
-  )
+  // txCalls.push(
+  //   prisma.userStrengthRating.aggregate({
+  //     _avg: {
+  //       tokenUtilityStrength: true,
+  //       businessModelStrength: true,
+  //       valueCreationStrength: true,
+  //       valueCaptureStrength: true,
+  //       demandDriversStrength: true,
+  //     },
+  //     where: {
+  //       postId: post.id,
+  //     },
+  //   })
+  // )
 
-  const response = await prisma.$transaction(txCalls)
+  const [postCount, postCategoryCount] = await prisma.$transaction(txCalls)
 
   // console.log("🚀 ~ file: [slug].tsx:311 ~ getStaticProps ~ response[0]", response[2])
-
-  let clerkUser = post?.authorClerkId
+  let clerkUser = {}
+  try {
+    let clerkUser = post?.authorClerkId
     ? await clerkClient.users.getUser(post?.authorClerkId)
-    : {}
+    : {}    
+  } catch (error) {
+    
+  }
 
-  clerkUser = clerkConvertJSON(clerkUser)
 
-  clerkUser.articleCount = response[0] || 0
+  clerkUser = clerkConvertJSON(clerkUser || null)
 
-  clerkUser.cat = response[1] || null
+  clerkUser.articleCount = postCount || 0
+
+  clerkUser.cat = postCategoryCount || null
 
   return {
     props: {
-      post: Object.assign(post, response[2]) || null,
+      // post: Object.assign(post, response[2]) || null,
+      post: post || null,
       author: clerkUser || null,
     },
     revalidate: 1,
