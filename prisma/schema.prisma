@@ -60,6 +60,7 @@ model Post {
   Mechanism             Mechanism[]
   PostUser              PostUser[]
   PostAuthor            PostAuthor[]
+  postType              String?              @db.Text
 
   @@index([authorId])
   @@index([calculationId])

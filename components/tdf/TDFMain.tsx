@@ -1,5 +1,5 @@
 import TDFSideBar from './TDFSideBar'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import dynamic from 'next/dynamic'
 import { FieldArray, Form, Formik } from 'formik'
 import toast, { Toaster } from 'react-hot-toast'
@@ -8,6 +8,7 @@ import FormId from '../form/FormId'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 // import TDFHeaders from './TDFHeaders'
+import RequestReviewModal from '../../components/requestReviewPopup'
 
 export default function TDFMain({ props }) {
   const router = useRouter()
@@ -16,7 +17,7 @@ export default function TDFMain({ props }) {
     router.query.phase ? +router.query.phase : 11
   ) //props.design.activePhase
   const [postId, setPostId] = useState(props.post.id || '')
-
+  const [isRequestReviewOpen, setIsRequestReviewOpen] = useState(false)
   const initialValues = props.post
   function handlePhaseChange(phase) {
     if (postId) {
@@ -39,9 +40,6 @@ export default function TDFMain({ props }) {
   const TDFDynamicOneField = dynamic(() => import('./TDFDynamicOneField'), {
     loading: () => <p>Loading</p>,
   })
-  // const TDF105 = dynamic(() => import('./TDF105'), {
-  //   loading: () => <p>Loading</p>,
-  // })
   // const TDF201 = dynamic(() => import('./TDF201'), {
   //   loading: () => <p>Loading</p>,
   // })
@@ -83,6 +81,20 @@ export default function TDFMain({ props }) {
   //   loading: () => <p>Loading</p>,
   // })
   const TDF701 = dynamic(() => import('./TDF701'), {
+    loading: () => <p>Loading</p>,
+  })
+
+  const TDF802 = dynamic(() => import('./TDF802'), {
+    loading: () => <p>Loading</p>,
+  })
+  const TDF803 = dynamic(() => import('./TDF803'), {
+    loading: () => <p>Loading</p>,
+  })
+
+  const TDF804 = dynamic(() => import('./TDF804'), {
+    loading: () => <p>Loading</p>,
+  })
+  const TDF901 = dynamic(() => import('./TDF901'), {
     loading: () => <p>Loading</p>,
   })
 
@@ -151,6 +163,7 @@ export default function TDFMain({ props }) {
       case 600:
       case 700:
       case 800:
+      case 900:
         return (
           <TDFHeaders props={props} values={values} activePhase={activePhase} />
         )
@@ -306,6 +319,25 @@ explanation`}
         return (
           <TDF701 props={props} values={values} activePhase={activePhase} />
         )
+
+      case 802:
+        return (
+          <TDF802 props={props} values={values} activePhase={activePhase} />
+        )
+      case 803:
+        return (
+          <TDF803 props={props} values={values} activePhase={activePhase} />
+        )
+
+      case 804:
+        return (
+          <TDF804 props={props} values={values} activePhase={activePhase} />
+        )
+
+      case 901:
+        return (
+          <TDF901 props={props} values={values} activePhase={activePhase} />
+        )
       default:
         return (
           <TDFGenericOneField
@@ -317,6 +349,16 @@ explanation`}
     }
   }
 
+  function openRequestReviewModal() {
+    setIsRequestReviewOpen(true)
+  }
+
+  const handleRequestReviewIsOpen = useCallback(
+    (event) => {
+      setIsRequestReviewOpen(false)
+    },
+    [isRequestReviewOpen]
+  )
   return (
     <div className="mt-4 mb-4 rounded-lg bg-gray-100 p-1">
       {/* <div className="h-12 w-full"></div> */}
@@ -348,7 +390,7 @@ explanation`}
                         // onClick={formik.handleSubmit}
                         className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
                       >
-                        Save
+                        {values?.id ? 'Update' : 'Save'}
                       </button>
                       <Link
                         as={`/posts/${postId}`}
@@ -357,6 +399,15 @@ explanation`}
                       >
                         View
                       </Link>
+                      {postId && (
+                        <button
+                          type="button"
+                          onClick={openRequestReviewModal}
+                          className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
+                        >
+                          RequestReview
+                        </button>
+                      )}
                       <button
                         type="button"
                         className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
