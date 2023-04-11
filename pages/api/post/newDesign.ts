@@ -86,6 +86,7 @@ export default async function handle(req, res) {
           },
         },
         mainImageUrl: inputFields.mainImageUrl,
+        breakdown: breakdown,
         tokenUtility: inputFields.tokenUtility,
         tokenUtilityStrength: inputFields.tokenUtilityStrength,
         businessModel: inputFields.businessModel,

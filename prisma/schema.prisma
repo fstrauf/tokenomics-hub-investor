@@ -60,6 +60,7 @@ model Post {
   Mechanism             Mechanism[]
   PostUser              PostUser[]
   PostAuthor            PostAuthor[]
+  postType              String?              @db.Text
 
   @@index([authorId])
   @@index([calculationId])
@@ -192,6 +193,7 @@ model DesignPhases {
   DesignElement   DesignElement[]
   phaseOrder      Int?
   postDataElement String?
+  isReport        Boolean?        @default(false)
 
   @@index([parentPhaseId])
 }
