@@ -112,6 +112,7 @@ export default async function handle(req, res) {
         authorClerkId: inputFields.authorClerkId,
         status: postStatus.draft,
         ticker: inputFields.ticker,
+        postType: inputFields.postType,
         Calculation: {
           create: {
             authorClerkId: inputFields.Calculation.authorClerkId,
