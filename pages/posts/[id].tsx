@@ -265,7 +265,7 @@ export async function getStaticProps({ params }) {
         },
       },
       author: {},
-      calculation: {
+      Calculation: {
         include: {
           CalculationRows: {},
         },
@@ -304,13 +304,17 @@ export async function getStaticProps({ params }) {
   const [postCount, catByAuthor, strengthRatingAggregate] = await prisma.$transaction(txCalls)
 
 
-
-  let clerkUser = post?.authorClerkId
+  let clerkUser = {}
+  try {
+    clerkUser = post?.authorClerkId
     ? await clerkClient.users.getUser(post?.authorClerkId)
-    : {}
+    : {}    
+  } catch (error) {
+    
+  }
 
-  clerkUser = clerkConvertJSON(clerkUser)
 
+  clerkUser = clerkConvertJSON(clerkUser || null)
   clerkUser.articleCount = postCount || 0
   
   clerkUser.cat = catByAuthor || null
@@ -330,7 +334,7 @@ export async function getStaticPaths() {
       id: true,      
     },
   })
-  // console.log("🚀 ~ file: [slug].tsx:333 ~ getStaticPaths ~ allPosts:", allPosts)
+  console.log("🚀 ~ file: [slug].tsx:333 ~ getStaticPaths ~ allPosts:", allPosts)
 
   return {
     paths:

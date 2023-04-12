@@ -137,7 +137,7 @@ export function getMonthEpochAreaData(
 export function getAreaData(months, calculationRows, totalSupply, startDate) {
   var chartData: object[] = []
 
-  calculationRows.forEach((cr) => {
+  calculationRows?.forEach((cr) => {
     const rowAllocation = (totalSupply * cr.percentageAllocation) / 100
     if (cr.isEpochDistro) {
       getMonthEpochAreaData(cr, months, rowAllocation, chartData, startDate)
