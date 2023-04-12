@@ -50,7 +50,7 @@
 //   const txCalls = []
 
 //   for (const user of mappingUsers){
-//     txCalls.push(prisma.post.updateMany({
+//     txCalls.push(prisma.calculation.updateMany({
 //         where: {
 //             authorClerkId: user.externalId,
 //         },
