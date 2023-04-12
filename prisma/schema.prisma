@@ -2,8 +2,7 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["referentialIntegrity"]
+  provider = "prisma-client-js"
 }
 
 datasource db {
@@ -54,11 +53,17 @@ model Post {
   parent                String?              @db.Text
   ProtocolResources     ProtocolResources[]
   calculationId         String?
-  calculation           Calculation?         @relation(fields: [calculationId], references: [id])
+  Calculation           Calculation?         @relation(fields: [calculationId], references: [id])
   Comments              Comments[]
   UserStrengthRating    UserStrengthRating[]
+  DesignElement         DesignElement[]
+  Mechanism             Mechanism[]
+  PostUser              PostUser[]
+  PostAuthor            PostAuthor[]
+  postType              String?              @db.Text
 
   @@index([authorId])
+  @@index([calculationId])
 }
 
 model Category {
@@ -132,6 +137,7 @@ model Calculation {
   startDate       DateTime?
   CalculationRows CalculationRows[]
   Post            Post[]
+  Mechanism       Mechanism[]
 }
 
 model CalculationRows {
@@ -147,8 +153,110 @@ model CalculationRows {
   color                     String?
   calculationId             String
   calculation               Calculation @relation(fields: [calculationId], references: [id], onDelete: Cascade)
+  // Mechanism                 Mechanism?              @relation(fields: [mechanismId], references: [id])
+  // CalculationTimeSeries     CalculationTimeSeries[]
+  // mechanismId               String?
+  // Mechanism                 Mechanism?  @relation(fields: [mechanismId], references: [id])
+  // mechanismId               String?
 
   @@index([calculationId])
+}
+
+// model Design {
+//   id            String          @id @default(cuid())
+//   title         String?
+//   authorClerkId String?
+//   status        String?
+//   DesignElement DesignElement[]
+// }
+
+model DesignElement {
+  id             String        @id @default(cuid())
+  postId         String
+  Post           Post          @relation(fields: [postId], references: [id], onDelete: Cascade)
+  content        String?       @db.Text
+  designPhase    DesignPhases? @relation(fields: [designPhasesId], references: [id])
+  designPhasesId String?
+
+  @@index([postId])
+  @@index([designPhasesId])
+}
+
+model DesignPhases {
+  id              String          @id @default(cuid())
+  name            String?
+  phaseId         Int?            @unique
+  parentPhaseId   Int?
+  // parentPhase   DesignPhases?   @relation("ParentChild", fields: [parentPhaseId], references: [phaseId], onDelete: NoAction, onUpdate: NoAction)
+  // childPhase    DesignPhases[]  @relation("ParentChild")
+  Resources       String?         @db.Text
+  DesignElement   DesignElement[]
+  phaseOrder      Int?
+  postDataElement String?
+  isReport        Boolean?        @default(false)
+
+  @@index([parentPhaseId])
+}
+
+model CalculationTimeSeries {
+  id                String    @id @default(cuid())
+  phase             Int?
+  months            Int?
+  tokens            Float?
+  calculationRowsId String?
+  Mechanism         Mechanism @relation(fields: [mechanismId], references: [id], onDelete: Cascade)
+  mechanismId       String
+
+  @@index([mechanismId])
+}
+
+model Mechanism {
+  id                        String                  @id @default(cuid())
+  name                      String?
+  summary                   String?                 @db.Text
+  details                   String?                 @db.Text
+  isSink                    Boolean?
+  token                     String?
+  postId                    String?
+  post                      Post?                   @relation(fields: [postId], references: [id], onDelete: Cascade)
+  isTemplate                Boolean?                @default(false)
+  PostUser                  PostUser[]
+  category                  String?
+  lockupPeriod              Float?
+  unlockPeriod              Float?
+  percentageAllocation      Float?
+  isEpochDistro             Boolean                 @default(false)
+  epochDurationInSeconds    Float?
+  initialEmissionPerSecond  Float?
+  emissionReductionPerEpoch Float?
+  color                     String?
+  calculationId             String?
+  calculation               Calculation?            @relation(fields: [calculationId], references: [id], onDelete: Cascade)
+  CalculationTimeSeries     CalculationTimeSeries[]
+
+  @@index([postId])
+  @@index([calculationId])
+}
+
+model PostUser {
+  id        String      @id @default(cuid())
+  name      String?
+  role      String?     @db.Text
+  postId    String
+  Post      Post        @relation(fields: [postId], references: [id], onDelete: Cascade)
+  Mechanism Mechanism[]
+
+  @@index([postId])
+}
+
+model PostAuthor {
+  id          String  @id @default(cuid())
+  postId      String
+  clerkUserId String
+  role        String? @db.Text
+  Post        Post    @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@index([postId])
 }
 
 model Account {
