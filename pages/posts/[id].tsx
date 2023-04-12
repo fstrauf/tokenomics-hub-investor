@@ -63,10 +63,10 @@ export default function Post({ post, morePosts, author }) {
   // function openExportModal() {
   //   setExportIsOpen(true)
   // }
-  // var userIsAuthor = false
-  // if (user?.id === post?.authorClerkId) {
-  //   userIsAuthor = true
-  // }
+  var userIsAuthor = false
+  if (user?.id === post?.authorClerkId) {
+    userIsAuthor = true
+  }
 
   const contributor = user?.publicMetadata?.contributor || false
 
