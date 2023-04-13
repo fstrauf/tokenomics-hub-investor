@@ -2,7 +2,7 @@ import Layout from '../components/layout'
 import React from 'react'
 import prisma from '../lib/prisma'
 import { GetServerSideProps } from 'next'
-import { getMergedInitialCalcValues, postStatus } from '../lib/helper'
+import { getMergedInitialCalcValues, postStatus, postType } from '../lib/helper'
 import TDFMain from '../components/tdf/TDFMain'
 import { getAuth } from '@clerk/nextjs/server'
 import { AuthData } from '@clerk/nextjs/dist/server/types'
@@ -158,6 +158,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     weakPoints: '',
     problemSolution: '',
     parent: '',
+    postType: postType.report,
   }
 
   return {

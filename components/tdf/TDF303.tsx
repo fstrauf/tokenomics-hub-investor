@@ -1,11 +1,18 @@
-import { Field } from 'formik'
+import { Field, useFormikContext } from 'formik'
 import ResourceSection from './ResourceSection'
 import { getActiveDesignPhase } from '../../lib/helper'
 import FormTable from '../form/FormTablePivot'
+import { useEffect } from 'react'
+import { designElementStatusUpdate } from '../../lib/designElementStatusField'
 // import ExampleSection from './ExampleSection'
 
 export default function TDF303({ props, values, activePhase }) {
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
+  const { setFieldValue } = useFormikContext()
+
+  useEffect(() => {
+    designElementStatusUpdate(values, '303', setFieldValue)
+  }, [])
   return (
     <div className="flex w-full flex-col rounded-lg border-2 p-2">
       <div className="col-span-2">

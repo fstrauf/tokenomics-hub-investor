@@ -3,6 +3,8 @@ import { Field, useFormikContext } from 'formik'
 import ResourceSection from './ResourceSection'
 import { getActiveDesignPhase } from '../../lib/helper'
 import ExampleSection from './ExampleSection'
+import { designElementStatusUpdate } from '../../lib/designElementStatusField'
+import { useEffect } from 'react'
 
 export default function TDFGenericOneField({
   props,
@@ -15,6 +17,11 @@ export default function TDFGenericOneField({
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
   // console.log("🚀 ~ file: TDFGenericOneField.tsx:15 ~ designPhase:", designPhase)
   const { setFieldValue } = useFormikContext()
+
+  useEffect(() => {
+    if (['101', '102', '103'].includes(activePhase.toString()))
+      designElementStatusUpdate(values, activePhase.toString(), setFieldValue)
+  }, [])
   // async function generateSuggestions(event) {
   //   event.preventDefault();
   //   try {

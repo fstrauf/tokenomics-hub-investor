@@ -102,10 +102,21 @@ export enum postStatus {
   example = 'Example',
 }
 
+export enum designElementStatus {
+  new = 'new',
+  in_progress = 'in progress',
+  completed = 'completed',
+}
+
 export enum headerStatus {
   main = 'main',
   design = 'design',
   report = 'report',
+}
+
+export enum postType {
+  report = 'report',
+  design = 'design',
 }
 
 export const stringToKey = (name) => {
@@ -193,7 +204,7 @@ export function getMonthEpochAreaData(
   startDate,
   supplyDemandTotals
 ) {
-  console.log("🚀 ~ file: helper.ts:196 ~ calculationRow:", calculationRow)
+  console.log('🚀 ~ file: helper.ts:196 ~ calculationRow:', calculationRow)
   let emissions = 0
   const secondsPerMonth = 2628000
   let emissionsPerSecond = calculationRow.initialEmissionPerSecond
@@ -236,7 +247,9 @@ export function getMonthEpochAreaData(
     if (supplyDemandTotals[i] === undefined) {
       supplyDemandTotals[i] = {
         date: new Date(startDate).setMonth(new Date(startDate).getMonth() + i),
-        supply: Number(categoryLine[calculationRow.name || calculationRow.category]),
+        supply: Number(
+          categoryLine[calculationRow.name || calculationRow.category]
+        ),
       }
     } else {
       if (supplyDemandTotals[i].supply === undefined) {
@@ -280,10 +293,10 @@ export function getAreaData(months, calculationRows, totalSupply, startDate) {
       }
     }
   })
-  console.log("🚀 ~ file: helper.ts:285 ~ getAreaData ~ props:", props)
+  console.log('🚀 ~ file: helper.ts:285 ~ getAreaData ~ props:', props)
   return props
 }
-  
+
 export function getDemandAreaData(
   calculationRow,
   months,
@@ -373,10 +386,12 @@ export function getLinearAreaData(
       chartData[i] = {}
     }
     if (i === 0) {
-      categoryLine[calculationRow.name || calculationRow.category] = monthlyEmission
+      categoryLine[calculationRow.name || calculationRow.category] =
+        monthlyEmission
     } else {
       categoryLine[calculationRow.name || calculationRow.category] =
-        monthlyEmission + chartData[i - 1][calculationRow.name || calculationRow.category]
+        monthlyEmission +
+        chartData[i - 1][calculationRow.name || calculationRow.category]
     }
 
     if (categoryLine['date'] === undefined) {
@@ -390,7 +405,9 @@ export function getLinearAreaData(
     if (supplyDemandTotals[i] === undefined) {
       supplyDemandTotals[i] = {
         date: new Date(startDate).setMonth(new Date(startDate).getMonth() + i),
-        supply: Number(categoryLine[calculationRow.name || calculationRow.category]),
+        supply: Number(
+          categoryLine[calculationRow.name || calculationRow.category]
+        ),
       }
     } else {
       if (supplyDemandTotals[i].supply === undefined) {

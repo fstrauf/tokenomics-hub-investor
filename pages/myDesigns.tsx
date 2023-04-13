@@ -9,7 +9,7 @@ import DesignCard from '../components/tdf/designCard'
 import Link from 'next/link'
 
 export default function MyDesigns({ posts }) {
-  
+
   return (
     <Layout mode={headerStatus.design}>
       <>
@@ -18,23 +18,26 @@ export default function MyDesigns({ posts }) {
             <p className="text-xl font-bold">My Designs</p>
             <div className="flex gap-1">
               {' '}
-              <Link href='/newDesign' className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40">
+              <Link
+                href="/newDesign"
+                className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
+              >
                 New Design
               </Link>
             </div>
           </div>
           {/* <div className=""> */}
-            <div className="overflow-x-auto rounded-lg bg-white">
-              <div className="flex flex-wrap items-center justify-center">
-                {posts?.map((post, index) => {
-                  return (
-                    <div key={index}>
-                      <DesignCard post={post} context="myDrafts" />
-                    </div>
-                  )
-                })}
-              </div>
+          <div className="overflow-x-auto rounded-lg bg-white">
+            <div className="flex flex-wrap items-center justify-center">
+              {posts?.map((post, index) => {
+                return (
+                  <div key={index}>
+                    <DesignCard post={post} context="myDrafts" />
+                  </div>
+                )
+              })}
             </div>
+          </div>
           {/* </div> */}
         </div>
       </>

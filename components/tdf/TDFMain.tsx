@@ -9,8 +9,10 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 // import TDFHeaders from './TDFHeaders'
 import RequestReviewModal from '../../components/requestReviewPopup'
+import { designElementStatus } from '../../lib/helper'
 
 export default function TDFMain({ props }) {
+  console.log('🚀 ~ file: TDFMain.tsx:14 ~ TDFMain ~ props:', props)
   const router = useRouter()
 
   const [activePhase, setActivePhase] = useState(
@@ -360,90 +362,99 @@ explanation`}
     },
     [isRequestReviewOpen]
   )
+
   return (
     <div className="mt-4 mb-4 rounded-lg bg-gray-100 p-1">
-      {/* <div className="h-12 w-full"></div> */}
-      <div className="mb-5 flex gap-1 ">
-        <div className="w-1/6">
-          <div className="h-10 bg-gray-100 p-1 "></div>
-          <TDFSideBar
-            designPhases={props.designPhases}
-            changePhase={handlePhaseChange}
-            activePhase={activePhase}
-          />
-        </div>
-        <div className="w-5/6 rounded-lg bg-white">
-          <div>
-            <Formik
-              initialValues={initialValues}
-              onSubmit={submitData}
-              enableReinitialize
-              // innerRef={formRef}
-            >
-              {({ isSubmitting, setFieldValue, values }) => (
-                <Form>
-                  <div className="flex h-10 justify-between bg-gray-100 p-1">
-                    <p className="text-xl font-bold ">{values?.title}</p>
-                    <div className="flex justify-end gap-1">
-                      <button
-                        type="submit"
-                        disabled={isSubmitting}
-                        // onClick={formik.handleSubmit}
-                        className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
-                      >
-                        {values?.id ? 'Update' : 'Save'}
-                      </button>
-                      <Link
-                        as={`/posts/${postId}`}
-                        href="/posts/[id]]"
-                        className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
-                      >
-                        View
-                      </Link>
-                      {postId && (
-                        <button
-                          type="button"
-                          onClick={openRequestReviewModal}
-                          className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
-                        >
-                          RequestReview
-                        </button>
-                      )}
-                      <button
-                        type="button"
-                        className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
-                      >
-                        Share
-                      </button>
-                      <RequestReviewModal
-                        isOpen={isRequestReviewOpen}
-                        handleIsOpen={handleRequestReviewIsOpen}
-                      />
+      
+      <Formik
+        initialValues={initialValues}
+        onSubmit={submitData}
+        enableReinitialize
+      >
+        {({ isSubmitting, setFieldValue, values }) => (
+          <Form>
+            <div className="flex h-10 justify-between bg-gray-100 p-1">
+              <p className="text-xl font-bold ">{values?.title}</p>
+              <div className="flex justify-end gap-1">
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  // onClick={formik.handleSubmit}
+                  className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
+                >
+                  {values?.id ? 'Update' : 'Save'}
+                </button>
+                <Link
+                  as={`/posts/${postId}`}
+                  href="/posts/[id]]"
+                  className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
+                >
+                  View
+                </Link>
+                {postId && (
+                  <button
+                    type="button"
+                    onClick={openRequestReviewModal}
+                    className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
+                  >
+                    RequestReview
+                  </button>
+                )}
+                <button
+                  type="button"
+                  onClick={() => {
+                    setFieldValue(
+                      `DesignElement.${values?.DesignElement?.findIndex(
+                        (de) =>
+                          de.designPhasesId.toString() ===
+                          activePhase.toString()
+                      )}.designElementStatus`,
+                      designElementStatus.completed
+                    )
+                  }}
+                  className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
+                >
+                  Mark as complete
+                </button>
+                <RequestReviewModal
+                  isOpen={isRequestReviewOpen}
+                  handleIsOpen={handleRequestReviewIsOpen}
+                />
+              </div>
+            </div>
+            <div className="mb-5 flex gap-1 ">
+              <div className="w-1/6">
+                <TDFSideBar
+                  designPhases={props.designPhases}
+                  changePhase={handlePhaseChange}
+                  activePhase={activePhase}
+                  props={props}
+                  values={values}
+                />
+              </div>
+              <div className="w-5/6 rounded-lg bg-white">
+                <FormAutoSave />
+                <FieldArray
+                  name="DesignElement"
+                  render={() => (
+                    <div className="rounded-lg bg-white">
+                      {renderSwitch(values, setFieldValue)}
                     </div>
-                  </div>
-                  <FormAutoSave />
-                  <FieldArray
-                    name="DesignElement"
-                    render={() => (
-                      <div className="rounded-lg bg-white">
-                        {renderSwitch(values, setFieldValue)}
-                      </div>
-                    )}
-                  />
-                  <FormId
-                    postId={postId}
-                    type="text"
-                    name="id"
-                    className="hidden w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
-                  />
-                </Form>
-              )}
-            </Formik>
-          </div>
-        </div>
+                  )}
+                />
+                <FormId
+                  postId={postId}
+                  type="text"
+                  name="id"
+                  className="hidden w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
+                />
+              </div>
+            </div>
+          </Form>
+        )}
+      </Formik>
 
-        <Toaster />
-      </div>
+      <Toaster />
     </div>
   )
 }

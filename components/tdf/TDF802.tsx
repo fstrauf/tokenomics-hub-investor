@@ -1,10 +1,16 @@
 import { Field, useFormikContext } from 'formik'
+import { useEffect } from 'react'
+import { designElementStatusUpdate } from '../../lib/designElementStatusField'
 import { getActiveDesignPhase } from '../../lib/helper'
 import FormTipTap from '../form/FormTipTap'
 
 export default function TDF802({ props, values, activePhase }) {
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
   const { setFieldValue } = useFormikContext()
+
+  useEffect(() => {
+    designElementStatusUpdate(values, '802', setFieldValue)
+  }, [])
   return (
     <div className="m-2">
       <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 ">

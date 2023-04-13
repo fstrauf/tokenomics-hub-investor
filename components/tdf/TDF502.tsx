@@ -6,9 +6,15 @@ import ResourceSection from './ResourceSection'
 import TDFCalculator from './TDFCalculator'
 import Tiptap from '../TipTap'
 import ExampleSection from './ExampleSection'
+import { useEffect } from 'react'
+import { designElementStatusUpdate } from '../../lib/designElementStatusField'
 
 export default function TDF502({ props, values, activePhase, setFieldValue }) {
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
+
+  useEffect(() => {
+    designElementStatusUpdate(values, '502', setFieldValue)
+  }, [])
 
   let ExampleDetail = ({ onGoBack, example, exampleField }) => {
     return (
@@ -42,9 +48,7 @@ export default function TDF502({ props, values, activePhase, setFieldValue }) {
         mechanismTemplates={props.mechanismTemplates}
       />
 
-      <TDFCalculator
-        values={values}
-      />
+      <TDFCalculator values={values} />
 
       <ResourceSection content={designPhase.Resources} />
       <ExampleSection

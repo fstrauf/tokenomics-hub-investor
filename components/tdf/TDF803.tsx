@@ -1,10 +1,16 @@
 import { Field, useFormikContext } from 'formik'
+import { useEffect } from 'react'
+import { designElementStatusUpdate } from '../../lib/designElementStatusField'
 import { getActiveDesignPhase } from '../../lib/helper'
 import FormImageSelect from '../form/FormImageSelect'
 
 export default function TDF803({ props, values, activePhase }) {
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
   const { setFieldValue } = useFormikContext()
+
+  useEffect(() => {
+    designElementStatusUpdate(values, '803', setFieldValue)
+  }, [])
   return (
     <div className="m-2">
       <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 ">

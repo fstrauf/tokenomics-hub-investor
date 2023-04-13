@@ -13,12 +13,13 @@ export default async function handle(req, res) {
 
   const mechanisms = inputFields.Mechanism.map((m) => {
     var postUsers = {}
-    if(m?.PostUser === undefined){      
-
+    if (m?.PostUser === undefined) {
     } else {
-      postUsers = {connect: m?.PostUser?.map((pu) => ({
-        id: pu.postId + '_' + pu.name,
-      }))}
+      postUsers = {
+        connect: m?.PostUser?.map((pu) => ({
+          id: pu.postId + '_' + pu.name,
+        })),
+      }
     }
 
     const calculationTimeSeries =
@@ -55,11 +56,13 @@ export default async function handle(req, res) {
       return {
         content: JSON.stringify(de.content),
         designPhasesId: de.designPhasesId,
+        designElementStatus: de.designElementStatus,
       }
     } else {
       return {
         content: de.content,
         designPhasesId: de.designPhasesId,
+        designElementStatus: de.designElementStatus,
       }
     }
   })
@@ -172,6 +175,7 @@ export default async function handle(req, res) {
         parent: inputFields.parent,
         authorClerkId: inputFields.authorClerkId,
         status: postStatus.draft,
+        postType: inputFields.postType,
         ticker: inputFields.ticker,
         categories: {
           connectOrCreate: inputFields.categories.map((category) => {

@@ -1,14 +1,22 @@
-import { Field } from 'formik'
+import { Field, useFormikContext } from 'formik'
 import ResourceSection from './ResourceSection'
 import { getActiveDesignPhase } from '../../lib/helper'
+import { useEffect } from 'react'
+import { designElementStatusUpdate } from '../../lib/designElementStatusField'
 
 export default function TDFDynamicOneField({
   props,
   activePhase,
   placeholder,
-  values
+  values,
 }) {
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
+  const { setFieldValue } = useFormikContext()
+
+  useEffect(() => {
+    designElementStatusUpdate(values, '301', setFieldValue)
+  }, [])
+
   return (
     <div className="flex flex-col">
       <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 ">

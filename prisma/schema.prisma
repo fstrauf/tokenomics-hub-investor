@@ -171,12 +171,13 @@ model CalculationRows {
 // }
 
 model DesignElement {
-  id             String        @id @default(cuid())
-  postId         String
-  Post           Post          @relation(fields: [postId], references: [id], onDelete: Cascade)
-  content        String?       @db.Text
-  designPhase    DesignPhases? @relation(fields: [designPhasesId], references: [id])
-  designPhasesId String?
+  id                  String        @id @default(cuid())
+  postId              String
+  Post                Post          @relation(fields: [postId], references: [id], onDelete: Cascade)
+  content             String?       @db.Text
+  designPhase         DesignPhases? @relation(fields: [designPhasesId], references: [id])
+  designPhasesId      String?
+  designElementStatus String?       @db.Text
 
   @@index([postId])
   @@index([designPhasesId])

@@ -62,11 +62,13 @@ export default async function handle(req, res) {
       return {
         content: JSON.stringify(de.content),
         designPhasesId: de.designPhasesId,
+        designElementStatus: de.designElementStatus,
       }
     } else {
       return {
         content: de.content,
         designPhasesId: de.designPhasesId,
+        designElementStatus: de.designElementStatus,
       }
     }
   })
@@ -112,6 +114,7 @@ export default async function handle(req, res) {
         authorClerkId: inputFields.authorClerkId,
         status: postStatus.draft,
         ticker: inputFields.ticker,
+        postType: inputFields.postType,
         Calculation: {
           create: {
             authorClerkId: inputFields.Calculation.authorClerkId,

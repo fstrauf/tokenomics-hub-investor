@@ -7,6 +7,7 @@ import {
   mandatoryFormValidate,
   notifyStatusUpdate,
   postStatus,
+  postType,
 } from '../../lib/helper'
 import toast from 'react-hot-toast'
 import { WEBSITE_URL_BASE } from '../../lib/constants'
@@ -14,6 +15,7 @@ import { confirmAlert } from 'react-confirm-alert'
 import 'react-confirm-alert/src/react-confirm-alert.css'
 
 export default function DesignCard({ post, context }) {
+  let isReport = post.postType === postType.report
   const { user } = useUser()
   const [isSubmitting, setSubmitting] = useState(false)
   let [isOpen, setIsOpen] = useState(false)
@@ -148,6 +150,10 @@ export default function DesignCard({ post, context }) {
         <span className="font-bold text-gray-700">Author: </span>
         <span className="text-gray-600">{post.author}</span>
       </div>
+      <div className="">
+        <span className="font-bold text-gray-700 ">Post Type: </span>
+        <span className="capitalize text-gray-600">{post.postType}</span>
+      </div>
       <div className="flex flex-auto gap-4">
         <h1 className="font-bold text-gray-700">Categories:</h1>
         {post?.categories &&
@@ -162,8 +168,9 @@ export default function DesignCard({ post, context }) {
       </div>
       <div className="mt-4 flex justify-center space-x-3 p-2 md:mt-6">
         <Link
-          as={`/editDesign/${post?.id}`}
-          href="/editDesign/[id]"
+          as={isReport ? `/editPost/${post?.id}` : `/editDesign/${post?.id}`}
+          href={isReport ? `/editPost/[id]` : `/editDesign/[id]`}
+          target="_blank"
           className=" rounded-lg bg-dao-red px-4 py-2 text-center text-xs font-medium text-white"
         >
           Edit
@@ -175,7 +182,7 @@ export default function DesignCard({ post, context }) {
         >
           View
         </Link>
-        <div className=''>
+        <div className="">
           <Menu as="div" className="z-60 static inline-block text-left">
             {({ close }) => (
               <>

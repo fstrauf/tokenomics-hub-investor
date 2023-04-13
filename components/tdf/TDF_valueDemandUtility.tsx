@@ -1,14 +1,20 @@
-import { Field } from 'formik'
+import { Field, useFormikContext } from 'formik'
 import ResourceSection from './ResourceSection'
-import React from 'react'
+import React, { useEffect } from 'react'
 import FormText from '../form/FormText'
 import { getActiveDesignPhase } from '../../lib/helper'
 import ExampleSection from './ExampleSection'
 import BreakdownBox from '../slugView/breakdown-box'
+import { designElementStatusUpdate } from '../../lib/designElementStatusField'
 
 export default function TDF_valueDemandUtility({ props, values, activePhase }) {
-  console.log("🚀 ~ file: TDF_valueDemandUtility.tsx:10 ~ TDF_valueDemandUtility ~ values:", values)
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
+
+  const { setFieldValue } = useFormikContext()
+
+  useEffect(() => {
+    designElementStatusUpdate(values, '801', setFieldValue)
+  }, [])
 
   let ExampleDetail = ({ onGoBack, example, exampleField }) => {
     return (

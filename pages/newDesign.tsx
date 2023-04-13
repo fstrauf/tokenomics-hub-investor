@@ -2,7 +2,7 @@ import Layout from '../components/layout'
 import React from 'react'
 import prisma from '../lib/prisma'
 import { GetServerSideProps } from 'next'
-import { getMergedInitialCalcValues, postStatus } from '../lib/helper'
+import { getMergedInitialCalcValues, postStatus, postType } from '../lib/helper'
 import TDFMain from '../components/tdf/TDFMain'
 import { getAuth } from '@clerk/nextjs/server'
 import { AuthData } from '@clerk/nextjs/dist/server/types'
@@ -18,11 +18,6 @@ export default function NewDesign(props) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  console.log(
-    '🚀 ~ file: newDesign.tsx:22 ~ constgetServerSideProps:GetServerSideProps= ~ context:',
-    context
-  )
-
   const postId: string = context?.query?.id || ''
 
   const { userId }: AuthData = getAuth(context.req)
@@ -109,7 +104,13 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     DesignElement: designPhases
       .filter((dp) => dp.parentPhaseId)
       .map((dp) => {
-        return { id: '', content: '', designPhasesId: String(dp.phaseId) }
+        console.log('🚀 ~ file: newDesign.tsx:112 ~ .map ~ dp:', dp)
+        return {
+          id: '',
+          content: '',
+          designPhasesId: String(dp.phaseId),
+          designElementStatus: '',
+        }
       }),
     Calculation: {
       id: '',
@@ -155,6 +156,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     threeMonthHorizon: '',
     oneYearHorizon: '',
     upside: '',
+    postType: postType.design,
     downside: '',
     horizon: '',
     metrics: '',
