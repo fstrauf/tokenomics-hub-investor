@@ -18,26 +18,13 @@ export default function NewDesign(props) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const postId: string = context?.query?.id || ''
+  // const postId: string = context?.query?.id || ''
 
   const { userId }: AuthData = getAuth(context.req)
 
   const txCalls = []
 
-  // txCalls.push(
-  //   prisma.post.findMany({
-  //     where: {
-  //       categories: { every: { label: 'defi' } },
-  //       AND: {
-  //         status: postStatus.published,
-  //       },
-  //     },
-  //     take: 20,
-  //   })
-  // )
-
   txCalls.push(prisma.designPhases.findMany({ orderBy: { phaseOrder: 'asc' } }))
-  // txCalls.push(prisma.designPhases.findUnique({ where: { id: postId } }))
 
   txCalls.push(
     prisma.calculation.findMany({
@@ -73,19 +60,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     })
   )
 
-  // txCalls.push(
-  //   prisma.calculation.findUnique({
-  //     where: {
-  //       id: calculationId,
-  //     },
-  //     include: {
-  //       CalculationRows: true,
-  //     },
-  //   })
-  // )
-
   const [
-    // posts,
     designPhases,
     userCalcs,
     mechanismTemplates,
@@ -94,8 +69,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     Tag,
   ] = await prisma.$transaction(txCalls)
 
-  // console.log("🚀 ~ file: newDesign.tsx:183 ~ constgetServerSideProps:GetServerSideProps= ~ userCalcs:", userCalcs)
-  // const preloadInitialCalcValues = null
   const defaultContent = {
     id: '',
     title: '',
@@ -124,19 +97,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     },
     Mechanism: [],
     mechanismTemplates: mechanismTemplates || [],
-    // PostUser: props.PostUser.map((pu) => {
-    //   return { id: pu.id, name: pu.name, role: pu.role, postId: pu.postId }
-    // }),
-    PostUser: [{ id: 0, name: '', role: '' }],
+    PostUser: [],
     slug: '',
     shortDescription: '',
     categories: [],
-    // categories: Category?.map((cd) => {
-    //   return {
-    //     value: cd.value,
-    //     label: cd.label,
-    //   }
-    // }),
     tags: [],
     protocolTimeLine: [],
     publishedAt: new Date().toLocaleDateString('en-CA'),
@@ -162,7 +126,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     metrics: '',
     diagramUrl: '',
     ProtocolResources: [],
-    // Author: { email: user?.email },
     strongPoints: '',
     weakPoints: '',
     problemSolution: '',
@@ -171,10 +134,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   return {
     props: {
-      // posts: posts || null,
       post: defaultContent,
       designPhases: designPhases || null,
-      // mechanismImpactFactors: mechanismImpactFactors || null,
       preloadInitialCalcValues:
         getMergedInitialCalcValues(userCalcs, userId, null) || null,
       mechanismTemplates: mechanismTemplates || null,

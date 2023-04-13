@@ -7,12 +7,10 @@ import FormAutoSave from '../form/FormAutoSave'
 import FormId from '../form/FormId'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-// import TDFHeaders from './TDFHeaders'
 import RequestReviewModal from '../../components/requestReviewPopup'
 import { designElementStatus } from '../../lib/helper'
 
 export default function TDFMain({ props }) {
-  console.log('🚀 ~ file: TDFMain.tsx:14 ~ TDFMain ~ props:', props)
   const router = useRouter()
 
   const [activePhase, setActivePhase] = useState(
@@ -42,9 +40,6 @@ export default function TDFMain({ props }) {
   const TDFDynamicOneField = dynamic(() => import('./TDFDynamicOneField'), {
     loading: () => <p>Loading</p>,
   })
-  // const TDF201 = dynamic(() => import('./TDF201'), {
-  //   loading: () => <p>Loading</p>,
-  // })
   const TDF301 = dynamic(() => import('./TDF301'), {
     loading: () => <p>Loading</p>,
   })
@@ -79,9 +74,6 @@ export default function TDFMain({ props }) {
   const TDF502 = dynamic(() => import('./TDF502'), {
     loading: () => <p>Loading</p>,
   })
-  // const TDF603 = dynamic(() => import('./TDF603'), {
-  //   loading: () => <p>Loading</p>,
-  // })
   const TDF701 = dynamic(() => import('./TDF701'), {
     loading: () => <p>Loading</p>,
   })
@@ -102,6 +94,7 @@ export default function TDFMain({ props }) {
 
   const submitData = async (values, { setSubmitting }) => {
     const body = { values }
+    console.log("🚀 ~ file: TDFMain.tsx:97 ~ submitData ~ values:", values)
     if (values?.id === '') {
       try {
         const response = await fetch('/api/post/newDesign', {
@@ -117,6 +110,7 @@ export default function TDFMain({ props }) {
         } else {
           //connect the returned id to the inputfields.id
           const id = await response.text()
+          console.log("🚀 ~ file: TDFMain.tsx:113 ~ submitData ~ id:", id)
           // console.log(response)
           toast.success('Changes auto-saved ', {
             position: 'bottom-right',
