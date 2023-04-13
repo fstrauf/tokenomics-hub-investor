@@ -6,10 +6,17 @@ import FormCardSupplyDemand from '../form/FormCardSupplyDemand'
 import { FormTable } from '../form/FormTable'
 import ExampleSection from './ExampleSection'
 import Tiptap from '../TipTap'
+import { useEffect } from 'react'
+import { designElementStatusUpdate } from '../../lib/designElementStatusField'
 
 //taking stock
 export default function TDF501({ props, values, activePhase, setFieldValue }) {
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
+
+
+  useEffect(() => {
+    designElementStatusUpdate(values, '501', setFieldValue)
+  }, [])
 
   let ExampleDetail = ({ onGoBack, example, exampleField }) => {
     return (

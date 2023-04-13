@@ -1,13 +1,19 @@
-import { Field } from 'formik'
+import { Field, useFormikContext } from 'formik'
 // import BreakdownBox from '../slugView/breakdown-box'
 import ResourceSection from './ResourceSection'
 import FormTablePivot from '../form/FormTablePivot'
 import { getActiveDesignPhase } from '../../lib/helper'
+import { useEffect } from 'react'
+import { designElementStatusUpdate } from '../../lib/designElementStatusField'
 // import ExampleSection from './ExampleSection'
 
 export default function TDF302({ props, values, activePhase }) {
-  // console.log("🚀 ~ file: TDF302.tsx:9 ~ TDF302 ~ values:", JSON.parse(values.DesignElement[7].content))
-  // console.log("🚀 ~ file: TDF302.tsx:9 ~ TDF302 ~ props:", props)
+  const { setFieldValue } = useFormikContext()
+
+  useEffect(() => {
+    designElementStatusUpdate(values, '302', setFieldValue)
+  }, [])
+
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
   return (
     <div className="flex w-full flex-col rounded-lg border-2 p-2">

@@ -18,11 +18,6 @@ export default function NewDesign(props) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  console.log(
-    '🚀 ~ file: newDesign.tsx:22 ~ constgetServerSideProps:GetServerSideProps= ~ context:',
-    context
-  )
-
   const postId: string = context?.query?.id || ''
 
   const { userId }: AuthData = getAuth(context.req)
@@ -109,7 +104,13 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     DesignElement: designPhases
       .filter((dp) => dp.parentPhaseId)
       .map((dp) => {
-        return { id: '', content: '', designPhasesId: String(dp.phaseId) }
+        console.log('🚀 ~ file: newDesign.tsx:112 ~ .map ~ dp:', dp)
+        return {
+          id: '',
+          content: '',
+          designPhasesId: String(dp.phaseId),
+          designElementStatus: '',
+        }
       }),
     Calculation: {
       id: '',

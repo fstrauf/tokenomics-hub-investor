@@ -102,6 +102,12 @@ export enum postStatus {
   example = 'Example',
 }
 
+export enum designElementStatus {
+  new = 'new',
+  in_progress = 'in progress',
+  completed = 'completed',
+}
+
 export enum headerStatus {
   main = 'main',
   design = 'design',

@@ -1,10 +1,18 @@
-import { Field } from 'formik'
+import { Field, useFormikContext } from 'formik'
 import ResourceSection from './ResourceSection'
 import { getActiveDesignPhase } from '../../lib/helper'
+import { designElementStatusUpdate } from '../../lib/designElementStatusField'
+import { useEffect } from 'react'
 
 export default function TDF201({ props, values, activePhase }) {
-  
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
+
+  const { setFieldValue } = useFormikContext()
+
+  useEffect(() => {
+    designElementStatusUpdate(values, '201', setFieldValue)
+  }, [])
+
   return (
     <div className="grid w-full grid-cols-2 gap-2 rounded-lg border-2 p-2">
       <div className="col-span-2">

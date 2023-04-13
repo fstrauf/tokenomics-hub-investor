@@ -1,12 +1,12 @@
 import { Field, useFormikContext } from 'formik'
 // import BreakdownBox from '../slugView/breakdown-box'
 // import ResourceSection from './ResourceSection'
-import React from 'react'
+import React, { useEffect } from 'react'
 // import FormErrorMessage from '../form/FormErrorMessage'
 import FormText from '../form/FormText'
 import FormSelect from '../form/FormSelect'
 import FormImageSelect from '../form/FormImageSelect'
-
+import { designElementStatusUpdate } from '../../lib/designElementStatusField'
 
 export default function TDF11({ props, values, activePhase }) {
   const designPhase = props.designPhases.find(
@@ -17,33 +17,37 @@ export default function TDF11({ props, values, activePhase }) {
   const { setFieldValue } = useFormikContext()
 
   async function generateSuggestions(event) {
-    event.preventDefault();
+    event.preventDefault()
     try {
-      const response = await fetch("/api/generate", {
-        method: "POST",
+      const response = await fetch('/api/generate', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({ animal: values.title }),
-        
-      });
+      })
 
-      const data = await response.json();
+      const data = await response.json()
       if (response.status !== 200) {
-        throw data.error || new Error(`Request failed with status ${response.status}`);
+        throw (
+          data.error ||
+          new Error(`Request failed with status ${response.status}`)
+        )
       }
 
       setFieldValue('shortDescription', data.result)
       // setResult(data.result);
       // setAnimalInput("");
-    } catch(error) {
+    } catch (error) {
       // Consider implementing your own error handling logic here
-      console.error(error);
-      alert(error.message);
+      console.error(error)
+      alert(error.message)
     }
   }
 
-  
+  useEffect(() => {
+    designElementStatusUpdate(values, '11', setFieldValue)
+  }, [])
 
   return (
     <div className="grid w-full  gap-2 rounded-lg border-2 p-2">

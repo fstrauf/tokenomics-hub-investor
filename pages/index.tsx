@@ -71,7 +71,7 @@ const Index: React.FC<Props> = (props) => {
 
   return (
     <>
-    {fundRaiseBar}
+      {fundRaiseBar}
       <Layout mode={headerStatus.main}>
         <Head>
           <title>Tokenomics Hub</title>
@@ -98,19 +98,19 @@ const Index: React.FC<Props> = (props) => {
           <h1 className="mb-10 text-center text-2xl md:text-3xl">
             Explore, compare and evaluate tokenomics of crypto projects.
           </h1>
-          <div className="flex gap-4 mt-10 mb-10 text-center justify-center">
+          <div className="mt-10 mb-10 flex justify-center gap-4 text-center">
             <Link
               href="/newPost"
-              className="w-44 h-14 text-center self-center rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+              className="h-14 w-44 self-center rounded-md bg-dao-red px-4 py-2 text-center text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
             >
               Add a Token Report
             </Link>
             <Link
               href="/myDesigns"
-              className="w-44 h-14 self-center rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+              className="h-14 w-44 self-center rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
             >
-              Design a Token 
-              <p className='text-[8px]'> (early beta)</p>
+              Design a Token
+              <p className="text-[8px]"> (early beta)</p>
             </Link>
           </div>
           <div className="m-auto flex w-1/2 max-w-5xl">
@@ -200,7 +200,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         },
       },
     },
-    orderBy: {title: 'asc'}
+    orderBy: { title: 'asc' },
   })
 
   // const aggregate = await prisma.userStrengthRating.groupBy({

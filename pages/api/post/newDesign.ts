@@ -62,11 +62,13 @@ export default async function handle(req, res) {
       return {
         content: JSON.stringify(de.content),
         designPhasesId: de.designPhasesId,
+        designElementStatus: de.designElementStatus,
       }
     } else {
       return {
         content: de.content,
         designPhasesId: de.designPhasesId,
+        designElementStatus: de.designElementStatus,
       }
     }
   })
