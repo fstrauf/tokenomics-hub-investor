@@ -289,14 +289,7 @@ explanation`}
         return (
           <TDF404 props={props} values={values} activePhase={activePhase} />
         )
-      case 801:
-        return (
-          <TDF_valueDemandUtility
-            props={props}
-            values={values}
-            activePhase={activePhase}
-          />
-        )
+
       case 501:
         return (
           <TDF501
@@ -321,7 +314,14 @@ explanation`}
         return (
           <TDF701 props={props} values={values} activePhase={activePhase} />
         )
-
+      case 801:
+        return (
+          <TDF_valueDemandUtility
+            props={props}
+            values={values}
+            activePhase={activePhase}
+          />
+        )
       case 802:
         return (
           <TDF802 props={props} values={values} activePhase={activePhase} />
