@@ -15,7 +15,7 @@ export default function TDF501({ props, values, activePhase, setFieldValue }) {
 
 
   useEffect(() => {
-    designElementStatusUpdate(values, '501', setFieldValue)
+    designElementStatusUpdate(values, designPhase.phaseId, setFieldValue)
   }, [])
 
   let ExampleDetail = ({ onGoBack, example, exampleField }) => {

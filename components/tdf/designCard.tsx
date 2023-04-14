@@ -170,7 +170,6 @@ export default function DesignCard({ post, context }) {
         <Link
           as={isReport ? `/editPost/${post?.id}` : `/editDesign/${post?.id}`}
           href={isReport ? `/editPost/[id]` : `/editDesign/[id]`}
-          target="_blank"
           className=" rounded-lg bg-dao-red px-4 py-2 text-center text-xs font-medium text-white"
         >
           Edit

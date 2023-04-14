@@ -19,8 +19,7 @@ export default function TDFGenericOneField({
   const { setFieldValue } = useFormikContext()
 
   useEffect(() => {
-    if (['101', '102', '103'].includes(activePhase.toString()))
-      designElementStatusUpdate(values, activePhase.toString(), setFieldValue)
+      designElementStatusUpdate(values, designPhase.phaseId, setFieldValue)
   }, [])
   // async function generateSuggestions(event) {
   //   event.preventDefault();

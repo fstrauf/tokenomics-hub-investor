@@ -11,7 +11,7 @@ export default function TDF303({ props, values, activePhase }) {
   const { setFieldValue } = useFormikContext()
 
   useEffect(() => {
-    designElementStatusUpdate(values, '303', setFieldValue)
+    designElementStatusUpdate(values, designPhase.phaseId, setFieldValue)
   }, [])
   return (
     <div className="flex w-full flex-col rounded-lg border-2 p-2">
