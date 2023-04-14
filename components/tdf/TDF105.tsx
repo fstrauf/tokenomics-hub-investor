@@ -10,7 +10,7 @@ export default function TDF105({ props, values, activePhase }) {
   const { setFieldValue } = useFormikContext()
 
   useEffect(() => {
-    designElementStatusUpdate(values, '105', setFieldValue)
+    designElementStatusUpdate(values, designPhase.phaseId, setFieldValue)
   }, [])
 
   return (

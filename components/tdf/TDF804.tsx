@@ -1,4 +1,4 @@
-import {useFormikContext } from 'formik'
+import { useFormikContext } from 'formik'
 import { useEffect } from 'react'
 import { designElementStatusUpdate } from '../../lib/designElementStatusField'
 import { getActiveDesignPhase } from '../../lib/helper'
@@ -7,10 +7,10 @@ import FormResources from '../form/FormResources'
 
 export default function TDF804({ props, values, activePhase }) {
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
-  const { setFieldValue } = useFormikContext()
+  const { setFieldValue, touched } = useFormikContext()
 
   useEffect(() => {
-    designElementStatusUpdate(values, '804', setFieldValue)
+    designElementStatusUpdate(values, designPhase.phaseId, setFieldValue)
   }, [])
 
   return (

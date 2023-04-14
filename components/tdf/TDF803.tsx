@@ -9,7 +9,7 @@ export default function TDF803({ props, values, activePhase }) {
   const { setFieldValue } = useFormikContext()
 
   useEffect(() => {
-    designElementStatusUpdate(values, '803', setFieldValue)
+    designElementStatusUpdate(values, designPhase.phaseId, setFieldValue)
   }, [])
   return (
     <div className="m-2">

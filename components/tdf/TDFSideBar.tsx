@@ -40,12 +40,10 @@ export default function TDFSideBar({
               } block w-full max-w-sm rounded-lg border border-gray-200 bg-white p-2 text-xs shadow hover:bg-gray-100`}
             >
               {/* {phase.name} */}
-              <div className="grid grid-cols-3">
-                <div className="col-span-2 flex justify-start">
-                  {phase.name}
-                </div>
+              <div className="flex">
+                <div className="w-[95%]">{phase.name}</div>
 
-                <div className="flex items-center justify-end">
+                <div className="flex w-[5%]  items-center">
                   <Tooltip
                     title={
                       inProgress.find(
@@ -65,7 +63,6 @@ export default function TDFSideBar({
                     size="small"
                     position="bottom"
                     arrow={true}
-                    
                     className="tooltip-class"
                   >
                     <div
@@ -96,7 +93,7 @@ export default function TDFSideBar({
               type="button"
               className={`${
                 phase.phaseId === activePhase ? 'bg-dao-red' : ''
-              } mt-2 block w-full rounded-lg  border border-gray-200 text-start text-lg font-bold tracking-tight text-gray-900 hover:bg-gray-100`}
+              } mt-2 block w-full rounded-lg  border border-gray-200 text-center text-lg font-bold tracking-tight text-gray-900 hover:bg-gray-100`}
               onClick={() => changePhase(phase.phaseId)}
             >
               <div className="ml-1">{phase.name}</div>

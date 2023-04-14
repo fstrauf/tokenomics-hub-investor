@@ -7,12 +7,15 @@ import FormText from '../form/FormText'
 import FormSelect from '../form/FormSelect'
 import FormImageSelect from '../form/FormImageSelect'
 import { designElementStatusUpdate } from '../../lib/designElementStatusField'
+import { getActiveDesignPhase } from '../../lib/helper'
 
 export default function TDF11({ props, values, activePhase }) {
-  const designPhase = props.designPhases.find(
-    (adp) => String(adp.phaseId) === '11',
-    activePhase
-  )
+  // const designPhase = props.designPhases.find(
+  //   (adp) => String(adp.phaseId) === '11',
+  //   activePhase
+  // )
+
+  const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
 
   const { setFieldValue } = useFormikContext()
 
@@ -46,7 +49,7 @@ export default function TDF11({ props, values, activePhase }) {
   }
 
   useEffect(() => {
-    designElementStatusUpdate(values, '11', setFieldValue)
+    designElementStatusUpdate(values, designPhase.phaseId, setFieldValue)
   }, [])
 
   return (
