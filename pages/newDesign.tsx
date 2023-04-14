@@ -104,7 +104,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     DesignElement: designPhases
       .filter((dp) => dp.parentPhaseId)
       .map((dp) => {
-        console.log('🚀 ~ file: newDesign.tsx:112 ~ .map ~ dp:', dp)
         return {
           id: '',
           content: '',

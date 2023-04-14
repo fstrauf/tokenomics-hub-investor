@@ -8,13 +8,13 @@ import { designElementStatusUpdate } from '../../lib/designElementStatusField'
 // import ExampleSection from './ExampleSection'
 
 export default function TDF302({ props, values, activePhase }) {
+  const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
   const { setFieldValue } = useFormikContext()
 
   useEffect(() => {
-    designElementStatusUpdate(values, '302', setFieldValue)
+    designElementStatusUpdate(values, designPhase.phaseId, setFieldValue)
   }, [])
 
-  const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
   return (
     <div className="flex w-full flex-col rounded-lg border-2 p-2">
       <div className="col-span-2">

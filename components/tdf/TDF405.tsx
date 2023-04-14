@@ -13,7 +13,7 @@ export default function TDF405({ props, values, activePhase }) {
   const { setFieldValue } = useFormikContext()
 
   useEffect(() => {
-    designElementStatusUpdate(values, '405', setFieldValue)
+    designElementStatusUpdate(values, designPhase.phaseId, setFieldValue)
   }, [])
 
   return (

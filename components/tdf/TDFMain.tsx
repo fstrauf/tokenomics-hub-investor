@@ -12,7 +12,6 @@ import RequestReviewModal from '../../components/requestReviewPopup'
 import { designElementStatus } from '../../lib/helper'
 
 export default function TDFMain({ props }) {
-  console.log('🚀 ~ file: TDFMain.tsx:14 ~ TDFMain ~ props:', props)
   const router = useRouter()
 
   const [activePhase, setActivePhase] = useState(
@@ -23,7 +22,9 @@ export default function TDFMain({ props }) {
   const initialValues = props.post
   function handlePhaseChange(phase) {
     if (postId) {
-      router.push(`/editDesign/${postId}?phase=${phase}`)
+      router.push(`/editDesign/${postId}?phase=${phase}`, null, {
+        scroll: false,
+      })
     }
     setActivePhase(phase)
   }
@@ -154,7 +155,6 @@ export default function TDFMain({ props }) {
   }
 
   function renderSwitch(values, setFieldValue) {
-    // console.log('renderSwitch', activePhase)
     switch (activePhase) {
       case 10:
       case 100:
@@ -365,13 +365,12 @@ explanation`}
 
   return (
     <div className="mt-4 mb-4 rounded-lg bg-gray-100 p-1">
-      
       <Formik
         initialValues={initialValues}
         onSubmit={submitData}
         enableReinitialize
       >
-        {({ isSubmitting, setFieldValue, values }) => (
+        {({ isSubmitting, setFieldValue, values, touched }) => (
           <Form>
             <div className="flex h-10 justify-between bg-gray-100 p-1">
               <p className="text-xl font-bold ">{values?.title}</p>
@@ -428,7 +427,6 @@ explanation`}
                   designPhases={props.designPhases}
                   changePhase={handlePhaseChange}
                   activePhase={activePhase}
-                  props={props}
                   values={values}
                 />
               </div>
