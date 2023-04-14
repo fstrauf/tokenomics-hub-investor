@@ -4,8 +4,9 @@ import prisma from '../lib/prisma'
 import { GetServerSideProps } from 'next'
 import { getMergedInitialCalcValues, postStatus, postType } from '../lib/helper'
 import TDFMain from '../components/tdf/TDFMain'
-import { getAuth } from '@clerk/nextjs/server'
-import { AuthData } from '@clerk/nextjs/dist/server/types'
+import { getAuth } from '@clerk/nextjs/dist/server/getAuth'
+// import { getAuth } from '@clerk/nextjs/server'
+// import { AuthData } from '@clerk/nextjs/dist/server/types'
 
 export default function NewDesign(props) {
   return (
@@ -77,7 +78,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     DesignElement: designPhases
       .filter((dp) => dp.parentPhaseId)
       .map((dp) => {
-        console.log('🚀 ~ file: newDesign.tsx:112 ~ .map ~ dp:', dp)
         return {
           id: '',
           content: '',

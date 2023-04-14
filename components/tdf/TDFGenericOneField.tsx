@@ -15,7 +15,7 @@ export default function TDFGenericOneField({
 }) {
   // console.log("🚀 ~ file: TDFGenericOneField.tsx:13 ~ values:", values)
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
-  // console.log("🚀 ~ file: TDFGenericOneField.tsx:15 ~ designPhase:", designPhase)
+  console.log("🚀 ~ file: TDFGenericOneField.tsx:15 ~ designPhase:", designPhase)
   const { setFieldValue } = useFormikContext()
 
   useEffect(() => {
