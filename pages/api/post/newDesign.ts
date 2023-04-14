@@ -81,7 +81,6 @@ export default async function handle(req, res) {
         slug: inputFields.slug,
         shortDescription: inputFields.shortDescription,
         publishedAt: new Date(),
-
         DesignElement: {
           createMany: {
             data: DesignElement,
