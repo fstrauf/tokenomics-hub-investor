@@ -4,11 +4,27 @@ import prisma from '../lib/prisma'
 import { GetServerSideProps } from 'next'
 import { clerkClient, getAuth } from '@clerk/nextjs/server'
 import type { AuthData } from '@clerk/nextjs/dist/server/types'
+import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
 import { clerkConvertJSON, headerStatus, postStatus } from '../lib/helper'
 import DesignCard from '../components/tdf/designCard'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
+// import { Router } from 'next/router'
+
 
 export default function MyDesigns({ posts }) {
+  const { user } = useUser()
+  const router = useRouter()
+
+  const beta = user?.publicMetadata?.beta || false
+
+  if(!beta){
+    router.push('/requestBeta')
+    // return(
+    //   <div>This is a beta feature!</div>
+    // )
+  }
+
 
   return (
     <Layout mode={headerStatus.design}>

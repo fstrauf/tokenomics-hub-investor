@@ -1,5 +1,5 @@
 import Container from '../components/container'
-import Intro from '../components/intro'
+// import Intro from '../components/intro'
 import Layout from '../components/layout'
 import Head from 'next/head'
 import Table from '../components/table'
@@ -94,10 +94,6 @@ const Index: React.FC<Props> = (props) => {
           <link rel="manifest" href="/site.webmanifest"></link>
         </Head>
         <Container>
-          {/* <Intro /> */}
-          {/* <h1 className="mb-10 text-center text-2xl md:text-3xl">
-            Explore, compare and evaluate tokenomics of crypto projects.
-          </h1> */}
           <div className="mt-10 flex items-center justify-center rounded-lg bg-gradient-to-r from-dao-green to-dao-red flex-col p-10 gap-8">
             <div className="flex w-3/4 flex-col items-center justify-center rounded-lg text-white">
               <h1 className="mb-5 text-3xl font-bold">
@@ -136,19 +132,6 @@ const Index: React.FC<Props> = (props) => {
             </div>
           </div>
           <div className="mt-10 mb-10 flex justify-center gap-4 text-center">
-            {/* <Link
-              href="/newPost"
-              className="h-14 w-44 self-center rounded-md bg-dao-red px-4 py-2 text-center text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
-            >
-              Add a Token Report
-            </Link> */}
-            {/* <Link
-              href="/myDesigns"
-              className="h-14 w-44 self-center rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
-            >
-              Design a Token
-              <p className="text-[8px]"> (early beta)</p>
-            </Link> */}
           </div>
           <div className="m-auto flex w-1/2 max-w-5xl">
             <Select
@@ -192,9 +175,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const tags = await prisma.tag.findMany()
 
   const filterCats = context?.query?.cats?.split(',') || ''
-  // console.log("🚀 ~ file: index.tsx:126 ~ constgetServerSideProps:GetServerSideProps= ~ filterCats:", filterCats)
   const filterTags = context?.query?.tags?.split(',') || ''
-  // console.log("🚀 ~ file: index.tsx:128 ~ constgetServerSideProps:GetServerSideProps= ~ filterTags:", filterTags)
   const filterCatsQuery =
     filterCats.length > 0
       ? {
@@ -218,7 +199,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       : {}
 
   const allPosts = await prisma.post.findMany({
-    // take: 20,
     where: {
       status: postStatus.published,
       ...filterCatsQuery,
@@ -240,25 +220,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     orderBy: { title: 'asc' },
   })
 
-  // const aggregate = await prisma.userStrengthRating.groupBy({
-  //   by: ['postId'],
-  //   _avg: {
-  //     tokenUtilityStrength: true,
-  //     businessModelStrength: true,
-  //     valueCreationStrength: true,
-  //     valueCaptureStrength: true,
-  //     demandDriversStrength: true,
-  //   },
-  // })
-  // console.log("🚀 ~ file: index.tsx:167 ~ constgetServerSideProps:GetServerSideProps= ~ aggregate", aggregate)
-
   return {
     props: {
       allPosts,
       categories: categories || null,
       tags: tags || null,
-      // rewardRound
     },
-    // revalidate: 1,
   }
 }
