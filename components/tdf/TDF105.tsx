@@ -22,7 +22,7 @@ export default function TDF105({ props, values, activePhase }) {
         as="textarea"
         rows="6"
         name={`DesignElement.${values?.DesignElement?.findIndex(
-          (de) => de.designPhasesId.toString() === '105'
+          (de) => de.designPhasesId.toString() === designPhase.phaseId
         )}.content`} //
         placeholder="Token Evaluation"
         phaseId={designPhase.phaseId}
