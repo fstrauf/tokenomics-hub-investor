@@ -168,8 +168,10 @@ export default function DesignCard({ post, context }) {
       </div>
       <div className="mt-4 flex justify-center space-x-3 p-2 md:mt-6">
         <Link
-          as={isReport ? `/editPost/${post?.id}` : `/editDesign/${post?.id}`}
-          href={isReport ? `/editPost/[id]` : `/editDesign/[id]`}
+          // as={isReport ? `/editPost/${post?.id}` : `/editDesign/${post?.id}`}
+          // href={isReport ? `/editPost/[id]` : `/editDesign/[id]`}
+          as={`/editDesign/${post?.id}`}
+          href={`/editDesign/[id]`}
           className=" rounded-lg bg-dao-red px-4 py-2 text-center text-xs font-medium text-white"
         >
           Edit

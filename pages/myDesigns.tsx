@@ -9,7 +9,6 @@ import { clerkConvertJSON, headerStatus, postStatus } from '../lib/helper'
 import DesignCard from '../components/tdf/designCard'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-// import { Router } from 'next/router'
 
 
 export default function MyDesigns({ posts }) {
@@ -20,9 +19,6 @@ export default function MyDesigns({ posts }) {
 
   if(!beta){
     router.push('/requestBeta')
-    // return(
-    //   <div>This is a beta feature!</div>
-    // )
   }
 
 
@@ -42,7 +38,6 @@ export default function MyDesigns({ posts }) {
               </Link>
             </div>
           </div>
-          {/* <div className=""> */}
           <div className="overflow-x-auto rounded-lg bg-white">
             <div className="flex flex-wrap items-center justify-center">
               {posts?.map((post, index) => {
@@ -54,7 +49,6 @@ export default function MyDesigns({ posts }) {
               })}
             </div>
           </div>
-          {/* </div> */}
         </div>
       </>
     </Layout>

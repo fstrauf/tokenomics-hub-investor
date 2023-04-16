@@ -11,6 +11,7 @@ import RequestReviewModal from '../../components/requestReviewPopup'
 import { designElementStatus } from '../../lib/helper'
 
 export default function TDFMain({ props }) {
+  console.log("🚀 ~ file: TDFMain.tsx:14 ~ TDFMain ~ props:", props)
   const router = useRouter()
 
   const [activePhase, setActivePhase] = useState(
@@ -96,7 +97,7 @@ export default function TDFMain({ props }) {
 
   const submitData = async (values, { setSubmitting }) => {
     const body = { values }
-    console.log("🚀 ~ file: TDFMain.tsx:97 ~ submitData ~ values:", values)
+    // console.log('🚀 ~ file: TDFMain.tsx:97 ~ submitData ~ values:', values)
     if (values?.id === '') {
       try {
         const response = await fetch('/api/post/newDesign', {
@@ -112,7 +113,7 @@ export default function TDFMain({ props }) {
         } else {
           //connect the returned id to the inputfields.id
           const id = await response.text()
-          console.log("🚀 ~ file: TDFMain.tsx:113 ~ submitData ~ id:", id)
+          // console.log('🚀 ~ file: TDFMain.tsx:113 ~ submitData ~ id:', id)
           // console.log(response)
           toast.success('Changes auto-saved ', {
             position: 'bottom-right',

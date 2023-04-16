@@ -119,7 +119,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     // PostUser: props.PostUser.map((pu) => {
     //   return { id: pu.id, name: pu.name, role: pu.role, postId: pu.postId }
     // }),
-    PostUser: [{ id: 0, name: '', role: '' }],
+    PostUser: [],
     slug: '',
     shortDescription: '',
     categories: [],

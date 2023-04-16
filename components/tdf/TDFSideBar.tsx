@@ -1,5 +1,4 @@
-import { useRouter } from 'next/router'
-import { designElementStatus } from '../../lib/helper'
+import { designElementStatus, postType } from '../../lib/helper'
 import { Tooltip } from 'react-tippy'
 import 'react-tippy/dist/tippy.css'
 
@@ -9,13 +8,12 @@ export default function TDFSideBar({
   activePhase,
   values,
 }) {
-  const router = useRouter()
 
   let phases = designPhases
-  if (router.pathname === '/newPost') {
+  if (values.postType === postType.report) {
     phases = designPhases.filter((phase) => phase.isReport)
+    // console.log("🚀 ~ file: TDFSideBar.tsx:18 ~ phases:", phases)
   }
-  // const DesignPhase = designPhases.filter((phase) => phase.isReport === false)
 
   let inProgress = values.DesignElement.filter((de) => {
     return de.designElementStatus === designElementStatus.in_progress
@@ -24,8 +22,6 @@ export default function TDFSideBar({
   let completed = values.DesignElement.filter((de) => {
     return de.designElementStatus === designElementStatus.completed
   })
-
-  // designElementStatus == designElementStatus.in_progress
 
   return (
     <div className="overflow-y-auto rounded-lg border-2 border-gray-100 bg-white p-2">
@@ -39,7 +35,6 @@ export default function TDFSideBar({
                 phase.phaseId === activePhase ? 'bg-dao-red' : ''
               } block w-full max-w-sm rounded-lg border border-gray-200 bg-white p-2 text-xs shadow hover:bg-gray-100`}
             >
-              {/* {phase.name} */}
               <div className="flex">
                 <div className="w-[95%]">{phase.name}</div>
 
