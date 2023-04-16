@@ -1,7 +1,7 @@
 import Layout from '../components/layout'
 import React, { useState } from 'react'
 import toast, { Toaster } from 'react-hot-toast'
-import { Field, Form, Formik } from 'formik'
+// import { Field, Form, Formik } from 'formik'
 import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
 import { useRouter } from 'next/router'
 // import { DISCORD_WEBHOOK } from '../lib/constants'
@@ -25,7 +25,7 @@ export default function RequestBeta(props) {
       })
       toast.success('Message sent', { position: 'bottom-right' })
       // resetForm() // clear the form's input fields after successful submission
-      router.push('/myDesigns')
+      router.push('/')
     } catch (error) {
       console.error(error)
       toast.error('An error occurred', { position: 'bottom-right' })
@@ -39,7 +39,7 @@ export default function RequestBeta(props) {
       <Layout>
         {/* <Intro /> */}
         <Toaster />
-        <div className="m-auto flex flex-col justify-center">
+        <div className="m-auto flex flex-col justify-center items-center">
           <h1 className="mb-10 mt-36 text-center text-3xl font-bold">
             The Tokenomics Design Framework is still in early beta.
           </h1>
@@ -50,7 +50,7 @@ export default function RequestBeta(props) {
             type="button"
             onClick={submitData}
             disabled={isSubmittingForm}
-            className="mt-5 mb-5 rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
+            className="mt-5 w-36 mb-5 rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
           >
             Request access
           </button>
