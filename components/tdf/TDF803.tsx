@@ -3,6 +3,8 @@ import { useEffect } from 'react'
 import { designElementStatusUpdate } from '../../lib/designElementStatusField'
 import { getActiveDesignPhase } from '../../lib/helper'
 import FormImageSelect from '../form/FormImageSelect'
+import ResourceSection from './ResourceSection'
+import ExampleSection from './ExampleSection'
 
 export default function TDF803({ props, values, activePhase }) {
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
@@ -12,16 +14,14 @@ export default function TDF803({ props, values, activePhase }) {
     designElementStatusUpdate(values, designPhase.phaseId, setFieldValue)
   }, [])
   return (
-    <div className="m-2">
+    <div className="flex flex-col">
       <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 ">
         {designPhase.name}
       </h5>
 
       <div className="mb-6">
         <div className="basis-1/4">
-          {/* <label className="mb-2 block text-sm font-medium text-gray-900">
-            Diagram
-          </label> */}
+
           <p className="mb-2 text-xs font-extralight text-gray-500">
             Provide a link to a diagram{' '}
             <a
@@ -46,7 +46,14 @@ export default function TDF803({ props, values, activePhase }) {
           className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
         />
       </div>
-      {/* <ResourceSection content={designPhase.Resources} /> */}
+      <ResourceSection content={designPhase.Resources} />
+      <ExampleSection
+        presetCategories={values.categories}
+        presetTags={values.tags}
+        props={props}
+        exampleField={designPhase.postDataElement}
+        exampleDetail={undefined}
+      />
     </div>
   )
 }
