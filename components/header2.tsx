@@ -36,10 +36,10 @@ export default function Header2({ mode }) {
 
   const expertsSection = (
     <Link
-      href="/experts"
+      href="/bookAnExpert"
       className="text-base font-medium text-white hover:text-gray-300"
     >
-      Experts
+      Services
     </Link>
   )
 

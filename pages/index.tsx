@@ -94,7 +94,7 @@ const Index: React.FC<Props> = (props) => {
           <link rel="manifest" href="/site.webmanifest"></link>
         </Head>
         <Container>
-          <div className="mt-10 flex items-center justify-center rounded-lg bg-gradient-to-r from-dao-green to-dao-red flex-col p-10 gap-8">
+          <div className="mt-10 flex items-center justify-center rounded-lg bg-gradient-to-r from-dao-green to-dao-red flex-col p-4 gap-8">
             <div className="flex w-3/4 flex-col items-center justify-center rounded-lg text-white">
               <h1 className="mb-5 text-3xl font-bold">
                 Explore, compare and evaluate tokenomics of crypto projects.

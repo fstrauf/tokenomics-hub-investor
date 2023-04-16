@@ -33,9 +33,10 @@ export default function BookAnExpert(props) {
         <Toaster />
         <div className="m-auto flex flex-col justify-center">
           <h1 className="mb-10 mt-10 text-center text-3xl font-bold">
-            Tell us what your looking for
+            Need help designing your token? 
+            <br></br>Want a review of your design?
           </h1>
-          <p className="mb-5 text-center">and we'll get back to you asap</p>
+          <p className="mb-5 text-center">our team of experts is happyn to help</p>
           <Formik
             initialValues={{
               name: '',
