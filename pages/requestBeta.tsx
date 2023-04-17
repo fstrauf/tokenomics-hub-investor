@@ -23,14 +23,17 @@ export default function RequestBeta(props) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
       })
-      toast.success('Message sent', { position: 'bottom-right' })
-      // resetForm() // clear the form's input fields after successful submission
-      router.push('/')
+      
+      // resetForm() // clear the form's input fields after successful submission      
     } catch (error) {
       console.error(error)
       toast.error('An error occurred', { position: 'bottom-right' })
     } finally {
-      // setIsSubmittingForm(false)
+      setInterval(function() {
+        toast.success('Request Granted!', { position: 'bottom-right' })
+        setIsSubmittingForm(false)
+        router.push('/')        
+      }, 30000); // Executes the anonymous function every second
     }
   }
 
@@ -39,18 +42,28 @@ export default function RequestBeta(props) {
       <Layout>
         {/* <Intro /> */}
         <Toaster />
-        <div className="m-auto flex flex-col justify-center items-center">
+        <div className="m-auto flex flex-col items-center justify-center">
           <h1 className="mb-10 mt-36 text-center text-3xl font-bold">
             The Tokenomics Design Framework is still in early beta.
           </h1>
           <p className="mb-5 text-center">
             but we're happy to give you access.
           </p>
+          {isSubmittingForm ? (
+            <div className="mt-10 flex items-center justify-center rounded-lg bg-gradient-to-r from-dao-green to-dao-red flex-col p-4 gap-8">
+            <h1 className="mb-10 mt-36 text-center text-3xl font-bold">
+              ... requesting access. Give us a moment.
+            </h1>
+            </div>
+          ) : (
+            <></>
+          )}
+
           <button
             type="button"
             onClick={submitData}
             disabled={isSubmittingForm}
-            className="mt-5 w-36 mb-5 rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
+            className="mt-5 mb-5 w-36 rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
           >
             Request access
           </button>

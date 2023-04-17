@@ -9,6 +9,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import RequestReviewModal from '../../components/requestReviewPopup'
 import { designElementStatus } from '../../lib/helper'
+import { event } from "nextjs-google-analytics";
 
 export default function TDFMain({ props }) {
   console.log("🚀 ~ file: TDFMain.tsx:14 ~ TDFMain ~ props:", props)
@@ -20,12 +21,17 @@ export default function TDFMain({ props }) {
   const [postId, setPostId] = useState(props.post.id || '')
   const [isRequestReviewOpen, setIsRequestReviewOpen] = useState(false)
   const initialValues = props.post
+
   function handlePhaseChange(phase) {
     if (postId) {
       router.push(`/editDesign/${postId}?phase=${phase}`, null, {
         scroll: false,
       })
     }
+    event("tdsPhaseChange", {
+      category: "UserAction",
+      label: phase,
+    });
     setActivePhase(phase)
   }
 
