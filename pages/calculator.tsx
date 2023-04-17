@@ -5,6 +5,7 @@ import { GetServerSideProps } from 'next'
 import prisma from '../lib/prisma'
 import { buildClerkProps, getAuth } from '@clerk/nextjs/server'
 import { AuthData } from '@clerk/nextjs/dist/server/types'
+import { initialCalculatorValues, getMergedInitialCalcValues } from '../lib/helper'
 
 export default function CalculationPage({ preloadInitialValues }) {  
   const Calculator = dynamic(() => import('../components/calculator'), {
@@ -21,75 +22,9 @@ export default function CalculationPage({ preloadInitialValues }) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
+// console.log("🚀 ~ file: calculator.tsx:25 ~ constgetServerSideProps:GetServerSideProps= ~ context:", context.req)
 
-  const initialValues = {
-    id: '',
-    totalSupply: 100000000,
-    months: 60,
-    areaData: [],
-    authorClerkId: '',
-    name: '',
-    startDate: new Date().toLocaleDateString('en-CA'),
-    calculations: '',  
-    calculationRows: [
-      {
-        category: 'Treasury',
-        lockupPeriod: 5,
-        unlockPeriod: 12,
-        percentageAllocation: 30,
-        color: '#FF6666',
-        isEpochDistro: false,
-        epochDurationInSeconds: 0,
-        initialEmissionPerSecond: 0,
-        emissionReductionPerEpoch: 0
-
-      },
-      {
-        category: 'Team',
-        lockupPeriod: 0,
-        unlockPeriod: 12,
-        percentageAllocation: 15,
-        color: '#028090',
-        isEpochDistro: false,
-        epochDurationInSeconds: 0,
-        initialEmissionPerSecond: 0,
-        emissionReductionPerEpoch: 0
-      },
-      {
-        category: 'Investors',
-        lockupPeriod: 0,
-        unlockPeriod: 12,
-        percentageAllocation: 15,
-        color: '#66FFB3',
-        isEpochDistro: false,
-        epochDurationInSeconds: 0,
-        initialEmissionPerSecond: 0,
-        emissionReductionPerEpoch: 0
-      },
-      {
-        category: 'Advisors',
-        lockupPeriod: 0,
-        unlockPeriod: 12,
-        percentageAllocation: 10,
-        color: '#996EFF',
-        isEpochDistro: false,
-        epochDurationInSeconds: 0,
-        initialEmissionPerSecond: 0,
-        emissionReductionPerEpoch: 0
-      },
-      {
-        category: 'Airdrops',
-        lockupPeriod: 0,
-        unlockPeriod: 12,
-        percentageAllocation: 30,
-        color: '#333C45',
-        isEpochDistro: true,
-        epochDurationInSeconds: 126144000,
-        initialEmissionPerSecond: 0.2397,
-        emissionReductionPerEpoch: 0.5
-      },
-    ],
-  }
+  // const initialValues = initialCalculatorValues
 
   const calculationId: string = context?.query?.id || ''
 
@@ -116,27 +51,28 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     })
   )
 
-  const response = await prisma.$transaction(txCalls)
+  const [userCalcs, detailedCalc] = await prisma.$transaction(txCalls)
 
-  var preloadInitialValues = initialValues
+  // var preloadInitialValues = initialValues
 
-  preloadInitialValues.calculations = response[0]
-  preloadInitialValues.authorClerkId = userId
+  // preloadInitialValues.calculations = userCalcs
+  // preloadInitialValues.authorClerkId = userId
 
-  if (response[1] !== null) {
-    preloadInitialValues.id = response[1].id
-    preloadInitialValues.totalSupply = response[1].totalSupply
-    preloadInitialValues.months = response[1].months
-    preloadInitialValues.startDate = new Date(
-      response[1].startDate
-    ).toLocaleDateString('en-CA')
-    preloadInitialValues.name = response[1].title
-    preloadInitialValues.calculationRows = response[1].CalculationRows
-  }
+  // if (detailedCalc !== null) {
+  //   preloadInitialValues.id = detailedCalc.id
+  //   preloadInitialValues.totalSupply = detailedCalc.totalSupply
+  //   preloadInitialValues.months = detailedCalc.months
+  //   preloadInitialValues.startDate = new Date(
+  //     detailedCalc.startDate
+  //   ).toLocaleDateString('en-CA')
+  //   preloadInitialValues.name = detailedCalc.title
+  //   preloadInitialValues.calculationRows = detailedCalc.CalculationRows
+  // }
 
   return {
     props: {
-      preloadInitialValues: preloadInitialValues || null,
+      // preloadInitialValues: preloadInitialValues || null,
+      preloadInitialValues: getMergedInitialCalcValues(userCalcs, userId, detailedCalc) || null,
       ...buildClerkProps(context.req),
     },
   }

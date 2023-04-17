@@ -96,7 +96,7 @@ export const FormResources = ({ values, postId }) => (
             type="text"
             disabled={true}
             name="id"
-            className="mt-4 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
+            className="hidden mt-4 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
           />
           {/* <FormId
             postId={postId}

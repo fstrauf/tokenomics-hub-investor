@@ -1,5 +1,5 @@
 import Container from '../components/container'
-import Intro from '../components/intro'
+// import Intro from '../components/intro'
 import Layout from '../components/layout'
 import Head from 'next/head'
 import Table from '../components/table'
@@ -7,10 +7,12 @@ import prisma from '../lib/prisma'
 import { GetServerSideProps } from 'next'
 import Select from 'react-select'
 import { useRouter } from 'next/router'
-import { postStatus } from '../lib/helper'
+import { headerStatus, postStatus } from '../lib/helper'
+import Link from 'next/link'
+import { useState } from 'react'
+import XMarkIcon from '../public/svg/xmarkicon'
 
 type Props = {
-  // rewardRound: any;
   allPosts: any
   preview: any
   categories: object[]
@@ -18,8 +20,8 @@ type Props = {
 }
 
 const Index: React.FC<Props> = (props) => {
-  // console.log('🚀 ~ file: index.tsx:20 ~ props', props.allPosts)
   const router = useRouter()
+  const [showBanner, setShowBanner] = useState(true)
 
   function filterCategories(newValue: MultiValue<any>): void {
     if (newValue.length === 0) {
@@ -39,16 +41,44 @@ const Index: React.FC<Props> = (props) => {
     }
   }
 
+  const fundRaiseBar = (
+    <div
+      className={`${
+        showBanner ? 'm-auto flex items-center bg-dao-green' : 'hidden'
+      }`}
+    >
+      <div className="mx-auto max-w-xl py-3 px-3 sm:px-6 lg:px-8">
+        <p className="ml-3 self-center truncate text-center font-medium text-white">
+          <span className="inline">🥳 We are fundraising. Interested? </span>
+          <a
+            href="mailto:contact@tokenomicsdao.com"
+            className="hover:underline"
+          >
+            Contact us.
+          </a>
+        </p>
+      </div>
+      <button
+        className="text-gray-200"
+        onClick={() => {
+          setShowBanner(false)
+        }}
+      >
+        <XMarkIcon className="h-6 w-6 text-gray-200" aria-hidden="true" />
+      </button>
+    </div>
+  )
+
   return (
     <>
-      <Layout>
+      {fundRaiseBar}
+      <Layout mode={headerStatus.main}>
         <Head>
           <title>Tokenomics Hub</title>
           <meta
             name="Explore, compare and evaluate tokenomics of crypto projects."
             content="Created by Tokenomics DAO"
           />
-          {/* <link rel="icon" href="/favicon.ico" /> */}
           <link
             rel="icon"
             type="image/png"
@@ -64,10 +94,45 @@ const Index: React.FC<Props> = (props) => {
           <link rel="manifest" href="/site.webmanifest"></link>
         </Head>
         <Container>
-          <Intro />
-          <h1 className="mb-10 text-center text-2xl md:text-3xl">
-            Explore, compare and evaluate tokenomics of crypto projects.
-          </h1>
+          <div className="mt-10 flex items-center justify-center rounded-lg bg-gradient-to-r from-dao-green to-dao-red flex-col p-4 gap-8">
+            <div className="flex w-3/4 flex-col items-center justify-center rounded-lg text-white">
+              <h1 className="mb-5 text-2xl font-bold">
+                Explore, compare and evaluate tokenomics of crypto projects.
+              </h1>
+              <p className="mb-5 text-base text-center">
+                Tokenomics Hub is a community driven platform showcasing the
+                need-to-know tokenomic information per project. No matter if
+                you’re an avid user, a fellow degen or a protocol owner/team
+                member, anyone can list a token
+              </p>
+              <div className="flex justify-center">
+                <Link
+                  href="/newPost"
+                  className="w-36 self-center rounded-md bg-white px-4 py-2 text-sm font-medium border-2 border-dark-tdao text-center text-dark-tdao hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+                >
+                  List a Token
+                </Link>
+              </div>
+            </div>
+            <div className="flex w-3/4 flex-col items-center justify-center rounded-lg text-white">
+              <h1 className="mb-5 text-2xl font-bold">
+                Want to design a token?
+              </h1>
+              <p className="mb-5 text-base text-center">
+              Tokenomics Hub offers entrepreneurs an industry leading framework with a built in suite of tools to help you create sustainable tokenomics (in beta)
+              </p>
+              <div className="flex justify-center">
+              <Link
+              href="/myDesigns"
+              className="w-36 self-center rounded-md bg-white px-4 py-2 text-sm font-medium text-dark-tdao border-2 border-dark-tdao text-center hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+            >
+              Design a Token
+            </Link>
+              </div>
+            </div>
+          </div>
+          <div className="mt-10 mb-10 flex justify-center gap-4 text-center">
+          </div>
           <div className="m-auto flex w-1/2 max-w-5xl">
             <Select
               defaultValue={[]}
@@ -134,7 +199,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       : {}
 
   const allPosts = await prisma.post.findMany({
-    // take: 20,
     where: {
       status: postStatus.published,
       ...filterCatsQuery,
@@ -147,19 +211,21 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       slug: true,
       id: true,
       ticker: true,
+      id: true,
       categories: {
         select: {
           label: true,
         },
       },
     },
+    orderBy: { title: 'asc' },
   })
 
   return {
     props: {
       allPosts,
       categories: categories || null,
-      tags: tags || null,    
+      tags: tags || null,
     },
   }
 }

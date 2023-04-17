@@ -20,10 +20,16 @@ import PostMeta from '../../components/postMeta'
 import dynamic from 'next/dynamic'
 import { useAuth } from '@clerk/clerk-react/dist/hooks/useAuth'
 import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
-import Calculation from '../../components/slugView/calculation'
+// import Calculation from '../../components/slugView/calculation'
 import { clerkClient } from '@clerk/nextjs/server'
-import { clerkConvertJSON, getTotalStrength, postStatus } from '../../lib/helper'
-
+import {
+  clerkConvertJSON,
+  getTotalStrength,
+  postStatus,
+} from '../../lib/helper'
+import MechanismViewer from '../../components/slugView/MechanismViewer'
+import UserViewer from '../../components/slugView/UserViewer'
+import ExportPopup from '../../components/exportPopup.jsx'
 export default function Post({ post, morePosts, author }) {
   const PostBody = dynamic(
     () => import('../../components/slugView/post-body'),
@@ -48,13 +54,19 @@ export default function Post({ post, morePosts, author }) {
   const [isSubmitting, setSubmitting] = useState(false)
   const { isSignedIn } = useAuth()
   const { user } = useUser()
-  // console.log("🚀 ~ file: [slug].tsx:51 ~ Post ~ user", user)
+  let [isExportOpen, setExportIsOpen] = useState(false)
 
+  // function closeExportModal() {
+  //   setExportIsOpen(false)
+  // }
+
+  // function openExportModal() {
+  //   setExportIsOpen(true)
+  // }
   var userIsAuthor = false
   if (user?.id === post?.authorClerkId) {
     userIsAuthor = true
   }
-  // console.log("🚀 ~ file: [slug].tsx:54 ~ Post ~ user?.id", user?.id)
 
   const contributor = user?.publicMetadata?.contributor || false
 
@@ -63,6 +75,13 @@ export default function Post({ post, morePosts, author }) {
   const handleIsOpen = useCallback(
     (event) => {
       setIsOpen(false)
+    },
+    [isOpen]
+  )
+
+  const handleExportIsOpen = useCallback(
+    (event) => {
+      setExportIsOpen(false)
     },
     [isOpen]
   )
@@ -76,6 +95,7 @@ export default function Post({ post, morePosts, author }) {
   }
 
   if (!router.isFallback && !post?.id) {
+  if (!router.isFallback && !post?.id) {
     return <ErrorPage statusCode={404} />
   }
   return (
@@ -87,7 +107,7 @@ export default function Post({ post, morePosts, author }) {
         ) : (
           <>
             <article className="mt-10">
-              <PostMeta title={post.title} content={post.shortDescription} />
+              <PostMeta title={post.title} />
 
               <PostHeader
                 title={post.title}
@@ -104,26 +124,39 @@ export default function Post({ post, morePosts, author }) {
               <button
                 onClick={editPost}
                 disabled={
-                  !(
-                    (
-                      userIsAuthor ||
-                      contributor
-                    )
-                  ) ||
-                  !isSignedIn ||
-                  isSubmitting
+                  !(userIsAuthor || contributor) || !isSignedIn || isSubmitting
                 }
                 className="mb-3 w-28 rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
               >
                 Edit
               </button>
+              {/* <button
+                type="button"
+                onClick={openExportModal}
+                disabled={
+                  !(userIsAuthor || contributor) || !isSignedIn || isSubmitting
+                }
+                className="mb-3 flex w-28 justify-center rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
+              >
+                Export
+              </button> */}
+
+              {/* <ExportPopup
+                isOpen={isExportOpen}
+                handleIsOpen={handleExportIsOpen}
+                component={<TimeLine items={post.protocolTimeLine} />}
+              /> */}
               <FeedbackPopup isOpen={isOpen} handleIsOpen={handleIsOpen} />
-              <div className={`top-3 w-full ${isOpen ? '' : 'sticky z-30'}`}>
-                <div className="overflow-x-auto border-b-2 border-black bg-white md:px-10">
-                  <ul className="flex">
+              <div
+                className={`top-3 w-full ${
+                  isOpen || isExportOpen ? '' : ''
+                }`}
+              >
+                <div className="overflow-x-auto border-b-2 border-black bg-white">
+                  <ul className="flex justify-evenly gap-3 py-2 text-xs">
                     <li>
                       <Link
-                        className="flex items-center p-4 text-lg font-bold text-gray-900 no-underline hover:rounded hover:bg-gray-700 hover:text-white"
+                        className="flex items-center font-bold text-gray-900 no-underline hover:rounded hover:bg-gray-700 hover:text-white"
                         activeClass="active"
                         to="tokenStrength"
                         spy={true}
@@ -134,7 +167,7 @@ export default function Post({ post, morePosts, author }) {
                     </li>
                     <li>
                       <Link
-                        className="flex items-center p-4 text-lg font-bold text-gray-900 no-underline hover:rounded hover:bg-gray-700 hover:text-white"
+                        className="flex items-center font-bold text-gray-900 no-underline hover:rounded hover:bg-gray-700 hover:text-white"
                         to="stats"
                         spy={true}
                         smooth={true}
@@ -144,7 +177,7 @@ export default function Post({ post, morePosts, author }) {
                     </li>
                     <li>
                       <Link
-                        className="flex items-center p-4 text-lg font-bold text-gray-900 no-underline hover:rounded hover:bg-gray-700 hover:text-white"
+                        className="flex items-center font-bold text-gray-900 no-underline hover:rounded hover:bg-gray-700 hover:text-white"
                         to="ourTake"
                         spy={true}
                         smooth={true}
@@ -154,7 +187,7 @@ export default function Post({ post, morePosts, author }) {
                     </li>
                     <li>
                       <Link
-                        className="flex items-center p-4 text-lg font-bold text-gray-900 no-underline hover:rounded hover:bg-gray-700 hover:text-white"
+                        className="flex items-center font-bold text-gray-900 no-underline hover:rounded hover:bg-gray-700 hover:text-white"
                         to="timeline"
                         spy={true}
                         smooth={true}
@@ -164,7 +197,7 @@ export default function Post({ post, morePosts, author }) {
                     </li>
                     <li>
                       <Link
-                        className="flex items-center p-4 text-lg font-bold text-gray-900 no-underline hover:rounded hover:bg-gray-700 hover:text-white"
+                        className="flex items-center font-bold text-gray-900 no-underline hover:rounded hover:bg-gray-700 hover:text-white"
                         to="deepDive"
                         spy={true}
                         smooth={true}
@@ -172,19 +205,19 @@ export default function Post({ post, morePosts, author }) {
                         Deep Dive
                       </Link>
                     </li>
-                    <li>
+                    {/* <li>
                       <Link
-                        className="flex items-center p-4 text-lg font-bold text-gray-900 no-underline hover:rounded hover:bg-gray-700 hover:text-white"
+                        className="flex items-center font-bold text-gray-900 no-underline hover:rounded hover:bg-gray-700 hover:text-white"
                         to="calculation"
                         spy={true}
                         smooth={true}
                       >
                         Allocation and Emissions
                       </Link>
-                    </li>
+                    </li> */}
                     <li>
                       <Link
-                        className="flex items-center p-4 text-lg font-bold text-gray-900 no-underline hover:rounded hover:bg-gray-700 hover:text-white"
+                        className="flex items-center font-bold text-gray-900 no-underline hover:rounded hover:bg-gray-700 hover:text-white"
                         to="diagram"
                         spy={true}
                         smooth={true}
@@ -194,7 +227,27 @@ export default function Post({ post, morePosts, author }) {
                     </li>
                     <li>
                       <Link
-                        className="flex items-center p-4 text-lg font-bold text-gray-900 no-underline hover:rounded hover:bg-gray-700 hover:text-white"
+                        className="flex items-center font-bold text-gray-900 no-underline hover:rounded hover:bg-gray-700 hover:text-white"
+                        to="supplyDemand"
+                        spy={true}
+                        smooth={true}
+                      >
+                        Supply and Demand
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        className="flex items-center font-bold text-gray-900 no-underline hover:rounded hover:bg-gray-700 hover:text-white"
+                        to="users"
+                        spy={true}
+                        smooth={true}
+                      >
+                        Ecosystem Users
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        className="flex items-center font-bold text-gray-900 no-underline hover:rounded hover:bg-gray-700 hover:text-white"
                         to="Resources"
                         spy={true}
                         smooth={true}
@@ -224,10 +277,14 @@ export default function Post({ post, morePosts, author }) {
                   <TimeLine items={post.protocolTimeLine} />
                   <div id="deepDive"></div>
                   <PostBody content={post.breakdown} />
-                  <div id="calculation"></div>
-                  <Calculation calculation={post.calculation} />
+                  {/* <div id="calculation"></div> */}
+                  {/* <Calculation calculation={post.Calculation} /> */}
                   <div id="diagram"></div>
                   <Diagram diagram={post.diagramUrl} />
+                  <div id="supplyDemand"></div>
+                  <MechanismViewer post={post} />
+                  <div id="users"></div>
+                  <UserViewer users={post.PostUser} />
                   <div id="Resources"></div>
                   <Resources resources={post.ProtocolResources} />
                   <div className="mt-10">
@@ -239,7 +296,13 @@ export default function Post({ post, morePosts, author }) {
                 Author.
               </h1>
 
-              {!post.isOfficial ? <AuthorCard author={author} /> : <ProtocolCard author={author} post={post} >hi</ProtocolCard>}
+              {!post.isOfficial ? (
+                <AuthorCard author={author} />
+              ) : (
+                <ProtocolCard author={author} post={post}>
+                  hi
+                </ProtocolCard>
+              )}
             </article>
             <SectionSeparator />
           </>
@@ -250,6 +313,7 @@ export default function Post({ post, morePosts, author }) {
 }
 
 export async function getStaticProps({ params }) {
+  // console.log("🚀 ~ file: [id].tsx:251 ~ getStaticProps ~ params:", params)
   const txCalls = []
   const post = await prisma.post.findUnique({
     where: {
@@ -264,6 +328,13 @@ export async function getStaticProps({ params }) {
           date: 'asc',
         },
       },
+      Mechanism: {
+        include: {
+          CalculationTimeSeries: {},
+          PostUser: {},
+        },
+      },
+      PostUser: {},
       author: {},
       Calculation: {
         include: {
@@ -272,6 +343,7 @@ export async function getStaticProps({ params }) {
       },
     },
   })
+  // console.log("🚀 ~ file: [id].tsx:274 ~ getStaticProps ~ post:", post)
 
   txCalls.push(
     prisma.post.count({
@@ -286,22 +358,22 @@ export async function getStaticProps({ params }) {
     prisma.$queryRaw`select count(A) as count,A as cat,p.authorClerkId from _CategoryToPost join Post as p on p.id = B WHERE p.authorClerkId = ${post?.authorClerkId} AND p.status = ${postStatus.published} GROUP BY A, p.authorClerkId`
   )
 
-  txCalls.push(
-    prisma.userStrengthRating.aggregate({
-      _avg: {
-        tokenUtilityStrength: true,
-        businessModelStrength: true,
-        valueCreationStrength: true,
-        valueCaptureStrength: true,
-        demandDriversStrength: true,
-      },
-      where: {
-        postId: post.id,
-      }
-    })
-  )
+  // txCalls.push(
+  //   prisma.userStrengthRating.aggregate({
+  //     _avg: {
+  //       tokenUtilityStrength: true,
+  //       businessModelStrength: true,
+  //       valueCreationStrength: true,
+  //       valueCaptureStrength: true,
+  //       demandDriversStrength: true,
+  //     },
+  //     where: {
+  //       postId: post.id,
+  //     },
+  //   })
+  // )
 
-  const [postCount, catByAuthor, strengthRatingAggregate] = await prisma.$transaction(txCalls)
+  const [postCount, postCategoryCount] = await prisma.$transaction(txCalls)
 
 
   let clerkUser = {}
@@ -315,13 +387,15 @@ export async function getStaticProps({ params }) {
 
 
   clerkUser = clerkConvertJSON(clerkUser || null)
+
   clerkUser.articleCount = postCount || 0
-  
-  clerkUser.cat = catByAuthor || null
+
+  clerkUser.cat = postCategoryCount || null
 
   return {
     props: {
-      post: Object.assign(post, strengthRatingAggregate) || null,
+      // post: Object.assign(post, response[2]) || null,
+      post: post || null,
       author: clerkUser || null,
     },
     revalidate: 1,
@@ -331,10 +405,10 @@ export async function getStaticProps({ params }) {
 export async function getStaticPaths() {
   const allPosts = await prisma.post.findMany({
     select: {
-      id: true,      
+      id: true,
     },
   })
-  console.log("🚀 ~ file: [slug].tsx:333 ~ getStaticPaths ~ allPosts:", allPosts)
+  // console.log("🚀 ~ file: [id].tsx:334 ~ getStaticPaths ~ allPosts:", allPosts)
 
   return {
     paths:

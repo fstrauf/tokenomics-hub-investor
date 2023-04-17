@@ -1,196 +1,67 @@
-import { Field, FieldArray } from 'formik'
-import React from 'react'
-import * as duration from 'dayjs/plugin/duration'
-import * as dayjs from 'dayjs'
-import { shortBigNumber } from '../../lib/helper'
+import toast, { Toaster } from 'react-hot-toast'
+import { useAuth } from '@clerk/clerk-react/dist/hooks/useAuth'
+import { useState } from 'react'
 
-export const FormCalculator = ({ values }) => {
-  dayjs.extend(duration)
-  const secondsPerMonth = 2628000
 
-  const monthHeader = (
-    <>
-      <p className="text-xs font-bold uppercase text-gray-700">Category</p>
-      <p className="w-16 text-xs font-bold uppercase text-gray-700">
-        Lockup Period
-      </p>
-      <p className="text-xs font-bold uppercase text-gray-700">
-        Unlocking Period
-      </p>
-      <p className="text-xs font-bold uppercase text-gray-700">
-        Percentage Allocation (
-        {values?.calculationRows?.reduce(
-          (a, v) => (a = a + Number(v?.percentageAllocation)),
-          0
-        )}
-        %)
-      </p>{' '}
-      <p className="text-xs font-bold uppercase text-gray-700">
-        Token Allocation
-      </p>
-      <p className="text-xs font-bold uppercase text-gray-700">Color</p>
-      <p></p>
-    </>
-  )
+export const FormCalculator = (props) => {
+  const { preloadInitialValues } = props
+  const { isSignedIn } = useAuth()
+  const [postId, setPostId] = useState(preloadInitialValues.id)
+  
+  const submitData = async (values, { setSubmitting }) => {
+    const body = { values }
+    if(!isSignedIn){
+      toast.error('Please sign in to save calculations', { position: 'bottom-right' })
+      return
+    }
 
-  const monthRow = (index, input, arrayHelpers) => (
-    <>
-      <Field
-        name={`calculationRows.${index}.category`}
-        placeholder="category"
-        className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
-        type="text"
-      />
-      <Field
-        name={`calculationRows.${index}.lockupPeriod`}
-        placeholder="lockupPeriod"
-        className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
-        type="number"
-        onWheel={(event) => event.currentTarget.blur()}
-      />
+    if (values?.id === '') {
+      try {
+        const response = await fetch('/api/post/newCalculation', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body),
+        })
 
-      <Field
-        name={`calculationRows.${index}.unlockPeriod`}
-        placeholder="unlockPeriod"
-        className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
-        type="number"
-        onWheel={(event) => event.currentTarget.blur()}
-      />
+        if (!response.ok) {
+          const error = await response.text()
+          toast.error(JSON.parse(error).error, { position: 'bottom-right' })
+          throw new Error(error)
+        } else {
+          const id = await response.text()
+          toast.success('Calculation saved ', { position: 'bottom-right' })
+          setPostId(JSON.parse(id).id)
+        }
 
-      <Field
-        name={`calculationRows.${index}.percentageAllocation`}
-        placeholder="percentageAllocation"
-        className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
-        type="number"
-        onWheel={(event) => event.currentTarget.blur()}
-      />
-      <div className="text-center text-sm">
-        {new Intl.NumberFormat('en').format(
-          Number((input.percentageAllocation / 100) * values?.totalSupply)
-        )}
-      </div>
-      <Field
-        name={`calculationRows.${index}.color`}
-        placeholder="color"
-        className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
-        type="color"
-      />
-      <button
-        type="button"
-        className="mr-2 inline-flex items-center rounded-full bg-red-500 p-2.5 text-center text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-800"
-        onClick={() => arrayHelpers.remove(index)}
-      >
-        <svg fill="white" viewBox="0 0 16 16" height="1em" width="1em">
-          <path d="M4 8a.5.5 0 01.5-.5h7a.5.5 0 010 1h-7A.5.5 0 014 8z" />
-        </svg>
-      </button>
-    </>
-  )
+        setSubmitting(false)
+        console.log('calculation created')
+      } catch (error) {
+        console.error(error)
+      }
+    } else {
+      try {
+        const response = await fetch('/api/post/updateCalculation', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body),
+        })
 
-  const epochHeader = (
-    <>
-      <p className="text-xs font-bold uppercase text-gray-700">Category</p>
-      <p className="text-xs font-bold uppercase text-gray-700">
-        Epoch Duration in Seconds
-      </p>
-      <p className="text-xs font-bold uppercase text-gray-700">
-        Initial Emission per second
-      </p>
-      <p className="text-xs font-bold uppercase text-gray-700">
-        Emission Reduction per Epoch (in %)
-      </p>
-      <p className="text-xs font-bold uppercase text-gray-700">
-        Percentage Allocation (
-        {values?.calculationRows?.reduce(
-          (a, v) => (a = a + Number(v?.percentageAllocation)),
-          0
-        )}
-        %)
-      </p>
-      <p className="text-xs font-bold uppercase text-gray-700">
-        Token Allocation
-      </p>
-      <p className="text-xs font-bold uppercase text-gray-700">Color</p>
-      <p></p>
-    </>
-  )
+        if (!response.ok) {
+          const error = await response.text()
+          toast.error(JSON.parse(error).error, { position: 'bottom-right' })
+          throw new Error(error)
+        } else {
+          toast.success('Calculation saved ', { position: 'bottom-right' })
+        }
 
-  const epochRow = (index, input, arrayHelpers) => (
-    <>
-      <Field
-        name={`calculationRows.${index}.category`}
-        placeholder="category"
-        className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
-        type="text"
-      />
-      <div className="flex">
-        <Field
-          name={`calculationRows.${index}.epochDurationInSeconds`}
-          placeholder="First Epoch Duration in Seconds"
-          className="block w-28 rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
-          type="number"
-          min="0"
-          onWheel={(event) => event.currentTarget.blur()}
-        />
-        {/* ({dayjs.duration(input.epochDurationInSeconds, 'seconds').humanize()}) */}
-        <span className="ml-1 self-center text-xs">
-          (~{' '}
-          {Math.floor(
-            dayjs.duration(input.epochDurationInSeconds, 'seconds').asMonths()
-          )}{' '}
-          months)
-        </span>
-      </div>
-      <div className="flex">
-        <Field
-          name={`calculationRows.${index}.initialEmissionPerSecond`}
-          placeholder="Initial Emission per Seconds"
-          className="block w-24 rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
-          type="number"
-          onWheel={(event) => event.currentTarget.blur()}
-        />
-        <span className="ml-1 self-center text-xs">
-          (~ {shortBigNumber(input.initialEmissionPerSecond * secondsPerMonth)}{' '}
-          per month)
-        </span>
-      </div>
-      <Field
-        name={`calculationRows.${index}.emissionReductionPerEpoch`}
-        placeholder="Emission Reduction per Epoch"
-        className="block w-24 rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
-        type="number"
-        onWheel={(event) => event.currentTarget.blur()}
-      />
-
-      <Field
-        name={`calculationRows.${index}.percentageAllocation`}
-        placeholder="percentageAllocation"
-        className="block w-24 rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
-        type="number"
-        onWheel={(event) => event.currentTarget.blur()}
-      />
-      <div className="text-center text-sm">
-        {new Intl.NumberFormat('en').format(
-          Number((input.percentageAllocation / 100) * values?.totalSupply)
-        )}
-      </div>
-      <Field
-        name={`calculationRows.${index}.color`}
-        placeholder="color"
-        className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
-        type="color"
-      />
-      <button
-        type="button"
-        className="mr-2 inline-flex items-center rounded-full bg-red-500 p-2.5 text-center text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-800"
-        onClick={() => arrayHelpers.remove(index)}
-      >
-        <svg fill="white" viewBox="0 0 16 16" height="1em" width="1em">
-          <path d="M4 8a.5.5 0 01.5-.5h7a.5.5 0 010 1h-7A.5.5 0 014 8z" />
-        </svg>
-      </button>
-    </>
-  )
+        // await Router.push('/');
+        setSubmitting(false)
+        console.log('calculation updated')
+      } catch (error) {
+        console.error(error)
+      }
+    }
+  }
 
   return (
     <div className="relative">

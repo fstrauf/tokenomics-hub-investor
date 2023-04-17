@@ -1,8 +1,8 @@
 // import { useState } from 'react'
 // import { Dialog, Transition } from '@headlessui/react'
 // import dynamic from 'next/dynamic'
-import toast, { Toaster } from 'react-hot-toast'
-import { Fragment, useState } from 'react'
+// import toast, { Toaster } from 'react-hot-toast'
+import { useState } from 'react'
 import FormRating from './formRating'
 import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
 import Drawer from './Drawer'
@@ -25,50 +25,9 @@ export function RatingDialog({ post }) {
 
   const { user } = useUser()
 
-  function closeModal() {
-    setIsOpen(false)
-  }
-
-  async function openDrawer() {
-    const postId = post.id
-    const authorClerkId = user.id
-    // console.log("🚀 ~ file: ratingDialog.tsx:35 ~ openDrawer ~ authorClerkId:", authorClerkId)
-
-    setIsLoading(true)
-    //get latest review from db
-    const body = { postId, authorClerkId }
-
-    const response = await fetch('/api/get/getUserRating', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body),
-    })
-    // console.log("🚀 ~ file: ratingDialog.tsx:45 ~ openDrawer ~ response:", response)
-
-    if (!response.ok) {
-      const error = await response.text()
-      toast.error(JSON.parse(error).error, { position: 'bottom-right' })
-      throw new Error(error)
-    } else {
-      const userRating = await response.json()
-      console.log("🚀 ~ file: ratingDialog.tsx:49 ~ openModal ~ userRating", userRating)
-      setUserReview(userRating)
-
-      // toast.success('Changes auto-saved ', { position: 'bottom-right' })
-    }
-    setIsLoading(false)
-    setIsOpen(true)
-  }
 
   return (
     <>
-      {/* <button
-        onClick={openModal}
-        disabled={isLoading}
-        className="h-10 w-28 rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
-      >
-        Add Rating
-      </button> */}
       <button
         disabled={isLoading}
         className="h-10 w-28 rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"

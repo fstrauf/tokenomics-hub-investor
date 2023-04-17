@@ -111,7 +111,7 @@ export default async function handle(req, res) {
             }
           }),
         },
-        calculationId: inputFields.calculation,
+        calculationId: inputFields?.calculation,
         ProtocolResources: {
           createMany: {
             data: resource,

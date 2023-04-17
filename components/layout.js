@@ -1,18 +1,16 @@
 import Footer from '../components/footer'
 import Meta from '../components/meta'
-// import dynamic from 'next/dynamic'
-import Header2 from './header2'
+import Header from './header2'
 
-export default function Layout({ children }) {
-
-  // const Login = dynamic(() => import('../components/login'), { loading: () => <p>Loading</p> })
+export default function Layout({ children, mode }) {
 
   return (
     <>
       <Meta />
-      {/* <Login message="You are not signed in" /> */}
-      <Header2 />
-      <div className="min-h-screen pl-2 pr-2 max-w-md sm:max-w-2xl lg:max-w-screen-xl m-auto">
+
+      <Header mode={mode} />
+
+      <div className="m-auto min-h-screen max-w-md pl-2 pr-2 sm:max-w-2xl lg:max-w-screen-2xl">
         <main>{children}</main>
       </div>
       <Footer />

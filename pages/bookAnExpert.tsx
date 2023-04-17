@@ -1,22 +1,29 @@
 import Layout from '../components/layout'
-import React from 'react'
+import React, { useState } from 'react'
 import toast, { Toaster } from 'react-hot-toast'
 import { Field, Form, Formik } from 'formik'
 // import { DISCORD_WEBHOOK } from '../lib/constants'
 
 export default function BookAnExpert(props) {
-  const submitData = async (values, { setSubmitting }) => {
-
+  const [isSubmittingForm, setIsSubmittingForm] = useState(false)
+  const submitData = async (values, { resetForm }) => {
+    setIsSubmittingForm(true)
     const body = { values }
 
-    fetch('/api/expertContact', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body),
-    })
-     
-    setSubmitting(false)
-    toast.success('Message sent ', { position: 'bottom-right' })
+    try {
+      await fetch('/api/expertContact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      })
+      toast.success('Message sent', { position: 'bottom-right' })
+      resetForm() // clear the form's input fields after successful submission
+    } catch (error) {
+      console.error(error)
+      toast.error('An error occurred', { position: 'bottom-right' })
+    } finally {
+      setIsSubmittingForm(false)
+    }
   }
 
   return (
@@ -26,14 +33,15 @@ export default function BookAnExpert(props) {
         <Toaster />
         <div className="m-auto flex flex-col justify-center">
           <h1 className="mb-10 mt-10 text-center text-3xl font-bold">
-            Tell us what your looking for
+            Need help designing your token? 
+            <br></br>Want a review of your design?
           </h1>
-          <p className="mb-5 text-center">and we'll get back to you asap</p>
+          <p className="mb-5 text-center">our team of experts is happy to help</p>
           <Formik
             initialValues={{
               name: '',
               email: '',
-              timeframe: new Date().toLocaleDateString('en-CA'),
+              timeline: new Date().toLocaleDateString('en-CA'),
               message: '',
             }}
             onSubmit={submitData}
@@ -55,7 +63,7 @@ export default function BookAnExpert(props) {
                 />
                 <Field
                   type="date"
-                  name="timeframe"
+                  name="timeline"
                   className="mb-3 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
                 />
                 <Field
@@ -67,7 +75,7 @@ export default function BookAnExpert(props) {
                 />
                 <button
                   type="submit"
-                  disabled={isSubmitting}
+                  disabled={isSubmittingForm}
                   className="mt-5 mb-5 rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
                 >
                   Submit

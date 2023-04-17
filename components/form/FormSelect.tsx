@@ -10,8 +10,7 @@ const FormSelect = ({
   placeholder = 'Select or create'
 }) => {
   function onChange(option) {
-    // console.log(option)
-    // console.log(field.name)
+
     form.setFieldValue(
       field.name,
       option ? (option).map((item) => item) : [],
@@ -51,6 +50,8 @@ const FormSelect = ({
         value={field.value}
         onChange={onChange}
         options={options}
+        // getOptionValue={option => option.id}
+        // getOptionLabel={option => option.name}
         isMulti={true}
         placeholder={placeholder}
       />

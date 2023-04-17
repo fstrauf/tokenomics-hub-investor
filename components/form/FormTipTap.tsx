@@ -6,7 +6,6 @@ export const FormTipTap = ({
   form, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
   ...props
 }) => {
-  // console.log(props)
   
   return (
     <div>

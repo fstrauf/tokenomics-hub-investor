@@ -9,6 +9,7 @@ import { useAuth } from '@clerk/clerk-react/dist/hooks/useAuth'
 import { useRouter } from 'next/router'
 
 export default function Calculator(props) {
+  console.log("🚀 ~ file: calculator.tsx:12 ~ Calculator ~ props:", props)
   const { preloadInitialValues } = props
   const { isSignedIn } = useAuth()
 
@@ -20,7 +21,7 @@ export default function Calculator(props) {
   const AllocationChart = dynamic(() => import('./charts/AllocationChart'), {
     ssr: false,
   })
-  const FormCalculator = dynamic(() => import('./form/FormCalculator'), {
+  const FormEmission = dynamic(() => import('./form/FormEmission'), {
     loading: () => <p>Loading</p>,
   })
   const FormAreaData = dynamic(() => import('./form/FormAreaData'), {
@@ -103,6 +104,7 @@ export default function Calculator(props) {
     }
   }
 
+  //can't load content via route 
   const loadContent = async (calculationId) => {
     router.push(`/calculator?id=${calculationId}`)    
   }
@@ -311,7 +313,7 @@ export default function Calculator(props) {
                 </div>
               </div>
               <div className="mb-6">
-                <FormCalculator values={values} />
+                <FormEmission values={values} />
               </div>
               <FormAreaData name="areaData" />
               <div className="w-full">
@@ -321,7 +323,7 @@ export default function Calculator(props) {
                       <VestingChart
                         width={width}
                         height={height}
-                        data={values.areaData}
+                        data={values?.areaData?.chartData}
                         fields={values.calculationRows}
                         totalSupply={values.totalSupply}
                       />
