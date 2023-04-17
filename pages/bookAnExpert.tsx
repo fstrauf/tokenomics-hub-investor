@@ -36,7 +36,7 @@ export default function BookAnExpert(props) {
             Need help designing your token? 
             <br></br>Want a review of your design?
           </h1>
-          <p className="mb-5 text-center">our team of experts is happyn to help</p>
+          <p className="mb-5 text-center">our team of experts is happy to help</p>
           <Formik
             initialValues={{
               name: '',
