@@ -9,6 +9,7 @@ export default async function handle(req, res) {
             postId: postId,
         },
     }) || {
+        id: '',
         userReviewUtility: '',
         userReviewDemandDriver: '',
         userReviewValueCreation: '',

@@ -16,6 +16,7 @@ export default function Drafts({ posts, context }) {
   const { user } = useUser()
   const [isSubmitting, setSubmitting] = useState(false)
   const contributor = user?.publicMetadata?.contributor || false
+  const admin = user?.publicMetadata?.admin || false
 
   const publishPost = async (post) => {
     setSubmitting(true)
@@ -284,7 +285,7 @@ export default function Drafts({ posts, context }) {
                                       } group flex w-full items-center rounded-md px-2 py-2 text-sm disabled:opacity-70`}
                                       disabled={
                                         isSubmitting ||
-                                        !contributor ||
+                                        !admin ||
                                         post.status !==
                                           postStatus.reviewComplete
                                       }

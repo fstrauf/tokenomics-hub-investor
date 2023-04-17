@@ -12,7 +12,9 @@ import {
 
 type Protocol = {
   title: string
-  tokenStrength: any
+  // catTitle: object
+  // tokenStrength: object
+  // tokenStrength: any
   coverImage: object
   mainImageUrl: string
   id: string
@@ -101,7 +103,7 @@ const Table: React.FC<{ prop: Props }> = ({ prop }) => {
                 ))}
               </thead>
               <tbody className="divide-y divide-gray-200 bg-white">
-                {table.getRowModel().rows.map((row) => (
+                {table?.getRowModel().rows.map((row) => (
                   <tr key={row.id} className="hover:bg-gray-100">
                     {/* row.original.slug */}
                     {row.getVisibleCells().map((cell) => (
@@ -123,6 +125,7 @@ const Table: React.FC<{ prop: Props }> = ({ prop }) => {
   )
 }
 
+
 export default Table
 
 export function CategoryPill({ value }) {
@@ -136,10 +139,10 @@ export function CategoryPill({ value }) {
 function CategoryPills({ value }) {
   return (
     <>
-    <div className="mr-1 mb-1 flex flex-wrap">
-      {value.map((v) => (      
-          <CategoryPill key={v.value} value={v.label} />        
-      ))}
+      <div className="mr-1 mb-1 flex flex-wrap">
+        {value.map((v) => (
+          <CategoryPill key={v.value} value={v.label} />
+        ))}
       </div>
     </>
   )

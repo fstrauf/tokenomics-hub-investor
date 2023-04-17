@@ -14,7 +14,7 @@
     "singleQuote": true
   },
   "dependencies": {
-    "@clerk/nextjs": "^4.15.0",
+    "@clerk/nextjs": "^4.16.1",
     "@google-cloud/storage": "^6.8.0",
     "@headlessui/react": "^1.7.7",
     "@prisma/client": "^4.7.1",

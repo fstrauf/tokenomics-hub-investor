@@ -95,6 +95,7 @@ export default function Post({ post, morePosts, author }) {
   }
 
   if (!router.isFallback && !post?.id) {
+  if (!router.isFallback && !post?.id) {
     return <ErrorPage statusCode={404} />
   }
   return (
@@ -115,7 +116,7 @@ export default function Post({ post, morePosts, author }) {
                 shortDescription={post.shortDescription}
                 cats={post.categories}
                 tags={post.tags}
-                tokenStrength={getTotalStrength(post?._avg)}
+                tokenStrength={Number(getTotalStrength(post?._avg).toFixed(1))}
                 ticker={post.ticker}
                 imageUrl={post.mainImageUrl}
                 isOfficial={post.isOfficial}
@@ -374,7 +375,7 @@ export async function getStaticProps({ params }) {
 
   const [postCount, postCategoryCount] = await prisma.$transaction(txCalls)
 
-  // console.log("🚀 ~ file: [slug].tsx:311 ~ getStaticProps ~ response[0]", response[2])
+
   let clerkUser = {}
   try {
     clerkUser = post?.authorClerkId
@@ -406,9 +407,6 @@ export async function getStaticPaths() {
     select: {
       id: true,
     },
-    // where: {
-    //   status: postStatus.published
-    // }
   })
   // console.log("🚀 ~ file: [id].tsx:334 ~ getStaticPaths ~ allPosts:", allPosts)
 
@@ -420,6 +418,5 @@ export async function getStaticPaths() {
         },
       })) || [],
     fallback: true,
-    // revalidate: 10, // In seconds
   }
 }
