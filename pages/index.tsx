@@ -96,10 +96,10 @@ const Index: React.FC<Props> = (props) => {
         <Container>
           <div className="mt-10 flex items-center justify-center rounded-lg bg-gradient-to-r from-dao-green to-dao-red flex-col p-4 gap-8">
             <div className="flex w-3/4 flex-col items-center justify-center rounded-lg text-white">
-              <h1 className="mb-5 text-3xl font-bold">
+              <h1 className="mb-5 text-2xl font-bold">
                 Explore, compare and evaluate tokenomics of crypto projects.
               </h1>
-              <p className="mb-5 text-lg text-center">
+              <p className="mb-5 text-base text-center">
                 Tokenomics Hub is a community driven platform showcasing the
                 need-to-know tokenomic information per project. No matter if
                 you’re an avid user, a fellow degen or a protocol owner/team
@@ -115,10 +115,10 @@ const Index: React.FC<Props> = (props) => {
               </div>
             </div>
             <div className="flex w-3/4 flex-col items-center justify-center rounded-lg text-white">
-              <h1 className="mb-5 text-3xl font-bold">
+              <h1 className="mb-5 text-2xl font-bold">
                 Want to design a token?
               </h1>
-              <p className="mb-5 text-lg text-center">
+              <p className="mb-5 text-base text-center">
               Tokenomics Hub offers entrepreneurs an industry leading framework with a built in suite of tools to help you create sustainable tokenomics (in beta)
               </p>
               <div className="flex justify-center">
