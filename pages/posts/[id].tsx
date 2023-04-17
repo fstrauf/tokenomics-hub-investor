@@ -90,7 +90,7 @@ export default function Post({ post, morePosts, author }) {
 
   function editPost() {
     setSubmitting(true)
-    Router.push('/editPost/[id]', `/editPost/${post.id}`)
+    Router.push('/editDesign/[id]', `/editDesign/${post.id}`)
     setSubmitting(false)
   }
 
