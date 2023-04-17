@@ -28,9 +28,12 @@ export default function TDFMain({ props }) {
         scroll: false,
       })
     }
-    event("tdsPhaseChange", {
+
+    event(`tdsPhaseChange ${phase}`, {
       category: "UserAction",
       label: phase,
+      debug_mode: true,
+      
     });
     setActivePhase(phase)
   }
