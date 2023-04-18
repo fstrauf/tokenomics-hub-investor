@@ -5,6 +5,7 @@ import ChevronIcon from '../../public/svg/chevron'
 import FormDivider from '../form/FormDivider'
 import useSWR from 'swr'
 import Select from 'react-select'
+import { event } from 'nextjs-google-analytics'
 
 export const fetcher = async (url, param) => {
   const body = { param }
@@ -31,12 +32,16 @@ export default function ExampleSection({
   const [example, setExample] = useState({})
   const [tagFilters, setTagFilters] = useState(presetTags || null)
   const [catFilters, setCatFilters] = useState(presetCategories || null)
-  
+
   const [isSubelementClicked, setIsSubelementClicked] = useState(false)
 
   function handleDetailClicked(c) {
     setExample(c)
     setIsSubelementClicked(true)
+    event(`ExampleSection`, {
+      category: 'UserAction',
+      label: 'ExampleSection',
+    })
   }
 
   let ExampleDetail = ({ onGoBack, example, exampleField }) => {
@@ -65,14 +70,18 @@ export default function ExampleSection({
     ExampleDetail = exampleDetail
   }
 
-  const key =    
+  const key =
     tagFilters && catFilters
-      ? `/api/get/getExamplePostData/?categories=${JSON.stringify(catFilters.map((nv) => nv.value))}&tags=${JSON.stringify(tagFilters.map((nv) => nv.value))}`
+      ? `/api/get/getExamplePostData/?categories=${JSON.stringify(
+          catFilters.map((nv) => nv.value)
+        )}&tags=${JSON.stringify(tagFilters.map((nv) => nv.value))}`
       : null
-  const { data, error, isLoading, isValidating } = useSWR(key, fetcher, { revalidateOnMount: true })
+  const { data, error, isLoading, isValidating } = useSWR(key, fetcher, {
+    revalidateOnMount: true,
+  })
 
   function ExamplesSelector() {
-    if (isLoading) return <div className="skeleton">loading</div>;
+    if (isLoading) return <div className="skeleton">loading</div>
     return (
       <div>
         <div className="m-auto mt-3 flex max-w-5xl lg:w-1/2">
