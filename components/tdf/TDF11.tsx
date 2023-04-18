@@ -19,34 +19,34 @@ export default function TDF11({ props, values, activePhase }) {
 
   const { setFieldValue } = useFormikContext()
 
-  async function generateSuggestions(event) {
-    event.preventDefault()
-    try {
-      const response = await fetch('/api/generate', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ animal: values.title }),
-      })
+  // async function generateSuggestions(event) {
+  //   event.preventDefault()
+  //   try {
+  //     const response = await fetch('/api/generate', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({ animal: values.title }),
+  //     })
 
-      const data = await response.json()
-      if (response.status !== 200) {
-        throw (
-          data.error ||
-          new Error(`Request failed with status ${response.status}`)
-        )
-      }
+  //     const data = await response.json()
+  //     if (response.status !== 200) {
+  //       throw (
+  //         data.error ||
+  //         new Error(`Request failed with status ${response.status}`)
+  //       )
+  //     }
 
-      setFieldValue('shortDescription', data.result)
-      // setResult(data.result);
-      // setAnimalInput("");
-    } catch (error) {
-      // Consider implementing your own error handling logic here
-      console.error(error)
-      alert(error.message)
-    }
-  }
+  //     setFieldValue('shortDescription', data.result)
+  //     // setResult(data.result);
+  //     // setAnimalInput("");
+  //   } catch (error) {
+  //     // Consider implementing your own error handling logic here
+  //     console.error(error)
+  //     alert(error.message)
+  //   }
+  // }
 
   useEffect(() => {
     designElementStatusUpdate(values, designPhase.phaseId, setFieldValue)
@@ -96,7 +96,7 @@ export default function TDF11({ props, values, activePhase }) {
           <p className="mb-2 text-xs font-extralight text-gray-500">
             Give a short summary of the project and the token/tokens.
           </p>
-          <button onClick={generateSuggestions}>Generate</button>
+          {/* <button onClick={generateSuggestions}>Generate</button> */}
         </div>
         <Field
           name="shortDescription"
