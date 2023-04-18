@@ -6,6 +6,7 @@ import { designElementStatusUpdate } from '../../lib/designElementStatusField'
 import { useEffect } from 'react'
 import FormGenerateButton from './FormGenerateButton'
 import FormFormatButton from './FormFormatButton'
+import WalkthroughSection from './WalkthroughSection'
 
 export default function TDFGenericOneField({
   props,
@@ -50,6 +51,7 @@ export default function TDFGenericOneField({
         exampleField={designPhase.postDataElement}
         exampleDetail={undefined}
       />
+      <WalkthroughSection />
     </div>
   )
 }
