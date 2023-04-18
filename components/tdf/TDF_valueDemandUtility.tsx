@@ -71,11 +71,11 @@ export default function TDF_valueDemandUtility({ props, values, activePhase }) {
             How does (or does not) the protocol and/or its token capture/reflect
             the value it creates?
           </p>
-          <div>
+          <div className="flex gap-2">
             <FormFormatButton
               text={values['valueCapture']}
               format={valueCaptureFormat}
-              scope='valueCapture'
+              scope="valueCapture"
               setFieldValue={setFieldValue}
             />
             <FormGenerateButton
@@ -88,7 +88,7 @@ export default function TDF_valueDemandUtility({ props, values, activePhase }) {
         <Field
           name="valueCapture"
           as={FormText}
-          rows={6}
+          rows={8}
           placeholder={valueCaptureFormat}
         />
       </div>
@@ -102,11 +102,11 @@ export default function TDF_valueDemandUtility({ props, values, activePhase }) {
             Describe what the token is used for and the role it plays within the
             protocol
           </p>
-          <div>
+          <div className="flex gap-2">
             <FormFormatButton
               text={values['tokenUtility']}
               format={utilityFormat}
-              scope='tokenUtility'
+              scope="tokenUtility"
               setFieldValue={setFieldValue}
             />
             <FormGenerateButton
@@ -119,7 +119,7 @@ export default function TDF_valueDemandUtility({ props, values, activePhase }) {
         <Field
           name="tokenUtility"
           as={FormText}
-          rows={6}
+          rows={8}
           placeholder={utilityFormat}
         />
       </div>
@@ -132,11 +132,11 @@ export default function TDF_valueDemandUtility({ props, values, activePhase }) {
           <p className="mb-2 text-xs font-extralight text-gray-500">
             What is the demand for the token, why will people buy it (or not)?
           </p>
-          <div>
+          <div className="flex gap-2">
             <FormFormatButton
               text={values['demandDrivers']}
               format={demandDriversFormat}
-              scope='demandDrivers'
+              scope="demandDrivers"
               setFieldValue={setFieldValue}
             />
             <FormGenerateButton
@@ -149,7 +149,7 @@ export default function TDF_valueDemandUtility({ props, values, activePhase }) {
         <Field
           name="demandDrivers"
           as={FormText}
-          rows={6}
+          rows={8}
           placeholder={demandDriversFormat}
         />
       </div>
