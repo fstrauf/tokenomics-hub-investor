@@ -208,8 +208,8 @@ export default function DesignCard({ post, context }) {
                           <button
                             onClick={() =>
                               Router.push(
-                                '/editPost/[id]',
-                                `/editPost/${post.id}`
+                                '/editDesign/[id]',
+                                `/editDesign/${post.id}`
                               )
                             }
                             className={`${
