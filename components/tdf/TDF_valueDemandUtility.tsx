@@ -7,6 +7,7 @@ import ExampleSection from './ExampleSection'
 import BreakdownBox from '../slugView/breakdown-box'
 import { designElementStatusUpdate } from '../../lib/designElementStatusField'
 import FormGenerateButton from './FormGenerateButton'
+import FormFormatButton from './FormFormatButton'
 
 export default function TDF_valueDemandUtility({ props, values, activePhase }) {
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
@@ -37,6 +38,24 @@ export default function TDF_valueDemandUtility({ props, values, activePhase }) {
     )
   }
 
+  const valueCaptureFormat = `Value accrual to token (if any)
+  [briefly explain any mechanism that allow token to map the value created]
+  
+  Value accrual to protocol (if any)
+  [briefly explain any ways in which value is directed back to the protool itself, normally to the treasury]`
+  const utilityFormat = `$Token 1
+  - Utility Name
+  [brief explanation of the utility] 
+  
+  $Token 2
+  - Utility Name
+  [brief explanation of the utility] `
+  const demandDriversFormat = `Demand Name 1
+  [explain who is buying/holding this token and why]
+  
+  Demand Name 2
+  [explain who is buying/holding this token and why]`
+
   return (
     <div className="flex flex-col rounded-lg border-2 p-2">
       <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 ">
@@ -52,17 +71,25 @@ export default function TDF_valueDemandUtility({ props, values, activePhase }) {
             How does (or does not) the protocol and/or its token capture/reflect
             the value it creates?
           </p>
-          <FormGenerateButton title={values.title} scope='valueCapture' setFieldValue={setFieldValue} />
+          <div>
+            <FormFormatButton
+              text={values['valueCapture']}
+              format={valueCaptureFormat}
+              scope='valueCapture'
+              setFieldValue={setFieldValue}
+            />
+            <FormGenerateButton
+              title={values.title}
+              scope="valueCapture"
+              setFieldValue={setFieldValue}
+            />
+          </div>
         </div>
         <Field
           name="valueCapture"
           as={FormText}
           rows={6}
-          placeholder={`Value accrual to token (if any)
-[briefly explain any mechanism that allow token to map the value created]
-
-Value accrual to protocol (if any)
-[briefly explain any ways in which value is directed back to the protool itself, normally to the treasury]`}
+          placeholder={valueCaptureFormat}
         />
       </div>
 
@@ -75,19 +102,25 @@ Value accrual to protocol (if any)
             Describe what the token is used for and the role it plays within the
             protocol
           </p>
-          <FormGenerateButton title={values.title} scope='tokenUtility' setFieldValue={setFieldValue} />
+          <div>
+            <FormFormatButton
+              text={values['tokenUtility']}
+              format={utilityFormat}
+              scope='tokenUtility'
+              setFieldValue={setFieldValue}
+            />
+            <FormGenerateButton
+              title={values.title}
+              scope="tokenUtility"
+              setFieldValue={setFieldValue}
+            />
+          </div>
         </div>
         <Field
           name="tokenUtility"
           as={FormText}
           rows={6}
-          placeholder={`$Token 1
-- Utility Name
-[brief explanation of the utility] 
-
-$Token 2
-- Utility Name
-[brief explanation of the utility] `}
+          placeholder={utilityFormat}
         />
       </div>
 
@@ -99,17 +132,25 @@ $Token 2
           <p className="mb-2 text-xs font-extralight text-gray-500">
             What is the demand for the token, why will people buy it (or not)?
           </p>
-          <FormGenerateButton title={values.title} scope='demandDrivers' setFieldValue={setFieldValue} />
+          <div>
+            <FormFormatButton
+              text={values['demandDrivers']}
+              format={demandDriversFormat}
+              scope='demandDrivers'
+              setFieldValue={setFieldValue}
+            />
+            <FormGenerateButton
+              title={values.title}
+              scope="demandDrivers"
+              setFieldValue={setFieldValue}
+            />
+          </div>
         </div>
         <Field
           name="demandDrivers"
           as={FormText}
           rows={6}
-          placeholder={`Demand Name 1
-[explain who is buying/holding this token and why]
-
-Demand Name 2
-[explain who is buying/holding this token and why]`}
+          placeholder={demandDriversFormat}
         />
       </div>
       <ResourceSection content={designPhase.Resources} />

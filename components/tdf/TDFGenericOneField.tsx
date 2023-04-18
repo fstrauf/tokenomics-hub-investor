@@ -1,11 +1,11 @@
 import { Field, useFormikContext } from 'formik'
-// import BreakdownBox from '../slugView/breakdown-box'
 import ResourceSection from './ResourceSection'
 import { getActiveDesignPhase } from '../../lib/helper'
 import ExampleSection from './ExampleSection'
 import { designElementStatusUpdate } from '../../lib/designElementStatusField'
 import { useEffect } from 'react'
 import FormGenerateButton from './FormGenerateButton'
+import FormFormatButton from './FormFormatButton'
 
 export default function TDFGenericOneField({
   props,
@@ -20,37 +20,7 @@ export default function TDFGenericOneField({
   useEffect(() => {
     designElementStatusUpdate(values, designPhase.phaseId, setFieldValue)
   }, [])
-
-
-
-  async function formatText(event) {
-    event.preventDefault()
-    try {
-      const response = await fetch('/api/gptFormat', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          text: values[designPhase.postDataElement],
-          format: format,
-        }),
-      })
-
-      const data = await response.json()
-      if (response.status !== 200) {
-        throw (
-          data.error ||
-          new Error(`Request failed with status ${response.status}`)
-        )
-      }
-
-      setFieldValue(designPhase.postDataElement, data.result)
-    } catch (error) {
-      console.error(error)
-      alert(error.message)
-    }
-  }
+  
   return (
     <div className="flex flex-col">
       <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 ">
@@ -65,12 +35,7 @@ export default function TDFGenericOneField({
       />
       <div className='flex gap-2'>
         {format ? (
-          <button
-            className="w-14 rounded-md bg-dao-red px-1 py-1 text-xs font-medium text-white"
-            onClick={formatText}
-          >
-            Format
-          </button>
+          <FormFormatButton text={values[designPhase.postDataElement]} format={format} scope={designPhase.postDataElement} setFieldValue={setFieldValue}/>
         ) : (
           <></>
         )}
