@@ -6,6 +6,7 @@ import { getActiveDesignPhase } from '../../lib/helper'
 import ExampleSection from './ExampleSection'
 import BreakdownBox from '../slugView/breakdown-box'
 import { designElementStatusUpdate } from '../../lib/designElementStatusField'
+import FormGenerateButton from './FormGenerateButton'
 
 export default function TDF_valueDemandUtility({ props, values, activePhase }) {
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
@@ -51,6 +52,7 @@ export default function TDF_valueDemandUtility({ props, values, activePhase }) {
             How does (or does not) the protocol and/or its token capture/reflect
             the value it creates?
           </p>
+          <FormGenerateButton title={values.title} scope='valueCapture' setFieldValue={setFieldValue} />
         </div>
         <Field
           name="valueCapture"
@@ -73,6 +75,7 @@ Value accrual to protocol (if any)
             Describe what the token is used for and the role it plays within the
             protocol
           </p>
+          <FormGenerateButton title={values.title} scope='tokenUtility' setFieldValue={setFieldValue} />
         </div>
         <Field
           name="tokenUtility"
@@ -96,6 +99,7 @@ $Token 2
           <p className="mb-2 text-xs font-extralight text-gray-500">
             What is the demand for the token, why will people buy it (or not)?
           </p>
+          <FormGenerateButton title={values.title} scope='demandDrivers' setFieldValue={setFieldValue} />
         </div>
         <Field
           name="demandDrivers"

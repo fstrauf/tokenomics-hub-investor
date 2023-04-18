@@ -9,10 +9,10 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import RequestReviewModal from '../../components/requestReviewPopup'
 import { designElementStatus } from '../../lib/helper'
-import { event } from "nextjs-google-analytics";
+import { event } from 'nextjs-google-analytics'
 
 export default function TDFMain({ props }) {
-  console.log("🚀 ~ file: TDFMain.tsx:14 ~ TDFMain ~ props:", props)
+  // console.log("🚀 ~ file: TDFMain.tsx:14 ~ TDFMain ~ props:", props)
   const router = useRouter()
 
   const [activePhase, setActivePhase] = useState(
@@ -30,10 +30,9 @@ export default function TDFMain({ props }) {
     }
 
     event(`tdsPhaseChange ${phase}`, {
-      category: "UserAction",
+      category: 'UserAction',
       label: phase,
-      
-    });
+    })
     setActivePhase(phase)
   }
 
@@ -367,6 +366,36 @@ explanation`}
     [isRequestReviewOpen]
   )
 
+  // async function generateSuggestions(event, title) {
+  //   event.preventDefault()
+  //   try {
+  //     const response = await fetch('/api/gptGenerate', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({ title: title, scope: 'problemSolution' }),
+  //     })
+
+  //     const data = await response.json()
+  //     console.log("🚀 ~ file: TDFMain.tsx:381 ~ generateSuggestions ~ data:", data)
+  //     if (response.status !== 200) {
+  //       throw (
+  //         data.error ||
+  //         new Error(`Request failed with status ${response.status}`)
+  //       )
+  //     }
+
+  //     // setFieldValue('shortDescription', data.result)
+  //     // setResult(data.result);
+  //     // setAnimalInput("");
+  //   } catch (error) {
+  //     // Consider implementing your own error handling logic here
+  //     console.error(error)
+  //     alert(error.message)
+  //   }
+  // }
+
   return (
     <div className="mt-4 mb-4 rounded-lg bg-gray-100 p-1">
       <Formik
@@ -417,8 +446,14 @@ explanation`}
                   }}
                   className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
                 >
-                  Mark as complete
+                  Complete
                 </button>
+                {/* <button
+                  onClick={(event) => generateSuggestions(event, values.title)}
+                  className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
+                >
+                  Generate
+                </button> */}
                 <RequestReviewModal
                   isOpen={isRequestReviewOpen}
                   handleIsOpen={handleRequestReviewIsOpen}

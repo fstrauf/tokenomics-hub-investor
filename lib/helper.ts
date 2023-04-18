@@ -18,6 +18,39 @@ export const getMergedInitialCalcValues = (userCalcs, userId, detailedCalc) => {
   return preloadInitialValues
 }
 
+// export async function getGptGenerate(
+//   title,
+//   scope,
+// ) {
+// // export async const getGptGenerate = (title, scope) => {
+//   try {
+//     const response = await fetch('/api/gptGenerate', {
+//       method: 'POST',
+//       headers: {
+//         'Content-Type': 'application/json',
+//       },
+//       body: JSON.stringify({ title: title, scope: scope }),
+//     })
+
+//     const data = await response.json()
+
+//     if (response.status !== 200) {
+//       throw (
+//         data.error || new Error(`Request failed with status ${response.status}`)
+//       )
+//     }
+
+//     return data.result
+//     // setFieldValue(scope, data.result)
+//     // setResult(data.result);
+//     // setAnimalInput("");
+//   } catch (error) {
+//     // Consider implementing your own error handling logic here
+//     console.error(error)
+//     alert(error.message)
+//   }
+// }
+
 export const initialCalculatorValues = {
   id: '',
   totalSupply: 100000000,

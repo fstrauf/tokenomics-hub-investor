@@ -8,6 +8,7 @@ import FormSelect from '../form/FormSelect'
 import FormImageSelect from '../form/FormImageSelect'
 import { designElementStatusUpdate } from '../../lib/designElementStatusField'
 import { getActiveDesignPhase } from '../../lib/helper'
+import FormGenerateButton from './FormGenerateButton'
 
 export default function TDF11({ props, values, activePhase }) {
   // const designPhase = props.designPhases.find(
@@ -17,36 +18,7 @@ export default function TDF11({ props, values, activePhase }) {
 
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
 
-  const { setFieldValue } = useFormikContext()
-
-  // async function generateSuggestions(event) {
-  //   event.preventDefault()
-  //   try {
-  //     const response = await fetch('/api/generate', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify({ animal: values.title }),
-  //     })
-
-  //     const data = await response.json()
-  //     if (response.status !== 200) {
-  //       throw (
-  //         data.error ||
-  //         new Error(`Request failed with status ${response.status}`)
-  //       )
-  //     }
-
-  //     setFieldValue('shortDescription', data.result)
-  //     // setResult(data.result);
-  //     // setAnimalInput("");
-  //   } catch (error) {
-  //     // Consider implementing your own error handling logic here
-  //     console.error(error)
-  //     alert(error.message)
-  //   }
-  // }
+  const { setFieldValue } = useFormikContext()  
 
   useEffect(() => {
     designElementStatusUpdate(values, designPhase.phaseId, setFieldValue)
@@ -96,7 +68,13 @@ export default function TDF11({ props, values, activePhase }) {
           <p className="mb-2 text-xs font-extralight text-gray-500">
             Give a short summary of the project and the token/tokens.
           </p>
-          {/* <button onClick={generateSuggestions}>Generate</button> */}
+          {/* <button
+            onClick={(event) => generateSuggestions(event, values.title, 'shortDescription')}
+            className="rounded-md bg-dao-red px-2 py-1 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
+          >
+            Generate
+          </button> */}
+          <FormGenerateButton title={values.title} scope='shortDescription' setFieldValue={setFieldValue} />
         </div>
         <Field
           name="shortDescription"

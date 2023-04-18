@@ -5,6 +5,7 @@ import { getActiveDesignPhase } from '../../lib/helper'
 import ExampleSection from './ExampleSection'
 import { designElementStatusUpdate } from '../../lib/designElementStatusField'
 import { useEffect } from 'react'
+import FormGenerateButton from './FormGenerateButton'
 
 export default function TDFGenericOneField({
   props,
@@ -17,31 +18,11 @@ export default function TDFGenericOneField({
   const { setFieldValue } = useFormikContext()
 
   useEffect(() => {
-      designElementStatusUpdate(values, designPhase.phaseId, setFieldValue)
+    designElementStatusUpdate(values, designPhase.phaseId, setFieldValue)
   }, [])
-  // async function generateSuggestions(event) {
-  //   event.preventDefault();
-  //   try {
-  //     const response = await fetch("/api/generate", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({ animal: values.title }),
 
-  //     });
 
-  //     const data = await response.json();
-  //     if (response.status !== 200) {
-  //       throw data.error || new Error(`Request failed with status ${response.status}`);
-  //     }
 
-  //     setFieldValue(designPhase.postDataElement, data.result)
-  //   } catch(error) {
-  //     console.error(error);
-  //     alert(error.message);
-  //   }
-  // }
   async function formatText(event) {
     event.preventDefault()
     try {
@@ -82,16 +63,19 @@ export default function TDFGenericOneField({
         placeholder={placeholder}
         className="mb-3 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
       />
-      {format ? (
-        <button
-          className="w-14 rounded-md bg-dao-red px-1 py-1 text-xs font-medium text-white"
-          onClick={formatText}
-        >
-          Format
-        </button>
-      ) : (
-        <></>
-      )}
+      <div className='flex gap-2'>
+        {format ? (
+          <button
+            className="w-14 rounded-md bg-dao-red px-1 py-1 text-xs font-medium text-white"
+            onClick={formatText}
+          >
+            Format
+          </button>
+        ) : (
+          <></>
+        )}
+        <FormGenerateButton title={values.title} scope={designPhase.postDataElement} setFieldValue={setFieldValue} />
+      </div>
 
       <ResourceSection content={designPhase.Resources} />
       <ExampleSection
