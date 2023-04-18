@@ -154,6 +154,10 @@ export default function DesignCard({ post, context }) {
         <span className="font-bold text-gray-700 ">Post Type: </span>
         <span className="capitalize text-gray-600">{post.postType}</span>
       </div>
+      <div className="">
+        <span className="font-bold text-gray-700 ">Post Status: </span>
+        <span className="capitalize text-gray-600">{post.status}</span>
+      </div>
       <div className="flex flex-auto gap-4">
         <h1 className="font-bold text-gray-700">Categories:</h1>
         {post?.categories &&
