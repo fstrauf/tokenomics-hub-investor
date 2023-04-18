@@ -108,7 +108,7 @@ export default function ExampleSection({
         </div>
         <div className="flex gap-6 overflow-x-auto">
           {data?.map((c) => (
-            <div className="flex h-52 flex-col justify-between">
+            <div key={c.id} className="flex h-52 flex-col justify-between">
               <div className="m-auto w-9 sm:w-16">
                 <div className="relative m-auto h-24 rounded-lg">
                   <Image

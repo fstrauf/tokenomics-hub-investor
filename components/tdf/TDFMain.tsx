@@ -23,11 +23,11 @@ export default function TDFMain({ props }) {
   const initialValues = props.post
 
   function handlePhaseChange(phase) {
-    if (postId) {
-      router.push(`/editDesign/${postId}?phase=${phase}`, null, {
-        scroll: false,
-      })
-    }
+    // if (postId) {
+    //   router.push(`/editDesign/${postId}?phase=${phase}`, null, {
+    //     scroll: false,
+    //   })
+    // }
 
     event(`tdsPhaseChange ${phase}`, {
       category: 'UserAction',
@@ -244,7 +244,7 @@ explanation
 explanation`}
           />
         )
-      case 603:
+      case 602:
         return (
           // <TDF105 props={props} values={values} activePhase={activePhase} />
           <TDFDynamicOneField
@@ -252,6 +252,16 @@ explanation`}
             values={values}
             activePhase={activePhase}
             placeholder="Token Launch"
+          />
+        )
+      case 603:
+        return (
+          // <TDF105 props={props} values={values} activePhase={activePhase} />
+          <TDFDynamicOneField
+            props={props}
+            values={values}
+            activePhase={activePhase}
+            placeholder="Valuation"
           />
         )
       case 105:
@@ -385,11 +395,11 @@ explanation`}
                   className="rounded-md bg-dao-red px-1 py-1 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
                 >
                   {values?.id ? 'Update' : 'Save'}
-                </button>                
+                </button>
                 <Link
                   as={`/posts/${postId}`}
                   href="/posts/[id]]"
-                  className="flex items-center justify-center rounded-md self-center text-center bg-dao-red px-1 h-full text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
+                  className="flex h-full items-center justify-center self-center rounded-md bg-dao-red px-1 text-center text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
                 >
                   View
                 </Link>
