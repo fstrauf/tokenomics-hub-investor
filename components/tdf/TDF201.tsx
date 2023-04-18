@@ -3,6 +3,7 @@ import ResourceSection from './ResourceSection'
 import { getActiveDesignPhase } from '../../lib/helper'
 import { designElementStatusUpdate } from '../../lib/designElementStatusField'
 import { useEffect } from 'react'
+import WalkthroughSection from './WalkthroughSection'
 
 export default function TDF201({ props, values, activePhase }) {
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
@@ -31,6 +32,7 @@ export default function TDF201({ props, values, activePhase }) {
         />
       </div>
       <ResourceSection content={designPhase.Resources} />
+      <WalkthroughSection />
       {/* <ExampleSection
         content={props.posts}
         exampleField={designPhase.postDataElement}

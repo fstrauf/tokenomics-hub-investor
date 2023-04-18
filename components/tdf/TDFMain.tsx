@@ -366,36 +366,6 @@ explanation`}
     [isRequestReviewOpen]
   )
 
-  // async function generateSuggestions(event, title) {
-  //   event.preventDefault()
-  //   try {
-  //     const response = await fetch('/api/gptGenerate', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify({ title: title, scope: 'problemSolution' }),
-  //     })
-
-  //     const data = await response.json()
-  //     console.log("🚀 ~ file: TDFMain.tsx:381 ~ generateSuggestions ~ data:", data)
-  //     if (response.status !== 200) {
-  //       throw (
-  //         data.error ||
-  //         new Error(`Request failed with status ${response.status}`)
-  //       )
-  //     }
-
-  //     // setFieldValue('shortDescription', data.result)
-  //     // setResult(data.result);
-  //     // setAnimalInput("");
-  //   } catch (error) {
-  //     // Consider implementing your own error handling logic here
-  //     console.error(error)
-  //     alert(error.message)
-  //   }
-  // }
-
   return (
     <div className="mt-4 mb-4 rounded-lg bg-gray-100 p-1">
       <Formik
@@ -403,7 +373,7 @@ explanation`}
         onSubmit={submitData}
         enableReinitialize
       >
-        {({ isSubmitting, setFieldValue, values, touched }) => (
+        {({ isSubmitting, setFieldValue, values }) => (
           <Form>
             <div className="flex h-10 justify-between bg-gray-100 p-1">
               <p className="text-xl font-bold ">{values?.title}</p>
@@ -412,14 +382,14 @@ explanation`}
                   type="submit"
                   disabled={isSubmitting}
                   // onClick={formik.handleSubmit}
-                  className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
+                  className="rounded-md bg-dao-red px-1 py-1 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
                 >
                   {values?.id ? 'Update' : 'Save'}
-                </button>
+                </button>                
                 <Link
                   as={`/posts/${postId}`}
                   href="/posts/[id]]"
-                  className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
+                  className="flex items-center justify-center rounded-md self-center text-center bg-dao-red px-1 h-full text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
                 >
                   View
                 </Link>
@@ -427,9 +397,9 @@ explanation`}
                   <button
                     type="button"
                     onClick={openRequestReviewModal}
-                    className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
+                    className="rounded-md bg-dao-red px-1 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
                   >
-                    RequestReview
+                    Request Review
                   </button>
                 )}
                 <button
@@ -444,7 +414,7 @@ explanation`}
                       designElementStatus.completed
                     )
                   }}
-                  className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
+                  className="rounded-md bg-dao-red px-1 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
                 >
                   Complete
                 </button>

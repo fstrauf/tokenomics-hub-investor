@@ -8,6 +8,7 @@ import ExampleSection from './ExampleSection'
 import Tiptap from '../TipTap'
 import { useEffect } from 'react'
 import { designElementStatusUpdate } from '../../lib/designElementStatusField'
+import WalkthroughSection from './WalkthroughSection'
 
 //taking stock
 export default function TDF501({ props, values, activePhase, setFieldValue }) {
@@ -67,6 +68,7 @@ export default function TDF501({ props, values, activePhase, setFieldValue }) {
         exampleField={designPhase.postDataElement}
         exampleDetail={ExampleDetail}
       />
+      <WalkthroughSection />
     </div>
   )
 }

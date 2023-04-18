@@ -6,6 +6,7 @@ import { getActiveDesignPhase } from '../../lib/helper'
 import FormResources from '../form/FormResources'
 import ResourceSection from './ResourceSection'
 import ExampleSection from './ExampleSection'
+import WalkthroughSection from './WalkthroughSection'
 
 export default function TDF804({ props, values, activePhase }) {
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
@@ -37,6 +38,7 @@ export default function TDF804({ props, values, activePhase }) {
         exampleField={designPhase.postDataElement}
         exampleDetail={undefined}
       />
+      <WalkthroughSection />
     </div>
   )
 }

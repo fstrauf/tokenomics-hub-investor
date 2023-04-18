@@ -3,6 +3,7 @@ import ResourceSection from './ResourceSection'
 import { getActiveDesignPhase } from '../../lib/helper'
 import { useEffect } from 'react'
 import { designElementStatusUpdate } from '../../lib/designElementStatusField'
+import WalkthroughSection from './WalkthroughSection'
 
 export default function TDFDynamicOneField({
   props,
@@ -33,6 +34,7 @@ export default function TDFDynamicOneField({
         className="mb-3 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
       />
       <ResourceSection content={designPhase.Resources} />
+      <WalkthroughSection />
     </div>
   )
 }

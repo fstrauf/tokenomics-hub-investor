@@ -8,6 +8,7 @@ import BreakdownBox from '../slugView/breakdown-box'
 import { designElementStatusUpdate } from '../../lib/designElementStatusField'
 import FormGenerateButton from './FormGenerateButton'
 import FormFormatButton from './FormFormatButton'
+import WalkthroughSection from './WalkthroughSection'
 
 export default function TDF_valueDemandUtility({ props, values, activePhase }) {
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
@@ -162,6 +163,7 @@ export default function TDF_valueDemandUtility({ props, values, activePhase }) {
         exampleField={designPhase.postDataElement}
         exampleDetail={ExampleDetail}
       />
+      <WalkthroughSection />
     </div>
   )
 }

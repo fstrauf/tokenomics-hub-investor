@@ -4,6 +4,7 @@ import FormTable from '../form/FormTablePivot'
 import { getActiveDesignPhase } from '../../lib/helper'
 import { designElementStatusUpdate } from '../../lib/designElementStatusField'
 import { useEffect } from 'react'
+import WalkthroughSection from './WalkthroughSection'
 
 export default function TDF402({ props, values, activePhase }) {
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
@@ -31,11 +32,7 @@ export default function TDF402({ props, values, activePhase }) {
         />
       </div>
       <ResourceSection content={designPhase.Resources} />
-      {/* <ExampleSection
-        content={props.posts}
-        exampleField={designPhase.postDataElement}
-        exampleDetail={null}
-      /> */}
+      <WalkthroughSection />
     </div>
   )
 }
