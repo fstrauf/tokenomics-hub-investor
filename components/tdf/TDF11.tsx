@@ -9,8 +9,14 @@ import FormImageSelect from '../form/FormImageSelect'
 import { designElementStatusUpdate } from '../../lib/designElementStatusField'
 import { getActiveDesignPhase } from '../../lib/helper'
 import FormGenerateButton from './FormGenerateButton'
+import FormErrorMessage from '../form/FormErrorMessage'
 
-export default function TDF11({ props, values, activePhase }) {
+export default function TDF11({
+  props,
+  values,
+  activePhase,
+  reviewRequiredFields,
+}) {
   // const designPhase = props.designPhases.find(
   //   (adp) => String(adp.phaseId) === '11',
   //   activePhase
@@ -18,7 +24,7 @@ export default function TDF11({ props, values, activePhase }) {
 
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
 
-  const { setFieldValue } = useFormikContext()  
+  const { setFieldValue } = useFormikContext()
 
   useEffect(() => {
     designElementStatusUpdate(values, designPhase.phaseId, setFieldValue)
@@ -41,6 +47,10 @@ export default function TDF11({ props, values, activePhase }) {
           type="text"
           name="title"
           className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-xs text-gray-900 focus:border-dao-red focus:ring-dao-red"
+        />
+        <FormErrorMessage
+          field="title"
+          reviewRequiredFields={reviewRequiredFields}
         />
       </div>
 
@@ -68,13 +78,15 @@ export default function TDF11({ props, values, activePhase }) {
           <p className="mb-2 text-xs font-extralight text-gray-500">
             Give a short summary of the project and the token/tokens.
           </p>
-          {/* <button
-            onClick={(event) => generateSuggestions(event, values.title, 'shortDescription')}
-            className="rounded-md bg-dao-red px-2 py-1 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
-          >
-            Generate
-          </button> */}
-          <FormGenerateButton title={values.title} scope='shortDescription' setFieldValue={setFieldValue} />
+          <FormGenerateButton
+            title={values.title}
+            scope="shortDescription"
+            setFieldValue={setFieldValue}
+          />
+          <FormErrorMessage
+            field="shortDescription"
+            reviewRequiredFields={reviewRequiredFields}
+          />
         </div>
         <Field
           name="shortDescription"
@@ -103,7 +115,10 @@ export default function TDF11({ props, values, activePhase }) {
         <label className="mb-2 block text-sm font-medium text-gray-900">
           Categories
         </label>
-
+        <FormErrorMessage
+          field="categories"
+          reviewRequiredFields={reviewRequiredFields}
+        />
         <Field
           className="custom-select"
           name="categories"
@@ -117,7 +132,10 @@ export default function TDF11({ props, values, activePhase }) {
         <label className="mb-2 block text-sm font-medium text-gray-900">
           Tags
         </label>
-
+        <FormErrorMessage
+          field="tags"
+          reviewRequiredFields={reviewRequiredFields}
+        />
         <Field
           className="custom-select"
           name="tags"

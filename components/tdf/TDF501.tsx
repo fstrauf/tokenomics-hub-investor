@@ -14,7 +14,6 @@ import WalkthroughSection from './WalkthroughSection'
 export default function TDF501({ props, values, activePhase, setFieldValue }) {
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
 
-
   useEffect(() => {
     designElementStatusUpdate(values, designPhase.phaseId, setFieldValue)
   }, [])

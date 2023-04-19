@@ -7,6 +7,7 @@ import { useEffect } from 'react'
 import FormGenerateButton from './FormGenerateButton'
 import FormFormatButton from './FormFormatButton'
 import WalkthroughSection from './WalkthroughSection'
+import FormErrorMessage from '../form/FormErrorMessage'
 
 export default function TDFGenericOneField({
   props,
@@ -14,6 +15,7 @@ export default function TDFGenericOneField({
   placeholder,
   values,
   format = null,
+  reviewRequiredFields
 }) {
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
   const { setFieldValue } = useFormikContext()
@@ -41,6 +43,10 @@ export default function TDFGenericOneField({
           <></>
         )}
         <FormGenerateButton title={values.title} scope={designPhase.postDataElement} setFieldValue={setFieldValue} />
+        <FormErrorMessage
+            field="tokenUtility"
+            reviewRequiredFields={reviewRequiredFields}
+          />
       </div>
 
       <ResourceSection content={designPhase.Resources} />

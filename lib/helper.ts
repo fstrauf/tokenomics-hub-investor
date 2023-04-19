@@ -326,7 +326,7 @@ export function getAreaData(months, calculationRows, totalSupply, startDate) {
       }
     }
   })
-  console.log('🚀 ~ file: helper.ts:285 ~ getAreaData ~ props:', props)
+  // console.log('🚀 ~ file: helper.ts:285 ~ getAreaData ~ props:', props)
   return props
 }
 
@@ -530,50 +530,54 @@ export function mandatoryFormValidate(values) {
   const errors = {}
   if (!values.title) {
     errors.title = 'Required!'
-    errors.mainInfo = true
+    errors['11'] = true
   }
   if (!values.shortDescription) {
     errors.shortDescription = 'Required!'
-    errors.mainInfo = true
+    errors['11'] = true
   }
   if (values?.categories?.length === 0) {
     errors.categories = 'Required!'
-    errors.mainInfo = true
+    errors['11'] = true
+  }
+  if (values?.Mechanism?.length === 0) {
+    errors.Mechanism = 'Required!'
+    errors['502'] = true
   }
   if (values?.tags?.length === 0) {
     errors.tags = 'Required!'
-    errors.mainInfo = true
+    errors['11'] = true
   }
   if (!values.tokenUtility) {
     errors.tokenUtility = 'Required!'
-    errors.tokenStrength = true
+    errors['801'] = true
   }
   if (!values.businessModel) {
     errors.businessModel = 'Required!'
-    errors.tokenStrength = true
+    errors['104'] = true
   }
   if (!values.valueCreation) {
     errors.valueCreation = 'Required!'
-    errors.tokenStrength = true
+    errors['103'] = true
   }
   if (!values.valueCapture) {
     errors.valueCapture = 'Required!'
-    errors.tokenStrength = true
+    errors['801'] = true
   }
 
   if (!values.demandDrivers) {
     errors.demandDrivers = 'Required!'
-    errors.tokenStrength = true
+    errors['801'] = true
   }
-  if (!values.breakdown && values?.calculation === undefined) {
-    if (!values.breakdown) {
-      errors.breakdown = 'Required!'
-    }
-    if (values?.calculation === undefined) {
-      errors.calculation = 'Required!'
-    }
-    errors.deepDive = true
-  }
+  // if (!values.breakdown && values?.calculation === undefined) {
+  //   if (!values.breakdown) {
+  //     errors.breakdown = 'Required!'
+  //   }
+  //   if (values?.calculation === undefined) {
+  //     errors.calculation = 'Required!'
+  //   }
+  //   errors.deepDive = true
+  // }
 
   return errors
 }

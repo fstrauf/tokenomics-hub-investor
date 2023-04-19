@@ -8,8 +8,15 @@ import FormId from '../form/FormId'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import RequestReviewModal from '../../components/requestReviewPopup'
-import { designElementStatus } from '../../lib/helper'
+import {
+  designElementStatus,
+  mandatoryFormValidate,
+  notifyDiscord,
+  postStatus,
+  postType,
+} from '../../lib/helper'
 import { event } from 'nextjs-google-analytics'
+import { WEBSITE_URL_BASE } from '../../lib/constants'
 
 export default function TDFMain({ props }) {
   // console.log("🚀 ~ file: TDFMain.tsx:14 ~ TDFMain ~ props:", props)
@@ -21,6 +28,8 @@ export default function TDFMain({ props }) {
   const [postId, setPostId] = useState(props.post.id || '')
   const [isRequestReviewOpen, setIsRequestReviewOpen] = useState(false)
   const initialValues = props.post
+  const [reviewRequiredFields, setreviewRequiredFields] = useState({})
+  const [isReviewSubmitting, setReviewSubmitting] = useState(false)
 
   function handlePhaseChange(phase) {
     // if (postId) {
@@ -104,7 +113,6 @@ export default function TDFMain({ props }) {
 
   const submitData = async (values, { setSubmitting }) => {
     const body = { values }
-    // console.log('🚀 ~ file: TDFMain.tsx:97 ~ submitData ~ values:', values)
     if (values?.id === '') {
       try {
         const response = await fetch('/api/post/newDesign', {
@@ -118,10 +126,7 @@ export default function TDFMain({ props }) {
           toast.error(JSON.parse(error).error, { position: 'bottom-right' })
           throw new Error(error)
         } else {
-          //connect the returned id to the inputfields.id
           const id = await response.text()
-          // console.log('🚀 ~ file: TDFMain.tsx:113 ~ submitData ~ id:', id)
-          // console.log(response)
           toast.success('Changes auto-saved ', {
             position: 'bottom-right',
           })
@@ -147,8 +152,6 @@ export default function TDFMain({ props }) {
         } else {
           toast.success('Changes auto-saved ', { position: 'bottom-right' })
         }
-
-        // await Router.push('/');
         setSubmitting(false)
         console.log('TDF updated')
       } catch (error) {
@@ -178,8 +181,8 @@ export default function TDFMain({ props }) {
           <TDF11
             props={props}
             values={values}
-            // content={content}
             activePhase={activePhase}
+            reviewRequiredFields={reviewRequiredFields}
           />
         )
       case 101:
@@ -197,6 +200,7 @@ Solution:
         
         Solution:
         - `}
+            reviewRequiredFields={reviewRequiredFields}
           />
         )
       case 102:
@@ -206,6 +210,7 @@ Solution:
             activePhase={activePhase}
             values={values}
             placeholder={`Similar projects include...`}
+            reviewRequiredFields={reviewRequiredFields}
           />
         )
       case 103:
@@ -216,6 +221,7 @@ Solution:
             values={values}
             placeholder={`The value created by [protocol] is...`}
             format={`The value created by...`}
+            reviewRequiredFields={reviewRequiredFields}
           />
         )
       case 104:
@@ -242,11 +248,11 @@ explanation
 
 - Revenue goes to:
 explanation`}
+            reviewRequiredFields={reviewRequiredFields}
           />
         )
       case 602:
         return (
-          // <TDF105 props={props} values={values} activePhase={activePhase} />
           <TDFDynamicOneField
             props={props}
             values={values}
@@ -256,7 +262,6 @@ explanation`}
         )
       case 603:
         return (
-          // <TDF105 props={props} values={values} activePhase={activePhase} />
           <TDFDynamicOneField
             props={props}
             values={values}
@@ -266,7 +271,6 @@ explanation`}
         )
       case 105:
         return (
-          // <TDF105 props={props} values={values} activePhase={activePhase} />
           <TDFDynamicOneField
             props={props}
             values={values}
@@ -319,10 +323,9 @@ explanation`}
             values={values}
             activePhase={activePhase}
             setFieldValue={setFieldValue}
+            reviewRequiredFields={reviewRequiredFields}
           />
         )
-      // case 603:
-      //   return <TDF603 props={props} activePhase={activePhase} />
       case 701:
         return (
           <TDF701 props={props} values={values} activePhase={activePhase} />
@@ -333,6 +336,7 @@ explanation`}
             props={props}
             values={values}
             activePhase={activePhase}
+            reviewRequiredFields={reviewRequiredFields}
           />
         )
       case 802:
@@ -360,13 +364,20 @@ explanation`}
             props={props}
             values={values}
             activePhase={activePhase}
+            reviewRequiredFields={reviewRequiredFields}
           />
         )
     }
   }
 
-  function openRequestReviewModal() {
-    setIsRequestReviewOpen(true)
+  function handleReviewClick(values) {
+    let typeA = values.postType
+    let typeB = postType.design
+    if (typeA === typeB) {
+      setIsRequestReviewOpen(true)
+    } else {
+      sendToReview(values)
+    }
   }
 
   const handleRequestReviewIsOpen = useCallback(
@@ -375,6 +386,46 @@ explanation`}
     },
     [isRequestReviewOpen]
   )
+
+  async function sendToReview(
+    // event: MouseEvent<HTMLButtonElement, MouseEvent>,
+    values
+  ): void {
+    const errors = mandatoryFormValidate(values)
+    setreviewRequiredFields(errors)
+    if (values?.id === '') {
+      toast.error('Please save first', { position: 'bottom-right' })
+    } else {
+      if (Object.keys(errors).length > 0) {
+        toast.error('Some required fields are missing!', {
+          position: 'bottom-right',
+        })
+      } else {
+        const postId = values.id
+        setReviewSubmitting(true)
+        const body = { status: postStatus.reviewRequired, postId }
+
+        const response = await fetch('/api/post/updateStatus', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body),
+        })
+
+        if (!response.ok) {
+          const error = await response.text()
+          toast.error(JSON.parse(error).error, { position: 'bottom-right' })
+          throw new Error(error)
+        } else {
+          toast.success('Sent to review', { position: 'bottom-right' })
+          notifyDiscord(
+            `${WEBSITE_URL_BASE}/editPost/${postId}`,
+            postStatus.reviewRequired
+          )
+        }
+        setReviewSubmitting(false)
+      }
+    }
+  }
 
   return (
     <div className="mt-4 mb-4 rounded-lg bg-gray-100 p-1">
@@ -391,7 +442,6 @@ explanation`}
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  // onClick={formik.handleSubmit}
                   className="rounded-md bg-dao-red px-1 py-1 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
                 >
                   {values?.id ? 'Update' : 'Save'}
@@ -406,7 +456,7 @@ explanation`}
                 {postId && (
                   <button
                     type="button"
-                    onClick={openRequestReviewModal}
+                    onClick={()=>handleReviewClick(values)}
                     className="rounded-md bg-dao-red px-1 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
                   >
                     Request Review
@@ -428,12 +478,6 @@ explanation`}
                 >
                   Complete
                 </button>
-                {/* <button
-                  onClick={(event) => generateSuggestions(event, values.title)}
-                  className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
-                >
-                  Generate
-                </button> */}
                 <RequestReviewModal
                   isOpen={isRequestReviewOpen}
                   handleIsOpen={handleRequestReviewIsOpen}
@@ -447,6 +491,7 @@ explanation`}
                   changePhase={handlePhaseChange}
                   activePhase={activePhase}
                   values={values}
+                  reviewRequiredFields={reviewRequiredFields}
                 />
               </div>
               <div className="w-5/6 rounded-lg bg-white">

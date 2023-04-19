@@ -9,8 +9,14 @@ import { designElementStatusUpdate } from '../../lib/designElementStatusField'
 import FormGenerateButton from './FormGenerateButton'
 import FormFormatButton from './FormFormatButton'
 import WalkthroughSection from './WalkthroughSection'
+import FormErrorMessage from '../form/FormErrorMessage'
 
-export default function TDF_valueDemandUtility({ props, values, activePhase }) {
+export default function TDF_valueDemandUtility({
+  props,
+  values,
+  activePhase,
+  reviewRequiredFields,
+}) {
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
 
   const { setFieldValue } = useFormikContext()
@@ -84,6 +90,10 @@ export default function TDF_valueDemandUtility({ props, values, activePhase }) {
               scope="valueCapture"
               setFieldValue={setFieldValue}
             />
+            <FormErrorMessage
+              field="valueCapture"
+              reviewRequiredFields={reviewRequiredFields}
+            />
           </div>
         </div>
         <Field
@@ -115,6 +125,10 @@ export default function TDF_valueDemandUtility({ props, values, activePhase }) {
               scope="tokenUtility"
               setFieldValue={setFieldValue}
             />
+            <FormErrorMessage
+              field="tokenUtility"
+              reviewRequiredFields={reviewRequiredFields}
+            />
           </div>
         </div>
         <Field
@@ -144,6 +158,10 @@ export default function TDF_valueDemandUtility({ props, values, activePhase }) {
               title={values.title}
               scope="demandDrivers"
               setFieldValue={setFieldValue}
+            />
+            <FormErrorMessage
+              field="demandDrivers"
+              reviewRequiredFields={reviewRequiredFields}
             />
           </div>
         </div>
