@@ -101,47 +101,47 @@ export default function DesignCard({ post, context }) {
     await Router.replace(Router.asPath)
   }
 
-  async function sendToReview(
-    // event: MouseEvent<HTMLButtonElement, MouseEvent>,
-    post,
-    close
-  ): void {
-    const errors = mandatoryFormValidate(post)
+  // async function sendToReview(
+  //   // event: MouseEvent<HTMLButtonElement, MouseEvent>,
+  //   post,
+  //   close
+  // ): void {
+  //   const errors = mandatoryFormValidate(post)
 
-    if (Object.keys(errors).length > 0) {
-      toast.error('Some required fields are missing!', {
-        position: 'bottom-right',
-      })
-    } else {
-      setSubmitting(true)
-      const postId = post.id
-      const body = { status: postStatus.reviewRequired, postId }
+  //   if (Object.keys(errors).length > 0) {
+  //     toast.error('Some required fields are missing!', {
+  //       position: 'bottom-right',
+  //     })
+  //   } else {
+  //     setSubmitting(true)
+  //     const postId = post.id
+  //     const body = { status: postStatus.reviewRequired, postId }
 
-      const response = await fetch('/api/post/updateStatus', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body),
-      })
+  //     const response = await fetch('/api/post/updateStatus', {
+  //       method: 'POST',
+  //       headers: { 'Content-Type': 'application/json' },
+  //       body: JSON.stringify(body),
+  //     })
 
-      if (!response.ok) {
-        const error = await response.text()
-        toast.error(JSON.parse(error).error, { position: 'bottom-right' })
-        throw new Error(error)
-      } else {
-        toast.success('Sent to review', { position: 'bottom-right' })
-        notifyStatusUpdate(
-          post.authorEmail,
-          postStatus.reviewRequired,
-          `${WEBSITE_URL_BASE}/editPost/${postId}`
-        )
-      }
-      setSubmitting(false)
-      close()
-      await Router.replace(Router.asPath)
-    }
-  }
+  //     if (!response.ok) {
+  //       const error = await response.text()
+  //       toast.error(JSON.parse(error).error, { position: 'bottom-right' })
+  //       throw new Error(error)
+  //     } else {
+  //       toast.success('Sent to review', { position: 'bottom-right' })
+  //       notifyStatusUpdate(
+  //         post.authorEmail,
+  //         postStatus.reviewRequired,
+  //         `${WEBSITE_URL_BASE}/editPost/${postId}`
+  //       )
+  //     }
+  //     setSubmitting(false)
+  //     close()
+  //     await Router.replace(Router.asPath)
+  //   }
+  // }
   return (
-    <div className="m-5 grid h-64 w-80 max-w-sm content-between rounded-lg border border-gray-200 bg-white p-2 shadow-md">
+    <div key={post.id} className="m-5 grid h-64 w-80 max-w-sm content-between rounded-lg border border-gray-200 bg-white p-2 shadow-md">
       <div className="">
         <span className="font-bold text-gray-700">Title: </span>
         <span className="text-gray-600">{post.title}</span>
@@ -238,7 +238,7 @@ export default function DesignCard({ post, context }) {
                           </button>
                         )}
                       </Menu.Item>
-                      <Menu.Item>
+                      {/* <Menu.Item>
                         {({ active }) => (
                           <button
                             onClick={() => sendToReview(post, close)}
@@ -254,7 +254,7 @@ export default function DesignCard({ post, context }) {
                             To Review
                           </button>
                         )}
-                      </Menu.Item>
+                      </Menu.Item> */}
                       <Menu.Item>
                         {({ active }) => (
                           <button
