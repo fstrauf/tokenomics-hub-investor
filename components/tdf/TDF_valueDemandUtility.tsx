@@ -22,7 +22,7 @@ export default function TDF_valueDemandUtility({
   const { setFieldValue } = useFormikContext()
 
   useEffect(() => {
-    designElementStatusUpdate(values, '801', setFieldValue)
+    designElementStatusUpdate(values, designPhase.phaseId, setFieldValue)
   }, [])
 
   let ExampleDetail = ({ onGoBack, example, exampleField }) => {
