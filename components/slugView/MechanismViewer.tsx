@@ -6,10 +6,6 @@ import { MechanismCardViewer } from './MechanismCardViewer'
 import TDFCalculatorViewer from './TDFCalculatorViewer'
 
 export default function MechanismViewer({ post }) {
-  console.log(
-    '🚀 ~ file: MechanismViewer.tsx:2 ~ MechanismViewer ~ mechanisms:',
-    post
-  )
   let [mechanismIndex, setMechanismIndex] = useState(0)
   const [isOpen, setIsOpen] = useState(false)
   const handleViewMechanism = (index) => {

@@ -5,8 +5,6 @@ import { GetServerSideProps } from 'next'
 import { getMergedInitialCalcValues, postStatus, postType } from '../lib/helper'
 import TDFMain from '../components/tdf/TDFMain'
 import { getAuth } from '@clerk/nextjs/dist/server/getAuth'
-// import { getAuth } from '@clerk/nextjs/server'
-// import { AuthData } from '@clerk/nextjs/dist/server/types'
 
 export default function NewDesign(props) {
   return (
@@ -19,8 +17,6 @@ export default function NewDesign(props) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  // const postId: string = context?.query?.id || ''
-
   const { userId }: AuthData = getAuth(context.req)
 
   const txCalls = []
@@ -75,6 +71,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     title: '',
     authorClerkId: userId,
     status: postStatus.draft,
+    ticker: '',
     DesignElement: designPhases
       .filter((dp) => dp.parentPhaseId)
       .map((dp) => {

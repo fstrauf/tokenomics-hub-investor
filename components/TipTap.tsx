@@ -158,7 +158,6 @@ const MenuBar = ({ editor }) => {
     editor.chain().focus().extendMarkRange('link').setLink({ href: url }).run()
   }, [editor])
 
-  console.log('editor.isActive', editor.isActive)
   return (
     <div className="menuBar">
       <button

@@ -153,7 +153,6 @@ export default function TDFMain({ props }) {
           toast.success('Changes auto-saved ', { position: 'bottom-right' })
         }
         setSubmitting(false)
-        console.log('TDF updated')
       } catch (error) {
         console.error(error)
       }

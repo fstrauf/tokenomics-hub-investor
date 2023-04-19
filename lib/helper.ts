@@ -237,7 +237,6 @@ export function getMonthEpochAreaData(
   startDate,
   supplyDemandTotals
 ) {
-  console.log('🚀 ~ file: helper.ts:196 ~ calculationRow:', calculationRow)
   let emissions = 0
   const secondsPerMonth = 2628000
   let emissionsPerSecond = calculationRow.initialEmissionPerSecond

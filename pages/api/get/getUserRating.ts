@@ -21,8 +21,6 @@ export default async function handle(req, res) {
         valueCaptureStrength: 0,
         demandDriversStrength: 0,
     }
-    // console.log("🚀 ~ file: getUserRating.ts:12 ~ handle ~ userStrengthRating", userStrengthRating)
 
     return res.status(200).send(userStrengthRating || {})
-    // return res.json(calcRows);
 }

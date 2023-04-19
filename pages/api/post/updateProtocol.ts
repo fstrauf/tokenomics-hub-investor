@@ -130,13 +130,8 @@ export default async function handle(req, res) {
     response = await prisma.$transaction(txCalls)
   } catch (e) {
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
-      // The .code property can be accessed in a type-safe manner
       if (e.code === 'P2002') {
-        // res.statusText = 'Unique Constraint. Slug might already exist!'
         return res.status(500).send({ error: 'Slug might already exist!' })
-        // console.log(
-        //   'There is a unique constraint violation, a new user cannot be created with this email'
-        // )
       }
     }
     throw e
