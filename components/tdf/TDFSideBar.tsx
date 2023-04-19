@@ -29,7 +29,7 @@ export default function TDFSideBar({
     <div className="overflow-y-auto rounded-lg border-2 border-gray-100 bg-white p-2">
       {phases.map((phase) => (
         <div key={phase.id}>
-          {phase.parentPhaseId ? ( //child
+          {phase.parentPhaseId ? ( 
             <button
               type="button"
               onClick={() => changePhase(phase.phaseId)} //we could navigate by name here
