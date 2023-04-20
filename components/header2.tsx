@@ -34,7 +34,11 @@ export default function Header2({ mode = headerStatus.main, children = null }) {
           router.pathname === pathName
             ? 'bg-gradient-to-tr from-dao-red via-dao-red to-dao-green'
             : 'bg-white'
-        } rounded-md bg-clip-text py-2 px-4 text-transparent hover:bg-opacity-80`}
+        } rounded-md bg-clip-text py-2 px-4 text-transparent hover:bg-opacity-80 ${
+          router.pathname === pathName
+            ? 'hover:from-dao-red hover:via-dao-red hover:to-dao-green'
+            : 'hover:bg-dao-red'
+        }`}
       >
         {title}
       </Link>
@@ -88,7 +92,13 @@ export default function Header2({ mode = headerStatus.main, children = null }) {
   function renderSwitch() {
     switch (mode) {
       case headerStatus.design:
-        return <>{/* <>{children}</> */}</>
+        return (
+          <>
+            <p className="rounded-md bg-white bg-clip-text py-2 px-4 text-transparent">
+              Design a Token
+            </p>
+          </>
+        )
       case headerStatus.main:
         return (
           <>
@@ -101,10 +111,13 @@ export default function Header2({ mode = headerStatus.main, children = null }) {
       default:
         return (
           <>
+            <p className="rounded-md bg-white bg-clip-text py-2 px-4 text-transparent">
+              List a Token
+            </p>
             {/* {calculatorSection} */}
-            {genericSection('/calculator', 'Calculator')}
+            {/* {genericSection('/calculator', 'Calculator')}
             {genericSection('/bookAnExpert', 'Services')}
-            {genericSection('/myDesigns', 'My Dashboard')}
+            {genericSection('/myDesigns', 'My Dashboard')} */}
             {/* {expertsSection} */}
           </>
         )
@@ -119,11 +132,7 @@ export default function Header2({ mode = headerStatus.main, children = null }) {
             <div className="flex justify-start lg:w-0 lg:flex-1">
               <ThubLogo />
               <div className="hidden md:ml-2 md:flex md:items-center">
-                {!headerStatus.design ? (
-                  <p className="text-2xl text-white">Tokenomics Hub</p>
-                ) : (
-                  <></>
-                )}
+                <p className="text-2xl text-white">Tokenomics Hub</p>
               </div>
             </div>
             <div className="-my-2 -mr-2 md:hidden">
@@ -134,6 +143,9 @@ export default function Header2({ mode = headerStatus.main, children = null }) {
             </div>
 
             <Popover.Group as="nav" className="hidden space-x-10 md:flex">
+              {renderSwitch()}
+            </Popover.Group>
+            <div className="hidden items-center justify-end md:flex md:flex-1 md:gap-5 lg:w-0">
               {admin ? (
                 <Popover className="relative">
                   {({ open }) => (
@@ -175,9 +187,6 @@ export default function Header2({ mode = headerStatus.main, children = null }) {
               ) : (
                 <></>
               )}
-              {renderSwitch()}
-            </Popover.Group>
-            <div className="hidden items-center justify-end md:flex md:flex-1 lg:w-0 md:gap-2">
               <div>{children}</div>
               <SignedIn>
                 <UserButton />
