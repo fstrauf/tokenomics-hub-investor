@@ -4,7 +4,7 @@ import Router from 'next/router'
 import { Fragment, useState } from 'react'
 import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
 import {
-  mandatoryFormValidate,
+  // mandatoryFormValidate,
   notifyStatusUpdate,
   postStatus,
   postType,
@@ -15,7 +15,7 @@ import { confirmAlert } from 'react-confirm-alert'
 import 'react-confirm-alert/src/react-confirm-alert.css'
 
 export default function DesignCard({ post, context }) {
-  let isReport = post.postType === postType.report
+  // let isReport = post.postType === postType.report
   const { user } = useUser()
   const [isSubmitting, setSubmitting] = useState(false)
   let [isOpen, setIsOpen] = useState(false)
@@ -101,45 +101,7 @@ export default function DesignCard({ post, context }) {
     await Router.replace(Router.asPath)
   }
 
-  // async function sendToReview(
-  //   // event: MouseEvent<HTMLButtonElement, MouseEvent>,
-  //   post,
-  //   close
-  // ): void {
-  //   const errors = mandatoryFormValidate(post)
 
-  //   if (Object.keys(errors).length > 0) {
-  //     toast.error('Some required fields are missing!', {
-  //       position: 'bottom-right',
-  //     })
-  //   } else {
-  //     setSubmitting(true)
-  //     const postId = post.id
-  //     const body = { status: postStatus.reviewRequired, postId }
-
-  //     const response = await fetch('/api/post/updateStatus', {
-  //       method: 'POST',
-  //       headers: { 'Content-Type': 'application/json' },
-  //       body: JSON.stringify(body),
-  //     })
-
-  //     if (!response.ok) {
-  //       const error = await response.text()
-  //       toast.error(JSON.parse(error).error, { position: 'bottom-right' })
-  //       throw new Error(error)
-  //     } else {
-  //       toast.success('Sent to review', { position: 'bottom-right' })
-  //       notifyStatusUpdate(
-  //         post.authorEmail,
-  //         postStatus.reviewRequired,
-  //         `${WEBSITE_URL_BASE}/editPost/${postId}`
-  //       )
-  //     }
-  //     setSubmitting(false)
-  //     close()
-  //     await Router.replace(Router.asPath)
-  //   }
-  // }
   return (
     <div key={post.id} className="m-5 grid h-64 w-80 max-w-sm content-between rounded-lg border border-gray-200 bg-white p-2 shadow-md">
       <div className="">
@@ -172,8 +134,6 @@ export default function DesignCard({ post, context }) {
       </div>
       <div className="mt-4 flex justify-center space-x-3 p-2 md:mt-6">
         <Link
-          // as={isReport ? `/editPost/${post?.id}` : `/editDesign/${post?.id}`}
-          // href={isReport ? `/editPost/[id]` : `/editDesign/[id]`}
           as={`/editDesign/${post?.id}`}
           href={`/editDesign/[id]`}
           className=" rounded-lg bg-dao-red px-4 py-2 text-center text-xs font-medium text-white"
@@ -181,8 +141,8 @@ export default function DesignCard({ post, context }) {
           Edit
         </Link>
         <Link
-          as={`/posts/${post?.id}`}
-          href="/posts/[id]]"
+          as={`/postPreview/${post?.id}`}
+          href="/postPreview/[id]]"
           className=" rounded-lg bg-dao-red px-4 py-2 text-center text-xs font-medium text-white"
         >
           View
@@ -238,23 +198,6 @@ export default function DesignCard({ post, context }) {
                           </button>
                         )}
                       </Menu.Item>
-                      {/* <Menu.Item>
-                        {({ active }) => (
-                          <button
-                            onClick={() => sendToReview(post, close)}
-                            className={`${
-                              active ? 'bg-dao-red text-white' : 'text-gray-900'
-                            } group flex w-full items-center rounded-md px-2 py-2 text-sm disabled:opacity-70`}
-                            disabled={
-                              isSubmitting ||
-                              !contributor ||
-                              post.status === postStatus.reviewRequired
-                            }
-                          >
-                            To Review
-                          </button>
-                        )}
-                      </Menu.Item> */}
                       <Menu.Item>
                         {({ active }) => (
                           <button

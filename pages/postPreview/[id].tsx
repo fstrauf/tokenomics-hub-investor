@@ -1,10 +1,14 @@
 import { useRouter } from 'next/router'
 import ErrorPage from 'next/error'
-import Layout from '../../components/layout'
+// import Layout from '../../components/layout'
 import prisma from '../../lib/prisma'
 import { clerkClient } from '@clerk/nextjs/server'
-import { clerkConvertJSON, postStatus } from '../../lib/helper'
+import { clerkConvertJSON, headerStatus, postStatus } from '../../lib/helper'
 import PostView from '../../components/postView'
+import { GetServerSideProps } from 'next/types'
+import Header2 from '../../components/header2'
+import Link from 'next/link'
+// import HelpButton from '../../components/tdf/HelpButton'
 export default function Post({ post, author }) {
   const router = useRouter()
 
@@ -12,13 +16,29 @@ export default function Post({ post, author }) {
     return <ErrorPage statusCode={404} />
   }
   return (
-    <Layout>
+    // <Layout>
+    <>
+      <Header2 mode={headerStatus.design}>
+        <div className="flex gap-2">
+          <Link
+            as={`/editDesign/${post?.id}`}
+            href="/editDesign/[id]]"
+            className="rounded-md border-2 border-dao-red bg-gradient-to-r from-dao-red via-dao-red to-dao-green bg-clip-text py-1 px-4 text-transparent hover:bg-opacity-80"
+          >
+            Edit
+          </Link>
+          {/* <HelpButton values={values} setIsRequestReviewOpen={setIsRequestReviewOpen} setreviewRequiredFields={setreviewRequiredFields} /> */}
+        </div>
+      </Header2>
       <PostView post={post} author={author} />
-    </Layout>
+    </>
   )
 }
 
-export async function getStaticProps({ params }) {
+export const getServerSideProps: GetServerSideProps = async ({
+  params,
+  req,
+}) => {
   const txCalls = []
   const post = await prisma.post.findUnique({
     where: {
@@ -62,21 +82,6 @@ export async function getStaticProps({ params }) {
     prisma.$queryRaw`select count(A) as count,A as cat,p.authorClerkId from _CategoryToPost join Post as p on p.id = B WHERE p.authorClerkId = ${post?.authorClerkId} AND p.status = ${postStatus.published} GROUP BY A, p.authorClerkId`
   )
 
-  // txCalls.push(
-  //   prisma.userStrengthRating.aggregate({
-  //     _avg: {
-  //       tokenUtilityStrength: true,
-  //       businessModelStrength: true,
-  //       valueCreationStrength: true,
-  //       valueCaptureStrength: true,
-  //       demandDriversStrength: true,
-  //     },
-  //     where: {
-  //       postId: post.id,
-  //     },
-  //   })
-  // )
-
   const [postCount, postCategoryCount] = await prisma.$transaction(txCalls)
 
   let clerkUser = {}
@@ -94,28 +99,8 @@ export async function getStaticProps({ params }) {
 
   return {
     props: {
-      // post: Object.assign(post, response[2]) || null,
       post: post || null,
       author: clerkUser || null,
     },
-    revalidate: 1,
-  }
-}
-
-export async function getStaticPaths() {
-  const allPosts = await prisma.post.findMany({
-    select: {
-      id: true,
-    },
-  })
-
-  return {
-    paths:
-      allPosts?.map((post) => ({
-        params: {
-          id: post.id,
-        },
-      })) || [],
-    fallback: true,
   }
 }

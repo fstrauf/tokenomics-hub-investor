@@ -16,26 +16,12 @@ export default function NewPost(props) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  // const postId: string = context?.query?.id || ''
 
   const { userId }: AuthData = getAuth(context.req)
 
   const txCalls = []
 
-  // txCalls.push(
-  //   prisma.post.findMany({
-  //     where: {
-  //       categories: { every: { label: 'defi' } },
-  //       AND: {
-  //         status: postStatus.published,
-  //       },
-  //     },
-  //     take: 20,
-  //   })
-  // )
-
   txCalls.push(prisma.designPhases.findMany({ orderBy: { phaseOrder: 'asc' } }))
-  // txCalls.push(prisma.designPhases.findUnique({ where: { id: postId } }))
 
   txCalls.push(
     prisma.calculation.findMany({

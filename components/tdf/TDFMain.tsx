@@ -391,8 +391,8 @@ explanation`}
                   Save
                 </button>
                 <Link
-                  as={`/posts/${postId}`}
-                  href="/posts/[id]]"
+                  as={`/postPreview/${postId}`}
+                  href="/postPreview/[id]]"
                   className="rounded-md border-2 border-dao-red bg-gradient-to-r from-dao-red via-dao-red to-dao-green bg-clip-text py-1 px-4 text-transparent hover:bg-opacity-80"
                 >
                   View
