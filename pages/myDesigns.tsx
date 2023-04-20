@@ -23,7 +23,7 @@ export default function MyDesigns({ posts }) {
 
 
   return (
-    <Layout mode={headerStatus.design}>
+    <Layout mode={headerStatus.main}>
       <>
         <div className="mt-4 mb-4 rounded-lg bg-gray-100 p-1">
           <div className="flex items-center justify-between rounded-lg p-2 py-2">

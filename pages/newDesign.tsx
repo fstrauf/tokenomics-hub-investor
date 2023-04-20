@@ -9,9 +9,9 @@ import { getAuth } from '@clerk/nextjs/dist/server/getAuth'
 export default function NewDesign(props) {
   return (
     <>
-      <Layout mode="design">
+      {/* <Layout mode="design"> */}
         <TDFMain props={props} />
-      </Layout>
+      {/* </Layout> */}
     </>
   )
 }

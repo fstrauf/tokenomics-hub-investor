@@ -12,9 +12,9 @@ import prisma from '../../lib/prisma'
 
 const EditDesign: React.FC<UpdateNewDesignProps> = (props) => {
   return (
-    <Layout mode={headerStatus.design}>
+    // <Layout mode={headerStatus.design}>
       <TDFMain props={props} />
-    </Layout>
+    // </Layout>
   )
 }
 

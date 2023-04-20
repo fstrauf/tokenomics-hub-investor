@@ -9,7 +9,7 @@ import { AuthData } from '@clerk/nextjs/dist/server/types'
 
 export default function NewPost(props) {
   return (
-    <Layout mode="design">
+    <Layout>
       <TDFMain props={props} />
     </Layout>
   )

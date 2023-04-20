@@ -3,7 +3,6 @@ import Meta from '../components/meta'
 import Header from './header2'
 
 export default function Layout({ children, mode }) {
-
   return (
     <>
       <Meta />
