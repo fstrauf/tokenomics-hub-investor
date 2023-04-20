@@ -113,7 +113,7 @@ export default withTooltip<StackedAreasProps, TooltipData>(
     )
 
     const ordinalColorScale = scaleOrdinal({
-      domain: ['supply', 'demamd'],
+      domain: ['supply', 'demand'],
       range: ['#be123d', '#15803c'],
     });
 

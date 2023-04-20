@@ -94,9 +94,10 @@ export default function Header2({ mode = headerStatus.main, children = null }) {
       case headerStatus.design:
         return (
           <>
-            <p className="rounded-md bg-white bg-clip-text py-2 px-4 text-transparent">
+            {/* <p className="rounded-md bg-white bg-clip-text py-2 px-4 text-transparent">
               Design a Token
-            </p>
+            </p> */}
+            {genericSection('/myDesigns', 'Design a Token')}
           </>
         )
       case headerStatus.main:
@@ -111,14 +112,10 @@ export default function Header2({ mode = headerStatus.main, children = null }) {
       default:
         return (
           <>
-            <p className="rounded-md bg-white bg-clip-text py-2 px-4 text-transparent">
+            {/* <p className="rounded-md bg-white bg-clip-text py-2 px-4 text-transparent">
               List a Token
-            </p>
-            {/* {calculatorSection} */}
-            {/* {genericSection('/calculator', 'Calculator')}
-            {genericSection('/bookAnExpert', 'Services')}
-            {genericSection('/myDesigns', 'My Dashboard')} */}
-            {/* {expertsSection} */}
+            </p> */}
+            {genericSection('/myDesigns', 'List a Token')}
           </>
         )
     }
