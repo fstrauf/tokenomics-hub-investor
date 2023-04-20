@@ -1,4 +1,4 @@
-import Layout from '../components/layout'
+// import Layout from '../components/layout'
 import React from 'react'
 import prisma from '../lib/prisma'
 import { GetServerSideProps } from 'next'
@@ -9,14 +9,14 @@ import { AuthData } from '@clerk/nextjs/dist/server/types'
 
 export default function NewPost(props) {
   return (
-    <Layout>
+    // <Layout>
       <TDFMain props={props} />
-    </Layout>
+    // </Layout>
   )
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const postId: string = context?.query?.id || ''
+  // const postId: string = context?.query?.id || ''
 
   const { userId }: AuthData = getAuth(context.req)
 

@@ -67,9 +67,6 @@ export default function HelpButton({ values, setIsRequestReviewOpen, setreviewRe
       className="w-56 rounded-md border-2 border-dao-red bg-gradient-to-r from-dao-red via-dao-red to-dao-green bg-clip-text py-1 px-4 text-transparent hover:bg-opacity-80"
     >
       Request Design Services
-      {/* <div className="ml-4">
-        <p className="text-base font-medium text-white">Request Design Services</p>
-      </div> */}
     </Link>
   )
 
@@ -111,7 +108,7 @@ export default function HelpButton({ values, setIsRequestReviewOpen, setreviewRe
                 leaveFrom="opacity-100 translate-y-0"
                 leaveTo="opacity-0 translate-y-1"
               >
-                <Popover.Panel className="absolute left-1/2 z-10 mt-3 max-w-md -translate-x-1/2 transform px-2 sm:px-0">
+                <Popover.Panel className="absolute z-10 mt-3 max-w-md -translate-x-1/2 transform px-2 sm:px-0">
                   <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
                     <div className="relative grid gap-6 bg-dark-tdao px-5 py-6 sm:gap-8 sm:p-8">
                       {requestReview}
