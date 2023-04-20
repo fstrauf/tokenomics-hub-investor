@@ -13,7 +13,7 @@ import prisma from '../../lib/prisma'
 const EditDesign: React.FC<UpdateNewDesignProps> = (props) => {
   return (
     // <Layout mode={headerStatus.design}>
-      <TDFMain props={props} />
+    <TDFMain props={props} />
     // </Layout>
   )
 }
@@ -73,9 +73,19 @@ export const getServerSideProps: GetServerSideProps = async ({
   const [post, mechanismTemplates, designPhases, Category, Tag] =
     await prisma.$transaction(txCalls)
 
-  let clerkUser = post?.authorClerkId
-    ? await clerkClient.users.getUser(post?.authorClerkId)
-    : {}
+  // let clerkUser = post?.authorClerkId
+  //   ? await clerkClient.users.getUser(post?.authorClerkId)
+  //   : {}
+
+  let clerkUser = {}
+  try {
+    if (post?.authorClerkId) {
+      clerkUser = await clerkClient.users.getUser(post.authorClerkId)
+    }
+  } catch (error) {
+    console.error('Error fetching user from Clerk:', error)
+    // Handle the error here, e.g. set a default user or show an error message to the user
+  }
 
   clerkUser = clerkConvertJSON(clerkUser)
 
@@ -96,7 +106,7 @@ export const getServerSideProps: GetServerSideProps = async ({
 
   let postWithUpdatedComments = post
 
-postWithUpdatedComments.Comments = commentsWithUserNames
+  postWithUpdatedComments.Comments = commentsWithUserNames
   postWithUpdatedComments.protocolTimeLine =
     postWithUpdatedComments.protocolTimeLine.map((ptl) => ({
       ...ptl,

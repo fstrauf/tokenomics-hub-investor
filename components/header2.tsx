@@ -94,9 +94,6 @@ export default function Header2({ mode = headerStatus.main, children = null }) {
       case headerStatus.design:
         return (
           <>
-            {/* <p className="rounded-md bg-white bg-clip-text py-2 px-4 text-transparent">
-              Design a Token
-            </p> */}
             {genericSection('/myDesigns', 'Design a Token')}
           </>
         )
@@ -112,9 +109,6 @@ export default function Header2({ mode = headerStatus.main, children = null }) {
       default:
         return (
           <>
-            {/* <p className="rounded-md bg-white bg-clip-text py-2 px-4 text-transparent">
-              List a Token
-            </p> */}
             {genericSection('/myDesigns', 'List a Token')}
           </>
         )
@@ -167,7 +161,7 @@ export default function Header2({ mode = headerStatus.main, children = null }) {
                         leaveFrom="opacity-100 translate-y-0"
                         leaveTo="opacity-0 translate-y-1"
                       >
-                        <Popover.Panel className="absolute left-1/2 z-10 mt-3 w-screen max-w-md -translate-x-1/2 transform px-2 sm:px-0">
+                        <Popover.Panel className="absolute z-10 mt-3 w-60 max-w-md -translate-x-1/2 transform px-2 sm:px-0">
                           <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
                             <div className="relative grid gap-6 bg-dark-tdao px-5 py-6 sm:gap-8 sm:p-8">
                               {tdsPhaseAdmin}

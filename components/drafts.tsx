@@ -11,6 +11,8 @@ import { Menu, Transition, Dialog } from '@headlessui/react'
 import { Fragment, useState } from 'react'
 import { confirmAlert } from 'react-confirm-alert' // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'
+import ReviewComplete from './tdf/ReviewComplete'
+import PublishPost from './tdf/PublishPost'
 
 export default function Drafts({ posts, context }) {
   const { user } = useUser()
@@ -18,19 +20,19 @@ export default function Drafts({ posts, context }) {
   const contributor = user?.publicMetadata?.contributor || false
   const admin = user?.publicMetadata?.admin || false
 
-  const publishPost = async (post) => {
-    setSubmitting(true)
-    await fetch(`/api/post/publish/${post.id}`, {
-      method: 'PUT',
-    })
-    notifyStatusUpdate(
-      post.authorEmail,
-      postStatus.published,
-      `${WEBSITE_URL_BASE}/posts/${post.slug}`
-    )
-    setSubmitting(false)
-    await Router.push('/')
-  }
+  // const publishPost = async (post) => {
+  //   setSubmitting(true)
+  //   await fetch(`/api/post/publish/${post.id}`, {
+  //     method: 'PUT',
+  //   })
+  //   notifyStatusUpdate(
+  //     post.authorEmail,
+  //     postStatus.published,
+  //     `${WEBSITE_URL_BASE}/posts/${post.slug}`
+  //   )
+  //   setSubmitting(false)
+  //   await Router.push('/')
+  // }
 
   const deleteDraft = async (id: String) => {
     setSubmitting(true)
@@ -97,7 +99,7 @@ export default function Drafts({ posts, context }) {
         notifyStatusUpdate(
           post.authorEmail,
           postStatus.reviewRequired,
-          `${WEBSITE_URL_BASE}/editPost/${postId}`
+          `${WEBSITE_URL_BASE}/editDesign/${postId}`
         )
       }
       setSubmitting(false)
@@ -106,37 +108,37 @@ export default function Drafts({ posts, context }) {
     }
   }
 
-  async function reviewComplete(
-    event: MouseEvent<HTMLButtonElement, MouseEvent>,
-    post,
-    close
-  ): void {
-    const postId = post.id
-    const body = { status: postStatus.reviewComplete, postId }
-    setSubmitting(true)
+  // async function reviewComplete(
+  //   event: MouseEvent<HTMLButtonElement, MouseEvent>,
+  //   post,
+  //   close
+  // ): void {
+  //   const postId = post.id
+  //   const body = { status: postStatus.reviewComplete, postId }
+  //   setSubmitting(true)
 
-    const response = await fetch('/api/post/updateStatus', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body),
-    })
+  //   const response = await fetch('/api/post/updateStatus', {
+  //     method: 'POST',
+  //     headers: { 'Content-Type': 'application/json' },
+  //     body: JSON.stringify(body),
+  //   })
 
-    if (!response.ok) {
-      const error = await response.text()
-      toast.error(JSON.parse(error).error, { position: 'bottom-right' })
-      throw new Error(error)
-    } else {
-      toast.success('Review completed', { position: 'bottom-right' })
-      notifyStatusUpdate(
-        post.authorEmail,
-        postStatus.reviewComplete,
-        `${WEBSITE_URL_BASE}/editPost/${postId}`
-      )
-    }
-    setSubmitting(false)
-    close()
-    await Router.replace(Router.asPath)
-  }
+  //   if (!response.ok) {
+  //     const error = await response.text()
+  //     toast.error(JSON.parse(error).error, { position: 'bottom-right' })
+  //     throw new Error(error)
+  //   } else {
+  //     toast.success('Review completed', { position: 'bottom-right' })
+  //     notifyStatusUpdate(
+  //       post.authorEmail,
+  //       postStatus.reviewComplete,
+  //       `${WEBSITE_URL_BASE}/editDesign/${postId}`
+  //     )
+  //   }
+  //   setSubmitting(false)
+  //   close()
+  //   await Router.replace(Router.asPath)
+  // }
 
   return (
     <div className="static overflow-x-auto">
@@ -202,8 +204,8 @@ export default function Drafts({ posts, context }) {
                                     <button
                                       onClick={() =>
                                         Router.push(
-                                          '/editPost/[id]',
-                                          `/editPost/${post.id}`
+                                          '/editDesign/[id]',
+                                          `/editDesign/${post.id}`
                                         )
                                       }
                                       className={`${
@@ -218,80 +220,40 @@ export default function Drafts({ posts, context }) {
                                 </Menu.Item>
                                 <Menu.Item>
                                   {({ active }) => (
-                                      <button
-                                        onClick={openModal}
-                                        className={`${
-                                          active
-                                            ? 'bg-dao-red text-white'
-                                            : 'text-gray-900'
-                                        } group flex w-full items-center rounded-md px-2 py-2 text-sm disabled:opacity-70`}
-                                        type="button"
-                                        disabled={isSubmitting}
-                                      >
-                                        Share
-                                      </button>
-                                  )}
-                                </Menu.Item>
-                                <Menu.Item>
-                                  {({ active }) => (
                                     <button
-                                      onClick={() => sendToReview(post, close)}
+                                      onClick={openModal}
                                       className={`${
                                         active
                                           ? 'bg-dao-red text-white'
                                           : 'text-gray-900'
                                       } group flex w-full items-center rounded-md px-2 py-2 text-sm disabled:opacity-70`}
-                                      disabled={
-                                        isSubmitting ||
-                                        !contributor ||
-                                        post.status ===
-                                          postStatus.reviewRequired
-                                      }
+                                      type="button"
+                                      disabled={isSubmitting}
                                     >
-                                      To Review
+                                      Share
                                     </button>
                                   )}
                                 </Menu.Item>
                                 <Menu.Item>
                                   {({ active }) => (
-                                    <button
-                                      onClick={(e) =>
-                                        reviewComplete(e, post, close)
-                                      }
-                                      className={`${
-                                        active
-                                          ? 'bg-dao-red text-white'
-                                          : 'text-gray-900'
-                                      } group flex w-full items-center rounded-md px-2 py-2 text-sm disabled:opacity-70`}
-                                      disabled={
-                                        isSubmitting ||
-                                        !contributor ||
-                                        post.status !==
-                                          postStatus.reviewRequired
-                                      }
-                                    >
-                                      Review Complete
-                                    </button>
+                                    <ReviewComplete
+                                      active={active}
+                                      contributor={contributor}
+                                      isSubmitting={isSubmitting}
+                                      post={post}
+                                      setSubmitting={setSubmitting}
+                                    />
                                   )}
                                 </Menu.Item>
                                 <Menu.Item>
                                   {({ active }) => (
-                                    <button
-                                      onClick={() => publishPost(post)}
-                                      className={`${
-                                        active
-                                          ? 'bg-dao-red text-white'
-                                          : 'text-gray-900'
-                                      } group flex w-full items-center rounded-md px-2 py-2 text-sm disabled:opacity-70`}
-                                      disabled={
-                                        isSubmitting ||
-                                        !admin ||
-                                        post.status !==
-                                          postStatus.reviewComplete
-                                      }
-                                    >
-                                      Publish
-                                    </button>
+                                    <PublishPost
+                                      active={active}
+                                      contributor={contributor}
+                                      isSubmitting={isSubmitting}
+                                      post={post}
+                                      setSubmitting={setSubmitting}
+                                    />
                                   )}
                                 </Menu.Item>
                                 <Menu.Item>

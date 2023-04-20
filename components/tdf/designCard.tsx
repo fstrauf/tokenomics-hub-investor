@@ -3,16 +3,10 @@ import { Menu, Transition, Dialog } from '@headlessui/react'
 import Router from 'next/router'
 import { Fragment, useState } from 'react'
 import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
-import {
-  // mandatoryFormValidate,
-  notifyStatusUpdate,
-  postStatus,
-  postType,
-} from '../../lib/helper'
-import toast from 'react-hot-toast'
-import { WEBSITE_URL_BASE } from '../../lib/constants'
 import { confirmAlert } from 'react-confirm-alert'
 import 'react-confirm-alert/src/react-confirm-alert.css'
+import ReviewComplete from './ReviewComplete'
+import PublishPost from './PublishPost'
 
 export default function DesignCard({ post, context }) {
   // let isReport = post.postType === postType.report
@@ -27,20 +21,6 @@ export default function DesignCard({ post, context }) {
 
   function openModal() {
     setIsOpen(true)
-  }
-
-  const publishPost = async (post) => {
-    setSubmitting(true)
-    await fetch(`/api/post/publish/${post.id}`, {
-      method: 'PUT',
-    })
-    notifyStatusUpdate(
-      post.authorEmail,
-      postStatus.published,
-      `${WEBSITE_URL_BASE}/posts/${post.slug}`
-    )
-    setSubmitting(false)
-    await Router.push('/')
   }
 
   const deleteDraft = async (id: String) => {
@@ -68,42 +48,11 @@ export default function DesignCard({ post, context }) {
     })
   }
 
-  async function reviewComplete(
-    event: MouseEvent<HTMLButtonElement, MouseEvent>,
-    post,
-    close
-  ): void {
-    const postId = post.id
-    const body = { status: postStatus.reviewComplete, postId }
-
-    setSubmitting(true)
-
-    const response = await fetch('/api/post/updateStatus', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body),
-    })
-
-    if (!response.ok) {
-      const error = await response.text()
-      toast.error(JSON.parse(error).error, { position: 'bottom-right' })
-      throw new Error(error)
-    } else {
-      toast.success('Review completed', { position: 'bottom-right' })
-      notifyStatusUpdate(
-        post.authorEmail,
-        postStatus.reviewComplete,
-        `${WEBSITE_URL_BASE}/editPost/${postId}`
-      )
-    }
-    setSubmitting(false)
-    close()
-    await Router.replace(Router.asPath)
-  }
-
-
   return (
-    <div key={post.id} className="m-5 grid h-64 w-80 max-w-sm content-between rounded-lg border border-gray-200 bg-white p-2 shadow-md">
+    <div
+      key={post.id}
+      className="m-5 grid h-64 w-80 max-w-sm content-between rounded-lg border border-gray-200 bg-white p-2 shadow-md"
+    >
       <div className="">
         <span className="font-bold text-gray-700">Title: </span>
         <span className="text-gray-600">{post.title}</span>
@@ -200,36 +149,24 @@ export default function DesignCard({ post, context }) {
                       </Menu.Item>
                       <Menu.Item>
                         {({ active }) => (
-                          <button
-                            onClick={(e) => reviewComplete(e, post, close)}
-                            className={`${
-                              active ? 'bg-dao-red text-white' : 'text-gray-900'
-                            } group flex w-full items-center rounded-md px-2 py-2 text-sm disabled:opacity-70`}
-                            disabled={
-                              isSubmitting ||
-                              !contributor ||
-                              post.status !== postStatus.reviewRequired
-                            }
-                          >
-                            Review Complete
-                          </button>
+                          <ReviewComplete
+                            active={active}
+                            contributor={contributor}
+                            isSubmitting={isSubmitting}
+                            post={post}
+                            setSubmitting={setSubmitting}
+                          />
                         )}
                       </Menu.Item>
                       <Menu.Item>
                         {({ active }) => (
-                          <button
-                            onClick={() => publishPost(post)}
-                            className={`${
-                              active ? 'bg-dao-red text-white' : 'text-gray-900'
-                            } group flex w-full items-center rounded-md px-2 py-2 text-sm disabled:opacity-70`}
-                            disabled={
-                              isSubmitting ||
-                              !contributor ||
-                              post.status !== postStatus.reviewComplete
-                            }
-                          >
-                            Publish
-                          </button>
+                          <PublishPost
+                            active={active}
+                            contributor={contributor}
+                            isSubmitting={isSubmitting}
+                            post={post}
+                            setSubmitting={setSubmitting}
+                          />
                         )}
                       </Menu.Item>
                       <Menu.Item>
