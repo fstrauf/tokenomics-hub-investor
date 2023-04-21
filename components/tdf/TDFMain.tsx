@@ -11,21 +11,21 @@ import RequestReviewModal from '../../components/requestReviewPopup'
 import {
   designElementStatus,
   headerStatus,
-  postType,
+  // postType,
 } from '../../lib/helper'
 import { event } from 'nextjs-google-analytics'
 import Header2 from '../header2'
 import HelpButton from './HelpButton'
-import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
+// import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
 
 export default function TDFMain({ props }) {
-  const { user } = useUser()
-  const beta = user?.publicMetadata?.beta || false
+  // const { user } = useUser()
+  // const beta = user?.publicMetadata?.beta || false
   const router = useRouter()
 
-  if(props?.post?.postType === postType.design && !beta){
-    router.push('/requestBeta')
-  }
+  // if(props?.post?.postType === postType.design && !beta){
+  //   router.push('/requestBeta')
+  // }
 
   const [activePhase, setActivePhase] = useState(
     router.query.phase ? +router.query.phase : 11
