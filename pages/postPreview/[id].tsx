@@ -1,6 +1,5 @@
 import { useRouter } from 'next/router'
 import ErrorPage from 'next/error'
-// import Layout from '../../components/layout'
 import prisma from '../../lib/prisma'
 import { clerkClient } from '@clerk/nextjs/server'
 import { clerkConvertJSON, headerStatus, postStatus } from '../../lib/helper'
@@ -8,15 +7,14 @@ import PostView from '../../components/PostView'
 import { GetServerSideProps } from 'next/types'
 import Header2 from '../../components/header2'
 import Link from 'next/link'
-// import HelpButton from '../../components/tdf/HelpButton'
-export default function Post({ post, author }) {
+
+const PostPreview: React.FC<UpdateNewDesignProps> = ({post, author}) => {
   const router = useRouter()
 
   if (!router.isFallback && !post?.id) {
     return <ErrorPage statusCode={404} />
   }
   return (
-    // <Layout>
     <>
       <Header2 mode={headerStatus.design}>
         <div className="flex gap-2">
@@ -34,6 +32,8 @@ export default function Post({ post, author }) {
     </>
   )
 }
+
+export default PostPreview
 
 export const getServerSideProps: GetServerSideProps = async ({
   params,

@@ -11,14 +11,14 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 
 export default function MyDesigns({ posts }) {
-  const { user } = useUser()
-  const router = useRouter()
+  // const { user } = useUser()
+  // const router = useRouter()
 
-  const beta = user?.publicMetadata?.beta || false
+  // const beta = user?.publicMetadata?.beta || false
 
-  if (!beta) {
-    router.push('/requestBeta')
-  }
+  // if (!beta) {
+  //   router.push('/requestBeta')
+  // }
 
   return (
     <Layout mode={headerStatus.main}>
