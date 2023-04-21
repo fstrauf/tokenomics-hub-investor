@@ -18,39 +18,6 @@ export const getMergedInitialCalcValues = (userCalcs, userId, detailedCalc) => {
   return preloadInitialValues
 }
 
-// export async function getGptGenerate(
-//   title,
-//   scope,
-// ) {
-// // export async const getGptGenerate = (title, scope) => {
-//   try {
-//     const response = await fetch('/api/gptGenerate', {
-//       method: 'POST',
-//       headers: {
-//         'Content-Type': 'application/json',
-//       },
-//       body: JSON.stringify({ title: title, scope: scope }),
-//     })
-
-//     const data = await response.json()
-
-//     if (response.status !== 200) {
-//       throw (
-//         data.error || new Error(`Request failed with status ${response.status}`)
-//       )
-//     }
-
-//     return data.result
-//     // setFieldValue(scope, data.result)
-//     // setResult(data.result);
-//     // setAnimalInput("");
-//   } catch (error) {
-//     // Consider implementing your own error handling logic here
-//     console.error(error)
-//     alert(error.message)
-//   }
-// }
-
 export const initialCalculatorValues = {
   id: '',
   totalSupply: 100000000,
@@ -184,50 +151,6 @@ export const getActiveDesignPhase = (designPhases, activePhase) => {
 
 export const shortBigNumber = (value) =>
   new Intl.NumberFormat('en', { notation: 'compact' }).format(value)
-
-// export function getEpochAreaData(
-//   calculationRow,
-//   rowAllocation,
-//   chartData,
-//   startDate
-// ) {
-//   console.log("🚀 ~ file: helper.ts:150 ~ calculationRow:", calculationRow)
-//   const secondsPerMonth = 2628000
-//   let emissions = 0
-//   let month = 0 //1
-//   const epochDurationInMonths =
-//     calculationRow.epochDurationInSeconds / secondsPerMonth //hardcode to start with
-//   let emissionsPerSecond = calculationRow.initialEmissionPerSecond
-//   let epochs = 0
-
-//   while (emissions < rowAllocation) {
-//     var categoryLine = {}
-
-//     if (chartData[month] === undefined) {
-//       //always initialise the first line
-//       chartData[month] = {}
-//     }
-
-//     emissions += secondsPerMonth * emissionsPerSecond
-
-//     if (month === epochDurationInMonths * (epochs + 1)) {
-//       emissionsPerSecond =
-//         emissionsPerSecond * calculationRow.emissionReductionPerEpoch
-//       epochs++
-//     }
-
-//     if (categoryLine['date'] === undefined) {
-//       categoryLine['date'] = new Date(startDate).setMonth(
-//         new Date(startDate).getMonth() + month
-//       )
-//     }
-
-//     categoryLine[calculationRow.name || calculationRow.category] = emissions
-
-//     Object.assign(chartData[month], categoryLine)
-//     month++
-//   }
-// }
 
 export function getMonthEpochAreaData(
   calculationRow,

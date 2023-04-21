@@ -1,29 +1,25 @@
 import Layout from '../components/layout'
 import React, { useState } from 'react'
-import toast, { Toaster } from 'react-hot-toast'
+import { Toaster } from 'react-hot-toast'
 import { Field, Form, Formik } from 'formik'
-// import { DISCORD_WEBHOOK } from '../lib/constants'
+import { discordWebhooks, sendDiscordMessage } from '../lib/discordMessenger'
 
 export default function BookAnExpert(props) {
   const [isSubmittingForm, setIsSubmittingForm] = useState(false)
   const submitData = async (values, { resetForm }) => {
     setIsSubmittingForm(true)
-    const body = { values }
 
-    try {
-      await fetch('/api/expertContact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body),
-      })
-      toast.success('Message sent', { position: 'bottom-right' })
-      resetForm() // clear the form's input fields after successful submission
-    } catch (error) {
-      console.error(error)
-      toast.error('An error occurred', { position: 'bottom-right' })
-    } finally {
-      setIsSubmittingForm(false)
+    const message = `
+    Name: ${values.name}
+    Email: ${values.email}
+    Timeline: ${values.timeline}
+    Message: ${values.message}`
+    const success = await sendDiscordMessage(message, discordWebhooks.consulting)
+
+    if (success) {
+      resetForm()
     }
+    setIsSubmittingForm(false)
   }
 
   return (
@@ -33,10 +29,12 @@ export default function BookAnExpert(props) {
         <Toaster />
         <div className="m-auto flex flex-col justify-center">
           <h1 className="mb-10 mt-10 text-center text-3xl font-bold">
-            Need help designing your token? 
+            Need help designing your token?
             <br></br>Want a review of your design?
           </h1>
-          <p className="mb-5 text-center">our team of experts is happy to help</p>
+          <p className="mb-5 text-center">
+            our team of experts is happy to help
+          </p>
           <Formik
             initialValues={{
               name: '',
