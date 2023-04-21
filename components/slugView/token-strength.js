@@ -12,32 +12,34 @@ export default function TokenStrength({ post, contributor }) {
         {/* {contributor && <RatingDialog post={post} />} */}
       </div>
 
-      <div className="grid rounded-lg border-2">
-        <BreakdownBox
-          value={post?.tokenUtility}
-          strength={Number(post?._avg?.tokenUtilityStrength?.toFixed(1))}
-          title="Token Utility:"
-        />
-        <BreakdownBox
-          value={post?.demandDrivers}
-          strength={Number(post?._avg?.demandDriversStrength?.toFixed(1))}
-          title="Demand Driver:"
-        />
-        <BreakdownBox
-          value={post?.valueCreation}
-          strength={Number(post?._avg?.valueCreationStrength?.toFixed(1))}
-          title="Value Creation:"
-        />
-        <BreakdownBox
-          value={post?.valueCapture}
-          strength={Number(post?._avg?.valueCaptureStrength?.toFixed(1))}
-          title="Value Capture:"
-        />
-        <BreakdownBox
-          value={post?.businessModel}
-          strength={Number(post?._avg?.businessModelStrength?.toFixed(1))}
-          title="Business Model:"
-        />
+      <div className="rounded-lg border-2">
+        <div className='max-w-4xl grid m-auto'>
+          <BreakdownBox
+            value={post?.tokenUtility}
+            strength={Number(post?._avg?.tokenUtilityStrength?.toFixed(1))}
+            title="Token Utility:"
+          />
+          <BreakdownBox
+            value={post?.demandDrivers}
+            strength={Number(post?._avg?.demandDriversStrength?.toFixed(1))}
+            title="Demand Driver:"
+          />
+          <BreakdownBox
+            value={post?.valueCreation}
+            strength={Number(post?._avg?.valueCreationStrength?.toFixed(1))}
+            title="Value Creation:"
+          />
+          <BreakdownBox
+            value={post?.valueCapture}
+            strength={Number(post?._avg?.valueCaptureStrength?.toFixed(1))}
+            title="Value Capture:"
+          />
+          <BreakdownBox
+            value={post?.businessModel}
+            strength={Number(post?._avg?.businessModelStrength?.toFixed(1))}
+            title="Business Model:"
+          />
+        </div>
       </div>
     </>
   )

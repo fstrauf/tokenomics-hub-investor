@@ -22,7 +22,7 @@ export default function ProtocolStats({ protocol }) {
     ssr: false,
   })
 
-  if (statsData.error || chartData.error) return <div>Failed to load</div>
+  if (statsData.error || chartData.error) return <div></div>
   if (!statsData.data || !chartData.data) return <div>Loading...</div>
 
   const priceData = chartData?.data?.prices?.map((value) => ({
