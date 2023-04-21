@@ -1,4 +1,4 @@
-import { Fragment } from 'react'
+import { Children, Fragment } from 'react'
 import { Popover, Transition } from '@headlessui/react'
 import Link from 'next/link'
 import {
@@ -12,54 +12,38 @@ import ThubLogo from '../public/svg/thub-logo'
 import Bars3Icon from '../public/svg/bars3Icon'
 import XMarkIcon from '../public/svg/xmarkicon'
 import { headerStatus } from '../lib/helper'
-import ChevronIcon from '../public/svg/chevron'
+// import ChevronIcon from '../public/svg/chevron'
 // import { createContext } from 'react';
+import { useRouter } from 'next/router'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function Header2({ mode }) {
+export default function Header2({ mode = headerStatus.main, children = null }) {
   const { user } = useUser()
-  // const [showBanner, setShowBanner] = useState(true)
   const admin = user?.publicMetadata?.admin || false
-  // const showBanner = useContext(BannerContext);
 
-  const calculatorSection = (
-    <Link
-      href="/calculator"
-      className="text-base font-medium text-white hover:text-gray-300"
-    >
-      Calculator
-    </Link>
-  )
+  const router = useRouter()
 
-  const expertsSection = (
-    <Link
-      href="/bookAnExpert"
-      className="text-base font-medium text-white hover:text-gray-300"
-    >
-      Services
-    </Link>
-  )
-
-  const myDesign = (
-    <Link
-      href="/myDesigns"
-      className="text-base font-medium text-white hover:text-gray-300"
-    >
-      My Designs
-    </Link>
-  )
-
-  const newDesign = (
-    <Link
-      href="/newDesign"
-      className="text-base font-medium text-white hover:text-gray-300"
-    >
-      New Design
-    </Link>
-  )
+  const genericSection = (pathName, title) => {
+    return (
+      <Link
+        href={pathName}
+        className={`${
+          router.pathname === pathName
+            ? 'bg-gradient-to-tr from-dao-red via-dao-red to-dao-green'
+            : 'bg-white'
+        } rounded-md bg-clip-text py-2 px-4 text-transparent hover:bg-opacity-80 ${
+          router.pathname === pathName
+            ? 'hover:from-dao-red hover:via-dao-red hover:to-dao-green'
+            : 'hover:bg-dao-red'
+        }`}
+      >
+        {title}
+      </Link>
+    )
+  }
 
   const mechanismAdmin = (
     <Link
@@ -105,57 +89,27 @@ export default function Header2({ mode }) {
     </Link>
   )
 
-  // const fundRaiseBar = (
-  //   <div
-  //     className={`${
-  //       showBanner ? 'm-auto flex items-center bg-dao-green' : 'hidden'
-  //     }`}
-  //   >
-  //     <div className="mx-auto max-w-xl py-3 px-3 sm:px-6 lg:px-8">
-  //       <p className="ml-3 self-center truncate text-center font-medium text-white">
-  //         <span className="inline">🥳 We are fundraising. Interested? </span>
-  //         <a
-  //           href="mailto:contact@tokenomicsdao.com"
-  //           className="hover:underline"
-  //         >
-  //           Contact us.
-  //         </a>
-  //       </p>
-  //     </div>
-  //     <button
-  //       className="text-gray-200"
-  //       onClick={() => {
-  //         setShowBanner(false)
-  //       }}
-  //     >
-  //       <XMarkIcon className="h-6 w-6 text-gray-200" aria-hidden="true" />
-  //     </button>
-  //   </div>
-  // )
-
   function renderSwitch() {
     switch (mode) {
       case headerStatus.design:
         return (
           <>
-            {myDesign}
-            {newDesign}
+            {genericSection('/myDesigns', 'Design a Token')}
           </>
         )
       case headerStatus.main:
         return (
           <>
-            {calculatorSection}
-            {expertsSection}
-            {myDesign}
+            {genericSection('/calculator', 'Calculator')}
+            {genericSection('/bookAnExpert', 'Services')}
+            {genericSection('/myDesigns', 'My Dashboard')}
           </>
         )
       case headerStatus.report:
       default:
         return (
           <>
-            {calculatorSection}
-            {expertsSection}
+            {genericSection('/myDesigns', 'List a Token')}
           </>
         )
     }
@@ -163,7 +117,6 @@ export default function Header2({ mode }) {
 
   return (
     <>
-      {/* {fundRaiseBar} */}
       <Popover className="relative bg-dark-tdao">
         <div className="mx-auto max-w-full px-6">
           <div className="flex items-center justify-between py-1 md:justify-start md:space-x-10">
@@ -182,6 +135,8 @@ export default function Header2({ mode }) {
 
             <Popover.Group as="nav" className="hidden space-x-10 md:flex">
               {renderSwitch()}
+            </Popover.Group>
+            <div className="hidden items-center justify-end md:flex md:flex-1 md:gap-5 lg:w-0">
               {admin ? (
                 <Popover className="relative">
                   {({ open }) => (
@@ -189,19 +144,12 @@ export default function Header2({ mode }) {
                       <Popover.Button
                         className={classNames(
                           open
-                            ? 'text-gray-900'
+                            ? 'bg-gradient-to-tr  from-dao-red via-dao-red to-dao-green text-gray-900'
                             : 'text-white hover:text-gray-50',
-                          'group inline-flex items-center rounded-md bg-dark-tdao text-base font-medium text-white hover:text-gray-50'
+                          'rounded-md bg-white bg-clip-text py-2 px-4 text-transparent hover:bg-opacity-80'
                         )}
                       >
                         <span className="mr-2">Admin</span>
-                        <ChevronIcon
-                          className={`${
-                            open
-                              ? 'rotate-180 transform text-gray-600'
-                              : 'text-gray-400'
-                          } ml-2 h-5 w-5 group-hover:text-gray-500`}
-                        />
                       </Popover.Button>
 
                       <Transition
@@ -213,7 +161,7 @@ export default function Header2({ mode }) {
                         leaveFrom="opacity-100 translate-y-0"
                         leaveTo="opacity-0 translate-y-1"
                       >
-                        <Popover.Panel className="absolute left-1/2 z-10 mt-3 w-screen max-w-md -translate-x-1/2 transform px-2 sm:px-0">
+                        <Popover.Panel className="absolute z-10 mt-3 w-60 max-w-md -translate-x-1/2 transform px-2 sm:px-0">
                           <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
                             <div className="relative grid gap-6 bg-dark-tdao px-5 py-6 sm:gap-8 sm:p-8">
                               {tdsPhaseAdmin}
@@ -230,8 +178,7 @@ export default function Header2({ mode }) {
               ) : (
                 <></>
               )}
-            </Popover.Group>
-            <div className="hidden items-center justify-end md:flex md:flex-1 lg:w-0">
+              <div>{children}</div>
               <SignedIn>
                 <UserButton />
               </SignedIn>

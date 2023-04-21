@@ -5,11 +5,10 @@ import { GetServerSideProps } from 'next'
 import { clerkClient, getAuth } from '@clerk/nextjs/server'
 import type { AuthData } from '@clerk/nextjs/dist/server/types'
 import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
-import { clerkConvertJSON, headerStatus, postStatus } from '../lib/helper'
+import { clerkConvertJSON, headerStatus, postStatus, postType } from '../lib/helper'
 import DesignCard from '../components/tdf/designCard'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-
 
 export default function MyDesigns({ posts }) {
   const { user } = useUser()
@@ -17,13 +16,12 @@ export default function MyDesigns({ posts }) {
 
   const beta = user?.publicMetadata?.beta || false
 
-  if(!beta){
+  if (!beta) {
     router.push('/requestBeta')
   }
 
-
   return (
-    <Layout mode={headerStatus.design}>
+    <Layout mode={headerStatus.main}>
       <>
         <div className="mt-4 mb-4 rounded-lg bg-gray-100 p-1">
           <div className="flex items-center justify-between rounded-lg p-2 py-2">
@@ -40,7 +38,32 @@ export default function MyDesigns({ posts }) {
           </div>
           <div className="overflow-x-auto rounded-lg bg-white">
             <div className="flex flex-wrap items-center justify-center">
-              {posts?.map((post, index) => {
+              {posts?.filter(p => p.postType === postType.design).map((post, index) => {
+                return (
+                  <div key={index}>
+                    <DesignCard post={post} context="myDrafts" />
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+        </div>
+        <div className="mt-4 mb-4 rounded-lg bg-gray-100 p-1">
+          <div className="flex items-center justify-between rounded-lg p-2 py-2">
+            <p className="text-xl font-bold">My Reports</p>
+            <div className="flex gap-1">
+              {' '}
+              <Link
+                href="/newPost"
+                className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
+              >
+                New Report
+              </Link>
+            </div>
+          </div>
+          <div className="overflow-x-auto rounded-lg bg-white">
+            <div className="flex flex-wrap items-center justify-center">
+              {posts?.filter(p => p.postType === postType.report).map((post, index) => {
                 return (
                   <div key={index}>
                     <DesignCard post={post} context="myDrafts" />

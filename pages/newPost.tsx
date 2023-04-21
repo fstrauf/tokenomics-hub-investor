@@ -1,4 +1,4 @@
-import Layout from '../components/layout'
+// import Layout from '../components/layout'
 import React from 'react'
 import prisma from '../lib/prisma'
 import { GetServerSideProps } from 'next'
@@ -9,33 +9,19 @@ import { AuthData } from '@clerk/nextjs/dist/server/types'
 
 export default function NewPost(props) {
   return (
-    <Layout mode="design">
+    // <Layout>
       <TDFMain props={props} />
-    </Layout>
+    // </Layout>
   )
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const postId: string = context?.query?.id || ''
 
   const { userId }: AuthData = getAuth(context.req)
 
   const txCalls = []
 
-  // txCalls.push(
-  //   prisma.post.findMany({
-  //     where: {
-  //       categories: { every: { label: 'defi' } },
-  //       AND: {
-  //         status: postStatus.published,
-  //       },
-  //     },
-  //     take: 20,
-  //   })
-  // )
-
   txCalls.push(prisma.designPhases.findMany({ orderBy: { phaseOrder: 'asc' } }))
-  // txCalls.push(prisma.designPhases.findUnique({ where: { id: postId } }))
 
   txCalls.push(
     prisma.calculation.findMany({
