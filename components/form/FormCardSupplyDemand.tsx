@@ -77,6 +77,10 @@ export const FormCardSupplyDemand = ({
   }
 
   const mechanismTile = (input, index, arrayHelpers) => {
+    console.log(
+      '🚀 ~ file: FormCardSupplyDemand.tsx:80 ~ mechanismTile ~ input:',
+      input
+    )
     return (
       <div
         key={index}
@@ -85,10 +89,14 @@ export const FormCardSupplyDemand = ({
         {' '}
         <div>
           <div className="flex">
-            <div
-              className="mr-2 h-5 w-5 bg-slate-600"
-              style={{ background: input.color }}
-            ></div>
+            {input?.isSink ? (
+              <></>
+            ) : (
+              <div
+                className="mr-2 h-5 w-5 bg-slate-600"
+                style={{ background: input.color }}
+              ></div>
+            )}
             <p className="">{input.name}</p>
           </div>
           {input.isSink ? (
