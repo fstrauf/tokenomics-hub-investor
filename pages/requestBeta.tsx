@@ -33,7 +33,7 @@ export default function RequestBeta(props) {
         toast.success('Request Granted!', { position: 'bottom-right' })
         setIsSubmittingForm(false)
         router.push('/')        
-      }, 30000); // Executes the anonymous function every second
+      }, 50000); // Executes the anonymous function every second
     }
   }
 
