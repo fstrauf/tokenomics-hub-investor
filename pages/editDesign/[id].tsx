@@ -1,20 +1,24 @@
 import { GetServerSideProps } from 'next'
-// import Layout from '../../components/layout'
 import React from 'react'
 import TDFMain from '../../components/tdf/TDFMain'
-import {
-  clerkConvertJSON,
-  // getMergedInitialCalcValues,
-  // headerStatus,
-} from '../../lib/helper'
+import { clerkConvertJSON } from '../../lib/helper'
 import { clerkClient } from '@clerk/nextjs/server'
 import prisma from '../../lib/prisma'
+import CommentForm from '../../components/commentForm'
+import Comments from '../../components/comments'
 
 const EditDesign: React.FC<UpdateNewDesignProps> = (props) => {
   return (
-    // <Layout mode={headerStatus.design}>
-    <TDFMain props={props} />
-    // </Layout>
+    <>
+      <TDFMain props={props} />
+      <div className="m-auto max-w-md sm:max-w-2xl lg:max-w-screen-2xl">
+        <h1 className="section-head mt-10 mb-4 text-xl font-bold text-black md:mt-20 md:text-2xl lg:text-3xl">
+          Comments.
+        </h1>
+        <CommentForm id={props?.post?.id} />
+        <Comments comments={props?.post?.Comments} />
+      </div>
+    </>
   )
 }
 
