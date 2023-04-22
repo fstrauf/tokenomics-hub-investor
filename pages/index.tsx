@@ -94,12 +94,12 @@ const Index: React.FC<Props> = (props) => {
           <link rel="manifest" href="/site.webmanifest"></link>
         </Head>
         <Container>
-          <div className="mt-10 flex items-center justify-center rounded-lg bg-gradient-to-r from-dao-green to-dao-red flex-col p-4 gap-8">
-            <div className="flex w-3/4 flex-col items-center justify-center rounded-lg text-white">
-              <h1 className="mb-5 text-2xl font-bold">
+          <div className="mt-10 flex justify-center gap-32 p-5 rounded-lg bg-gradient-to-r from-dao-green to-dao-red">
+            <div className="flex w-3/4 flex-col rounded-lg text-white max-w-lg">
+              <h1 className="mb-5 text-2xl text-center font-bold">
                 Explore, compare and evaluate tokenomics of crypto projects.
               </h1>
-              <p className="mb-5 text-base text-center">
+              <p className="mb-5 text-base">
                 Tokenomics Hub is a community driven platform showcasing the
                 need-to-know tokenomic information per project. No matter if
                 you’re an avid user, a fellow degen or a protocol owner/team
@@ -108,31 +108,32 @@ const Index: React.FC<Props> = (props) => {
               <div className="flex justify-center">
                 <Link
                   href="/newPost"
-                  className="w-36 self-center rounded-md bg-white px-4 py-2 text-sm font-medium border-2 border-dark-tdao text-center text-dark-tdao hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+                  className="w-36 self-center rounded-md border-2 border-dark-tdao bg-white px-4 py-2 text-center text-sm font-medium text-dark-tdao hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
                 >
                   List a Token
                 </Link>
               </div>
             </div>
-            <div className="flex w-3/4 flex-col items-center justify-center rounded-lg text-white">
-              <h1 className="mb-5 text-2xl font-bold">
+            <div className="flex w-3/4 flex-col rounded-lg text-white max-w-lg">
+              <h1 className="mb-5 text-2xl text-center font-bold">
                 Want to design a token?
               </h1>
-              <p className="mb-5 text-base text-center">
-              Tokenomics Hub offers entrepreneurs an industry leading framework with a built in suite of tools to help you create sustainable tokenomics (in beta)
+              <p className="mb-5 text-base">
+                Tokenomics Hub offers entrepreneurs an industry leading
+                framework with a built in suite of tools to help you create
+                sustainable tokenomics (in beta)
               </p>
               <div className="flex justify-center">
-              <Link
-              href="/myDesigns"
-              className="w-36 self-center rounded-md bg-white px-4 py-2 text-sm font-medium text-dark-tdao border-2 border-dark-tdao text-center hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
-            >
-              Design a Token
-            </Link>
+                <Link
+                  href="/myDesigns"
+                  className="w-36 self-center rounded-md border-2 border-dark-tdao bg-white px-4 py-2 text-center text-sm font-medium text-dark-tdao hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+                >
+                  Design a Token
+                </Link>
               </div>
             </div>
           </div>
-          <div className="mt-10 mb-10 flex justify-center gap-4 text-center">
-          </div>
+          <div className="mt-10 mb-10 flex justify-center gap-4 text-center"></div>
           <div className="m-auto flex w-1/2 max-w-5xl">
             <Select
               defaultValue={[]}
