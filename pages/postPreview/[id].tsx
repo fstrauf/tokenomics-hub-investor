@@ -7,8 +7,9 @@ import PostView from '../../components/PostView'
 import { GetServerSideProps } from 'next/types'
 import Header2 from '../../components/header2'
 import Link from 'next/link'
+import InfoSection from '../../components/InfoSection'
 
-const PostPreview: React.FC<UpdateNewDesignProps> = ({post, author}) => {
+const PostPreview: React.FC<UpdateNewDesignProps> = ({ post, author }) => {
   const router = useRouter()
 
   if (!router.isFallback && !post?.id) {
@@ -25,9 +26,13 @@ const PostPreview: React.FC<UpdateNewDesignProps> = ({post, author}) => {
           >
             Edit
           </Link>
-          {/* <HelpButton values={values} setIsRequestReviewOpen={setIsRequestReviewOpen} setreviewRequiredFields={setreviewRequiredFields} /> */}
         </div>
       </Header2>
+
+      <InfoSection
+        title="You are currently in preview mode"
+        text="This allows you to see what your finished report would look like if you decide to publish it on Tokenomics Hub. You can click Edit in the top right hand corner to continue making changes "
+      />
       <PostView post={post} author={author} />
     </>
   )

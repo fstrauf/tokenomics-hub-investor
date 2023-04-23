@@ -95,7 +95,7 @@ export default function DesignCard({ post, context }) {
           href="/postPreview/[id]]"
           className=" rounded-lg bg-dao-red px-4 py-2 text-center text-xs font-medium text-white"
         >
-          View
+          Preview
         </Link>
         <div className="">
           <Menu as="div" className="z-60 static inline-block text-left">

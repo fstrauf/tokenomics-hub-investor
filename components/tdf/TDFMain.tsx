@@ -395,7 +395,7 @@ explanation`}
                   href="/postPreview/[id]]"
                   className="rounded-md border-2 border-dao-red bg-gradient-to-r from-dao-red via-dao-red to-dao-green bg-clip-text py-1 px-4 text-transparent hover:bg-opacity-80"
                 >
-                  View
+                  Preview
                 </Link>
                 <HelpButton values={values} setIsRequestReviewOpen={setIsRequestReviewOpen} setreviewRequiredFields={setreviewRequiredFields} />
               </div>
