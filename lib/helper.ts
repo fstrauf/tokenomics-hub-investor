@@ -266,7 +266,14 @@ export function getDemandAreaData(
 
     for (let i = 0; i < inputData.length; i++) {
       const row = inputData[i]
-      const endMonth = currentMonth + row.months - 1
+      let endMonth = currentMonth + row.months - 1
+      // console.log("🚀 ~ file: helper.ts:270 ~ months:", months)
+      
+      if(endMonth>=months){
+        endMonth=months-1
+      }
+      // console.log("🚀 ~ file: helper.ts:270 ~ endMonth:", endMonth)
+      
       for (let j = currentMonth; j <= endMonth; j++) {
         if (supplyDemandTotals[j] === undefined) {
           supplyDemandTotals[j] = {

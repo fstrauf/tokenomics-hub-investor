@@ -1,13 +1,7 @@
 import Router from 'next/router'
 import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
-// import {
-//   postStatus,
-//   notifyStatusUpdate,
-//   mandatoryFormValidate,
-// } from '../lib/helper'
 import { Toaster } from 'react-hot-toast'
-// import { WEBSITE_URL_BASE } from '../lib/constants'
-import { Menu, Transition, Dialog } from '@headlessui/react'
+import { Menu, Transition } from '@headlessui/react'
 import { Fragment, useState } from 'react'
 import { confirmAlert } from 'react-confirm-alert' // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'
@@ -19,7 +13,6 @@ export default function Drafts({ posts, context }) {
   const { user } = useUser()
   const [isSubmitting, setSubmitting] = useState(false)
   const contributor = user?.publicMetadata?.contributor || false
-  // const admin = user?.publicMetadata?.admin || false
 
   const deleteDraft = async (id: String) => {
     setSubmitting(true)
@@ -44,8 +37,6 @@ export default function Drafts({ posts, context }) {
       ],
     })
   }
-
-  // let [isOpen, setIsOpen] = useState(false)
 
   return (
     <div className="static overflow-x-auto">
@@ -121,7 +112,7 @@ export default function Drafts({ posts, context }) {
                                           : 'text-gray-900'
                                       } group flex w-full items-center rounded-md px-2 py-2 text-sm disabled:opacity-70`}
                                     >
-                                      Edit
+                                      Open
                                     </button>
                                   )}
                                 </Menu.Item>

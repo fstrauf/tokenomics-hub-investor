@@ -2,7 +2,7 @@
 import React from 'react'
 import prisma from '../lib/prisma'
 import { GetServerSideProps } from 'next'
-import { getMergedInitialCalcValues, postStatus, postType } from '../lib/helper'
+import { getMergedInitialCalcValues, headerStatus, postStatus, postType } from '../lib/helper'
 import TDFMain from '../components/tdf/TDFMain'
 import { getAuth } from '@clerk/nextjs/server'
 import { AuthData } from '@clerk/nextjs/dist/server/types'
@@ -10,7 +10,7 @@ import { AuthData } from '@clerk/nextjs/dist/server/types'
 export default function NewPost(props) {
   return (
     // <Layout>
-      <TDFMain props={props} />
+      <TDFMain props={props} header={headerStatus.report} />
     // </Layout>
   )
 }

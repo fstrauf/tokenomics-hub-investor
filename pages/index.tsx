@@ -94,42 +94,52 @@ const Index: React.FC<Props> = (props) => {
           <link rel="manifest" href="/site.webmanifest"></link>
         </Head>
         <Container>
-          <div className="mt-10 flex justify-center gap-32 p-5 rounded-lg bg-gradient-to-r from-dao-green to-dao-red">
-            <div className="flex w-3/4 flex-col rounded-lg text-white max-w-lg">
-              <h1 className="mb-5 text-2xl text-center font-bold">
+          <div className="m-auto mt-10 flex flex-col items-center">
+            <div className="mb-10">
+              <h1 className="text-center text-3xl font-bold">
                 Explore, compare and evaluate tokenomics of crypto projects.
               </h1>
-              <p className="mb-5 text-base">
-                Tokenomics Hub is a community driven platform showcasing the
-                need-to-know tokenomic information per project. No matter if
-                you’re an avid user, a fellow degen or a protocol owner/team
-                member, anyone can list a token
+              <p className="text-center text-xl">
+                Tokenomics Hub shows you the need-to-know tokenomic information
+                per project{' '}
               </p>
-              <div className="flex justify-center">
-                <Link
-                  href="/newPost"
-                  className="w-36 self-center rounded-md border-2 border-dark-tdao bg-white px-4 py-2 text-center text-sm font-medium text-dark-tdao hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
-                >
-                  List a Token
-                </Link>
-              </div>
             </div>
-            <div className="flex w-3/4 flex-col rounded-lg text-white max-w-lg">
-              <h1 className="mb-5 text-2xl text-center font-bold">
-                Want to design a token?
-              </h1>
-              <p className="mb-5 text-base">
-                Tokenomics Hub offers entrepreneurs an industry leading
-                framework with a built in suite of tools to help you create
-                sustainable tokenomics (in beta)
-              </p>
-              <div className="flex justify-center">
-                <Link
-                  href="/myDesigns"
-                  className="w-36 self-center rounded-md border-2 border-dark-tdao bg-white px-4 py-2 text-center text-sm font-medium text-dark-tdao hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
-                >
-                  Design a Token
-                </Link>
+            <div className="flex max-w-6xl justify-center gap-32 rounded-lg bg-gradient-to-r from-dao-green to-dao-red p-5">
+              <div className="flex w-3/4 max-w-lg flex-col rounded-lg text-white">
+                <h1 className="mb-5 text-center text-2xl font-bold">
+                  A tokenomics centric platform
+                </h1>
+                <p className="mb-5 text-center">
+                  No matter if you’re an avid crypto user, a fellow degen or a
+                  protocol owner/team member, anyone can contribute to
+                  Tokenomics Hub by listing a token
+                </p>
+                <div className="flex justify-center">
+                  <Link
+                    href="/newPost"
+                    className="w-36 self-center rounded-md border-2 border-dark-tdao bg-white px-4 py-2 text-center text-sm font-medium text-dark-tdao hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+                  >
+                    List a Token
+                  </Link>
+                </div>
+              </div>
+              <div className="flex w-3/4 max-w-lg flex-col rounded-lg text-white">
+                <h1 className="mb-5 text-center text-2xl font-bold">
+                  Want to design a token?
+                </h1>
+                <p className="mb-5 text-center">
+                  Tokenomics Hub offers entrepreneurs an industry leading
+                  framework with a built in suite of tools to help you create
+                  sustainable tokenomics (in beta)
+                </p>
+                <div className="flex justify-center">
+                  <Link
+                    href="/myDesigns"
+                    className="w-36 self-center rounded-md border-2 border-dark-tdao bg-white px-4 py-2 text-center text-sm font-medium text-dark-tdao hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+                  >
+                    Design a Token
+                  </Link>
+                </div>
               </div>
             </div>
           </div>

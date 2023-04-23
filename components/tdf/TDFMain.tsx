@@ -11,21 +11,13 @@ import RequestReviewModal from '../../components/requestReviewPopup'
 import {
   designElementStatus,
   headerStatus,
-  // postType,
 } from '../../lib/helper'
 import { event } from 'nextjs-google-analytics'
 import Header2 from '../header2'
 import HelpButton from './HelpButton'
-// import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
 
-export default function TDFMain({ props }) {
-  // const { user } = useUser()
-  // const beta = user?.publicMetadata?.beta || false
+export default function TDFMain({ props, header=headerStatus.design }) {
   const router = useRouter()
-
-  // if(props?.post?.postType === postType.design && !beta){
-  //   router.push('/requestBeta')
-  // }
 
   const [activePhase, setActivePhase] = useState(
     router.query.phase ? +router.query.phase : 11
@@ -389,7 +381,7 @@ explanation`}
       >
         {({ isSubmitting, setFieldValue, values }) => (
           <Form>
-            <Header2 mode={headerStatus.design}>
+            <Header2 mode={header}>
               <div className="flex gap-2">
                 <button
                   type="submit"
@@ -403,7 +395,7 @@ explanation`}
                   href="/postPreview/[id]]"
                   className="rounded-md border-2 border-dao-red bg-gradient-to-r from-dao-red via-dao-red to-dao-green bg-clip-text py-1 px-4 text-transparent hover:bg-opacity-80"
                 >
-                  View
+                  Preview
                 </Link>
                 <HelpButton values={values} setIsRequestReviewOpen={setIsRequestReviewOpen} setreviewRequiredFields={setreviewRequiredFields} />
               </div>
