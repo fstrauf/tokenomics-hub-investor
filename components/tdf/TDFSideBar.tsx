@@ -9,13 +9,16 @@ export default function TDFSideBar({
   values,
   reviewRequiredFields
 }) {
-  // console.log("🚀 ~ file: TDFSideBar.tsx:12 ~ reviewRequiredFields:", reviewRequiredFields)
+  
 
   let phases = designPhases
   if (values.postType === postType.report) {
     phases = designPhases.filter((phase) => phase.isReport)
     // console.log("🚀 ~ file: TDFSideBar.tsx:18 ~ phases:", phases)
   }
+
+  console.log("🚀 ~ file: TDFSideBar.tsx:12 ~ reviewRequiredFields:", reviewRequiredFields)
+  phases.map((phase) => (console.log(reviewRequiredFields[phase.phaseId] || false)))
 
   let inProgress = values.DesignElement.filter((de) => {
     return de.designElementStatus === designElementStatus.in_progress
@@ -33,9 +36,9 @@ export default function TDFSideBar({
             <button
               type="button"
               onClick={() => changePhase(phase.phaseId)} //we could navigate by name here
-              className={`${
+              className={`${reviewRequiredFields[phase.phaseId] || false ? 'border-red-600 border-2' : ''} ${
                 phase.phaseId === activePhase ? 'border-dao-green border-2' : ''
-              } ${reviewRequiredFields[phase.phaseId] ? 'border-dao-red border-2' : ''} block w-full max-w-sm rounded-lg border border-gray-200 bg-white p-2 text-xs shadow hover:bg-gray-100`}
+              }  block w-full max-w-sm rounded-lg border border-gray-200 bg-white p-2 text-xs shadow hover:bg-gray-100`}
             >
               <div className="flex">
                 <div className="w-[95%]">{phase.name}</div>
