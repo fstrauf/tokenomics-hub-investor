@@ -17,7 +17,7 @@ const PostPreview: React.FC<UpdateNewDesignProps> = ({ post, author }) => {
   }
   return (
     <>
-      <Header2 mode={headerStatus.design}>
+      <Header2 mode={post?.postType}>
         <div className="flex gap-2">
           <Link
             as={`/editDesign/${post?.id}`}
