@@ -260,19 +260,15 @@ export function getDemandAreaData(
 ) {
   if (calculationRow.CalculationTimeSeries !== undefined) {
     const inputData = calculationRow.CalculationTimeSeries || []
-
-    // const dataset = []
     let currentMonth = 0
 
     for (let i = 0; i < inputData.length; i++) {
       const row = inputData[i]
       let endMonth = currentMonth + row.months - 1
-      // console.log("🚀 ~ file: helper.ts:270 ~ months:", months)
       
       if(endMonth>=months){
         endMonth=months-1
       }
-      // console.log("🚀 ~ file: helper.ts:270 ~ endMonth:", endMonth)
       
       for (let j = currentMonth; j <= endMonth; j++) {
         if (supplyDemandTotals[j] === undefined) {
@@ -304,7 +300,7 @@ export function getDemandAreaData(
         if (supplyDemandTotals[i].demand === undefined) {
           supplyDemandTotals[i].demand = 0
         }
-        supplyDemandTotals[i].demand += inputData[inputData.length - 1]?.tokens
+        supplyDemandTotals[i].demand += inputData[inputData.length - 1]?.tokens || 0
       }
     }
   }
