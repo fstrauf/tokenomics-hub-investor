@@ -88,7 +88,7 @@ export default function DesignCard({ post, context }) {
           href={`/editDesign/[id]`}
           className=" rounded-lg bg-dao-red px-4 py-2 text-center text-xs font-medium text-white"
         >
-          Edit
+          Open
         </Link>
         <Link
           as={`/postPreview/${post?.id}`}
@@ -130,7 +130,7 @@ export default function DesignCard({ post, context }) {
                               active ? 'bg-dao-red text-white' : 'text-gray-900'
                             } group flex w-full items-center rounded-md px-2 py-2 text-sm disabled:opacity-70`}
                           >
-                            Edit
+                            Open
                           </button>
                         )}
                       </Menu.Item>
