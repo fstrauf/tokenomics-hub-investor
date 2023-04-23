@@ -19,7 +19,7 @@ export const FormAreaDataMechanism = (props) => {
         values?.Calculation?.startDate
       )
       setFieldValue(props.name, chartProps)
-    }, 5000)
+    }, 1000)
 
     // Save the new timer id to clear it on the next form input
     setTimerId(newTimerId)
