@@ -8,6 +8,14 @@ import ThubLogo from '../public/svg/thub-logo'
 // import Script from 'next/script'
 
 export default function tdsLandingPage() {
+  const videoLink = (
+    <a href="https://youtu.be/SUoKhNti9pk" target="_blank">
+      <button className="mt-5 rounded-md border-2 border-dao-red bg-white px-6 py-4 text-sm font-medium text-dao-red hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
+        Watch Quick Demo
+      </button>
+    </a>
+  )
+
   return (
     <>
       {/* <Layout> */}
@@ -44,11 +52,7 @@ export default function tdsLandingPage() {
                     Design a Token
                   </button>
                 </Link>
-                <Link href="https://youtu.be/SUoKhNti9pk">
-                  <button className="mt-5 rounded-md border-2 border-dao-red bg-white px-6 py-4 text-sm font-medium text-dao-red hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
-                    Watch Quick Demo
-                  </button>
-                </Link>
+                {videoLink}
               </div>
             </div>
             <div className="">
@@ -164,17 +168,13 @@ export default function tdsLandingPage() {
             Powerful and simple to use tokenomics design software to help you
             create a sustainable token economy
           </p>
-          <div className="flex gap-3 justify-center">
+          <div className="flex justify-center gap-3">
             <Link href="/myDesigns">
               <button className="mt-5 rounded-md bg-dao-red px-6 py-4 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
                 Design a Token
               </button>
             </Link>
-            <Link href="https://youtu.be/SUoKhNti9pk">
-              <button className="mt-5 rounded-md border-2 border-dao-red bg-white px-6 py-4 text-sm font-medium text-dao-red hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
-                Watch Quick Demo
-              </button>
-            </Link>
+            {videoLink}
           </div>
         </div>
       </div>
