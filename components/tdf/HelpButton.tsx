@@ -10,7 +10,7 @@ import toast from 'react-hot-toast'
 import { WEBSITE_URL_BASE } from '../../lib/constants'
 import HeaderComboSection from '../HeaderComboSection'
 import HeaderGenericSection from '../HeaderGenericSection'
-import { useRouter } from 'next/router'
+// import { useRouter } from 'next/router'
 
 export default function HelpButton({
   values,
@@ -28,14 +28,13 @@ export default function HelpButton({
     if (typeA === typeB) {
       setIsRequestReviewOpen(true)
     } else {
+      //only for reports
       sendToReview(values)
     }
   }
-  const router = useRouter()
+  // const router = useRouter()
 
-  async function sendToReview(
-    values
-  ): void {
+  async function sendToReview(values): void {
     const errors = mandatoryFormValidate(values)
     setreviewRequiredFields(errors)
     if (values?.id === '') {
@@ -76,10 +75,10 @@ export default function HelpButton({
     <button
       type="button"
       onClick={() => handleReviewClick(values)}
-      className={`bg-white text-left rounded-md bg-clip-text py-2 px-4 text-transparent hover:bg-dao-red`}
+      className={`rounded-md bg-white bg-clip-text py-2 px-4 text-left text-transparent hover:bg-dao-red`}
       disabled={isReviewSubmitting}
     >
-      Request Review
+      {values.postType === postType.design ? 'Request Review' : 'Send to Review'}
     </button>
   )
 
@@ -87,10 +86,14 @@ export default function HelpButton({
     <div className="">
       <Popover.Group as="nav" className="hidden space-x-10 md:flex">
         <HeaderComboSection classNames={classNames} title="Review" boxed={true}>
-          <HeaderGenericSection
-            pathName="/bookAnExpert"
-            title="Request Design Services"
-          />
+          {values.postType === postType.design ? (
+            <HeaderGenericSection
+              pathName="/bookAnExpert"
+              title="Request Design Services"
+            />
+          ) : (
+            <></>
+          )}
           {requestReview}
         </HeaderComboSection>
       </Popover.Group>
