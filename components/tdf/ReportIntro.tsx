@@ -4,7 +4,7 @@ import Image from 'next/image'
 export default function ReportIntro() {
   return (
     <GenericCarousel>
-      <div className="flex flex-col items-center p-3 h-140">
+      <div className="flex h-140 flex-col items-center justify-center p-3">
         <Image
           src="/tokensListed.png"
           width={971 / 1.5}
@@ -26,7 +26,7 @@ export default function ReportIntro() {
           builders
         </p>
       </div>
-      <div className="flex flex-col items-center p-3 h-140">
+      <div className="flex h-140 flex-col items-center justify-center p-3">
         <Image
           src="/reportToReview.png"
           width={381}
@@ -47,22 +47,21 @@ export default function ReportIntro() {
           receive an update via email
         </p>
       </div>
-      <div className="flex flex-col items-center p-3 h-140">
-
-          <Image
-            src="/tokensListedZoom.png"
-            width={965 / 1.5}
-            height={530 / 1.5}
-            className="rounded-md shadow-xl"
-            alt="Examples help to break diwn the complexity of token design"
-          />
-          <h1 className="mt-10 text-3xl font-bold leading-10 md:whitespace-nowrap">
-            Publishing
-          </h1>
-          <p className="text-center text-xl">
-            Once your Report gets approved by the Review process it will be
-            published on Tokenomics Hub 🥳
-          </p>
+      <div className="flex h-140 flex-col items-center justify-center p-3">
+        <Image
+          src="/tokensListedZoom.png"
+          width={965 / 1.5}
+          height={530 / 1.5}
+          className="rounded-md shadow-xl"
+          alt="Examples help to break diwn the complexity of token design"
+        />
+        <h1 className="mt-10 text-3xl font-bold leading-10 md:whitespace-nowrap">
+          Publishing
+        </h1>
+        <p className="text-center text-xl">
+          Once your Report gets approved by the Review process it will be
+          published on Tokenomics Hub 🥳
+        </p>
       </div>
     </GenericCarousel>
   )

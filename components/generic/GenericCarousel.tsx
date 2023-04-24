@@ -30,7 +30,7 @@ const GenericCarousel = ({ children }) => {
           {child}
         </div>
       ))}
-      <div className="flex gap-3">
+      <div className="flex gap-3 justify-center">
         <button
           className=" rounded-lg bg-dao-red px-4 py-2 text-center text-xs font-medium text-white"
           onClick={prevSlide}
