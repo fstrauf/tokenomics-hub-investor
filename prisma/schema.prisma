@@ -138,7 +138,7 @@ model Calculation {
   startDate       DateTime?
   CalculationRows CalculationRows[]
   postId          String?           @unique
-  post            Post?             @relation(fields: [postId], references: [id], onDelete: NoAction)
+  post            Post?             @relation(fields: [postId], references: [id])
   Mechanism       Mechanism[]
 
   @@index([postId])
