@@ -15,11 +15,7 @@ import Link from 'next/link'
 import InfoSection from '../components/InfoSection'
 
 export default function MyDesigns({ posts }) {
-  posts?.filter((p) => p.postType === postType.design).length
-  console.log(
-    '🚀 ~ file: myDesigns.tsx:99 ~ MyDesigns ~ posts?.filter((p) => p.postType === postType.design).length:',
-    posts?.filter((p) => p.postType === postType.design).length
-  )
+
   return (
     <Layout mode={headerStatus.main}>
       <>

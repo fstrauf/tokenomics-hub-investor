@@ -57,9 +57,9 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     },
   })
 
-  const userId = posts.map((post) => {
-    return post.authorClerkId
-  })
+  const userId = posts.map(post => post.authorClerkId).filter((value, index, self) => {
+    return self.indexOf(value) === index;
+  });
 
   let users = clerkConvertJSON(await clerkClient.users.getUserList({ userId }))
 
