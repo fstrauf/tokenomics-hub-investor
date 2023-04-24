@@ -62,6 +62,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   });
 
   let users = clerkConvertJSON(await clerkClient.users.getUserList({ userId }))
+  console.log("🚀 ~ file: allDrafts.tsx:65 ~ constgetServerSideProps:GetServerSideProps= ~ users:", users)
 
   const postsWithUserNames = posts.map((post) => {
     const currentUser = users?.find((u) => u.id === post.authorClerkId)
