@@ -62,6 +62,8 @@ export default function tdsLandingPage() {
                   width={1191 / 2}
                   height={948 / 2}
                   className="rounded-md shadow-xl"
+                  alt='Supply and Demand Calculation'
+                  priority={true}
                 />
               </div>
             </div>
@@ -88,6 +90,7 @@ export default function tdsLandingPage() {
                 height={802 / 2}
                 src="/Greatnewtoken.png"
                 className="rounded-md shadow-xl"
+                alt='Token Editor Flow'
               />
             </div>
             <div className="relative object-scale-down">
@@ -96,6 +99,7 @@ export default function tdsLandingPage() {
                 height={1266 / 3}
                 src="/ValueCapture.png"
                 className="rounded-md shadow-xl"
+                alt='Value Capture Explanation Section'
               />
             </div>
           </div>
@@ -116,6 +120,7 @@ export default function tdsLandingPage() {
               width={2550 / 2}
               height={606 / 2}
               className="rounded-md shadow-xl"
+              alt='Examples help to break diwn the complexity of token design'
             />
           </div>
         </div>
@@ -128,6 +133,7 @@ export default function tdsLandingPage() {
                 height={1458 / 2.5}
                 src="/Aave.png"
                 className="rounded-md shadow-xl"
+                alt='See you design in a nice and easy to understand report format'
               />
             </div>
           </div>
