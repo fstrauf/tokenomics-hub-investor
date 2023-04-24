@@ -11,6 +11,12 @@ export default async function handle(req, res) {
     breakdown = JSON.stringify(inputFields.breakdown)
   }
 
+  let calculation = inputFields.Calculation
+  delete calculation?.areaData
+  delete calculation?.postId
+  calculation.startDate = new Date(calculation?.startDate)
+  // console.log("🚀 ~ file: updateNewDesign.ts:18 ~ handle ~ calculation.startDate:", calculation.startDate)
+
   const mechanisms = inputFields.Mechanism.map((m) => {
     var postUsers = {}
     if (m?.PostUser === undefined) {
@@ -124,7 +130,6 @@ export default async function handle(req, res) {
     })
   )
 
-  //this should delete the timeseries too
   txCalls.push(
     prisma.mechanism.deleteMany({
       where: {
@@ -132,6 +137,14 @@ export default async function handle(req, res) {
       },
     })
   )
+
+  // txCalls.push(
+  //   prisma.calculation.deleteMany({
+  //     where: {
+  //       id: inputFields?.Calculation?.id,
+  //     },
+  //   })
+  // )
 
   txCalls.push(
     prisma.protocolResources.deleteMany({
@@ -213,6 +226,9 @@ export default async function handle(req, res) {
         },
         Mechanism: {
           create: mechanisms,
+        },
+        Calculation: {
+          update: calculation,
         },
         protocolTimeLine: {
           createMany: {

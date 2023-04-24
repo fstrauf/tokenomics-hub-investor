@@ -109,6 +109,7 @@ export default function TDFMain({ props, header=headerStatus.design }) {
 
   const submitData = async (values, { setSubmitting }) => {
     const body = { values }
+    console.log("🚀 ~ file: TDFMain.tsx:112 ~ submitData ~ body:", body)
     if (values?.id === '') {
       try {
         const response = await fetch('/api/post/newDesign', {

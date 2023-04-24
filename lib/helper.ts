@@ -1,3 +1,12 @@
+export const formatDate = (date) => {
+  const oldDate = new Date(date)
+  var getYear = date.toLocaleString('default', { year: 'numeric' })
+  var getMonth = date.toLocaleString('default', { month: '2-digit' })
+  var getDay = date.toLocaleString('default', { day: '2-digit' })
+
+  return getYear + '-' + getMonth + '-' + getDay
+}
+
 export const getMergedInitialCalcValues = (userCalcs, userId, detailedCalc) => {
   var preloadInitialValues = initialCalculatorValues
 
@@ -265,11 +274,11 @@ export function getDemandAreaData(
     for (let i = 0; i < inputData.length; i++) {
       const row = inputData[i]
       let endMonth = currentMonth + row.months - 1
-      
-      if(endMonth>=months){
-        endMonth=months-1
+
+      if (endMonth >= months) {
+        endMonth = months - 1
       }
-      
+
       for (let j = currentMonth; j <= endMonth; j++) {
         if (supplyDemandTotals[j] === undefined) {
           supplyDemandTotals[j] = {
@@ -300,7 +309,8 @@ export function getDemandAreaData(
         if (supplyDemandTotals[i].demand === undefined) {
           supplyDemandTotals[i].demand = 0
         }
-        supplyDemandTotals[i].demand += inputData[inputData.length - 1]?.tokens || 0
+        supplyDemandTotals[i].demand +=
+          inputData[inputData.length - 1]?.tokens || 0
       }
     }
   }

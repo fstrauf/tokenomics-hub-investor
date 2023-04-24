@@ -1,7 +1,7 @@
 import { GetServerSideProps } from 'next'
 import React from 'react'
 import TDFMain from '../../components/tdf/TDFMain'
-import { clerkConvertJSON, headerStatus } from '../../lib/helper'
+import { clerkConvertJSON, formatDate } from '../../lib/helper'
 import { clerkClient } from '@clerk/nextjs/server'
 import prisma from '../../lib/prisma'
 import CommentForm from '../../components/commentForm'
@@ -78,10 +78,6 @@ export const getServerSideProps: GetServerSideProps = async ({
   const [post, mechanismTemplates, designPhases, Category, Tag] =
     await prisma.$transaction(txCalls)
 
-  // let clerkUser = post?.authorClerkId
-  //   ? await clerkClient.users.getUser(post?.authorClerkId)
-  //   : {}
-
   let clerkUser = {}
   try {
     if (post?.authorClerkId) {
@@ -115,14 +111,18 @@ export const getServerSideProps: GetServerSideProps = async ({
   postWithUpdatedComments.protocolTimeLine =
     postWithUpdatedComments.protocolTimeLine.map((ptl) => ({
       ...ptl,
-      date: new Date(ptl.date).toLocaleDateString('en-CA'),
+      // date: new Date(ptl.date).toLocaleDateString('en-CA'),
+      date: formatDate(ptl.date)
     }))
   if (postWithUpdatedComments.Calculation === null) {
     postWithUpdatedComments.Calculation = {}
   }
-  postWithUpdatedComments.Calculation.startDate = new Date(
+  // postWithUpdatedComments.Calculation.startDate = new Date(
+  //   postWithUpdatedComments?.Calculation?.startDate || ''
+  // ).toLocaleDateString('en-CA')
+  postWithUpdatedComments.Calculation.startDate = formatDate(
     postWithUpdatedComments?.Calculation?.startDate || ''
-  ).toLocaleDateString('en-CA')
+  )
   postWithUpdatedComments.DesignElement =
     postWithUpdatedComments?.DesignElement?.map((de) => {
       try {
@@ -141,6 +141,6 @@ export const getServerSideProps: GetServerSideProps = async ({
       mechanismTemplates: mechanismTemplates || null,
       Category: Category || null,
       Tag: Tag || null,
-    },
+    },      
   }
 }

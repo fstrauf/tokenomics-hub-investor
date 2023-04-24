@@ -14,11 +14,7 @@ export default function TDFSideBar({
   let phases = designPhases
   if (values.postType === postType.report) {
     phases = designPhases.filter((phase) => phase.isReport)
-    // console.log("🚀 ~ file: TDFSideBar.tsx:18 ~ phases:", phases)
   }
-
-  console.log("🚀 ~ file: TDFSideBar.tsx:12 ~ reviewRequiredFields:", reviewRequiredFields)
-  phases.map((phase) => (console.log(reviewRequiredFields[phase.phaseId] || false)))
 
   let inProgress = values.DesignElement.filter((de) => {
     return de.designElementStatus === designElementStatus.in_progress
