@@ -1,140 +1,184 @@
 // import { getAllPostsForHome } from '../lib/api'
-import Layout from '../components/layout'
+// import Layout from '../components/layout'
 // import Intro from '../components/intro'
 import Image from 'next/image'
 import Link from 'next/link'
-import Script from 'next/script'
+import Header2 from '../components/header2'
+import ThubLogo from '../public/svg/thub-logo'
+// import Script from 'next/script'
 
 export default function tdsLandingPage() {
   return (
     <>
-      <Layout>
-        {/* <Intro /> */}
-        <div className="m-auto mt-10 max-w-md sm:max-w-xl md:max-w-2xl lg:max-w-4xl">
-            <div className="ml-10">
-              <h1 className="text-4xl font-bold leading-10 md:whitespace-nowrap">
-              Design sustainable Tokenomics
+      {/* <Layout> */}
+      <Header2 />
+      <div className="m-auto">
+        <div className="">
+          <div className="flex w-full justify-between gap-5 bg-gradient-to-r from-dao-green to-dao-red py-5 pt-10">
+            <div className="p-10">
+              <h1 className="mb-5 text-5xl font-bold leading-10 text-white md:whitespace-nowrap">
+                Design sustainable Tokenomics
               </h1>
-              <div className="mt-5 flex">
-              <p className="mt-5">
-                <li>User-friendly, step-by-step process for designing a token</li>
-                <li>Non-jargon guidance and education</li>
-                <li>Make the best design decisions with relevant data and insights on similar projects</li>
-                <li>Receive a clear and concise, shareable report summarizing your tokenomics</li>
-                <li>Get the opinion of an expert to point out potential flaws</li>
-              </p>
-              <div className="relative h-[276px] w-[384px] object-scale-down">
-              <Image
-                layout="fill"
-                src="/Supply&DemandOverview.png"
-                className="rounded-md"
-                objectFit="contain"/>
+              <div className="flex p-3 text-xl text-white">
+                <p className="">
+                  <li>
+                    User-friendly, step-by-step process for designing a token
+                  </li>
+                  <li>Non-jargon guidance and education</li>
+                  <li>
+                    Make the best design decisions with relevant data and
+                    insights on similar projects
+                  </li>
+                  <li>
+                    Receive a clear and concise, shareable report summarizing
+                    your tokenomics
+                  </li>
+                  <li>
+                    Get the opinion of an expert to point out potential flaws
+                  </li>
+                </p>
+              </div>
+              <div className="flex gap-3">
+                <Link href="/myDesigns">
+                  <button className="mt-5 rounded-md bg-dao-red px-6 py-4 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
+                    Design a Token
+                  </button>
+                </Link>
+                <Link href="https://youtu.be/SUoKhNti9pk">
+                  <button className="mt-5 rounded-md border-2 border-dao-red bg-white px-6 py-4 text-sm font-medium text-dao-red hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
+                    Watch Quick Demo
+                  </button>
+                </Link>
               </div>
             </div>
-              <Link href="https://www.figma.com/community/file/1146029367992730229">
-                <button className="mt-5 rounded-md bg-dao-red px-6 py-4 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
-                 Design a Token
-                </button>
-              </Link>
-              <Link href="https://www.figma.com/community/file/1146029367992730229">
-                <button className="mt-5 rounded-md bg-white border-2 border-dao-red px-6 py-4 text-sm font-medium text-dao-red hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
-                 Watch Quick Demo
-                </button>
-              </Link> 
-          </div>
-          <hr className="my-4 mx-auto h-1 w-48 rounded border-0 bg-gray-100 dark:bg-gray-700 md:my-10"></hr>
-          <div>
-
-          <h1 className="text-2xl font-bold md:whitespace-nowrap">
-            Simple step by step design process
-            </h1>
-          <div className="mt-5 flex">
-            <p className="mt-5">
-            <li>Industry leading design process</li>
-            <li>Educational resources along the way</li>
-            <li>Know your unknown unknowns. </li>
-            <li>Tokenomics design made simple</li>
-            </p>
-            <div className="relative h-[484px] w-[313px] object-scale-down">
-              <Image
-                layout="fill"
-                src="/Greatnewtoken.png"
-                className="rounded-md"
-                objectFit="contain"/>
+            <div className="">
+              <div className="flex">
+                <Image
+                  src="/demandCalcHalf.png"
+                  width={1191 / 2}
+                  height={948 / 2}
+                  className="rounded-md shadow-xl"
+                />
               </div>
-              <div className="relative h-[423px] w-[434px] object-scale-down">
-              <Image
-                layout="fill"
-                src="/ValueCapture.png"
-                className="rounded-md"
-                objectFit="contain"/>
-              </div>
-              </div>
-            <hr className="my-4 mx-auto h-1 w-48 rounded border-0 bg-gray-100 dark:bg-gray-700 md:my-10"></hr>
-
-            <h1 className="text-2xl font-bold text-center md:whitespace-nowrap">
-            Put your design into perspective
-            </h1>
-            <p className="mt-5 text-center">
-            We show you relevant data, examples and the industry standard of similar projects to help you make better design decisions through every step of the way
-            </p>
-            <div className="relative h-[274px] w-[1004px] object-scale-down">
-              <Image
-                layout="fill"
-                src="/Example.png"
-                className="rounded-md"
-                objectFit="contain"/>
-              </div>
-            <hr className="my-4 mx-auto h-1 w-48 rounded border-0 bg-gray-100 dark:bg-gray-700 md:my-10"></hr>
-
-            <h1 className="text-2xl font-bold text-center md:whitespace-nowrap">
-            Share your tokenomics easily
-            </h1>
-            <div className="mt-5 flex">
-            <div className="relative h-[378px] w-[625px] object-scale-down">
-              <Image
-                layout="fill"
-                src="/Aave.png"
-                className="rounded-md"
-                objectFit="contain"/>
-              </div>
-            <p className="mt-5">
-            Share your design with team members, VCs, investors, advisors, users, anyone!The TDS is also built into the Tokenomics Hub platform, allow your community to easily understand your tokenomics by publishing your design as a report on the platform
-          </p>
-          </div>
-          </div>
-          <hr className="my-4 mx-auto h-1 w-48 rounded border-0 bg-gray-100 dark:bg-gray-700 md:my-10"></hr>
-
-          <h1 className="text-2xl font-bold text-center md:whitespace-nowrap">Get an expert to review your design</h1> 
-          <p className="mt-5 text-center">
-            Get feedback, guidance and even design help on your tokenomics from experts in the Tokenomics DAO community
-            </p>
-          <div className="mb-5">
-          <hr className="my-4 mx-auto h-1 w-48 rounded border-0 bg-gray-100 dark:bg-gray-700 md:my-10"></hr>
-          <h1 className="text-4xl font-bold text-center leading-10 md:whitespace-nowrap">
-          Build better Tokenomics
-              </h1>
-              <p className="mt-5 text-center">
-              Powerful and simple to use tokenomics design software to help you create a sustainable token economy
-         
-          </p>
-          <div className="flex justify-center">
-              <Link href="https://www.figma.com/community/file/1146029367992730229">
-                <button className="mt-5 rounded-md bg-dao-red px-6 py-4 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
-                 Design a Token
-                </button>
-              </Link>
-              <Link href="https://www.figma.com/community/file/1146029367992730229">
-                <button className="mt-5 rounded-md bg-white border-2 border-dao-red px-6 py-4 text-sm font-medium text-dao-red hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
-                 Watch Quick Demo
-                </button>
-              </Link>
-              </div>
-          
-           
+            </div>
           </div>
         </div>
-      </Layout>
+        <hr className="my-4 mx-auto h-1 w-48 rounded border-0 bg-gray-100 dark:bg-gray-700 md:my-10"></hr>
+
+        <div className="flex justify-evenly p-10">
+          <div className="pl-20">
+            <h1 className="mb-10 text-3xl font-bold leading-10 md:whitespace-nowrap">
+              Simple step by step design process
+            </h1>
+            <div className="flex flex-col gap-4 text-xl">
+              <p>Industry leading design process</p>
+              <p>Educational resources along the way</p>
+              <p>Know your unknown unknowns. </p>
+              <p>Tokenomics design made simple</p>
+            </div>
+          </div>
+          <div className="flex gap-5">
+            <div className="relative">
+              <Image
+                width={502 / 2}
+                height={802 / 2}
+                src="/Greatnewtoken.png"
+                className="rounded-md shadow-xl"
+              />
+            </div>
+            <div className="relative object-scale-down">
+              <Image
+                width={1248 / 3}
+                height={1266 / 3}
+                src="/ValueCapture.png"
+                className="rounded-md shadow-xl"
+              />
+            </div>
+          </div>
+        </div>
+        <hr className="my-4 mx-auto h-1 w-48 rounded border-0 bg-gray-100 dark:bg-gray-700 md:my-10"></hr>
+        <div className="flex flex-col items-center bg-gray-50 p-3">
+          <h1 className="mb-10 text-3xl font-bold leading-10 md:whitespace-nowrap">
+            Put your design into perspective
+          </h1>
+          <p className="mt-5 p-10 text-center text-xl">
+            We show you relevant data, examples and the industry standard of
+            similar projects to help you make better design decisions through
+            every step of the way
+          </p>
+          <div className="relative object-scale-down">
+            <Image
+              src="/Example.png"
+              width={2550 / 2}
+              height={606 / 2}
+              className="rounded-md shadow-xl"
+            />
+          </div>
+        </div>
+        <hr className="my-4 mx-auto h-1 w-48 rounded border-0 bg-gray-100 dark:bg-gray-700 md:my-10"></hr>
+        <div className="flex justify-evenly p-3">
+          <div className="flex">
+            <div className="relative object-scale-down">
+              <Image
+                width={1218 / 2.5}
+                height={1458 / 2.5}
+                src="/Aave.png"
+                className="rounded-md shadow-xl"
+              />
+            </div>
+          </div>
+          <div>
+            <h1 className="mb-10 text-3xl font-bold leading-10 md:whitespace-nowrap">
+              Share your tokenomics easily
+            </h1>
+            <p className="mt-5 w-96 text-right text-xl">
+              Share your design with team members, VCs, investors, advisors,
+              users, anyone!<br></br>
+              <br></br>The TDS is also built into the Tokenomics Hub platform,
+              allow your community to easily understand your tokenomics by
+              publishing your design as a report on the platform
+            </p>
+          </div>
+        </div>
+        <hr className="my-4 mx-auto h-1 w-48 rounded border-0 bg-gray-100 dark:bg-gray-700 md:my-10"></hr>
+        <div className="flex flex-col items-center bg-gray-50 p-3">
+          <h1 className="mb-10 text-3xl font-bold leading-10 md:whitespace-nowrap">
+            Get an expert to review your design
+          </h1>
+          <p className="mt-5 text-center text-xl">
+            Get feedback, guidance and even design help on your tokenomics from
+            experts in the Tokenomics DAO community
+          </p>
+          <div className="m-10 h-24 w-24">
+            <ThubLogo />
+          </div>
+        </div>
+
+        {/* <hr className="my-4 mx-auto h-1 w-48 rounded border-0 bg-gray-100 dark:bg-gray-700 md:my-10"></hr> */}
+
+        <div className="flex w-full flex-col justify-between gap-5 bg-gradient-to-r from-dao-green to-dao-red py-5 pt-10">
+          <h1 className="text-center text-4xl font-bold leading-10 text-white md:whitespace-nowrap">
+            Build better Tokenomics
+          </h1>
+          <p className="mt-5 text-center text-xl text-white">
+            Powerful and simple to use tokenomics design software to help you
+            create a sustainable token economy
+          </p>
+          <div className="flex gap-3 justify-center">
+            <Link href="/myDesigns">
+              <button className="mt-5 rounded-md bg-dao-red px-6 py-4 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
+                Design a Token
+              </button>
+            </Link>
+            <Link href="https://youtu.be/SUoKhNti9pk">
+              <button className="mt-5 rounded-md border-2 border-dao-red bg-white px-6 py-4 text-sm font-medium text-dao-red hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
+                Watch Quick Demo
+              </button>
+            </Link>
+          </div>
+        </div>
+      </div>
+      {/* </Layout> */}
     </>
   )
 }

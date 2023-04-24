@@ -65,7 +65,9 @@ export default function Header2({ mode = headerStatus.main, children = null }) {
         <div className="mx-auto max-w-full px-6">
           <div className="flex items-center justify-between py-1 md:justify-start md:space-x-10">
             <div className="flex justify-start lg:w-0 lg:flex-1">
+              <div className='w-12 h-12'>
               <ThubLogo />
+              </div>
               <div className="hidden md:ml-2 md:flex md:items-center">
                 <p className="text-2xl text-white">Tokenomics Hub</p>
               </div>

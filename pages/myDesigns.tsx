@@ -4,11 +4,11 @@ import prisma from '../lib/prisma'
 import { GetServerSideProps } from 'next'
 import { clerkClient, getAuth } from '@clerk/nextjs/server'
 import type { AuthData } from '@clerk/nextjs/dist/server/types'
-import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
+// import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
 import { clerkConvertJSON, headerStatus, postStatus, postType } from '../lib/helper'
 import DesignCard from '../components/tdf/designCard'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
+// import { useRouter } from 'next/router'
 
 export default function MyDesigns({ posts }) {
   // const { user } = useUser()
