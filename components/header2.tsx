@@ -37,7 +37,7 @@ export default function Header2({ mode = headerStatus.main, children = null }) {
               title="Products & Services"
             >
               <HeaderGenericSection
-                pathName="/tdsIntro"
+                pathName="/tdsLandingPage"
                 title="Tokenomics Design Space"
               />
               <HeaderGenericSection
