@@ -1,7 +1,5 @@
 export const formatDate = (date) => {
-  console.log("🚀 ~ file: helper.ts:2 ~ formatDate ~ date:", date)
   const oldDate = new Date(date)
-  console.log("🚀 ~ file: helper.ts:3 ~ formatDate ~ oldDate:", oldDate)
   var getYear = oldDate.toLocaleString('default', { year: 'numeric' })
   var getMonth = oldDate.toLocaleString('default', { month: '2-digit' })
   var getDay = oldDate.toLocaleString('default', { day: '2-digit' })

@@ -229,14 +229,8 @@ export default async function handle(req, res) {
         Mechanism: {
           create: mechanisms,
         },
-        Calculation: {
-        
-          // upsert: {
-          //   where: 
-          //   create: calculation,
-          //   update: { }
-
-          // update: calculation,
+        Calculation: {          
+          update: calculation,
         },
         protocolTimeLine: {
           createMany: {
