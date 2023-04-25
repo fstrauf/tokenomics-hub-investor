@@ -15,6 +15,13 @@ export default function tdsLandingPage() {
       </button>
     </a>
   )
+  const designLink = (
+    <Link href="/newDesign">
+      <button className="mt-5 rounded-md bg-dao-red px-6 py-4 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
+        Design a Token
+      </button>
+    </Link>
+  )
 
   return (
     <>
@@ -47,11 +54,7 @@ export default function tdsLandingPage() {
                 </p>
               </div>
               <div className="flex gap-3">
-                <Link href="/myDesigns">
-                  <button className="mt-5 rounded-md bg-dao-red px-6 py-4 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
-                    Design a Token
-                  </button>
-                </Link>
+                {designLink}
                 {videoLink}
               </div>
             </div>
@@ -62,7 +65,7 @@ export default function tdsLandingPage() {
                   width={1191 / 2}
                   height={948 / 2}
                   className="rounded-md shadow-xl"
-                  alt='Supply and Demand Calculation'
+                  alt="Supply and Demand Calculation"
                   priority={true}
                 />
               </div>
@@ -90,7 +93,7 @@ export default function tdsLandingPage() {
                 height={802 / 2}
                 src="/Greatnewtoken.png"
                 className="rounded-md shadow-xl"
-                alt='Token Editor Flow'
+                alt="Token Editor Flow"
               />
             </div>
             <div className="relative object-scale-down">
@@ -99,7 +102,7 @@ export default function tdsLandingPage() {
                 height={1266 / 3}
                 src="/ValueCapture.png"
                 className="rounded-md shadow-xl"
-                alt='Value Capture Explanation Section'
+                alt="Value Capture Explanation Section"
               />
             </div>
           </div>
@@ -120,7 +123,7 @@ export default function tdsLandingPage() {
               width={2550 / 2}
               height={606 / 2}
               className="rounded-md shadow-xl"
-              alt='Examples help to break diwn the complexity of token design'
+              alt="Examples help to break diwn the complexity of token design"
             />
           </div>
         </div>
@@ -133,7 +136,7 @@ export default function tdsLandingPage() {
                 height={1458 / 2.5}
                 src="/Aave.png"
                 className="rounded-md shadow-xl"
-                alt='See you design in a nice and easy to understand report format'
+                alt="See you design in a nice and easy to understand report format"
               />
             </div>
           </div>
@@ -175,11 +178,7 @@ export default function tdsLandingPage() {
             create a sustainable token economy
           </p>
           <div className="flex justify-center gap-3">
-            <Link href="/myDesigns">
-              <button className="mt-5 rounded-md bg-dao-red px-6 py-4 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
-                Design a Token
-              </button>
-            </Link>
+            {designLink}
             {videoLink}
           </div>
         </div>

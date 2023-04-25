@@ -1,17 +1,32 @@
-import Layout from '../components/layout'
-import React from 'react'
+// import Layout from '../components/layout'
+import React, { useEffect, useState } from 'react'
 import prisma from '../lib/prisma'
 import { GetServerSideProps } from 'next'
-import { getMergedInitialCalcValues, postStatus, postType } from '../lib/helper'
+import { getMergedInitialCalcValues, postStatus, postType, upDateFirstTimeVisit } from '../lib/helper'
 import TDFMain from '../components/tdf/TDFMain'
 import { getAuth } from '@clerk/nextjs/dist/server/getAuth'
+import GenericPopover from '../components/generic/GenericPopover'
+import ReportIntro from '../components/tdf/ReportIntro'
+import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
+import { AuthData } from '@clerk/nextjs/dist/server/types'
 
 export default function NewDesign(props) {
+  const [isOpen, setIsOpen] = useState(false)
+  const { user } = useUser()
+  const introComplete = user?.publicMetadata.designIntroDone || false
+
+  useEffect(() => {
+    if (!introComplete) {
+      setIsOpen(true)
+      upDateFirstTimeVisit(user?.id, 'designIntroDone', true)
+    }
+  }, [introComplete])
   return (
     <>
-      {/* <Layout mode="design"> */}
-        <TDFMain props={props} />
-      {/* </Layout> */}
+      <GenericPopover isOpen={isOpen} setIsOpen={setIsOpen}>
+        <ReportIntro />
+      </GenericPopover>
+      <TDFMain props={props} />
     </>
   )
 }
@@ -57,14 +72,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     })
   )
 
-  const [
-    designPhases,
-    userCalcs,
-    mechanismTemplates,
-    PostUser,
-    Category,
-    Tag,
-  ] = await prisma.$transaction(txCalls)
+  const [designPhases, userCalcs, mechanismTemplates, PostUser, Category, Tag] =
+    await prisma.$transaction(txCalls)
 
   const defaultContent = {
     id: '',

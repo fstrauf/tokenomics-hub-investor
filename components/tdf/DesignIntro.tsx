@@ -13,6 +13,7 @@ export default function DesignIntro() {
                 src="/Greatnewtoken.png"
                 className="rounded-md shadow-xl"
                 alt='Token Editor Flow'
+                priority={true}
               />
             </div>
             <div className="relative object-scale-down">
@@ -22,6 +23,7 @@ export default function DesignIntro() {
                 src="/ValueCapture.png"
                 className="rounded-md shadow-xl"
                 alt='Value Capture Explanation Section'
+                priority={true}
               />
             </div>
           </div>

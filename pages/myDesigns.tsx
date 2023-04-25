@@ -1,5 +1,5 @@
 import Layout from '../components/layout'
-import React, { useState } from 'react'
+import React from 'react'
 import prisma from '../lib/prisma'
 import { GetServerSideProps } from 'next'
 import { clerkClient, getAuth } from '@clerk/nextjs/server'
@@ -13,29 +13,13 @@ import {
 import DesignCard from '../components/tdf/designCard'
 import Link from 'next/link'
 import InfoSection from '../components/InfoSection'
-import GenericPopover from '../components/generic/GenericPopover'
-// import GenericCarousel from '../components/generic/GenericCarousel'
-import ReportIntro from '../components/tdf/ReportIntro'
-import DesignIntro from '../components/tdf/DesignIntro'
+
 
 export default function MyDesigns({ posts }) {
-  const [isOpen, setIsOpen] = useState(false)
-  //check first time
-  // set dialog to open
-  // go through caroussel.
-
-  const openDialogTest = (index) => {
-    setIsOpen(true)
-  }
 
   return (
     <Layout mode={headerStatus.main}>
       <>
-        <GenericPopover isOpen={isOpen} setIsOpen={setIsOpen}>
-          {/* <ReportIntro /> */}
-          <DesignIntro/>
-        </GenericPopover>
-        <button onClick={openDialogTest}>test</button>
         <div className="mt-4 mb-4 rounded-lg bg-gray-100 p-1">
           <div className="flex items-center justify-between rounded-lg p-2 py-2">
             <p className="text-xl font-bold">My Designs</p>

@@ -516,3 +516,21 @@ export function mandatoryFormValidate(values) {
 
   return errors
 }
+
+export async function upDateFirstTimeVisit(userId: string, prop: string, newVal: any) {
+  const body = { userId, prop, newVal }
+
+  try {
+    await fetch('/api/setPublicMetaData', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    })
+    // toast.success('Message sent', { position: 'bottom-right' })
+    return true
+  } catch (error) {
+    console.error(error)
+    // toast.error('An error occurred', { position: 'bottom-right' })
+    return false
+  }
+}

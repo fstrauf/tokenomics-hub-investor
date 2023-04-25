@@ -14,7 +14,9 @@ export default async function handle(req, res) {
   let calculation = inputFields.Calculation
   delete calculation?.areaData
   delete calculation?.postId
+  delete calculation?.calculationRows
   calculation.startDate = new Date(calculation?.startDate)
+  // console.log("🚀 ~ file: updateNewDesign.ts:18 ~ handle ~ calculation:", calculation)
   // console.log("🚀 ~ file: updateNewDesign.ts:18 ~ handle ~ calculation.startDate:", calculation.startDate)
 
   const mechanisms = inputFields.Mechanism.map((m) => {

@@ -11,6 +11,7 @@ export default function ReportIntro() {
           height={535 / 1.5}
           className="rounded-md shadow-xl"
           alt="Examples help to break diwn the complexity of token design"
+          priority={true}
         />
         <h1 className=" mt-10 text-3xl font-bold leading-10 md:whitespace-nowrap">
           Tokenomics Hub Reports
