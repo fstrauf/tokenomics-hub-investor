@@ -205,6 +205,18 @@ export default function adminView({ allPosts }) {
                     placeholder="Author"
                     className="mb-3 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
                   />
+                  <DepField
+                    id="status"
+                    name="status"
+                    placeholder="Status"
+                    className="mb-3 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
+                  />
+                  <DepField
+                    id="postType"
+                    name="postType"
+                    placeholder="postType"
+                    className="mb-3 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
+                  />
 
                   <label className="mb-2 block text-sm font-medium text-gray-900">
                     Id
@@ -265,6 +277,8 @@ export async function getStaticProps() {
       authorClerkId: true,
       id: true,
       author: {},
+      status: true,
+      postType: true,
     },
   })
 
