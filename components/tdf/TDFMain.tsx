@@ -16,7 +16,7 @@ import { event } from 'nextjs-google-analytics'
 import Header2 from '../header2'
 import HelpButton from './HelpButton'
 
-export default function TDFMain({ props }) {
+export default function TDFMain({ props, header=headerStatus.design }) {
   const router = useRouter()
 
   const [activePhase, setActivePhase] = useState(
@@ -108,6 +108,7 @@ export default function TDFMain({ props }) {
   })
 
   const submitData = async (values, { setSubmitting }) => {
+    console.log("🚀 ~ file: TDFMain.tsx:111 ~ submitData ~ values:", values)
     const body = { values }
     if (values?.id === '') {
       try {
@@ -127,12 +128,13 @@ export default function TDFMain({ props }) {
             position: 'bottom-right',
           })
           setPostId(JSON.parse(id).id)
+          router.push(`/editDesign/${JSON.parse(id).id}`)
         }
 
         setSubmitting(false)
       } catch (error) {
         console.error(error)
-      }
+      } 
     } else {
       try {
         const response = await fetch('/api/post/updateNewDesign', {
@@ -381,7 +383,7 @@ explanation`}
       >
         {({ isSubmitting, setFieldValue, values }) => (
           <Form>
-            <Header2 mode={headerStatus.design}>
+            <Header2 mode={header}>
               <div className="flex gap-2">
                 <button
                   type="submit"
@@ -395,7 +397,7 @@ explanation`}
                   href="/postPreview/[id]]"
                   className="rounded-md border-2 border-dao-red bg-gradient-to-r from-dao-red via-dao-red to-dao-green bg-clip-text py-1 px-4 text-transparent hover:bg-opacity-80"
                 >
-                  View
+                  Preview
                 </Link>
                 <HelpButton values={values} setIsRequestReviewOpen={setIsRequestReviewOpen} setreviewRequiredFields={setreviewRequiredFields} />
               </div>

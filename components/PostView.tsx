@@ -195,7 +195,7 @@ export default function PostView({ post, author }) {
                 </ul>
               </div>
             </div>
-            <main className="m-auto flex max-w-4xl flex-col">
+            <main className="m-auto flex max-w-7xl flex-col">
               {/* section header */}
               <div id="tokenStrength"></div>
               <TokenStrength post={post} contributor={contributor} />

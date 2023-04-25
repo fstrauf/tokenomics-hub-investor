@@ -44,7 +44,7 @@ export default function TDFGenericOneField({
         )}
         <FormGenerateButton title={values.title} scope={designPhase.postDataElement} setFieldValue={setFieldValue} />
         <FormErrorMessage
-            field="tokenUtility"
+            field={designPhase.postDataElement}
             reviewRequiredFields={reviewRequiredFields}
           />
       </div>

@@ -5,11 +5,19 @@ import { postStatus, stringToKey } from '../../../lib/helper'
 export default async function handle(req, res) {
   const { values } = req.body
   const inputFields = values
+  // console.log("🚀 ~ file: updateNewDesign.ts:8 ~ handle ~ inputFields:", inputFields)
 
   var breakdown = inputFields.breakdown
   if (typeof inputFields.breakdown === 'object') {
     breakdown = JSON.stringify(inputFields.breakdown)
   }
+
+  let calculation = inputFields.Calculation
+  delete calculation?.areaData
+  delete calculation?.postId
+  delete calculation?.calculationRows
+  calculation.startDate = new Date(calculation?.startDate)
+  console.log("🚀 ~ file: updateNewDesign.ts:20 ~ handle ~ calculation:", calculation)
 
   const mechanisms = inputFields.Mechanism.map((m) => {
     var postUsers = {}
@@ -124,7 +132,6 @@ export default async function handle(req, res) {
     })
   )
 
-  //this should delete the timeseries too
   txCalls.push(
     prisma.mechanism.deleteMany({
       where: {
@@ -132,6 +139,14 @@ export default async function handle(req, res) {
       },
     })
   )
+
+  // txCalls.push(
+  //   prisma.calculation.deleteMany({
+  //     where: {
+  //       id: inputFields?.Calculation?.id,
+  //     },
+  //   })
+  // )
 
   txCalls.push(
     prisma.protocolResources.deleteMany({
@@ -214,6 +229,9 @@ export default async function handle(req, res) {
         Mechanism: {
           create: mechanisms,
         },
+        Calculation: {          
+          update: calculation,
+        },
         protocolTimeLine: {
           createMany: {
             data: timeLine,
@@ -232,6 +250,7 @@ export default async function handle(req, res) {
   try {
     response = await prisma.$transaction(txCalls)
   } catch (e) {
+    console.log("🚀 ~ file: updateNewDesign.ts:252 ~ handle ~ e:", e)
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
       // The .code property can be accessed in a type-safe manner
       if (e.code === 'P2002') {

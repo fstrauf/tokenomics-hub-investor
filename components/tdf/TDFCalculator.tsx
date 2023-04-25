@@ -4,13 +4,10 @@ import dynamic from 'next/dynamic'
 import { Field } from 'formik'
 import { Toaster } from 'react-hot-toast'
 import FormId from '../form/FormId'
-// import { useAuth } from '@clerk/clerk-react/dist/hooks/useAuth'
 import FormAreaDataMechanism from '../form/FormAreaDataMechanism'
 
 export default function TDFCalculator(props) {
   const { values } = props
-
-  // const { isSignedIn } = useAuth()
 
   const VestingChart = dynamic(() => import('../charts/VestingChart'), {
     ssr: false,

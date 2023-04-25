@@ -1,6 +1,5 @@
 import { useRouter } from 'next/router'
 import ErrorPage from 'next/error'
-// import Layout from '../../components/layout'
 import prisma from '../../lib/prisma'
 import { clerkClient } from '@clerk/nextjs/server'
 import { clerkConvertJSON, headerStatus, postStatus } from '../../lib/helper'
@@ -8,17 +7,17 @@ import PostView from '../../components/PostView'
 import { GetServerSideProps } from 'next/types'
 import Header2 from '../../components/header2'
 import Link from 'next/link'
-// import HelpButton from '../../components/tdf/HelpButton'
-export default function Post({ post, author }) {
+import InfoSection from '../../components/InfoSection'
+
+const PostPreview: React.FC<UpdateNewDesignProps> = ({ post, author }) => {
   const router = useRouter()
 
   if (!router.isFallback && !post?.id) {
     return <ErrorPage statusCode={404} />
   }
   return (
-    // <Layout>
     <>
-      <Header2 mode={headerStatus.design}>
+      <Header2 mode={post?.postType}>
         <div className="flex gap-2">
           <Link
             as={`/editDesign/${post?.id}`}
@@ -27,13 +26,19 @@ export default function Post({ post, author }) {
           >
             Edit
           </Link>
-          {/* <HelpButton values={values} setIsRequestReviewOpen={setIsRequestReviewOpen} setreviewRequiredFields={setreviewRequiredFields} /> */}
         </div>
       </Header2>
+
+      <InfoSection
+        title="You are currently in preview mode"
+        text="This allows you to see what your finished report would look like if you decide to publish it on Tokenomics Hub. You can click Edit in the top right hand corner to continue making changes "
+      />
       <PostView post={post} author={author} />
     </>
   )
 }
+
+export default PostPreview
 
 export const getServerSideProps: GetServerSideProps = async ({
   params,

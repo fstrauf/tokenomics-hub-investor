@@ -83,6 +83,7 @@
     "react-hot-toast": "^2.4.0",
     "react-icons": "^4.8.0",
     "react-instantsearch-hooks-web": "^6.37.0",
+    "react-lite-youtube-embed": "^2.3.52",
     "react-scroll": "^1.8.7",
     "react-select": "^5.7.0",
     "react-share": "^4.4.1",
