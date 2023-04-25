@@ -5,6 +5,7 @@ import { postStatus, stringToKey } from '../../../lib/helper'
 export default async function handle(req, res) {
   const { values } = req.body
   const inputFields = values
+  // console.log("🚀 ~ file: updateNewDesign.ts:8 ~ handle ~ inputFields:", inputFields)
 
   var breakdown = inputFields.breakdown
   if (typeof inputFields.breakdown === 'object') {
@@ -16,8 +17,7 @@ export default async function handle(req, res) {
   delete calculation?.postId
   delete calculation?.calculationRows
   calculation.startDate = new Date(calculation?.startDate)
-  // console.log("🚀 ~ file: updateNewDesign.ts:18 ~ handle ~ calculation:", calculation)
-  // console.log("🚀 ~ file: updateNewDesign.ts:18 ~ handle ~ calculation.startDate:", calculation.startDate)
+  console.log("🚀 ~ file: updateNewDesign.ts:20 ~ handle ~ calculation:", calculation)
 
   const mechanisms = inputFields.Mechanism.map((m) => {
     var postUsers = {}
@@ -230,7 +230,13 @@ export default async function handle(req, res) {
           create: mechanisms,
         },
         Calculation: {
-          update: calculation,
+        
+          // upsert: {
+          //   where: 
+          //   create: calculation,
+          //   update: { }
+
+          // update: calculation,
         },
         protocolTimeLine: {
           createMany: {
@@ -250,6 +256,7 @@ export default async function handle(req, res) {
   try {
     response = await prisma.$transaction(txCalls)
   } catch (e) {
+    console.log("🚀 ~ file: updateNewDesign.ts:252 ~ handle ~ e:", e)
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
       // The .code property can be accessed in a type-safe manner
       if (e.code === 'P2002') {

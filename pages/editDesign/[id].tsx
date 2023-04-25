@@ -121,7 +121,7 @@ export const getServerSideProps: GetServerSideProps = async ({
   //   postWithUpdatedComments?.Calculation?.startDate || ''
   // ).toLocaleDateString('en-CA')
   postWithUpdatedComments.Calculation.startDate = formatDate(
-    postWithUpdatedComments?.Calculation?.startDate || ''
+    postWithUpdatedComments?.Calculation?.startDate || new Date()
   )
   postWithUpdatedComments.DesignElement =
     postWithUpdatedComments?.DesignElement?.map((de) => {
