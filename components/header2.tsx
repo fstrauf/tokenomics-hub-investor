@@ -1,6 +1,6 @@
-import { Children, Fragment } from 'react'
+import { Fragment } from 'react'
 import { Popover, Transition } from '@headlessui/react'
-import Link from 'next/link'
+// import Link from 'next/link'
 import {
   SignedIn,
   SignedOut,
@@ -12,9 +12,8 @@ import ThubLogo from '../public/svg/thub-logo'
 import Bars3Icon from '../public/svg/bars3Icon'
 import XMarkIcon from '../public/svg/xmarkicon'
 import { headerStatus } from '../lib/helper'
-// import ChevronIcon from '../public/svg/chevron'
-// import { createContext } from 'react';
-import { useRouter } from 'next/router'
+import HeaderComboSection from './HeaderComboSection'
+import HeaderGenericSection from './HeaderGenericSection'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -24,93 +23,38 @@ export default function Header2({ mode = headerStatus.main, children = null }) {
   const { user } = useUser()
   const admin = user?.publicMetadata?.admin || false
 
-  const router = useRouter()
-
-  const genericSection = (pathName, title) => {
-    return (
-      <Link
-        href={pathName}
-        className={`${
-          router.pathname === pathName
-            ? 'bg-gradient-to-tr from-dao-red via-dao-red to-dao-green'
-            : 'bg-white'
-        } rounded-md bg-clip-text py-2 px-4 text-transparent hover:bg-opacity-80 ${
-          router.pathname === pathName
-            ? 'hover:from-dao-red hover:via-dao-red hover:to-dao-green'
-            : 'hover:bg-dao-red'
-        }`}
-      >
-        {title}
-      </Link>
-    )
-  }
-
-  const mechanismAdmin = (
-    <Link
-      href="/coreMechanisms"
-      className="-m-3 flex items-start rounded-lg p-3 hover:bg-gray-700"
-    >
-      <div className="ml-4">
-        <p className="text-base font-medium text-white">Mechanism Admin</p>
-      </div>
-    </Link>
-  )
-
-  const allDraftsAdmin = (
-    <Link
-      href="/allDrafts"
-      className="-m-3 flex items-start rounded-lg p-3 hover:bg-gray-700"
-    >
-      <div className="ml-4">
-        <p className="text-base font-medium text-white">Report Drafts Admin</p>
-      </div>
-    </Link>
-  )
-
-  const postAdmin = (
-    <Link
-      href="/adminView"
-      className="-m-3 flex items-start rounded-lg p-3 hover:bg-gray-700"
-    >
-      <div className="ml-4">
-        <p className="text-base font-medium text-white">Post Admin</p>
-      </div>
-    </Link>
-  )
-
-  const tdsPhaseAdmin = (
-    <Link
-      href="/adminTDFPhase"
-      className="-m-3 flex items-start rounded-lg p-3 hover:bg-gray-700"
-    >
-      <div className="ml-4">
-        <p className="text-base font-medium text-white">TDS Phase Admin</p>
-      </div>
-    </Link>
-  )
-
   function renderSwitch() {
     switch (mode) {
       case headerStatus.design:
         return (
-          <>
-            {genericSection('/myDesigns', 'Design a Token')}
-          </>
+          <HeaderGenericSection pathName="/myDesigns" title="Design a Token" />
         )
       case headerStatus.main:
         return (
           <>
-            {genericSection('/calculator', 'Calculator')}
-            {genericSection('/bookAnExpert', 'Services')}
-            {genericSection('/myDesigns', 'My Dashboard')}
+            <HeaderComboSection
+              classNames={classNames}
+              title="Products & Services"
+            >
+              <HeaderGenericSection
+                pathName="/tdsLandingPage"
+                title="Tokenomics Design Space"
+              />
+              <HeaderGenericSection
+                pathName="/thub"
+                title="Calculation Template"
+              />
+              <HeaderGenericSection pathName="/bookAnExpert" title="Services" />
+            </HeaderComboSection>
+            <HeaderGenericSection pathName="/calculator" title="Calculator" />
+            {/* <HeaderGenericSection pathName="/bookAnExpert" title="Services" /> */}
+            <HeaderGenericSection pathName="/myDesigns" title="My Dashboard" />
           </>
         )
       case headerStatus.report:
       default:
         return (
-          <>
-            {genericSection('/myDesigns', 'List a Token')}
-          </>
+          <HeaderGenericSection pathName="/myDesigns" title="List a Token" />
         )
     }
   }
@@ -121,7 +65,9 @@ export default function Header2({ mode = headerStatus.main, children = null }) {
         <div className="mx-auto max-w-full px-6">
           <div className="flex items-center justify-between py-1 md:justify-start md:space-x-10">
             <div className="flex justify-start lg:w-0 lg:flex-1">
+              <div className='w-12 h-12'>
               <ThubLogo />
+              </div>
               <div className="hidden md:ml-2 md:flex md:items-center">
                 <p className="text-2xl text-white">Tokenomics Hub</p>
               </div>
@@ -138,43 +84,24 @@ export default function Header2({ mode = headerStatus.main, children = null }) {
             </Popover.Group>
             <div className="hidden items-center justify-end md:flex md:flex-1 md:gap-5 lg:w-0">
               {admin ? (
-                <Popover className="relative">
-                  {({ open }) => (
-                    <>
-                      <Popover.Button
-                        className={classNames(
-                          open
-                            ? 'bg-gradient-to-tr  from-dao-red via-dao-red to-dao-green text-gray-900'
-                            : 'text-white hover:text-gray-50',
-                          'rounded-md bg-white bg-clip-text py-2 px-4 text-transparent hover:bg-opacity-80'
-                        )}
-                      >
-                        <span className="mr-2">Admin</span>
-                      </Popover.Button>
-
-                      <Transition
-                        as={Fragment}
-                        enter="transition ease-out duration-200"
-                        enterFrom="opacity-0 translate-y-1"
-                        enterTo="opacity-100 translate-y-0"
-                        leave="transition ease-in duration-150"
-                        leaveFrom="opacity-100 translate-y-0"
-                        leaveTo="opacity-0 translate-y-1"
-                      >
-                        <Popover.Panel className="absolute z-10 mt-3 w-60 max-w-md -translate-x-1/2 transform px-2 sm:px-0">
-                          <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
-                            <div className="relative grid gap-6 bg-dark-tdao px-5 py-6 sm:gap-8 sm:p-8">
-                              {tdsPhaseAdmin}
-                              {postAdmin}
-                              {mechanismAdmin}
-                              {allDraftsAdmin}
-                            </div>
-                          </div>
-                        </Popover.Panel>
-                      </Transition>
-                    </>
-                  )}
-                </Popover>
+                <HeaderComboSection classNames={classNames} title="Admin">
+                  <HeaderGenericSection
+                    pathName="/adminTDFPhase"
+                    title="TDS Phase Admin"
+                  />
+                  <HeaderGenericSection
+                    pathName="/adminView"
+                    title="Post Admin"
+                  />
+                  <HeaderGenericSection
+                    pathName="/coreMechanisms"
+                    title="Mechanism Admin"
+                  />
+                  <HeaderGenericSection
+                    pathName="/allDrafts"
+                    title="Report Drafts Admin"
+                  />
+                </HeaderComboSection>
               ) : (
                 <></>
               )}

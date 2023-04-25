@@ -1,3 +1,12 @@
+export const formatDate = (date) => {
+  const oldDate = new Date(date)
+  var getYear = oldDate.toLocaleString('default', { year: 'numeric' })
+  var getMonth = oldDate.toLocaleString('default', { month: '2-digit' })
+  var getDay = oldDate.toLocaleString('default', { day: '2-digit' })
+
+  return getYear + '-' + getMonth + '-' + getDay
+}
+
 export const getMergedInitialCalcValues = (userCalcs, userId, detailedCalc) => {
   var preloadInitialValues = initialCalculatorValues
 
@@ -260,13 +269,16 @@ export function getDemandAreaData(
 ) {
   if (calculationRow.CalculationTimeSeries !== undefined) {
     const inputData = calculationRow.CalculationTimeSeries || []
-
-    // const dataset = []
     let currentMonth = 0
 
     for (let i = 0; i < inputData.length; i++) {
       const row = inputData[i]
-      const endMonth = currentMonth + row.months - 1
+      let endMonth = currentMonth + row.months - 1
+
+      if (endMonth >= months) {
+        endMonth = months - 1
+      }
+
       for (let j = currentMonth; j <= endMonth; j++) {
         if (supplyDemandTotals[j] === undefined) {
           supplyDemandTotals[j] = {
@@ -297,7 +309,8 @@ export function getDemandAreaData(
         if (supplyDemandTotals[i].demand === undefined) {
           supplyDemandTotals[i].demand = 0
         }
-        supplyDemandTotals[i].demand += inputData[inputData.length - 1]?.tokens
+        supplyDemandTotals[i].demand +=
+          inputData[inputData.length - 1]?.tokens || 0
       }
     }
   }
@@ -502,4 +515,22 @@ export function mandatoryFormValidate(values) {
   // }
 
   return errors
+}
+
+export async function upDateFirstTimeVisit(userId: string, prop: string, newVal: any) {
+  const body = { userId, prop, newVal }
+
+  try {
+    await fetch('/api/setPublicMetaData', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    })
+    // toast.success('Message sent', { position: 'bottom-right' })
+    return true
+  } catch (error) {
+    console.error(error)
+    // toast.error('An error occurred', { position: 'bottom-right' })
+    return false
+  }
 }
