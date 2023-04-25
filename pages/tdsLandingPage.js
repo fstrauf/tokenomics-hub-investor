@@ -6,10 +6,12 @@ import Link from 'next/link'
 import Header2 from '../components/header2'
 import ThubLogo from '../public/svg/thub-logo'
 // import Script from 'next/script'
+import LiteYouTubeEmbed from 'react-lite-youtube-embed'
+import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css'
 
 export default function tdsLandingPage() {
   const videoLink = (
-    <a href="https://youtu.be/SUoKhNti9pk" target="_blank">
+    <a href="https://youtu.be/dq_SowJgRvE" target="_blank">
       <button className="mt-5 rounded-md border-2 border-dao-red bg-white px-6 py-4 text-sm font-medium text-dao-red hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
         Watch Quick Demo
       </button>
@@ -27,6 +29,7 @@ export default function tdsLandingPage() {
     <>
       {/* <Layout> */}
       <Header2 />
+
       <div className="m-auto">
         <div className="">
           <div className="flex w-full justify-between gap-5 bg-gradient-to-r from-dao-green to-dao-red py-5 pt-10">
@@ -58,17 +61,12 @@ export default function tdsLandingPage() {
                 {videoLink}
               </div>
             </div>
-            <div className="">
-              <div className="flex">
-                <Image
-                  src="/demandCalcHalf.png"
-                  width={1191 / 2}
-                  height={948 / 2}
-                  className="rounded-md shadow-xl"
-                  alt="Supply and Demand Calculation"
-                  priority={true}
-                />
-              </div>
+            <div className="w-[650px] m-10">
+              {' '}
+              <LiteYouTubeEmbed
+                id="dq_SowJgRvE"
+                title="What’s new in Material Design for the web (Chrome Dev Summit 2019)"
+              />
             </div>
           </div>
         </div>
