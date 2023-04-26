@@ -8,20 +8,17 @@ import FormId from '../form/FormId'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import RequestReviewModal from '../../components/requestReviewPopup'
-import {
-  designElementStatus,
-  headerStatus,
-} from '../../lib/helper'
+import { designElementStatus, headerStatus } from '../../lib/helper'
 import { event } from 'nextjs-google-analytics'
 import Header2 from '../header2'
 import HelpButton from './HelpButton'
 
-export default function TDFMain({ props, header=headerStatus.design }) {
+export default function TDFMain({ props, header = headerStatus.design }) {
   const router = useRouter()
 
   const [activePhase, setActivePhase] = useState(
     router.query.phase ? +router.query.phase : 11
-  ) 
+  )
   const [postId, setPostId] = useState(props.post.id || '')
   const [isRequestReviewOpen, setIsRequestReviewOpen] = useState(false)
   const initialValues = props.post
@@ -108,7 +105,6 @@ export default function TDFMain({ props, header=headerStatus.design }) {
   })
 
   const submitData = async (values, { setSubmitting }) => {
-    console.log("🚀 ~ file: TDFMain.tsx:111 ~ submitData ~ values:", values)
     const body = { values }
     if (values?.id === '') {
       try {
@@ -134,7 +130,7 @@ export default function TDFMain({ props, header=headerStatus.design }) {
         setSubmitting(false)
       } catch (error) {
         console.error(error)
-      } 
+      }
     } else {
       try {
         const response = await fetch('/api/post/updateNewDesign', {
@@ -381,14 +377,14 @@ explanation`}
         onSubmit={submitData}
         enableReinitialize
       >
-        {({ isSubmitting, setFieldValue, values }) => (
+        {({ isSubmitting, setFieldValue, values, dirty }) => (
           <Form>
             <Header2 mode={header}>
               <div className="flex gap-2">
                 <button
                   type="submit"
-                  disabled={isSubmitting}
-                  className="rounded-md border-2 border-dao-red bg-gradient-to-r from-dao-red via-dao-red to-dao-green bg-clip-text py-1 px-4 text-transparent hover:bg-opacity-80"
+                  disabled={isSubmitting || !dirty}
+                  className="rounded-md border-2 border-dao-red bg-gradient-to-r from-dao-red via-dao-red to-dao-green bg-clip-text py-1 px-4 text-transparent hover:bg-opacity-80 disabled:opacity-50"
                 >
                   Save
                 </button>
@@ -399,7 +395,11 @@ explanation`}
                 >
                   Preview
                 </Link>
-                <HelpButton values={values} setIsRequestReviewOpen={setIsRequestReviewOpen} setreviewRequiredFields={setreviewRequiredFields} />
+                <HelpButton
+                  values={values}
+                  setIsRequestReviewOpen={setIsRequestReviewOpen}
+                  setreviewRequiredFields={setreviewRequiredFields}
+                />
               </div>
             </Header2>
             <div className="m-auto max-w-md sm:max-w-2xl lg:max-w-screen-2xl">
@@ -440,7 +440,7 @@ explanation`}
                   />
                 </div>
                 <div className="w-5/6 rounded-lg bg-white">
-                  <FormAutoSave />
+                  <FormAutoSave dirty={dirty} />
                   <FieldArray
                     name="DesignElement"
                     render={() => (
