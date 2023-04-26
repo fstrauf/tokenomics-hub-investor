@@ -475,10 +475,10 @@ export function mandatoryFormValidate(values) {
     errors.categories = 'Required!'
     errors['11'] = true
   }
-  if (values?.Mechanism?.length === 0) {
-    errors.Mechanism = 'Required!'
-    errors['502'] = true
-  }
+  // if (values?.Mechanism?.length === 0) {
+  //   errors.Mechanism = 'Required!'
+  //   errors['502'] = true
+  // }
   if (values?.tags?.length === 0) {
     errors.tags = 'Required!'
     errors['11'] = true
@@ -504,15 +504,16 @@ export function mandatoryFormValidate(values) {
     errors.demandDrivers = 'Required!'
     errors['801'] = true
   }
-  // if (!values.breakdown && values?.calculation === undefined) {
-  //   if (!values.breakdown) {
-  //     errors.breakdown = 'Required!'
-  //   }
-  //   if (values?.calculation === undefined) {
-  //     errors.calculation = 'Required!'
-  //   }
-  //   errors.deepDive = true
-  // }
+  if (!values.breakdown && values?.Mechanism?.length === 0) {
+    if (!values.breakdown) {
+      errors.breakdown = 'Required!'
+      errors['802'] = true
+    }
+    if (values?.Mechanism?.length === 0) {
+      errors.Mechanism = 'Required!'
+      errors['502'] = true
+    }
+  }
 
   return errors
 }
