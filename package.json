@@ -80,6 +80,7 @@
     "react-circular-progressbar": "^2.1.0",
     "react-confirm-alert": "^3.0.6",
     "react-dom": "^18.2.0",
+    "react-gtm-module": "^2.0.11",
     "react-hot-toast": "^2.4.0",
     "react-icons": "^4.8.0",
     "react-instantsearch-hooks-web": "^6.37.0",

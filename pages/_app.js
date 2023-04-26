@@ -9,6 +9,8 @@ import {
   RedirectToSignIn,
 } from '@clerk/nextjs'
 import { useRouter } from 'next/router'
+import { useEffect } from 'react'
+import TagManager from 'react-gtm-module'
 
 const publicPages = [
   '/',
@@ -24,6 +26,9 @@ const publicPages = [
 function MyApp({ Component, pageProps }) {
   const { pathname } = useRouter()
 
+  useEffect(() => {
+    TagManager.initialize({ gtmId: 'G-3MWJJK74SD' })
+  }, [])
   // Check if the current route matches a public page
   const isPublicPage = publicPages.includes(pathname)
   return (
