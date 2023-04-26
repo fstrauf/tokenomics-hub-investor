@@ -5,7 +5,6 @@ import { postStatus, stringToKey } from '../../../lib/helper'
 export default async function handle(req, res) {
   const { values } = req.body
   const inputFields = values
-  // console.log("🚀 ~ file: updateNewDesign.ts:8 ~ handle ~ inputFields:", inputFields)
 
   var breakdown = inputFields.breakdown
   if (typeof inputFields.breakdown === 'object') {
@@ -13,11 +12,18 @@ export default async function handle(req, res) {
   }
 
   let calculation = inputFields.Calculation
-  delete calculation?.areaData
-  delete calculation?.postId
-  delete calculation?.calculationRows
-  calculation.startDate = new Date(calculation?.startDate)
-  console.log("🚀 ~ file: updateNewDesign.ts:20 ~ handle ~ calculation:", calculation)
+  if (Object.keys(calculation).length > 0) {
+    delete calculation?.areaData
+    delete calculation?.postId
+    delete calculation?.calculationRows
+    calculation.startDate = new Date(calculation?.startDate)
+
+    if(calculation?.id){
+      calculation = {update: calculation}
+    } else {
+      calculation = {create: calculation}
+    }    
+  }
 
   const mechanisms = inputFields.Mechanism.map((m) => {
     var postUsers = {}
@@ -229,9 +235,7 @@ export default async function handle(req, res) {
         Mechanism: {
           create: mechanisms,
         },
-        Calculation: {          
-          update: calculation,
-        },
+        Calculation: calculation,
         protocolTimeLine: {
           createMany: {
             data: timeLine,
@@ -250,7 +254,7 @@ export default async function handle(req, res) {
   try {
     response = await prisma.$transaction(txCalls)
   } catch (e) {
-    console.log("🚀 ~ file: updateNewDesign.ts:252 ~ handle ~ e:", e)
+    console.log('🚀 ~ file: updateNewDesign.ts:252 ~ handle ~ e:', e)
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
       // The .code property can be accessed in a type-safe manner
       if (e.code === 'P2002') {

@@ -1,8 +1,5 @@
 import { Field, useFormikContext } from 'formik'
-// import BreakdownBox from '../slugView/breakdown-box'
-// import ResourceSection from './ResourceSection'
 import React, { useEffect } from 'react'
-// import FormErrorMessage from '../form/FormErrorMessage'
 import FormText from '../form/FormText'
 import FormSelect from '../form/FormSelect'
 import FormImageSelect from '../form/FormImageSelect'
@@ -24,11 +21,13 @@ export default function TDF11({
 
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
 
-  const { setFieldValue } = useFormikContext()
+  const { setFieldValue, dirty } = useFormikContext()
 
   useEffect(() => {
-    designElementStatusUpdate(values, designPhase.phaseId, setFieldValue)
-  }, [])
+    if (dirty) {
+      designElementStatusUpdate(values, designPhase.phaseId, setFieldValue)
+    }
+  }, [dirty])
 
   return (
     <div className="grid w-full  gap-2 rounded-lg border-2 p-2">

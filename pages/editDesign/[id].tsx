@@ -8,7 +8,7 @@ import CommentForm from '../../components/commentForm'
 import Comments from '../../components/comments'
 
 const EditDesign: React.FC<UpdateNewDesignProps> = (props) => {
-  // console.log("🚀 ~ file: [id].tsx:11 ~ props:", props)
+  console.log("🚀 ~ file: [id].tsx:11 ~ props:", props)
   return (
     <>
       <TDFMain props={props} header={props?.post?.postType} />
@@ -116,13 +116,15 @@ export const getServerSideProps: GetServerSideProps = async ({
     }))
   if (postWithUpdatedComments.Calculation === null) {
     postWithUpdatedComments.Calculation = {}
+  } else {
+    postWithUpdatedComments.Calculation.startDate = formatDate(
+      postWithUpdatedComments?.Calculation?.startDate || new Date()
+    )
   }
   // postWithUpdatedComments.Calculation.startDate = new Date(
   //   postWithUpdatedComments?.Calculation?.startDate || ''
   // ).toLocaleDateString('en-CA')
-  postWithUpdatedComments.Calculation.startDate = formatDate(
-    postWithUpdatedComments?.Calculation?.startDate || new Date()
-  )
+  
   postWithUpdatedComments.DesignElement =
     postWithUpdatedComments?.DesignElement?.map((de) => {
       try {
