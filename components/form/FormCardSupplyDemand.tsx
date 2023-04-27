@@ -24,6 +24,7 @@ export const FormCardSupplyDemand = ({
     category: `Mechanism`,
     lockupPeriod: 5,
     unlockPeriod: 12,
+    percentageUnlockTGE: 0,
     percentageAllocation: 30,
     color: '#FF6666',
     isEpochDistro: false,

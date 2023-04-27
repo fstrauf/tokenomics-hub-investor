@@ -1,6 +1,5 @@
 import '../styles/index.css'
 import { GoogleAnalytics } from 'nextjs-google-analytics'
-// import { SessionProvider } from 'next-auth/react';
 import Head from 'next/head'
 import {
   ClerkProvider,
@@ -29,7 +28,6 @@ function MyApp({ Component, pageProps }) {
   useEffect(() => {
     TagManager.initialize({ gtmId: 'G-3MWJJK74SD' })
   }, [])
-  // Check if the current route matches a public page
   const isPublicPage = publicPages.includes(pathname)
   return (
     <>

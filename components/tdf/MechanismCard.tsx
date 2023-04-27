@@ -77,6 +77,18 @@ export const MechanismCard = ({
             <>
               <div className="flex">
                 <p className="w-16 text-xs font-bold uppercase text-gray-700">
+                  % Unlock at TGE
+                </p>
+                <Field
+                  name={`${field.name}.${mechanismIndex}.percentageUnlockTGE`}
+                  placeholder="TGE Unlock Percentage"
+                  className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+                  type="number"
+                  onWheel={(event) => event.currentTarget.blur()}
+                />
+              </div>
+              <div className="flex">
+                <p className="w-16 text-xs font-bold uppercase text-gray-700">
                   Lockup Period
                 </p>
                 <Field
@@ -241,7 +253,10 @@ export const MechanismCard = ({
   }
 
   return (
-    <div key={mechanismIndex} className="flex flex-col p-4 max-w-2xl ml-auto mr-auto">
+    <div
+      key={mechanismIndex}
+      className="ml-auto mr-auto flex max-w-2xl flex-col p-4"
+    >
       <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 ">
         {isSink ? <>Demand Builder</> : <>Supply Builder</>}
       </h5>

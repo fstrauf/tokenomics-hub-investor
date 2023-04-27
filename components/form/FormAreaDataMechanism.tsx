@@ -10,7 +10,7 @@ export const FormAreaDataMechanism = (props) => {
     // Clear the timer on every form input
     clearTimeout(timerId)
 
-    // Start a new timer to call getAreaData after a delay of 500ms
+    // Start a new timer to call getAreaData after a delay of 1s
     const newTimerId = setTimeout(() => {
       const chartProps = getAreaData(
         values?.Calculation?.months,
