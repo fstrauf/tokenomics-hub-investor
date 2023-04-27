@@ -69,7 +69,7 @@ export const MechanismCard = ({
                 <p className="text-xs font-bold uppercase text-gray-700">
                   Initial Emission per second
                 </p>
-                <div className='flex'>
+                <div className="flex">
                   <Field
                     name={`${field.name}.${mechanismIndex}.initialEmissionPerSecond`}
                     placeholder="Initial Emission per Seconds"
@@ -105,7 +105,7 @@ export const MechanismCard = ({
                 <Field
                   name={`${field.name}.${mechanismIndex}.percentageUnlockTGE`}
                   placeholder="TGE Unlock Percentage"
-                  className="block rounded-lg w-28 border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+                  className="block w-28 rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
                   type="number"
                   onWheel={(event) => event.currentTarget.blur()}
                 />
@@ -115,7 +115,7 @@ export const MechanismCard = ({
                 <Field
                   name={`${field.name}.${mechanismIndex}.lockupPeriod`}
                   placeholder="lockupPeriod"
-                  className="block rounded-lg w-28 border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+                  className="block w-28 rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
                   type="number"
                   onWheel={(event) => event.currentTarget.blur()}
                 />
@@ -125,7 +125,7 @@ export const MechanismCard = ({
                 <Field
                   name={`${field.name}.${mechanismIndex}.unlockPeriod`}
                   placeholder="unlockPeriod"
-                  className="block rounded-lg w-28 border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+                  className="block w-28 rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
                   type="number"
                   onWheel={(event) => event.currentTarget.blur()}
                 />
@@ -175,9 +175,15 @@ export const MechanismCard = ({
                     </th>
                     <th scope="col" className="py-3">
                       Phase Duration
+                      <span className="ml-1 self-center text-xs">
+                        (in months)
+                      </span>
                     </th>
                     <th scope="col" className="py-3">
                       Demand
+                      <span className="ml-1 self-center text-xs">
+                        (tokens during phase)
+                      </span>
                     </th>
                     <th></th>
                   </tr>
