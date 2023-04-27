@@ -196,7 +196,7 @@ export default async function handle(req, res) {
         problemSolution: inputFields.problemSolution,
         parent: inputFields.parent,
         authorClerkId: inputFields.authorClerkId,
-        status: postStatus.draft,
+        // status: postStatus.draft,
         postType: inputFields.postType,
         ticker: inputFields.ticker,
         categories: {
