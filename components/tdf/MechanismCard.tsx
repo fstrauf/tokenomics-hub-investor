@@ -38,6 +38,21 @@ export const MechanismCard = ({
             </span>
           </div>
           <div className="grid grid-cols-2 items-center gap-1">
+            <p className="text-xs font-bold uppercase text-gray-700">
+              Percentage Allocation (
+              {field.values?.reduce(
+                (a, v) => (a = a + Number(v?.percentageAllocation)),
+                0
+              )}
+              %)
+            </p>{' '}
+            <Field
+              name={`${field.name}.${mechanismIndex}.percentageAllocation`}
+              placeholder="percentageAllocation"
+              className="block w-28 rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+              type="number"
+              onWheel={(event) => event.currentTarget.blur()}
+            />
             {field?.value[mechanismIndex]?.isEpochDistro ? (
               <>
                 {' '}
@@ -131,21 +146,6 @@ export const MechanismCard = ({
                 />
               </>
             )}
-            <p className="text-xs font-bold uppercase text-gray-700">
-              Percentage Allocation (
-              {field.values?.reduce(
-                (a, v) => (a = a + Number(v?.percentageAllocation)),
-                0
-              )}
-              %)
-            </p>{' '}
-            <Field
-              name={`${field.name}.${mechanismIndex}.percentageAllocation`}
-              placeholder="percentageAllocation"
-              className="block w-28 rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
-              type="number"
-              onWheel={(event) => event.currentTarget.blur()}
-            />
             <p className="text-xs font-bold uppercase text-gray-700">Color</p>
             <Field
               name={`${field.name}.${mechanismIndex}.color`}
