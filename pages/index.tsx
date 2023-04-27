@@ -21,7 +21,7 @@ type Props = {
 
 const Index: React.FC<Props> = (props) => {
   const router = useRouter()
-  const [showBanner, setShowBanner] = useState(true)
+  // const [showBanner, setShowBanner] = useState(true)
 
   function filterCategories(newValue: MultiValue<any>): void {
     if (newValue.length === 0) {
@@ -41,37 +41,37 @@ const Index: React.FC<Props> = (props) => {
     }
   }
 
-  const fundRaiseBar = (
-    <div
-      className={`${
-        showBanner ? 'm-auto flex items-center bg-dao-green' : 'hidden'
-      }`}
-    >
-      <div className="mx-auto max-w-xl py-3 px-3 sm:px-6 lg:px-8">
-        <p className="ml-3 self-center truncate text-center font-medium text-white">
-          <span className="inline">🥳 We are fundraising. Interested? </span>
-          <a
-            href="mailto:contact@tokenomicsdao.com"
-            className="hover:underline"
-          >
-            Contact us.
-          </a>
-        </p>
-      </div>
-      <button
-        className="text-gray-200"
-        onClick={() => {
-          setShowBanner(false)
-        }}
-      >
-        <XMarkIcon className="h-6 w-6 text-gray-200" aria-hidden="true" />
-      </button>
-    </div>
-  )
+  // const fundRaiseBar = (
+  //   <div
+  //     className={`${
+  //       showBanner ? 'm-auto flex items-center bg-dao-green' : 'hidden'
+  //     }`}
+  //   >
+  //     <div className="mx-auto max-w-xl py-3 px-3 sm:px-6 lg:px-8">
+  //       <p className="ml-3 self-center truncate text-center font-medium text-white">
+  //         <span className="inline">🥳 We are fundraising. Interested? </span>
+  //         <a
+  //           href="mailto:contact@tokenomicsdao.com"
+  //           className="hover:underline"
+  //         >
+  //           Contact us.
+  //         </a>
+  //       </p>
+  //     </div>
+  //     <button
+  //       className="text-gray-200"
+  //       onClick={() => {
+  //         setShowBanner(false)
+  //       }}
+  //     >
+  //       <XMarkIcon className="h-6 w-6 text-gray-200" aria-hidden="true" />
+  //     </button>
+  //   </div>
+  // )
 
   return (
     <>
-      {fundRaiseBar}
+      {/* {fundRaiseBar} */}
       <Layout mode={headerStatus.main}>
         <Head>
           <title>Tokenomics Hub</title>
