@@ -19,7 +19,7 @@ export const MechanismCard = ({
             <span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">
               Allocation Based Supply
             </span>
-            <label className="relative mr-5 inline-flex cursor-pointer items-center">
+            <label className="relative mx-5 inline-flex cursor-pointer items-center">
               <Field
                 id="isEpochDistro"
                 name={`${field.name}.${mechanismIndex}.isEpochDistro`}
@@ -32,10 +32,10 @@ export const MechanismCard = ({
               Emission Based Supply
             </span>
           </div>
-          {field?.value[mechanismIndex]?.isEpochDistro ? (
-            <>
-              {' '}
-              <div className="flex">
+          <div className="grid grid-cols-2 items-center gap-1">
+            {field?.value[mechanismIndex]?.isEpochDistro ? (
+              <>
+                {' '}
                 <p className="text-xs font-bold uppercase text-gray-700">
                   Epoch Duration in Seconds
                 </p>
@@ -47,8 +47,6 @@ export const MechanismCard = ({
                   min="0"
                   onWheel={(event) => event.currentTarget.blur()}
                 />
-              </div>
-              <div className="flex">
                 <p className="text-xs font-bold uppercase text-gray-700">
                   Initial Emission per second
                 </p>
@@ -59,8 +57,6 @@ export const MechanismCard = ({
                   type="number"
                   onWheel={(event) => event.currentTarget.blur()}
                 />
-              </div>
-              <div className="flex">
                 <p className="text-xs font-bold uppercase text-gray-700">
                   Emission Reduction per Epoch (in %)
                 </p>
@@ -71,12 +67,10 @@ export const MechanismCard = ({
                   type="number"
                   onWheel={(event) => event.currentTarget.blur()}
                 />
-              </div>
-            </>
-          ) : (
-            <>
-              <div className="flex">
-                <p className="w-16 text-xs font-bold uppercase text-gray-700">
+              </>
+            ) : (
+              <>
+                <p className="text-xs font-bold uppercase text-gray-700">
                   % Unlock at TGE
                 </p>
                 <Field
@@ -86,9 +80,7 @@ export const MechanismCard = ({
                   type="number"
                   onWheel={(event) => event.currentTarget.blur()}
                 />
-              </div>
-              <div className="flex">
-                <p className="w-16 text-xs font-bold uppercase text-gray-700">
+                <p className="text-xs font-bold uppercase text-gray-700">
                   Lockup Period
                 </p>
                 <Field
@@ -98,8 +90,6 @@ export const MechanismCard = ({
                   type="number"
                   onWheel={(event) => event.currentTarget.blur()}
                 />
-              </div>
-              <div className="flex">
                 <p className="text-xs font-bold uppercase text-gray-700">
                   Unlocking Period
                 </p>
@@ -110,10 +100,8 @@ export const MechanismCard = ({
                   type="number"
                   onWheel={(event) => event.currentTarget.blur()}
                 />
-              </div>
-            </>
-          )}
-          <div className="flex">
+              </>
+            )}
             <p className="text-xs font-bold uppercase text-gray-700">
               Percentage Allocation (
               {field.values?.reduce(
@@ -129,8 +117,6 @@ export const MechanismCard = ({
               type="number"
               onWheel={(event) => event.currentTarget.blur()}
             />
-          </div>
-          <div className="flex">
             <p className="text-xs font-bold uppercase text-gray-700">Color</p>
             <Field
               name={`${field.name}.${mechanismIndex}.color`}
