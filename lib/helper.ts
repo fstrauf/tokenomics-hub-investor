@@ -1,3 +1,5 @@
+// import { google } from 'googleapis';
+
 export const formatDate = (date) => {
   const oldDate = new Date(date)
   var getYear = oldDate.toLocaleString('default', { year: 'numeric' })
@@ -517,7 +519,11 @@ export function mandatoryFormValidate(values) {
   return errors
 }
 
-export async function upDateFirstTimeVisit(userId: string, prop: string, newVal: any) {
+export async function upDateFirstTimeVisit(
+  userId: string,
+  prop: string,
+  newVal: any
+) {
   const body = { userId, prop, newVal }
 
   try {
@@ -532,5 +538,24 @@ export async function upDateFirstTimeVisit(userId: string, prop: string, newVal:
     console.error(error)
     // toast.error('An error occurred', { position: 'bottom-right' })
     return false
+  }
+}
+
+export async function createSpreadSheet(title) {
+  const body = { title }
+  try {
+    const response = await fetch('/api/createGSheet', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    })
+    const spreadsheetUrl = await response.text()
+    console.log("🚀 ~ file: helper.ts:553 ~ createSpreadSheet ~ spreadsheetUrl:", spreadsheetUrl)
+    // toast.success('Message sent', { position: 'bottom-right' })
+    return spreadsheetUrl
+  } catch (error) {
+    console.error(error)
+    // toast.error('An error occurred', { position: 'bottom-right' })
+    return ''
   }
 }
