@@ -2,6 +2,9 @@ import { Field, FieldArray } from 'formik'
 import React from 'react'
 import FormSelectUser from '../form/FormSelectUser'
 import FormTipTap from '../form/FormTipTap'
+import * as duration from 'dayjs/plugin/duration'
+import * as dayjs from 'dayjs'
+import { shortBigNumber } from '../../lib/helper'
 
 export const MechanismCard = ({
   field,
@@ -10,6 +13,8 @@ export const MechanismCard = ({
   users,
 }) => {
   const isSink = field.value[mechanismIndex]?.isSink || false
+  dayjs.extend(duration)
+  const secondsPerMonth = 2628000
 
   const supplyBuilder = () => {
     return (
@@ -19,7 +24,7 @@ export const MechanismCard = ({
             <span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">
               Allocation Based Supply
             </span>
-            <label className="relative mr-5 inline-flex cursor-pointer items-center">
+            <label className="relative mx-5 inline-flex cursor-pointer items-center">
               <Field
                 id="isEpochDistro"
                 name={`${field.name}.${mechanismIndex}.isEpochDistro`}
@@ -32,76 +37,7 @@ export const MechanismCard = ({
               Emission Based Supply
             </span>
           </div>
-          {field?.value[mechanismIndex]?.isEpochDistro ? (
-            <>
-              {' '}
-              <div className="flex">
-                <p className="text-xs font-bold uppercase text-gray-700">
-                  Epoch Duration in Seconds
-                </p>
-                <Field
-                  name={`${field.name}.${mechanismIndex}.epochDurationInSeconds`}
-                  placeholder="First Epoch Duration in Seconds"
-                  className="block w-28 rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
-                  type="number"
-                  min="0"
-                  onWheel={(event) => event.currentTarget.blur()}
-                />
-              </div>
-              <div className="flex">
-                <p className="text-xs font-bold uppercase text-gray-700">
-                  Initial Emission per second
-                </p>
-                <Field
-                  name={`${field.name}.${mechanismIndex}.initialEmissionPerSecond`}
-                  placeholder="Initial Emission per Seconds"
-                  className="block w-24 rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
-                  type="number"
-                  onWheel={(event) => event.currentTarget.blur()}
-                />
-              </div>
-              <div className="flex">
-                <p className="text-xs font-bold uppercase text-gray-700">
-                  Emission Reduction per Epoch (in %)
-                </p>
-                <Field
-                  name={`${field.name}.${mechanismIndex}.emissionReductionPerEpoch`}
-                  placeholder="Emission Reduction per Epoch"
-                  className="block w-24 rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
-                  type="number"
-                  onWheel={(event) => event.currentTarget.blur()}
-                />
-              </div>
-            </>
-          ) : (
-            <>
-              <div className="flex">
-                <p className="w-16 text-xs font-bold uppercase text-gray-700">
-                  Lockup Period
-                </p>
-                <Field
-                  name={`${field.name}.${mechanismIndex}.lockupPeriod`}
-                  placeholder="lockupPeriod"
-                  className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
-                  type="number"
-                  onWheel={(event) => event.currentTarget.blur()}
-                />
-              </div>
-              <div className="flex">
-                <p className="text-xs font-bold uppercase text-gray-700">
-                  Unlocking Period
-                </p>
-                <Field
-                  name={`${field.name}.${mechanismIndex}.unlockPeriod`}
-                  placeholder="unlockPeriod"
-                  className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
-                  type="number"
-                  onWheel={(event) => event.currentTarget.blur()}
-                />
-              </div>
-            </>
-          )}
-          <div className="flex">
+          <div className="grid grid-cols-2 items-center gap-1">
             <p className="text-xs font-bold uppercase text-gray-700">
               Percentage Allocation (
               {field.values?.reduce(
@@ -113,12 +49,103 @@ export const MechanismCard = ({
             <Field
               name={`${field.name}.${mechanismIndex}.percentageAllocation`}
               placeholder="percentageAllocation"
-              className="block w-24 rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+              className="block w-28 rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
               type="number"
               onWheel={(event) => event.currentTarget.blur()}
             />
-          </div>
-          <div className="flex">
+            {field?.value[mechanismIndex]?.isEpochDistro ? (
+              <>
+                {' '}
+                <p className="text-xs font-bold uppercase text-gray-700">
+                  Epoch Duration in Seconds
+                </p>
+                <div className="flex">
+                  <Field
+                    name={`${field.name}.${mechanismIndex}.epochDurationInSeconds`}
+                    placeholder="First Epoch Duration in Seconds"
+                    className="block w-28 rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+                    type="number"
+                    min="0"
+                    onWheel={(event) => event.currentTarget.blur()}
+                  />
+                  <span className="ml-1 self-center text-xs">
+                    (~{' '}
+                    {Math.floor(
+                      dayjs
+                        .duration(
+                          field.value[mechanismIndex].epochDurationInSeconds,
+                          'seconds'
+                        )
+                        .asMonths()
+                    )}{' '}
+                    months)
+                  </span>
+                </div>
+                <p className="text-xs font-bold uppercase text-gray-700">
+                  Initial Emission per second
+                </p>
+                <div className="flex">
+                  <Field
+                    name={`${field.name}.${mechanismIndex}.initialEmissionPerSecond`}
+                    placeholder="Initial Emission per Seconds"
+                    className="block w-28 rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+                    type="number"
+                    onWheel={(event) => event.currentTarget.blur()}
+                  />
+                  <span className="ml-1 self-center text-xs">
+                    (~{' '}
+                    {shortBigNumber(
+                      field.value[mechanismIndex].initialEmissionPerSecond *
+                        secondsPerMonth
+                    )}{' '}
+                    per month)
+                  </span>
+                </div>
+                <p className="text-xs font-bold uppercase text-gray-700">
+                  Emission Reduction per Epoch (in %)
+                </p>
+                <Field
+                  name={`${field.name}.${mechanismIndex}.emissionReductionPerEpoch`}
+                  placeholder="Emission Reduction per Epoch"
+                  className="block w-28 rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+                  type="number"
+                  onWheel={(event) => event.currentTarget.blur()}
+                />
+              </>
+            ) : (
+              <>
+                <p className="text-xs font-bold uppercase text-gray-700">
+                  % Unlock at TGE
+                </p>
+                <Field
+                  name={`${field.name}.${mechanismIndex}.percentageUnlockTGE`}
+                  placeholder="TGE Unlock Percentage"
+                  className="block w-28 rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+                  type="number"
+                  onWheel={(event) => event.currentTarget.blur()}
+                />
+                <p className="text-xs font-bold uppercase text-gray-700">
+                  Lockup Period
+                </p>
+                <Field
+                  name={`${field.name}.${mechanismIndex}.lockupPeriod`}
+                  placeholder="lockupPeriod"
+                  className="block w-28 rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+                  type="number"
+                  onWheel={(event) => event.currentTarget.blur()}
+                />
+                <p className="text-xs font-bold uppercase text-gray-700">
+                  Unlocking Period
+                </p>
+                <Field
+                  name={`${field.name}.${mechanismIndex}.unlockPeriod`}
+                  placeholder="unlockPeriod"
+                  className="block w-28 rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+                  type="number"
+                  onWheel={(event) => event.currentTarget.blur()}
+                />
+              </>
+            )}
             <p className="text-xs font-bold uppercase text-gray-700">Color</p>
             <Field
               name={`${field.name}.${mechanismIndex}.color`}
@@ -148,9 +175,15 @@ export const MechanismCard = ({
                     </th>
                     <th scope="col" className="py-3">
                       Phase Duration
+                      <span className="ml-1 self-center text-xs">
+                        (in months)
+                      </span>
                     </th>
                     <th scope="col" className="py-3">
                       Demand
+                      <span className="ml-1 self-center text-xs">
+                        (tokens during phase)
+                      </span>
                     </th>
                     <th></th>
                   </tr>
@@ -241,7 +274,10 @@ export const MechanismCard = ({
   }
 
   return (
-    <div key={mechanismIndex} className="flex flex-col p-4 max-w-2xl ml-auto mr-auto">
+    <div
+      key={mechanismIndex}
+      className="ml-auto mr-auto flex max-w-2xl flex-col p-4"
+    >
       <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 ">
         {isSink ? <>Demand Builder</> : <>Supply Builder</>}
       </h5>

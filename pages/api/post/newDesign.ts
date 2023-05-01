@@ -44,6 +44,7 @@ export default async function handle(req, res) {
       epochDurationInSeconds: m.epochDurationInSeconds,
       initialEmissionPerSecond: m.initialEmissionPerSecond,
       emissionReductionPerEpoch: m.emissionReductionPerEpoch,
+      percentageUnlockTGE: m.percentageUnlockTGE,
       color: m.color,
       CalculationTimeSeries: {
         create: calculationTimeSeries,

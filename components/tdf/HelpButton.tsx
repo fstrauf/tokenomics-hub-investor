@@ -62,7 +62,7 @@ export default function HelpButton({
         } else {
           toast.success('Sent to review', { position: 'bottom-right' })
           notifyDiscord(
-            `${WEBSITE_URL_BASE}/editPost/${postId}`,
+            `${WEBSITE_URL_BASE}/editDesign/${postId}`,
             postStatus.reviewRequired
           )
         }
