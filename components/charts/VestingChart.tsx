@@ -18,7 +18,7 @@ import { AxisBottom, AxisLeft } from '@visx/axis'
 import { Group } from '@visx/group'
 import { LegendOrdinal } from '@visx/legend'
 import { shortBigNumber } from '../../lib/helper'
-import { curveBasis, curveCardinal, curveMonotoneX, curveNatural } from '@visx/curve'
+import { curveBasis } from '@visx/curve'
 
 export const background = '#FF6666'
 const tooltipStyles = {
@@ -40,6 +40,7 @@ export type StackedAreasProps = {
   data: object[]
   fields: object[]
   totalSupply: number
+  hideLegend: boolean
 }
 
 export default withTooltip<StackedAreasProps, TooltipData>(
@@ -55,18 +56,17 @@ export default withTooltip<StackedAreasProps, TooltipData>(
     data,
     fields,
     totalSupply,
+    hideLegend = false,
   }: StackedAreasProps & WithTooltipProvidedProps<TooltipData>) => {
-
-    if(data===undefined){
+    if (data === undefined) {
       return null
     }
 
-    const keys = fields?.map((f) => {                  
+    const keys = fields?.map((f) => {
       return f.name || f.category
     })
 
     const colors = fields?.map((f) => {
-      
       return f.color
     })
 
@@ -138,24 +138,26 @@ export default withTooltip<StackedAreasProps, TooltipData>(
           tooltipData: d,
           tooltipLeft: coords.x,
           tooltipTop: coords.y,
-        })        
+        })
       },
       [showTooltip, valueScale, dateScale, data]
     )
 
     return width < 10 ? null : (
       <div>
-        <div className="absolute flex w-full justify-center">
-          <LegendOrdinal
-            scale={colorScale}
-            direction='row'
-            labelMargin="0 10px 0 0"
-            className='text-xs'
-            // style={{ 'font-size': '5px 0' }}
-            // font-size: 10px;
-          />
-        </div>
-        <svg width={width} height={height}>       
+        {hideLegend ? (
+          <></>
+        ) : (
+          <div className="flex w-full justify-center">
+            <LegendOrdinal
+              scale={colorScale}
+              direction="row"
+              labelMargin="0 10px 0 0"
+              className="flex flex-wrap gap-2 text-xs"
+            />
+          </div>
+        )}
+        <svg width={width} height={height}>
           <Group left={margin.left} top={margin.top}>
             <AreaStack
               top={margin.top}
@@ -164,12 +166,12 @@ export default withTooltip<StackedAreasProps, TooltipData>(
               data={data}
               width={innerWidth}
               height={innerHeight}
-              stroke='white'
+              stroke="white"
               strokeWidth={1}
               x={(d) => dateScale(getDate(d.data)) ?? 0}
               y0={(d) => valueScale(d[0])}
-              y1={d => valueScale(d[1])}
-              color={d => colorScale(d)}
+              y1={(d) => valueScale(d[1])}
+              color={(d) => colorScale(d)}
               curve={curveBasis}
             />
             <AxisBottom
@@ -182,7 +184,7 @@ export default withTooltip<StackedAreasProps, TooltipData>(
             <AxisLeft
               scale={valueScale}
               numTicks={5}
-              tickFormat={shortBigNumber}                    
+              tickFormat={shortBigNumber}
               tickLabelProps={() => axisLeftTickLabelProps}
               tickLength={0}
               hideAxisLine={true}
@@ -206,7 +208,7 @@ export default withTooltip<StackedAreasProps, TooltipData>(
               <Line
                 from={{ x: tooltipLeft, y: margin.top }}
                 to={{ x: tooltipLeft, y: innerHeight + margin.top }}
-                stroke='#555758'
+                stroke="#555758"
                 strokeWidth={2}
                 pointerEvents="none"
                 strokeDasharray="5,2"
@@ -223,10 +225,12 @@ export default withTooltip<StackedAreasProps, TooltipData>(
               left={tooltipLeft + 12}
               style={tooltipStyles}
             >
-              <div className='rounded-lg'>
+              <div className="rounded-lg">
                 {fields.map((k) => (
-                  <div key={k.category} className='flex justify-end'>                    
-                    <p style={{color: k.color}} className='mr-2 font-bold'>{k.name || k.category}: </p>
+                  <div key={k.category} className="flex justify-end">
+                    <p style={{ color: k.color }} className="mr-2 font-bold">
+                      {k.name || k.category}:{' '}
+                    </p>
                     <p> {shortBigNumber(tooltipData[k.name || k.category])}</p>
                   </div>
                 ))}
@@ -246,7 +250,6 @@ export default withTooltip<StackedAreasProps, TooltipData>(
             </Tooltip>
           </div>
         )}
-        
       </div>
     )
   }

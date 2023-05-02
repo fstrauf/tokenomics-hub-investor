@@ -68,7 +68,7 @@ export default function AllocationChart({
   })
 
   const keys = fields?.map((f) => {
-    return f.name || f.category
+    return f.name + ` (${f.percentageAllocation}%)` || f.category + `(${f.percentageAllocation})`
   })
 
   const pieColorScale = useMemo(
@@ -86,7 +86,7 @@ export default function AllocationChart({
         <></>
       ) : (
         <LegendOrdinal
-          className="flex w-full justify-center text-xs"
+          className="flex flex-wrap text-xs px-10 gap-2"
           scale={pieColorScale}
           direction="row"
           labelMargin="0 10px 0 0"

@@ -45,7 +45,7 @@ export default function TDFCalculatorViewer(props) {
               <p className="text-xs">{String(new Date(values?.Calculation?.startDate).toLocaleDateString('en-AU'))}</p>
             </div>
           </div>
-          <div className="m-auto flex w-full flex-col place-items-center">
+          <div className="m-auto flex w-full flex-col place-items-center mb-10">
             <div className="h-52 w-full">
               <ParentSize>
                 {({ width, height }) => (
@@ -68,6 +68,7 @@ export default function TDFCalculatorViewer(props) {
                 <VestingChart
                   width={width}
                   height={height}
+                  hideLegend={true}
                   // data={values?.Calculation?.areaData?.chartData}
                   data={getAreaData(
                     values?.Calculation?.months,
