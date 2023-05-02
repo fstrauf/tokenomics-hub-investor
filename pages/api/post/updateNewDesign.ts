@@ -5,6 +5,10 @@ import { postStatus, stringToKey } from '../../../lib/helper'
 export default async function handle(req, res) {
   const { values } = req.body
   const inputFields = values
+  console.log(
+    '🚀 ~ file: updateNewDesign.ts:8 ~ handle ~ inputFields:',
+    inputFields
+  )
 
   var breakdown = inputFields.breakdown
   if (typeof inputFields.breakdown === 'object') {
@@ -18,12 +22,19 @@ export default async function handle(req, res) {
     delete calculation?.calculationRows
     calculation.startDate = new Date(calculation?.startDate)
 
-    if(calculation?.id){
-      calculation = {update: calculation}
+    if (calculation?.id) {
+      calculation = { update: calculation }
     } else {
-      calculation = {create: calculation}
-    }    
+      calculation = { create: calculation }
+    }
   }
+
+  const postUser = inputFields.PostUser.map((pu) => ({
+    id: inputFields?.id + '_' + pu.name,
+    name: pu.name,
+    role: pu.role,
+  }))
+  console.log("🚀 ~ file: updateNewDesign.ts:37 ~ postUser ~ postUser:", postUser)
 
   const mechanisms = inputFields.Mechanism.map((m) => {
     var postUsers = {}
@@ -31,7 +42,7 @@ export default async function handle(req, res) {
     } else {
       postUsers = {
         connect: m?.PostUser?.map((pu) => ({
-          id: pu.postId + '_' + pu.name,
+          id: inputFields?.id + '_' + pu.name,
         })),
       }
     }
@@ -223,16 +234,7 @@ export default async function handle(req, res) {
             data: resource,
           },
         },
-        PostUser: {
-          createMany: {
-            // data: inputFields.PostUser.map(({ name, role }) => ({ name, role })),
-            data: inputFields.PostUser.map((pu) => ({
-              id: pu.postId + '_' + pu.name,
-              name: pu.name,
-              role: pu.role,
-            })),
-          },
-        },
+        PostUser: {create: postUser},
         Mechanism: {
           create: mechanisms,
         },
