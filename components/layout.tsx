@@ -1,8 +1,13 @@
-import Footer from '../components/footer'
-import Meta from '../components/meta'
+import Footer from './footer'
+import Meta from './meta'
 import Header from './header2'
 
-export default function Layout({ children, mode }) {
+interface LayoutProps {
+  children: React.ReactNode;
+  mode: string;
+}
+
+export default function Layout({ children, mode }: LayoutProps) {
   return (
     <>
       <Meta />

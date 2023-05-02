@@ -1,4 +1,3 @@
-import Layout from '../components/layout'
 import React from 'react'
 import prisma from '../lib/prisma'
 import { GetServerSideProps } from 'next'
@@ -13,6 +12,7 @@ import {
 import DesignCard from '../components/tdf/designCard'
 import Link from 'next/link'
 import InfoSection from '../components/InfoSection'
+import Layout from '../components/layout'
 
 
 export default function MyDesigns({ posts }) {
