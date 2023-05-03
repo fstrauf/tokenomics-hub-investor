@@ -16,7 +16,6 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  // const stripe = initStripe(process.env.STRIPE_SECRET_KEY);
   if (req.method === 'POST') {
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
       apiVersion: '2022-11-15',
@@ -30,17 +29,47 @@ export default async function handler(
         sig,
         process.env.STRIPE_WEBHOOK_SECRET
       )
-      console.log("🚀 ~ file: stripeSync.ts:34 ~ event?.type:", event?.type)
-      switch (event?.type) {        
+      console.log('🚀 ~ file: stripeSync.ts:34 ~ event?.type:', event?.type)
+      switch (event?.type) {
         case 'checkout.session.completed':
-          const paymentIntentSucceeded = event.data.object
+          const userId = event.data.object?.client_reference_id
+          const paymentIntent = event.data.object?.payment_intent
+          const checkoutSessionId = event.data.object?.id
+          console.log(
+            '🚀 ~ file: stripeSync.ts:37 ~  event.data.object:',
+            event.data.object
+          )
+          console.log(
+            '🚀 ~ file: stripeSync.ts:37 ~ paymentIntent:',
+            paymentIntent
+          )
+
           console.log(
             '🚀 ~ file: stripeSync.ts:35 ~ paymentIntentSucceeded:',
-            paymentIntentSucceeded
+            userId
           )
-          // Then define and call a function to handle the event payment_intent.succeeded
+          const checkoutSession = await stripe.checkout.sessions.retrieve(checkoutSessionId, {
+            expand: ['line_items'],
+          })
+          console.log("🚀 ~ file: stripeSync.ts:54 ~ checkoutSession:", checkoutSession.line_items)
+          //update the user publicmetadata with the new subscription data.
           break
-        // ... handle other event types
+        case 'customer.subscription.updated':
+          //we should change the current subscription
+          break
+        case 'customer.subscription.deleted':
+          //eset the user back to free.
+          break
+        case 'customer.subscription.paused':
+          //reset to free tier
+          break
+        case 'customer.subscription.resumed':
+          //update the tier
+          break
+        case 'invoice.paid':
+          //update the tier
+          break
+
         default:
           console.log(`Unhandled event type ${event?.type}`)
       }
