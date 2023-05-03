@@ -6,10 +6,6 @@ import { MechanismCardViewer } from './MechanismCardViewer'
 import TDFCalculatorViewer from './TDFCalculatorViewer'
 
 export default function MechanismViewer({ post }) {
-  console.log(
-    '🚀 ~ file: MechanismViewer.tsx:2 ~ MechanismViewer ~ mechanisms:',
-    post
-  )
   let [mechanismIndex, setMechanismIndex] = useState(0)
   const [isOpen, setIsOpen] = useState(false)
   const handleViewMechanism = (index) => {
@@ -65,7 +61,7 @@ export default function MechanismViewer({ post }) {
               {' '}
               <p>Supply</p>
             </div>
-            <div className="h-60 overflow-auto rounded-lg border-2 border-slate-300">
+            <div className="overflow-auto rounded-lg border-2 border-slate-300">
               <div
                 key={4711}
                 className="flex flex-row flex-wrap gap-2 overflow-auto p-2"
@@ -89,7 +85,7 @@ export default function MechanismViewer({ post }) {
               <p>Demand</p>
             </div>
 
-            <div className="h-60 rounded-lg border-2 border-slate-300">
+            <div className="rounded-lg border-2 border-slate-300">
               <div
                 key={4811}
                 className="flex flex-row flex-wrap gap-2 overflow-auto p-2"
@@ -110,10 +106,6 @@ export default function MechanismViewer({ post }) {
         </div>
         <div>
           <TDFCalculatorViewer values={post} />
-          {/* <StaticAllocationAndVestingChart
-            calculation={calculation}
-            mechanisms={mechanisms}
-          /> */}
         </div>
       </div>
     </section>

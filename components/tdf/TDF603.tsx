@@ -1,5 +1,6 @@
 import { getActiveDesignPhase } from '../../lib/helper'
 import ResourceSection from './ResourceSection'
+import WalkthroughSection from './WalkthroughSection'
 
 export default function TDF603({ props, activePhase }) {
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
@@ -11,6 +12,7 @@ export default function TDF603({ props, activePhase }) {
         </h5>
       </div>
       <ResourceSection content={designPhase.Resources} />
+      <WalkthroughSection />
     </div>
   )
 }

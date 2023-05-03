@@ -1,15 +1,19 @@
 import { Field, useFormikContext } from 'formik'
-// import BreakdownBox from '../slugView/breakdown-box'
-// import ResourceSection from './ResourceSection'
 import React, { useEffect } from 'react'
-// import FormErrorMessage from '../form/FormErrorMessage'
 import FormText from '../form/FormText'
 import FormSelect from '../form/FormSelect'
 import FormImageSelect from '../form/FormImageSelect'
 import { designElementStatusUpdate } from '../../lib/designElementStatusField'
 import { getActiveDesignPhase } from '../../lib/helper'
+import FormGenerateButton from './FormGenerateButton'
+import FormErrorMessage from '../form/FormErrorMessage'
 
-export default function TDF11({ props, values, activePhase }) {
+export default function TDF11({
+  props,
+  values,
+  activePhase,
+  reviewRequiredFields,
+}) {
   // const designPhase = props.designPhases.find(
   //   (adp) => String(adp.phaseId) === '11',
   //   activePhase
@@ -17,40 +21,13 @@ export default function TDF11({ props, values, activePhase }) {
 
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
 
-  const { setFieldValue } = useFormikContext()
-
-  async function generateSuggestions(event) {
-    event.preventDefault()
-    try {
-      const response = await fetch('/api/generate', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ animal: values.title }),
-      })
-
-      const data = await response.json()
-      if (response.status !== 200) {
-        throw (
-          data.error ||
-          new Error(`Request failed with status ${response.status}`)
-        )
-      }
-
-      setFieldValue('shortDescription', data.result)
-      // setResult(data.result);
-      // setAnimalInput("");
-    } catch (error) {
-      // Consider implementing your own error handling logic here
-      console.error(error)
-      alert(error.message)
-    }
-  }
+  const { setFieldValue, dirty } = useFormikContext()
 
   useEffect(() => {
-    designElementStatusUpdate(values, designPhase.phaseId, setFieldValue)
-  }, [])
+    if (dirty) {
+      designElementStatusUpdate(values, designPhase.phaseId, setFieldValue)
+    }
+  }, [dirty])
 
   return (
     <div className="grid w-full  gap-2 rounded-lg border-2 p-2">
@@ -69,6 +46,10 @@ export default function TDF11({ props, values, activePhase }) {
           type="text"
           name="title"
           className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-xs text-gray-900 focus:border-dao-red focus:ring-dao-red"
+        />
+        <FormErrorMessage
+          field="title"
+          reviewRequiredFields={reviewRequiredFields}
         />
       </div>
 
@@ -96,7 +77,15 @@ export default function TDF11({ props, values, activePhase }) {
           <p className="mb-2 text-xs font-extralight text-gray-500">
             Give a short summary of the project and the token/tokens.
           </p>
-          <button onClick={generateSuggestions}>Generate</button>
+          <FormGenerateButton
+            title={values.title}
+            scope="shortDescription"
+            setFieldValue={setFieldValue}
+          />
+          <FormErrorMessage
+            field="shortDescription"
+            reviewRequiredFields={reviewRequiredFields}
+          />
         </div>
         <Field
           name="shortDescription"
@@ -125,7 +114,10 @@ export default function TDF11({ props, values, activePhase }) {
         <label className="mb-2 block text-sm font-medium text-gray-900">
           Categories
         </label>
-
+        <FormErrorMessage
+          field="categories"
+          reviewRequiredFields={reviewRequiredFields}
+        />
         <Field
           className="custom-select"
           name="categories"
@@ -139,7 +131,10 @@ export default function TDF11({ props, values, activePhase }) {
         <label className="mb-2 block text-sm font-medium text-gray-900">
           Tags
         </label>
-
+        <FormErrorMessage
+          field="tags"
+          reviewRequiredFields={reviewRequiredFields}
+        />
         <Field
           className="custom-select"
           name="tags"

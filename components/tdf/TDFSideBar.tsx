@@ -7,12 +7,13 @@ export default function TDFSideBar({
   changePhase,
   activePhase,
   values,
+  reviewRequiredFields
 }) {
+  
 
   let phases = designPhases
   if (values.postType === postType.report) {
     phases = designPhases.filter((phase) => phase.isReport)
-    // console.log("🚀 ~ file: TDFSideBar.tsx:18 ~ phases:", phases)
   }
 
   let inProgress = values.DesignElement.filter((de) => {
@@ -27,18 +28,17 @@ export default function TDFSideBar({
     <div className="overflow-y-auto rounded-lg border-2 border-gray-100 bg-white p-2">
       {phases.map((phase) => (
         <div key={phase.id}>
-          {phase.parentPhaseId ? ( //child
+          {phase.parentPhaseId ? ( 
             <button
               type="button"
               onClick={() => changePhase(phase.phaseId)} //we could navigate by name here
-              className={`${
-                phase.phaseId === activePhase ? 'bg-dao-red' : ''
-              } block w-full max-w-sm rounded-lg border border-gray-200 bg-white p-2 text-xs shadow hover:bg-gray-100`}
+              className={`${reviewRequiredFields[phase.phaseId] || false ? 'border-red-600 border-2' : ''} ${
+                phase.phaseId === activePhase ? 'border-dao-green border-2' : ''
+              }  block w-full max-w-sm rounded-lg border border-gray-200 bg-white p-2 text-xs shadow hover:bg-gray-100`}
             >
               <div className="flex">
                 <div className="w-[95%]">{phase.name}</div>
-
-                <div className="flex w-[5%]  items-center">
+                <div className="flex w-[5%] items-center">
                   <Tooltip
                     title={
                       inProgress.find(

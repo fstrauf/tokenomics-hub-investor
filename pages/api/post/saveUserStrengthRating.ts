@@ -70,7 +70,6 @@ export default async function handle(req, res) {
   try {
     response = await prisma.$transaction(txCalls)
   } catch (e) {
-    console.log(e)
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
       if (e.code === 'P2002') {
         return res.status(500).send({ error: 'Slug might already exist!' })

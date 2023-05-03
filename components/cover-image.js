@@ -4,7 +4,7 @@ import Image from 'next/image'
 export default function CoverImage({ title, url, id }) {
   const image = (
     <div className='rounded-lg h-8 m-auto relative'>
-      <Image alt={`Cover Image for ${title}`} className='object-contain' fill={true} src={url}/>
+      <Image alt={`Cover Image for ${title}`} className='object-contain' fill={true} sizes="(max-width: 64px) 100vw, 64px" src={url}/>
     </div>
   )
 

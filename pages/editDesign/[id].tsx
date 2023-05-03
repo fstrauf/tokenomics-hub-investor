@@ -1,20 +1,24 @@
 import { GetServerSideProps } from 'next'
-import Layout from '../../components/layout'
 import React from 'react'
 import TDFMain from '../../components/tdf/TDFMain'
-import {
-  clerkConvertJSON,
-  // getMergedInitialCalcValues,
-  headerStatus,
-} from '../../lib/helper'
+import { clerkConvertJSON, formatDate } from '../../lib/helper'
 import { clerkClient } from '@clerk/nextjs/server'
 import prisma from '../../lib/prisma'
+import CommentForm from '../../components/commentForm'
+import Comments from '../../components/comments'
 
 const EditDesign: React.FC<UpdateNewDesignProps> = (props) => {
   return (
-    <Layout mode={headerStatus.design}>
-      <TDFMain props={props} />
-    </Layout>
+    <>
+      <TDFMain props={props} header={props?.post?.postType} />
+      <div className="m-auto max-w-md sm:max-w-2xl lg:max-w-screen-2xl">
+        <h1 className="section-head mt-10 mb-4 text-xl font-bold text-black md:mt-20 md:text-2xl lg:text-3xl">
+          Comments.
+        </h1>
+        <CommentForm id={props?.post?.id} />
+        <Comments comments={props?.post?.Comments} />
+      </div>
+    </>
   )
 }
 
@@ -73,9 +77,15 @@ export const getServerSideProps: GetServerSideProps = async ({
   const [post, mechanismTemplates, designPhases, Category, Tag] =
     await prisma.$transaction(txCalls)
 
-  let clerkUser = post?.authorClerkId
-    ? await clerkClient.users.getUser(post?.authorClerkId)
-    : {}
+  let clerkUser = {}
+  try {
+    if (post?.authorClerkId) {
+      clerkUser = await clerkClient.users.getUser(post.authorClerkId)
+    }
+  } catch (error) {
+    console.error('Error fetching user from Clerk:', error)
+    // Handle the error here, e.g. set a default user or show an error message to the user
+  }
 
   clerkUser = clerkConvertJSON(clerkUser)
 
@@ -96,18 +106,23 @@ export const getServerSideProps: GetServerSideProps = async ({
 
   let postWithUpdatedComments = post
 
-postWithUpdatedComments.Comments = commentsWithUserNames
+  postWithUpdatedComments.Comments = commentsWithUserNames
   postWithUpdatedComments.protocolTimeLine =
     postWithUpdatedComments.protocolTimeLine.map((ptl) => ({
       ...ptl,
-      date: new Date(ptl.date).toLocaleDateString('en-CA'),
+      date: formatDate(ptl.date)
     }))
   if (postWithUpdatedComments.Calculation === null) {
     postWithUpdatedComments.Calculation = {}
+  } else {
+    postWithUpdatedComments.Calculation.startDate = formatDate(
+      postWithUpdatedComments?.Calculation?.startDate || new Date()
+    )
   }
-  postWithUpdatedComments.Calculation.startDate = new Date(
-    postWithUpdatedComments?.Calculation?.startDate || ''
-  ).toLocaleDateString('en-CA')
+  // postWithUpdatedComments.Calculation.startDate = new Date(
+  //   postWithUpdatedComments?.Calculation?.startDate || ''
+  // ).toLocaleDateString('en-CA')
+  
   postWithUpdatedComments.DesignElement =
     postWithUpdatedComments?.DesignElement?.map((de) => {
       try {
@@ -126,6 +141,6 @@ postWithUpdatedComments.Comments = commentsWithUserNames
       mechanismTemplates: mechanismTemplates || null,
       Category: Category || null,
       Tag: Tag || null,
-    },
+    },      
   }
 }

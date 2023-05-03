@@ -47,7 +47,6 @@ export default function coreMechanisms({ allMechanisms }) {
     setInititalValues(
       allMechanisms.find((adp) => String(adp.id) === e.target.value)
     )
-    console.log('e', e)
   }
 
   if (isSignedIn && admin) {

@@ -4,6 +4,7 @@ import { designElementStatusUpdate } from '../../lib/designElementStatusField'
 import { getActiveDesignPhase } from '../../lib/helper'
 import FormTimeLine from '../form/FormTimeLine'
 import ResourceSection from './ResourceSection'
+import WalkthroughSection from './WalkthroughSection'
 
 export default function TDF901({ props, values, activePhase }) {
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
@@ -27,6 +28,7 @@ export default function TDF901({ props, values, activePhase }) {
         <FormTimeLine values={values} />
       </div>
       {/* <ResourceSection content={designPhase.Resources} /> */}
+      <WalkthroughSection />
     </div>
   )
 }

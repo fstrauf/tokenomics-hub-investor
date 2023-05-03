@@ -24,8 +24,9 @@ export const FormCardSupplyDemand = ({
     category: `Mechanism`,
     lockupPeriod: 5,
     unlockPeriod: 12,
+    percentageUnlockTGE: 0,
     percentageAllocation: 30,
-    color: '#FF6666',
+    color: `#${Math.floor(Math.random()*16777215).toString(16)}`,
     isEpochDistro: false,
     epochDurationInSeconds: 0,
     initialEmissionPerSecond: 0,
@@ -51,10 +52,6 @@ export const FormCardSupplyDemand = ({
 
   const handleNewMechanism = (arrayHelpers, isSink: boolean) => {
     const updateMechanism = selectedTemplate
-    console.log(
-      '🚀 ~ file: FormCardSupplyDemand.tsx:59 ~ handleNewMechanism ~ updateMechanism:',
-      updateMechanism
-    )
 
     updateMechanism.isSink = isSink
     if (isSink) {
@@ -89,10 +86,14 @@ export const FormCardSupplyDemand = ({
         {' '}
         <div>
           <div className="flex">
-            <div
-              className="mr-2 h-5 w-5 bg-slate-600"
-              style={{ background: input.color }}
-            ></div>
+            {input?.isSink ? (
+              <></>
+            ) : (
+              <div
+                className="mr-2 h-5 w-5 bg-slate-600"
+                style={{ background: input.color }}
+              ></div>
+            )}
             <p className="">{input.name}</p>
           </div>
           {input.isSink ? (

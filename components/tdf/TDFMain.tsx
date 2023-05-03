@@ -5,35 +5,36 @@ import { FieldArray, Form, Formik } from 'formik'
 import toast, { Toaster } from 'react-hot-toast'
 import FormAutoSave from '../form/FormAutoSave'
 import FormId from '../form/FormId'
-import Link from 'next/link'
+// import Link from 'next/link'
 import { useRouter } from 'next/router'
 import RequestReviewModal from '../../components/requestReviewPopup'
-import { designElementStatus } from '../../lib/helper'
-import { event } from "nextjs-google-analytics";
+import { designElementStatus, headerStatus } from '../../lib/helper'
+import { event } from 'nextjs-google-analytics'
+import Header2 from '../header2'
+import HelpButton from './HelpButton'
 
-export default function TDFMain({ props }) {
-  console.log("🚀 ~ file: TDFMain.tsx:14 ~ TDFMain ~ props:", props)
+export default function TDFMain({ props, header = headerStatus.design }) {
   const router = useRouter()
 
   const [activePhase, setActivePhase] = useState(
     router.query.phase ? +router.query.phase : 11
-  ) //props.design.activePhase
+  )
   const [postId, setPostId] = useState(props.post.id || '')
   const [isRequestReviewOpen, setIsRequestReviewOpen] = useState(false)
   const initialValues = props.post
+  const [reviewRequiredFields, setreviewRequiredFields] = useState({})
 
   function handlePhaseChange(phase) {
-    if (postId) {
-      router.push(`/editDesign/${postId}?phase=${phase}`, null, {
-        scroll: false,
-      })
-    }
+    // if (postId) {
+    //   router.push(`/editDesign/${postId}?phase=${phase}`, null, {
+    //     scroll: false,
+    //   })
+    // }
 
     event(`tdsPhaseChange ${phase}`, {
-      category: "UserAction",
+      category: 'UserAction',
       label: phase,
-      
-    });
+    })
     setActivePhase(phase)
   }
 
@@ -105,7 +106,6 @@ export default function TDFMain({ props }) {
 
   const submitData = async (values, { setSubmitting }) => {
     const body = { values }
-    // console.log('🚀 ~ file: TDFMain.tsx:97 ~ submitData ~ values:', values)
     if (values?.id === '') {
       try {
         const response = await fetch('/api/post/newDesign', {
@@ -119,14 +119,12 @@ export default function TDFMain({ props }) {
           toast.error(JSON.parse(error).error, { position: 'bottom-right' })
           throw new Error(error)
         } else {
-          //connect the returned id to the inputfields.id
           const id = await response.text()
-          // console.log('🚀 ~ file: TDFMain.tsx:113 ~ submitData ~ id:', id)
-          // console.log(response)
           toast.success('Changes auto-saved ', {
             position: 'bottom-right',
           })
           setPostId(JSON.parse(id).id)
+          router.push(`/editDesign/${JSON.parse(id).id}`)
         }
 
         setSubmitting(false)
@@ -148,10 +146,7 @@ export default function TDFMain({ props }) {
         } else {
           toast.success('Changes auto-saved ', { position: 'bottom-right' })
         }
-
-        // await Router.push('/');
         setSubmitting(false)
-        console.log('TDF updated')
       } catch (error) {
         console.error(error)
       }
@@ -179,8 +174,8 @@ export default function TDFMain({ props }) {
           <TDF11
             props={props}
             values={values}
-            // content={content}
             activePhase={activePhase}
+            reviewRequiredFields={reviewRequiredFields}
           />
         )
       case 101:
@@ -198,6 +193,7 @@ Solution:
         
         Solution:
         - `}
+            reviewRequiredFields={reviewRequiredFields}
           />
         )
       case 102:
@@ -207,6 +203,7 @@ Solution:
             activePhase={activePhase}
             values={values}
             placeholder={`Similar projects include...`}
+            reviewRequiredFields={reviewRequiredFields}
           />
         )
       case 103:
@@ -217,6 +214,7 @@ Solution:
             values={values}
             placeholder={`The value created by [protocol] is...`}
             format={`The value created by...`}
+            reviewRequiredFields={reviewRequiredFields}
           />
         )
       case 104:
@@ -243,11 +241,11 @@ explanation
 
 - Revenue goes to:
 explanation`}
+            reviewRequiredFields={reviewRequiredFields}
           />
         )
-      case 603:
+      case 602:
         return (
-          // <TDF105 props={props} values={values} activePhase={activePhase} />
           <TDFDynamicOneField
             props={props}
             values={values}
@@ -255,9 +253,17 @@ explanation`}
             placeholder="Token Launch"
           />
         )
+      case 603:
+        return (
+          <TDFDynamicOneField
+            props={props}
+            values={values}
+            activePhase={activePhase}
+            placeholder="Valuation"
+          />
+        )
       case 105:
         return (
-          // <TDF105 props={props} values={values} activePhase={activePhase} />
           <TDFDynamicOneField
             props={props}
             values={values}
@@ -310,10 +316,9 @@ explanation`}
             values={values}
             activePhase={activePhase}
             setFieldValue={setFieldValue}
+            reviewRequiredFields={reviewRequiredFields}
           />
         )
-      // case 603:
-      //   return <TDF603 props={props} activePhase={activePhase} />
       case 701:
         return (
           <TDF701 props={props} values={values} activePhase={activePhase} />
@@ -324,6 +329,7 @@ explanation`}
             props={props}
             values={values}
             activePhase={activePhase}
+            reviewRequiredFields={reviewRequiredFields}
           />
         )
       case 802:
@@ -351,13 +357,10 @@ explanation`}
             props={props}
             values={values}
             activePhase={activePhase}
+            reviewRequiredFields={reviewRequiredFields}
           />
         )
     }
-  }
-
-  function openRequestReviewModal() {
-    setIsRequestReviewOpen(true)
   }
 
   const handleRequestReviewIsOpen = useCallback(
@@ -367,89 +370,105 @@ explanation`}
     [isRequestReviewOpen]
   )
 
+  const previewAndSave = async (submitForm) => {
+    submitForm()
+    router.push(`/postPreview/${postId}`)
+  }
+
   return (
-    <div className="mt-4 mb-4 rounded-lg bg-gray-100 p-1">
+    <div className="">
       <Formik
         initialValues={initialValues}
         onSubmit={submitData}
         enableReinitialize
       >
-        {({ isSubmitting, setFieldValue, values, touched }) => (
+        {({ isSubmitting, setFieldValue, values, dirty, submitForm }) => (
           <Form>
-            <div className="flex h-10 justify-between bg-gray-100 p-1">
-              <p className="text-xl font-bold ">{values?.title}</p>
-              <div className="flex justify-end gap-1">
+            <Header2 mode={header}>
+              <div className="flex gap-2">
                 <button
                   type="submit"
-                  disabled={isSubmitting}
-                  // onClick={formik.handleSubmit}
-                  className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
+                  disabled={isSubmitting || !dirty}
+                  className="rounded-md border-2 border-dao-red bg-gradient-to-r from-dao-red via-dao-red to-dao-green bg-clip-text py-1 px-4 text-transparent hover:bg-opacity-80 disabled:opacity-50"
                 >
-                  {values?.id ? 'Update' : 'Save'}
+                  Save
                 </button>
-                <Link
-                  as={`/posts/${postId}`}
-                  href="/posts/[id]]"
-                  className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
-                >
-                  View
-                </Link>
-                {postId && (
-                  <button
-                    type="button"
-                    onClick={openRequestReviewModal}
-                    className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
-                  >
-                    RequestReview
-                  </button>
-                )}
                 <button
                   type="button"
-                  onClick={() => {
-                    setFieldValue(
-                      `DesignElement.${values?.DesignElement?.findIndex(
-                        (de) =>
-                          de.designPhasesId.toString() ===
-                          activePhase.toString()
-                      )}.designElementStatus`,
-                      designElementStatus.completed
-                    )
-                  }}
-                  className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
+                  disabled={isSubmitting}
+                  onClick={()=>previewAndSave(submitForm)}
+                  className="rounded-md border-2 border-dao-red bg-gradient-to-r from-dao-red via-dao-red to-dao-green bg-clip-text py-1 px-4 text-transparent hover:bg-opacity-80 disabled:opacity-50"
                 >
-                  Mark as complete
+                  Preview
                 </button>
-                <RequestReviewModal
-                  isOpen={isRequestReviewOpen}
-                  handleIsOpen={handleRequestReviewIsOpen}
-                />
-              </div>
-            </div>
-            <div className="mb-5 flex gap-1 ">
-              <div className="w-1/6">
-                <TDFSideBar
-                  designPhases={props.designPhases}
-                  changePhase={handlePhaseChange}
-                  activePhase={activePhase}
+                {/* <Link
+                  as={`/postPreview/${postId}`}
+                  href="/postPreview/[id]]"
+                  className="rounded-md border-2 border-dao-red bg-gradient-to-r from-dao-red via-dao-red to-dao-green bg-clip-text py-1 px-4 text-transparent hover:bg-opacity-80"
+                >
+                  Preview
+                </Link> */}
+                <HelpButton
                   values={values}
+                  setIsRequestReviewOpen={setIsRequestReviewOpen}
+                  setreviewRequiredFields={setreviewRequiredFields}
                 />
               </div>
-              <div className="w-5/6 rounded-lg bg-white">
-                <FormAutoSave />
-                <FieldArray
-                  name="DesignElement"
-                  render={() => (
-                    <div className="rounded-lg bg-white">
-                      {renderSwitch(values, setFieldValue)}
-                    </div>
-                  )}
-                />
-                <FormId
-                  postId={postId}
-                  type="text"
-                  name="id"
-                  className="hidden w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
-                />
+            </Header2>
+            <div className="m-auto max-w-md sm:max-w-2xl lg:max-w-screen-2xl">
+              <div className="mt-5 flex h-10 justify-between bg-gray-100 p-1">
+                <p className="text-xl font-bold ">{values?.title}</p>
+                <div className="flex justify-end gap-1">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setFieldValue(
+                        `DesignElement.${values?.DesignElement?.findIndex(
+                          (de) =>
+                            de.designPhasesId.toString() ===
+                            activePhase.toString()
+                        )}.designElementStatus`,
+                        designElementStatus.completed
+                      )
+                    }}
+                    className="rounded-md bg-dao-red px-1 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
+                  >
+                    Complete Step
+                  </button>
+                  <RequestReviewModal
+                    isOpen={isRequestReviewOpen}
+                    handleIsOpen={handleRequestReviewIsOpen}
+                  />
+                </div>
+              </div>
+
+              <div className="mb-5 flex gap-1 ">
+                <div className="w-1/6">
+                  <TDFSideBar
+                    designPhases={props.designPhases}
+                    changePhase={handlePhaseChange}
+                    activePhase={activePhase}
+                    values={values}
+                    reviewRequiredFields={reviewRequiredFields}
+                  />
+                </div>
+                <div className="w-5/6 rounded-lg bg-white">
+                  <FormAutoSave dirty={dirty} />
+                  <FieldArray
+                    name="DesignElement"
+                    render={() => (
+                      <div className="rounded-lg bg-white">
+                        {renderSwitch(values, setFieldValue)}
+                      </div>
+                    )}
+                  />
+                  <FormId
+                    postId={postId}
+                    type="text"
+                    name="id"
+                    className="hidden w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
+                  />
+                </div>
               </div>
             </div>
           </Form>

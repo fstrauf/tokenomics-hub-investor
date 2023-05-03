@@ -14,6 +14,8 @@ export default async function handle(req, res) {
       slug: values.slug,
       isOfficial: values.isOfficial,
       authorClerkId: values.authorClerkId,
+      status: values?.status,
+      postType: values?.postType,
       author: {
         upsert: {
           create: { 

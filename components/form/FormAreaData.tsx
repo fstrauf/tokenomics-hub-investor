@@ -8,11 +8,6 @@ export const FormAreaData = (props) => {
     setFieldValue,
   } = useFormikContext()
 
-  console.log("🚀 ~ file: FormAreaData.tsx:8 ~ FormAreaData ~ startDate:", startDate)
-  console.log("🚀 ~ file: FormAreaData.tsx:8 ~ FormAreaData ~ months:", months)
-  console.log("🚀 ~ file: FormAreaData.tsx:8 ~ FormAreaData ~ totalSupply:", totalSupply)
-  console.log("🚀 ~ file: FormAreaData.tsx:8 ~ FormAreaData ~ calculationRows:", calculationRows)
-
   React.useEffect(() => {
     const chartData = getAreaData(months, calculationRows, totalSupply, startDate)
 

@@ -1,41 +1,49 @@
-import Layout from '../components/layout'
-import React from 'react'
+// import Layout from '../components/layout'
+import React, { useEffect, useState } from 'react'
 import prisma from '../lib/prisma'
 import { GetServerSideProps } from 'next'
-import { getMergedInitialCalcValues, postStatus, postType } from '../lib/helper'
+import {
+  getMergedInitialCalcValues,
+  headerStatus,
+  postStatus,
+  postType,
+  upDateFirstTimeVisit,
+} from '../lib/helper'
 import TDFMain from '../components/tdf/TDFMain'
+import GenericPopover from '../components/generic/GenericPopover'
+import ReportIntro from '../components/tdf/ReportIntro'
+import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
 import { getAuth } from '@clerk/nextjs/server'
 import { AuthData } from '@clerk/nextjs/dist/server/types'
 
 export default function NewPost(props) {
+  const [isOpen, setIsOpen] = useState(false)
+  const { user } = useUser()
+  const introComplete = user?.publicMetadata.reportIntroDone || false
+  
+  useEffect(() => {
+    if (!introComplete) {
+      setIsOpen(true)
+      upDateFirstTimeVisit(user?.id, 'reportIntroDone', true)
+    }
+  }, [introComplete])
+
   return (
-    <Layout mode="design">
-      <TDFMain props={props} />
-    </Layout>
+    <>
+      <GenericPopover isOpen={isOpen} setIsOpen={setIsOpen}>
+        <ReportIntro />
+      </GenericPopover>
+      <TDFMain props={props} header={headerStatus.report} />
+    </>
   )
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const postId: string = context?.query?.id || ''
-
   const { userId }: AuthData = getAuth(context.req)
 
   const txCalls = []
 
-  // txCalls.push(
-  //   prisma.post.findMany({
-  //     where: {
-  //       categories: { every: { label: 'defi' } },
-  //       AND: {
-  //         status: postStatus.published,
-  //       },
-  //     },
-  //     take: 20,
-  //   })
-  // )
-
   txCalls.push(prisma.designPhases.findMany({ orderBy: { phaseOrder: 'asc' } }))
-  // txCalls.push(prisma.designPhases.findUnique({ where: { id: postId } }))
 
   txCalls.push(
     prisma.calculation.findMany({

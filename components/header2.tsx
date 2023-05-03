@@ -1,6 +1,6 @@
 import { Fragment } from 'react'
 import { Popover, Transition } from '@headlessui/react'
-import Link from 'next/link'
+// import Link from 'next/link'
 import {
   SignedIn,
   SignedOut,
@@ -12,163 +12,62 @@ import ThubLogo from '../public/svg/thub-logo'
 import Bars3Icon from '../public/svg/bars3Icon'
 import XMarkIcon from '../public/svg/xmarkicon'
 import { headerStatus } from '../lib/helper'
-import ChevronIcon from '../public/svg/chevron'
-// import { createContext } from 'react';
+import HeaderComboSection from './HeaderComboSection'
+import HeaderGenericSection from './HeaderGenericSection'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function Header2({ mode }) {
+export default function Header2({ mode = headerStatus.main, children = null }) {
   const { user } = useUser()
-  // const [showBanner, setShowBanner] = useState(true)
   const admin = user?.publicMetadata?.admin || false
-  // const showBanner = useContext(BannerContext);
-
-  const calculatorSection = (
-    <Link
-      href="/calculator"
-      className="text-base font-medium text-white hover:text-gray-300"
-    >
-      Calculator
-    </Link>
-  )
-
-  const expertsSection = (
-    <Link
-      href="/bookAnExpert"
-      className="text-base font-medium text-white hover:text-gray-300"
-    >
-      Services
-    </Link>
-  )
-
-  const myDesign = (
-    <Link
-      href="/myDesigns"
-      className="text-base font-medium text-white hover:text-gray-300"
-    >
-      My Designs
-    </Link>
-  )
-
-  const newDesign = (
-    <Link
-      href="/newDesign"
-      className="text-base font-medium text-white hover:text-gray-300"
-    >
-      New Design
-    </Link>
-  )
-
-  const mechanismAdmin = (
-    <Link
-      href="/coreMechanisms"
-      className="-m-3 flex items-start rounded-lg p-3 hover:bg-gray-700"
-    >
-      <div className="ml-4">
-        <p className="text-base font-medium text-white">Mechanism Admin</p>
-      </div>
-    </Link>
-  )
-
-  const allDraftsAdmin = (
-    <Link
-      href="/allDrafts"
-      className="-m-3 flex items-start rounded-lg p-3 hover:bg-gray-700"
-    >
-      <div className="ml-4">
-        <p className="text-base font-medium text-white">Report Drafts Admin</p>
-      </div>
-    </Link>
-  )
-
-  const postAdmin = (
-    <Link
-      href="/adminView"
-      className="-m-3 flex items-start rounded-lg p-3 hover:bg-gray-700"
-    >
-      <div className="ml-4">
-        <p className="text-base font-medium text-white">Post Admin</p>
-      </div>
-    </Link>
-  )
-
-  const tdsPhaseAdmin = (
-    <Link
-      href="/adminTDFPhase"
-      className="-m-3 flex items-start rounded-lg p-3 hover:bg-gray-700"
-    >
-      <div className="ml-4">
-        <p className="text-base font-medium text-white">TDS Phase Admin</p>
-      </div>
-    </Link>
-  )
-
-  // const fundRaiseBar = (
-  //   <div
-  //     className={`${
-  //       showBanner ? 'm-auto flex items-center bg-dao-green' : 'hidden'
-  //     }`}
-  //   >
-  //     <div className="mx-auto max-w-xl py-3 px-3 sm:px-6 lg:px-8">
-  //       <p className="ml-3 self-center truncate text-center font-medium text-white">
-  //         <span className="inline">🥳 We are fundraising. Interested? </span>
-  //         <a
-  //           href="mailto:contact@tokenomicsdao.com"
-  //           className="hover:underline"
-  //         >
-  //           Contact us.
-  //         </a>
-  //       </p>
-  //     </div>
-  //     <button
-  //       className="text-gray-200"
-  //       onClick={() => {
-  //         setShowBanner(false)
-  //       }}
-  //     >
-  //       <XMarkIcon className="h-6 w-6 text-gray-200" aria-hidden="true" />
-  //     </button>
-  //   </div>
-  // )
 
   function renderSwitch() {
     switch (mode) {
       case headerStatus.design:
         return (
-          <>
-            {myDesign}
-            {newDesign}
-          </>
+          <HeaderGenericSection pathName="/myDesigns" title="Design a Token" />
         )
       case headerStatus.main:
         return (
           <>
-            {calculatorSection}
-            {expertsSection}
-            {myDesign}
+            <HeaderComboSection
+              classNames={classNames}
+              title="Products & Services"
+            >
+              <HeaderGenericSection
+                pathName="/tdsLandingPage"
+                title="Tokenomics Design Space"
+              />
+              <HeaderGenericSection
+                pathName="/thub"
+                title="Calculation Template"
+              />
+              <HeaderGenericSection pathName="/bookAnExpert" title="Services" />
+            </HeaderComboSection>
+            <HeaderGenericSection pathName="/calculator" title="Calculator" />
+            {/* <HeaderGenericSection pathName="/bookAnExpert" title="Services" /> */}
+            <HeaderGenericSection pathName="/myDesigns" title="My Dashboard" />
           </>
         )
       case headerStatus.report:
       default:
         return (
-          <>
-            {calculatorSection}
-            {expertsSection}
-          </>
+          <HeaderGenericSection pathName="/myDesigns" title="List a Token" />
         )
     }
   }
 
   return (
     <>
-      {/* {fundRaiseBar} */}
       <Popover className="relative bg-dark-tdao">
         <div className="mx-auto max-w-full px-6">
           <div className="flex items-center justify-between py-1 md:justify-start md:space-x-10">
             <div className="flex justify-start lg:w-0 lg:flex-1">
+              <div className='w-12 h-12'>
               <ThubLogo />
+              </div>
               <div className="hidden md:ml-2 md:flex md:items-center">
                 <p className="text-2xl text-white">Tokenomics Hub</p>
               </div>
@@ -182,56 +81,31 @@ export default function Header2({ mode }) {
 
             <Popover.Group as="nav" className="hidden space-x-10 md:flex">
               {renderSwitch()}
+            </Popover.Group>
+            <div className="hidden items-center justify-end md:flex md:flex-1 md:gap-5 lg:w-0">
               {admin ? (
-                <Popover className="relative">
-                  {({ open }) => (
-                    <>
-                      <Popover.Button
-                        className={classNames(
-                          open
-                            ? 'text-gray-900'
-                            : 'text-white hover:text-gray-50',
-                          'group inline-flex items-center rounded-md bg-dark-tdao text-base font-medium text-white hover:text-gray-50'
-                        )}
-                      >
-                        <span className="mr-2">Admin</span>
-                        <ChevronIcon
-                          className={`${
-                            open
-                              ? 'rotate-180 transform text-gray-600'
-                              : 'text-gray-400'
-                          } ml-2 h-5 w-5 group-hover:text-gray-500`}
-                        />
-                      </Popover.Button>
-
-                      <Transition
-                        as={Fragment}
-                        enter="transition ease-out duration-200"
-                        enterFrom="opacity-0 translate-y-1"
-                        enterTo="opacity-100 translate-y-0"
-                        leave="transition ease-in duration-150"
-                        leaveFrom="opacity-100 translate-y-0"
-                        leaveTo="opacity-0 translate-y-1"
-                      >
-                        <Popover.Panel className="absolute left-1/2 z-10 mt-3 w-screen max-w-md -translate-x-1/2 transform px-2 sm:px-0">
-                          <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
-                            <div className="relative grid gap-6 bg-dark-tdao px-5 py-6 sm:gap-8 sm:p-8">
-                              {tdsPhaseAdmin}
-                              {postAdmin}
-                              {mechanismAdmin}
-                              {allDraftsAdmin}
-                            </div>
-                          </div>
-                        </Popover.Panel>
-                      </Transition>
-                    </>
-                  )}
-                </Popover>
+                <HeaderComboSection classNames={classNames} title="Admin">
+                  <HeaderGenericSection
+                    pathName="/adminTDFPhase"
+                    title="TDS Phase Admin"
+                  />
+                  <HeaderGenericSection
+                    pathName="/adminView"
+                    title="Post Admin"
+                  />
+                  <HeaderGenericSection
+                    pathName="/coreMechanisms"
+                    title="Mechanism Admin"
+                  />
+                  <HeaderGenericSection
+                    pathName="/allDrafts"
+                    title="Report Drafts Admin"
+                  />
+                </HeaderComboSection>
               ) : (
                 <></>
               )}
-            </Popover.Group>
-            <div className="hidden items-center justify-end md:flex md:flex-1 lg:w-0">
+              <div>{children}</div>
               <SignedIn>
                 <UserButton />
               </SignedIn>

@@ -1,3 +1,12 @@
+export const formatDate = (date) => {
+  const oldDate = new Date(date)
+  var getYear = oldDate.toLocaleString('default', { year: 'numeric' })
+  var getMonth = oldDate.toLocaleString('default', { month: '2-digit' })
+  var getDay = oldDate.toLocaleString('default', { day: '2-digit' })
+
+  return getYear + '-' + getMonth + '-' + getDay
+}
+
 export const getMergedInitialCalcValues = (userCalcs, userId, detailedCalc) => {
   var preloadInitialValues = initialCalculatorValues
 
@@ -152,50 +161,6 @@ export const getActiveDesignPhase = (designPhases, activePhase) => {
 export const shortBigNumber = (value) =>
   new Intl.NumberFormat('en', { notation: 'compact' }).format(value)
 
-// export function getEpochAreaData(
-//   calculationRow,
-//   rowAllocation,
-//   chartData,
-//   startDate
-// ) {
-//   console.log("🚀 ~ file: helper.ts:150 ~ calculationRow:", calculationRow)
-//   const secondsPerMonth = 2628000
-//   let emissions = 0
-//   let month = 0 //1
-//   const epochDurationInMonths =
-//     calculationRow.epochDurationInSeconds / secondsPerMonth //hardcode to start with
-//   let emissionsPerSecond = calculationRow.initialEmissionPerSecond
-//   let epochs = 0
-
-//   while (emissions < rowAllocation) {
-//     var categoryLine = {}
-
-//     if (chartData[month] === undefined) {
-//       //always initialise the first line
-//       chartData[month] = {}
-//     }
-
-//     emissions += secondsPerMonth * emissionsPerSecond
-
-//     if (month === epochDurationInMonths * (epochs + 1)) {
-//       emissionsPerSecond =
-//         emissionsPerSecond * calculationRow.emissionReductionPerEpoch
-//       epochs++
-//     }
-
-//     if (categoryLine['date'] === undefined) {
-//       categoryLine['date'] = new Date(startDate).setMonth(
-//         new Date(startDate).getMonth() + month
-//       )
-//     }
-
-//     categoryLine[calculationRow.name || calculationRow.category] = emissions
-
-//     Object.assign(chartData[month], categoryLine)
-//     month++
-//   }
-// }
-
 export function getMonthEpochAreaData(
   calculationRow,
   months,
@@ -204,7 +169,6 @@ export function getMonthEpochAreaData(
   startDate,
   supplyDemandTotals
 ) {
-  console.log('🚀 ~ file: helper.ts:196 ~ calculationRow:', calculationRow)
   let emissions = 0
   const secondsPerMonth = 2628000
   let emissionsPerSecond = calculationRow.initialEmissionPerSecond
@@ -305,13 +269,16 @@ export function getDemandAreaData(
 ) {
   if (calculationRow.CalculationTimeSeries !== undefined) {
     const inputData = calculationRow.CalculationTimeSeries || []
-
-    // const dataset = []
     let currentMonth = 0
 
     for (let i = 0; i < inputData.length; i++) {
       const row = inputData[i]
-      const endMonth = currentMonth + row.months - 1
+      let endMonth = currentMonth + row.months - 1
+
+      if (endMonth >= months) {
+        endMonth = months - 1
+      }
+
       for (let j = currentMonth; j <= endMonth; j++) {
         if (supplyDemandTotals[j] === undefined) {
           supplyDemandTotals[j] = {
@@ -342,7 +309,8 @@ export function getDemandAreaData(
         if (supplyDemandTotals[i].demand === undefined) {
           supplyDemandTotals[i].demand = 0
         }
-        supplyDemandTotals[i].demand += inputData[inputData.length - 1]?.tokens
+        supplyDemandTotals[i].demand +=
+          inputData[inputData.length - 1]?.tokens || 0
       }
     }
   }
@@ -356,29 +324,38 @@ export function getLinearAreaData(
   startDate,
   supplyDemandTotals
 ) {
+  let totalRowAllocation = rowAllocation
   for (let i = 0; i < months; i++) {
     var monthlyEmission = 0
-    if (i < calculationRow.lockupPeriod) {
-      monthlyEmission = 0
+    //tge unlock
+    if (i === 0 && calculationRow.percentageUnlockTGE > 0) {
+      monthlyEmission = (totalRowAllocation * calculationRow.percentageUnlockTGE) / 100
+      totalRowAllocation = totalRowAllocation * (1 - (calculationRow.percentageUnlockTGE/100))
     } else {
-      //token not locked, releasing all
-      if (
-        i <=
+      if (i < calculationRow.lockupPeriod) {
+        //still locking, no emissions
+        monthlyEmission = 0
+      } else {
+        //token not locked, releasing all
+        if (
+          i <=
+            Number(calculationRow.unlockPeriod) +
+              Number(calculationRow.lockupPeriod) &&
+          Number(calculationRow.unlockPeriod) == 0
+        ) {
+          monthlyEmission = totalRowAllocation
+        }
+        //token not locked, but vesting
+        if (
+          i <
           Number(calculationRow.unlockPeriod) +
-            Number(calculationRow.lockupPeriod) &&
-        Number(calculationRow.unlockPeriod) == 0
-      ) {
-        monthlyEmission = rowAllocation
-      }
-      //token not locked, but vesting
-      if (
-        i <
-        Number(calculationRow.unlockPeriod) +
-          Number(calculationRow.lockupPeriod)
-      ) {
-        monthlyEmission = rowAllocation / calculationRow.unlockPeriod
+            Number(calculationRow.lockupPeriod)
+        ) {
+          monthlyEmission = totalRowAllocation / calculationRow.unlockPeriod
+        }
       }
     }
+
     var categoryLine = {}
 
     if (chartData[i] === undefined) {
@@ -497,50 +474,77 @@ export function mandatoryFormValidate(values) {
   const errors = {}
   if (!values.title) {
     errors.title = 'Required!'
-    errors.mainInfo = true
+    errors['11'] = true
   }
   if (!values.shortDescription) {
     errors.shortDescription = 'Required!'
-    errors.mainInfo = true
+    errors['11'] = true
   }
   if (values?.categories?.length === 0) {
     errors.categories = 'Required!'
-    errors.mainInfo = true
+    errors['11'] = true
   }
+  // if (values?.Mechanism?.length === 0) {
+  //   errors.Mechanism = 'Required!'
+  //   errors['502'] = true
+  // }
   if (values?.tags?.length === 0) {
     errors.tags = 'Required!'
-    errors.mainInfo = true
+    errors['11'] = true
   }
   if (!values.tokenUtility) {
     errors.tokenUtility = 'Required!'
-    errors.tokenStrength = true
+    errors['801'] = true
   }
   if (!values.businessModel) {
     errors.businessModel = 'Required!'
-    errors.tokenStrength = true
+    errors['104'] = true
   }
   if (!values.valueCreation) {
     errors.valueCreation = 'Required!'
-    errors.tokenStrength = true
+    errors['103'] = true
   }
   if (!values.valueCapture) {
     errors.valueCapture = 'Required!'
-    errors.tokenStrength = true
+    errors['801'] = true
   }
 
   if (!values.demandDrivers) {
     errors.demandDrivers = 'Required!'
-    errors.tokenStrength = true
+    errors['801'] = true
   }
-  if (!values.breakdown && values?.calculation === undefined) {
+  if (!values.breakdown && values?.Mechanism?.length === 0) {
     if (!values.breakdown) {
       errors.breakdown = 'Required!'
+      errors['802'] = true
     }
-    if (values?.calculation === undefined) {
-      errors.calculation = 'Required!'
+    if (values?.Mechanism?.length === 0) {
+      errors.Mechanism = 'Required!'
+      errors['502'] = true
     }
-    errors.deepDive = true
   }
 
   return errors
+}
+
+export async function upDateFirstTimeVisit(
+  userId: string,
+  prop: string,
+  newVal: any
+) {
+  const body = { userId, prop, newVal }
+
+  try {
+    await fetch('/api/setPublicMetaData', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    })
+    // toast.success('Message sent', { position: 'bottom-right' })
+    return true
+  } catch (error) {
+    console.error(error)
+    // toast.error('An error occurred', { position: 'bottom-right' })
+    return false
+  }
 }

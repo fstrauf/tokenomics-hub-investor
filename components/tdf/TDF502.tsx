@@ -8,8 +8,16 @@ import Tiptap from '../TipTap'
 import ExampleSection from './ExampleSection'
 import { useEffect } from 'react'
 import { designElementStatusUpdate } from '../../lib/designElementStatusField'
+import WalkthroughSection from './WalkthroughSection'
+import FormErrorMessage from '../form/FormErrorMessage'
 
-export default function TDF502({ props, values, activePhase, setFieldValue }) {
+export default function TDF502({
+  props,
+  values,
+  activePhase,
+  setFieldValue,
+  reviewRequiredFields,
+}) {
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
 
   useEffect(() => {
@@ -47,7 +55,10 @@ export default function TDF502({ props, values, activePhase, setFieldValue }) {
         values={values}
         mechanismTemplates={props.mechanismTemplates}
       />
-
+      <FormErrorMessage
+        field="Mechanism"
+        reviewRequiredFields={reviewRequiredFields}
+      />
       <TDFCalculator values={values} />
 
       <ResourceSection content={designPhase.Resources} />
@@ -59,6 +70,7 @@ export default function TDF502({ props, values, activePhase, setFieldValue }) {
         exampleField={designPhase.postDataElement}
         exampleDetail={ExampleDetail}
       />
+      <WalkthroughSection />
     </div>
   )
 }

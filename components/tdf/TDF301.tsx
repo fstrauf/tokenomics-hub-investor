@@ -5,6 +5,7 @@ import ExampleSection from './ExampleSection'
 import { useEffect } from 'react'
 import { useFormikContext } from 'formik'
 import { designElementStatusUpdate } from '../../lib/designElementStatusField'
+import WalkthroughSection from './WalkthroughSection'
 
 export default function TDF301({ props, values, activePhase }) {
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
@@ -37,6 +38,7 @@ export default function TDF301({ props, values, activePhase }) {
         exampleField={designPhase.postDataElement}
         exampleDetail={null}
       />
+      <WalkthroughSection />
     </div>
   )
 }

@@ -5,6 +5,7 @@ import ChevronIcon from '../../public/svg/chevron'
 import FormDivider from '../form/FormDivider'
 import useSWR from 'swr'
 import Select from 'react-select'
+import { event } from 'nextjs-google-analytics'
 
 export const fetcher = async (url, param) => {
   const body = { param }
@@ -31,12 +32,16 @@ export default function ExampleSection({
   const [example, setExample] = useState({})
   const [tagFilters, setTagFilters] = useState(presetTags || null)
   const [catFilters, setCatFilters] = useState(presetCategories || null)
-  
+
   const [isSubelementClicked, setIsSubelementClicked] = useState(false)
 
   function handleDetailClicked(c) {
     setExample(c)
     setIsSubelementClicked(true)
+    event(`ExampleSection`, {
+      category: 'UserAction',
+      label: 'ExampleSection',
+    })
   }
 
   let ExampleDetail = ({ onGoBack, example, exampleField }) => {
@@ -65,14 +70,18 @@ export default function ExampleSection({
     ExampleDetail = exampleDetail
   }
 
-  const key =    
+  const key =
     tagFilters && catFilters
-      ? `/api/get/getExamplePostData/?categories=${JSON.stringify(catFilters.map((nv) => nv.value))}&tags=${JSON.stringify(tagFilters.map((nv) => nv.value))}`
+      ? `/api/get/getExamplePostData/?categories=${JSON.stringify(
+          catFilters.map((nv) => nv.value)
+        )}&tags=${JSON.stringify(tagFilters.map((nv) => nv.value))}`
       : null
-  const { data, error, isLoading, isValidating } = useSWR(key, fetcher, { revalidateOnMount: true })
+  const { data, error, isLoading, isValidating } = useSWR(key, fetcher, {
+    revalidateOnMount: true,
+  })
 
   function ExamplesSelector() {
-    if (isLoading) return <div className="skeleton">loading</div>;
+    if (isLoading) return <div className="skeleton">loading</div>
     return (
       <div>
         <div className="m-auto mt-3 flex max-w-5xl lg:w-1/2">
@@ -99,14 +108,15 @@ export default function ExampleSection({
         </div>
         <div className="flex gap-6 overflow-x-auto">
           {data?.map((c) => (
-            <div className="flex h-52 flex-col justify-between">
+            <div key={c.id} className="flex h-52 flex-col justify-between">
               <div className="m-auto w-9 sm:w-16">
-                <div className="relative m-auto h-24 rounded-lg">
+                <div className="relative m-auto h-24 rounded-lg" style={{ position: 'relative' }}>
                   <Image
                     alt={`Cover Image for ${c.title}`}
-                    className="object-contain"
+                    className="object-contain relative"
                     fill={true}
                     src={c.mainImageUrl}
+                    sizes="(max-width: 64px) 100vw, 64px"
                   />
                 </div>
               </div>

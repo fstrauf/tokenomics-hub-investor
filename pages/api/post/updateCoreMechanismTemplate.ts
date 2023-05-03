@@ -27,7 +27,5 @@ export default async function handle(req, res) {
       isTemplate: values.isTemplate,
     },
   })
-
-  console.log('response', response)
   res.json(response)
 }

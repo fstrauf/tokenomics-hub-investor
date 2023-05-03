@@ -3,7 +3,6 @@
 
 generator client {
   provider = "prisma-client-js"
-  //provider = "prisma-client-js"
 }
 
 datasource db {
@@ -54,7 +53,7 @@ model Post {
   parent                String?              @db.Text
   ProtocolResources     ProtocolResources[]
   calculationId         String?
-  Calculation           Calculation?         @relation(fields: [calculationId], references: [id])
+  // Calculation           Calculation?         @relation(fields: [calculationId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   Comments              Comments[]
   UserStrengthRating    UserStrengthRating[]
   DesignElement         DesignElement[]
@@ -62,9 +61,10 @@ model Post {
   PostUser              PostUser[]
   PostAuthor            PostAuthor[]
   postType              String?              @db.Text
+  // @@index([calculationId])
+  Calculation           Calculation?
 
   @@index([authorId])
-  @@index([calculationId])
 }
 
 model Category {
@@ -137,8 +137,11 @@ model Calculation {
   totalSupply     Float?
   startDate       DateTime?
   CalculationRows CalculationRows[]
-  Post            Post[]
+  postId          String?           @unique
+  post            Post?             @relation(fields: [postId], references: [id])
   Mechanism       Mechanism[]
+
+  @@index([postId])
 }
 
 model CalculationRows {
@@ -227,6 +230,7 @@ model Mechanism {
   lockupPeriod              Float?
   unlockPeriod              Float?
   percentageAllocation      Float?
+  percentageUnlockTGE       Float?
   isEpochDistro             Boolean                 @default(false)
   epochDurationInSeconds    Float?
   initialEmissionPerSecond  Float?

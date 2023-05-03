@@ -3,6 +3,7 @@ import ResourceSection from './ResourceSection'
 import { getActiveDesignPhase } from '../../lib/helper'
 import { designElementStatusUpdate } from '../../lib/designElementStatusField'
 import { useEffect } from 'react'
+import WalkthroughSection from './WalkthroughSection'
 
 export default function TDF105({ props, values, activePhase }) {
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
@@ -29,6 +30,7 @@ export default function TDF105({ props, values, activePhase }) {
         className="mb-3 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
       />
       <ResourceSection content={designPhase.Resources} />
+      <WalkthroughSection />
     </div>
   )
 }

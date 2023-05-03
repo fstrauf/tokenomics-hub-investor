@@ -115,6 +115,5 @@ export default async function handle(req, res) {
   }
 
   console.log(response)
-  // return res.json(response);
   return res.status(200).send({ id: response.id })
 }
