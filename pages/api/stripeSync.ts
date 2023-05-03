@@ -29,12 +29,14 @@ export default async function handler(
         sig,
         process.env.STRIPE_WEBHOOK_SECRET
       )
-      console.log('🚀 ~ file: stripeSync.ts:34 ~ event?.type:', event?.type)
       switch (event?.type) {
         case 'checkout.session.completed':
           const userId = event.data.object?.client_reference_id
           const paymentIntent = event.data.object?.payment_intent
           const checkoutSessionId = event.data.object?.id
+          // const customer = event.data.object?.customer || event.data.object?.customer_details?.email
+          const subscriptionId = event.data.object?.subscription
+          // console.log("🚀 ~ file: stripeSync.ts:39 ~ customer:", customer)
           console.log(
             '🚀 ~ file: stripeSync.ts:37 ~  event.data.object:',
             event.data.object
@@ -48,10 +50,21 @@ export default async function handler(
             '🚀 ~ file: stripeSync.ts:35 ~ paymentIntentSucceeded:',
             userId
           )
+          const subscription = await stripe.subscriptions.retrieve(
+            subscriptionId
+          );
+          const subscriptions = await stripe.subscriptions.list({
+            status: 'active', limit: 100,
+          })
+          const customer = await stripe.customers.retrieve(
+            subscriptions.data[0].customer
+          );
+          console.log("🚀 ~ file: stripeSync.ts:59 ~ subscriptions:", subscriptions)
+          console.log("🚀 ~ file: stripeSync.ts:56 ~ subscription:", subscription)
           const checkoutSession = await stripe.checkout.sessions.retrieve(checkoutSessionId, {
             expand: ['line_items'],
           })
-          console.log("🚀 ~ file: stripeSync.ts:54 ~ checkoutSession:", checkoutSession.line_items)
+          console.log("🚀 ~ file: stripeSync.ts:54 ~ checkoutSession:", checkoutSession.line_items.data[0].price.product)
           //update the user publicmetadata with the new subscription data.
           break
         case 'customer.subscription.updated':

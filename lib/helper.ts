@@ -128,6 +128,12 @@ export enum postType {
   design = 'design',
 }
 
+export enum subTiers {
+  genesis = '',
+  navigator = '',
+  frontier = '',
+}
+
 export const stringToKey = (name) => {
   return name.trim().replace(/\s+/g, '-').toLowerCase().replace(/&/g, 'and')
 }
