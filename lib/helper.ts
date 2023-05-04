@@ -129,9 +129,10 @@ export enum postType {
 }
 
 export enum subTiers {
-  genesis = '',
+  genesis = 'prod_NpDbT4LFoUtZ1l',
   navigator = '',
   frontier = '',
+  inactive = ''
 }
 
 export const stringToKey = (name) => {

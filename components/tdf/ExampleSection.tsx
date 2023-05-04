@@ -42,6 +42,7 @@ export default function ExampleSection({
       category: 'UserAction',
       label: 'ExampleSection',
     })
+    //check subscription
   }
 
   let ExampleDetail = ({ onGoBack, example, exampleField }) => {

@@ -1,6 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import Stripe from 'stripe'
 import { buffer } from 'micro'
+import prisma from '../../lib/prisma'
+import { clerkClient } from '@clerk/nextjs/server'
 
 export const config = {
   api: {
@@ -32,39 +34,58 @@ export default async function handler(
       switch (event?.type) {
         case 'checkout.session.completed':
           const userId = event.data.object?.client_reference_id
-          const paymentIntent = event.data.object?.payment_intent
           const checkoutSessionId = event.data.object?.id
-          // const customer = event.data.object?.customer || event.data.object?.customer_details?.email
-          const subscriptionId = event.data.object?.subscription
-          // console.log("🚀 ~ file: stripeSync.ts:39 ~ customer:", customer)
-          console.log(
-            '🚀 ~ file: stripeSync.ts:37 ~  event.data.object:',
-            event.data.object
-          )
-          console.log(
-            '🚀 ~ file: stripeSync.ts:37 ~ paymentIntent:',
-            paymentIntent
-          )
+          const customer = event.data.object?.customer // || event.data.object?.customer_details?.email
+          // const subscriptionId = event.data.object?.subscription
 
-          console.log(
-            '🚀 ~ file: stripeSync.ts:35 ~ paymentIntentSucceeded:',
-            userId
+          // const subscription = await stripe.subscriptions.retrieve(
+          //   subscriptionId
+          // );
+          // const subscriptions = await stripe.subscriptions.list({
+          //   status: 'active', limit: 100,
+          // })
+          // const customer = await stripe.customers.retrieve(
+          //   subscriptions.data[0].customer
+          // );
+          const checkoutSession = await stripe.checkout.sessions.retrieve(
+            checkoutSessionId,
+            {
+              expand: ['line_items'],
+            }
           )
-          const subscription = await stripe.subscriptions.retrieve(
-            subscriptionId
-          );
-          const subscriptions = await stripe.subscriptions.list({
-            status: 'active', limit: 100,
+          const productTier = String(
+            checkoutSession.line_items.data[0].price.product
+          )
+          try {
+            const result = await prisma.subscriptions.upsert({
+              where: {
+                authorClerkId: userId,
+              },
+              create: {
+                authorClerkId: userId,
+                stripeCustomerId: customer,
+                tier: productTier,
+              },
+              update: {
+                stripeCustomerId: customer,
+                tier: productTier,
+              },
+            })
+          } catch (error) {
+            console.error(error)
+          }
+          //also update clerk
+          // const body = { userId, tier, productTier }
+
+          const user = await clerkClient.users.getUser(userId)
+          let publicMetadata = user.publicMetadata
+          publicMetadata.tier = productTier
+        
+          const result = await clerkClient.users.updateUser(userId, {
+            publicMetadata: publicMetadata,
           })
-          const customer = await stripe.customers.retrieve(
-            subscriptions.data[0].customer
-          );
-          console.log("🚀 ~ file: stripeSync.ts:59 ~ subscriptions:", subscriptions)
-          console.log("🚀 ~ file: stripeSync.ts:56 ~ subscription:", subscription)
-          const checkoutSession = await stripe.checkout.sessions.retrieve(checkoutSessionId, {
-            expand: ['line_items'],
-          })
-          console.log("🚀 ~ file: stripeSync.ts:54 ~ checkoutSession:", checkoutSession.line_items.data[0].price.product)
+
+          res.status(200).json(result)
           //update the user publicmetadata with the new subscription data.
           break
         case 'customer.subscription.updated':
@@ -86,7 +107,7 @@ export default async function handler(
         default:
           console.log(`Unhandled event type ${event?.type}`)
       }
-      res.status(200).json({ received: true })
+      res.status(200)
     } catch (err) {
       console.error(`Error verifying Stripe webhook: ${err.message}`)
       res.status(400).json({ error: `Webhook Error: ${err.message}` })
