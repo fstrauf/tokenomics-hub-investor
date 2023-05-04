@@ -547,12 +547,9 @@ export async function upDateFirstTimeVisit(
 }
 
 export function validateTierAccess(props: any): boolean {
-  console.log("🚀 ~ file: helper.ts:550 ~ validateTierAccess ~ props:", props)
-  if(props?.Subscription){
+  if(props?.Subscription?.tier === subTiers.genesis || props?.Subscription?.tier === subTiers.frontier || props?.Subscription?.tier === subTiers.navigator ){
     return true
   }else{
     return false
-  }
-  
+  }  
 }
-// validateTiers

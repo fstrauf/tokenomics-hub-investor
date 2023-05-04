@@ -130,13 +130,15 @@ export default function ExampleSection({
                   className="relative m-auto h-24 rounded-lg"
                   style={{ position: 'relative' }}
                 >
-                  <Image
-                    alt={`Cover Image for ${c.title}`}
-                    className="relative object-contain"
-                    fill={true}
-                    src={c.mainImageUrl}
-                    sizes="(max-width: 64px) 100vw, 64px"
-                  />
+                  {c.mainImageUrl ? (
+                    <Image
+                      alt={`Cover Image for ${c.title}`}
+                      className="relative object-contain"
+                      fill={true}
+                      src={c.mainImageUrl}
+                      sizes="(max-width: 64px) 100vw, 64px"
+                    />
+                  ): <></>}
                 </div>
               </div>
               <p className="text-center text-sm font-bold">{c.title}</p>
