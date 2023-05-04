@@ -120,8 +120,7 @@ export default function ExampleSection({
             className="w-1/2 text-xs"
             options={props?.Tag}
             onChange={setTagFilters}
-          />
-          
+          />          
         </div>
         <div className="flex gap-6 overflow-x-auto">
           {data?.map((c) => (
