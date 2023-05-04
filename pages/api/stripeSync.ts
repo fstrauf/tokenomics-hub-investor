@@ -57,7 +57,7 @@ export default async function handler(
             checkoutSession.line_items.data[0].price.product
           )
           try {
-            const result = await prisma.subscriptions.upsert({
+            await prisma.subscriptions.upsert({
               where: {
                 authorClerkId: userId,
               },
@@ -81,31 +81,37 @@ export default async function handler(
           let publicMetadata = user.publicMetadata
           publicMetadata.tier = productTier
         
-          const result = await clerkClient.users.updateUser(userId, {
+          await clerkClient.users.updateUser(userId, {
             publicMetadata: publicMetadata,
           })
 
-          res.status(200).json(result)
+          res.status(200)
           //update the user publicmetadata with the new subscription data.
           break
         case 'customer.subscription.updated':
           //we should change the current subscription
+          res.status(200)
           break
         case 'customer.subscription.deleted':
           //eset the user back to free.
+          res.status(200)
           break
         case 'customer.subscription.paused':
           //reset to free tier
+          res.status(200)
           break
         case 'customer.subscription.resumed':
           //update the tier
+          res.status(200)
           break
         case 'invoice.paid':
           //update the tier
+          res.status(200)
           break
 
         default:
           console.log(`Unhandled event type ${event?.type}`)
+          res.status(200)
       }
       res.status(200)
     } catch (err) {
