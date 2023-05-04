@@ -16,7 +16,7 @@ const publicPages = [
   '/thub',
   '/terms',
   '/calculator',
-  '/posts/[slug]',
+  '/posts/[id]',
   '/authors/[slug]',
   '/experts',
   '/glossary',
