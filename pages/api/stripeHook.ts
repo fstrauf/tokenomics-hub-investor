@@ -27,15 +27,18 @@ export default async function handler(
     let event
     try {
       event = await stripe.webhooks.constructEvent(
-        buf,
+        buf.toString(), //try .toString()
         sig,
         process.env.STRIPE_WEBHOOK_SECRET
       )
       switch (event?.type) {
+        
         case 'checkout.session.completed':
           const userId = event.data.object?.client_reference_id
           const checkoutSessionId = event.data.object?.id
           const customer = event.data.object?.customer // || event.data.object?.customer_details?.email
+          console.log("🚀 ~ file: stripeHook.ts:40 ~ customer:", customer)
+          
           // const subscriptionId = event.data.object?.subscription
 
           // const subscription = await stripe.subscriptions.retrieve(
@@ -57,27 +60,30 @@ export default async function handler(
             checkoutSession.line_items.data[0].price.product
           )
           try {
-            await prisma.subscriptions.upsert({
-              where: {
-                authorClerkId: userId,
-              },
-              create: {
-                authorClerkId: userId,
-                stripeCustomerId: customer,
-                tier: productTier,
-              },
-              update: {
-                stripeCustomerId: customer,
-                tier: productTier,
-              },
-            })
+            if (userId & customer) {
+              await prisma.subscriptions.upsert({
+                where: {
+                  authorClerkId: userId,
+                },
+                create: {
+                  authorClerkId: userId,
+                  stripeCustomerId: customer,
+                  tier: productTier,
+                },
+                update: {
+                  stripeCustomerId: customer,
+                  tier: productTier,
+                },
+              })
+            }
           } catch (error) {
             console.error(error)
+            res.status(400).json({ error: `Webhook Error: ${err.message}` })
           }
           // const user = await clerkClient.users.getUser(userId)
           // let publicMetadata = user.publicMetadata
           // publicMetadata.tier = productTier
-        
+
           // await clerkClient.users.updateUser(userId, {
           //   publicMetadata: publicMetadata,
           // })
@@ -110,6 +116,7 @@ export default async function handler(
           console.log(`Unhandled event type ${event?.type}`)
           res.status(200)
       }
+        
       res.status(200)
     } catch (err) {
       console.error(`Error verifying Stripe webhook: ${err.message}`)
