@@ -12,7 +12,7 @@ export default async function handler(
 ) {
   const { title } = req.body
   const { JWT } = require('google-auth-library')
-
+  const { GoogleSpreadsheet } = require('google-spreadsheet')
   const sheetBaseUrl = `https://sheets.googleapis.com/v4/spreadsheets`
 
   const GOOGLE_AUTH_SCOPES = [
