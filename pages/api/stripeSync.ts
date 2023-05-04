@@ -27,52 +27,43 @@ export default async function handler(
     tier: s.items.data[0].price.product,
   }))
 
-const updateQuery = `
-  UPDATE Subscriptions
-  SET tier = CASE stripeCustomerId
-    ${usersAndTiers.map(({ stripeCustomerId, tier }) => `
-      WHEN '${stripeCustomerId}' THEN '${tier}'
-      `).join('\n')}
-    ELSE 'inactive'
-    END
-  WHERE stripeCustomerId IN (${usersAndTiers.map(({ stripeCustomerId }) => `'${stripeCustomerId}'`).join(',')})
-`;
+  const stripeCustomers = usersAndTiers.map(
+    ({ stripeCustomerId }) => stripeCustomerId
+  )
 
-const result = await prisma.$queryRaw`
-UPDATE Subscriptions
-SET tier = CASE stripeCustomerId
-  ${usersAndTiers.map(({ stripeCustomerId, tier }) => `
-    WHEN '${stripeCustomerId}' THEN '${tier}'
-    `).join('\n')}
-  ELSE 'inactive'
-  END
-WHERE stripeCustomerId IN (${usersAndTiers.map(({ stripeCustomerId }) => `'${stripeCustomerId}'`).join(',')})
-`;
+  const txCalls = []
+  const updateSubs = usersAndTiers.map((subscription) => {
+    console.log(
+      '🚀 ~ file: stripeSync.ts:41 ~ updateSubs ~ subscription:',
+      subscription
+    )
+    return prisma.subscriptions
+      .update({
+        where: { stripeCustomerId: String(subscription.stripeCustomerId) },
+        data: { tier: String(subscription.tier) },
+      })
+      .catch((error) => {
+        if (error.code !== 'P2025') {
+          throw error
+        }
+      })
+  })
 
+  txCalls.push(updateSubs)
 
-  // const updateSubs = usersAndTiers.map((subscription) => {
-  //   console.log(
-  //     '🚀 ~ file: stripeSync.ts:41 ~ updateSubs ~ subscription:',
-  //     subscription
-  //   )
-  //   return prisma.subscriptions
-  //     .update({
-  //       where: { stripeCustomerId: String(subscription.customer) },
-  //       data: { tier: String(subscription.tier) },
-  //     })
-  //     .catch((error) => {
-  //       if (error.code !== 'P2025') {
-  //         throw error
-  //       }
-  //     })
-  // })
+  await prisma.subscriptions.updateMany({
+    where: {
+      stripeCustomerId: { notIn: stripeCustomers },
+    },
+    data: { tier: 'inactive' },
+  })
 
-  // await prisma
-  //   .$transaction(updateSubs)
-  //   .then(() => {
-  //     res.status(200)
-  //   })
-  //   .catch((error) => {
-  //     res.status(400).send(error)
-  //   })
+  await prisma
+    .$transaction(txCalls)
+    .then(() => {
+      res.status(200)
+    })
+    .catch((error) => {
+      res.status(400).send(error)
+    })
 }
