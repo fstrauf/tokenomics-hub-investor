@@ -1,6 +1,6 @@
 import Layout from '../components/layout'
 import { headerStatus } from '../lib/helper'
-import Script from 'next/script'
+// import Script from 'next/script'
 import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
 import SubscriptionTable from './SubscriptionTable'
 
