@@ -4,5 +4,11 @@
   "rewrites": [
     { "source": "/studio/(.*)", "destination": "/studio/index.html" }
   ],
-  "regions": ["syd1"]
+  "regions": ["syd1"],
+  "crons": [
+    {
+      "path": "/api/stripeSync",
+      "schedule": "* * * * *"
+    }
+  ]
 }

@@ -1,8 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import Stripe from 'stripe'
-import { buffer } from 'micro'
+// import { buffer } from 'micro'
 import prisma from '../../lib/prisma'
-import { clerkClient } from '@clerk/nextjs/server'
+// import { clerkClient } from '@clerk/nextjs/server'
 
 export const config = {
   api: {
@@ -10,116 +10,69 @@ export const config = {
   },
 }
 
-type Data = {
-  name: string
-}
-
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Data>
+  res: NextApiResponse
 ) {
-  if (req.method === 'POST') {
-    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-      apiVersion: '2022-11-15',
-    })
-    const sig = req.headers['stripe-signature']
-    const buf = await buffer(req)
-    let event
-    try {
-      event = await stripe.webhooks.constructEvent(
-        buf,
-        sig,
-        process.env.STRIPE_WEBHOOK_SECRET
-      )
-      switch (event?.type) {
-        case 'checkout.session.completed':
-          const userId = event.data.object?.client_reference_id
-          const checkoutSessionId = event.data.object?.id
-          const customer = event.data.object?.customer // || event.data.object?.customer_details?.email
-          // const subscriptionId = event.data.object?.subscription
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+    apiVersion: '2022-11-15',
+  })
+  const subscriptions = await stripe.subscriptions.list({
+    status: 'active',
+    limit: 100,
+  })
 
-          // const subscription = await stripe.subscriptions.retrieve(
-          //   subscriptionId
-          // );
-          // const subscriptions = await stripe.subscriptions.list({
-          //   status: 'active', limit: 100,
-          // })
-          // const customer = await stripe.customers.retrieve(
-          //   subscriptions.data[0].customer
-          // );
-          const checkoutSession = await stripe.checkout.sessions.retrieve(
-            checkoutSessionId,
-            {
-              expand: ['line_items'],
-            }
-          )
-          const productTier = String(
-            checkoutSession.line_items.data[0].price.product
-          )
-          try {
-            await prisma.subscriptions.upsert({
-              where: {
-                authorClerkId: userId,
-              },
-              create: {
-                authorClerkId: userId,
-                stripeCustomerId: customer,
-                tier: productTier,
-              },
-              update: {
-                stripeCustomerId: customer,
-                tier: productTier,
-              },
-            })
-          } catch (error) {
-            console.error(error)
-          }
-          //also update clerk
-          // const body = { userId, tier, productTier }
+  const usersAndTiers = subscriptions.data.map((s) => ({
+    stripeCustomerId: s.customer,
+    tier: s.items.data[0].price.product,
+  }))
 
-          const user = await clerkClient.users.getUser(userId)
-          let publicMetadata = user.publicMetadata
-          publicMetadata.tier = productTier
-        
-          await clerkClient.users.updateUser(userId, {
-            publicMetadata: publicMetadata,
-          })
+const updateQuery = `
+  UPDATE Subscriptions
+  SET tier = CASE stripeCustomerId
+    ${usersAndTiers.map(({ stripeCustomerId, tier }) => `
+      WHEN '${stripeCustomerId}' THEN '${tier}'
+      `).join('\n')}
+    ELSE 'inactive'
+    END
+  WHERE stripeCustomerId IN (${usersAndTiers.map(({ stripeCustomerId }) => `'${stripeCustomerId}'`).join(',')})
+`;
 
-          res.status(200)
-          //update the user publicmetadata with the new subscription data.
-          break
-        case 'customer.subscription.updated':
-          //we should change the current subscription
-          res.status(200)
-          break
-        case 'customer.subscription.deleted':
-          //eset the user back to free.
-          res.status(200)
-          break
-        case 'customer.subscription.paused':
-          //reset to free tier
-          res.status(200)
-          break
-        case 'customer.subscription.resumed':
-          //update the tier
-          res.status(200)
-          break
-        case 'invoice.paid':
-          //update the tier
-          res.status(200)
-          break
+const result = await prisma.$queryRaw`
+UPDATE Subscriptions
+SET tier = CASE stripeCustomerId
+  ${usersAndTiers.map(({ stripeCustomerId, tier }) => `
+    WHEN '${stripeCustomerId}' THEN '${tier}'
+    `).join('\n')}
+  ELSE 'inactive'
+  END
+WHERE stripeCustomerId IN (${usersAndTiers.map(({ stripeCustomerId }) => `'${stripeCustomerId}'`).join(',')})
+`;
 
-        default:
-          console.log(`Unhandled event type ${event?.type}`)
-          res.status(200)
-      }
-      res.status(200)
-    } catch (err) {
-      console.error(`Error verifying Stripe webhook: ${err.message}`)
-      res.status(400).json({ error: `Webhook Error: ${err.message}` })
-    }
-  } else {
-    res.setHeader('Allow', 'POST')
-    res.status(405).end('Method Not Allowed')
-  }
+
+  // const updateSubs = usersAndTiers.map((subscription) => {
+  //   console.log(
+  //     '🚀 ~ file: stripeSync.ts:41 ~ updateSubs ~ subscription:',
+  //     subscription
+  //   )
+  //   return prisma.subscriptions
+  //     .update({
+  //       where: { stripeCustomerId: String(subscription.customer) },
+  //       data: { tier: String(subscription.tier) },
+  //     })
+  //     .catch((error) => {
+  //       if (error.code !== 'P2025') {
+  //         throw error
+  //       }
+  //     })
+  // })
+
+  // await prisma
+  //   .$transaction(updateSubs)
+  //   .then(() => {
+  //     res.status(200)
+  //   })
+  //   .catch((error) => {
+  //     res.status(400).send(error)
+  //   })
 }

@@ -81,7 +81,7 @@ model Tag {
 
 model Subscriptions {
   authorClerkId    String @id
-  stripeCustomerId String
+  stripeCustomerId String @unique
   tier             String
 }
 

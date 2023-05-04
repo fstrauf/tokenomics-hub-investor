@@ -43,6 +43,7 @@ export default function ExampleSection({
       label: 'ExampleSection',
     })
     //check subscription
+    // if(user.publicMetadata.tier !== )
   }
 
   let ExampleDetail = ({ onGoBack, example, exampleField }) => {
