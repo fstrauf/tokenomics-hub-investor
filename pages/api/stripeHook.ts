@@ -35,6 +35,7 @@ export default async function handler(
         
         case 'checkout.session.completed':
           const userId = event.data.object?.client_reference_id
+          console.log("🚀 ~ file: stripeHook.ts:38 ~ userId:", userId)
           const checkoutSessionId = event.data.object?.id
           const customer = event.data.object?.customer // || event.data.object?.customer_details?.email
           console.log("🚀 ~ file: stripeHook.ts:40 ~ customer:", customer)
@@ -56,9 +57,11 @@ export default async function handler(
               expand: ['line_items'],
             }
           )
+          console.log("🚀 ~ file: stripeHook.ts:59 ~ checkoutSession:", checkoutSession)
           const productTier = String(
             checkoutSession.line_items.data[0].price.product
           )
+          console.log("🚀 ~ file: stripeHook.ts:63 ~ productTier:", productTier)
           try {
             if (userId & customer) {
               await prisma.subscriptions.upsert({
