@@ -25,24 +25,22 @@ export default async function handler(
 ) {
   try {
     for (let fileName of allFileName) {
-      fs.readFile(`exportedData/${fileName}.json`, async (error, data) => {
-        if (error) throw 'file read error'
-        let allData = JSON.parse(data.toString('utf-8'))
-        filterData.push({
-          model: fileName,
-          allData,
-        })
+      let oFile = fs.readFileSync(`exportedData/${fileName}.json`, 'utf-8')
+      let allData = JSON.stringify(oFile)
+      filterData.push({
+        model: fileName,
+        allData,
       })
     }
     await makeBatchTransaction()
-    // await clearDatabase()
-    // await prisma.$transaction(db)
+    await clearDatabase()
+    await prisma.$transaction(db)
 
     filterData = []
     db = []
 
     return res.status(200).json({
-      message: 'Data Imported Successfully',
+      message: "Data Imported Successfully",
     })
   } catch (error) {
     console.log('error = ', error)
@@ -124,7 +122,7 @@ async function clearDatabase() {
 
     await prisma.$transaction(dbs)
   } catch (error) {
-    console.log('error = ', error)
+    console.log('clearDatabase error = ', error)
     return
   }
 }
