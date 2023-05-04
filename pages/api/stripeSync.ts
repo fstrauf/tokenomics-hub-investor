@@ -1,8 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import Stripe from 'stripe'
-// import { buffer } from 'micro'
 import prisma from '../../lib/prisma'
-// import { clerkClient } from '@clerk/nextjs/server'
 
 export const config = {
   api: {
@@ -33,10 +31,7 @@ export default async function handler(
 
   const txCalls = []
   const updateSubs = usersAndTiers.map((subscription) => {
-    console.log(
-      '🚀 ~ file: stripeSync.ts:41 ~ updateSubs ~ subscription:',
-      subscription
-    )
+    
     return prisma.subscriptions
       .update({
         where: { stripeCustomerId: String(subscription.stripeCustomerId) },

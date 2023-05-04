@@ -6,9 +6,10 @@ import { clerkClient } from '@clerk/nextjs/server'
 import prisma from '../../lib/prisma'
 import CommentForm from '../../components/commentForm'
 import Comments from '../../components/comments'
+import { getAuth } from '@clerk/nextjs/dist/server/getAuth'
+import { AuthData } from '@clerk/nextjs/dist/server/types'
 
 const EditDesign: React.FC<UpdateNewDesignProps> = (props) => {
-  console.log("🚀 ~ file: [id].tsx:11 ~ props:", props)
   return (
     <>
       <TDFMain props={props} header={props?.post?.postType} />
@@ -25,15 +26,13 @@ const EditDesign: React.FC<UpdateNewDesignProps> = (props) => {
 
 export default EditDesign
 
-export const getServerSideProps: GetServerSideProps = async ({
-  params,
-  req,
-}) => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { loggedInUser }: AuthData = getAuth(context.req)
   const txCalls = []
   txCalls.push(
     prisma.post.findUnique({
       where: {
-        id: String(params?.id),
+        id: String(context.params?.id),
       },
       include: {
         author: {
@@ -74,8 +73,9 @@ export const getServerSideProps: GetServerSideProps = async ({
 
   txCalls.push(prisma.category.findMany())
   txCalls.push(prisma.tag.findMany())
+  txCalls.push(prisma.subscriptions.findUnique({where:{authorClerkId: loggedInUser}}))
 
-  const [post, mechanismTemplates, designPhases, Category, Tag] =
+  const [post, mechanismTemplates, designPhases, Category, Tag, Subscription] =
     await prisma.$transaction(txCalls)
 
   let clerkUser = {}
@@ -143,6 +143,7 @@ export const getServerSideProps: GetServerSideProps = async ({
       mechanismTemplates: mechanismTemplates || null,
       Category: Category || null,
       Tag: Tag || null,
+      Subscription: Subscription || null,
     },      
   }
 }

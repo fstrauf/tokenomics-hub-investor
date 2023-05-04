@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import Stripe from 'stripe'
 import { buffer } from 'micro'
 import prisma from '../../lib/prisma'
-import { clerkClient } from '@clerk/nextjs/server'
+// import { clerkClient } from '@clerk/nextjs/server'
 
 export const config = {
   api: {
@@ -74,16 +74,13 @@ export default async function handler(
           } catch (error) {
             console.error(error)
           }
-          //also update clerk
-          // const body = { userId, tier, productTier }
-
-          const user = await clerkClient.users.getUser(userId)
-          let publicMetadata = user.publicMetadata
-          publicMetadata.tier = productTier
+          // const user = await clerkClient.users.getUser(userId)
+          // let publicMetadata = user.publicMetadata
+          // publicMetadata.tier = productTier
         
-          await clerkClient.users.updateUser(userId, {
-            publicMetadata: publicMetadata,
-          })
+          // await clerkClient.users.updateUser(userId, {
+          //   publicMetadata: publicMetadata,
+          // })
 
           res.status(200)
           //update the user publicmetadata with the new subscription data.

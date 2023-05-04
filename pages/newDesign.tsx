@@ -74,8 +74,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       where: {},
     })
   )
+  txCalls.push(prisma.subscriptions.findUnique({where:{authorClerkId: userId}}))
 
-  const [designPhases, userCalcs, mechanismTemplates, PostUser, Category, Tag] =
+  const [designPhases, userCalcs, mechanismTemplates, PostUser, Category, Tag, Subscription] =
     await prisma.$transaction(txCalls)
 
   const defaultContent = {
@@ -151,6 +152,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       PostUser: PostUser || null,
       Category: Category || null,
       Tag: Tag || null,
+      Subscription: Subscription || null,
     },
   }
 }
