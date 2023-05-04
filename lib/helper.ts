@@ -132,7 +132,7 @@ export enum subTiers {
   genesis = 'prod_NpDbT4LFoUtZ1l',
   navigator = '',
   frontier = '',
-  inactive = ''
+  inactive = '',
 }
 
 export const stringToKey = (name) => {
@@ -524,7 +524,11 @@ export function mandatoryFormValidate(values) {
   return errors
 }
 
-export async function upDateFirstTimeVisit(userId: string, prop: string, newVal: any) {
+export async function upDateFirstTimeVisit(
+  userId: string,
+  prop: string,
+  newVal: any
+) {
   const body = { userId, prop, newVal }
 
   try {
@@ -542,7 +546,13 @@ export async function upDateFirstTimeVisit(userId: string, prop: string, newVal:
   }
 }
 
-export function validateTierAccess(){
+export function validateTierAccess(props: any): boolean {
+  console.log("🚀 ~ file: helper.ts:550 ~ validateTierAccess ~ props:", props)
+  if(props?.Subscription){
+    return true
+  }else{
+    return false
+  }
   
 }
 // validateTiers

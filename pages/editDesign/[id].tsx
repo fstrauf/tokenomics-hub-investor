@@ -27,7 +27,7 @@ const EditDesign: React.FC<UpdateNewDesignProps> = (props) => {
 export default EditDesign
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { loggedInUser }: AuthData = getAuth(context.req)
+  const { userId }: AuthData = getAuth(context.req)
   const txCalls = []
   txCalls.push(
     prisma.post.findUnique({
@@ -73,7 +73,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   txCalls.push(prisma.category.findMany())
   txCalls.push(prisma.tag.findMany())
-  txCalls.push(prisma.subscriptions.findUnique({where:{authorClerkId: loggedInUser}}))
+  txCalls.push(
+    prisma.subscriptions.findUnique({ where: { authorClerkId: userId } })    
+  )
 
   const [post, mechanismTemplates, designPhases, Category, Tag, Subscription] =
     await prisma.$transaction(txCalls)
@@ -90,11 +92,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   clerkUser = clerkConvertJSON(clerkUser)
 
-  const userId = post?.Comments?.map((comment) => {
+  const userIds = post?.Comments?.map((comment) => {
     return comment.authorClerkId
   })
 
-  let users = clerkConvertJSON(await clerkClient.users.getUserList({ userId }))
+  let users = clerkConvertJSON(await clerkClient.users.getUserList({ userIds }))
 
   const commentsWithUserNames = post?.Comments?.map((comment) => {
     const currentUser = users?.find((u) => u.id === comment.authorClerkId)
@@ -112,7 +114,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     postWithUpdatedComments.protocolTimeLine.map((ptl) => ({
       ...ptl,
       // date: new Date(ptl.date).toLocaleDateString('en-CA'),
-      date: formatDate(ptl.date)
+      date: formatDate(ptl.date),
     }))
   if (postWithUpdatedComments.Calculation === null) {
     postWithUpdatedComments.Calculation = {}
@@ -124,7 +126,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   // postWithUpdatedComments.Calculation.startDate = new Date(
   //   postWithUpdatedComments?.Calculation?.startDate || ''
   // ).toLocaleDateString('en-CA')
-  
+
   postWithUpdatedComments.DesignElement =
     postWithUpdatedComments?.DesignElement?.map((de) => {
       try {
@@ -144,6 +146,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       Category: Category || null,
       Tag: Tag || null,
       Subscription: Subscription || null,
-    },      
+    },
   }
 }
