@@ -15,7 +15,7 @@ type Data = {
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Data>
+  res: NextApiResponse
 ) {
   if (req.method === 'POST') {
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
@@ -30,7 +30,7 @@ export default async function handler(
         sig,
         process.env.STRIPE_WEBHOOK_SECRET
       )
-      res.status(200)
+      // res.status(200)
       switch (event?.type) {
         case 'checkout.session.completed':
           const userId = event.data.object?.client_reference_id
@@ -64,7 +64,7 @@ export default async function handler(
           
           try {
             console.log('prisma before')
-            const response = await prisma.subscriptions.upsert({
+            prisma.subscriptions.upsert({
               where: {
                 authorClerkId: userId,
               },
@@ -78,39 +78,39 @@ export default async function handler(
                 tier: productTier,
               },
             })
-            console.log('🚀 ~ file: stripeHook.ts:70 ~ response:', response)
+            // console.log('🚀 ~ file: stripeHook.ts:70 ~ response:', response)
           } catch (error) {
             console.error(error)
             console.log('prisma before')
             res.status(400).json({ error: `Webhook Error: ${err.message}` })
           }
-          res.status(200)
+          res.status(200).send({event: event?.type})
           //update the user publicmetadata with the new subscription data.
           break
         case 'customer.subscription.updated':
           //we should change the current subscription
-          res.status(200)
+          res.status(200).send({event: event?.type})
           break
         case 'customer.subscription.deleted':
           //eset the user back to free.
-          res.status(200)
+          res.status(200).send({event: event?.type})
           break
         case 'customer.subscription.paused':
           //reset to free tier
-          res.status(200)
+          res.status(200).send({event: event?.type})
           break
         case 'customer.subscription.resumed':
           //update the tier
-          res.status(200)
+          res.status(200).send({event: event?.type})
           break
         case 'invoice.paid':
           //update the tier
-          res.status(200)
+          res.status(200).send({event: event?.type})
           break
 
         default:
           console.log(`Unhandled event type ${event?.type}`)
-          res.status(200)
+          res.status(200).send({event: event?.type})
       }
 
       res.status(200)
