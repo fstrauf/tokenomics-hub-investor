@@ -31,6 +31,8 @@ export default async function handler(
         sig,
         process.env.STRIPE_WEBHOOK_SECRET
       )
+
+      res.status(200).end()
       switch (event?.type) {
         case 'checkout.session.completed':
           const userId = event.data.object?.client_reference_id
@@ -66,7 +68,7 @@ export default async function handler(
           console.log('🚀 ~ file: stripeHook.ts:63 ~ productTier:', productTier)
           try {
             console.log("🚀 ~ file: stripeHook.ts:69 ~ userId:", userId)
-            if (userId & customer) {
+            // if (userId & customer) {
 
               const response = await prisma.subscriptions.upsert({
                 where: {
@@ -83,7 +85,7 @@ export default async function handler(
                 },
               })
               console.log("🚀 ~ file: stripeHook.ts:83 ~ response:", response)
-            }
+            // }
           } catch (error) {
             console.error(error)
             res.status(400).json({ error: `Webhook Error: ${err.message}` })
