@@ -9,16 +9,18 @@ import { AuthData } from '@clerk/nextjs/dist/server/types'
 import prisma from '../lib/prisma'
 import { GetServerSideProps } from 'next'
 
-
 export default function ManageSubscriptions(props) {
   // const { user } = useUser()
   return (
     <>
       <Layout mode={headerStatus.main}>
-        <>
-
+        <div className='flex flex-col justify-center items-center gap-10'>
           <SubscriptionTable />
-          <SubscriptionStatus customerId={props?.subscription?.stripeCustomerId} />
+          <hr className="my-4 mx-auto h-1 w-48 rounded border-0 bg-gray-100 dark:bg-gray-700 md:my-10"></hr>
+          <SubscriptionStatus
+            customerId={props?.subscription?.stripeCustomerId}
+          />
+          <hr className="my-4 mx-auto h-1 w-48 rounded border-0 bg-gray-100 dark:bg-gray-700 md:my-10"></hr>
           <div>
             <a
               href="https://billing.stripe.com/p/login/8wMcQ7b9w9Yx95S000"
@@ -29,7 +31,7 @@ export default function ManageSubscriptions(props) {
               </button>
             </a>
           </div>
-        </>
+        </div>
       </Layout>
     </>
   )
@@ -37,10 +39,12 @@ export default function ManageSubscriptions(props) {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { userId }: AuthData = getAuth(context.req)
-  const subscription = await prisma.subscriptions.findUnique({where:{authorClerkId: userId}})
+  const subscription = await prisma.subscriptions.findUnique({
+    where: { authorClerkId: userId },
+  })
 
   return {
-    props: {      
+    props: {
       Subscription: subscription || null,
     },
   }

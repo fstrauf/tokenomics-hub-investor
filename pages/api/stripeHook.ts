@@ -2,7 +2,6 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import Stripe from 'stripe'
 import { buffer } from 'micro'
 import prisma from '../../lib/prisma'
-// import { clerkClient } from '@clerk/nextjs/server'
 
 export const config = {
   api: {
@@ -27,7 +26,7 @@ export default async function handler(
     let event
     try {
       event = await stripe.webhooks.constructEvent(
-        buf.toString(), //try .toString()
+        buf,
         sig,
         process.env.STRIPE_WEBHOOK_SECRET
       )
@@ -36,68 +35,42 @@ export default async function handler(
       switch (event?.type) {
         case 'checkout.session.completed':
           const userId = event.data.object?.client_reference_id
-          console.log('🚀 ~ file: stripeHook.ts:38 ~ userId:', userId)
+          console.log("🚀 ~ file: stripeHook.ts:38 ~ event.data.object:", event.data.object)
+          console.log("🚀 ~ file: stripeHook.ts:38 ~ userId:", userId)
           const checkoutSessionId = event.data.object?.id
-          const customer = event.data.object?.customer // || event.data.object?.customer_details?.email
-          console.log('🚀 ~ file: stripeHook.ts:40 ~ customer:', customer)
+          const customer = event.data.object?.customer
+          console.log("🚀 ~ file: stripeHook.ts:41 ~ customer:", customer)
 
-          // const subscriptionId = event.data.object?.subscription
-
-          // const subscription = await stripe.subscriptions.retrieve(
-          //   subscriptionId
-          // );
-          // const subscriptions = await stripe.subscriptions.list({
-          //   status: 'active', limit: 100,
-          // })
-          // const customer = await stripe.customers.retrieve(
-          //   subscriptions.data[0].customer
-          // );
           const checkoutSession = await stripe.checkout.sessions.retrieve(
             checkoutSessionId,
             {
               expand: ['line_items'],
             }
           )
-          console.log(
-            '🚀 ~ file: stripeHook.ts:59 ~ checkoutSession:',
-            checkoutSession
-          )
+
           const productTier = String(
             checkoutSession.line_items.data[0].price.product
           )
-          console.log('🚀 ~ file: stripeHook.ts:63 ~ productTier:', productTier)
-          try {
-            console.log("🚀 ~ file: stripeHook.ts:69 ~ userId:", userId)
-            // if (userId & customer) {
 
-              const response = await prisma.subscriptions.upsert({
-                where: {
-                  authorClerkId: userId,
-                },
-                create: {
-                  authorClerkId: userId,
-                  stripeCustomerId: customer,
-                  tier: productTier,
-                },
-                update: {
-                  stripeCustomerId: customer,
-                  tier: productTier,
-                },
-              })
-              console.log("🚀 ~ file: stripeHook.ts:83 ~ response:", response)
-            // }
+          try {
+            await prisma.subscriptions.upsert({
+              where: {
+                authorClerkId: userId,
+              },
+              create: {
+                authorClerkId: userId,
+                stripeCustomerId: customer,
+                tier: productTier,
+              },
+              update: {
+                stripeCustomerId: customer,
+                tier: productTier,
+              },
+            })
           } catch (error) {
             console.error(error)
             res.status(400).json({ error: `Webhook Error: ${err.message}` })
           }
-          // const user = await clerkClient.users.getUser(userId)
-          // let publicMetadata = user.publicMetadata
-          // publicMetadata.tier = productTier
-
-          // await clerkClient.users.updateUser(userId, {
-          //   publicMetadata: publicMetadata,
-          // })
-          console.log('all good - completed')
           res.status(200)
           //update the user publicmetadata with the new subscription data.
           break
