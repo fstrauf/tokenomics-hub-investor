@@ -32,14 +32,13 @@ export default async function handler(
         process.env.STRIPE_WEBHOOK_SECRET
       )
       switch (event?.type) {
-        
         case 'checkout.session.completed':
           const userId = event.data.object?.client_reference_id
-          console.log("🚀 ~ file: stripeHook.ts:38 ~ userId:", userId)
+          console.log('🚀 ~ file: stripeHook.ts:38 ~ userId:', userId)
           const checkoutSessionId = event.data.object?.id
           const customer = event.data.object?.customer // || event.data.object?.customer_details?.email
-          console.log("🚀 ~ file: stripeHook.ts:40 ~ customer:", customer)
-          
+          console.log('🚀 ~ file: stripeHook.ts:40 ~ customer:', customer)
+
           // const subscriptionId = event.data.object?.subscription
 
           // const subscription = await stripe.subscriptions.retrieve(
@@ -57,14 +56,19 @@ export default async function handler(
               expand: ['line_items'],
             }
           )
-          console.log("🚀 ~ file: stripeHook.ts:59 ~ checkoutSession:", checkoutSession)
+          console.log(
+            '🚀 ~ file: stripeHook.ts:59 ~ checkoutSession:',
+            checkoutSession
+          )
           const productTier = String(
             checkoutSession.line_items.data[0].price.product
           )
-          console.log("🚀 ~ file: stripeHook.ts:63 ~ productTier:", productTier)
+          console.log('🚀 ~ file: stripeHook.ts:63 ~ productTier:', productTier)
           try {
+            console.log("🚀 ~ file: stripeHook.ts:69 ~ userId:", userId)
             if (userId & customer) {
-              await prisma.subscriptions.upsert({
+
+              const response = await prisma.subscriptions.upsert({
                 where: {
                   authorClerkId: userId,
                 },
@@ -78,6 +82,7 @@ export default async function handler(
                   tier: productTier,
                 },
               })
+              console.log("🚀 ~ file: stripeHook.ts:83 ~ response:", response)
             }
           } catch (error) {
             console.error(error)
@@ -90,7 +95,7 @@ export default async function handler(
           // await clerkClient.users.updateUser(userId, {
           //   publicMetadata: publicMetadata,
           // })
-
+          console.log('all good - completed')
           res.status(200)
           //update the user publicmetadata with the new subscription data.
           break
@@ -119,13 +124,14 @@ export default async function handler(
           console.log(`Unhandled event type ${event?.type}`)
           res.status(200)
       }
-        
+
       res.status(200)
     } catch (err) {
       console.error(`Error verifying Stripe webhook: ${err.message}`)
       res.status(400).json({ error: `Webhook Error: ${err.message}` })
     }
   } else {
+    console.log('only post allowed')
     res.setHeader('Allow', 'POST')
     res.status(405).end('Method Not Allowed')
   }
