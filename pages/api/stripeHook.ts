@@ -47,6 +47,7 @@ export default async function handler(
               expand: ['line_items'],
             }
           )
+          console.log("🚀 ~ file: stripeHook.ts:50 ~ checkoutSession:", checkoutSession)
 
           const productTier = String(
             checkoutSession.line_items.data[0].price.product
@@ -54,6 +55,7 @@ export default async function handler(
           console.log("🚀 ~ file: stripeHook.ts:54 ~ productTier:", productTier)
 
           try {
+            console.log('prisma before')
             const response = await prisma.subscriptions.upsert({
               where: {
                 authorClerkId: userId,
@@ -71,6 +73,7 @@ export default async function handler(
             console.log("🚀 ~ file: stripeHook.ts:70 ~ response:", response)
           } catch (error) {
             console.error(error)
+            console.log('prisma before')
             res.status(400).json({ error: `Webhook Error: ${err.message}` })
           }
           res.status(200)
