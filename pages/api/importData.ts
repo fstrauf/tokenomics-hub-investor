@@ -26,7 +26,7 @@ export default async function handler(
   try {
     for (let fileName of allFileName) {
       let oFile = fs.readFileSync(`exportedData/${fileName}.json`, 'utf-8')
-      let allData = JSON.stringify(oFile)
+      let allData = JSON.parse(oFile)
       filterData.push({
         model: fileName,
         allData,
@@ -40,7 +40,7 @@ export default async function handler(
     db = []
 
     return res.status(200).json({
-      message: "Data Imported Successfully",
+      message: 'Data Imported Successfully',
     })
   } catch (error) {
     console.log('error = ', error)
@@ -58,43 +58,49 @@ async function makeBatchTransaction() {
       })
       switch (file) {
         case 'post':
-          db.push(prisma.post.createMany(oFile[0].allData))
+          db.push(prisma.post.createMany({ data: oFile[0].allData }))
           break
         case 'category':
-          db.push(prisma.category.createMany(oFile[0].allData))
+          db.push(prisma.category.createMany({ data: oFile[0].allData }))
           break
         case 'tag':
-          db.push(prisma.tag.createMany(oFile[0].allData))
+          db.push(prisma.tag.createMany({ data: oFile[0].allData }))
           break
         case 'protocolTimeLine':
-          db.push(prisma.protocolTimeLine.createMany(oFile[0].allData))
+          db.push(
+            prisma.protocolTimeLine.createMany({ data: oFile[0].allData })
+          )
           break
         case 'protocolResources':
-          db.push(prisma.protocolResources.createMany(oFile[0].allData))
+          db.push(
+            prisma.protocolResources.createMany({ data: oFile[0].allData })
+          )
           break
         case 'comments':
-          db.push(prisma.comments.createMany(oFile[0].allData))
+          db.push(prisma.comments.createMany({ data: oFile[0].allData }))
           break
         case 'calculation':
-          db.push(prisma.calculation.createMany(oFile[0].allData))
+          db.push(prisma.calculation.createMany({ data: oFile[0].allData }))
           break
         case 'designElement':
-          db.push(prisma.designElement.createMany(oFile[0].allData))
+          db.push(prisma.designElement.createMany({ data: oFile[0].allData }))
           break
         case 'designPhases':
-          db.push(prisma.designPhases.createMany(oFile[0].allData))
+          db.push(prisma.designPhases.createMany({ data: oFile[0].allData }))
           break
         case 'calculationTimeSeries':
-          db.push(prisma.calculationTimeSeries.createMany(oFile[0].allData))
+          db.push(
+            prisma.calculationTimeSeries.createMany({ data: oFile[0].allData })
+          )
           break
         case 'mechanism':
-          db.push(prisma.mechanism.createMany(oFile[0].allData))
+          db.push(prisma.mechanism.createMany({ data: oFile[0].allData }))
           break
         case 'postUser':
-          db.push(prisma.postUser.createMany(oFile[0].allData))
+          db.push(prisma.postUser.createMany({ data: oFile[0].allData }))
           break
         case 'postAuthor':
-          db.push(prisma.postAuthor.createMany(oFile[0].allData))
+          db.push(prisma.postAuthor.createMany({ data: oFile[0].allData }))
           break
       }
     }
