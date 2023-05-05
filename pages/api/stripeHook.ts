@@ -64,7 +64,6 @@ export default async function handler(
 
           try {
             console.log('prisma before')
-            res.status(200).end()
             const response = await prisma.subscriptions.upsert({
               where: {
                 authorClerkId: userId,
