@@ -51,6 +51,7 @@ export default async function handler(
           const productTier = String(
             checkoutSession.line_items.data[0].price.product
           )
+          console.log("🚀 ~ file: stripeHook.ts:54 ~ productTier:", productTier)
 
           try {
             const response = await prisma.subscriptions.upsert({

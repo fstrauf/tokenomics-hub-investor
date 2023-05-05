@@ -9,6 +9,7 @@ import { event } from 'nextjs-google-analytics'
 import { validateTierAccess } from '../../lib/helper'
 import GenericPopover from '../generic/GenericPopover'
 import SubscriptionTable from '../../pages/SubscriptionTable'
+import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
 
 export const fetcher = async (url, param) => {
   const body = { param }
@@ -39,9 +40,14 @@ export default function ExampleSection({
 
   const [isSubelementClicked, setIsSubelementClicked] = useState(false)
 
+  const { user } = useUser()
+
+  const admin = user?.publicMetadata?.admin || false
+
   function handleDetailClicked(c) {
     //check subscription
-    if (validateTierAccess(props)) {
+    console.log('🚀 ~ file: ExampleSection.tsx:46 ~ admin:', admin)
+    if (validateTierAccess(props) && !admin) {
       setExample(c)
       setIsSubelementClicked(true)
       event(`ExampleSection`, {
@@ -120,7 +126,7 @@ export default function ExampleSection({
             className="w-1/2 text-xs"
             options={props?.Tag}
             onChange={setTagFilters}
-          />          
+          />
         </div>
         <div className="flex gap-6 overflow-x-auto">
           {data?.map((c) => (
@@ -138,7 +144,9 @@ export default function ExampleSection({
                       src={c.mainImageUrl}
                       sizes="(max-width: 64px) 100vw, 64px"
                     />
-                  ): <></>}
+                  ) : (
+                    <></>
+                  )}
                 </div>
               </div>
               <p className="text-center text-sm font-bold">{c.title}</p>
