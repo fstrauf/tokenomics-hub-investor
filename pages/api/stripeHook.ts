@@ -41,13 +41,20 @@ export default async function handler(
           const customer = event.data.object?.customer
           console.log("🚀 ~ file: stripeHook.ts:41 ~ customer:", customer)
 
-          const checkoutSession = await stripe.checkout.sessions.retrieve(
-            checkoutSessionId,
-            {
-              expand: ['line_items'],
-            }
-          )
-          console.log("🚀 ~ file: stripeHook.ts:50 ~ checkoutSession:", checkoutSession)
+          try {
+            const checkoutSession = await stripe.checkout.sessions.retrieve(
+              checkoutSessionId,
+              {
+                expand: ['line_items'],
+              }
+            )  
+            console.log("🚀 ~ file: stripeHook.ts:50 ~ checkoutSession:", checkoutSession)
+          } catch (error) {
+            console.log("🚀 ~ file: stripeHook.ts:53 ~ error:", error)
+            //do nothing
+          }
+          
+          console.log('checkoutsession complete')
 
           const productTier = String(
             checkoutSession.line_items.data[0].price.product
