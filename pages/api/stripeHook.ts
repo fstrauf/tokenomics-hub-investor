@@ -53,7 +53,7 @@ export default async function handler(
           )
 
           try {
-            await prisma.subscriptions.upsert({
+            const response = await prisma.subscriptions.upsert({
               where: {
                 authorClerkId: userId,
               },
@@ -67,6 +67,7 @@ export default async function handler(
                 tier: productTier,
               },
             })
+            console.log("🚀 ~ file: stripeHook.ts:70 ~ response:", response)
           } catch (error) {
             console.error(error)
             res.status(400).json({ error: `Webhook Error: ${err.message}` })

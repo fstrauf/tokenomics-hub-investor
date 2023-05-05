@@ -1,7 +1,5 @@
 import Layout from '../components/layout'
 import { headerStatus } from '../lib/helper'
-// import Script from 'next/script'
-// import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
 import SubscriptionTable from './SubscriptionTable'
 import SubscriptionStatus from './SubscriptionStatus'
 import { getAuth } from '@clerk/nextjs/dist/server/getAuth'
@@ -10,7 +8,6 @@ import prisma from '../lib/prisma'
 import { GetServerSideProps } from 'next'
 
 export default function ManageSubscriptions(props) {
-  // const { user } = useUser()
   return (
     <>
       <Layout mode={headerStatus.main}>

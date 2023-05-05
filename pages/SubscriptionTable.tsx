@@ -7,6 +7,8 @@ export default function SubscriptionTable() {
     <>
       <div className="mt-10">
         <Script src="https://js.stripe.com/v3/pricing-table.js" async />
+
+        
         {/* <stripe-pricing-table
               pricing-table-id="prctbl_1N38wkKs0xSuCAmfu87BjsFs"
               publishable-key="pk_live_51LUqnsKs0xSuCAmfmBBT45ICtEtzj8EkcJK7e2SFncAnbVzjEO4WFY9X3C8Ih1OlevrEAXZmiu86jszeLfQDJ5Xv000IKYBg6T"
