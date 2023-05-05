@@ -30,39 +30,41 @@ export default async function handler(
         sig,
         process.env.STRIPE_WEBHOOK_SECRET
       )
-
-      // res.status(200).end()
+      
       switch (event?.type) {
         case 'checkout.session.completed':
           const userId = event.data.object?.client_reference_id
           // console.log("🚀 ~ file: stripeHook.ts:38 ~ event.data.object:", event.data.object)
-          console.log("🚀 ~ file: stripeHook.ts:38 ~ userId:", userId)
+          console.log('🚀 ~ file: stripeHook.ts:38 ~ userId:', userId)
           const checkoutSessionId = event.data.object?.id
           const customer = event.data.object?.customer
-          console.log("🚀 ~ file: stripeHook.ts:41 ~ customer:", customer)
-
+          console.log('🚀 ~ file: stripeHook.ts:41 ~ customer:', customer)
+          let productTier = ''
           try {
             const checkoutSession = await stripe.checkout.sessions.retrieve(
               checkoutSessionId,
               {
                 expand: ['line_items'],
               }
-            )  
-            console.log("🚀 ~ file: stripeHook.ts:50 ~ checkoutSession:", checkoutSession)
+            )
+
+            console.log(
+              '🚀 ~ file: stripeHook.ts:50 ~ checkoutSession:',
+              checkoutSession
+            )
+            productTier = String(
+              checkoutSession.line_items.data[0].price.product
+            )
           } catch (error) {
-            console.log("🚀 ~ file: stripeHook.ts:53 ~ error:", error)
+            console.log('🚀 ~ file: stripeHook.ts:53 ~ error:', error)
             //do nothing
           }
-          
-          console.log('checkoutsession complete')
 
-          const productTier = String(
-            checkoutSession.line_items.data[0].price.product
-          )
-          console.log("🚀 ~ file: stripeHook.ts:54 ~ productTier:", productTier)
+          console.log('🚀 ~ file: stripeHook.ts:54 ~ productTier:', productTier)
 
           try {
             console.log('prisma before')
+            res.status(200).end()
             const response = await prisma.subscriptions.upsert({
               where: {
                 authorClerkId: userId,
@@ -77,7 +79,7 @@ export default async function handler(
                 tier: productTier,
               },
             })
-            console.log("🚀 ~ file: stripeHook.ts:70 ~ response:", response)
+            console.log('🚀 ~ file: stripeHook.ts:70 ~ response:', response)
           } catch (error) {
             console.error(error)
             console.log('prisma before')
