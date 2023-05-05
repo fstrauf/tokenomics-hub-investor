@@ -30,7 +30,7 @@ export default async function handler(
         sig,
         process.env.STRIPE_WEBHOOK_SECRET
       )
-      
+      res.status(200)
       switch (event?.type) {
         case 'checkout.session.completed':
           const userId = event.data.object?.client_reference_id
@@ -61,7 +61,7 @@ export default async function handler(
           }
 
           console.log('🚀 ~ file: stripeHook.ts:54 ~ productTier:', productTier)
-          res.status(200)
+          
           try {
             console.log('prisma before')
             const response = await prisma.subscriptions.upsert({
