@@ -61,7 +61,7 @@ export default async function handler(
           }
 
           console.log('🚀 ~ file: stripeHook.ts:54 ~ productTier:', productTier)
-
+          res.status(200)
           try {
             console.log('prisma before')
             const response = await prisma.subscriptions.upsert({
