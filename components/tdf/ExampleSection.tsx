@@ -47,7 +47,7 @@ export default function ExampleSection({
   function handleDetailClicked(c) {
     //check subscription
     console.log('🚀 ~ file: ExampleSection.tsx:46 ~ admin:', admin)
-    if (validateTierAccess(props) && !admin) {
+    if (validateTierAccess(props?.Subscription) && !admin) {
       setExample(c)
       setIsSubelementClicked(true)
       event(`ExampleSection`, {

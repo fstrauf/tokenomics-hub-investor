@@ -3,6 +3,9 @@ import React, { useState } from 'react'
 import XMarkIcon from '../../public/svg/xmarkicon'
 import Drawer from '../slugView/Drawer'
 import MechanismCard from '../tdf/MechanismCard'
+import { validateTierAccess } from '../../lib/helper'
+import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
+import Link from 'next/link'
 
 export const FormCardSupplyDemand = ({
   field,
@@ -10,6 +13,8 @@ export const FormCardSupplyDemand = ({
   mechanismTemplates,
   setFieldValue,
 }) => {
+  const { user } = useUser()
+  const admin = user?.publicMetadata?.admin || false
   let [mechanismIndex, setMechanismIndex] = useState(0)
   const defaultMechanism = {
     id: '',
@@ -169,7 +174,25 @@ export const FormCardSupplyDemand = ({
                   </div>
                 </div>
               </div>
-              <div className="w-1/2">
+              <div className="relative w-1/2">
+                {validateTierAccess(values?.Subscription) && !admin ? (
+                  <></>
+                ) : (
+                  <>
+                    <div className="absolute inset-0 rounded-lg bg-gray-100 opacity-70"></div>
+                    <div className="absolute inset-0 z-10 flex flex-col items-center justify-center">                    
+                      <p className="bg-gray-200 text-3xl font-bold text-gray-900 p-10 rounded-lg">
+                        Premium Members Only
+                      </p>
+                      <Link href="/manage-subscriptions">
+                        <button className="mt-5 rounded-md bg-dao-red px-6 py-4 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
+                          Subscribe Now
+                        </button>
+                      </Link>
+                    </div>
+                  </>
+                )}
+
                 <div className="mb-1 flex gap-2">
                   {' '}
                   <p>Demand</p>
@@ -201,7 +224,6 @@ export const FormCardSupplyDemand = ({
                     Add Demand
                   </button>
                 </div>
-
                 <div className="h-60 rounded-lg border-2 border-slate-300">
                   <div
                     key={4811}

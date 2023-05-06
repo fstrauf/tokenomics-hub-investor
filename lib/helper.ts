@@ -546,8 +546,8 @@ export async function upDateFirstTimeVisit(
   }
 }
 
-export function validateTierAccess(props: any): boolean {
-  if(props?.Subscription?.tier === subTiers.genesis || props?.Subscription?.tier === subTiers.frontier || props?.Subscription?.tier === subTiers.navigator ){
+export function validateTierAccess(subscription: any): boolean {
+  if(subscription?.tier === subTiers.genesis || subscription?.tier === subTiers.frontier || subscription?.tier === subTiers.navigator ){
     return true
   }else{
     return false
