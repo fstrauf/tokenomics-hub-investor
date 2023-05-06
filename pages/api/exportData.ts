@@ -92,6 +92,7 @@ export default async function handler(
       message: 'Data Exported Successfully',
     })
   } catch (error) {
+    console.log('error = ', error)
     return res.status(400).json({
       message: 'error occured',
     })
