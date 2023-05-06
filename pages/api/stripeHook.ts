@@ -9,10 +9,6 @@ export const config = {
   },
 }
 
-type Data = {
-  name: string
-}
-
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -64,7 +60,7 @@ export default async function handler(
           
           try {
             console.log('prisma before')
-            prisma.subscriptions.upsert({
+            await prisma.subscriptions.upsert({
               where: {
                 authorClerkId: userId,
               },
