@@ -7,7 +7,7 @@
   "regions": ["syd1"],
   "crons": [
     {
-      "path": "/api/cron",
+      "path": "/api/syncStripe",
       "schedule": "0 5 * * *"
     }
   ]
