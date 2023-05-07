@@ -56,7 +56,7 @@ export default async function handler(
   await prisma
     .$transaction(txCalls)
     .then(() => {
-      res.status(200)
+      res.status(200).end('users updated')
     })
     .catch((error) => {
       res.status(400).send(error)
