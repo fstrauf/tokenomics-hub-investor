@@ -226,7 +226,6 @@ model Mechanism {
   epochDurationInSeconds    Float?
   initialEmissionPerSecond  Float?
   emissionReductionPerEpoch Float?
-  percentageUnlockTGE       Float?
   color                     String?
   calculationId             String?
   calculation               Calculation?            @relation(fields: [calculationId], references: [id], onDelete: Cascade)
