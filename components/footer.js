@@ -1,4 +1,4 @@
-import Container from './container'
+import Container from './generic/container'
 import { TWITTER, DISCORD, LINKTREE } from '../lib/constants'
 // import Feedback from './feedback'
 import Link from 'next/link';

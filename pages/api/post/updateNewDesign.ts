@@ -1,6 +1,6 @@
 import prisma from '../../../lib/prisma'
 import { Prisma } from '@prisma/client'
-import { postStatus, stringToKey } from '../../../lib/helper'
+import { stringToKey } from '../../../lib/helper'
 
 export default async function handle(req, res) {
   const { values } = req.body

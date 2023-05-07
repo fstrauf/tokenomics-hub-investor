@@ -130,7 +130,7 @@ export default Table
 
 export function CategoryPill({ value }) {
   return (
-    <span className="leading-wide rounded-full bg-gray-100 px-3 py-1 text-xs font-bold uppercase text-gray-700 shadow-sm">
+    <span key={value} className="leading-wide rounded-full bg-gray-100 px-3 py-1 text-xs font-bold uppercase text-gray-700 shadow-sm">
       {value}
     </span>
   )

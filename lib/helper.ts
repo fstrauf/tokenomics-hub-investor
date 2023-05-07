@@ -128,6 +128,13 @@ export enum postType {
   design = 'design',
 }
 
+export enum subTiers {
+  genesis = 'prod_NpDbT4LFoUtZ1l',
+  navigator = '',
+  frontier = '',
+  inactive = '',
+}
+
 export const stringToKey = (name) => {
   return name.trim().replace(/\s+/g, '-').toLowerCase().replace(/&/g, 'and')
 }
@@ -547,4 +554,12 @@ export async function upDateFirstTimeVisit(
     // toast.error('An error occurred', { position: 'bottom-right' })
     return false
   }
+}
+
+export function validateTierAccess(subscription: any): boolean {
+  if(subscription?.tier === subTiers.genesis || subscription?.tier === subTiers.frontier || subscription?.tier === subTiers.navigator ){
+    return true
+  }else{
+    return false
+  }  
 }

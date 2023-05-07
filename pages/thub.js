@@ -58,10 +58,6 @@ export default function tokenomicshub() {
               </a>
             </div>
             <Script src="https://js.stripe.com/v3/pricing-table.js" async />
-            {/* <script
-              async
-              src="https://js.stripe.com/v3/pricing-table.js"
-            ></script> */}
             <stripe-pricing-table
               pricing-table-id="prctbl_1LmR42Ks0xSuCAmfiO54IWu1"
               publishable-key="pk_live_51LUqnsKs0xSuCAmfmBBT45ICtEtzj8EkcJK7e2SFncAnbVzjEO4WFY9X3C8Ih1OlevrEAXZmiu86jszeLfQDJ5Xv000IKYBg6T"

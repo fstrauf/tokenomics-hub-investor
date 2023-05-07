@@ -79,6 +79,12 @@ model Tag {
   posts Post[]
 }
 
+model Subscriptions {
+  authorClerkId    String @id
+  stripeCustomerId String @unique
+  tier             String
+}
+
 model ProtocolTimeLine {
   id          String    @id @default(cuid())
   title       String?
@@ -157,22 +163,9 @@ model CalculationRows {
   color                     String?
   calculationId             String
   calculation               Calculation @relation(fields: [calculationId], references: [id], onDelete: Cascade)
-  // Mechanism                 Mechanism?              @relation(fields: [mechanismId], references: [id])
-  // CalculationTimeSeries     CalculationTimeSeries[]
-  // mechanismId               String?
-  // Mechanism                 Mechanism?  @relation(fields: [mechanismId], references: [id])
-  // mechanismId               String?
 
   @@index([calculationId])
 }
-
-// model Design {
-//   id            String          @id @default(cuid())
-//   title         String?
-//   authorClerkId String?
-//   status        String?
-//   DesignElement DesignElement[]
-// }
 
 model DesignElement {
   id                  String        @id @default(cuid())
@@ -192,8 +185,6 @@ model DesignPhases {
   name            String?
   phaseId         Int?            @unique
   parentPhaseId   Int?
-  // parentPhase   DesignPhases?   @relation("ParentChild", fields: [parentPhaseId], references: [phaseId], onDelete: NoAction, onUpdate: NoAction)
-  // childPhase    DesignPhases[]  @relation("ParentChild")
   Resources       String?         @db.Text
   DesignElement   DesignElement[]
   phaseOrder      Int?
@@ -235,6 +226,7 @@ model Mechanism {
   epochDurationInSeconds    Float?
   initialEmissionPerSecond  Float?
   emissionReductionPerEpoch Float?
+  percentageUnlockTGE       Float?
   color                     String?
   calculationId             String?
   calculation               Calculation?            @relation(fields: [calculationId], references: [id], onDelete: Cascade)

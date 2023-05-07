@@ -6,6 +6,10 @@ import FormDivider from '../form/FormDivider'
 import useSWR from 'swr'
 import Select from 'react-select'
 import { event } from 'nextjs-google-analytics'
+import { validateTierAccess } from '../../lib/helper'
+import GenericPopover from '../generic/GenericPopover'
+import SubscriptionTable from '../../pages/SubscriptionTable'
+import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
 
 export const fetcher = async (url, param) => {
   const body = { param }
@@ -32,16 +36,28 @@ export default function ExampleSection({
   const [example, setExample] = useState({})
   const [tagFilters, setTagFilters] = useState(presetTags || null)
   const [catFilters, setCatFilters] = useState(presetCategories || null)
+  const [isOpen, setIsOpen] = useState(false)
 
   const [isSubelementClicked, setIsSubelementClicked] = useState(false)
 
+  const { user } = useUser()
+
+  const admin = user?.publicMetadata?.admin || false
+
   function handleDetailClicked(c) {
-    setExample(c)
-    setIsSubelementClicked(true)
-    event(`ExampleSection`, {
-      category: 'UserAction',
-      label: 'ExampleSection',
-    })
+    //check subscription
+    console.log('🚀 ~ file: ExampleSection.tsx:46 ~ admin:', admin)
+    if (validateTierAccess(props?.Subscription) && !admin) {
+      setExample(c)
+      setIsSubelementClicked(true)
+      event(`ExampleSection`, {
+        category: 'UserAction',
+        label: 'ExampleSection',
+      })
+    } else {
+      setIsOpen(true)
+      //show subscription popup
+    }
   }
 
   let ExampleDetail = ({ onGoBack, example, exampleField }) => {
@@ -84,6 +100,12 @@ export default function ExampleSection({
     if (isLoading) return <div className="skeleton">loading</div>
     return (
       <div>
+        <GenericPopover isOpen={isOpen} setIsOpen={setIsOpen}>
+          <div>
+            <h1>You need to subscribe to see this information</h1>
+            <SubscriptionTable />
+          </div>
+        </GenericPopover>
         <div className="m-auto mt-3 flex max-w-5xl lg:w-1/2">
           <Select
             defaultValue={catFilters}
@@ -110,14 +132,21 @@ export default function ExampleSection({
           {data?.map((c) => (
             <div key={c.id} className="flex h-52 flex-col justify-between">
               <div className="m-auto w-9 sm:w-16">
-                <div className="relative m-auto h-24 rounded-lg" style={{ position: 'relative' }}>
-                  <Image
-                    alt={`Cover Image for ${c.title}`}
-                    className="object-contain relative"
-                    fill={true}
-                    src={c.mainImageUrl}
-                    sizes="(max-width: 64px) 100vw, 64px"
-                  />
+                <div
+                  className="relative m-auto h-24 rounded-lg"
+                  style={{ position: 'relative' }}
+                >
+                  {c.mainImageUrl ? (
+                    <Image
+                      alt={`Cover Image for ${c.title}`}
+                      className="relative object-contain"
+                      fill={true}
+                      src={c.mainImageUrl}
+                      sizes="(max-width: 64px) 100vw, 64px"
+                    />
+                  ) : (
+                    <></>
+                  )}
                 </div>
               </div>
               <p className="text-center text-sm font-bold">{c.title}</p>
