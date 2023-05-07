@@ -34,7 +34,7 @@ export default function ReviewComplete({ active, post, setSubmitting, isSubmitti
       notifyStatusUpdate(
         post.authorEmail,
         postStatus.reviewComplete,
-        `${WEBSITE_URL_BASE}/editPost/${postId}`
+        `${WEBSITE_URL_BASE}/editDesign/${postId}`
       )
     }
     setSubmitting(false)

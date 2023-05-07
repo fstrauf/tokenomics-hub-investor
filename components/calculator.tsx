@@ -305,6 +305,7 @@ export default function Calculator(props) {
                           width={width}
                           height={height}
                           fields={values.calculationRows}
+                          hideLegend={false}
                         />
                       )}
                     </ParentSize>

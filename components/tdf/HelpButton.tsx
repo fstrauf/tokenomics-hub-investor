@@ -62,7 +62,7 @@ export default function HelpButton({
         } else {
           toast.success('Sent to review', { position: 'bottom-right' })
           notifyDiscord(
-            `${WEBSITE_URL_BASE}/editPost/${postId}`,
+            `${WEBSITE_URL_BASE}/editDesign/${postId}`,
             postStatus.reviewRequired
           )
         }
@@ -76,7 +76,7 @@ export default function HelpButton({
       type="button"
       onClick={() => handleReviewClick(values)}
       className={`rounded-md bg-white bg-clip-text py-2 px-4 text-left text-transparent hover:bg-dao-red`}
-      disabled={isReviewSubmitting}
+      disabled={isReviewSubmitting || values.status === postStatus.published}
     >
       {values.postType === postType.design ? 'Request Review' : 'Send to Review'}
     </button>

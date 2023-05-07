@@ -21,7 +21,7 @@ type Props = {
 
 const Index: React.FC<Props> = (props) => {
   const router = useRouter()
-  const [showBanner, setShowBanner] = useState(true)
+  // const [showBanner, setShowBanner] = useState(true)
 
   function filterCategories(newValue: MultiValue<any>): void {
     if (newValue.length === 0) {

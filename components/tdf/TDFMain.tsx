@@ -5,7 +5,7 @@ import { FieldArray, Form, Formik } from 'formik'
 import toast, { Toaster } from 'react-hot-toast'
 import FormAutoSave from '../form/FormAutoSave'
 import FormId from '../form/FormId'
-import Link from 'next/link'
+// import Link from 'next/link'
 import { useRouter } from 'next/router'
 import RequestReviewModal from '../../components/requestReviewPopup'
 import { designElementStatus, headerStatus } from '../../lib/helper'
@@ -370,6 +370,11 @@ explanation`}
     [isRequestReviewOpen]
   )
 
+  const previewAndSave = async (submitForm) => {
+    submitForm()
+    router.push(`/postPreview/${postId}`)
+  }
+
   return (
     <div className="">
       <Formik
@@ -377,7 +382,7 @@ explanation`}
         onSubmit={submitData}
         enableReinitialize
       >
-        {({ isSubmitting, setFieldValue, values, dirty }) => (
+        {({ isSubmitting, setFieldValue, values, dirty, submitForm }) => (
           <Form>
             <Header2 mode={header}>
               <div className="flex gap-2">
@@ -388,13 +393,21 @@ explanation`}
                 >
                   Save
                 </button>
-                <Link
+                <button
+                  type="button"
+                  disabled={isSubmitting}
+                  onClick={()=>previewAndSave(submitForm)}
+                  className="rounded-md border-2 border-dao-red bg-gradient-to-r from-dao-red via-dao-red to-dao-green bg-clip-text py-1 px-4 text-transparent hover:bg-opacity-80 disabled:opacity-50"
+                >
+                  Preview
+                </button>
+                {/* <Link
                   as={`/postPreview/${postId}`}
                   href="/postPreview/[id]]"
                   className="rounded-md border-2 border-dao-red bg-gradient-to-r from-dao-red via-dao-red to-dao-green bg-clip-text py-1 px-4 text-transparent hover:bg-opacity-80"
                 >
                   Preview
-                </Link>
+                </Link> */}
                 <HelpButton
                   values={values}
                   setIsRequestReviewOpen={setIsRequestReviewOpen}

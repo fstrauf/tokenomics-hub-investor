@@ -19,6 +19,7 @@ import Resources from './slugView/resources'
 import EditPiece from './edit-piece'
 import SectionSeparator from './generic/section-separator'
 import dynamic from 'next/dynamic'
+import Login from './login'
 
 export default function PostView({ post, author }) {
   const [isSubmitting, setSubmitting] = useState(false)

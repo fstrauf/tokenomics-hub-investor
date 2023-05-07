@@ -221,6 +221,7 @@ model Mechanism {
   lockupPeriod              Float?
   unlockPeriod              Float?
   percentageAllocation      Float?
+  percentageUnlockTGE       Float?
   isEpochDistro             Boolean                 @default(false)
   epochDurationInSeconds    Float?
   initialEmissionPerSecond  Float?
