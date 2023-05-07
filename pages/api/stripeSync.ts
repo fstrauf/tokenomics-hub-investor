@@ -19,15 +19,18 @@ export default async function handler(
     status: 'active',
     limit: 100,
   })
+  console.log("🚀 ~ file: stripeSync.ts:22 ~ subscriptions:", subscriptions)
 
   const usersAndTiers = subscriptions.data.map((s) => ({
     stripeCustomerId: s.customer,
     tier: s.items.data[0].price.product,
   }))
+  console.log("🚀 ~ file: stripeSync.ts:28 ~ usersAndTiers ~ usersAndTiers:", usersAndTiers)
 
   const stripeCustomers = usersAndTiers.map(
     ({ stripeCustomerId }) => stripeCustomerId
   )
+  console.log("🚀 ~ file: stripeSync.ts:33 ~ stripeCustomers:", stripeCustomers)
 
   const txCalls = []
   const updateSubs = usersAndTiers.map((subscription) => {
@@ -46,12 +49,13 @@ export default async function handler(
 
   txCalls.push(updateSubs)
 
-  await prisma.subscriptions.updateMany({
+  const subUpdate = await prisma.subscriptions.updateMany({
     where: {
       stripeCustomerId: { notIn: stripeCustomers },
     },
     data: { tier: 'inactive' },
   })
+  console.log("🚀 ~ file: stripeSync.ts:58 ~ subUpdate:", subUpdate)
 
   await prisma
     .$transaction(txCalls)
