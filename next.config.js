@@ -25,7 +25,7 @@ const nextConfig = {
     return [
       {
         source: '/tdsLandingPage',
-        destination: '/tokenomics-design-space',
+        destination: '/tokenomics-design',
         permanent: true,
       },
       {
