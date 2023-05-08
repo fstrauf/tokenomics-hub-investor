@@ -149,7 +149,7 @@ function CategoryPills({ value }) {
 }
 
 function HeaderLink({ value, id, ticker }) {
-  const url = 'posts/' + id
+  const url = '/' + id
 
   return (
     <div className="ml-2">
