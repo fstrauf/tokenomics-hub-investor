@@ -44,7 +44,7 @@ export default function MyDesigns({ posts }) {
                   >
                     <div className="flex justify-center">
                       <Link
-                        href="/tdsLandingPage"
+                        href="/tokenomics-design-space"
                         className="w-36 self-center rounded-md border-2 border-dark-tdao bg-white px-4 py-2 text-center text-sm font-medium text-dark-tdao hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
                       >
                         Design a Token
