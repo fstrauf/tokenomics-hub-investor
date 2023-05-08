@@ -24,7 +24,7 @@ const nextConfig = {
   async redirects() {
     return [
       {
-        source: '/tdsLandingSpace',
+        source: '/tdsLandingPage',
         destination: '/tokenomics-design-space',
         permanent: true,
       },
