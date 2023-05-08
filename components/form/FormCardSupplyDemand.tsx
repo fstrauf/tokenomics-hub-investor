@@ -31,7 +31,7 @@ export const FormCardSupplyDemand = ({
     unlockPeriod: 12,
     percentageUnlockTGE: 0,
     percentageAllocation: 30,
-    color: `#${Math.floor(Math.random()*16777215).toString(16)}`,
+    color: `#${Math.floor(Math.random() * 16777215).toString(16)}`,
     isEpochDistro: false,
     epochDurationInSeconds: 0,
     initialEmissionPerSecond: 0,
@@ -176,13 +176,14 @@ export const FormCardSupplyDemand = ({
                 </div>
               </div>
               <div className="relative w-1/2">
-                {validateTierAccess(values?.Subscription) && !admin ? (
+                {validateTierAccess(values?.Subscription, admin) ? (
                   <></>
                 ) : (
                   <>
+                    {' '}
                     <div className="absolute inset-0 rounded-lg bg-gray-100 opacity-70"></div>
-                    <div className="absolute inset-0 z-10 flex flex-col items-center justify-center">                    
-                      <p className="bg-gray-200 text-3xl font-bold text-gray-900 p-10 rounded-lg">
+                    <div className="absolute inset-0 z-10 flex flex-col items-center justify-center">
+                      <p className="rounded-lg bg-gray-200 p-10 text-3xl font-bold text-gray-900">
                         Premium Members Only
                       </p>
                       <Link href="/manage-subscriptions">
