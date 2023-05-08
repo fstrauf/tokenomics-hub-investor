@@ -24,45 +24,31 @@ export default async function handler(
     stripeCustomerId: s.customer,
     tier: s.items.data[0].price.product,
   }))
-  console.log(
-    '🚀 ~ file: stripeSync.ts:28 ~ usersAndTiers ~ usersAndTiers:',
-    usersAndTiers
-  )
 
-  const stripeCustomers = usersAndTiers.map(
-    ({ stripeCustomerId }) => stripeCustomerId
-  )
-  console.log('🚀 ~ file: stripeSync.ts:33 ~ stripeCustomers:', stripeCustomers)
+  const currentSubs = await prisma.subscriptions.findMany()  
 
-  const txCalls = []
-  const updateSubs = usersAndTiers.map((subscription) => {
+  const updatedSubs = currentSubs.map((cs) => {  
+    return {
+      ...cs,
+      tier: usersAndTiers.find(uat => uat.stripeCustomerId === cs.stripeCustomerId)?.tier || 'inactive'
+    }
+  });
+
+  const txCalls = updatedSubs.map((subscription) => {
+
     return prisma.subscriptions
       .update({
         where: { stripeCustomerId: String(subscription.stripeCustomerId) },
         data: { tier: String(subscription.tier) },
       })
-      .catch((error) => {
-        if (error.code !== 'P2025') {
-          throw error
-        }
-      })
   })
-
-  txCalls.push(updateSubs)
-
-  const subUpdate = await prisma.subscriptions.updateMany({
-    where: {
-      stripeCustomerId: { notIn: stripeCustomers },
-    },
-    data: { tier: 'inactive' },
-  })
-  console.log('🚀 ~ file: stripeSync.ts:58 ~ subUpdate:', subUpdate)
 
   const txRes = await prisma.$transaction(txCalls).catch((error) => {
-    res.status(400).send(error)
+    console.log('🚀 ~ file: stripeSync.ts:62 ~ error:', error)
+    // res.status(400).send(error)
   })
 
   console.log('🚀 ~ file: stripeSync.ts:60 ~ txRes:', txRes)
 
-  res.status(200).end('users updated')
+  res.status(200).json('users updated')
 }
