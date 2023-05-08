@@ -44,10 +44,9 @@ export default function Header2({ mode = headerStatus.main, children = null }) {
                 pathName="/thub"
                 title="Calculation Template"
               />
-              <HeaderGenericSection pathName="/bookAnExpert" title="Services" />
+              <HeaderGenericSection pathName="/bookAnExpert" title="Tokenomics Consulting" />
             </HeaderComboSection>
             <HeaderGenericSection pathName="/calculator" title="Calculator" />
-            {/* <HeaderGenericSection pathName="/bookAnExpert" title="Services" /> */}
             <HeaderGenericSection pathName="/myDesigns" title="My Dashboard" />
           </>
         )
