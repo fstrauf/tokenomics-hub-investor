@@ -12,6 +12,7 @@ import WalkthroughSection from './WalkthroughSection'
 
 //taking stock
 export default function TDF501({ props, values, activePhase, setFieldValue }) {
+  console.log("🚀 ~ file: TDF501.tsx:15 ~ TDF501 ~ props:", props)
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
 
   useEffect(() => {
@@ -47,6 +48,7 @@ export default function TDF501({ props, values, activePhase, setFieldValue }) {
         setFieldValue={setFieldValue}
         values={values}
         mechanismTemplates={props.mechanismTemplates}
+        subscription={props.Subscription}
       />
       <Field
         name={`DesignElement.${values?.DesignElement?.findIndex(

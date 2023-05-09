@@ -5,7 +5,7 @@ const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY, {
   apiVersion: '2022-11-15',
 })
 
-function SubscriptionStatus(customerId) {
+function SubscriptionStatus({ customerId }) {
   const [subscription, setSubscription] = useState(null)
   const [product, setProduct] = useState(null)
 
@@ -14,17 +14,21 @@ function SubscriptionStatus(customerId) {
       // const stripe = await stripePromise;
       // const customerId = 'cus_NpqkFvgxXprQTY'; // replace with the customer ID
       if (customerId) {
-        const subscriptions = await stripe.subscriptions.list({
-          customer: customerId,
-        })
-        const activeSubscription = subscriptions.data.find(
-          (sub) => sub.status === 'active'
-        )
-        setSubscription(activeSubscription)
+        try {
+          const subscriptions = await stripe.subscriptions.list({
+            customer: customerId,
+          })
+          const activeSubscription = subscriptions.data.find(
+            (sub) => sub.status === 'active'
+          )
+          setSubscription(activeSubscription)
 
-        const productId = activeSubscription.items.data[0].price.product
-        const product = await stripe.products.retrieve(productId)
-        setProduct(product)
+          const productId = activeSubscription.items.data[0].price.product
+          const product = await stripe.products.retrieve(productId)
+          setProduct(product)
+        } catch (error) {
+          //do nothing
+        }
       }
     }
     fetchSubscription()

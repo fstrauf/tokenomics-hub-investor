@@ -556,10 +556,22 @@ export async function upDateFirstTimeVisit(
   }
 }
 
-export function validateTierAccess(subscription: any): boolean {
-  if(subscription?.tier === subTiers.genesis || subscription?.tier === subTiers.frontier || subscription?.tier === subTiers.navigator ){
-    return true
-  }else{
-    return false
-  }  
-}
+export function validateTierAccess(subscription: any, admin: boolean =false): boolean {
+  console.log("🚀 ~ file: helper.ts:560 ~ validateTierAccess ~ subscription:", subscription)
+  console.log("🚀 ~ file: helper.ts:560 ~ validateTierAccess ~ admin:", admin)
+  
+    
+    if(subscription?.tier === subTiers.genesis || subscription?.tier === subTiers.frontier || subscription?.tier === subTiers.navigator ){
+      console.log('user has subscriptiom')
+      return true
+    }else{
+      //still testing subscriptions
+      if(admin){
+        console.log('No subscription and admin')
+        return false
+      } else {
+        console.log('No subscription but normal user (we are still testing)')
+        return true
+      }
+    }  
+  }
