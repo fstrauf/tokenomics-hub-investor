@@ -33,6 +33,11 @@ const nextConfig = {
         destination: '/:id',
         permanent: true,
       },
+      {
+        source: '/bookAnExpert',
+        destination: '/book-an-expert',
+        permanent: true,
+      },
     ]
   },
   typescript: {

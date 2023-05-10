@@ -16,7 +16,7 @@ export default function ExpertsPage(props) {
           <h1 className="mb-10 mt-10 text-center text-3xl font-bold">
             Find the right expert to support your project
           </h1>
-          <Link href='/bookAnExpert' className="w-36 self-center rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
+          <Link href='/book-an-expert' className="w-36 self-center rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
             Book an Expert
           </Link>
         </div>
