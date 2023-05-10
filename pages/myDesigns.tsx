@@ -19,7 +19,12 @@ export default function MyDesigns({ posts }) {
     <Layout mode={headerStatus.main}>
       <>
         <div className="my-10 w-full">
-          <div className="flex justify-center rounded-lg bg-gradient-to-r from-dao-green to-dao-red py-2 gap-4 items-center">
+          <div className="flex justify-between rounded-lg bg-gradient-to-r from-dao-red to-dao-green p-2 gap-4 items-center">
+            
+            <p className="text-center text-white">
+              Upgrade your Token Design - use expert help and unlock the demand
+              builder!
+            </p>
             <div className="flex gap-3">
               <Link
                 href="/manage-subscriptions"
@@ -34,10 +39,6 @@ export default function MyDesigns({ posts }) {
                 Manage Subscription
               </Link>
             </div>
-            <p className="text-center text-white">
-              Upgrade your Token Design - use expert help and unlock the demand
-              builder!
-            </p>
           </div>
           <div className="w-72"> </div>
         </div>
