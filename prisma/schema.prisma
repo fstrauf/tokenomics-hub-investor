@@ -80,9 +80,11 @@ model Tag {
 }
 
 model Subscriptions {
-  authorClerkId    String @id
-  stripeCustomerId String @unique
-  tier             String
+  authorClerkId         String    @id
+  stripeCustomerId      String    @unique
+  tier                  String
+  exampleSectionCounter Int?
+  exampleViewStart      DateTime?
 }
 
 model ProtocolTimeLine {

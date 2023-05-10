@@ -336,8 +336,10 @@ export function getLinearAreaData(
     var monthlyEmission = 0
     //tge unlock
     if (i === 0 && calculationRow.percentageUnlockTGE > 0) {
-      monthlyEmission = (totalRowAllocation * calculationRow.percentageUnlockTGE) / 100
-      totalRowAllocation = totalRowAllocation * (1 - (calculationRow.percentageUnlockTGE/100))
+      monthlyEmission =
+        (totalRowAllocation * calculationRow.percentageUnlockTGE) / 100
+      totalRowAllocation =
+        totalRowAllocation * (1 - calculationRow.percentageUnlockTGE / 100)
     } else {
       if (i < calculationRow.lockupPeriod) {
         //still locking, no emissions
@@ -556,22 +558,86 @@ export async function upDateFirstTimeVisit(
   }
 }
 
-export function validateTierAccess(subscription: any, admin: boolean =false): boolean {
-  console.log("🚀 ~ file: helper.ts:560 ~ validateTierAccess ~ subscription:", subscription)
-  console.log("🚀 ~ file: helper.ts:560 ~ validateTierAccess ~ admin:", admin)
-  
-    
-    if(subscription?.tier === subTiers.genesis || subscription?.tier === subTiers.frontier || subscription?.tier === subTiers.navigator ){
-      console.log('user has subscriptiom')
+export function validateTierAccess(
+  subscription: any,
+  admin: boolean = false
+): boolean {
+  if (
+    subscription?.tier === subTiers.genesis ||
+    subscription?.tier === subTiers.frontier ||
+    subscription?.tier === subTiers.navigator
+  ) {
+    console.log('user has subscriptiom')
+    return true
+  } else {
+    //still testing subscriptions
+    if (admin) {
+      console.log('No subscription and admin')
+      return false
+    } else {
+      console.log('No subscription but normal user (we are still testing)')
       return true
-    }else{
-      //still testing subscriptions
-      if(admin){
-        console.log('No subscription and admin')
-        return false
-      } else {
-        console.log('No subscription but normal user (we are still testing)')
-        return true
-      }
-    }  
+    }
   }
+}
+
+export async function validateFreeTrialExamples(
+  subscription: any,
+  admin: boolean = false,
+  userId: string
+): boolean {
+  console.log("🚀 ~ file: helper.ts:589 ~ userId:", userId)
+  // const useSWR = require('swr')
+  const body = { userId }
+  // const fetcher = async (url, param) => {
+  //   const body = { param }
+  //   const res = await fetch(url, {
+  //     method: 'POST',
+  //     headers: { 'Content-Type': 'application/json' },
+  //     body: JSON.stringify(body),
+  //   })
+
+  //   if (!res.ok) {
+  //     throw new Error(`Failed to fetch data from ${url}`)
+  //   }
+  //   const data = await res.json()
+  //   return data
+  // }
+
+  // const { data, error, isLoading, isValidating } = useSWR('/api/get/getSubscriptionsData', fetcher, {
+  //   revalidateOnMount: true,
+  // })
+  // console.log("🚀 ~ file: helper.ts:608 ~ data:", data)
+
+    await fetch('/api/get/getSubscriptionData', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    }).then(response => response.json())
+    .then(data => {
+      // process the data returned from the server
+      console.log(data);
+    })
+    .catch(error => {
+      // handle any errors that occur
+      console.error(error);
+    })
+
+  if (
+    subscription?.tier === subTiers.genesis ||
+    subscription?.tier === subTiers.frontier ||
+    subscription?.tier === subTiers.navigator
+  ) {
+    console.log('user has subscriptiom')
+    return true
+  } else {
+    //still testing subscriptions
+    if (admin) {
+      console.log('No subscription and admin')
+      return false
+    } else {
+      console.log('No subscription but normal user (we are still testing)')
+      return true
+    }
+  }
+}

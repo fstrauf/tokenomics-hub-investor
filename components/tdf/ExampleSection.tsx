@@ -6,7 +6,7 @@ import FormDivider from '../form/FormDivider'
 import useSWR from 'swr'
 import Select from 'react-select'
 import { event } from 'nextjs-google-analytics'
-import { validateTierAccess } from '../../lib/helper'
+import { validateFreeTrialExamples, validateTierAccess } from '../../lib/helper'
 import GenericPopover from '../generic/GenericPopover'
 import SubscriptionTable from '../../pages/SubscriptionTable'
 import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
@@ -46,17 +46,23 @@ export default function ExampleSection({
 
   function handleDetailClicked(c) {
     //check subscription
-    console.log('🚀 ~ file: ExampleSection.tsx:46 ~ admin:', admin)
-    if (validateTierAccess(props?.Subscription, admin)) {
+
+    // const { data, error, isLoading, isValidating } = useSWR('/api/get/getSubscriptionsData', fetcher, {
+    //   revalidateOnMount: true,
+    // })
+    // console.log("🚀 ~ file: helper.ts:608 ~ data:", data)
+
+    if (validateTierAccess(props?.Subscription, admin) || validateFreeTrialExamples(props?.Subscription, admin, user?.id)) {
       setExample(c)
       setIsSubelementClicked(true)
       event(`ExampleSection`, {
         category: 'UserAction',
         label: 'ExampleSection',
       })
-    } else {
-      setIsOpen(true)
+    } else {      
       //show subscription popup
+      setIsOpen(true)
+      
     }
   }
 

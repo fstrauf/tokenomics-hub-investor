@@ -8,7 +8,6 @@ import prisma from '../lib/prisma'
 import { GetServerSideProps } from 'next'
 
 export default function ManageSubscriptions(props) {
-  console.log("🚀 ~ file: manage-subscriptions.tsx:11 ~ ManageSubscriptions ~ props:", props?.Subscription)
   return (
     <>
       <Layout mode={headerStatus.main}>
@@ -40,7 +39,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const subscription = await prisma.subscriptions.findUnique({
     where: { authorClerkId: userId },
   })
-  console.log("🚀 ~ file: manage-subscriptions.tsx:43 ~ constgetServerSideProps:GetServerSideProps= ~ subscription:", subscription)
 
   return {
     props: {
