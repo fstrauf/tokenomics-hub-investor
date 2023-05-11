@@ -18,8 +18,12 @@ const publicPages = [
   '/calculator',
   '/posts/[id]',
   '/authors/[slug]',
-  '/experts',
+  '/book-an-expert',
   '/glossary',
+  '/tokenomics-design',
+  '/[id]',
+  '/privacy-policy',
+  '/about-us'
 ]
 
 function MyApp({ Component, pageProps }) {

@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -14,54 +11,52 @@ datasource db {
 model Post {
   id                    String               @id @default(cuid())
   title                 String?
-  slug                  String?
-  shortDescription      String?              @db.Text
-  breakdown             String?              @db.Text
-  ourTake               String?              @db.Text
-  isOfficial            Boolean              @default(false)
-  author                User?                @relation(fields: [authorId], references: [id])
   authorId              String?
-  status                String?
+  breakdown             String?              @db.Text
+  businessModel         String?              @db.Text
+  businessModelStrength Float?
+  demandDrivers         String?              @db.Text
+  demandDriversStrength Float?
+  diagramUrl            String?              @db.Text
+  downside              String?              @db.Text
+  horizon               String?              @db.Text
+  mainImageUrl          String?
+  metrics               String?              @db.Text
+  oneYearHorizon        String?              @db.Text
+  ourTake               String?              @db.Text
+  publishedAt           DateTime?
+  shortDescription      String?              @db.Text
+  slug                  String?
+  threeMonthHorizon     String?              @db.Text
+  tokenStrength         Float?
+  tokenUtility          String?              @db.Text
+  tokenUtilityStrength  Float?
+  upside                String?              @db.Text
+  valueCapture          String?              @db.Text
+  valueCaptureStrength  Float?
+  valueCreation         String?              @db.Text
+  valueCreationStrength Float?
+  parent                String?              @db.Text
+  problemSolution       String?              @db.Text
+  strongPoints          String?              @db.Text
+  weakPoints            String?              @db.Text
   authorClerkId         String?
+  calculationId         String?
+  status                String?
   ticker                String?
+  isOfficial            Boolean              @default(false)
+  postType              String?              @db.Text
+  author                User?                @relation(fields: [authorId], references: [id])
   categories            Category[]
   tags                  Tag[]
   protocolTimeLine      ProtocolTimeLine[]
-  publishedAt           DateTime?
-  mainImageUrl          String?
-  tokenUtility          String?              @db.Text
-  tokenUtilityStrength  Float?
-  businessModel         String?              @db.Text
-  businessModelStrength Float?
-  valueCreation         String?              @db.Text
-  valueCreationStrength Float?
-  valueCapture          String?              @db.Text
-  valueCaptureStrength  Float?
-  demandDrivers         String?              @db.Text
-  demandDriversStrength Float?
-  tokenStrength         Float?
-  threeMonthHorizon     String?              @db.Text
-  oneYearHorizon        String?              @db.Text
-  upside                String?              @db.Text
-  downside              String?              @db.Text
-  horizon               String?              @db.Text
-  metrics               String?              @db.Text
-  diagramUrl            String?              @db.Text
-  strongPoints          String?              @db.Text
-  weakPoints            String?              @db.Text
-  problemSolution       String?              @db.Text
-  parent                String?              @db.Text
   ProtocolResources     ProtocolResources[]
-  calculationId         String?
-  // Calculation           Calculation?         @relation(fields: [calculationId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   Comments              Comments[]
   UserStrengthRating    UserStrengthRating[]
   DesignElement         DesignElement[]
   Mechanism             Mechanism[]
   PostUser              PostUser[]
   PostAuthor            PostAuthor[]
-  postType              String?              @db.Text
-  // @@index([calculationId])
   Calculation           Calculation?
 
   @@index([authorId])
@@ -80,9 +75,11 @@ model Tag {
 }
 
 model Subscriptions {
-  authorClerkId    String @id
-  stripeCustomerId String @unique
-  tier             String
+  authorClerkId         String    @id
+  stripeCustomerId      String    @unique
+  tier                  String
+  exampleSectionCounter Int?
+  exampleViewStart      DateTime?
 }
 
 model ProtocolTimeLine {
@@ -111,8 +108,8 @@ model Comments {
   id            String    @id @default(cuid())
   comment       String?   @db.Text
   authorClerkId String?
-  date          DateTime?
   postId        String
+  date          DateTime?
   post          Post      @relation(fields: [postId], references: [id], onDelete: Cascade)
 
   @@index([postId])
@@ -122,7 +119,6 @@ model UserStrengthRating {
   id                      String  @id @default(cuid())
   authorClerkId           String?
   postId                  String
-  post                    Post    @relation(fields: [postId], references: [id], onDelete: Cascade)
   userReviewUtility       String? @db.Text
   userReviewDemandDriver  String? @db.Text
   userReviewValueCreation String? @db.Text
@@ -133,6 +129,7 @@ model UserStrengthRating {
   valueCreationStrength   Float?
   valueCaptureStrength    Float?
   demandDriversStrength   Float?
+  post                    Post    @relation(fields: [postId], references: [id], onDelete: Cascade)
 }
 
 model Calculation {
@@ -142,8 +139,8 @@ model Calculation {
   months          Int?
   totalSupply     Float?
   startDate       DateTime?
-  CalculationRows CalculationRows[]
   postId          String?           @unique
+  CalculationRows CalculationRows[]
   post            Post?             @relation(fields: [postId], references: [id])
   Mechanism       Mechanism[]
 
@@ -156,12 +153,12 @@ model CalculationRows {
   lockupPeriod              Float?
   unlockPeriod              Float?
   percentageAllocation      Float?
-  isEpochDistro             Boolean     @default(false)
-  epochDurationInSeconds    Float?
-  initialEmissionPerSecond  Float?
-  emissionReductionPerEpoch Float?
   color                     String?
   calculationId             String
+  emissionReductionPerEpoch Float?
+  epochDurationInSeconds    Float?
+  initialEmissionPerSecond  Float?
+  isEpochDistro             Boolean     @default(false)
   calculation               Calculation @relation(fields: [calculationId], references: [id], onDelete: Cascade)
 
   @@index([calculationId])
@@ -169,12 +166,12 @@ model CalculationRows {
 
 model DesignElement {
   id                  String        @id @default(cuid())
-  postId              String
-  Post                Post          @relation(fields: [postId], references: [id], onDelete: Cascade)
   content             String?       @db.Text
-  designPhase         DesignPhases? @relation(fields: [designPhasesId], references: [id])
   designPhasesId      String?
+  postId              String
   designElementStatus String?       @db.Text
+  Post                Post          @relation(fields: [postId], references: [id], onDelete: Cascade)
+  designPhase         DesignPhases? @relation(fields: [designPhasesId], references: [id])
 
   @@index([postId])
   @@index([designPhasesId])
@@ -182,53 +179,54 @@ model DesignElement {
 
 model DesignPhases {
   id              String          @id @default(cuid())
-  name            String?
-  phaseId         Int?            @unique
   parentPhaseId   Int?
   Resources       String?         @db.Text
-  DesignElement   DesignElement[]
+  phaseId         Int?            @unique
+  name            String?
   phaseOrder      Int?
   postDataElement String?
   isReport        Boolean?        @default(false)
+  DesignElement   DesignElement[]
 
   @@index([parentPhaseId])
 }
 
 model CalculationTimeSeries {
   id                String    @id @default(cuid())
-  phase             Int?
   months            Int?
   tokens            Float?
-  calculationRowsId String?
-  Mechanism         Mechanism @relation(fields: [mechanismId], references: [id], onDelete: Cascade)
   mechanismId       String
+  calculationRowsId String?
+  phase             Int?
+  Mechanism         Mechanism @relation(fields: [mechanismId], references: [id], onDelete: Cascade)
 
   @@index([mechanismId])
 }
 
 model Mechanism {
-  id                        String                  @id @default(cuid())
+  id                        String                     @id @default(cuid())
   name                      String?
-  summary                   String?                 @db.Text
-  details                   String?                 @db.Text
+  summary                   String?                    @db.Text
+  details                   String?                    @db.Text
   isSink                    Boolean?
   token                     String?
   postId                    String?
-  post                      Post?                   @relation(fields: [postId], references: [id], onDelete: Cascade)
-  isTemplate                Boolean?                @default(false)
-  PostUser                  PostUser[]
+  isTemplate                Boolean?                   @default(false)
+  calculationId             String?
   category                  String?
-  lockupPeriod              Float?
-  unlockPeriod              Float?
-  percentageAllocation      Float?
-  percentageUnlockTGE       Float?
-  isEpochDistro             Boolean                 @default(false)
+  color                     String?
+  emissionReductionPerEpoch Float?
   epochDurationInSeconds    Float?
   initialEmissionPerSecond  Float?
-  emissionReductionPerEpoch Float?
-  color                     String?
-  calculationId             String?
-  calculation               Calculation?            @relation(fields: [calculationId], references: [id], onDelete: Cascade)
+  isEpochDistro             Boolean                    @default(false)
+  lockupPeriod              Float?
+  percentageAllocation      Float?
+  unlockPeriod              Float?
+  percentageUnlockTGE       Float?
+  supplyDemandType          Mechanism_supplyDemandType @default(supplyInternal)
+  post                      Post?                      @relation(fields: [postId], references: [id], onDelete: Cascade)
+  PostUser                  PostUser[]
+  calculation               Calculation?               @relation(fields: [calculationId], references: [id], onDelete: Cascade)
   CalculationTimeSeries     CalculationTimeSeries[]
 
   @@index([postId])
@@ -271,8 +269,7 @@ model Account {
   session_state      String?
   oauth_token_secret String?
   oauth_token        String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user               User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
   @@index([userId])
@@ -303,17 +300,17 @@ model User {
   email                 String?                 @unique
   emailVerified         DateTime?
   image                 String?
+  wallet                String?                 @unique
   role                  String?
   slug                  String?                 @unique
+  twitter               String?
+  website               String?
   posts                 Post[]
   accounts              Account[]
   sessions              Session[]
   Payout                Payout[]
   Vote                  Vote[]
   ContentAuthor         ContentAuthor[]
-  wallet                String?                 @unique
-  website               String?
-  twitter               String?
   TeamProposal          TeamsProposal[]
   RewardRoundTeamMember RewardRoundTeamMember[]
   MemberVote            MemberVote[]
@@ -324,26 +321,25 @@ model RewardRound {
   monthYear     String?         @unique
   budget        Int?
   contentPoints Int?
+  isOpen        Boolean         @default(false)
+  phase         String?         @default("preparation")
   Vote          Vote[]
   Payout        Payout[]
-  isOpen        Boolean         @default(false)
   Content       Content[]
   TeamValueAdd  TeamValueAdd[]
   TeamsProposal TeamsProposal[]
-  phase         String?         @default("preparation")
-  // TeamAllocationProposal TeamAllocationProposal[]
 }
 
 model Payout {
   id                String      @id @default(cuid())
   userId            String      @map("user_id")
-  user              User        @relation(fields: [userId], references: [id])
   rewardRoundId     String
-  rewardRound       RewardRound @relation(fields: [rewardRoundId], references: [id], onDelete: Cascade)
   pointsReceived    Int?
   contentCashReward Float?
-  teamCashReward    Float?
   ownershipReward   Float?
+  teamCashReward    Float?
+  user              User        @relation(fields: [userId], references: [id])
+  rewardRound       RewardRound @relation(fields: [rewardRoundId], references: [id], onDelete: Cascade)
 
   @@index([userId])
   @@index([rewardRoundId])
@@ -355,13 +351,12 @@ model Content {
   url             String?
   pointsVote      Int?            @default(0)
   createdAt       String?
-  createdOn       DateTime?
   contentAuthorId String?
+  createdOn       DateTime?
+  rewardRoundId   String?         @default(cuid())
   type            String?
-  // ContentAuthor ContentAuthor @relation(fields: [contentAuthorId], references: [id])
   Vote            Vote[]
   ContentAuthor   ContentAuthor[]
-  rewardRoundId   String?         @default(cuid())
   rewardRound     RewardRound?    @relation(fields: [rewardRoundId], references: [id], onDelete: Cascade)
 
   @@index([rewardRoundId])
@@ -370,11 +365,11 @@ model Content {
 model Vote {
   id            String      @id @default(cuid())
   rewardRoundId String
-  rewardRound   RewardRound @relation(fields: [rewardRoundId], references: [id])
   userId        String      @map("user_id")
-  user          User        @relation(fields: [userId], references: [id])
   pointsSpent   Int?
   contentId     String
+  rewardRound   RewardRound @relation(fields: [rewardRoundId], references: [id])
+  user          User        @relation(fields: [userId], references: [id])
   content       Content     @relation(fields: [contentId], references: [id], onDelete: Cascade)
 
   @@index([rewardRoundId])
@@ -385,8 +380,8 @@ model Vote {
 model ContentAuthor {
   id        String  @id @default(cuid())
   userId    String  @map("user_id")
-  user      User    @relation(fields: [userId], references: [id])
   contentId String
+  user      User    @relation(fields: [userId], references: [id])
   content   Content @relation(fields: [contentId], references: [id], onDelete: Cascade)
 
   @@index([userId])
@@ -394,25 +389,23 @@ model ContentAuthor {
 }
 
 model Team {
-  id   String @id @default(cuid())
-  name String
-
+  id           String         @id @default(cuid())
+  name         String
   TeamValueAdd TeamValueAdd[]
-  // TeamAllocationProposal TeamAllocationProposal[]
 }
 
 model TeamValueAdd {
   id                    String                  @id @default(cuid())
   teamId                String?                 @default(cuid())
-  team                  Team?                   @relation(fields: [teamId], references: [id], onDelete: Cascade)
   rewardRoundId         String?                 @default(cuid())
-  rewardRound           RewardRound?            @relation(fields: [rewardRoundId], references: [id], onDelete: Cascade)
   valueAdd              String                  @db.VarChar(1000)
   allocation            Int?
+  cashAllocation        Float?
+  team                  Team?                   @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  rewardRound           RewardRound?            @relation(fields: [rewardRoundId], references: [id], onDelete: Cascade)
   TeamProposal          TeamsProposal[]
   RewardRoundTeamMember RewardRoundTeamMember[]
   MemberVote            MemberVote[]
-  cashAllocation        Float?
 
   @@index([teamId])
   @@index([rewardRoundId])
@@ -421,16 +414,16 @@ model TeamValueAdd {
 model TeamsProposal {
   id             String        @id @default(cuid())
   userId         String        @map("user_id")
-  user           User          @relation(fields: [userId], references: [id])
   reason         String        @db.VarChar(1000)
-  active         Boolean       @default(false)
   rewardRoundId  String?       @default(cuid())
-  rewardRound    RewardRound?  @relation(fields: [rewardRoundId], references: [id], onDelete: Cascade)
-  teamValueAddId String?       @default(cuid())
-  teamValueAdd   TeamValueAdd? @relation(fields: [teamValueAddId], references: [id], onDelete: Cascade)
+  active         Boolean       @default(false)
   allocation     Int?
+  teamValueAddId String?       @default(cuid())
   proposalNumber Int?
   submittedOn    DateTime?
+  user           User          @relation(fields: [userId], references: [id])
+  rewardRound    RewardRound?  @relation(fields: [rewardRoundId], references: [id], onDelete: Cascade)
+  teamValueAdd   TeamValueAdd? @relation(fields: [teamValueAddId], references: [id], onDelete: Cascade)
 
   @@index([userId])
   @@index([rewardRoundId])
@@ -440,13 +433,13 @@ model TeamsProposal {
 model RewardRoundTeamMember {
   id               String        @id @default(cuid())
   userId           String        @map("user_id")
-  user             User          @relation(fields: [userId], references: [id])
   teamValueAddId   String?       @default(cuid())
-  teamValueAdd     TeamValueAdd? @relation(fields: [teamValueAddId], references: [id], onDelete: Cascade)
   valueAdd         String?       @db.VarChar(1000)
   selected         Boolean       @default(false)
-  MemberVote       MemberVote[]
   allocationPoints Int?
+  user             User          @relation(fields: [userId], references: [id])
+  teamValueAdd     TeamValueAdd? @relation(fields: [teamValueAddId], references: [id], onDelete: Cascade)
+  MemberVote       MemberVote[]
 
   @@index([userId])
   @@index([teamValueAddId])
@@ -455,14 +448,48 @@ model RewardRoundTeamMember {
 model MemberVote {
   id                      String                 @id @default(cuid())
   userId                  String                 @map("user_id")
-  user                    User                   @relation(fields: [userId], references: [id])
   pointsSpent             Int?
   teamValueAddId          String?                @default(cuid())
-  teamValueAdd            TeamValueAdd?          @relation(fields: [teamValueAddId], references: [id], onDelete: Cascade)
   RewardRoundTeamMemberId String?                @default(cuid())
+  user                    User                   @relation(fields: [userId], references: [id])
+  teamValueAdd            TeamValueAdd?          @relation(fields: [teamValueAddId], references: [id], onDelete: Cascade)
   RewardRoundTeamMember   RewardRoundTeamMember? @relation(fields: [RewardRoundTeamMemberId], references: [id], onDelete: Cascade)
 
   @@index([userId])
   @@index([teamValueAddId])
   @@index([RewardRoundTeamMemberId])
+}
+
+model CategoryToPost {
+  A String
+  B String
+
+  @@unique([A, B], map: "_CategoryToPost_AB_unique")
+  @@index([B], map: "_CategoryToPost_B_index")
+  @@map("_CategoryToPost")
+}
+
+model MechanismToPostUser {
+  A String
+  B String
+
+  @@unique([A, B], map: "_MechanismToPostUser_AB_unique")
+  @@index([B], map: "_MechanismToPostUser_B_index")
+  @@map("_MechanismToPostUser")
+}
+
+model PostToTag {
+  A String
+  B String
+
+  @@unique([A, B], map: "_PostToTag_AB_unique")
+  @@index([B], map: "_PostToTag_B_index")
+  @@map("_PostToTag")
+}
+
+enum Mechanism_supplyDemandType {
+  supplyInternal
+  supplyExternal
+  demandUtility
+  demandMechanism
 }

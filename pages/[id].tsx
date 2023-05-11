@@ -1,10 +1,15 @@
 import { useRouter } from 'next/router'
 import ErrorPage from 'next/error'
-import Layout from '../../components/layout'
-import prisma from '../../lib/prisma'
+// import Layout from '../../components/layout'
+import Layout from '../components/layout'
+// import prisma from '../../lib/prisma'
+import prisma from '../lib/prisma'
 import { clerkClient } from '@clerk/nextjs/server'
-import { clerkConvertJSON, postStatus } from '../../lib/helper'
-import PostView from '../../components/PostView'
+// import { clerkConvertJSON, postStatus } from '../../lib/helper'
+import { clerkConvertJSON, postStatus } from '../lib/helper'
+// import PostView from '../../components/PostView'
+import PostView from '../components/PostView'
+
 export default function Post({ post, author }) {
   const router = useRouter()
 
@@ -105,7 +110,7 @@ export async function getStaticProps({ params }) {
 export async function getStaticPaths() {
   const allPosts = await prisma.post.findMany({
     where: {
-        status: postStatus.published,
+      status: postStatus.published,
     },
     select: {
       id: true,

@@ -12,7 +12,9 @@ export const FormCardSupplyDemand = ({
   values,
   mechanismTemplates,
   setFieldValue,
+  subscription,
 }) => {
+  console.log("🚀 ~ file: FormCardSupplyDemand.tsx:16 ~ values:", values)
   const { user } = useUser()
   const admin = user?.publicMetadata?.admin || false
   let [mechanismIndex, setMechanismIndex] = useState(0)
@@ -31,6 +33,7 @@ export const FormCardSupplyDemand = ({
     unlockPeriod: 12,
     percentageUnlockTGE: 0,
     percentageAllocation: 30,
+    color: `#${Math.floor(Math.random() * 16777215).toString(16)}`,
     color: `#${Math.floor(Math.random() * 16777215).toString(16)}`,
     isEpochDistro: false,
     epochDurationInSeconds: 0,
@@ -176,7 +179,7 @@ export const FormCardSupplyDemand = ({
                 </div>
               </div>
               <div className="relative w-1/2">
-                {validateTierAccess(values?.Subscription, admin) ? (
+                {validateTierAccess(subscription, admin) ? (
                   <></>
                 ) : (
                   <>
