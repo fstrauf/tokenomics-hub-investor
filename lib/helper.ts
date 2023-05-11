@@ -134,6 +134,10 @@ export enum subTiers {
   frontier = '',
   inactive = '',
 }
+export enum supplyDemandType {
+  supplyInternal = 'supplyInternal',
+  supplyExternal = 'supplyExternal'
+}
 
 export const stringToKey = (name) => {
   return name.trim().replace(/\s+/g, '-').toLowerCase().replace(/&/g, 'and')

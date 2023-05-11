@@ -86,6 +86,9 @@ export default function TDFMain({ props, header = headerStatus.design }) {
   const TDF502 = dynamic(() => import('./TDF502'), {
     loading: () => <p>Loading</p>,
   })
+  const TDF503 = dynamic(() => import('./TDF503'), {
+    loading: () => <p>Loading</p>,
+  })
   const TDF701 = dynamic(() => import('./TDF701'), {
     loading: () => <p>Loading</p>,
   })
@@ -319,6 +322,17 @@ explanation`}
             reviewRequiredFields={reviewRequiredFields}
           />
         )
+        case 503:
+          console.log("swith === ",values)
+          return (
+            <TDF503
+              props={props}
+              values={values}
+              activePhase={activePhase}
+              setFieldValue={setFieldValue}
+              reviewRequiredFields={reviewRequiredFields}
+            />
+          )
       case 701:
         return (
           <TDF701 props={props} values={values} activePhase={activePhase} />
