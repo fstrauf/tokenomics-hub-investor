@@ -13,6 +13,7 @@ export default function ManageSubscriptions(props) {
     <>
       <Layout mode={headerStatus.main}>
         <div className='flex flex-col justify-center items-center gap-10'>
+          <h1 className='mt-20 text-3xl'>Upgrade your Token Design - use expert help and unlock the demand builder!</h1>
           {/* <SubscriptionTable /> */}
           <SubscriptionOptions ></SubscriptionOptions>
           <hr className="my-4 mx-auto h-1 w-48 rounded border-0 bg-gray-100 dark:bg-gray-700 md:my-10"></hr>
