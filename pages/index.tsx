@@ -41,37 +41,8 @@ const Index: React.FC<Props> = (props) => {
     }
   }
 
-  // const fundRaiseBar = (
-  //   <div
-  //     className={`${
-  //       showBanner ? 'm-auto flex items-center bg-dao-green' : 'hidden'
-  //     }`}
-  //   >
-  //     <div className="mx-auto max-w-xl py-3 px-3 sm:px-6 lg:px-8">
-  //       <p className="ml-3 self-center truncate text-center font-medium text-white">
-  //         <span className="inline">🥳 We are fundraising. Interested? </span>
-  //         <a
-  //           href="mailto:contact@tokenomicsdao.com"
-  //           className="hover:underline"
-  //         >
-  //           Contact us.
-  //         </a>
-  //       </p>
-  //     </div>
-  //     <button
-  //       className="text-gray-200"
-  //       onClick={() => {
-  //         setShowBanner(false)
-  //       }}
-  //     >
-  //       <XMarkIcon className="h-6 w-6 text-gray-200" aria-hidden="true" />
-  //     </button>
-  //   </div>
-  // )
-
   return (
     <>
-      {/* {fundRaiseBar} */}
       <Layout mode={headerStatus.main}>
         <Head>
           <title>Tokenomics Hub</title>
@@ -101,11 +72,10 @@ const Index: React.FC<Props> = (props) => {
               </h1>
             </div>
             <div className="flex w-3/4 max-w-6xl flex-col justify-center gap-5 rounded-lg bg-gradient-to-r from-dao-green to-dao-red p-5 text-white items-center">
-              {/* <div className="flex w-3/4 max-w-lg flex-col rounded-lg text-white"> */}
               <h2 className="text-center text-2xl font-bold">
                 Crypto Token Design
               </h2>
-              <p className="max-w-2xl text-center text-lg">
+              <p className="max-w-2xl text-center text-base">
                 Tokenomic Hub is your step-by-step guide to token design. <br />
                 <br />
                 Our library of tokenomic reports help web3 entrepreneurs and
