@@ -6,10 +6,11 @@ import FormDivider from '../form/FormDivider'
 import useSWR from 'swr'
 import Select from 'react-select'
 import { event } from 'nextjs-google-analytics'
-import { validateFreeTrialExamples, validateTierAccess } from '../../lib/helper'
+import { validateFreeTrialExamples } from '../../lib/helper'
 import GenericPopover from '../generic/GenericPopover'
-import SubscriptionTable from '../../pages/SubscriptionTable'
+// import SubscriptionTable from '../../pages/SubscriptionTable'
 import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
+import SubscriptionOptions from '../SubscriptionOptions'
 
 export const fetcher = async (url, param) => {
   const body = { param }
@@ -106,8 +107,9 @@ export default function ExampleSection({
       <div>
         <GenericPopover isOpen={isOpen} setIsOpen={setIsOpen}>
           <div>
-            <h1>You need to subscribe to see this information</h1>
-            <SubscriptionTable />
+            <h1 className='text-center font-bold'>You have reached 3 weekly examples, subscribe for more.</h1>
+            {/* <SubscriptionTable /> */}
+            <SubscriptionOptions/>
           </div>
         </GenericPopover>
         <div className="m-auto mt-3 flex max-w-5xl lg:w-1/2">

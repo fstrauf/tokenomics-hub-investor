@@ -1,6 +1,6 @@
 import Layout from '../components/layout'
 import { headerStatus } from '../lib/helper'
-import SubscriptionTable from './SubscriptionTable'
+// import SubscriptionTable from './SubscriptionTable'
 import SubscriptionStatus from './SubscriptionStatus'
 import { getAuth } from '@clerk/nextjs/dist/server/getAuth'
 import { AuthData } from '@clerk/nextjs/dist/server/types'

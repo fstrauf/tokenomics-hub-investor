@@ -9,7 +9,7 @@ export default function SubscriptionTable() {
 
 
 
-        {/* <Script src="https://js.stripe.com/v3/pricing-table.js" async /> */}
+        <Script src="https://js.stripe.com/v3/pricing-table.js" async />
 
 {/* ---Prod--- */}
         {/* <stripe-pricing-table
