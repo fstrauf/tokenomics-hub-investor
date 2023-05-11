@@ -1,3 +1,5 @@
+import * as dayjs from 'dayjs'
+
 export const formatDate = (date) => {
   const oldDate = new Date(date)
   var getYear = oldDate.toLocaleString('default', { year: 'numeric' })
@@ -132,7 +134,7 @@ export enum subTiers {
   genesis = 'prod_NpDbT4LFoUtZ1l',
   navigator = '',
   frontier = '',
-  inactive = '',
+  inactive = '', 
 }
 
 export const stringToKey = (name) => {
@@ -585,59 +587,85 @@ export async function validateFreeTrialExamples(
   subscription: any,
   admin: boolean = false,
   userId: string
-): boolean {
-  console.log("🚀 ~ file: helper.ts:589 ~ userId:", userId)
-  // const useSWR = require('swr')
+): Promise<boolean> {
+
+  if(validateTierAccess(subscription,admin)){
+    //premium has unlimited access
+    return true
+  }
   const body = { userId }
-  // const fetcher = async (url, param) => {
-  //   const body = { param }
-  //   const res = await fetch(url, {
-  //     method: 'POST',
-  //     headers: { 'Content-Type': 'application/json' },
-  //     body: JSON.stringify(body),
-  //   })
 
-  //   if (!res.ok) {
-  //     throw new Error(`Failed to fetch data from ${url}`)
-  //   }
-  //   const data = await res.json()
-  //   return data
-  // }
-
-  // const { data, error, isLoading, isValidating } = useSWR('/api/get/getSubscriptionsData', fetcher, {
-  //   revalidateOnMount: true,
-  // })
-  // console.log("🚀 ~ file: helper.ts:608 ~ data:", data)
-
-    await fetch('/api/get/getSubscriptionData', {
+  try {
+    const response = await fetch('/api/get/getSubscriptionData', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
-    }).then(response => response.json())
-    .then(data => {
-      // process the data returned from the server
-      console.log(data);
-    })
-    .catch(error => {
-      // handle any errors that occur
-      console.error(error);
-    })
+    });
+    const data = await response.json();
+    console.log("🚀 ~ file: helper.ts:605 ~ data:", data)
+    // process the data returned from the server
 
-  if (
-    subscription?.tier === subTiers.genesis ||
-    subscription?.tier === subTiers.frontier ||
-    subscription?.tier === subTiers.navigator
-  ) {
-    console.log('user has subscriptiom')
-    return true
-  } else {
-    //still testing subscriptions
-    if (admin) {
-      console.log('No subscription and admin')
-      return false
+    let subscriptionData = data;
+    subscriptionData.authorClerkId = userId;
+    const counter = subscriptionData?.exampleSectionCounter || 0;
+    if (counter < 3) {
+      //still within limit
+      //async increase counter
+      // subscriptionData.exampleViewStart=new Date()
+      console.log(
+        '🚀 ~ file: helper.ts:624 ~ .then ~ still within limit:',
+        'still within limit'
+      )
+      subscriptionData.exampleViewStart = subscriptionData.exampleViewStart || new Date();
+      subscriptionData.exampleSectionCounter = counter + 1;
+      await updateSubscriptionData(subscriptionData);
+      
+      return true;
     } else {
-      console.log('No subscription but normal user (we are still testing)')
-      return true
+      //have 7 days past?
+      const viewStart = new Date(data?.exampleViewStart);
+      console.log("🚀 ~ file: helper.ts:626 ~ viewStart:", viewStart)
+      const currentDate = dayjs();
+      console.log("🚀 ~ file: helper.ts:628 ~ currentDate:", currentDate)
+      console.log("🚀 ~ file: helper.ts:628 ~ currentDate.diff(viewStart, 'day'):", currentDate.diff(viewStart, 'day'))
+      if (currentDate.diff(viewStart, 'day') > 7) {
+        
+        // reset date to today, reset counter to 1
+        console.log(
+          '🚀 ~ file: helper.ts:619 ~ .then ~ reset date to today, reset counter to 1:',
+          'reset date to today, reset counter to 1'
+        )
+        subscriptionData.exampleViewStart = new Date();
+        subscriptionData.exampleSectionCounter = 1;
+        await updateSubscriptionData(subscriptionData);
+        
+        return true;
+      } else {
+        // 7 days have not passed
+        console.log(
+          '🚀 ~ file: helper.ts:620 ~ .then ~ // 7 days have not passed:',
+          '7 days have not passed'
+        )
+        return false;
+      }
     }
+  } catch (error) {
+    // handle any errors that occur
+    console.error(error);
+    return false;
   }
+}
+
+export async function updateSubscriptionData(subscription: object) {
+  console.log("🚀 ~ file: helper.ts:647 ~ updateSubscriptionData ~ subscription:", subscription)
+  const body = { subscription }
+
+  await fetch('/api/post/updateSubscriptionData', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  }).catch((error) => {
+    // handle any errors that occur
+    console.error(error)
+  })
 }

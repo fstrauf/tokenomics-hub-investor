@@ -9,8 +9,8 @@ import Select from 'react-select'
 import { useRouter } from 'next/router'
 import { headerStatus, postStatus } from '../lib/helper'
 import Link from 'next/link'
-import { useState } from 'react'
-import XMarkIcon from '../public/svg/xmarkicon'
+// import { useState } from 'react'
+// import XMarkIcon from '../public/svg/xmarkicon'
 
 type Props = {
   allPosts: any
@@ -97,50 +97,35 @@ const Index: React.FC<Props> = (props) => {
           <div className="m-auto mt-10 flex flex-col items-center">
             <div className="mb-10">
               <h1 className="text-center text-3xl font-bold">
-                Explore, compare and evaluate tokenomics of crypto projects.
+                Welcome to Tokenomics Hub.
               </h1>
-              <p className="text-center text-xl">
-                Tokenomics Hub shows you the need-to-know tokenomic information
-                per project{' '}
-              </p>
             </div>
-            <div className="flex max-w-6xl justify-center gap-32 rounded-lg bg-gradient-to-r from-dao-green to-dao-red p-5">
-              <div className="flex w-3/4 max-w-lg flex-col rounded-lg text-white">
-                <h1 className="mb-5 text-center text-2xl font-bold">
-                  A tokenomics centric platform
-                </h1>
-                <p className="mb-5 text-center">
-                  No matter if you’re an avid crypto user, a fellow degen or a
-                  protocol owner/team member, anyone can contribute to
-                  Tokenomics Hub by listing a token
-                </p>
-                <div className="flex justify-center">
-                  <Link
-                    href="/newPost"
-                    className="w-36 self-center rounded-md border-2 border-dark-tdao bg-white px-4 py-2 text-center text-sm font-medium text-dark-tdao hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
-                  >
-                    List a Token
-                  </Link>
-                </div>
+            <div className="flex w-3/4 max-w-6xl flex-col justify-center gap-5 rounded-lg bg-gradient-to-r from-dao-green to-dao-red p-5 text-white items-center">
+              {/* <div className="flex w-3/4 max-w-lg flex-col rounded-lg text-white"> */}
+              <h2 className="text-center text-2xl font-bold">
+                Crypto Token Design
+              </h2>
+              <p className="max-w-2xl text-center text-lg">
+                Tokenomic Hub is your step-by-step guide to token design. <br />
+                <br />
+                Our library of tokenomic reports help web3 entrepreneurs and
+                crypto investors, builders and contributors to explore, compare
+                and evaluate the tokenomics of leading of crypto and web 3
+                protocols. <br />
+                <br />
+                So that you can apply this knowledge to the token design of your
+                next project.
+              </p>
+              <div className="flex justify-center">
+                <Link
+                  href="/tokenomics-design"
+                  className="w-36 self-center rounded-md border-2 border-dark-tdao bg-white px-4 py-2 text-center text-sm font-medium text-dark-tdao hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+                >
+                  Design a Token
+                </Link>
               </div>
-              <div className="flex w-3/4 max-w-lg flex-col rounded-lg text-white">
-                <h1 className="mb-5 text-center text-2xl font-bold">
-                  Want to design a token?
-                </h1>
-                <p className="mb-5 text-center">
-                  Tokenomics Hub offers entrepreneurs an industry leading
-                  framework with a built in suite of tools to help you create
-                  sustainable tokenomics (in beta)
-                </p>
-                <div className="flex justify-center">
-                  <Link
-                    href="/tokenomics-design"
-                    className="w-36 self-center rounded-md border-2 border-dark-tdao bg-white px-4 py-2 text-center text-sm font-medium text-dark-tdao hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
-                  >
-                    Design a Token
-                  </Link>
-                </div>
-              </div>
+
+              {/* </div> */}
             </div>
           </div>
           <div className="mt-10 mb-10 flex justify-center gap-4 text-center"></div>

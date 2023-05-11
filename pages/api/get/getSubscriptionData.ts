@@ -7,7 +7,8 @@ export default async function handle(req, res) {
 
   const subscriptions = await prisma.subscriptions.findUnique({
     where: { authorClerkId: userId },
-  })
+  }) || {}
+  console.log("🚀 ~ file: getSubscriptionData.ts:11 ~ handle ~ subscriptions:", subscriptions)
 
   return res.status(200).send(subscriptions)
 }

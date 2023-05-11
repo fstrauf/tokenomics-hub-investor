@@ -44,15 +44,13 @@ export default function ExampleSection({
 
   const admin = user?.publicMetadata?.admin || false
 
-  function handleDetailClicked(c) {
+  async function handleDetailClicked(c) {
     //check subscription
-
-    // const { data, error, isLoading, isValidating } = useSWR('/api/get/getSubscriptionsData', fetcher, {
-    //   revalidateOnMount: true,
-    // })
-    // console.log("🚀 ~ file: helper.ts:608 ~ data:", data)
-
-    if (validateTierAccess(props?.Subscription, admin) || validateFreeTrialExamples(props?.Subscription, admin, user?.id)) {
+    const trialStatus = await validateFreeTrialExamples(props?.Subscription, admin, user?.id)
+    console.log("🚀 ~ file: ExampleSection.tsx:50 ~ handleDetailClicked ~ trialStatus:", trialStatus)
+    
+    if (trialStatus) {
+      
       setExample(c)
       setIsSubelementClicked(true)
       event(`ExampleSection`, {
