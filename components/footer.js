@@ -21,6 +21,7 @@ export default function Footer() {
             </div>
             <Feedback />
           </div>
+          <div className='flex gap-6'>
           <div className='flex flex-col'>
             <Link href="/terms" className="hover:underline">
               Terms & Conditions
@@ -31,6 +32,18 @@ export default function Footer() {
             <Link href="/glossary" className="hover:underline">
               Glossary
             </Link>
+          </div>
+          <div className='flex flex-col'>
+            <Link href="/about-us" className="hover:underline">
+              About Us
+            </Link>
+            <Link href="/privacy-policy" className="hover:underline">
+              Privacy Policy
+            </Link>
+            <Link href="/newPost" className="hover:underline">
+              List a token
+            </Link>
+          </div>
           </div>
           <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
           <div className="sm:flex sm:items-center sm:justify-between">

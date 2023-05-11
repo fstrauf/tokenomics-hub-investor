@@ -34,20 +34,19 @@ export default function Header2({ mode = headerStatus.main, children = null }) {
           <>
             <HeaderComboSection
               classNames={classNames}
-              title="Products & Services"
+              title="Products & Consulting"
             >
               <HeaderGenericSection
-                pathName="/tdsLandingPage"
+                pathName="/tokenomics-design"
                 title="Tokenomics Design Space"
               />
               <HeaderGenericSection
                 pathName="/thub"
                 title="Calculation Template"
               />
-              <HeaderGenericSection pathName="/bookAnExpert" title="Services" />
+              <HeaderGenericSection pathName="/book-an-expert" title="Tokenomics Consulting" />
             </HeaderComboSection>
             <HeaderGenericSection pathName="/calculator" title="Calculator" />
-            {/* <HeaderGenericSection pathName="/bookAnExpert" title="Services" /> */}
             <HeaderGenericSection pathName="/myDesigns" title="My Dashboard" />
           </>
         )

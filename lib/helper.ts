@@ -1,3 +1,5 @@
+import * as dayjs from 'dayjs'
+
 export const formatDate = (date) => {
   const oldDate = new Date(date)
   var getYear = oldDate.toLocaleString('default', { year: 'numeric' })
@@ -132,7 +134,7 @@ export enum subTiers {
   genesis = 'prod_NpDbT4LFoUtZ1l',
   navigator = '',
   frontier = '',
-  inactive = '',
+  inactive = '', 
 }
 export enum supplyDemandType {
   supplyInternal = 'supplyInternal',
@@ -340,8 +342,10 @@ export function getLinearAreaData(
     var monthlyEmission = 0
     //tge unlock
     if (i === 0 && calculationRow.percentageUnlockTGE > 0) {
-      monthlyEmission = (totalRowAllocation * calculationRow.percentageUnlockTGE) / 100
-      totalRowAllocation = totalRowAllocation * (1 - (calculationRow.percentageUnlockTGE/100))
+      monthlyEmission =
+        (totalRowAllocation * calculationRow.percentageUnlockTGE) / 100
+      totalRowAllocation =
+        totalRowAllocation * (1 - calculationRow.percentageUnlockTGE / 100)
     } else {
       if (i < calculationRow.lockupPeriod) {
         //still locking, no emissions
@@ -560,10 +564,112 @@ export async function upDateFirstTimeVisit(
   }
 }
 
-export function validateTierAccess(subscription: any): boolean {
-  if(subscription?.tier === subTiers.genesis || subscription?.tier === subTiers.frontier || subscription?.tier === subTiers.navigator ){
+export function validateTierAccess(
+  subscription: any,
+  admin: boolean = false
+): boolean {
+  if (
+    subscription?.tier === subTiers.genesis ||
+    subscription?.tier === subTiers.frontier ||
+    subscription?.tier === subTiers.navigator
+  ) {
+    console.log('user has subscriptiom')
     return true
-  }else{
-    return false
-  }  
+  } else {
+    //still testing subscriptions
+    if (admin) {
+      console.log('No subscription and admin')
+      return false
+    } else {
+      console.log('No subscription but normal user (we are still testing)')
+      return true
+    }
+  }
+}
+
+export async function validateFreeTrialExamples(
+  subscription: any,
+  admin: boolean = false,
+  userId: string
+): Promise<boolean> {
+
+  if(validateTierAccess(subscription,admin)){
+    //premium has unlimited access
+    return true
+  }
+  const body = { userId }
+
+  try {
+    const response = await fetch('/api/get/getSubscriptionData', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+    const data = await response.json();
+    console.log("🚀 ~ file: helper.ts:605 ~ data:", data)
+    // process the data returned from the server
+
+    let subscriptionData = data;
+    subscriptionData.authorClerkId = userId;
+    const counter = subscriptionData?.exampleSectionCounter || 0;
+    if (counter < 3) {
+      //still within limit
+      //async increase counter
+      // subscriptionData.exampleViewStart=new Date()
+      console.log(
+        '🚀 ~ file: helper.ts:624 ~ .then ~ still within limit:',
+        'still within limit'
+      )
+      subscriptionData.exampleViewStart = subscriptionData.exampleViewStart || new Date();
+      subscriptionData.exampleSectionCounter = counter + 1;
+      await updateSubscriptionData(subscriptionData);
+      
+      return true;
+    } else {
+      //have 7 days past?
+      const viewStart = new Date(data?.exampleViewStart);
+      console.log("🚀 ~ file: helper.ts:626 ~ viewStart:", viewStart)
+      const currentDate = dayjs();
+      console.log("🚀 ~ file: helper.ts:628 ~ currentDate:", currentDate)
+      console.log("🚀 ~ file: helper.ts:628 ~ currentDate.diff(viewStart, 'day'):", currentDate.diff(viewStart, 'day'))
+      if (currentDate.diff(viewStart, 'day') > 7) {
+        
+        // reset date to today, reset counter to 1
+        console.log(
+          '🚀 ~ file: helper.ts:619 ~ .then ~ reset date to today, reset counter to 1:',
+          'reset date to today, reset counter to 1'
+        )
+        subscriptionData.exampleViewStart = new Date();
+        subscriptionData.exampleSectionCounter = 1;
+        await updateSubscriptionData(subscriptionData);
+        
+        return true;
+      } else {
+        // 7 days have not passed
+        console.log(
+          '🚀 ~ file: helper.ts:620 ~ .then ~ // 7 days have not passed:',
+          '7 days have not passed'
+        )
+        return false;
+      }
+    }
+  } catch (error) {
+    // handle any errors that occur
+    console.error(error);
+    return false;
+  }
+}
+
+export async function updateSubscriptionData(subscription: object) {
+  console.log("🚀 ~ file: helper.ts:647 ~ updateSubscriptionData ~ subscription:", subscription)
+  const body = { subscription }
+
+  await fetch('/api/post/updateSubscriptionData', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  }).catch((error) => {
+    // handle any errors that occur
+    console.error(error)
+  })
 }

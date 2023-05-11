@@ -9,14 +9,14 @@ import ThubLogo from '../public/svg/thub-logo'
 import LiteYouTubeEmbed from 'react-lite-youtube-embed'
 import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css'
 
-export default function tdsLandingPage() {
-  const videoLink = (
-    <a href="https://youtu.be/dq_SowJgRvE" target="_blank">
-      <button className="mt-5 rounded-md border-2 border-dao-red bg-white px-6 py-4 text-sm font-medium text-dao-red hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
-        Watch Quick Demo
-      </button>
-    </a>
-  )
+export default function TokenomicsDesignSpace() {
+  // const videoLink = (
+  //   <a href="https://youtu.be/dq_SowJgRvE" target="_blank">
+  //     <button className="mt-5 rounded-md border-2 border-dao-red bg-white px-6 py-4 text-sm font-medium text-dao-red hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
+  //       Watch Quick Demo
+  //     </button>
+  //   </a>
+  // )
   const designLink = (
     <Link href="/newDesign">
       <button className="mt-5 rounded-md bg-dao-red px-6 py-4 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
@@ -58,7 +58,7 @@ export default function tdsLandingPage() {
               </div>
               <div className="flex gap-3">
                 {designLink}
-                {videoLink}
+                {/* {videoLink} */}
               </div>
             </div>
             <div className="w-[650px] m-10">
@@ -177,7 +177,7 @@ export default function tdsLandingPage() {
           </p>
           <div className="flex justify-center gap-3">
             {designLink}
-            {videoLink}
+            {/* {videoLink} */}
           </div>
         </div>
       </div>

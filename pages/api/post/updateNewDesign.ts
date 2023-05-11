@@ -5,10 +5,6 @@ import { stringToKey } from '../../../lib/helper'
 export default async function handle(req, res) {
   const { values } = req.body
   const inputFields = values
-  console.log(
-    '🚀 ~ file: updateNewDesign.ts:8 ~ handle ~ inputFields:',
-    inputFields
-  )
 
   var breakdown = inputFields.breakdown
   if (typeof inputFields.breakdown === 'object') {
@@ -34,7 +30,6 @@ export default async function handle(req, res) {
     name: pu.name,
     role: pu.role,
   }))
-  console.log("🚀 ~ file: updateNewDesign.ts:37 ~ postUser ~ postUser:", postUser)
 
   const mechanisms = inputFields.Mechanism.map((m) => {
     var postUsers = {}

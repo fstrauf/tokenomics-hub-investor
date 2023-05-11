@@ -18,6 +18,7 @@ export default function TDF502({
   setFieldValue,
   reviewRequiredFields,
 }) {
+  console.log("🚀 ~ file: TDF502.tsx:21 ~ props:", props)
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
 
   useEffect(() => {
@@ -54,6 +55,7 @@ export default function TDF502({
         setFieldValue={setFieldValue}
         values={values}
         mechanismTemplates={props.mechanismTemplates}
+        subscription={props.Subscription}
       />
       <FormErrorMessage
         field="Mechanism"

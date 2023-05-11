@@ -211,15 +211,14 @@ demandMechanism
 }
 
 model Mechanism {
-  id                        String                  @id @default(cuid())
+  id                        String                     @id @default(cuid())
   name                      String?
-  summary                   String?                 @db.Text
-  details                   String?                 @db.Text
-  supplyDemandType          supply_Demand_Type      @default(supplyInternal)
+  summary                   String?                    @db.Text
+  details                   String?                    @db.Text
   isSink                    Boolean?
   token                     String?
   postId                    String?
-  isTemplate                Boolean?                @default(false)
+  isTemplate                Boolean?                   @default(false)
   calculationId             String?
   category                  String?
   color                     String?
@@ -231,11 +230,11 @@ model Mechanism {
   percentageAllocation      Float?
   unlockPeriod              Float?
   percentageUnlockTGE       Float?
-  post                      Post?                   @relation(fields: [postId], references: [id], onDelete: Cascade)
+  supplyDemandType          Mechanism_supplyDemandType? 
+  post                      Post?                      @relation(fields: [postId], references: [id], onDelete: Cascade)
   PostUser                  PostUser[]
-  calculation               Calculation?            @relation(fields: [calculationId], references: [id], onDelete: Cascade)
+  calculation               Calculation?               @relation(fields: [calculationId], references: [id], onDelete: Cascade)
   CalculationTimeSeries     CalculationTimeSeries[]
-
   @@index([postId])
   @@index([calculationId])
 }
@@ -493,3 +492,11 @@ model PostToTag {
   @@index([B], map: "_PostToTag_B_index")
   @@map("_PostToTag")
 }
+
+enum Mechanism_supplyDemandType {
+  supplyInternal
+  supplyExternal
+  demandUtility
+  demandMechanism
+}
+
