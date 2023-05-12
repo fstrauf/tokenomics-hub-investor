@@ -1,6 +1,6 @@
 import { Field } from 'formik'
 import { getActiveDesignPhase } from '../../lib/helper'
-import FormCardSupply from '../form/FormCardSupply'
+import FormCardDemand from '../form/FormCardDemand'
 // import BreakdownBox from '../slugView/breakdown-box'
 import ResourceSection from './ResourceSection'
 import TDFCalculator from './TDFCalculator'
@@ -49,7 +49,7 @@ export default function TDF503({
 
       <Field
         name="Mechanism"
-        component={FormCardSupply}
+        component={FormCardDemand}
         phaseId={designPhase.phaseId}
         setFieldValue={setFieldValue}
         values={values}

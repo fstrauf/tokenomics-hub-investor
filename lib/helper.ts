@@ -138,8 +138,11 @@ export enum subTiers {
 }
 export enum supplyDemandType {
   supplyInternal = 'supplyInternal',
-  supplyExternal = 'supplyExternal'
+  supplyExternal = 'supplyExternal',
+  demandUtility = 'demandUtility',
+  demandMechanism = 'demandMechanism'
 }
+
 
 export const stringToKey = (name) => {
   return name.trim().replace(/\s+/g, '-').toLowerCase().replace(/&/g, 'and')
