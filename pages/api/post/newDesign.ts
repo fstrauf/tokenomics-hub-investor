@@ -50,6 +50,7 @@ export default async function handle(req, res) {
         create: calculationTimeSeries,
       },
       PostUser: postUsers,
+      supplyDemandType: m.supplyDemandType,
     }
   })
 
