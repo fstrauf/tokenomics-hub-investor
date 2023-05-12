@@ -59,13 +59,11 @@ export default function TDF503({
         field="Mechanism"
         reviewRequiredFields={reviewRequiredFields}
       />
-      {/* <TDFCalculator values={values} /> */}
 
       <ResourceSection content={designPhase.Resources} />
       <ExampleSection
         presetCategories={values.categories}
         presetTags={values.tags}
-        // content={props.posts}
         props={props}
         exampleField={designPhase.postDataElement}
         exampleDetail={ExampleDetail}
