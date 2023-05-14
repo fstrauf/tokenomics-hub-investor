@@ -78,7 +78,7 @@ export default async function handler(
           } catch (error) {
             console.error(error)
             console.log('prisma before')
-            res.status(400).json({ error: `Webhook Error: ${err.message}` })
+            res.status(400).json({ error: `Webhook Error: ${error.message}` })
           }
           res.status(200).send({event: event?.type})
           //update the user publicmetadata with the new subscription data.
