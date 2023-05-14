@@ -29,6 +29,7 @@ export default function SubscriptionOptions() {
           link: `https://buy.stripe.com/test_5kA4k98YwaUzgrCaEE?prefilled_email=${user.primaryEmailAddress.emailAddress}&client_reference_id=${user.id}`,
           name: 'Purchase',
         }}
+        highlight={true}
       />
       <ProductCard
         title="Frontier"

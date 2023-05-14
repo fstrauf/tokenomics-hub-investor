@@ -7,9 +7,11 @@ export default function ProductCard({
   termsLink,
   purchaseLink,
   purchaseLink2 = {},
+  highlight=false,
 }) {
   return (
-    <div className="flex h-96 w-72 flex-col items-center justify-between rounded-lg bg-white p-4 shadow-md">
+    <div className={`w-full h-full rounded-md bg-gradient-to-r ${highlight ? 'from-dao-red to-dao-green p-1': ''}  shadow-md`}>
+    <div className={`flex h-96 w-72 flex-col items-center justify-between rounded-lg bg-white p-4 `}>
       <h2 className="text-center text-xl font-bold">{title}</h2>
       <p className="text-center text-gray-600">{description}</p>
       <p className="mt-4 text-lg font-bold">{price}</p>
@@ -30,6 +32,7 @@ export default function ProductCard({
           </Link>
         )}
       </div>
+    </div>
     </div>
   )
 }
