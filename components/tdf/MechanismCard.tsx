@@ -4,7 +4,7 @@ import FormSelectUser from '../form/FormSelectUser'
 import FormTipTap from '../form/FormTipTap'
 import * as duration from 'dayjs/plugin/duration'
 import * as dayjs from 'dayjs'
-import { shortBigNumber } from '../../lib/helper'
+import { createSpreadSheet, shortBigNumber } from '../../lib/helper'
 
 export const MechanismCard = ({
   field,
@@ -268,7 +268,7 @@ export const MechanismCard = ({
             </>
           )}
         />
-        {/* need some kind of table that creates timeseries, question is how we convert the info back and forth */}
+        <button type='button' onClick={()=>createSpreadSheet('test')}>Create Spreadsheet</button>
       </>
     )
   }
