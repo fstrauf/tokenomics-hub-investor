@@ -1,5 +1,4 @@
 import Container from '../components/generic/container'
-// import Intro from '../components/intro'
 import Layout from '../components/layout'
 import Head from 'next/head'
 import Table from '../components/table'
@@ -9,8 +8,6 @@ import Select from 'react-select'
 import { useRouter } from 'next/router'
 import { headerStatus, postStatus } from '../lib/helper'
 import Link from 'next/link'
-// import { useState } from 'react'
-// import XMarkIcon from '../public/svg/xmarkicon'
 
 type Props = {
   allPosts: any
