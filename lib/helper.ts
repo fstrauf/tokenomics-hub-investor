@@ -245,6 +245,7 @@ export function getAreaData(months, calculationRows, totalSupply, startDate) {
   calculationRows?.forEach((cr) => {
     const rowAllocation = (totalSupply * cr.percentageAllocation) / 100
     if (cr?.isSink) {
+      console.log("🚀 ~ file: helper.ts:248 ~ calculationRows?.forEach ~ cr:", cr)
       // sum up the demand data for supplydemand totals
       getDemandAreaData(cr, months, props.supplyDemandTotals, startDate)
     } else {
@@ -282,6 +283,7 @@ export function getDemandAreaData(
 ) {
   if (calculationRow.CalculationTimeSeries !== undefined) {
     const inputData = calculationRow.CalculationTimeSeries || []
+    console.log("🚀 ~ file: helper.ts:285 ~ inputData:", inputData)
     let currentMonth = 0
 
     for (let i = 0; i < inputData.length; i++) {
@@ -672,4 +674,23 @@ export async function updateSubscriptionData(subscription: object) {
     // handle any errors that occur
     console.error(error)
   })
+}
+
+export async function createSpreadSheet(title) {
+  const body = { title }
+  try {
+    const response = await fetch('/api/createGSheet', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    })
+    const spreadsheetUrl = await response.text()
+    console.log("🚀 ~ file: helper.ts:553 ~ createSpreadSheet ~ spreadsheetUrl:", spreadsheetUrl)
+    // toast.success('Message sent', { position: 'bottom-right' })
+    return spreadsheetUrl
+  } catch (error) {
+    console.error(error)
+    // toast.error('An error occurred', { position: 'bottom-right' })
+    return ''
+  }
 }

@@ -9,7 +9,7 @@ export default function SubscriptionOptions() {
       <ProductCard
         title="Genesis"
         description="Ultimate DIY Tokenomics Design. Use examples and Demand Side Tokenomics to balance your supply."
-        price="USD $50/month or $180/year"
+        price="USD $70/month or $180/year"
         termsLink="/manage-subscriptions#genesis"
         purchaseLink={{
           link: `https://buy.stripe.com/test_5kA4k98YwaUzgrCaEE?prefilled_email=${user.primaryEmailAddress.emailAddress}&client_reference_id=${user.id}`,

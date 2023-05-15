@@ -18,7 +18,6 @@ export default function TDF502({
   setFieldValue,
   reviewRequiredFields,
 }) {
-  console.log("🚀 ~ file: TDF502.tsx:21 ~ props:", props)
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
 
   useEffect(() => {
