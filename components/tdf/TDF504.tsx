@@ -1,9 +1,9 @@
 import { Field } from 'formik'
 import { getActiveDesignPhase } from '../../lib/helper'
-import FormCardSupply from '../form/FormCardSupply'
+import FormCardDemand from '../form/FormCardDemand'
 // import BreakdownBox from '../slugView/breakdown-box'
 import ResourceSection from './ResourceSection'
-import TDFCalculator from './TDFCalculator'
+// import TDFCalculator from './TDFCalculator'
 import Tiptap from '../TipTap'
 import ExampleSection from './ExampleSection'
 import { useEffect } from 'react'
@@ -11,7 +11,7 @@ import { designElementStatusUpdate } from '../../lib/designElementStatusField'
 import WalkthroughSection from './WalkthroughSection'
 import FormErrorMessage from '../form/FormErrorMessage'
 
-export default function TDF503({
+export default function TDF504({
   props,
   values,
   activePhase,
@@ -46,10 +46,35 @@ export default function TDF503({
       <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 ">
         {designPhase.name}
       </h5>
-
+      <label className="mb-2 block text-xs font-medium text-gray-900">
+        Total Supply
+      </label>
+      <Field
+        type="number"
+        name="Calculation.totalSupply"
+        className="block w-36 rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-xs text-gray-900 focus:border-dao-red focus:ring-dao-red"
+        onWheel={(event) => event.currentTarget.blur()}
+      />
+      <label className="mb-2 block text-xs font-medium text-gray-900">
+        Months
+      </label>
+      <Field
+        type="number"
+        name="Calculation.months"
+        className="block w-36 rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-xs text-gray-900 focus:border-dao-red focus:ring-dao-red"
+        onWheel={(event) => event.currentTarget.blur()}
+      />
+      <label className="mb-2 block text-xs font-medium text-gray-900">
+        Start Date
+      </label>
+      <Field
+        type="date"
+        name="Calculation.startDate"
+        className="block w-36 rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-xs text-gray-900 focus:border-dao-red focus:ring-dao-red"
+      />
       <Field
         name="Mechanism"
-        component={FormCardSupply}
+        component={FormCardDemand}
         phaseId={designPhase.phaseId}
         setFieldValue={setFieldValue}
         values={values}
@@ -59,7 +84,7 @@ export default function TDF503({
         field="Mechanism"
         reviewRequiredFields={reviewRequiredFields}
       />
-      <TDFCalculator values={values} />
+
       <ResourceSection content={designPhase.Resources} />
       <ExampleSection
         presetCategories={values.categories}

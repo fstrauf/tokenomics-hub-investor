@@ -1,7 +1,7 @@
 import { FieldArray } from 'formik'
 import React, { useState } from 'react'
 import Drawer from '../slugView/Drawer'
-import MechanismCardSupply from '../tdf/MechanismCardSupply'
+import MechanismCardDemand from '../tdf/MechanismCardDemand'
 import { supplyDemandType } from '../../lib/helper'
 
 export const FormCardSupply = ({
@@ -38,8 +38,8 @@ export const FormCardSupply = ({
 
   const mechTemplates = mechanismTemplates.filter((template) => {
     return (
-      template.supplyDemandType === supplyDemandType.supplyInternal ||
-      template.supplyDemandType === supplyDemandType.supplyExternal
+      template.supplyDemandType === supplyDemandType.demandUtility ||
+      template.supplyDemandType === supplyDemandType.demandMechanism
     )
   })
   const [isOpen, setIsOpen] = useState(false)
@@ -81,7 +81,7 @@ export const FormCardSupply = ({
     <div className="relative overflow-x-auto">
       <Drawer isOpen={isOpen} setIsOpen={setIsOpen}>
         {isOpen && (
-          <MechanismCardSupply
+          <MechanismCardDemand
             field={field}
             mechanismIndex={mechanismIndex}
             setFieldValue={setFieldValue}
@@ -97,8 +97,8 @@ export const FormCardSupply = ({
               <div>
                 <div>
                   <div>
-                    <p className="mt-5">Allocations</p>
-                    <p className="mt-5">Internal</p>
+                    <p className="mt-5">Demand Types</p>
+                    <p className="mt-5">Utility</p>
                     <p>
                       <button
                         type="button"
@@ -118,7 +118,7 @@ export const FormCardSupply = ({
                         {mechTemplates?.map((mt) => {
                           if (
                             mt.supplyDemandType ==
-                            supplyDemandType.supplyInternal
+                            supplyDemandType.demandUtility
                           ) {
                             return (
                               <>
@@ -136,7 +136,7 @@ export const FormCardSupply = ({
                       </select>
                     </p>
 
-                    <p className="mt-5">External</p>
+                    <p className="mt-5">Mechanism</p>
 
                     <p className="mt-5">
                       <button
@@ -157,7 +157,7 @@ export const FormCardSupply = ({
                         {mechTemplates?.map((mt) => {
                           if (
                             mt.supplyDemandType ==
-                            supplyDemandType.supplyExternal
+                            supplyDemandType.demandMechanism
                           ) {
                             return (
                               <>

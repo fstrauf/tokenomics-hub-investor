@@ -89,6 +89,12 @@ export default function TDFMain({ props, header = headerStatus.design }) {
   const TDF503 = dynamic(() => import('./TDF503'), {
     loading: () => <p>Loading</p>,
   })
+  const TDF504 = dynamic(() => import('./TDF504'), {
+    loading: () => <p>Loading</p>,
+  })
+  const TDF505 = dynamic(() => import('./TDF505'), {
+    loading: () => <p>Loading</p>,
+  })
   const TDF701 = dynamic(() => import('./TDF701'), {
     loading: () => <p>Loading</p>,
   })
@@ -322,10 +328,29 @@ explanation`}
             reviewRequiredFields={reviewRequiredFields}
           />
         )
-        case 503:
-          console.log("swith === ",values)
+      case 503:
+        return (
+          <TDF503
+            props={props}
+            values={values}
+            activePhase={activePhase}
+            setFieldValue={setFieldValue}
+            reviewRequiredFields={reviewRequiredFields}
+          />
+        )
+      case 504:
+        return (
+          <TDF504
+            props={props}
+            values={values}
+            activePhase={activePhase}
+            setFieldValue={setFieldValue}
+            reviewRequiredFields={reviewRequiredFields}
+          />
+        )
+        case 505:
           return (
-            <TDF503
+            <TDF505
               props={props}
               values={values}
               activePhase={activePhase}
@@ -410,7 +435,7 @@ explanation`}
                 <button
                   type="button"
                   disabled={isSubmitting}
-                  onClick={()=>previewAndSave(submitForm)}
+                  onClick={() => previewAndSave(submitForm)}
                   className="rounded-md border-2 border-dao-red bg-gradient-to-r from-dao-red via-dao-red to-dao-green bg-clip-text py-1 px-4 text-transparent hover:bg-opacity-80 disabled:opacity-50"
                 >
                   Preview

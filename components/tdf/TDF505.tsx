@@ -1,9 +1,9 @@
 import { Field } from 'formik'
 import { getActiveDesignPhase } from '../../lib/helper'
-import FormCardSupply from '../form/FormCardSupply'
+import FormCardSupplyvsDemand from '../form/FormCardSupplyvsDemand'
 // import BreakdownBox from '../slugView/breakdown-box'
 import ResourceSection from './ResourceSection'
-import TDFCalculator from './TDFCalculator'
+import TDFCalculatorSvsD from './TDFCalculatorSvsD'
 import Tiptap from '../TipTap'
 import ExampleSection from './ExampleSection'
 import { useEffect } from 'react'
@@ -11,13 +11,14 @@ import { designElementStatusUpdate } from '../../lib/designElementStatusField'
 import WalkthroughSection from './WalkthroughSection'
 import FormErrorMessage from '../form/FormErrorMessage'
 
-export default function TDF503({
+export default function TDF502({
   props,
   values,
   activePhase,
   setFieldValue,
   reviewRequiredFields,
 }) {
+  console.log("🚀 ~ file: TDF505.tsx:21 ~ props:", props)
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
 
   useEffect(() => {
@@ -47,23 +48,26 @@ export default function TDF503({
         {designPhase.name}
       </h5>
 
+      <TDFCalculatorSvsD values={values} />
       <Field
         name="Mechanism"
-        component={FormCardSupply}
+        component={FormCardSupplyvsDemand}
         phaseId={designPhase.phaseId}
         setFieldValue={setFieldValue}
         values={values}
         mechanismTemplates={props.mechanismTemplates}
+        subscription={props.Subscription}
       />
       <FormErrorMessage
         field="Mechanism"
         reviewRequiredFields={reviewRequiredFields}
       />
-      <TDFCalculator values={values} />
+
       <ResourceSection content={designPhase.Resources} />
       <ExampleSection
         presetCategories={values.categories}
         presetTags={values.tags}
+        // content={props.posts}
         props={props}
         exampleField={designPhase.postDataElement}
         exampleDetail={ExampleDetail}
