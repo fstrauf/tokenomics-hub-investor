@@ -3,10 +3,8 @@ import React from 'react'
 import FormSelectUtility from '../form/FormSelectUtility'
 import * as duration from 'dayjs/plugin/duration'
 import * as dayjs from 'dayjs'
-import Tabs from '@mui/material/Tabs'
-import Tab from '@mui/material/Tab'
-import Typography from '@mui/material/Typography'
-import Box from '@mui/material/Box'
+import { Tab } from '@headlessui/react'
+
 
 export const MechanismCardSupply = ({
   field,
@@ -18,84 +16,100 @@ export const MechanismCardSupply = ({
   dayjs.extend(duration)
   const secondsPerMonth = 2628000
 
-  interface TabPanelProps {
-    children?: React.ReactNode
-    index: number
-    value: number
+  function classNames(...classes) {
+    return classes.filter(Boolean).join(' ')
   }
 
-  function TabPanel(props: TabPanelProps) {
-    const { children, value, index, ...other } = props
-
+  function Example() {
     return (
-      <div
-        role="tabpanel"
-        hidden={value !== index}
-        id={`simple-tabpanel-${index}`}
-        aria-labelledby={`simple-tab-${index}`}
-        {...other}
-      >
-        {value === index && (
-          <Box sx={{ p: 3 }}>
-            <Typography>{children}</Typography>
-          </Box>
-        )}
+      <div className="w-full max-w-md px-2 py-16 sm:px-0 m-auto">
+        <Tab.Group>
+          <Tab.List className="bg-gray-300 flex space-x-1 rounded-xl p-1">
+            <Tab
+              key={'Phases'}
+              className={({ selected }) =>
+                classNames(
+                  'w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-black-700',
+                  'ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
+                  selected
+                    ? 'bg-white shadow'
+                    : 'text-blue hover:bg-white/[0.12] hover:text-white'
+                )
+              }
+            >
+              Phases
+            </Tab>
+            <Tab
+              key={'Function'}
+              className={({ selected }) =>
+                classNames(
+                  'w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-black-700',
+                  'ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
+                  selected
+                    ? 'bg-white shadow'
+                    : 'text-blue hover:bg-white/[0.12] hover:text-white'
+                )
+              }
+            >
+              Functions
+            </Tab>
+            <Tab
+              key={'Spreadsheet'}
+              className={({ selected }) =>
+                classNames(
+                  'w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-black-700',
+                  'ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
+                  selected
+                    ? 'bg-white shadow'
+                    : 'text-blue hover:bg-white/[0.12] hover:text-white'
+                )
+              }
+            >
+              Spreadsheets
+            </Tab>
+          </Tab.List>
+          <Tab.Panels className="mt-2">
+            <Tab.Panel
+              className={classNames(
+                'rounded-xl bg-white p-3',
+                'ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2'
+              )}
+            >
+              Phases comming soon
+            </Tab.Panel>
+            <Tab.Panel
+              className={classNames(
+                'rounded-xl bg-white p-3',
+                'ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2'
+              )}
+            >
+              Functions comming soon
+            </Tab.Panel>
+            <Tab.Panel
+              className={classNames(
+                'rounded-xl bg-white p-3',
+                'ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2'
+              )}
+            >
+              Spreadsheets comming soon
+            </Tab.Panel>
+          </Tab.Panels>
+        </Tab.Group>
       </div>
     )
   }
-
-  function a11yProps(index: number) {
-    return {
-      id: `simple-tab-${index}`,
-      'aria-controls': `simple-tabpanel-${index}`,
-    }
-  }
-  function BasicTabs() {
-    const [value, setValue] = React.useState(0)
-
-    const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-      setValue(newValue)
-    }
-
-    return (
-      <Box sx={{ width: '100%' }}>
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <Tabs
-            value={value}
-            onChange={handleChange}
-            aria-label="basic tabs example"
-          >
-            <Tab label="Phases" {...a11yProps(0)} />
-            <Tab label="Functions" {...a11yProps(1)} />
-            <Tab label="Spreadsheets" {...a11yProps(2)} />
-          </Tabs>
-        </Box>
-        <TabPanel value={value} index={0}>
-          Phases
-        </TabPanel>
-        <TabPanel value={value} index={1}>
-          Functions
-        </TabPanel>
-        <TabPanel value={value} index={2}>
-          Spreadsheets
-        </TabPanel>
-      </Box>
-    )
-  }
-
   const demandUtility = () => {
     return (
       <>
         <div className="mt-10">
           <label
-            style={{ alignContent: 'center' }}
-            className="tracking-tight text-gray-900"
+            className="tracking-tight text-gray-900 m-auto"
           >
             DEMAND ESTIMATE
           </label>
           <hr className="mt-5 mb-5"></hr>
           <div>
-            <BasicTabs></BasicTabs>
+            <Example></Example>
           </div>
         </div>
       </>
@@ -114,7 +128,7 @@ export const MechanismCardSupply = ({
           </label>
           <hr className="mt-5 mb-5"></hr>
           <div>
-            <BasicTabs></BasicTabs>
+            <Example></Example>
           </div>
         </div>
       </>
