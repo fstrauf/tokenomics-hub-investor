@@ -73,8 +73,7 @@ export default async function handler(
               },
             })
           } catch (error) {
-            console.error(error)
-            console.log('prisma before')
+            // console.error(error)
             return res.status(400).json({ error: `Webhook Error: ${error.message}` })
           }
           return res.status(200).json({ event: event?.type })
@@ -84,7 +83,7 @@ export default async function handler(
           return res.status(200).json({ event: event?.type })
       }
     } catch (err) {
-      console.error(`Error verifying Stripe webhook: ${err.message}`)
+      // console.error(`Error verifying Stripe webhook: ${err.message}`)
       return res.status(400).json({ error: `Webhook Error: ${err.message}` })
     }
   } else {
