@@ -286,52 +286,26 @@ export function getDemandAreaData(
 ) {
   if (calculationRow.CalculationTimeSeries !== undefined) {
     const inputData = calculationRow.CalculationTimeSeries || []
-    console.log("🚀 ~ file: helper.ts:285 ~ inputData:", inputData)
-    let currentMonth = 0
 
-    for (let i = 0; i < inputData.length; i++) {
-      const row = inputData[i]
-      let endMonth = currentMonth + row.months - 1
-
-      if (endMonth >= months) {
-        endMonth = months - 1
-      }
-
-      for (let j = currentMonth; j <= endMonth; j++) {
-        if (supplyDemandTotals[j] === undefined) {
-          supplyDemandTotals[j] = {
-            date: new Date(startDate).setMonth(
-              new Date(startDate).getMonth() + j
-            ),
-            demand: row.tokens,
-          }
-        } else {
-          if (supplyDemandTotals[j].demand === undefined) {
-            supplyDemandTotals[j].demand = 0
-          }
-          supplyDemandTotals[j].demand += row.tokens
-        }
-      }
-      currentMonth = endMonth + 1
-    }
-
-    for (let i = currentMonth; i < months; i++) {
+    for (let i = 0; i < months; i++) {
       if (supplyDemandTotals[i] === undefined) {
         supplyDemandTotals[i] = {
           date: new Date(startDate).setMonth(
             new Date(startDate).getMonth() + i
           ),
-          demand: inputData[inputData.length - 1]?.tokens || 0,
+          demand: inputData[i]?.tokens || 0,
+          months: i+1,
         }
       } else {
         if (supplyDemandTotals[i].demand === undefined) {
           supplyDemandTotals[i].demand = 0
         }
-        supplyDemandTotals[i].demand +=
-          inputData[inputData.length - 1]?.tokens || 0
+        supplyDemandTotals[i].demand +=          
+          inputData[i]?.tokens || 0
       }
     }
   }
+  console.log("🚀 ~ file: helper.ts:333 ~ supplyDemandTotals:", supplyDemandTotals)
 }
 
 export function getLinearAreaData(
