@@ -134,15 +134,14 @@ export enum subTiers {
   genesis = 'prod_NpDbT4LFoUtZ1l',
   navigator = '',
   frontier = '',
-  inactive = '', 
+  inactive = '',
 }
 export enum supplyDemandType {
   supplyInternal = 'supplyInternal',
   supplyExternal = 'supplyExternal',
   demandUtility = 'demandUtility',
-  demandMechanism = 'demandMechanism'
+  demandMechanism = 'demandMechanism',
 }
-
 
 export const stringToKey = (name) => {
   return name.trim().replace(/\s+/g, '-').toLowerCase().replace(/&/g, 'and')
@@ -248,7 +247,10 @@ export function getAreaData(months, calculationRows, totalSupply, startDate) {
   calculationRows?.forEach((cr) => {
     const rowAllocation = (totalSupply * cr.percentageAllocation) / 100
     if (cr?.isSink) {
-      console.log("🚀 ~ file: helper.ts:248 ~ calculationRows?.forEach ~ cr:", cr)
+      console.log(
+        '🚀 ~ file: helper.ts:248 ~ calculationRows?.forEach ~ cr:',
+        cr
+      )
       // sum up the demand data for supplydemand totals
       getDemandAreaData(cr, months, props.supplyDemandTotals, startDate)
     } else {
@@ -278,35 +280,75 @@ export function getAreaData(months, calculationRows, totalSupply, startDate) {
   return props
 }
 
-export function getDemandAreaData(
-  calculationRow,
-  months,
-  supplyDemandTotals,
-  startDate
-) {
+export function getDemandAreaData(calculationRow, months, supplyDemandTotals, startDate) {
   if (calculationRow.CalculationTimeSeries !== undefined) {
-    const inputData = calculationRow.CalculationTimeSeries || []
+    const inputData = calculationRow.CalculationTimeSeries || [];
+    const sortedMonthsInput = inputData.sort((a, b) => a.months - b.months);
 
     for (let i = 0; i < months; i++) {
-      if (supplyDemandTotals[i] === undefined) {
+      let monthExists = false;
+      
+      for (const input of sortedMonthsInput) {
+        if (input.months === i + 1) {
+          supplyDemandTotals[i] = {
+            date: new Date(startDate).setMonth(new Date(startDate).getMonth() + i),
+            demand: input.tokens,
+            months: input.months,
+          };
+          monthExists = true;
+          break;
+        }
+      }
+      
+      if (!monthExists) {
         supplyDemandTotals[i] = {
-          date: new Date(startDate).setMonth(
-            new Date(startDate).getMonth() + i
-          ),
-          demand: inputData[i]?.tokens || 0,
-          months: i+1,
-        }
-      } else {
-        if (supplyDemandTotals[i].demand === undefined) {
-          supplyDemandTotals[i].demand = 0
-        }
-        supplyDemandTotals[i].demand +=          
-          inputData[i]?.tokens || 0
+          date: new Date(startDate).setMonth(new Date(startDate).getMonth() + i),
+          demand: 0,
+          months: i + 1,
+        };
       }
     }
   }
-  console.log("🚀 ~ file: helper.ts:333 ~ supplyDemandTotals:", supplyDemandTotals)
+
+  console.log('🚀 ~ file: helper.ts:333 ~ supplyDemandTotals:', supplyDemandTotals);
 }
+
+
+// export function getDemandAreaData(
+//   calculationRow,
+//   months,
+//   supplyDemandTotals,
+//   startDate
+// ) {
+//   //we could sort incoming timeseries by month ascending - then we could skip months
+//   if (calculationRow.CalculationTimeSeries !== undefined) {
+//     const inputData = calculationRow.CalculationTimeSeries || []
+//     const sortedMonthsInput = inputData.sort((a, b) => a.months - b.months)
+//     //check for
+//     for (let i = 0; i < months; i++) {
+//       //if months+1 does not exist in inputData set tokens = 0
+//       if (supplyDemandTotals[i] === undefined) {
+//           supplyDemandTotals[i] = {
+//             date: new Date(startDate).setMonth(
+//               new Date(startDate).getMonth() + i
+//             ),
+//             demand: sortedMonthsInput[i]?.tokens || 0,
+//             months: sortedMonthsInput[i]?.months ||i + 1,
+//           }
+//         // }
+//       } else {
+//         if (supplyDemandTotals[i].demand === undefined) {
+//           supplyDemandTotals[i].demand = 0
+//         }
+//         supplyDemandTotals[i].demand += sortedMonthsInput[i]?.tokens || 0
+//       }
+//     }
+//   }
+//   console.log(
+//     '🚀 ~ file: helper.ts:333 ~ supplyDemandTotals:',
+//     supplyDemandTotals
+//   )
+// }
 
 export function getLinearAreaData(
   calculationRow,
@@ -571,8 +613,7 @@ export async function validateFreeTrialExamples(
   admin: boolean = false,
   userId: string
 ): Promise<boolean> {
-
-  if(validateTierAccess(subscription,admin)){
+  if (validateTierAccess(subscription, admin)) {
     //premium has unlimited access
     return true
   }
@@ -583,14 +624,14 @@ export async function validateFreeTrialExamples(
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
-    });
-    const data = await response.json();
-    console.log("🚀 ~ file: helper.ts:605 ~ data:", data)
+    })
+    const data = await response.json()
+    console.log('🚀 ~ file: helper.ts:605 ~ data:', data)
     // process the data returned from the server
 
-    let subscriptionData = data;
-    subscriptionData.authorClerkId = userId;
-    const counter = subscriptionData?.exampleSectionCounter || 0;
+    let subscriptionData = data
+    subscriptionData.authorClerkId = userId
+    const counter = subscriptionData?.exampleSectionCounter || 0
     if (counter < 3) {
       //still within limit
       //async increase counter
@@ -599,48 +640,54 @@ export async function validateFreeTrialExamples(
         '🚀 ~ file: helper.ts:624 ~ .then ~ still within limit:',
         'still within limit'
       )
-      subscriptionData.exampleViewStart = subscriptionData.exampleViewStart || new Date();
-      subscriptionData.exampleSectionCounter = counter + 1;
-      await updateSubscriptionData(subscriptionData);
-      
-      return true;
+      subscriptionData.exampleViewStart =
+        subscriptionData.exampleViewStart || new Date()
+      subscriptionData.exampleSectionCounter = counter + 1
+      await updateSubscriptionData(subscriptionData)
+
+      return true
     } else {
       //have 7 days past?
-      const viewStart = new Date(data?.exampleViewStart);
-      console.log("🚀 ~ file: helper.ts:626 ~ viewStart:", viewStart)
-      const currentDate = dayjs();
-      console.log("🚀 ~ file: helper.ts:628 ~ currentDate:", currentDate)
-      console.log("🚀 ~ file: helper.ts:628 ~ currentDate.diff(viewStart, 'day'):", currentDate.diff(viewStart, 'day'))
+      const viewStart = new Date(data?.exampleViewStart)
+      console.log('🚀 ~ file: helper.ts:626 ~ viewStart:', viewStart)
+      const currentDate = dayjs()
+      console.log('🚀 ~ file: helper.ts:628 ~ currentDate:', currentDate)
+      console.log(
+        "🚀 ~ file: helper.ts:628 ~ currentDate.diff(viewStart, 'day'):",
+        currentDate.diff(viewStart, 'day')
+      )
       if (currentDate.diff(viewStart, 'day') > 7) {
-        
         // reset date to today, reset counter to 1
         console.log(
           '🚀 ~ file: helper.ts:619 ~ .then ~ reset date to today, reset counter to 1:',
           'reset date to today, reset counter to 1'
         )
-        subscriptionData.exampleViewStart = new Date();
-        subscriptionData.exampleSectionCounter = 1;
-        await updateSubscriptionData(subscriptionData);
-        
-        return true;
+        subscriptionData.exampleViewStart = new Date()
+        subscriptionData.exampleSectionCounter = 1
+        await updateSubscriptionData(subscriptionData)
+
+        return true
       } else {
         // 7 days have not passed
         console.log(
           '🚀 ~ file: helper.ts:620 ~ .then ~ // 7 days have not passed:',
           '7 days have not passed'
         )
-        return false;
+        return false
       }
     }
   } catch (error) {
     // handle any errors that occur
-    console.error(error);
-    return false;
+    console.error(error)
+    return false
   }
 }
 
 export async function updateSubscriptionData(subscription: object) {
-  console.log("🚀 ~ file: helper.ts:647 ~ updateSubscriptionData ~ subscription:", subscription)
+  console.log(
+    '🚀 ~ file: helper.ts:647 ~ updateSubscriptionData ~ subscription:',
+    subscription
+  )
   const body = { subscription }
 
   await fetch('/api/post/updateSubscriptionData', {
@@ -662,7 +709,10 @@ export async function createSpreadSheet(title) {
       body: JSON.stringify(body),
     })
     const spreadsheetUrl = await response.text()
-    console.log("🚀 ~ file: helper.ts:553 ~ createSpreadSheet ~ spreadsheetUrl:", spreadsheetUrl)
+    console.log(
+      '🚀 ~ file: helper.ts:553 ~ createSpreadSheet ~ spreadsheetUrl:',
+      spreadsheetUrl
+    )
     // toast.success('Message sent', { position: 'bottom-right' })
     return spreadsheetUrl
   } catch (error) {
