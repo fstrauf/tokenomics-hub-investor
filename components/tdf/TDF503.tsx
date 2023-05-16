@@ -3,7 +3,7 @@ import { getActiveDesignPhase } from '../../lib/helper'
 import FormCardSupply from '../form/FormCardSupply'
 // import BreakdownBox from '../slugView/breakdown-box'
 import ResourceSection from './ResourceSection'
-import TDFCalculator from './TDFCalculator'
+import TDFCalculatorForSupply from './TDFCalculatorForSupply'
 import Tiptap from '../TipTap'
 import ExampleSection from './ExampleSection'
 import { useEffect } from 'react'
@@ -46,6 +46,7 @@ export default function TDF503({
       <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 ">
         {designPhase.name}
       </h5>
+      <TDFCalculatorForSupply values={values} />
 
       <Field
         name="Mechanism"
@@ -59,7 +60,6 @@ export default function TDF503({
         field="Mechanism"
         reviewRequiredFields={reviewRequiredFields}
       />
-      <TDFCalculator values={values} />
       <ResourceSection content={designPhase.Resources} />
       <ExampleSection
         presetCategories={values.categories}

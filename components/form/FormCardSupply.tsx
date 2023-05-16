@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import Drawer from '../slugView/Drawer'
 import MechanismCardSupply from '../tdf/MechanismCardSupply'
 import { supplyDemandType } from '../../lib/helper'
-
+import XMarkIcon from '../../public/svg/xmarkicon'
 export const FormCardSupply = ({
   field,
   values,
@@ -77,6 +77,57 @@ export const FormCardSupply = ({
     setSelectedTemplate(defaultMechanism)
   }
 
+  const handleEditMechanism = (index) => {
+    setMechanismIndex(index)
+    setIsOpen(true)
+  }
+
+  const mechanismTile = (input, index, arrayHelpers) => {
+    return (
+      <div
+        key={index}
+        className="grid h-24 w-36 content-between rounded-md border-2 border-dao-green p-1 text-xs"
+      >
+        {' '}
+        <div>
+          <div className="flex">
+            {input?.isSink ? (
+              <></>
+            ) : (
+              <div
+                className="mr-2 h-5 w-5 bg-slate-600"
+                style={{ background: input.color }}
+              ></div>
+            )}
+            <p className="">{input.name}</p>
+          </div>
+          {input.isSink ? (
+            <></>
+          ) : (
+            <p className="mt-2">{input.percentageAllocation} %</p>
+          )}
+        </div>
+        <div className="flex h-7 border-t-2">
+          {' '}
+          <button
+            type="button"
+            className="w-full"
+            onClick={() => handleEditMechanism(index)}
+          >
+            Edit
+          </button>
+          <button
+            className="relative float-right"
+            onClick={() => arrayHelpers.remove(index)}
+            type="button"
+          >
+            <XMarkIcon className="h-3 w-3" aria-hidden="true" />
+          </button>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="relative overflow-x-auto">
       <Drawer isOpen={isOpen} setIsOpen={setIsOpen}>
@@ -93,20 +144,13 @@ export const FormCardSupply = ({
         name={field.name}
         render={(arrayHelpers) => (
           <>
-            <div key={87944}>
+            <div key={87944} >
               <div>
                 <div>
                   <div>
                     <p className="mt-5">Allocations</p>
                     <p className="mt-5">Internal</p>
                     <p>
-                      <button
-                        type="button"
-                        className="mt-5 h-11 w-28 rounded-md border-2 border-dao-green text-xs font-bold"
-                        onClick={() => handleNewMechanism(arrayHelpers, false)}
-                      >
-                        Add
-                      </button>
                       <select
                         style={{ marginRight: 1000 }}
                         onChange={handleChange}
@@ -134,7 +178,32 @@ export const FormCardSupply = ({
                           }
                         })}
                       </select>
+                      <button
+                        type="button"
+                        className="mt-5 h-11 w-28 rounded-md border-2 border-dao-green text-xs font-bold"
+                        onClick={() => handleNewMechanism(arrayHelpers, false)}
+                      >
+                        Add
+                      </button>
                     </p>
+                    {/* added new */}
+                    <div className="h-60 mt-10 overflow-auto rounded-lg border-2 border-slate-300">
+                      <div
+                        key={4711}
+                        className="flex flex-row flex-wrap gap-2 overflow-auto p-2"
+                      >
+                        {field.value?.length > 0 &&
+                          field.value?.map((input, index) => (
+                            <>
+                              {!input.isSink && input.supplyDemandType == supplyDemandType.supplyInternal ? (
+                                <>{mechanismTile(input, index, arrayHelpers)}</>
+                              ) : (
+                                <></>
+                              )}
+                            </>
+                          ))}
+                      </div>
+                    </div>
 
                     <p className="mt-5">External</p>
 
@@ -174,6 +243,24 @@ export const FormCardSupply = ({
                         })}
                       </select>
                     </p>
+                    {/* added new2 */}
+                    <div className="h-60 mt-10 overflow-auto rounded-lg border-2 border-slate-300">
+                      <div
+                        key={4711}
+                        className="flex flex-row flex-wrap gap-2 overflow-auto p-2"
+                      >
+                        {field.value?.length > 0 &&
+                          field.value?.map((input, index) => (
+                            <>
+                              {input.isSink && input.supplyDemandType == supplyDemandType.supplyExternal ? (
+                                <>{mechanismTile(input, index, arrayHelpers)}</>
+                              ) : (
+                                <></>
+                              )}
+                            </>
+                          ))}
+                      </div>
+                    </div>
                     <div></div>
                   </div>
                 </div>
