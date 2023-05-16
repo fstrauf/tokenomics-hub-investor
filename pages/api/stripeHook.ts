@@ -82,34 +82,12 @@ export default async function handler(
           }
           res.status(200).send({event: event?.type})
           //update the user publicmetadata with the new subscription data.
-          break
-        case 'customer.subscription.updated':
-          //we should change the current subscription
-          res.status(200).send({event: event?.type})
-          break
-        case 'customer.subscription.deleted':
-          //eset the user back to free.
-          res.status(200).send({event: event?.type})
-          break
-        case 'customer.subscription.paused':
-          //reset to free tier
-          res.status(200).send({event: event?.type})
-          break
-        case 'customer.subscription.resumed':
-          //update the tier
-          res.status(200).send({event: event?.type})
-          break
-        case 'invoice.paid':
-          //update the tier
-          res.status(200).send({event: event?.type})
-          break
+          break    
 
         default:
           console.log(`Unhandled event type ${event?.type}`)
           res.status(200).send({event: event?.type})
       }
-
-      res.status(200)
     } catch (err) {
       console.error(`Error verifying Stripe webhook: ${err.message}`)
       res.status(400).json({ error: `Webhook Error: ${err.message}` })
