@@ -170,14 +170,11 @@ export const MechanismCard = ({
               <table className="mb-1 overflow-x-auto text-left text-sm text-gray-500">
                 <thead className="bg-gray-50 text-xs text-gray-700">
                   <tr>
-                    <th scope="col" className="py-3">
+                    {/* <th scope="col" className="py-3">
                       Phase
-                    </th>
+                    </th> */}
                     <th scope="col" className="py-3">
-                      Phase Duration
-                      <span className="ml-1 self-center text-xs">
-                        (in months)
-                      </span>
+                      Month
                     </th>
                     <th scope="col" className="py-3">
                       Demand
@@ -198,7 +195,7 @@ export const MechanismCard = ({
                             key={factorIndex}
                             className="border-b bg-white text-xs font-normal"
                           >
-                            <th
+                            {/* <th
                               scope="row"
                               className="whitespace-nowrap text-gray-900 "
                             >
@@ -209,7 +206,7 @@ export const MechanismCard = ({
                                 type="number"
                                 onWheel={(event) => event.currentTarget.blur()}
                               />
-                            </th>
+                            </th> */}
                             <td className="">
                               {' '}
                               <Field
@@ -217,6 +214,7 @@ export const MechanismCard = ({
                                 className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-gray-900 focus:border-blue-500 focus:ring-blue-500"
                                 type="number"
                                 onWheel={(event) => event.currentTarget.blur()}
+                                disabled={true}
                               />
                             </td>
                             <td className="">
