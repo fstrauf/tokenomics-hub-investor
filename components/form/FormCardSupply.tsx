@@ -1,19 +1,27 @@
 import { FieldArray } from 'formik'
 import React, { useState } from 'react'
+import XMarkIcon from '../../public/svg/xmarkicon'
 import Drawer from '../slugView/Drawer'
+
+import { validateTierAccess } from '../../lib/helper'
+import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
+import Link from 'next/link'
 import MechanismCardSupply from '../tdf/MechanismCardSupply'
 import { supplyDemandType } from '../../lib/helper'
-import XMarkIcon from '../../public/svg/xmarkicon'
-export const FormCardSupply = ({
+
+export const FormCardSupplyDemand = ({
   field,
   values,
   mechanismTemplates,
   setFieldValue,
+  subscription,
 }) => {
+  const { user } = useUser()
+  const admin = user?.publicMetadata?.admin || false
   let [mechanismIndex, setMechanismIndex] = useState(0)
   const defaultMechanism = {
     id: '',
-    name: `default`,
+    name: `Default`,
     summary:
       'Briefly explain what this mechanism incentivises users to do and why they want to do it. (e.g., users are incentivised to buy and stake a token in order to receive token emissions)',
     details:
@@ -144,128 +152,139 @@ export const FormCardSupply = ({
         name={field.name}
         render={(arrayHelpers) => (
           <>
-            <div key={87944} >
-              <div>
-                <div>
-                  <div>
-                    <p className="mt-5">Allocations</p>
-                    <p className="mt-5">Internal</p>
-                    <p>
-                      <select
-                        style={{ marginRight: 1000 }}
-                        onChange={handleChange}
-                        className="float-right mt-5  block h-11 w-32 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-xs text-gray-900 focus:border-dao-red focus:ring-dao-red"
-                      >
-                        <option key="none" value="none">
-                          From template
-                        </option>
-                        {mechTemplates?.map((mt) => {
-                          if (
-                            mt.supplyDemandType ==
-                            supplyDemandType.supplyInternal
-                          ) {
-                            return (
-                              <>
-                                <option
-                                  key={mt.id}
-                                  value={mt.id}
-                                  // label={mt.name}
-                                >
-                                  {mt.name}
-                                </option>
-                              </>
-                            )
-                          }
-                        })}
-                      </select>
-                      <button
-                        type="button"
-                        className="mt-5 h-11 w-28 rounded-md border-2 border-dao-green text-xs font-bold"
-                        onClick={() => handleNewMechanism(arrayHelpers, false)}
-                      >
-                        Add
-                      </button>
-                    </p>
-                    {/* added new */}
-                    <div className="h-60 mt-10 overflow-auto rounded-lg border-2 border-slate-300">
-                      <div
-                        key={4711}
-                        className="flex flex-row flex-wrap gap-2 overflow-auto p-2"
-                      >
-                        {field.value?.length > 0 &&
-                          field.value?.map((input, index) => (
-                            <>
-                              {!input.isSink && input.supplyDemandType == supplyDemandType.supplyInternal ? (
-                                <>{mechanismTile(input, index, arrayHelpers)}</>
-                              ) : (
-                                <></>
-                              )}
-                            </>
-                          ))}
-                      </div>
-                    </div>
-
-                    <p className="mt-5">External</p>
-
-                    <p className="mt-5">
-                      <button
-                        type="button"
-                        className="h-11 w-28 rounded-md border-2 border-dao-green text-xs font-bold"
-                        onClick={() => handleNewMechanism(arrayHelpers, true)}
-                      >
-                        Add
-                      </button>
-                      <select
-                        style={{ marginRight: 1000 }}
-                        onChange={handleChange}
-                        className="float-right block h-11 w-32 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-xs text-gray-900 focus:border-dao-red focus:ring-dao-red"
-                      >
-                        <option key="none" value="none">
-                          From template
-                        </option>
-                        {mechTemplates?.map((mt) => {
-                          if (
-                            mt.supplyDemandType ==
-                            supplyDemandType.supplyExternal
-                          ) {
-                            return (
-                              <>
-                                <option
-                                  key={mt.id}
-                                  value={mt.id}
-                                  // label={mt.name}
-                                >
-                                  {mt.name}
-                                </option>
-                              </>
-                            )
-                          }
-                        })}
-                      </select>
-                    </p>
-                    {/* added new2 */}
-                    <div className="h-60 mt-10 overflow-auto rounded-lg border-2 border-slate-300">
-                      <div
-                        key={4711}
-                        className="flex flex-row flex-wrap gap-2 overflow-auto p-2"
-                      >
-                        {field.value?.length > 0 &&
-                          field.value?.map((input, index) => (
-                            <>
-                              {input.isSink && input.supplyDemandType == supplyDemandType.supplyExternal ? (
-                                <>{mechanismTile(input, index, arrayHelpers)}</>
-                              ) : (
-                                <></>
-                              )}
-                            </>
-                          ))}
-                      </div>
-                    </div>
-                    <div></div>
+            <div key={87944} className="mt-10 flex">
+              <div className="w-1/2">
+                <div className="mb-1 flex gap-3">
+                  {' '}
+                  <p className='font-light'>Internal Allocations</p>
+               
+                  <select
+                    onChange={handleChange}
+                    className="block h-11 w-32 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-xs text-gray-900 focus:border-dao-red focus:ring-dao-red"
+                  >
+                    <option key="none" value="none">
+                      From template
+                    </option>
+                    {mechTemplates?.map((mt) => {
+                      if (
+                        mt.supplyDemandType == supplyDemandType.supplyInternal
+                      ) {
+                        return (
+                          <>
+                            <option
+                              key={mt.id}
+                              value={mt.id}
+                              // label={mt.name}
+                            >
+                              {mt.name}
+                            </option>
+                          </>
+                        )
+                      }
+                    })}
+                  </select>
+                  <button
+                    type="button"
+                    className="h-11 w-28 rounded-md border-2 border-dao-green text-xs font-bold"
+                    onClick={() => handleNewMechanism(arrayHelpers, false)}
+                  >
+                    Add
+                  </button>
+                </div>
+                <div className="h-60 overflow-auto rounded-lg border-2 border-slate-300">
+                  <div
+                    key={4711}
+                    className="flex flex-row flex-wrap gap-2 overflow-auto p-2"
+                  >
+                    {field.value?.length > 0 &&
+                      field.value?.map((input, index) => (
+                        <>
+                          {!input.isSink &&
+                          input.supplyDemandType ==
+                            supplyDemandType.supplyInternal ? (
+                            <>{mechanismTile(input, index, arrayHelpers)}</>
+                          ) : (
+                            <></>
+                          )}
+                        </>
+                      ))}
                   </div>
                 </div>
               </div>
-              <div></div>
+              <div className="relative w-1/2">
+                {validateTierAccess(subscription, admin) ? (
+                  <></>
+                ) : (
+                  <>
+                    {' '}
+                    <div className="absolute inset-0 rounded-lg bg-gray-100 opacity-70"></div>
+                    <div className="absolute inset-0 z-10 flex flex-col items-center justify-center">
+                      <p className="rounded-lg bg-gray-200 p-10 text-3xl font-bold text-gray-900">
+                        Premium Members Only
+                      </p>
+                      <Link href="/manage-subscriptions">
+                        <button className="mt-5 rounded-md bg-dao-red px-6 py-4 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
+                          Subscribe Now
+                        </button>
+                      </Link>
+                    </div>
+                  </>
+                )}
+
+                <div className="mb-1 flex gap-2">
+                  {' '}
+                  <p className='font-light'>External Allocations</p>
+                  <select
+                    onChange={handleChange}
+                    className="block h-11 w-32 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-xs text-gray-900 focus:border-dao-red focus:ring-dao-red"
+                  >
+                    <option key="none" value="none">
+                      From template
+                    </option>
+                    {mechTemplates?.map((mt) => {
+                      if (
+                        mt.supplyDemandType == supplyDemandType.supplyExternal
+                      ) {
+                        return (
+                          <>
+                            <option
+                              key={mt.id}
+                              value={mt.id}
+                              // label={mt.name}
+                            >
+                              {mt.name}
+                            </option>
+                          </>
+                        )
+                      }
+                    })}
+                  </select>
+                  <button
+                    type="button"
+                    className="h-11 w-28 rounded-md border-2 border-dao-green text-xs font-bold"
+                    onClick={() => handleNewMechanism(arrayHelpers, true)}
+                  >
+                    Add
+                  </button>
+                </div>
+                <div className="h-60 rounded-lg border-2 border-slate-300">
+                  <div
+                    key={4811}
+                    className="flex flex-row flex-wrap gap-2 overflow-auto p-2"
+                  >
+                    {field.value?.length > 0 &&
+                      field.value?.map((input, index) => (
+                        <>
+                          {input.isSink && input.supplyDemandType == supplyDemandType.supplyExternal ? (
+                            <>{mechanismTile(input, index, arrayHelpers)}</>
+                          ) : (
+                            <></>
+                          )}
+                        </>
+                      ))}
+                  </div>
+                </div>
+              </div>
             </div>
           </>
         )}
@@ -274,4 +293,4 @@ export const FormCardSupply = ({
   )
 }
 
-export default FormCardSupply
+export default FormCardSupplyDemand

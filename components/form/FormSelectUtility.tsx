@@ -1,6 +1,7 @@
 // import { FieldProps } from "formik";
 import React from 'react'
 import Select from 'react-select'
+import { supplyDemandType } from '../../lib/helper'
 
 const FormSelectUtilty = ({
   field,
@@ -10,25 +11,8 @@ const FormSelectUtilty = ({
   placeholder = 'Select or create',
   isSink,
 }) => {
-  const requirementOptions = [
-    { id: 'Stake', name: 'Stake' },
-    { id: 'Lock', name: 'Lock' },
-    { id: 'Pay Tax', name: 'Pay Tax' },
-    { id: 'Bond', name: 'Bond' },
-    { id: 'Option', name: 'Option' },
-    { id: 'Reedem', name: 'Reedem' },
-  ];
-  const incentiveOptions = [
-    { id: '10% Trader', name: '10% Trader' },
-    { id: '30% Liquidity providers', name: '30% Liquidity providers' },
-    { id: '20% Token Holders', name: '30% Liquidity providers' },
-    { id: '3% Airdrop', name: '3% Airdrop' },
-    { id: '2% contributors', name: '2% contributors' },
 
-  ]
-  console.log('🚀 ~ file: FormSelectUtility.tsx:12 ~ options:', options)
-  console.log('🚀 ~ field = ', field)
-  console.log('🚀 is slink = ', isSink)
+
   function onChange(option) {
     form.setFieldValue(field.name, option ? option.map((item) => item) : [])
   }
@@ -48,7 +32,7 @@ const FormSelectUtilty = ({
         placeholder={placeholder}
       />
     )
-  } else if(field.name.split('.')[2]== 'requirement') {
+  } else if (field.name.split('.')[2] == 'requirement') {
     return (
       <Select
         className="react-select-container"
@@ -56,13 +40,9 @@ const FormSelectUtilty = ({
         name={field.name}
         value={field.value}
         onChange={onChange}
-        options={
-          isSink
-            ? requirementOptions
-            : options.value.filter((option) => {
-                return option.supplyDemandType == 'demandUtility'
-              })
-        }
+        options={options.value.filter((option) => {
+          return option.supplyDemandType == supplyDemandType.demandMechanism
+        })}
         getOptionValue={(option) => option.id}
         getOptionLabel={(option) => option.name}
         // getNewOptionData={(value, label) => ({ id: value, name: label, __isNew__: true })}
@@ -70,7 +50,25 @@ const FormSelectUtilty = ({
         placeholder={placeholder}
       />
     )
-  }
+  } else if (field.name.split('.')[2] == 'incentive') {
+    return (
+      <Select
+        className="react-select-container"
+        classNamePrefix="react-select"
+        name={field.name}
+        value={field.value}
+        onChange={onChange}
+        options={options.value.filter((option) => {
+          return option.supplyDemandType == supplyDemandType.supplyExternal
+        })}
+        getOptionValue={(option) => option.percentageAllocation +'% '+ option.name}
+        getOptionLabel={(option) =>  option.percentageAllocation +'% '+ option.name}
+        // getNewOptionData={(value, label) => ({ id: value, name: label, __isNew__: true })}
+        isMulti={true}
+        placeholder={placeholder}
+      />
+    )
+  } 
   else {
     return (
       <Select
@@ -79,13 +77,9 @@ const FormSelectUtilty = ({
         name={field.name}
         value={field.value}
         onChange={onChange}
-        options={
-          isSink
-            ? incentiveOptions
-            : options.value.filter((option) => {
-                return option.supplyDemandType == 'demandUtility'
-              })
-        }
+        options={options.value.filter((option) => {
+          return option.supplyDemandType == supplyDemandType.demandUtility
+        })}
         getOptionValue={(option) => option.id}
         getOptionLabel={(option) => option.name}
         // getNewOptionData={(value, label) => ({ id: value, name: label, __isNew__: true })}

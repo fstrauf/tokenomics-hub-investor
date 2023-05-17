@@ -4,13 +4,19 @@ import Drawer from '../slugView/Drawer'
 import MechanismCardDemand from '../tdf/MechanismCardDemand'
 import { supplyDemandType } from '../../lib/helper'
 import XMarkIcon from '../../public/svg/xmarkicon'
+import { validateTierAccess } from '../../lib/helper'
+import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
+import Link from 'next/link'
 export const FormCardSupply = ({
   field,
   values,
   mechanismTemplates,
   setFieldValue,
+  subscription
 }) => {
   let [mechanismIndex, setMechanismIndex] = useState(0)
+  const { user } = useUser()
+  const admin = user?.publicMetadata?.admin || false
   const defaultMechanism = {
     id: '',
     name: `default`,
@@ -144,132 +150,142 @@ export const FormCardSupply = ({
         name={field.name}
         render={(arrayHelpers) => (
           <>
-            <div key={87944}>
-              <div>
-                <div>
-                  <div>
-                    <p className="mt-5">Demand Types</p>
-                    <p className="mt-5">Utility</p>
-                    <p>
-                      <button
-                        type="button"
-                        className="mt-5 h-11 w-28 rounded-md border-2 border-dao-green text-xs font-bold"
-                        onClick={() => handleNewMechanism(arrayHelpers, false)}
-                      >
-                        Add
-                      </button>
-                      <select
-                        style={{ marginRight: 1000 }}
-                        onChange={handleChange}
-                        className="float-right mt-5  block h-11 w-32 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-xs text-gray-900 focus:border-dao-red focus:ring-dao-red"
-                      >
-                        <option key="none" value="none">
-                          From template
-                        </option>
-                        {mechTemplates?.map((mt) => {
-                          if (
-                            mt.supplyDemandType ==
-                            supplyDemandType.demandUtility
-                          ) {
-                            return (
-                              <>
-                                <option
-                                  key={mt.id}
-                                  value={mt.id}
-                                  // label={mt.name}
-                                >
-                                  {mt.name}
-                                </option>
-                              </>
-                            )
-                          }
-                        })}
-                      </select>
-                    </p>
-                    {/* added new */}
-                    <div className="mt-10 h-60 overflow-auto rounded-lg border-2 border-slate-300">
-                      <div
-                        key={4711}
-                        className="flex flex-row flex-wrap gap-2 overflow-auto p-2"
-                      >
-                        {field.value?.length > 0 &&
-                          field.value?.map((input, index) => (
-                            <>
-                              {!input.isSink &&
-                              input.supplyDemandType ==
-                                supplyDemandType.demandUtility ? (
-                                <>{mechanismTile(input, index, arrayHelpers)}</>
-                              ) : (
-                                <></>
-                              )}
-                            </>
-                          ))}
-                      </div>
-                    </div>
-
-                    <p className="mt-5">Mechanism</p>
-
-                    <p className="mt-5">
-                      <button
-                        type="button"
-                        className="h-11 w-28 rounded-md border-2 border-dao-green text-xs font-bold"
-                        onClick={() => handleNewMechanism(arrayHelpers, true)}
-                      >
-                        Add
-                      </button>
-                      <select
-                        style={{ marginRight: 1000 }}
-                        onChange={handleChange}
-                        className="float-right block h-11 w-32 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-xs text-gray-900 focus:border-dao-red focus:ring-dao-red"
-                      >
-                        <option key="none" value="none">
-                          From template
-                        </option>
-                        {mechTemplates?.map((mt) => {
-                          if (
-                            mt.supplyDemandType ==
-                            supplyDemandType.demandMechanism
-                          ) {
-                            return (
-                              <>
-                                <option
-                                  key={mt.id}
-                                  value={mt.id}
-                                  // label={mt.name}
-                                >
-                                  {mt.name}
-                                </option>
-                              </>
-                            )
-                          }
-                        })}
-                      </select>
-                    </p>
-                    {/* added new */}
-                    <div className="mt-10 h-60 overflow-auto rounded-lg border-2 border-slate-300">
-                      <div
-                        key={4711}
-                        className="flex flex-row flex-wrap gap-2 overflow-auto p-2"
-                      >
-                        {field.value?.length > 0 &&
-                          field.value?.map((input, index) => (
-                            <>
-                              {input.isSink &&
-                              input.supplyDemandType ==
-                                supplyDemandType.demandMechanism ? (
-                                <>{mechanismTile(input, index, arrayHelpers)}</>
-                              ) : (
-                                <></>
-                              )}
-                            </>
-                          ))}
-                      </div>
-                    </div>
-                  </div>
+          <p className='font-light mt-10'>Demand Types</p>
+          <div key={87944} className="mt-10 flex">
+            <div className="w-1/2">
+              <div className="mb-1 flex gap-3">
+                {' '}
+             
+                <p className='font-dark'>Utilty</p>
+                <select
+                  onChange={handleChange}
+                  className="block h-11 w-32 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-xs text-gray-900 focus:border-dao-red focus:ring-dao-red"
+                >
+                  <option key="none" value="none">
+                    From template
+                  </option>
+                  {mechTemplates?.map((mt) => {
+                    if (
+                      mt.supplyDemandType == supplyDemandType.demandUtility
+                    ) {
+                      return (
+                        <>
+                          <option
+                            key={mt.id}
+                            value={mt.id}
+                            // label={mt.name}
+                          >
+                            {mt.name}
+                          </option>
+                        </>
+                      )
+                    }
+                  })}
+                </select>
+                <button
+                  type="button"
+                  className="h-11 w-28 rounded-md border-2 border-dao-green text-xs font-bold"
+                  onClick={() => handleNewMechanism(arrayHelpers, false)}
+                >
+                  Add
+                </button>
+              </div>
+              <div className="h-60 overflow-auto rounded-lg border-2 border-slate-300">
+                <div
+                  key={4711}
+                  className="flex flex-row flex-wrap gap-2 overflow-auto p-2"
+                >
+                  {field.value?.length > 0 &&
+                    field.value?.map((input, index) => (
+                      <>
+                        {!input.isSink &&
+                        input.supplyDemandType ==
+                          supplyDemandType.demandUtility ? (
+                          <>{mechanismTile(input, index, arrayHelpers)}</>
+                        ) : (
+                          <></>
+                        )}
+                      </>
+                    ))}
                 </div>
               </div>
             </div>
-          </>
+            <div className="relative w-1/2">
+              {validateTierAccess(subscription, admin) ? (
+                <></>
+              ) : (
+                <>
+                  {' '}
+                  <div className="absolute inset-0 rounded-lg bg-gray-100 opacity-70"></div>
+                  <div className="absolute inset-0 z-10 flex flex-col items-center justify-center">
+                    <p className="rounded-lg bg-gray-200 p-10 text-3xl font-bold text-gray-900">
+                      Premium Members Only
+                    </p>
+                    <Link href="/manage-subscriptions">
+                      <button className="mt-5 rounded-md bg-dao-red px-6 py-4 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
+                        Subscribe Now
+                      </button>
+                    </Link>
+                  </div>
+                </>
+              )}
+
+              <div className="mb-1 flex gap-2">
+                {' '}
+                <p className='font-dark'>Mechanism</p>
+                <select
+                  onChange={handleChange}
+                  className="block h-11 w-32 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-xs text-gray-900 focus:border-dao-red focus:ring-dao-red"
+                >
+                  <option key="none" value="none">
+                    From template
+                  </option>
+                  {mechTemplates?.map((mt) => {
+                    if (
+                      mt.supplyDemandType == supplyDemandType.demandMechanism
+                    ) {
+                      return (
+                        <>
+                          <option
+                            key={mt.id}
+                            value={mt.id}
+                            // label={mt.name}
+                          >
+                            {mt.name}
+                          </option>
+                        </>
+                      )
+                    }
+                  })}
+                </select>
+                <button
+                  type="button"
+                  className="h-11 w-28 rounded-md border-2 border-dao-green text-xs font-bold"
+                  onClick={() => handleNewMechanism(arrayHelpers, true)}
+                >
+                  Add
+                </button>
+              </div>
+              <div className="h-60 rounded-lg border-2 border-slate-300">
+                <div
+                  key={4811}
+                  className="flex flex-row flex-wrap gap-2 overflow-auto p-2"
+                >
+                  {field.value?.length > 0 &&
+                    field.value?.map((input, index) => (
+                      <>
+                        {input.isSink && input.supplyDemandType == supplyDemandType.demandMechanism ? (
+                          <>{mechanismTile(input, index, arrayHelpers)}</>
+                        ) : (
+                          <></>
+                        )}
+                      </>
+                    ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
         )}
       />
     </div>

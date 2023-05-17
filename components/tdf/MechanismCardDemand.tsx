@@ -217,7 +217,7 @@ export const MechanismCardSupply = ({
         </label>
         <Field
           className="custom-select mt-5"
-          name={`${field.name}.${mechanismIndex}.Incentive`}
+          name={`${field.name}.${mechanismIndex}.incentive`}
           options={field}
           component={FormSelectUtility}
           placeholder="Select Incentive"
