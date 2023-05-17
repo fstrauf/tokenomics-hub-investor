@@ -26,6 +26,7 @@ export default async function handler(
         sig,
         process.env.STRIPE_WEBHOOK_SECRET
       )
+      console.log("🚀 ~ file: stripeHook.ts:29 ~ event:", event)
       switch (event?.type) {
         case 'checkout.session.completed':
           const userId = event.data.object?.client_reference_id
