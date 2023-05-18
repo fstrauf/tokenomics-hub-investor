@@ -21,31 +21,31 @@ export default function MyDesigns({ posts }) {
   return (
     <Layout mode={headerStatus.main}>
       <>
-        {admin && (
-          <div className="my-10 w-full">
-            <div className="flex items-center justify-between gap-4 rounded-lg bg-gradient-to-r from-dao-red to-dao-green p-2">
-              <p className="text-center text-white">
-                Upgrade your Token Design - use expert help and unlock the
-                demand builder!
-              </p>
-              <div className="flex gap-3">
-                <Link
-                  href="/manage-subscriptions"
-                  className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
-                >
-                  Upgrade to Premium
-                </Link>
-                <Link
-                  href="/manage-subscriptions"
-                  className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
-                >
-                  Manage Subscription
-                </Link>
-              </div>
+        {/* {admin && ( */}
+        <div className="my-10 w-full">
+          <div className="flex items-center justify-between gap-4 rounded-lg bg-gradient-to-r from-dao-red to-dao-green p-2">
+            <p className="text-center text-white">
+              Upgrade your Token Design - use expert help and unlock the demand
+              builder!
+            </p>
+            <div className="flex gap-3">
+              <Link
+                href="/manage-subscriptions"
+                className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
+              >
+                Upgrade to Premium
+              </Link>
+              <Link
+                href="/manage-subscriptions"
+                className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
+              >
+                Manage Subscription
+              </Link>
             </div>
-            <div className="w-72"> </div>
           </div>
-        )}
+          <div className="w-72"> </div>
+        </div>
+        {/* )} */}
 
         <div className="mt-4 mb-4 rounded-lg bg-gray-100 p-1">
           <div className="flex items-center justify-between rounded-lg p-2 py-2">
