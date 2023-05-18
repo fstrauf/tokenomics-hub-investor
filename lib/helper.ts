@@ -131,10 +131,10 @@ export enum postType {
 }
 
 export enum subTiers {
-  genesis = 'prod_NpDbT4LFoUtZ1l',
-  navigator = '',
-  frontier = '',
-  inactive = '', 
+  genesis = 'prod_MVRtvDxAu53Ge5',
+  navigator = 'prod_MVQHF3wgkBkXCg',
+  frontier = 'prod_MEHnUn7PIvaScK',
+  inactive = 'inactive', 
 }
 
 export const stringToKey = (name) => {
@@ -572,14 +572,15 @@ export function validateTierAccess(
     console.log('user has subscriptiom')
     return true
   } else {
+    return false
     //still testing subscriptions
-    if (admin) {
-      console.log('No subscription and admin')
-      return false
-    } else {
-      console.log('No subscription but normal user (we are still testing)')
-      return true
-    }
+    // if (admin) {
+    //   console.log('No subscription and admin')
+    //   return false
+    // } else {
+    //   console.log('No subscription but normal user (we are still testing)')
+    //   return true
+    // }
   }
 }
 
@@ -624,10 +625,7 @@ export async function validateFreeTrialExamples(
     } else {
       //have 7 days past?
       const viewStart = new Date(data?.exampleViewStart);
-      console.log("🚀 ~ file: helper.ts:626 ~ viewStart:", viewStart)
       const currentDate = dayjs();
-      console.log("🚀 ~ file: helper.ts:628 ~ currentDate:", currentDate)
-      console.log("🚀 ~ file: helper.ts:628 ~ currentDate.diff(viewStart, 'day'):", currentDate.diff(viewStart, 'day'))
       if (currentDate.diff(viewStart, 'day') > 7) {
         
         // reset date to today, reset counter to 1
