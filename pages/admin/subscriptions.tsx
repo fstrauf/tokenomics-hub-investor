@@ -42,7 +42,7 @@ export default function subscriptions({ allSubscriptions }) {
 
   function handleChange(e) {
     setInititalValues(
-      allSubscriptions.find((adp) => String(adp.id) === e.target.value)
+      allSubscriptions.find((adp) => String(adp.authorClerkId) === e.target.value)
     )
   }
 
