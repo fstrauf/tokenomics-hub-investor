@@ -266,7 +266,7 @@ export function getAreaData(months, calculationRows, totalSupply, startDate) {
       }
     }
   })
-  // console.log('🚀 ~ file: helper.ts:285 ~ getAreaData ~ props:', props)
+  console.log('🚀 ~ file: helper.ts:285 ~ getAreaData ~ props:', props)
   return props
 }
 
