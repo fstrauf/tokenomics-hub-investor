@@ -66,9 +66,9 @@ export const FormCardSupplyDemand = ({
     updateMechanism.isSink = isSink
     if (isSink) {
       updateMechanism.name =
-        updateMechanism.name + ' ' + (field.value?.length + 1)
+        updateMechanism.name 
       updateMechanism.category =
-        updateMechanism.category + ' ' + (field.value?.length + 1)
+        updateMechanism.category 
     } else {
       updateMechanism.name = updateMechanism.name
       updateMechanism.category = updateMechanism.name
@@ -240,7 +240,7 @@ export const FormCardSupplyDemand = ({
                   <button
                     type="button"
                     className="h-11 w-28 rounded-md border-2 border-dao-green text-xs font-bold"
-                    onClick={() => handleNewMechanism(arrayHelpers, true)}
+                    onClick={() => handleNewMechanism(arrayHelpers, false)}
                   >
                     Add
                   </button>
@@ -253,7 +253,7 @@ export const FormCardSupplyDemand = ({
                     {field.value?.length > 0 &&
                       field.value?.map((input, index) => (
                         <>
-                          {input.isSink && input.supplyDemandType == supplyDemandType.supplyExternal ? (
+                          {!input.isSink && input.supplyDemandType == supplyDemandType.supplyExternal ? (
                             <>{mechanismTile(input, index, arrayHelpers)}</>
                           ) : (
                             <></>

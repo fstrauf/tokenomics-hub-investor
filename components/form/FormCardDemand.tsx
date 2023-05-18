@@ -67,9 +67,9 @@ export const FormCardSupply = ({
     updateMechanism.isSink = isSink
     if (isSink) {
       updateMechanism.name =
-        updateMechanism.name + ' ' + (field.value?.length + 1)
+        updateMechanism.name 
       updateMechanism.category =
-        updateMechanism.category + ' ' + (field.value?.length + 1)
+        updateMechanism.category 
     } else {
       updateMechanism.name = updateMechanism.name
       updateMechanism.category = updateMechanism.name
@@ -99,11 +99,11 @@ export const FormCardSupply = ({
           <div className="flex">
             {input?.isSink ? (
               <></>
-            ) : (
-              <div
-                className="mr-2 h-5 w-5 bg-slate-600"
-                style={{ background: input.color }}
-              ></div>
+            ) : (<></>
+              // <div
+              //   className="mr-2 h-5 w-5 bg-slate-600"
+              //   style={{ background: input.color }}
+              // ></div>
             )}
             <p className="">{input.name}</p>
           </div>
@@ -140,9 +140,11 @@ export const FormCardSupply = ({
         {isOpen && (
           <MechanismCardDemand
             field={field}
+            values={values}
             mechanismIndex={mechanismIndex}
             setFieldValue={setFieldValue}
             users={values.PostUser} // mechanismImpactFactors={mechanismImpactFactors}
+            templates={mechTemplates}
           />
         )}
       </Drawer>

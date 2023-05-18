@@ -4,12 +4,15 @@ import FormSelectUtility from '../form/FormSelectUtility'
 import * as duration from 'dayjs/plugin/duration'
 import * as dayjs from 'dayjs'
 import GenericTab from '../generic/GenericTab'
+import { createSpreadSheet } from '../../lib/helper'
 
 export const MechanismCardSupply = ({
   field,
+  values,
   mechanismIndex,
   setFieldValue,
   users,
+  templates,
 }) => {
   const isSink = field.value[mechanismIndex]?.isSink || false
   dayjs.extend(duration)
@@ -20,6 +23,15 @@ export const MechanismCardSupply = ({
     { tab: 'Functions' },
     { tab: 'Spreadsheets' },
   ]
+
+  async function downloadSpreadsheet() {
+    try {
+     
+    } catch (error) {
+      console.log('error = ', error)
+      alert(error)
+    }
+  }
 
   const DemandBuilder = () => {
     return (
@@ -140,13 +152,22 @@ export const MechanismCardSupply = ({
     return <>Comming soon...</>
   }
 
-  function Spreadsheet(){
-    return(
+  function Spreadsheet() {
+    return (
       <>
-      <div className='m-auto mt-5'>
-        <button className='outline outline-offset-2 outline-1'>Download Spreadsheet</button>
-        <button className='ml-20 outline outline-offset-2 outline-1'>Upload Spreadsheet</button>
-      </div>
+        <div className="m-auto mt-5">
+          <button
+            type="button"
+            onClick={downloadSpreadsheet}
+            className="outline outline-1 outline-offset-2"
+          >
+            Download Spreadsheet
+          </button>
+      
+          <button className="ml-20 outline outline-1 outline-offset-2">
+            Upload Spreadsheet
+          </button>
+        </div>
       </>
     )
   }
@@ -163,8 +184,9 @@ export const MechanismCardSupply = ({
           options={field}
           component={FormSelectUtility}
           placeholder="Select utility"
+          templates={templates}
           isMulti={true}
-          isSink={isSink}
+          // isSink={isSink}
         />
         <label className="mt-5 block text-sm font-medium text-gray-900">
           Descriptions
@@ -209,8 +231,8 @@ export const MechanismCardSupply = ({
           options={field}
           component={FormSelectUtility}
           placeholder="Select requirement"
+          templates={templates}
           isMulti={true}
-          isSink={isSink}
         />
         <label className="mt-5 block text-sm font-medium text-gray-900 ">
           Select Incentive
@@ -222,7 +244,6 @@ export const MechanismCardSupply = ({
           component={FormSelectUtility}
           placeholder="Select Incentive"
           isMulti={true}
-          isSink={isSink}
         />
         <label className="mt-5 block text-sm font-medium text-gray-900">
           Descriptions
@@ -245,7 +266,7 @@ export const MechanismCardSupply = ({
           <hr className="mt-5 mb-5"></hr>
 
           <div>
-          <GenericTab
+            <GenericTab
               tabs={Tabs}
               panels={[
                 <DemandBuilder></DemandBuilder>,
