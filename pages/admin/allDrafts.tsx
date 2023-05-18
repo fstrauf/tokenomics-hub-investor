@@ -1,13 +1,13 @@
-import Layout from '../components/layout'
+import Layout from '../../components/layout'
 import React from 'react'
-import prisma from '../lib/prisma'
-import Drafts from '../components/drafts'
+import prisma from '../../lib/prisma'
+import Drafts from '../../components/drafts'
 import { GetServerSideProps } from 'next'
 import { useAuth } from '@clerk/clerk-react/dist/hooks/useAuth'
 import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
 import { clerkClient } from '@clerk/nextjs/server'
-import { clerkConvertJSON, postStatus } from '../lib/helper'
-import UnAuthorised from '../components/unauthorised'
+import { clerkConvertJSON, postStatus } from '../../lib/helper'
+import UnAuthorised from '../../components/unauthorised'
 
 export default function AllDrafts({ posts }) {
   const { isSignedIn } = useAuth()
