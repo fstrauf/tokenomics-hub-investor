@@ -211,25 +211,6 @@ export const FormCardSupply = ({
               </div>
             </div>
             <div className="relative w-1/2">
-              {validateTierAccess(subscription, admin) ? (
-                <></>
-              ) : (
-                <>
-                  {' '}
-                  <div className="absolute inset-0 rounded-lg bg-gray-100 opacity-70"></div>
-                  <div className="absolute inset-0 z-10 flex flex-col items-center justify-center">
-                    <p className="rounded-lg bg-gray-200 p-10 text-3xl font-bold text-gray-900">
-                      Premium Members Only
-                    </p>
-                    <Link href="/manage-subscriptions">
-                      <button className="mt-5 rounded-md bg-dao-red px-6 py-4 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
-                        Subscribe Now
-                      </button>
-                    </Link>
-                  </div>
-                </>
-              )}
-
               <div className="mb-1 flex gap-2">
                 {' '}
                 <p className='font-dark'>Mechanism</p>
