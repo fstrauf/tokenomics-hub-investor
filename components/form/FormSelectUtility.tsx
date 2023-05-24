@@ -10,6 +10,7 @@ const FormSelectUtilty = ({
   isMulti = false,
   placeholder = 'Select or create',
   templates,
+  index
 }) => {
   function onChange(option) {
     form.setFieldValue(field.name, option ? option : {})
@@ -38,6 +39,7 @@ const FormSelectUtilty = ({
         name={field.name}
         value={field.value}
         onChange={onChange}
+        defaultValue={options.value[index]}
         options={templates.filter((option) => {
           return option.supplyDemandType == supplyDemandType.demandMechanism
         })}
@@ -78,6 +80,7 @@ const FormSelectUtilty = ({
         name={field.name}
         value={field.value}
         onChange={onChange}
+        defaultValue={options.value[index]}
         options={templates.filter((option) => {
           return option.supplyDemandType == supplyDemandType.demandUtility
         })}

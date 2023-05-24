@@ -23,7 +23,7 @@ export const FormCardSupplyDemand = ({
       'Briefly explain what this mechanism incentivises users to do and why they want to do it. (e.g., users are incentivised to buy and stake a token in order to receive token emissions)',
     details:
       '{"type":"doc","content":[{"type":"heading","attrs":{"level":3},"content":[{"type":"text","marks":[{"type":"bold"}],"text":"Explanation"}]},{"type":"paragraph","content":[{"type":"text","marks":[{"type":"italic"}],"text":"Explain in detail what this mechanism incentivises users to do, why they want to do it and why it has a positive effect on the token. Also explain if this mechanism is a sink –tokens are held/bought, a source –tokens are given out to users, or both –users are required to buy/hold a token but in exchange thet receive tokens.  (e.g., staking incentivises users to stake tokens, thus reducing circulating supply, in order to receive token emissions. This means that this mechanism acts as a sink –users are acquiring/holding a token, but also as a source –users are receiving emissions)"}]},{"type":"heading","attrs":{"level":3},"content":[{"type":"text","marks":[{"type":"bold"}],"text":"Mechanism & Users"}]},{"type":"paragraph","content":[{"type":"text","marks":[{"type":"italic"}],"text":"How the user interacts with the mechanism"},{"type":"text","text":" "}]},{"type":"paragraph","content":[{"type":"text","text":"1. Users have to…"}]},{"type":"heading","attrs":{"level":3},"content":[{"type":"text","marks":[{"type":"bold"}],"text":"Mechanism demand"}]},{"type":"paragraph","content":[{"type":"text","marks":[{"type":"italic"}],"text":"How does the mechanism create demand"}]},{"type":"heading","attrs":{"level":3},"content":[{"type":"text","marks":[{"type":"bold"}],"text":"Factors"}]},{"type":"paragraph","content":[{"type":"text","marks":[{"type":"italic"}],"text":"What factors affect demand"}]},{"type":"heading","attrs":{"level":3},"content":[{"type":"text","marks":[{"type":"bold"}],"text":"Side effects"}]},{"type":"paragraph","content":[{"type":"text","marks":[{"type":"italic"}],"text":"What are the side effects of this mechanism"}]}]}',
-    isSink: true,
+    isSink: false,
     // user: '',
     token: '',
     category: `Mechanism`,
@@ -33,20 +33,24 @@ export const FormCardSupplyDemand = ({
     percentageAllocation: 30,
     color: `#${Math.floor(Math.random() * 16777215).toString(16)}`,
     isEpochDistro: false,
+    supplyDemandType: '',
     epochDurationInSeconds: 0,
     initialEmissionPerSecond: 0,
     emissionReductionPerEpoch: 0,
     CalculationTimeSeries: [],
-    isTemplate: false,
+    isTemplate: true,
     PostUser: [],
   }
 
-  const mechTemplates = mechanismTemplates.filter((template) => {
+  const mechTemplate = mechanismTemplates.filter((template) => {
     return (
       template.supplyDemandType === supplyDemandType.supplyInternal ||
       template.supplyDemandType === supplyDemandType.supplyExternal
     )
   })
+  const mechTemplates = mechTemplate.map((obj) => ({ ...obj }))
+
+  console.log("mech templatexz = ",mechTemplates)
   const [isOpen, setIsOpen] = useState(false)
   const [selectedTemplate, setSelectedTemplate] = useState(defaultMechanism)
 
@@ -60,18 +64,21 @@ export const FormCardSupplyDemand = ({
     }
   }
 
-  const handleNewMechanism = (arrayHelpers, isSink: boolean) => {
+  const handleNewMechanism = (
+    arrayHelpers,
+    isSink: boolean,
+    tempType: string
+  ) => {
     const updateMechanism = selectedTemplate
 
     updateMechanism.isSink = isSink
+    updateMechanism.supplyDemandType = tempType
     if (isSink) {
-      updateMechanism.name =
-        updateMechanism.name 
-      updateMechanism.category =
-        updateMechanism.category 
+      updateMechanism.name = updateMechanism.name+ ' ' + (field.value?.length + 1)
+      updateMechanism.category =  updateMechanism.category+ ' ' + (field.value?.length + 1)
     } else {
-      updateMechanism.name = updateMechanism.name
-      updateMechanism.category = updateMechanism.name
+      updateMechanism.name = updateMechanism.name+ ' ' + (field.value?.length + 1)
+      updateMechanism.category = updateMechanism.category+ ' ' + (field.value?.length + 1)
       updateMechanism.summary = ''
     }
 
@@ -88,6 +95,7 @@ export const FormCardSupplyDemand = ({
   }
 
   const mechanismTile = (input, index, arrayHelpers) => {
+    console.log('test = ', input?.isSink)
     return (
       <div
         key={index}
@@ -153,8 +161,7 @@ export const FormCardSupplyDemand = ({
               <div className="w-1/2">
                 <div className="mb-1 flex gap-3">
                   {' '}
-                  <p className='font-light'>Internal Allocations</p>
-               
+                  <p className="font-light">Internal Allocations</p>
                   <select
                     onChange={handleChange}
                     className="block h-11 w-32 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-xs text-gray-900 focus:border-dao-red focus:ring-dao-red"
@@ -183,7 +190,13 @@ export const FormCardSupplyDemand = ({
                   <button
                     type="button"
                     className="h-11 w-28 rounded-md border-2 border-dao-green text-xs font-bold"
-                    onClick={() => handleNewMechanism(arrayHelpers, false)}
+                    onClick={() =>
+                      handleNewMechanism(
+                        arrayHelpers,
+                        false,
+                        supplyDemandType.supplyInternal
+                      )
+                    }
                   >
                     Add
                   </button>
@@ -211,7 +224,7 @@ export const FormCardSupplyDemand = ({
               <div className="relative w-1/2">
                 <div className="mb-1 flex gap-2">
                   {' '}
-                  <p className='font-light'>External Allocations</p>
+                  <p className="font-light">External Allocations</p>
                   <select
                     onChange={handleChange}
                     className="block h-11 w-32 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-xs text-gray-900 focus:border-dao-red focus:ring-dao-red"
@@ -240,7 +253,13 @@ export const FormCardSupplyDemand = ({
                   <button
                     type="button"
                     className="h-11 w-28 rounded-md border-2 border-dao-green text-xs font-bold"
-                    onClick={() => handleNewMechanism(arrayHelpers, false)}
+                    onClick={() =>
+                      handleNewMechanism(
+                        arrayHelpers,
+                        false,
+                        supplyDemandType.supplyExternal
+                      )
+                    }
                   >
                     Add
                   </button>
@@ -253,7 +272,9 @@ export const FormCardSupplyDemand = ({
                     {field.value?.length > 0 &&
                       field.value?.map((input, index) => (
                         <>
-                          {!input.isSink && input.supplyDemandType == supplyDemandType.supplyExternal ? (
+                          {!input.isSink &&
+                          input.supplyDemandType ==
+                            supplyDemandType.supplyExternal ? (
                             <>{mechanismTile(input, index, arrayHelpers)}</>
                           ) : (
                             <></>
