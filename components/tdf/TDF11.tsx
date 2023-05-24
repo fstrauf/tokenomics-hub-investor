@@ -75,7 +75,7 @@ export default function TDF11({
             Short Description
           </label>
           <p className="mb-2 text-xs font-extralight text-gray-500">
-            Give a short summary of the project and the token/tokens.
+            Give a short description of what the protocol is/does
           </p>
           <FormGenerateButton
             title={values.title}

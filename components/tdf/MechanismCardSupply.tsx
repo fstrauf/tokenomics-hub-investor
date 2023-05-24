@@ -1,7 +1,7 @@
 import { Field, FieldArray } from 'formik'
 import React from 'react'
 import FormSelectUser from '../form/FormSelectUser'
-import FormTipTap from '../form/FormTipTap'
+// import FormTipTap from '../form/FormTipTap'
 import * as duration from 'dayjs/plugin/duration'
 import * as dayjs from 'dayjs'
 import { shortBigNumber } from '../../lib/helper'
@@ -9,7 +9,7 @@ import { shortBigNumber } from '../../lib/helper'
 export const MechanismCardSupply = ({
   field,
   mechanismIndex,
-  setFieldValue,
+  // setFieldValue,
   users,
 }) => {
   const isSink = field.value[mechanismIndex]?.isSink || false
