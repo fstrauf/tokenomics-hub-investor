@@ -489,6 +489,7 @@ export async function notifyDiscord(url: string, status: postStatus) {
 }
 
 export function clerkConvertJSON(input) {
+  console.log("🚀 ~ file: helper.ts:492 ~ clerkConvertJSON ~ input:", input)
   var properJSON
   if (Array.isArray(input)) {
     properJSON = []
