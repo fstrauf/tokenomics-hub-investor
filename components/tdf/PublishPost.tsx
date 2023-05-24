@@ -1,8 +1,3 @@
-// import { Popover, Transition } from '@headlessui/react'
-// import Link from 'next/link'
-// import { Fragment, useState } from 'react'
-// import { mandatoryFormValidate, notifyDiscord, postStatus, postType } from '../../lib/helper'
-// import toast from 'react-hot-toast'
 import { WEBSITE_URL_BASE } from '../../lib/constants'
 import Router from 'next/router'
 import { notifyStatusUpdate, postStatus } from '../../lib/helper'
@@ -17,17 +12,25 @@ export default function PublishPost({
 }) {
   const publishPost = async (post) => {
     setSubmitting(true)
-    await fetch(`/api/post/publish/${post.id}`, {
-      method: 'PUT',
-    })
-    notifyStatusUpdate(
-      post.authorEmail,
-      postStatus.published,
-      `${WEBSITE_URL_BASE}/posts/${post.slug}`
-    )
-    toast.success('Published', { position: 'bottom-right' })
-    setSubmitting(false)
-    await Router.push('/')
+    const body = { post }
+    try {
+      await fetch(`/api/post/updatePostId`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      })
+      notifyStatusUpdate(
+        post.authorEmail,
+        postStatus.published,
+        `${WEBSITE_URL_BASE}/${post.id}`
+      )
+      toast.success('Published', { position: 'bottom-right' })
+      setSubmitting(false)
+      await Router.push('/')
+  
+    } catch (error) {
+      toast.error(error, { position: 'bottom-right' })
+    }
   }
   return (
     <button
