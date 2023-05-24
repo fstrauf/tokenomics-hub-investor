@@ -9,12 +9,11 @@ const FormSelectUtilty = ({
   options,
   isMulti = false,
   placeholder = 'Select or create',
-  isSink,
+  templates,
+  index
 }) => {
-
-
   function onChange(option) {
-    form.setFieldValue(field.name, option ? option.map((item) => item) : [])
+    form.setFieldValue(field.name, option ? option : {})
   }
 
   if (!isMulti) {
@@ -40,13 +39,14 @@ const FormSelectUtilty = ({
         name={field.name}
         value={field.value}
         onChange={onChange}
-        options={options.value.filter((option) => {
+        defaultValue={options.value[index]}
+        options={templates.filter((option) => {
           return option.supplyDemandType == supplyDemandType.demandMechanism
         })}
         getOptionValue={(option) => option.id}
         getOptionLabel={(option) => option.name}
         // getNewOptionData={(value, label) => ({ id: value, name: label, __isNew__: true })}
-        isMulti={true}
+        // isMulti={true}
         placeholder={placeholder}
       />
     )
@@ -61,15 +61,18 @@ const FormSelectUtilty = ({
         options={options.value.filter((option) => {
           return option.supplyDemandType == supplyDemandType.supplyExternal
         })}
-        getOptionValue={(option) => option.percentageAllocation +'% '+ option.name}
-        getOptionLabel={(option) =>  option.percentageAllocation +'% '+ option.name}
+        getOptionValue={(option) =>
+          option.percentageAllocation + '% ' + option.name
+        }
+        getOptionLabel={(option) =>
+          option.percentageAllocation + '% ' + option.name
+        }
         // getNewOptionData={(value, label) => ({ id: value, name: label, __isNew__: true })}
-        isMulti={true}
+        //isMulti={true}
         placeholder={placeholder}
       />
     )
-  } 
-  else {
+  } else {
     return (
       <Select
         className="react-select-container"
@@ -77,13 +80,14 @@ const FormSelectUtilty = ({
         name={field.name}
         value={field.value}
         onChange={onChange}
-        options={options.value.filter((option) => {
+        defaultValue={options.value[index]}
+        options={templates.filter((option) => {
           return option.supplyDemandType == supplyDemandType.demandUtility
         })}
         getOptionValue={(option) => option.id}
         getOptionLabel={(option) => option.name}
         // getNewOptionData={(value, label) => ({ id: value, name: label, __isNew__: true })}
-        isMulti={true}
+        //isMulti={true}
         placeholder={placeholder}
       />
     )

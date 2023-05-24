@@ -178,15 +178,15 @@ model DesignElement {
 }
 
 model DesignPhases {
-  id              String          @id @default(cuid())
+  id              String                      @id @default(cuid())
   parentPhaseId   Int?
-  Resources       String?         @db.Text
-  phaseId         Int?            @unique
+  Resources       String?                     @db.Text
+  phaseId         Int?                        @unique
   name            String?
   phaseOrder      Int?
   postDataElement String?
-  isReport        Boolean?        @default(false)
-  phaseGrouping   PhaseGrouping?
+  isReport        Boolean?                    @default(false)
+  phaseGrouping   DesignPhases_phaseGrouping?
   DesignElement   DesignElement[]
 
   @@index([parentPhaseId])
@@ -225,15 +225,16 @@ model Mechanism {
   unlockPeriod              Float?
   percentageUnlockTGE       Float?
   supplyDemandType          Mechanism_supplyDemandType?
-  mechanismTypeId           String?
   post                      Post?                       @relation(fields: [postId], references: [id], onDelete: Cascade)
   PostUser                  PostUser[]
   calculation               Calculation?                @relation(fields: [calculationId], references: [id], onDelete: Cascade)
   CalculationTimeSeries     CalculationTimeSeries[]
+  mechanismTypeId           String?
   mechanismType             Mechanism?                  @relation("MechanismType", fields: [mechanismTypeId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   mechanismTypes            Mechanism[]                 @relation("MechanismType")
   incentiveTarget           Mechanism[]                 @relation("Incentives")
   IncentivisedBy            Mechanism[]                 @relation("Incentives")
+  templateSheet             String?
 
   @@index([postId])
   @@index([calculationId])
@@ -510,7 +511,7 @@ enum Mechanism_supplyDemandType {
   demandMechanism
 }
 
-enum PhaseGrouping {
+enum DesignPhases_phaseGrouping {
   Research
   Design
   Review

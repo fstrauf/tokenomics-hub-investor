@@ -19,7 +19,7 @@ export const FormCardSupply = ({
   const admin = user?.publicMetadata?.admin || false
   const defaultMechanism = {
     id: '',
-    name: `default`,
+    name: `Default`,
     summary:
       'Briefly explain what this mechanism incentivises users to do and why they want to do it. (e.g., users are incentivised to buy and stake a token in order to receive token emissions)',
     details:
@@ -35,19 +35,21 @@ export const FormCardSupply = ({
     color: `#${Math.floor(Math.random() * 16777215).toString(16)}`,
     isEpochDistro: false,
     epochDurationInSeconds: 0,
+    supplyDemandType:'',
     initialEmissionPerSecond: 0,
     emissionReductionPerEpoch: 0,
     CalculationTimeSeries: [],
-    isTemplate: false,
+    isTemplate: true,
     PostUser: [],
   }
 
-  const mechTemplates = mechanismTemplates.filter((template) => {
+  const mechTemplate = mechanismTemplates.filter((template) => {
     return (
       template.supplyDemandType === supplyDemandType.demandUtility ||
       template.supplyDemandType === supplyDemandType.demandMechanism
     )
   })
+  const mechTemplates = mechTemplate.map((obj) => ({ ...obj }))
   const [isOpen, setIsOpen] = useState(false)
   const [selectedTemplate, setSelectedTemplate] = useState(defaultMechanism)
 
@@ -61,18 +63,17 @@ export const FormCardSupply = ({
     }
   }
 
-  const handleNewMechanism = (arrayHelpers, isSink: boolean) => {
+  const handleNewMechanism = (arrayHelpers, isSink: boolean,tempType:string) => {
     const updateMechanism = selectedTemplate
 
     updateMechanism.isSink = isSink
+    updateMechanism.supplyDemandType = tempType
     if (isSink) {
-      updateMechanism.name =
-        updateMechanism.name + ' ' + (field.value?.length + 1)
-      updateMechanism.category =
-        updateMechanism.category + ' ' + (field.value?.length + 1)
+      updateMechanism.name =  updateMechanism.name+ ' ' + (field.value?.length + 1)
+      updateMechanism.category =  updateMechanism.category+ ' ' + (field.value?.length + 1)
     } else {
-      updateMechanism.name = updateMechanism.name
-      updateMechanism.category = updateMechanism.name
+      updateMechanism.name =  updateMechanism.name+ ' ' + (field.value?.length + 1)
+      updateMechanism.category =  updateMechanism.category+ ' ' + (field.value?.length + 1)
       updateMechanism.summary = ''
     }
 
@@ -97,21 +98,21 @@ export const FormCardSupply = ({
         {' '}
         <div>
           <div className="flex">
-            {input?.isSink ? (
+            {/* {input?.isSink ? (
               <></>
-            ) : (
-              <div
-                className="mr-2 h-5 w-5 bg-slate-600"
-                style={{ background: input.color }}
-              ></div>
-            )}
+            ) : (<></>
+              // <div
+              //   className="mr-2 h-5 w-5 bg-slate-600"
+              //   style={{ background: input.color }}
+              // ></div>
+            )} */}
             <p className="">{input.name}</p>
           </div>
-          {input.isSink ? (
+          {/* {input.isSink ? (
             <></>
           ) : (
             <p className="mt-2">{input.percentageAllocation} %</p>
-          )}
+          )} */}
         </div>
         <div className="flex h-7 border-t-2">
           {' '}
@@ -140,9 +141,11 @@ export const FormCardSupply = ({
         {isOpen && (
           <MechanismCardDemand
             field={field}
+            values={values}
             mechanismIndex={mechanismIndex}
             setFieldValue={setFieldValue}
             users={values.PostUser} // mechanismImpactFactors={mechanismImpactFactors}
+            templates={mechTemplates}
           />
         )}
       </Drawer>
@@ -185,7 +188,7 @@ export const FormCardSupply = ({
                 <button
                   type="button"
                   className="h-11 w-28 rounded-md border-2 border-dao-green text-xs font-bold"
-                  onClick={() => handleNewMechanism(arrayHelpers, false)}
+                  onClick={() => handleNewMechanism(arrayHelpers, false,supplyDemandType.demandUtility)}
                 >
                   Add
                 </button>
@@ -242,7 +245,7 @@ export const FormCardSupply = ({
                 <button
                   type="button"
                   className="h-11 w-28 rounded-md border-2 border-dao-green text-xs font-bold"
-                  onClick={() => handleNewMechanism(arrayHelpers, true)}
+                  onClick={() => handleNewMechanism(arrayHelpers, true,supplyDemandType.demandMechanism)}
                 >
                   Add
                 </button>
