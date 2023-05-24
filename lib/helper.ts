@@ -143,6 +143,12 @@ export enum supplyDemandType {
   demandMechanism = 'demandMechanism',
 }
 
+export enum designPhaseGrouping {
+  research = 'Research',
+  design = 'Design',
+  review = 'Review',  
+}
+
 export const stringToKey = (name) => {
   return name.trim().replace(/\s+/g, '-').toLowerCase().replace(/&/g, 'and')
 }
