@@ -32,11 +32,11 @@ export default function BookAnExpert(props) {
       <Layout mode={headerStatus.main}>        
         <Toaster />
         <div className="flex flex-col items-center justify-center gap-10">
-          <h1 className="mb-10 mt-10 text-center text-3xl font-bold">
+          <h1 className="mb-10 mt-10 text-center text-3xl font-bold prose">
             Need help designing your token?
-            <br></br>Want a review of your design?
+            <br></br>Want an audit of your token design?
           </h1>
-          <p className="mb-5 text-center">
+          <p className="mb-5 text-center prose">
             our team of experts is happy to help
           </p>
           <div className="my-20">
@@ -95,7 +95,7 @@ export default function BookAnExpert(props) {
             <h1 className="text-4xl font-bold">Scope, Terms & Conditions</h1>
 
             <section id="review-of-your-material">
-              <h2 className="text-2xl font-bold">Review of your Material</h2>
+              <h2 className="text-2xl font-bold">Audit of your Material</h2>
               <p>
                 We will analyse, review and provide a report with written
                 feedback{' '}
@@ -128,7 +128,7 @@ export default function BookAnExpert(props) {
 
             <section id="review-of-tokenomics-design">
               <h2 className="text-2xl font-bold">
-                Review of Tokenomics Design Space Design
+                Audit of Tokenomics Design Space Design
               </h2>
               <p>
                 We will analyse, review and provide a report with written
