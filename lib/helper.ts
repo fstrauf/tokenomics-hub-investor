@@ -596,6 +596,7 @@ export function validateTierAccess(
   subscription: any,
   admin: boolean = false
 ): boolean {
+  console.log("🚀 ~ file: helper.ts:599 ~ subscription:", subscription)
   if (
     subscription?.tier === subTiers.genesis ||
     subscription?.tier === subTiers.frontier ||

@@ -7,12 +7,13 @@ import XMarkIcon from '../../public/svg/xmarkicon'
 import { validateTierAccess } from '../../lib/helper'
 import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
 import Link from 'next/link'
+// import Link from 'next/link'
 export const FormCardSupply = ({
   field,
   values,
   mechanismTemplates,
   setFieldValue,
-  subscription
+  subscription,
 }) => {
   let [mechanismIndex, setMechanismIndex] = useState(0)
   const { user } = useUser()
@@ -35,7 +36,7 @@ export const FormCardSupply = ({
     color: `#${Math.floor(Math.random() * 16777215).toString(16)}`,
     isEpochDistro: false,
     epochDurationInSeconds: 0,
-    supplyDemandType:'',
+    supplyDemandType: '',
     initialEmissionPerSecond: 0,
     emissionReductionPerEpoch: 0,
     CalculationTimeSeries: [],
@@ -63,17 +64,25 @@ export const FormCardSupply = ({
     }
   }
 
-  const handleNewMechanism = (arrayHelpers, isSink: boolean,tempType:string) => {
+  const handleNewMechanism = (
+    arrayHelpers,
+    isSink: boolean,
+    tempType: string
+  ) => {
     const updateMechanism = selectedTemplate
 
     updateMechanism.isSink = isSink
     updateMechanism.supplyDemandType = tempType
     if (isSink) {
-      updateMechanism.name =  updateMechanism.name+ ' ' + (field.value?.length + 1)
-      updateMechanism.category =  updateMechanism.category+ ' ' + (field.value?.length + 1)
+      updateMechanism.name =
+        updateMechanism.name + ' ' + (field.value?.length + 1)
+      updateMechanism.category =
+        updateMechanism.category + ' ' + (field.value?.length + 1)
     } else {
-      updateMechanism.name =  updateMechanism.name+ ' ' + (field.value?.length + 1)
-      updateMechanism.category =  updateMechanism.category+ ' ' + (field.value?.length + 1)
+      updateMechanism.name =
+        updateMechanism.name + ' ' + (field.value?.length + 1)
+      updateMechanism.category =
+        updateMechanism.category + ' ' + (field.value?.length + 1)
       updateMechanism.summary = ''
     }
 
@@ -96,23 +105,8 @@ export const FormCardSupply = ({
         className="grid h-24 w-36 content-between rounded-md border-2 border-dao-green p-1 text-xs"
       >
         {' '}
-        <div>
-          <div className="flex">
-            {/* {input?.isSink ? (
-              <></>
-            ) : (<></>
-              // <div
-              //   className="mr-2 h-5 w-5 bg-slate-600"
-              //   style={{ background: input.color }}
-              // ></div>
-            )} */}
-            <p className="">{input.name}</p>
-          </div>
-          {/* {input.isSink ? (
-            <></>
-          ) : (
-            <p className="mt-2">{input.percentageAllocation} %</p>
-          )} */}
+        <div className="flex">
+          <p className="">{input.name}</p>
         </div>
         <div className="flex h-7 border-t-2">
           {' '}
@@ -153,123 +147,136 @@ export const FormCardSupply = ({
         name={field.name}
         render={(arrayHelpers) => (
           <>
-          <p className='font-light mt-10'>Demand Types</p>
-          <div key={87944} className="mt-10 flex">
-            <div className="w-1/2">
-              <div className="mb-1 flex gap-3">
-                {' '}
-             
-                <p className='font-dark'>Utilty</p>
-                <select
-                  onChange={handleChange}
-                  className="block h-11 w-32 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-xs text-gray-900 focus:border-dao-red focus:ring-dao-red"
-                >
-                  <option key="none" value="none">
-                    From template
-                  </option>
-                  {mechTemplates?.map((mt) => {
-                    if (
-                      mt.supplyDemandType == supplyDemandType.demandUtility
-                    ) {
-                      return (
-                        <>
-                          <option
-                            key={mt.id}
-                            value={mt.id}
-                            // label={mt.name}
-                          >
-                            {mt.name}
-                          </option>
-                        </>
+            <p className="mt-10 font-light">Demand Types</p>
+            <div key={87944} className="mt-10 flex">
+              <div className="w-1/2">
+                <div className="mb-1 flex gap-3">
+                  {' '}
+                  <p className="font-dark">Utilty</p>
+                  <select
+                    onChange={handleChange}
+                    className="block h-11 w-32 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-xs text-gray-900 focus:border-dao-red focus:ring-dao-red"
+                  >
+                    <option key="none" value="none">
+                      From template
+                    </option>
+                    {mechTemplates?.map((mt) => {
+                      if (
+                        mt.supplyDemandType == supplyDemandType.demandUtility
+                      ) {
+                        return (
+                          <>
+                            <option
+                              key={mt.id}
+                              value={mt.id}
+                              // label={mt.name}
+                            >
+                              {mt.name}
+                            </option>
+                          </>
+                        )
+                      }
+                    })}
+                  </select>
+                  <button
+                    type="button"
+                    className="h-11 w-28 rounded-md border-2 border-dao-green text-xs font-bold"
+                    onClick={() =>
+                      handleNewMechanism(
+                        arrayHelpers,
+                        false,
+                        supplyDemandType.demandUtility
                       )
                     }
-                  })}
-                </select>
-                <button
-                  type="button"
-                  className="h-11 w-28 rounded-md border-2 border-dao-green text-xs font-bold"
-                  onClick={() => handleNewMechanism(arrayHelpers, false,supplyDemandType.demandUtility)}
-                >
-                  Add
-                </button>
+                  >
+                    Add
+                  </button>
+                </div>
+                <div className="h-60 overflow-auto rounded-lg border-2 border-slate-300">
+                  <div
+                    key={4711}
+                    className="flex flex-row flex-wrap gap-2 overflow-auto p-2"
+                  >
+                    {field.value?.length > 0 &&
+                      field.value?.map((input, index) => (
+                        <>
+                          {!input.isSink &&
+                          input.supplyDemandType ==
+                            supplyDemandType.demandUtility ? (
+                            <>{mechanismTile(input, index, arrayHelpers)}</>
+                          ) : (
+                            <></>
+                          )}
+                        </>
+                      ))}
+                  </div>
+                </div>
               </div>
-              <div className="h-60 overflow-auto rounded-lg border-2 border-slate-300">
-                <div
-                  key={4711}
-                  className="flex flex-row flex-wrap gap-2 overflow-auto p-2"
-                >
-                  {field.value?.length > 0 &&
-                    field.value?.map((input, index) => (
-                      <>
-                        {!input.isSink &&
-                        input.supplyDemandType ==
-                          supplyDemandType.demandUtility ? (
-                          <>{mechanismTile(input, index, arrayHelpers)}</>
-                        ) : (
-                          <></>
-                        )}
-                      </>
-                    ))}
+              <div className="relative w-1/2">
+                <div className="mb-1 flex gap-2">
+                  {' '}
+                  <p className="font-dark">Mechanism</p>
+                  <select
+                    onChange={handleChange}
+                    className="block h-11 w-32 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-xs text-gray-900 focus:border-dao-red focus:ring-dao-red"
+                  >
+                    <option key="none" value="none">
+                      From template
+                    </option>
+                    {mechTemplates?.map((mt) => {
+                      if (
+                        mt.supplyDemandType == supplyDemandType.demandMechanism
+                      ) {
+                        return (
+                          <>
+                            <option
+                              key={mt.id}
+                              value={mt.id}
+                              // label={mt.name}
+                            >
+                              {mt.name}
+                            </option>
+                          </>
+                        )
+                      }
+                    })}
+                  </select>
+                  <button
+                    type="button"
+                    className="h-11 w-28 rounded-md border-2 border-dao-green text-xs font-bold"
+                    onClick={() =>
+                      handleNewMechanism(
+                        arrayHelpers,
+                        true,
+                        supplyDemandType.demandMechanism
+                      )
+                    }
+                  >
+                    Add
+                  </button>
+                </div>
+                <div className="h-60 rounded-lg border-2 border-slate-300">
+                  <div
+                    key={4811}
+                    className="flex flex-row flex-wrap gap-2 overflow-auto p-2"
+                  >
+                    {field.value?.length > 0 &&
+                      field.value?.map((input, index) => (
+                        <>
+                          {input.isSink &&
+                          input.supplyDemandType ==
+                            supplyDemandType.demandMechanism ? (
+                            <>{mechanismTile(input, index, arrayHelpers)}</>
+                          ) : (
+                            <></>
+                          )}
+                        </>
+                      ))}
+                  </div>
                 </div>
               </div>
             </div>
-            <div className="relative w-1/2">
-              <div className="mb-1 flex gap-2">
-                {' '}
-                <p className='font-dark'>Mechanism</p>
-                <select
-                  onChange={handleChange}
-                  className="block h-11 w-32 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-xs text-gray-900 focus:border-dao-red focus:ring-dao-red"
-                >
-                  <option key="none" value="none">
-                    From template
-                  </option>
-                  {mechTemplates?.map((mt) => {
-                    if (
-                      mt.supplyDemandType == supplyDemandType.demandMechanism
-                    ) {
-                      return (
-                        <>
-                          <option
-                            key={mt.id}
-                            value={mt.id}
-                            // label={mt.name}
-                          >
-                            {mt.name}
-                          </option>
-                        </>
-                      )
-                    }
-                  })}
-                </select>
-                <button
-                  type="button"
-                  className="h-11 w-28 rounded-md border-2 border-dao-green text-xs font-bold"
-                  onClick={() => handleNewMechanism(arrayHelpers, true,supplyDemandType.demandMechanism)}
-                >
-                  Add
-                </button>
-              </div>
-              <div className="h-60 rounded-lg border-2 border-slate-300">
-                <div
-                  key={4811}
-                  className="flex flex-row flex-wrap gap-2 overflow-auto p-2"
-                >
-                  {field.value?.length > 0 &&
-                    field.value?.map((input, index) => (
-                      <>
-                        {input.isSink && input.supplyDemandType == supplyDemandType.demandMechanism ? (
-                          <>{mechanismTile(input, index, arrayHelpers)}</>
-                        ) : (
-                          <></>
-                        )}
-                      </>
-                    ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </>
+          </>
         )}
       />
     </div>

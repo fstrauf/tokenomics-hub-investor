@@ -10,6 +10,10 @@ import { useEffect } from 'react'
 import { designElementStatusUpdate } from '../../lib/designElementStatusField'
 import WalkthroughSection from './WalkthroughSection'
 import FormErrorMessage from '../form/FormErrorMessage'
+import { validateTierAccess } from '../../lib/helper'
+import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
+import Link from 'next/link'
+import DemandIntro from './DemandIntro'
 
 export default function TDF504({
   props,
@@ -18,7 +22,10 @@ export default function TDF504({
   setFieldValue,
   reviewRequiredFields,
 }) {
+  console.log("🚀 ~ file: TDF504.tsx:25 ~ props:", props)
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
+  const { user } = useUser()
+  const admin = user?.publicMetadata?.admin || false
 
   useEffect(() => {
     designElementStatusUpdate(values, designPhase.phaseId, setFieldValue)
@@ -42,10 +49,33 @@ export default function TDF504({
   }
 
   return (
-    <div className="flex flex-col">
+    <div className="relative flex flex-col">
       <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 ">
         {designPhase.name}
       </h5>
+      {validateTierAccess(props.Subscription, admin) ? (
+        <></>
+      ) : (
+        <>
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="z-10 flex h-full w-full justify-center bg-gray-100 bg-opacity-80">
+              <div className="z-9 m-auto mt-1 flex justify-center rounded-md bg-gradient-to-r from-dao-red to-dao-green p-1 shadow-md">
+                <div className="flex flex-col items-center rounded-lg bg-white p-4">
+                  <h2 className="text-center text-xl font-bold">
+                    Access The Demand Builder to Balance Your Supply!
+                  </h2>
+                  <DemandIntro />
+                  <Link href="/manage-subscriptions">
+                    <button className="mt-5 rounded-md bg-dao-red px-6 py-4 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
+                      Subscribe Now
+                    </button>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
       <label className="mb-2 block text-xs font-medium text-gray-900">
         Total Supply
       </label>
