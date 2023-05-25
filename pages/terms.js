@@ -9,7 +9,7 @@ export default function Terms() {
         <>
             <Layout>
                 <Intro />
-                <div className='max-w-2xl'>
+                <div className='max-w-2xl prose items-center justify-center flex flex-col m-auto'>
                     <h1 className='text-3xl'>Terms and Condition</h1>
                     <h2 className='text-2xl mt-10'>Non Financial Advice Disclaimer</h2>
                     <p className='text-sm mt-5'>Updated November 9, 2022</p>

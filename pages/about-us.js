@@ -7,7 +7,7 @@ export default function AboutUs() {
     <>
       <Layout>
         <Intro />
-        <div className="max-w-2xl flex flex-col items-center justify-center m-auto">
+        <div className="max-w-2xl flex flex-col items-center justify-center m-auto prose">
           <h1 className="text-3xl">About Us</h1>
           <h2 className="mt-10 text-2xl">Manifesto</h2>
           <h3 className="text-1xl mt-10 font-bold">We are not credentialists.</h3>

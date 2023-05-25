@@ -85,20 +85,24 @@ export default function Header2({ mode = headerStatus.main, children = null }) {
               {admin ? (
                 <HeaderComboSection classNames={classNames} title="Admin">
                   <HeaderGenericSection
-                    pathName="/adminTDFPhase"
+                    pathName="/admin/adminTDFPhase"
                     title="TDS Phase Admin"
                   />
                   <HeaderGenericSection
-                    pathName="/adminView"
+                    pathName="/admin/adminView"
                     title="Post Admin"
                   />
                   <HeaderGenericSection
-                    pathName="/coreMechanisms"
+                    pathName="/admin/coreMechanisms"
                     title="Mechanism Admin"
                   />
                   <HeaderGenericSection
-                    pathName="/allDrafts"
+                    pathName="/admin/allDrafts"
                     title="Report Drafts Admin"
+                  />
+                  <HeaderGenericSection
+                    pathName="/admin/subscriptions"
+                    title="Manage Subscriptions"
                   />
                 </HeaderComboSection>
               ) : (

@@ -22,6 +22,7 @@ export default function ProductOverview() {
           link: `https://buy.stripe.com/14k02da31dKCbIc9AC`,
           name: 'Purchase',
         }}
+        highlight={true}
       />
       <ProductCard
         title="Custom"

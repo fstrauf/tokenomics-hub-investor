@@ -1,9 +1,9 @@
-import Layout from '../components/layout'
+import Layout from '../../components/layout'
 import React, { useState } from 'react'
 import toast, { Toaster } from 'react-hot-toast'
 import { Field, Form, Formik } from 'formik'
-import prisma from '../lib/prisma'
-import UnAuthorised from '../components/unauthorised'
+import prisma from '../../lib/prisma'
+import UnAuthorised from '../../components/unauthorised'
 import { useAuth } from '@clerk/clerk-react/dist/hooks/useAuth'
 import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
 import dynamic from 'next/dynamic'
@@ -21,7 +21,7 @@ export default function adminTDFPhase({ alldesignPhases }) {
   const { user } = useUser()
 
   const admin = user?.publicMetadata?.admin || false
-  const FormTipTap = dynamic(() => import('../components/form/FormTipTap'), {
+  const FormTipTap = dynamic(() => import('../../components/form/FormTipTap'), {
     loading: () => <p>Loading</p>,
   })
 
