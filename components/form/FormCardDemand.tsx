@@ -40,7 +40,7 @@ export const FormCardSupply = ({
     initialEmissionPerSecond: 0,
     emissionReductionPerEpoch: 0,
     CalculationTimeSeries: [],
-    isTemplate: true,
+    isTemplate: false,
     PostUser: [],
   }
 
