@@ -14,7 +14,7 @@ export default function ProductOverview() {
         }}
       />
       <ProductCard
-        title="Audit of Tokenomics Design Space Design"
+        title="Audit of Tokenomics Design Space"
         description="Get an expert to audit your design in the Tokenomics Design Space."
         price="USD $2000"
         termsLink="/book-an-expert#review-of-tokenomics-design"

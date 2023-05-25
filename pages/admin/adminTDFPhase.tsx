@@ -10,7 +10,7 @@ import dynamic from 'next/dynamic'
 import Router from 'next/router'
 import { confirmAlert } from 'react-confirm-alert'
 import 'react-confirm-alert/src/react-confirm-alert.css'
-import { designPhaseGrouping } from '../lib/helper'
+import { designPhaseGrouping } from '../../lib/helper'
 
 export default function adminTDFPhase({ alldesignPhases }) {
   console.log("🚀 ~ file: adminTDFPhase.tsx:16 ~ adminTDFPhase ~ alldesignPhases:", alldesignPhases)
