@@ -22,7 +22,6 @@ export default function TDF504({
   setFieldValue,
   reviewRequiredFields,
 }) {
-  console.log("🚀 ~ file: TDF504.tsx:25 ~ props:", props)
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
   const { user } = useUser()
   const admin = user?.publicMetadata?.admin || false

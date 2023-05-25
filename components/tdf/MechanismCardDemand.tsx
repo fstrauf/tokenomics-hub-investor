@@ -1,10 +1,10 @@
 import {
   Field,
   FieldArray,
-  useFormik,
-  ErrorMessage,
-  Formik,
-  Form,
+  // useFormik,
+  // ErrorMessage,
+  // Formik,
+  // Form,
 } from 'formik'
 import React from 'react'
 import FormSelectUtility from '../form/FormSelectUtility'
@@ -12,17 +12,28 @@ import * as duration from 'dayjs/plugin/duration'
 import * as dayjs from 'dayjs'
 import GenericTab from '../generic/GenericTab'
 import { createSpreadSheet } from '../../lib/helper'
+import { supplyDemandType } from '../../lib/helper'
 
-export const MechanismCardSupply = ({
+export const MechanismCardDemand = ({
   field,
   values,
   mechanismIndex,
-  setFieldValue,
-  users,
+  // setFieldValue,
+  // users,
   templates,
 }) => {
-  console.log('values = ', values)
-  const isSink = field.value[mechanismIndex]?.isSink || false
+  console.log('🚀 ~ file: MechanismCardDemand.tsx:24 ~ values:', values)
+  // const isSink = field.value[mechanismIndex]?.isSink || false 
+
+  let isUtility = false
+
+  if (
+    field.value[mechanismIndex]?.supplyDemandType ===
+    supplyDemandType.demandUtility
+  ) {
+    isUtility = true
+  }
+
   dayjs.extend(duration)
   const secondsPerMonth = 2628000
 
@@ -254,7 +265,7 @@ export const MechanismCardSupply = ({
           index={mechanismIndex}
           // isSink={isSink}
         />
-        <label className="mt-5 block text-sm font-medium text-gray-900">
+        {/* <label className="mt-5 block text-sm font-medium text-gray-900">
           Descriptions
         </label>
         <Field
@@ -263,7 +274,7 @@ export const MechanismCardSupply = ({
           className="mt-5 block w-full rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
           as="textarea"
           row={4}
-        />
+        /> */}
 
         <div className="mt-10">
           <label className="m-auto tracking-tight text-gray-900">
@@ -313,7 +324,7 @@ export const MechanismCardSupply = ({
           isMulti={true}
           index={mechanismIndex}
         />
-        <label className="mt-5 block text-sm font-medium text-gray-900">
+        {/* <label className="mt-5 block text-sm font-medium text-gray-900">
           Descriptions
         </label>
         <Field
@@ -322,7 +333,7 @@ export const MechanismCardSupply = ({
           className="mt-5 block w-full rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
           as="textarea"
           row={4}
-        />
+        /> */}
 
         <div className="mt-10">
           <label
@@ -349,15 +360,30 @@ export const MechanismCardSupply = ({
   }
 
   return (
-    <div key={mechanismIndex} className="ml-20 mr-20">
+    <div key={mechanismIndex} className="ml-20 mr-20 flex max-w-2xl flex-col p-4">
       <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 ">
-        {isSink ? <>Mechanisms</> : <>Utility</>}
+        {isUtility ? <>Utility</> : <>Mechanisms</>}
       </h5>
-      <hr></hr>
-
-      {isSink ? demandMechanism() : demandUtility()}
+      <label className="block text-sm font-medium text-gray-900 ">Name</label>
+      <Field
+        name={`${field.name}.${mechanismIndex}.name`}
+        placeholder="Name"
+        className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-xs text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+        type="text"
+      />
+      <label className="block text-sm font-medium text-gray-900 ">
+        Summary
+      </label>
+      <Field
+        name={`${field.name}.${mechanismIndex}.summary`}
+        placeholder="Summary"
+        className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-xs text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+        as="textarea"
+        rows={4}
+      />
+      {isUtility ? demandUtility() : demandMechanism()}
     </div>
   )
 }
 
-export default MechanismCardSupply
+export default MechanismCardDemand

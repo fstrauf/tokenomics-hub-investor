@@ -17,7 +17,6 @@ export default function TDFSideBar({
   reviewRequiredFields,
 }) {
   let phases = designPhases
-  console.log('🚀 ~ file: TDFSideBar.tsx:14 ~ phases:', phases)
   if (values.postType === postType.report) {
     phases = designPhases.filter((phase) => phase.isReport)
   }
