@@ -10,29 +10,30 @@ export default async function handler(
   res: NextApiResponse<Data>
 ) {
   try {
-    const { spreadsheetId } = req.body
+    const { id,url } = req.body
+    let spreadSheetId = url.toString().split('/')[5]
 
     const { GoogleSpreadsheet } = require('google-spreadsheet')
 
-    const doc = new GoogleSpreadsheet(spreadsheetId)
+    const doc = new GoogleSpreadsheet(spreadSheetId)
     await doc.useServiceAccountAuth({
       client_email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
       private_key: process.env.GOOGLE_PRIVATE_KEY,
     })
 
     await doc.loadInfo()
-    const sheet = doc.sheetsByIndex[0]
+    const sheet = doc.sheetsByIndex[1]
 
     let aRows = await sheet.getRows()
     console.log('sheet ========', aRows[0]._rawData)
     let allRow = []
     for (let row of aRows) {
       allRow.push({
-        month: row._rawData[0],
-        expecedYield: row._rawData[1],
-        percentageStaked: row._rawData[2],
-        circulatingSupply: row._rawData[3],
-        tokenDemand: row._rawData[4],
+        Months: row._rawData[0],
+        'Circulating supply': row._rawData[1],
+        'Expected Token Demand': row._rawData[2],
+        'Month Count': row._rawData[3],
+        'Rewards Type': row._rawData[4],
       })
     }
 

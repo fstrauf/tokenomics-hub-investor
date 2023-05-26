@@ -10,7 +10,7 @@ const FormSelectUtilty = ({
   isMulti = false,
   placeholder = 'Select or create',
   templates,
-  index
+  index,
 }) => {
   function onChange(option) {
     form.setFieldValue(field.name, option ? option : {})
@@ -44,7 +44,7 @@ const FormSelectUtilty = ({
           return option.supplyDemandType == supplyDemandType.demandMechanism
         })}
         getOptionValue={(option) => option.id}
-        getOptionLabel={(option) => option.name}
+        getOptionLabel={(option) => filterLabel(option)}
         // getNewOptionData={(value, label) => ({ id: value, name: label, __isNew__: true })}
         // isMulti={true}
         placeholder={placeholder}
@@ -61,12 +61,8 @@ const FormSelectUtilty = ({
         options={options.value.filter((option) => {
           return option.supplyDemandType == supplyDemandType.supplyExternal
         })}
-        getOptionValue={(option) =>
-          option.percentageAllocation + '% ' + option.name
-        }
-        getOptionLabel={(option) =>
-          option.percentageAllocation + '% ' + option.name
-        }
+        getOptionValue={(option) => filterIncentiveLabel(option)}
+        getOptionLabel={(option) => filterIncentiveLabel(option)}
         // getNewOptionData={(value, label) => ({ id: value, name: label, __isNew__: true })}
         //isMulti={true}
         placeholder={placeholder}
@@ -84,12 +80,26 @@ const FormSelectUtilty = ({
         options={templates.filter((option) => {
           return option.supplyDemandType == supplyDemandType.demandUtility
         })}
-        getOptionValue={(option) => option.id}
-        getOptionLabel={(option) => option.name}
+        getOptionValue={(option) =>filterLabel(option)}
+        getOptionLabel={(option) => filterLabel(option)}
         // getNewOptionData={(value, label) => ({ id: value, name: label, __isNew__: true })}
         //isMulti={true}
         placeholder={placeholder}
       />
+    )
+  }
+
+  function filterLabel(options) {
+    if (options.name.replace(/[0-9]/g, '').trim() === 'Default') {
+      return ''
+    }
+    return options.name.replace(/[0-9]/g, '').trim()
+  }
+  function filterIncentiveLabel(options) {
+    return (
+      options.percentageAllocation +
+      '% ' +
+      options.name.replace(/[0-9]/g, '').trim()
     )
   }
 }

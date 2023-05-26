@@ -3,16 +3,17 @@ import {
   FieldArray,
   // useFormik,
   // ErrorMessage,
-  // Formik,
-  // Form,
+  Formik,
+  Form,
 } from 'formik'
 import React from 'react'
 import FormSelectUtility from '../form/FormSelectUtility'
 import * as duration from 'dayjs/plugin/duration'
 import * as dayjs from 'dayjs'
 import GenericTab from '../generic/GenericTab'
-import { createSpreadSheet } from '../../lib/helper'
 import { supplyDemandType } from '../../lib/helper'
+import { createSpreadSheet, uploadSpreadsheet } from '../../lib/helper'
+import { useState } from 'react'
 
 export const MechanismCardDemand = ({
   field,
@@ -34,8 +35,14 @@ export const MechanismCardDemand = ({
     isUtility = true
   }
 
+  const isSink = field.value[mechanismIndex]?.isSink || false
   dayjs.extend(duration)
   const secondsPerMonth = 2628000
+  const [disabled, setDisabled] = useState(false)
+  const [name, setName] = useState('Create Spreadsheet')
+  const [name_, setName_] = useState('Upload Spreadsheet')
+
+  const [url, setUrl] = useState('')
 
   const Tabs = [
     { tab: 'Phases' },
@@ -45,22 +52,33 @@ export const MechanismCardDemand = ({
 
   async function downloadSpreadsheet() {
     try {
-      console.log('hello')
       let aSpreadsheetData = values.Calculation.areaData.supplyDemandTotals
       console.log('spreadsheet data = ', aSpreadsheetData)
+      setName('Creating Spreadsheet..')
+      setDisabled(true)
       if (
         'supply' in aSpreadsheetData[0] == false ||
         'demand' in aSpreadsheetData[0] == false
       ) {
-        alert('supply/demand not found')
-        return
+        throw 'supply/demand not found'
       }
-      let aSpreadSheetData = []
+      let aSpreadSheetData = [
+        {
+          Months: "Don't Change - Imported from Tokenomics Design Space",
+          'Circulating supply':
+            "Don't Change - Imported from Tokenomics Design Space",
+          'Expected Token Demand':
+            "Don't Change - Imported from Tokenomics Design Space",
+            "Month Count":"Don't Change - Imported from Tokenomics Design Space",
+            "Rewards Type":"Please select the relevant tab"
+        },
+      ]
+
       for (let data of aSpreadsheetData) {
         let obj = {
           Months: data.months,
-          'Circulating Supply': data.supply,
-          'Token Demand': data.demand,
+          'Circulating supply': data.supply,
+          'Expected Token Demand': data.demand,
         }
         aSpreadSheetData.push(obj)
       }
@@ -68,10 +86,32 @@ export const MechanismCardDemand = ({
         title: 'Demand_Staking',
         data: aSpreadSheetData,
       })
-      alert(spreadSheetUrl)
+      setName('Create Spreadsheet')
+      setDisabled(false)
+      setUrl(JSON.parse(spreadSheetUrl).message)
     } catch (error) {
       console.log('error = ', error)
-      // alert('some error occured')
+      setName('Create Spreadsheet')
+      setDisabled(false)
+      alert(error)
+    }
+  }
+  // function setSpreadsheetUrl(url){
+  //   setUrl(url)
+  // }
+  async function uploadSheet() {
+    try {
+      setDisabled(true)
+      setName_('Uploading sheet...')
+      let updateResponse = await uploadSpreadsheet({ id: 'id', url })
+      if (updateResponse) alert('Upload successfully')
+      setDisabled(true)
+      setName_('Upload Spreadsheet')
+    } catch (error) {
+      console.log('error = ', error)
+      setDisabled(false)
+      setName_('Upload Spreadsheet')
+      alert(error)
     }
   }
 
@@ -198,49 +238,31 @@ export const MechanismCardDemand = ({
     return (
       <>
         <div className="m-auto mt-5">
-          <div className="text-left">
-            <div role="status">
-              <svg
-                aria-hidden="true"
-                className="mr-2 inline h-8 w-8 animate-spin fill-blue-600 text-gray-200 dark:text-gray-600"
-                viewBox="0 0 100 101"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-                  fill="currentColor"
-                />
-                <path
-                  d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-                  fill="currentFill"
-                />
-              </svg>
-              <span className="sr-only">Loading...</span>
-            </div>
-          </div>
-
-          {/* <button
+          <button
+            disabled={disabled}
             type="button"
             onClick={downloadSpreadsheet}
             className="outline outline-1 outline-offset-2 "
           >
-            Download Spreadsheet
-          </button> */}
+            {name}
+          </button>
 
-          <input
-            id="url"
+          <Field
+            name={`${field.name}.${mechanismIndex}.url`}
+            onChange={(event) => setUrl(event.target.value)}
             type="text"
             className="ml-20 outline outline-1 outline-offset-2"
             placeholder="URL"
-            // value={url}
-          ></input>
+            value={url}
+          ></Field>
           <p>
             <button
+              disabled={disabled}
+              onClick={uploadSheet}
               type="button"
-              className="float-right mt-5 mr-3 outline outline-1 outline-offset-2"
+              className="float-right mt-5 mr-8 outline outline-1 outline-offset-2"
             >
-              Upload Spreadsheet
+              {name_}
             </button>
           </p>
         </div>
@@ -360,7 +382,10 @@ export const MechanismCardDemand = ({
   }
 
   return (
-    <div key={mechanismIndex} className="ml-20 mr-20 flex max-w-2xl flex-col p-4">
+    <div
+      key={mechanismIndex}
+      className="ml-20 mr-20 flex max-w-2xl flex-col p-4"
+    >
       <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 ">
         {isUtility ? <>Utility</> : <>Mechanisms</>}
       </h5>
