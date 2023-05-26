@@ -21,7 +21,6 @@ export default function MyDesigns({ posts }) {
   return (
     <Layout mode={headerStatus.main}>
       <>
-        {/* {admin && ( */}
         <div className="my-10 w-full">
           <div className="flex items-center justify-between gap-4 rounded-lg bg-gradient-to-r from-dao-red to-dao-green p-2">
             <p className="text-center text-white">
@@ -43,9 +42,7 @@ export default function MyDesigns({ posts }) {
               </Link>
             </div>
           </div>
-          <div className="w-72"> </div>
         </div>
-        {/* )} */}
 
         <div className="mt-4 mb-4 rounded-lg bg-gray-100 p-1">
           <div className="flex items-center justify-between rounded-lg p-2 py-2">

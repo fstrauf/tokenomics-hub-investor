@@ -1,22 +1,11 @@
-// import { getAllPostsForHome } from '../lib/api'
-// import Layout from '../components/layout'
-// import Intro from '../components/intro'
 import Image from 'next/image'
 import Link from 'next/link'
 import Header2 from '../components/header2'
 import ThubLogo from '../public/svg/thub-logo'
-// import Script from 'next/script'
 import LiteYouTubeEmbed from 'react-lite-youtube-embed'
 import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css'
 
 export default function TokenomicsDesignSpace() {
-  // const videoLink = (
-  //   <a href="https://youtu.be/dq_SowJgRvE" target="_blank">
-  //     <button className="mt-5 rounded-md border-2 border-dao-red bg-white px-6 py-4 text-sm font-medium text-dao-red hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
-  //       Watch Quick Demo
-  //     </button>
-  //   </a>
-  // )
   const designLink = (
     <Link href="/newDesign">
       <button className="mt-5 rounded-md bg-dao-red px-6 py-4 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
@@ -27,18 +16,17 @@ export default function TokenomicsDesignSpace() {
 
   return (
     <>
-      {/* <Layout> */}
       <Header2 />
 
       <div className="m-auto">
         <div className="">
           <div className="flex w-full justify-between gap-5 bg-gradient-to-r from-dao-green to-dao-red py-5 pt-10">
-            <div className="p-10">
+            <div className="p-10 prose">
               <h1 className="mb-5 text-5xl font-bold leading-10 text-white md:whitespace-nowrap">
                 Design sustainable Tokenomics
               </h1>
-              <div className="flex p-3 text-xl text-white">
-                <p className="">
+              <div className="flex p-3 text-xl text-white prose">
+                <ul className="prose text-white">
                   <li>
                     User-friendly, step-by-step process for designing a token
                   </li>
@@ -54,14 +42,13 @@ export default function TokenomicsDesignSpace() {
                   <li>
                     Get the opinion of an expert to point out potential flaws
                   </li>
-                </p>
+                </ul>
               </div>
               <div className="flex gap-3">
                 {designLink}
-                {/* {videoLink} */}
               </div>
             </div>
-            <div className="w-[650px] m-10">
+            <div className="m-10 w-[650px]">
               {' '}
               <LiteYouTubeEmbed
                 id="dq_SowJgRvE"
@@ -73,15 +60,18 @@ export default function TokenomicsDesignSpace() {
         <hr className="my-4 mx-auto h-1 w-48 rounded border-0 bg-gray-100 dark:bg-gray-700 md:my-10"></hr>
 
         <div className="flex justify-evenly p-10">
-          <div className="pl-20">
-            <h1 className="mb-10 text-3xl font-bold leading-10 md:whitespace-nowrap">
+          <div className="pl-20 prose">
+            <h1 className="mb-10 text-3xl font-bold leading-10 md:whitespace-nowrap prose">
               Simple step by step design process
             </h1>
             <div className="flex flex-col gap-4 text-xl">
-              <p>Industry leading design process</p>
-              <p>Educational resources along the way</p>
-              <p>Know your unknown unknowns. </p>
-              <p>Tokenomics design made simple</p>
+              <ul>
+              <li>Industry leading design process</li>
+              <li>Educational resources along the way</li>
+              <li>Know your unknown unknowns. </li>
+              <li>Tokenomics design made simple</li>
+              </ul>
+              
             </div>
           </div>
           <div className="flex gap-5">
@@ -107,10 +97,10 @@ export default function TokenomicsDesignSpace() {
         </div>
         <hr className="my-4 mx-auto h-1 w-48 rounded border-0 bg-gray-100 dark:bg-gray-700 md:my-10"></hr>
         <div className="flex flex-col items-center bg-gray-50 p-3">
-          <h1 className="mb-10 text-3xl font-bold leading-10 md:whitespace-nowrap">
+          <h1 className="mb-10 text-3xl font-bold leading-10 md:whitespace-nowrap prose">
             Put your design into perspective
           </h1>
-          <p className="mt-5 p-10 text-center text-xl">
+          <p className="mt-5 p-10 text-center text-xl prose">
             We show you relevant data, examples and the industry standard of
             similar projects to help you make better design decisions through
             every step of the way
@@ -138,7 +128,7 @@ export default function TokenomicsDesignSpace() {
               />
             </div>
           </div>
-          <div>
+          <div className='prose'>
             <h1 className="mb-10 text-3xl font-bold leading-10 md:whitespace-nowrap">
               Share your tokenomics easily
             </h1>
@@ -153,10 +143,10 @@ export default function TokenomicsDesignSpace() {
         </div>
         <hr className="my-4 mx-auto h-1 w-48 rounded border-0 bg-gray-100 dark:bg-gray-700 md:my-10"></hr>
         <div className="flex flex-col items-center bg-gray-50 p-3">
-          <h1 className="mb-10 text-3xl font-bold leading-10 md:whitespace-nowrap">
+          <h1 className="mb-10 text-3xl font-bold leading-10 md:whitespace-nowrap prose">
             Get an expert to review your design
           </h1>
-          <p className="mt-5 text-center text-xl">
+          <p className="mt-5 text-center text-xl prose">
             Get feedback, guidance and even design help on your tokenomics from
             experts in the Tokenomics DAO community
           </p>
@@ -164,11 +154,8 @@ export default function TokenomicsDesignSpace() {
             <ThubLogo />
           </div>
         </div>
-
-        {/* <hr className="my-4 mx-auto h-1 w-48 rounded border-0 bg-gray-100 dark:bg-gray-700 md:my-10"></hr> */}
-
         <div className="flex w-full flex-col justify-between gap-5 bg-gradient-to-r from-dao-green to-dao-red py-5 pt-10">
-          <h1 className="text-center text-4xl font-bold leading-10 text-white md:whitespace-nowrap">
+          <h1 className="text-center text-4xl font-bold leading-10 text-white md:whitespace-nowrap prose">
             Build better Tokenomics
           </h1>
           <p className="mt-5 text-center text-xl text-white">
@@ -177,11 +164,9 @@ export default function TokenomicsDesignSpace() {
           </p>
           <div className="flex justify-center gap-3">
             {designLink}
-            {/* {videoLink} */}
           </div>
         </div>
       </div>
-      {/* </Layout> */}
     </>
   )
 }
