@@ -253,10 +253,6 @@ export function getAreaData(months, calculationRows, totalSupply, startDate) {
   calculationRows?.forEach((cr) => {
     const rowAllocation = (totalSupply * cr.percentageAllocation) / 100
     if (cr?.isSink) {
-      console.log(
-        '🚀 ~ file: helper.ts:248 ~ calculationRows?.forEach ~ cr:',
-        cr
-      )
       // sum up the demand data for supplydemand totals
       getDemandAreaData(cr, months, props.supplyDemandTotals, startDate)
     } else {
@@ -282,7 +278,6 @@ export function getAreaData(months, calculationRows, totalSupply, startDate) {
       }
     }
   })
-  console.log('🚀 ~ file: helper.ts:285 ~ getAreaData ~ props:', props)
   return props
 }
 
@@ -315,46 +310,7 @@ export function getDemandAreaData(calculationRow, months, supplyDemandTotals, st
       }
     }
   }
-
-  console.log('🚀 ~ file: helper.ts:333 ~ supplyDemandTotals:', supplyDemandTotals);
 }
-
-
-// export function getDemandAreaData(
-//   calculationRow,
-//   months,
-//   supplyDemandTotals,
-//   startDate
-// ) {
-//   //we could sort incoming timeseries by month ascending - then we could skip months
-//   if (calculationRow.CalculationTimeSeries !== undefined) {
-//     const inputData = calculationRow.CalculationTimeSeries || []
-//     const sortedMonthsInput = inputData.sort((a, b) => a.months - b.months)
-//     //check for
-//     for (let i = 0; i < months; i++) {
-//       //if months+1 does not exist in inputData set tokens = 0
-//       if (supplyDemandTotals[i] === undefined) {
-//           supplyDemandTotals[i] = {
-//             date: new Date(startDate).setMonth(
-//               new Date(startDate).getMonth() + i
-//             ),
-//             demand: sortedMonthsInput[i]?.tokens || 0,
-//             months: sortedMonthsInput[i]?.months ||i + 1,
-//           }
-//         // }
-//       } else {
-//         if (supplyDemandTotals[i].demand === undefined) {
-//           supplyDemandTotals[i].demand = 0
-//         }
-//         supplyDemandTotals[i].demand += sortedMonthsInput[i]?.tokens || 0
-//       }
-//     }
-//   }
-//   console.log(
-//     '🚀 ~ file: helper.ts:333 ~ supplyDemandTotals:',
-//     supplyDemandTotals
-//   )
-// }
 
 export function getLinearAreaData(
   calculationRow,

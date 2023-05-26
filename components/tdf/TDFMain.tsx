@@ -114,6 +114,7 @@ export default function TDFMain({ props, header = headerStatus.design }) {
   })
 
   const submitData = async (values, { setSubmitting }) => {
+    console.log("🚀 ~ file: TDFMain.tsx:117 ~ submitData ~ values:", values)
     const body = { values }
     if (values?.id === '') {
       try {
