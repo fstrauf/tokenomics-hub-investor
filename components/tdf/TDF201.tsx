@@ -8,11 +8,13 @@ import WalkthroughSection from './WalkthroughSection'
 export default function TDF201({ props, values, activePhase }) {
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
 
-  const { setFieldValue } = useFormikContext()
+  const { setFieldValue, dirty } = useFormikContext()
 
   useEffect(() => {
-    designElementStatusUpdate(values, designPhase.phaseId, setFieldValue)
-  }, [])
+    if (dirty) {
+      designElementStatusUpdate(values, designPhase.phaseId, setFieldValue)
+    }
+  }, [dirty])
 
   return (
     <div className="grid w-full grid-cols-2 gap-2 rounded-lg border-2 p-2">

@@ -1,4 +1,4 @@
-import { Field } from 'formik'
+import { Field, useFormikContext } from 'formik'
 // import BreakdownBox from '../slugView/breakdown-box'
 import ResourceSection from './ResourceSection'
 import { getActiveDesignPhase } from '../../lib/helper'
@@ -11,13 +11,16 @@ import { designElementStatusUpdate } from '../../lib/designElementStatusField'
 import WalkthroughSection from './WalkthroughSection'
 
 //taking stock
-export default function TDF501({ props, values, activePhase, setFieldValue }) {
-  console.log("🚀 ~ file: TDF501.tsx:15 ~ TDF501 ~ props:", props)
+export default function TDF501({ props, values, activePhase }) {
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
 
+  const { setFieldValue, dirty } = useFormikContext()
+
   useEffect(() => {
-    designElementStatusUpdate(values, designPhase.phaseId, setFieldValue)
-  }, [])
+    if (dirty) {
+      designElementStatusUpdate(values, designPhase.phaseId, setFieldValue)
+    }
+  }, [dirty])
 
   let ExampleDetail = ({ onGoBack, example, exampleField }) => {
     return (

@@ -9,11 +9,13 @@ import WalkthroughSection from './WalkthroughSection'
 
 export default function TDF802({ props, values, activePhase }) {
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
-  const { setFieldValue } = useFormikContext()
+  const { setFieldValue, dirty } = useFormikContext()
 
   useEffect(() => {
-    designElementStatusUpdate(values, designPhase.phaseId, setFieldValue)
-  }, [])
+    if (dirty) {
+      designElementStatusUpdate(values, designPhase.phaseId, setFieldValue)
+    }
+  }, [dirty])
   return (
     <div className="flex flex-col">
       <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 ">

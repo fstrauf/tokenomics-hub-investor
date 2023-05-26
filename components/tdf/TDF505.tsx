@@ -1,4 +1,4 @@
-import { Field } from 'formik'
+import { Field, useFormikContext } from 'formik'
 import { getActiveDesignPhase } from '../../lib/helper'
 import FormCardSupplyvsDemand from '../form/FormCardSupplyvsDemand'
 // import BreakdownBox from '../slugView/breakdown-box'
@@ -15,15 +15,18 @@ export default function TDF502({
   props,
   values,
   activePhase,
-  setFieldValue,
+  // setFieldValue,
   reviewRequiredFields,
 }) {
-  console.log("🚀 ~ file: TDF505.tsx:21 ~ props:", props)
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
 
+  const { setFieldValue, dirty } = useFormikContext()
+
   useEffect(() => {
-    designElementStatusUpdate(values, designPhase.phaseId, setFieldValue)
-  }, [])
+    if (dirty) {
+      designElementStatusUpdate(values, designPhase.phaseId, setFieldValue)
+    }
+  }, [dirty])
 
   let ExampleDetail = ({ onGoBack, example, exampleField }) => {
     return (

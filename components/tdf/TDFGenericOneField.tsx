@@ -18,11 +18,13 @@ export default function TDFGenericOneField({
   reviewRequiredFields
 }) {
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
-  const { setFieldValue } = useFormikContext()
+  const { setFieldValue, dirty } = useFormikContext()
 
   useEffect(() => {
-    designElementStatusUpdate(values, designPhase.phaseId, setFieldValue)
-  }, [])
+    if (dirty) {
+      designElementStatusUpdate(values, designPhase.phaseId, setFieldValue)
+    }
+  }, [dirty])
   
   return (
     <div className="flex flex-col">

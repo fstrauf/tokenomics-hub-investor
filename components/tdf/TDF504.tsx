@@ -1,4 +1,4 @@
-import { Field } from 'formik'
+import { Field, useFormikContext } from 'formik'
 import { getActiveDesignPhase } from '../../lib/helper'
 import FormCardDemand from '../form/FormCardDemand'
 // import BreakdownBox from '../slugView/breakdown-box'
@@ -19,16 +19,20 @@ export default function TDF504({
   props,
   values,
   activePhase,
-  setFieldValue,
+  // setFieldValue,
   reviewRequiredFields,
 }) {
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
   const { user } = useUser()
   const admin = user?.publicMetadata?.admin || false
 
+  const { setFieldValue, dirty } = useFormikContext()
+
   useEffect(() => {
-    designElementStatusUpdate(values, designPhase.phaseId, setFieldValue)
-  }, [])
+    if (dirty) {
+      designElementStatusUpdate(values, designPhase.phaseId, setFieldValue)
+    }
+  }, [dirty])
 
   let ExampleDetail = ({ onGoBack, example, exampleField }) => {
     return (
