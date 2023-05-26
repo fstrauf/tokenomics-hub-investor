@@ -657,8 +657,8 @@ export async function updateSubscriptionData(subscription: object) {
   })
 }
 
-export async function createSpreadSheet(title) {
-  const body = { title }
+export async function createSpreadSheet(data) {
+  const body = data
   try {
     const response = await fetch('/api/createGSheet', {
       method: 'POST',
@@ -672,6 +672,23 @@ export async function createSpreadSheet(title) {
     )
     // toast.success('Message sent', { position: 'bottom-right' })
     return spreadsheetUrl
+  } catch (error) {
+    console.error(error)
+    // toast.error('An error occurred', { position: 'bottom-right' })
+    return ''
+  }
+}
+
+export async function uploadSpreadsheet(data){
+  try {
+    const body = data
+    const response = await fetch('/api/uploadSheet', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    })
+    const updateResponse = await response.text()
+    return updateResponse
   } catch (error) {
     console.error(error)
     // toast.error('An error occurred', { position: 'bottom-right' })
