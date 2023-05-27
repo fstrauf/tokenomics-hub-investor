@@ -190,6 +190,7 @@ export function getMonthEpochAreaData(
   startDate,
   supplyDemandTotals
 ) {
+  console.log("🚀 ~ file: helper.ts:193 ~ months:", months)
   let emissions = 0
   const secondsPerMonth = 2628000
   let emissionsPerSecond = calculationRow.initialEmissionPerSecond
@@ -230,6 +231,7 @@ export function getMonthEpochAreaData(
     Object.assign(chartData[i], categoryLine)
 
     if (supplyDemandTotals[i] === undefined) {
+      
       supplyDemandTotals[i] = {
         date: new Date(startDate).setMonth(new Date(startDate).getMonth() + i),
         supply: Number(
@@ -244,19 +246,22 @@ export function getMonthEpochAreaData(
         categoryLine[calculationRow.name || calculationRow.category]
       )
     }
+    // console.log("🚀 ~ file: helper.ts:233 ~ supplyDemandTotals:", supplyDemandTotals)
   }
 }
 
 export function getAreaData(months, calculationRows, totalSupply, startDate) {
   var props = { chartData: [], supplyDemandTotals: [] }
-
+  
   calculationRows?.forEach((cr) => {
     const rowAllocation = (totalSupply * cr.percentageAllocation) / 100
     if (cr?.isSink) {
       // sum up the demand data for supplydemand totals
       getDemandAreaData(cr, months, props.supplyDemandTotals, startDate)
     } else {
+      // console.log("🚀 ~ file: helper.ts:263 ~ calculationRows?.forEach ~ cr:", cr)
       if (cr.isEpochDistro) {
+        
         // add supply for the supplydemand totals
         getMonthEpochAreaData(
           cr,
@@ -278,6 +283,7 @@ export function getAreaData(months, calculationRows, totalSupply, startDate) {
       }
     }
   })
+  // console.log("🚀 ~ file: helper.ts:253 ~ getAreaData ~ props:", props)
   return props
 }
 
@@ -378,6 +384,7 @@ export function getLinearAreaData(
     Object.assign(chartData[i], categoryLine)
 
     if (supplyDemandTotals[i] === undefined) {
+      
       supplyDemandTotals[i] = {
         date: new Date(startDate).setMonth(new Date(startDate).getMonth() + i),
         supply: Number(
@@ -392,6 +399,7 @@ export function getLinearAreaData(
         categoryLine[calculationRow.name || calculationRow.category]
       )
     }
+    console.log("🚀 ~ file: helper.ts:387 ~ supplyDemandTotals:", supplyDemandTotals)
   }
 }
 

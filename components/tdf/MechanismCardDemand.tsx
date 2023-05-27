@@ -1,10 +1,11 @@
 import {
   Field,
   FieldArray,
+  useFormikContext,
   // useFormik,
   // ErrorMessage,
-  Formik,
-  Form,
+  // Formik,
+  // Form,
 } from 'formik'
 import React from 'react'
 import FormSelectUtility from '../form/FormSelectUtility'
@@ -14,6 +15,7 @@ import GenericTab from '../generic/GenericTab'
 import { supplyDemandType } from '../../lib/helper'
 import { createSpreadSheet, uploadSpreadsheet } from '../../lib/helper'
 import { useState } from 'react'
+import { toast } from 'react-hot-toast'
 
 export const MechanismCardDemand = ({
   field,
@@ -24,7 +26,9 @@ export const MechanismCardDemand = ({
   templates,
 }) => {
   console.log('🚀 ~ file: MechanismCardDemand.tsx:24 ~ values:', values)
-  // const isSink = field.value[mechanismIndex]?.isSink || false 
+  // const isSink = field.value[mechanismIndex]?.isSink || false
+
+  const { setFieldValue } = useFormikContext()
 
   let isUtility = false
 
@@ -45,7 +49,7 @@ export const MechanismCardDemand = ({
   const [url, setUrl] = useState('')
 
   const Tabs = [
-    { tab: 'Phases' },
+    { tab: 'Manual' },
     { tab: 'Functions' },
     { tab: 'Spreadsheets' },
   ]
@@ -53,14 +57,17 @@ export const MechanismCardDemand = ({
   async function downloadSpreadsheet() {
     try {
       let aSpreadsheetData = values.Calculation.areaData.supplyDemandTotals
-      console.log('spreadsheet data = ', aSpreadsheetData)
+      console.log(
+        '🚀 ~ file: MechanismCardDemand.tsx:56 ~ downloadSpreadsheet ~ aSpreadsheetData:',
+        aSpreadsheetData
+      )
       setName('Creating Spreadsheet..')
       setDisabled(true)
       if (
         'supply' in aSpreadsheetData[0] == false ||
         'demand' in aSpreadsheetData[0] == false
       ) {
-        throw 'supply/demand not found'
+        toast.error('supply/demand not found', { position: 'bottom-right' })
       }
       let aSpreadSheetData = [
         {
@@ -69,8 +76,8 @@ export const MechanismCardDemand = ({
             "Don't Change - Imported from Tokenomics Design Space",
           'Expected Token Demand':
             "Don't Change - Imported from Tokenomics Design Space",
-            "Month Count":"Don't Change - Imported from Tokenomics Design Space",
-            "Rewards Type":"Please select the relevant tab"
+          'Month Count': "Don't Change - Imported from Tokenomics Design Space",
+          'Rewards Type': 'Please select the relevant tab',
         },
       ]
 
@@ -78,10 +85,14 @@ export const MechanismCardDemand = ({
         let obj = {
           Months: data.months,
           'Circulating supply': data.supply,
-          'Expected Token Demand': data.demand,
+          // 'Expected Token Demand': data.demand,
         }
         aSpreadSheetData.push(obj)
       }
+      console.log(
+        '🚀 ~ file: MechanismCardDemand.tsx:88 ~ downloadSpreadsheet ~ aSpreadSheetData:',
+        aSpreadSheetData
+      )
       let spreadSheetUrl = await createSpreadSheet({
         title: 'Demand_Staking',
         data: aSpreadSheetData,
@@ -103,9 +114,35 @@ export const MechanismCardDemand = ({
     try {
       setDisabled(true)
       setName_('Uploading sheet...')
-      let updateResponse = await uploadSpreadsheet({ id: 'id', url })
-      if (updateResponse) alert('Upload successfully')
-      setDisabled(true)
+      let updateResponse = JSON.parse(
+        await uploadSpreadsheet({ id: 'id', url })
+      )
+      console.log(
+        '🚀 ~ file: MechanismCardDemand.tsx:113 ~ uploadSheet ~ updateResponse:',
+        updateResponse
+      )
+      if (updateResponse) {
+        try {
+          const calculationTimeSeries = updateResponse.data.map((ur) => ({
+            months: Number(ur['Months']),
+            tokens: parseInt(ur['Expected Token Demand'].replace(/,/g, '').split('.')[0], 10),
+          }))
+          //remove headers
+          calculationTimeSeries.shift()
+          setFieldValue(
+            `${field.name}.${mechanismIndex}.CalculationTimeSeries`,
+            calculationTimeSeries
+          )
+          toast.success('Upload successfull', { position: 'bottom-right' })
+        } catch (error) {
+          console.log(
+            '🚀 ~ file: MechanismCardDemand.tsx:136 ~ uploadSheet ~ error:',
+            error
+          )
+          toast.error('Upload failed', { position: 'bottom-right' })
+        }
+      }
+      setDisabled(false)
       setName_('Upload Spreadsheet')
     } catch (error) {
       console.log('error = ', error)
@@ -125,20 +162,14 @@ export const MechanismCardDemand = ({
               <table className="mb-1 overflow-x-auto text-left text-sm text-gray-500">
                 <thead className="bg-gray-50 text-xs text-gray-700">
                   <tr>
-                    <th scope="col" className="py-3">
+                    {/* <th scope="col" className="py-3">
                       Phase
+                    </th> */}
+                    <th scope="col" className="py-3">
+                      Months
                     </th>
                     <th scope="col" className="py-3">
-                      Phase Duration
-                      <span className="ml-1 self-center text-xs">
-                        (in months)
-                      </span>
-                    </th>
-                    <th scope="col" className="py-3">
-                      Demand
-                      <span className="ml-1 self-center text-xs">
-                        (tokens during phase)
-                      </span>
+                      Token Demand
                     </th>
                     <th></th>
                   </tr>
@@ -153,7 +184,7 @@ export const MechanismCardDemand = ({
                             key={factorIndex}
                             className="border-b bg-white text-xs font-normal"
                           >
-                            <th
+                            {/* <th
                               scope="row"
                               className="whitespace-nowrap text-gray-900 "
                             >
@@ -164,7 +195,7 @@ export const MechanismCardDemand = ({
                                 type="number"
                                 onWheel={(event) => event.currentTarget.blur()}
                               />
-                            </th>
+                            </th> */}
                             <td className="">
                               {' '}
                               <Field
@@ -223,9 +254,6 @@ export const MechanismCardDemand = ({
             </>
           )}
         />
-        <button type="button" onClick={() => {}}>
-          Create Spreadsheet
-        </button>
       </>
     )
   }
@@ -237,34 +265,33 @@ export const MechanismCardDemand = ({
   function Spreadsheet() {
     return (
       <>
-        <div className="m-auto mt-5">
-          <button
-            disabled={disabled}
-            type="button"
-            onClick={downloadSpreadsheet}
-            className="outline outline-1 outline-offset-2 "
-          >
-            {name}
-          </button>
-
-          <Field
-            name={`${field.name}.${mechanismIndex}.url`}
-            onChange={(event) => setUrl(event.target.value)}
-            type="text"
-            className="ml-20 outline outline-1 outline-offset-2"
-            placeholder="URL"
-            value={url}
-          ></Field>
-          <p>
+        <div className="m-auto mt-5 flex flex-col gap-3">
+          <div className="flex justify-around gap-3">
+            <button
+              disabled={disabled}
+              type="button"
+              onClick={downloadSpreadsheet}
+              className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
+            >
+              {name}
+            </button>
             <button
               disabled={disabled}
               onClick={uploadSheet}
               type="button"
-              className="float-right mt-5 mr-8 outline outline-1 outline-offset-2"
+              className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
             >
               {name_}
             </button>
-          </p>
+          </div>
+          <input
+            // name={`${field.name}.${mechanismIndex}.url`}
+            onChange={(event) => setUrl(event.target.value)}
+            type="text"
+            className="block h-10 rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-xs text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+            placeholder="URL"
+            value={url}
+          ></input>
         </div>
       </>
     )
@@ -285,22 +312,10 @@ export const MechanismCardDemand = ({
           templates={templates}
           isMulti={true}
           index={mechanismIndex}
-          // isSink={isSink}
         />
-        {/* <label className="mt-5 block text-sm font-medium text-gray-900">
-          Descriptions
-        </label>
-        <Field
-          name={`${field.name}.${mechanismIndex}.description`}
-          placeholder="Description"
-          className="mt-5 block w-full rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
-          as="textarea"
-          row={4}
-        /> */}
-
         <div className="mt-10">
           <label className="m-auto tracking-tight text-gray-900">
-            DEMAND ESTIMATE
+            Demand Estimate
           </label>
           <hr className="mt-5 mb-5"></hr>
           <div>
@@ -346,23 +361,12 @@ export const MechanismCardDemand = ({
           isMulti={true}
           index={mechanismIndex}
         />
-        {/* <label className="mt-5 block text-sm font-medium text-gray-900">
-          Descriptions
-        </label>
-        <Field
-          name={`${field.name}.${mechanismIndex}.description`}
-          placeholder="Description"
-          className="mt-5 block w-full rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
-          as="textarea"
-          row={4}
-        /> */}
-
         <div className="mt-10">
           <label
             style={{ alignContent: 'center' }}
             className="tracking-tight text-gray-900"
           >
-            DEMAND ESTIMATE
+            Demand Estimate
           </label>
           <hr className="mt-5 mb-5"></hr>
 

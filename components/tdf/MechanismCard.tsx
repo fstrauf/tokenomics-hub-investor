@@ -195,18 +195,6 @@ export const MechanismCard = ({
                             key={factorIndex}
                             className="border-b bg-white text-xs font-normal"
                           >
-                            {/* <th
-                              scope="row"
-                              className="whitespace-nowrap text-gray-900 "
-                            >
-                              {' '}
-                              <Field
-                                name={`${field.name}.${mechanismIndex}.CalculationTimeSeries.${factorIndex}.phase`}
-                                className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-gray-900 focus:border-blue-500 focus:ring-blue-500"
-                                type="number"
-                                onWheel={(event) => event.currentTarget.blur()}
-                              />
-                            </th> */}
                             <td className="">
                               {' '}
                               <Field
