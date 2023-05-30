@@ -39,9 +39,9 @@ export const MechanismCardDemand = ({
     isUtility = true
   }
 
-  const isSink = field.value[mechanismIndex]?.isSink || false
+  // const isSink = field.value[mechanismIndex]?.isSink || false
   dayjs.extend(duration)
-  const secondsPerMonth = 2628000
+  // const secondsPerMonth = 2628000
   const [disabled, setDisabled] = useState(false)
   const [name, setName] = useState('Create Spreadsheet')
   const [name_, setName_] = useState('Upload Spreadsheet')

@@ -1,10 +1,10 @@
-import { Field, FieldArray } from 'formik'
+import { Field } from 'formik'
 import React from 'react'
 import FormSelectUser from '../form/FormSelectUser'
 // import FormTipTap from '../form/FormTipTap'
 import * as duration from 'dayjs/plugin/duration'
 import * as dayjs from 'dayjs'
-import { shortBigNumber } from '../../lib/helper'
+import { shortBigNumber, supplyDemandType } from '../../lib/helper'
 
 export const MechanismCardSupply = ({
   field,
@@ -12,7 +12,15 @@ export const MechanismCardSupply = ({
   // setFieldValue,
   users,
 }) => {
-  const isSink = field.value[mechanismIndex]?.isSink || false
+
+  let isInternal = false
+  if (
+    field.value[mechanismIndex]?.supplyDemandType ===
+    supplyDemandType.supplyInternal
+  ) {
+    isInternal = true
+  }
+  // const isSink = field.value[mechanismIndex]?.isSink || false
   dayjs.extend(duration)
   const secondsPerMonth = 2628000
 
@@ -318,7 +326,7 @@ export const MechanismCardSupply = ({
       className="ml-auto mr-auto flex max-w-2xl flex-col p-4"
     >
       <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 ">
-        {isSink ? <>External Allocation</> : <>Internal Allocation</>}
+        {isInternal ? <>Internal Allocation</> : <>External Allocation</>}
       </h5>
       <label className="block text-sm font-medium text-gray-900 ">Name</label>
       <Field
@@ -338,7 +346,7 @@ export const MechanismCardSupply = ({
         isMulti={true}
       />
 
-      {isSink ? supplyExternal() : supplyInternal()}
+      {isInternal ? supplyInternal() : supplyExternal()}
     </div>
   )
 }
