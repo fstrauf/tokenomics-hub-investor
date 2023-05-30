@@ -1,9 +1,23 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
+import prisma from '../../lib/prisma'
 // import prisma from '../../lib/prisma'
 
 type Data = {
   message: string
+}
+
+function updateData(data: object[]) {
+  const updatedData = data.map((element, index) => {
+    if (index === 0) return { ...element }
+
+    let rowNumber = index + 2 // Start from 3rd row
+    const formulaString = `=IF($E$3="Staking + Normal Rewards Calc",'Staking + Normal Rewards Calc'!C${rowNumber},IF($E$3="Staking + Revenue Share Rewards Calc",'Staking + Revenue Share Rewards Calc'!C${rowNumber},IF($E$3="Staking + Vesting Rewards Calc",'Staking + Vesting Rewards Calc'!C${rowNumber},0)))`
+
+    return { ...element, 'Expected Token Demand': formulaString }
+  })
+
+  return updatedData
 }
 
 export default async function handler(
@@ -11,7 +25,7 @@ export default async function handler(
   res: NextApiResponse<Data>
 ) {
   try {
-    const { title, data } = req.body
+    const { id, title, data } = req.body
     const { JWT } = require('google-auth-library')
     const { GoogleSpreadsheet } = require('google-spreadsheet')
     const sheetBaseUrl = `https://sheets.googleapis.com/v4/spreadsheets`
@@ -22,6 +36,28 @@ export default async function handler(
       'https://www.googleapis.com/auth/spreadsheets',
       'https://www.googleapis.com/auth/drive',
     ]
+
+    const sMechanismId = await prisma.mechanism.findFirst({
+      where: {
+        id: id,
+        isTemplate: true,
+      },
+    })
+
+    if (!sMechanismId) {
+      return res.status(400).json({
+        message: 'Invalid Template',
+      })
+    }
+
+    if (
+      sMechanismId.templateSheet == null ||
+      sMechanismId.templateSheet == undefined
+    ) {
+      return res.status(400).json({
+        message: 'Invalid Template',
+      })
+    }
 
     const jwt = new JWT({
       email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
@@ -45,7 +81,7 @@ export default async function handler(
       },
     })
     const sheetData = await sheetRes.json()
-    console.log('🚀 ~ file: createGSheet.ts:36 ~ sheetData:', sheetData)
+    // console.log('🚀 ~ file: createGSheet.ts:36 ~ sheetData:', sheetData)
 
     const promisesAccountAuth = []
 
@@ -66,23 +102,10 @@ export default async function handler(
       )
     )
 
-    // await fetch(
-    //   `https://www.googleapis.com/drive/v3/files/${sheetData.spreadsheetId}/permissions`,
-    //   {
-    //     method: 'POST',
-    //     body: JSON.stringify({
-    //       role: 'writer',
-    //       type: 'anyone',
-    //     }),
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //       Authorization: `Bearer ${jwt.credentials.access_token}`,
-    //     },
-    //   }
-    // )
-
     const doc = new GoogleSpreadsheet(sheetData.spreadsheetId)
-    const copyTemplateDoc = new GoogleSpreadsheet(copyTemplateSpreadsheetId)
+    const copyTemplateDoc = new GoogleSpreadsheet(
+      sMechanismId.templateSheet.toString().split('/')[5]
+    )
 
     promisesAccountAuth.push(
       doc.useServiceAccountAuth({
@@ -149,10 +172,13 @@ export default async function handler(
       sheet.updateProperties({ title: templateSheet.title })
     }
 
+    await doc.loadInfo()
     const sheet = doc.sheetsByIndex[1]
     await sheet.clearRows()
 
-    await sheet.addRows(data)
+    const updatedData = updateData(data)
+
+    await sheet.addRows(updatedData)
 
     return res.status(200).json({ message: sheetData?.spreadsheetUrl })
   } catch (error) {
