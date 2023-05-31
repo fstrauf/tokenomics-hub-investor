@@ -57,16 +57,39 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     },
   })
 
-  const userId = posts.map(post => post.authorClerkId).filter((value, index, self) => {
-    return self.indexOf(value) === index;
-  });
+  const userId = posts
+    .map((post) => post.authorClerkId)
+    .filter((value, index, self) => {
+      return self.indexOf(value) === index
+    })
+  // console.log('🚀 ~ file: allDrafts.tsx:63 ~ userId ~ userId:', userId)
 
-  let users = clerkConvertJSON(await clerkClient.users.getUserList({ userId }))
-  console.log("🚀 ~ file: allDrafts.tsx:65 ~ constgetServerSideProps:GetServerSideProps= ~ users:", users)
+  // const userIds = [
+  //   'user_2OJS2phbZM5AJNjFnbiXo3PuXwz',
+  //   'user_2OJRzKpH0GPtDjo0iW7tDJwHOLf',
+  //   'user_2OJS2j1GeN2xU72jMKKn9Y5bFK9',
+  //   'user_2OJRuO9IJgTS2peegG9vCJTsj5b',
+  //   'user_2OJRuTxpGorVmbMf9Gz1SHQNBkU',
+  //   'user_2OJRxISYvcPpcn1UBUnlxcDA45S',
+  //   'user_2OJRuXBPHux5Wq5p7p5tqxPmSQR',
+  //   'user_2OJRrxSZl3p6LZLOa2w2gsHSsJC',
+  //   'user_2OJRs1Aaa0rPwsncLwkvl0Lv4RU',
+  //   'user_2OJRry3Pifnu0MhMlx1DCVZtuAa',
+  //   'user_2OJRzK7LGVn0EUOEMiSAFCDKWTu',
+  //   'user_2OJRjLTgYyRIaa19eNCsCwXSrOd',
+  //   'user_2OJRrzUzefFztHyvOpsxX6NOZMi',
+  //   'user_2OJRrwQnFr66L0WgdSpQQe6cwRs',
+  //   'user_2OJRzQZiYRMy8b444GSUW5ayb4T',]
+
+  let users = clerkConvertJSON(
+    await clerkClient.users.getUserList({ limit: 500, userId: userId })
+  )
+  // console.log("🚀 ~ file: allDrafts.tsx:65 ~ constgetServerSideProps:GetServerSideProps= ~ users:", users.length)
 
   const postsWithUserNames = posts.map((post) => {
     const currentUser = users?.find((u) => u.id === post.authorClerkId)
     const eA = currentUser?.emailAddresses || []
+    // console.log("🚀 ~ file: allDrafts.tsx:70 ~ postsWithUserNames ~ eA:", eA)
     const authorEmail =
       eA.find((email) => email.id === currentUser?.primaryEmailAddressId)
         ?.emailAddress || ''
@@ -77,6 +100,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
       authorEmail: authorEmail,
     }
   })
+  // console.log("🚀 ~ file: allDrafts.tsx:103 ~ postsWithUserNames ~ postsWithUserNames:", postsWithUserNames)
 
   return {
     props: {

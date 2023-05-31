@@ -10,6 +10,7 @@ import PublishPost from './tdf/PublishPost'
 import SharePost from './tdf/SharePost'
 
 export default function Drafts({ posts, context }) {
+  // console.log("🚀 ~ file: drafts.tsx:13 ~ Drafts ~ posts:", posts)
   const { user } = useUser()
   const [isSubmitting, setSubmitting] = useState(false)
   const contributor = user?.publicMetadata?.contributor || false
@@ -69,7 +70,7 @@ export default function Drafts({ posts, context }) {
                     <p>{post.title}</p>
                   </th>
                   <td className="py-2 px-3">
-                    <p>{post?.author}</p>
+                    <p>{post?.authorEmail} | {post?.authorClerkId} | {post?.author}</p>
                   </td>
                   <td className="py-2 px-3">
                     <p>{post?.status}</p>
