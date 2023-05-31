@@ -268,10 +268,11 @@ export const MechanismCardDemand = ({
                 className="mt-3 mr-3 w-36 rounded-md bg-dao-red px-2 py-1 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
                 onClick={() =>
                   arrayHelpers.push({
-                    phase:
-                      field.value[mechanismIndex]?.CalculationTimeSeries
-                        ?.length + 1 || 1,
-                    months: 6,
+                    // phase:
+                    //   field.value[mechanismIndex]?.CalculationTimeSeries
+                    //     ?.length + 1 || 1,
+                    months: field.value[mechanismIndex]?.CalculationTimeSeries
+                    ?.length + 1 || 1,
                     tokens: 10000000,
                   })
                 }
@@ -396,8 +397,8 @@ export const MechanismCardDemand = ({
             Demand Estimate
           </label>
           <hr className="mt-5 mb-5"></hr>
-
           <div>
+
             <GenericTab
               tabs={Tabs}
               panels={[
