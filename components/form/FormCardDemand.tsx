@@ -4,7 +4,7 @@ import Drawer from '../slugView/Drawer'
 import MechanismCardDemand from '../tdf/MechanismCardDemand'
 import { supplyDemandType } from '../../lib/helper'
 import XMarkIcon from '../../public/svg/xmarkicon'
-import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
+// import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
 
 export const FormCardSupply = ({
   field,
@@ -14,7 +14,7 @@ export const FormCardSupply = ({
   // subscription,
 }) => {
   let [mechanismIndex, setMechanismIndex] = useState(0)
-  const { user } = useUser()
+  // const { user } = useUser()
   // const admin = user?.publicMetadata?.admin || false
   const defaultMechanism = {
     id: '',
@@ -40,6 +40,8 @@ export const FormCardSupply = ({
     CalculationTimeSeries: [],
     isTemplate: false,
     PostUser: [],
+    mechanismType: '',
+    incentiveTarget: []
   }
 
   const mechTemplate = mechanismTemplates.filter((template) => {

@@ -25,9 +25,7 @@ export const MechanismCardDemand = ({
   // users,
   templates,
 }) => {
-  console.log('🚀 ~ file: MechanismCardDemand.tsx:24 ~ values:', values)
-  console.log('🚀 ~ file: MechanismCardDemand.tsx:24 ~ field:', field)
-  // const isSink = field.value[mechanismIndex]?.isSink || false
+  console.log("🚀 ~ file: MechanismCardDemand.tsx:28 ~ templates:", templates)
 
   const { setFieldValue } = useFormikContext()
 
@@ -329,14 +327,14 @@ export const MechanismCardDemand = ({
     return (
       <>
         <label className="mt-5 block text-sm font-medium text-gray-900 ">
-          Utility
+          Select Utility Type
         </label>
         <Field
           className="custom-select mt-5"
-          name={`${field.name}.${mechanismIndex}.Utility`}
+          name={`${field.name}.${mechanismIndex}.mechanismType`}
           options={field}
           component={FormSelectUtility}
-          placeholder="Select utility"
+          placeholder="Select Utility"
           templates={templates}
           isMulti={true}
           index={mechanismIndex}
@@ -362,18 +360,22 @@ export const MechanismCardDemand = ({
   }
 
   const demandMechanism = () => {
+    console.log("🚀 ~ file: MechanismCardDemand.tsx:375 ~ demandMechanism ~ templates:", templates)
+    console.log("🚀 ~ file: MechanismCardDemand.tsx:373 ~ demandMechanism ~ field:", field)
     return (
       <>
         <label className="mt-5 block text-sm font-medium text-gray-900 ">
-          Select requirement
+          Select Mechanism Type
         </label>
         <Field
           className="custom-select mt-5"
-          name={`${field.name}.${mechanismIndex}.requirement`}
+          name={`${field.name}.${mechanismIndex}.mechanismType`}          
           options={field}
+          
           component={FormSelectUtility}
-          placeholder="Select requirement"
+          placeholder="Select Mechanism"
           templates={templates}
+          
           isMulti={true}
           index={mechanismIndex}
         />
@@ -382,7 +384,7 @@ export const MechanismCardDemand = ({
         </label>
         <Field
           className="custom-select mt-5"
-          name={`${field.name}.${mechanismIndex}.incentive`}
+          name={`${field.name}.${mechanismIndex}.incentiveTarget`}
           options={field}
           component={FormSelectUtility}
           placeholder="Select Incentive"

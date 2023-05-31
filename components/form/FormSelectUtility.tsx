@@ -12,6 +12,8 @@ const FormSelectUtilty = ({
   templates,
   index,
 }) => {
+  console.log("🚀 ~ file: FormSelectUtility.tsx:15 ~ field:", field)
+  console.log("🚀 ~ file: FormSelectUtility.tsx:15 ~ templates:", templates)
   function onChange(option) {
     form.setFieldValue(field.name, option ? option : {})
   }
@@ -31,7 +33,7 @@ const FormSelectUtilty = ({
         placeholder={placeholder}
       />
     )
-  } else if (field.name.split('.')[2] == 'requirement') {
+  } else if (field.name.split('.')[2] == 'mechanismType') {
     return (
       <Select
         className="react-select-container"
@@ -40,7 +42,7 @@ const FormSelectUtilty = ({
         value={field.value}
         onChange={onChange}
         defaultValue={options.value[index]}
-        options={templates.filter((option) => {
+        options={templates?.filter((option) => {
           return option.supplyDemandType == supplyDemandType.demandMechanism
         })}
         getOptionValue={(option) => option.id}
@@ -50,7 +52,7 @@ const FormSelectUtilty = ({
         placeholder={placeholder}
       />
     )
-  } else if (field.name.split('.')[2] == 'incentive') {
+  } else if (field.name.split('.')[2] == 'incentiveTarget') {
     return (
       <Select
         className="react-select-container"
@@ -77,7 +79,7 @@ const FormSelectUtilty = ({
         value={field.value}
         onChange={onChange}
         defaultValue={options.value[index]}
-        options={templates.filter((option) => {
+        options={templates?.filter((option) => {
           return option.supplyDemandType == supplyDemandType.demandUtility
         })}
         getOptionValue={(option) =>filterLabel(option)}
