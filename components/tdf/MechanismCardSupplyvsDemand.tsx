@@ -103,11 +103,13 @@ export const MechanismCardSupplyvsDemand = ({
         '🚀 ~ file: MechanismCardDemand.tsx:88 ~ downloadSpreadsheet ~ aSpreadSheetData:',
         aSpreadSheetData
       )
+      console.log("🚀 ~ file: MechanismCardSupplyvsDemand.tsx:111 ~ downloadSpreadsheet ~ field.value[mechanismIndex]:", field.value[mechanismIndex])
       let spreadSheetUrl = await createSpreadSheet({
         id: field.value[mechanismIndex].id,
         title: 'Demand_Staking',
         data: aSpreadSheetData,
       })
+        
       if (JSON.parse(spreadSheetUrl).message == 'Invalid Template')
         throw JSON.parse(spreadSheetUrl).message
       setUrl(JSON.parse(spreadSheetUrl).message)

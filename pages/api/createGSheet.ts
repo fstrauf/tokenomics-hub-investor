@@ -26,6 +26,7 @@ export default async function handler(
 ) {
   try {
     const { id, title, data } = req.body
+    console.log("🚀 ~ file: createGSheet.ts:29 ~ id:", id)
     const { JWT } = require('google-auth-library')
     const { GoogleSpreadsheet } = require('google-spreadsheet')
     const sheetBaseUrl = `https://sheets.googleapis.com/v4/spreadsheets`
@@ -43,6 +44,7 @@ export default async function handler(
         isTemplate: true,
       },
     })
+    console.log("🚀 ~ file: createGSheet.ts:46 ~ sMechanismId:", sMechanismId)
 
     if (!sMechanismId) {
       return res.status(400).json({

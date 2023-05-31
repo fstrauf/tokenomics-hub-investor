@@ -58,13 +58,13 @@ export const MechanismCardDemand = ({
   async function downloadSpreadsheet() {
     try {
       if ('areaData' in values.Calculation == false) {
-        throw 'supply/demand not found'
+        throw 'areaData in Calculation not found'
       }
       if ('supplyDemandTotals' in values.Calculation.areaData == false) {
-        throw 'supply/demand not found'
+        throw 'supply demand summary in Calculation not found'
       }
       if (values.Calculation.areaData.supplyDemandTotals.length == 0) {
-        throw 'supply/demand not found'
+        throw 'supply demand summary is 0'
       }
 
       let aSpreadsheetData = values.Calculation.areaData.supplyDemandTotals
@@ -78,7 +78,7 @@ export const MechanismCardDemand = ({
         'supply' in aSpreadsheetData[0] == false ||
         'demand' in aSpreadsheetData[0] == false
       ) {
-        throw 'supply/demand not found'
+        throw 'Column supply or demand in Calculation not found'
       }
       let aSpreadSheetData = [
         {
