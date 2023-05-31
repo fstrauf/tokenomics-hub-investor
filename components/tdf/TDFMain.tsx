@@ -49,6 +49,9 @@ export default function TDFMain({ props, header = headerStatus.design }) {
   const TDFGenericOneField = dynamic(() => import('./TDFGenericOneField'), {
     loading: () => <p>Loading</p>,
   })
+  const TDFComingSoon = dynamic(() => import('./TDFComingSoon'), {
+    loading: () => <p>Loading</p>,
+  })
   const TDFDynamicOneField = dynamic(() => import('./TDFDynamicOneField'), {
     loading: () => <p>Loading</p>,
   })
@@ -391,13 +394,7 @@ explanation`}
         )
       default:
         return (
-          <TDFGenericOneField
-            placeholder=""
-            props={props}
-            values={values}
-            activePhase={activePhase}
-            reviewRequiredFields={reviewRequiredFields}
-          />
+          <TDFComingSoon/>
         )
     }
   }
