@@ -225,16 +225,16 @@ model Mechanism {
   unlockPeriod              Float?
   percentageUnlockTGE       Float?
   supplyDemandType          Mechanism_supplyDemandType?
+  mechanismTypeId           String?                     @unique
+  templateSheet             String?
   post                      Post?                       @relation(fields: [postId], references: [id], onDelete: Cascade)
   PostUser                  PostUser[]
   calculation               Calculation?                @relation(fields: [calculationId], references: [id], onDelete: Cascade)
   CalculationTimeSeries     CalculationTimeSeries[]
-  mechanismTypeId           String?                     @unique
   mechanismType             Mechanism?                  @relation("MechanismType", fields: [mechanismTypeId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   mechanismTypes            Mechanism[]                 @relation("MechanismType")
   incentiveTarget           Mechanism[]                 @relation("Incentives")
   IncentivisedBy            Mechanism[]                 @relation("Incentives")
-  templateSheet             String?
 
   @@index([postId])
   @@index([calculationId])
