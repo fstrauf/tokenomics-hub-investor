@@ -10,33 +10,20 @@ export default withClerkMiddleware((req: NextRequest) => {
   const path = url.pathname;
   console.log("🚀 ~ file: middleware.tsx:9 ~ withClerkMiddleware ~ path:", path)
 
-  if (path === "/myDesigns" && !hostname.startsWith("design.")) {
-    const newHost = `design.${hostname}`;
-    url.host = newHost;
-    return NextResponse.redirect(url);
-  }
+  // if (path === "/myDesigns" && !hostname.startsWith("design.")) {
+  //   const newHost = `design.${hostname}`;
+  //   url.host = newHost;
+  //   return NextResponse.redirect(url);
+  // }
 
-
-  // href: 'http://localhost:3000/',
-  // origin: 'http://localhost:3000',
-  // protocol: 'http:',
-  // username: '',
-  // password: '',
-  // host: 'localhost:3000',
-  // hostname: 'localhost',
-  // port: '3000',
-  // pathname: '/',
-  // search: '',
-  // searchParams: URLSearchParams {  },
-  // hash: ''
-  if (path === "/home" && hostname.startsWith("design.")) {
-    const newHost = hostname.replace("design.", "");
-    console.log("🚀 ~ file: middleware.tsx:20 ~ withClerkMiddleware ~ newHost:", newHost)
-    url.host = newHost;    
-    url.pathname = "/";
-    console.log("🚀 ~ file: middleware.tsx:22 ~ withClerkMiddleware ~ url:", url)
-    return NextResponse.redirect(url);
-  }
+  // if (path === "/home" && hostname.startsWith("design.")) {
+  //   const newHost = hostname.replace("design.", "");
+  //   console.log("🚀 ~ file: middleware.tsx:20 ~ withClerkMiddleware ~ newHost:", newHost)
+  //   url.host = newHost;    
+  //   url.pathname = "/";
+  //   console.log("🚀 ~ file: middleware.tsx:22 ~ withClerkMiddleware ~ url:", url)
+  //   return NextResponse.redirect(url);
+  // }
 
   return NextResponse.next();
 });
