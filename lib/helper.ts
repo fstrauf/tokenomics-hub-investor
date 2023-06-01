@@ -237,20 +237,12 @@ export function getMonthEpochAreaData(
         ),
       }
     } else {
-      // console.log("🚀 ~ file: helper.ts:233 ~ supplyDemandTotals: - no supply", supplyDemandTotals)
-      console.log(
-        '🚀 ~ file: helper.ts:243 ~ supplyDemandTotals[i].supply:',
-        supplyDemandTotals[i].supply
-      )
+      
       if (supplyDemandTotals[i].supply === undefined) {
         supplyDemandTotals[i].supply = 0
       }
       supplyDemandTotals[i].supply += Number(
         categoryLine[calculationRow.name || calculationRow.category]
-      )
-      console.log(
-        '🚀 ~ file: helper.ts:247 ~ supplyDemandTotals:',
-        supplyDemandTotals[i]
       )
     }
   }

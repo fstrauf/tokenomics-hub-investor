@@ -2,7 +2,7 @@ import Layout from '../components/layout'
 import Image from 'next/image'
 import Link from 'next/link'
 import Script from 'next/script'
-import InfoSection from '../components/InfoSection'
+// import InfoSection from '../components/InfoSection'
 
 export default function tokenomicshub() {
   return (

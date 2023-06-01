@@ -1,9 +1,9 @@
 import { useRouter } from 'next/router'
-import Container from './generic/container'
-import PostTitle from './slugView/post-title'
-import PostMeta from './postMeta'
-import { getTotalStrength } from '../lib/helper'
-import PostHeader from './slugView/post-header'
+import Container from '../generic/container'
+import PostTitle from '../slugView/post-title'
+import PostMeta from '../postMeta'
+import { getTotalStrength } from '../../lib/helper'
+import PostHeader from '../slugView/post-header'
 import { useCallback, useState } from 'react'
 import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
 import { useAuth } from '@clerk/clerk-react/dist/hooks/useAuth'
@@ -45,23 +45,23 @@ export default function PostView({ post, author }) {
     },
     [isOpen]
   )
-  const PostBody = dynamic(() => import('./slugView/post-body'), {
+  const PostBody = dynamic(() => import('../slugView/post-body'), {
     loading: () => <p>Loading</p>,
   })
-  const AuthorCard = dynamic(() => import('./authorCard'), {
+  const AuthorCard = dynamic(() => import('../authorCard'), {
     loading: () => <p>Loading</p>,
   })
   const ProtocolCard = dynamic(() => import('./protocolCard'), {
     loading: () => <p>Loading</p>,
   })
-  const ProtocolStats = dynamic(() => import('./slugView/protocol-stats'), {
+  const ProtocolStats = dynamic(() => import('../slugView/protocol-stats'), {
     loading: () => <p>Loading</p>,
   })
-  const Diagram = dynamic(() => import('./slugView/diagram'), {
+  const Diagram = dynamic(() => import('../slugView/diagram'), {
     loading: () => <p>Loading</p>,
   })
 
-  const MechanismViewer = dynamic(() => import('./slugView/MechanismViewer'), {
+  const MechanismViewer = dynamic(() => import('../slugView/MechanismViewer'), {
     loading: () => <p>Loading</p>,
   })
 

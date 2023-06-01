@@ -1,6 +1,6 @@
 // import { getAllPostsForHome } from '../lib/api'
 import Layout from '../components/layout'
-import Intro from '../components/intro'
+// import Intro from '../components/intro'
 
 
 export default function Terms() {
@@ -8,7 +8,6 @@ export default function Terms() {
     return (
         <>
             <Layout>
-                <Intro />
                 <div className='max-w-2xl prose items-center justify-center flex flex-col m-auto'>
                     <h1 className='text-3xl'>Terms and Condition</h1>
                     <h2 className='text-2xl mt-10'>Non Financial Advice Disclaimer</h2>
