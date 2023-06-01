@@ -8,6 +8,7 @@ import Select from 'react-select'
 import { useRouter } from 'next/router'
 import { headerStatus, postStatus } from '../lib/helper'
 import Link from 'next/link'
+import THUBFaqSection from '../components/static/THUBfaqSection'
 
 type Props = {
   allPosts: any
@@ -75,9 +76,9 @@ const Index: React.FC<Props> = (props) => {
               <p className="max-w-2xl text-center text-base">
                 Tokenomic Hub is your step-by-step guide to token design. <br />
                 <br />
-                Our library of tokenomic reports help web3 entrepreneurs and
+                Our library of tokenomic reports helps web3 entrepreneurs and
                 crypto investors, builders and contributors to explore, compare
-                and evaluate the tokenomics of leading of crypto and web 3
+                and evaluate the tokenomics of leading crypto and web 3
                 protocols. <br />
                 <br />
                 So that you can apply this knowledge to the token design of your
@@ -121,6 +122,8 @@ const Index: React.FC<Props> = (props) => {
           </div>
           <Table prop={props.allPosts} />
         </Container>
+        <hr className="my-4 mx-auto h-1 w-48 rounded border-0 bg-gray-100 dark:bg-gray-700 md:my-10"></hr>
+        <THUBFaqSection/>
       </Layout>
     </>
   )

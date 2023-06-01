@@ -1,4 +1,4 @@
-export default function FaqSection() {
+export default function TDSFaqSection() {
   return (
     <article className="py-10 prose prose-slate text-gray-700 flex flex-col justify-center items-center text-center m-auto ">
       <h1 className="">How are tokenomics designed?</h1>

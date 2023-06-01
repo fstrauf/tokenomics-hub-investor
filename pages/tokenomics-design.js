@@ -4,7 +4,7 @@ import Header2 from '../components/header2'
 import ThubLogo from '../public/svg/thub-logo'
 import LiteYouTubeEmbed from 'react-lite-youtube-embed'
 import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css'
-import FaqSection from '../components/static/faqSection'
+import FaqSection from '../components/static/TDSfaqSection'
 
 export default function TokenomicsDesignSpace() {
   const designLink = (
@@ -107,8 +107,8 @@ export default function TokenomicsDesignSpace() {
           <div className="flex">
             <div className="relative object-scale-down">
               <Image
-                width={1000}
-                height={292}
+                width={1000/1.2}
+                height={292/1.2}
                 src="/supply_vs_demand.png"
                 className="rounded-md shadow-xl"
                 alt="Compare supply and demand"
