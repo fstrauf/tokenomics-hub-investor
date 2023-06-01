@@ -1,4 +1,4 @@
-import ProductCard from './generic/ProductCard'
+import ProductCard from '../generic/ProductCard'
 import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
 
 export default function SubscriptionOptions() {

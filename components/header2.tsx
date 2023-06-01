@@ -12,8 +12,8 @@ import ThubLogo from '../public/svg/thub-logo'
 import Bars3Icon from '../public/svg/bars3Icon'
 import XMarkIcon from '../public/svg/xmarkicon'
 import { headerStatus } from '../lib/helper'
-import HeaderComboSection from './HeaderComboSection'
-import HeaderGenericSection from './HeaderGenericSection'
+import HeaderComboSection from './generic/HeaderComboSection'
+import HeaderGenericSection from './generic/HeaderGenericSection'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')

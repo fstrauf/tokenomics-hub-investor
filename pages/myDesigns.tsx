@@ -11,7 +11,7 @@ import {
 } from '../lib/helper'
 import DesignCard from '../components/tdf/designCard'
 import Link from 'next/link'
-import InfoSection from '../components/InfoSection'
+import InfoSection from '../components/generic/InfoSection'
 import Layout from '../components/layout'
 import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
 

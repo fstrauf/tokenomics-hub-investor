@@ -10,7 +10,7 @@ import { validateFreeTrialExamples } from '../../lib/helper'
 import GenericPopover from '../generic/GenericPopover'
 // import SubscriptionTable from '../../pages/SubscriptionTable'
 import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
-import SubscriptionOptions from '../SubscriptionOptions'
+import SubscriptionOptions from '../subscription/SubscriptionOptions'
 
 export const fetcher = async (url, param) => {
   const body = { param }

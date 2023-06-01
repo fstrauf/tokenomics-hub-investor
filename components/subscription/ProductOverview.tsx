@@ -1,4 +1,4 @@
-import ProductCard from "./generic/ProductCard"
+import ProductCard from "../generic/ProductCard"
 
 export default function ProductOverview() {
   return (

@@ -5,7 +5,7 @@ import { getAuth } from '@clerk/nextjs/dist/server/getAuth'
 import { AuthData } from '@clerk/nextjs/dist/server/types'
 import prisma from '../lib/prisma'
 import { GetServerSideProps } from 'next'
-import SubscriptionOptions from '../components/SubscriptionOptions'
+import SubscriptionOptions from '../components/subscription/SubscriptionOptions'
 
 export default function ManageSubscriptions(props) {
   return (

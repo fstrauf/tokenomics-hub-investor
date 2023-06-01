@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { Toaster } from 'react-hot-toast'
 import { Field, Form, Formik } from 'formik'
 import { discordWebhooks, sendDiscordMessage } from '../lib/discordMessenger'
-import ProductOverview from '../components/ProductOverview'
+import ProductOverview from '../components/subscription/ProductOverview'
 import { headerStatus } from '../lib/helper'
 
 export default function BookAnExpert(props) {
