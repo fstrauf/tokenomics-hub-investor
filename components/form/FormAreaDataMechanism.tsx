@@ -18,7 +18,7 @@ export const FormAreaDataMechanism = (props) => {
         values.Calculation?.totalSupply,
         values?.Calculation?.startDate
       )
-      // console.log("🚀 ~ file: FormAreaDataMechanism.tsx:21 ~ newTimerId ~ chartProps:", chartProps)
+      console.log("🚀 ~ file: FormAreaDataMechanism.tsx:21 ~ newTimerId ~ chartProps:", chartProps)
       // console.log("🚀 ~ file: FormAreaDataMechanism.tsx:24 ~ newTimerId ~ props.name:", props.name)
       setFieldValue(props.name, chartProps)
     }, 1000)

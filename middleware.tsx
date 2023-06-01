@@ -4,11 +4,11 @@ import type { NextRequest } from 'next/server'
 
 export default withClerkMiddleware((req: NextRequest) => {
   const url = req.nextUrl;
-  console.log("🚀 ~ file: middleware.tsx:7 ~ withClerkMiddleware ~ url:", url)
+  // console.log("🚀 ~ file: middleware.tsx:7 ~ withClerkMiddleware ~ url:", url)
   const hostname = req.headers.get("host") || "tokenomicshub.xyz";
-  console.log("🚀 ~ file: middleware.tsx:8 ~ withClerkMiddleware ~ hostname:", hostname)
+  // console.log("🚀 ~ file: middleware.tsx:8 ~ withClerkMiddleware ~ hostname:", hostname)
   const path = url.pathname;
-  console.log("🚀 ~ file: middleware.tsx:9 ~ withClerkMiddleware ~ path:", path)
+  // console.log("🚀 ~ file: middleware.tsx:9 ~ withClerkMiddleware ~ path:", path)
 
   if (path === "/myDesigns" && !hostname.startsWith("design.") && !hostname.startsWith("preview.")) {
     const newHost = `design.${hostname}`;
@@ -18,10 +18,10 @@ export default withClerkMiddleware((req: NextRequest) => {
 
   if (path === "/home" && hostname.startsWith("design.")) {
     const newHost = hostname.replace("design.", "");
-    console.log("🚀 ~ file: middleware.tsx:20 ~ withClerkMiddleware ~ newHost:", newHost)
+    // console.log("🚀 ~ file: middleware.tsx:20 ~ withClerkMiddleware ~ newHost:", newHost)
     url.host = newHost;    
     url.pathname = "/";
-    console.log("🚀 ~ file: middleware.tsx:22 ~ withClerkMiddleware ~ url:", url)
+    // console.log("🚀 ~ file: middleware.tsx:22 ~ withClerkMiddleware ~ url:", url)
     return NextResponse.redirect(url);
   }
 

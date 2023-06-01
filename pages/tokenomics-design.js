@@ -107,11 +107,11 @@ export default function TokenomicsDesignSpace() {
           <div className="flex">
             <div className="relative object-scale-down">
               <Image
-                width={1218 / 2.5}
-                height={1458 / 2.5}
-                src="/Aave.png"
+                width={1000}
+                height={292}
+                src="/supply_vs_demand.png"
                 className="rounded-md shadow-xl"
-                alt="See you design in a nice and easy to understand report format"
+                alt="Compare supply and demand"
               />
             </div>
           </div>
