@@ -25,12 +25,12 @@ const Index: React.FC<Props> = (props) => {
   const [showBanner, setShowBanner] = useState(true)
 
   const hideBanner = () => {
-    setShowBanner(false);
+    setShowBanner(false)
     event(`NotInterestedinDesign`, {
       category: 'UserAction',
       label: 'NotInterestedinDesign',
     })
-  };
+  }
 
   function filterCategories(newValue: MultiValue<any>): void {
     if (newValue.length === 0) {
@@ -108,7 +108,12 @@ const Index: React.FC<Props> = (props) => {
                   >
                     Design a Token
                   </Link>
-                  <button onClick={hideBanner} className='text-xs underline mt-1'>I'm not interested</button>
+                  <button
+                    onClick={hideBanner}
+                    className="mt-1 text-xs underline"
+                  >
+                    I'm not interested
+                  </button>
                   {/* </div> */}
                 </div>
                 <div className="relative">
@@ -150,6 +155,14 @@ const Index: React.FC<Props> = (props) => {
           </div>
           <Table prop={props.allPosts} />
         </Container>
+        <div className='flex justify-center items-center'>
+        <Link
+          href="/newPost"
+          className="mt-4 rounded-full bg-dao-red py-2 px-4 text-white hover:underline"
+        >
+          List a token
+        </Link>
+        </div>
         <hr className="my-4 mx-auto h-1 w-48 rounded border-0 bg-gray-100 dark:bg-gray-700 md:my-10"></hr>
         <THUBFaqSection />
       </Layout>
