@@ -1,6 +1,7 @@
 import Layout from '../components/layout'
 import { headerStatus } from '../lib/helper'
-import SubscriptionStatus from '../components/SubscriptionStatus'
+// import SubscriptionStatus from '../components/SubscriptionStatus'
+import SubscriptionStatus from '../components/subscription/SubscriptionStatus'
 import { getAuth } from '@clerk/nextjs/dist/server/getAuth'
 import { AuthData } from '@clerk/nextjs/dist/server/types'
 import prisma from '../lib/prisma'

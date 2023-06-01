@@ -7,19 +7,19 @@ import PostHeader from './slugView/post-header'
 import { useCallback, useState } from 'react'
 import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
 import { useAuth } from '@clerk/clerk-react/dist/hooks/useAuth'
-import FeedbackPopup from './feedback-popup'
-import TokenStrength from './slugView/token-strength'
+import FeedbackPopup from '../feedback-popup'
+import TokenStrength from '../slugView/token-strength'
 
 import { Link } from 'react-scroll'
-import OurTake from './slugView/our-take'
-import TimeLine from './slugView/timeline'
+import OurTake from '../slugView/our-take'
+import TimeLine from '../slugView/timeline'
 
-import UserViewer from './slugView/UserViewer'
-import Resources from './slugView/resources'
-import EditPiece from './edit-piece'
-import SectionSeparator from './generic/section-separator'
+import UserViewer from '../slugView/UserViewer'
+import Resources from '../slugView/resources'
+import EditPiece from '../edit-piece'
+import SectionSeparator from '../generic/section-separator'
 import dynamic from 'next/dynamic'
-import Login from './login'
+import Login from '../login'
 
 export default function PostView({ post, author }) {
   const [isSubmitting, setSubmitting] = useState(false)

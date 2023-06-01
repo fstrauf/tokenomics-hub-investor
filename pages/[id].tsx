@@ -7,8 +7,7 @@ import prisma from '../lib/prisma'
 import { clerkClient } from '@clerk/nextjs/server'
 // import { clerkConvertJSON, postStatus } from '../../lib/helper'
 import { clerkConvertJSON, postStatus } from '../lib/helper'
-// import PostView from '../../components/PostView'
-import PostView from '../components/PostView'
+import PostView from '../components/slugView/PostView'
 
 export default function Post({ post, author }) {
   const router = useRouter()

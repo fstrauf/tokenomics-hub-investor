@@ -72,26 +72,15 @@ export default function TokenomicsDesignSpace() {
               </p>
             </div>
           </div>
-          <div className="flex gap-5">
             <div className="relative">
               <Image
-                width={502 / 2}
-                height={802 / 2}
-                src="/Greatnewtoken.png"
+                width={1191}
+                height={948}
+                src="/demandCalcHalf.png"
                 className="rounded-md shadow-xl"
                 alt="Token Editor Flow"
               />
             </div>
-            <div className="relative object-scale-down">
-              <Image
-                width={1248 / 3}
-                height={1266 / 3}
-                src="/ValueCapture.png"
-                className="rounded-md shadow-xl"
-                alt="Value Capture Explanation Section"
-              />
-            </div>
-          </div>
         </div>
         <hr className="my-4 mx-auto h-1 w-48 rounded border-0 bg-gray-100 dark:bg-gray-700 md:my-10"></hr>
         <div className="flex flex-col items-center bg-gray-50 p-3">

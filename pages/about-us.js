@@ -1,12 +1,12 @@
 // import { getAllPostsForHome } from '../lib/api'
 import Layout from '../components/layout'
-import Intro from '../components/intro'
+// import Intro from '../components/intro'
 
 export default function AboutUs() {
   return (
     <>
       <Layout>
-        <Intro />
+        {/* <Intro /> */}
         <div className="max-w-2xl flex flex-col items-center justify-center m-auto prose">
           <h1 className="text-3xl">About Us</h1>
           <h2 className="mt-10 text-2xl">Manifesto</h2>
