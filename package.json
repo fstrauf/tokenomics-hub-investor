@@ -14,7 +14,7 @@
     "singleQuote": true
   },
   "dependencies": {
-    "@clerk/nextjs": "^4.16.1",
+    "@clerk/nextjs": "^4.19.0",
     "@emotion/styled": "^11.11.0",
     "@google-cloud/storage": "^6.8.0",
     "@headlessui/react": "^1.7.7",
