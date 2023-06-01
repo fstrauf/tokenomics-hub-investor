@@ -3,6 +3,27 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from 'next/server'
 
 export default withClerkMiddleware((req: NextRequest) => {
+  const url = req.nextUrl;
+  console.log("🚀 ~ file: middleware.tsx:7 ~ withClerkMiddleware ~ url:", url)
+  const hostname = req.headers.get("host") || "tokenomicshub.xyz";
+  console.log("🚀 ~ file: middleware.tsx:8 ~ withClerkMiddleware ~ hostname:", hostname)
+  const path = url.pathname;
+  console.log("🚀 ~ file: middleware.tsx:9 ~ withClerkMiddleware ~ path:", path)
+
+  // if (path === "/myDesigns" && !hostname.startsWith("design.")) {
+  //   const newHost = `design.${hostname}`;
+  //   url.host = newHost;
+  //   return NextResponse.redirect(url);
+  // }
+
+  // if (path === "/home" && hostname.startsWith("design.")) {
+  //   const newHost = hostname.replace("design.", "");
+  //   console.log("🚀 ~ file: middleware.tsx:20 ~ withClerkMiddleware ~ newHost:", newHost)
+  //   url.host = newHost;    
+  //   url.pathname = "/";
+  //   console.log("🚀 ~ file: middleware.tsx:22 ~ withClerkMiddleware ~ url:", url)
+  //   return NextResponse.redirect(url);
+  // }
   return NextResponse.next();
 });
 
