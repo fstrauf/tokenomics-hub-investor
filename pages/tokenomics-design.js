@@ -23,9 +23,10 @@ export default function TokenomicsDesignSpace() {
         <div className="">
           <div className="flex w-full justify-between gap-5 bg-gradient-to-r from-dao-green to-dao-red py-5 pt-10">
             <div className="prose p-10">
-              <h1 className="mb-5 text-5xl font-bold leading-10 text-white md:whitespace-nowrap">
-                Design sustainable Tokenomics
+              <h1 className="text-5xl font-bold leading-10 text-white md:whitespace-nowrap">
+                Improved Tokenomics Calculator
               </h1>
+              <h2 className='text-white font-normal mt-0'>Design Sustainable Tokenomics</h2>
               <div className="prose flex flex-col p-3 text-white">
                 <p>
                   Designing tokenomics in a spreadsheet can be complicated and

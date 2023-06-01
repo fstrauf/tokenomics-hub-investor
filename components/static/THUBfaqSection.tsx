@@ -1,6 +1,6 @@
 export default function THUBFaqSection() {
   return (
-    <article className="prose prose-slate m-auto flex flex-col items-center justify-center py-10 text-center text-gray-700 ">
+    <article className="prose prose-slate m-auto flex flex-col py-10 text-left text-gray-700 ">
       <h1 className="">What are tokenomics?</h1>
       <p className="">
         When a problem is solved value is created. Tokenomics look at how that

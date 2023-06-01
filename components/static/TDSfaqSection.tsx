@@ -1,6 +1,6 @@
 export default function TDSFaqSection() {
   return (
-    <article className="py-10 prose prose-slate text-gray-700 flex flex-col justify-center items-center text-center m-auto ">
+    <article className="py-10 prose prose-slate text-gray-700 flex flex-col text-left m-auto ">
       <h1 className="">How are tokenomics designed?</h1>
       <p className="">
         First, you have to evaluate the viability of a token for your project.
