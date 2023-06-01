@@ -10,6 +10,7 @@ import { headerStatus, postStatus } from '../lib/helper'
 import Link from 'next/link'
 import THUBFaqSection from '../components/static/THUBfaqSection'
 import Image from 'next/image'
+import { useState } from 'react'
 
 type Props = {
   allPosts: any
@@ -20,7 +21,11 @@ type Props = {
 
 const Index: React.FC<Props> = (props) => {
   const router = useRouter()
-  // const [showBanner, setShowBanner] = useState(true)
+  const [showBanner, setShowBanner] = useState(true)
+
+  const hideBanner = () => {
+    setShowBanner(false);
+  };
 
   function filterCategories(newValue: MultiValue<any>): void {
     if (newValue.length === 0) {
@@ -70,44 +75,49 @@ const Index: React.FC<Props> = (props) => {
                 Welcome to Tokenomics Hub.
               </h1>
             </div>
-            <div className="flex w-3/4 max-w-6xl items-center justify-center gap-5 rounded-lg bg-gradient-to-r from-dao-green to-dao-red p-5 text-white">
-              <div className="flex flex-col justify-between items-start">
-                <h2 className="mb-5 text-2xl font-bold">
-                  Interested in Crypto Token Design?
-                </h2>
-                <p className="prose max-w-2xl text-base text-white">
-                  Check out the Tokenomics Design Space (TDS), an all-in-one
-                  platform that simplifies token design which includes;
-                  <ul>
-                    <li>An easy-to-follow design process</li>
-                    <li>
-                      Relevant data on similar projects in the same niche{' '}
-                    </li>
-                    <li>Supply and demand modelling </li>
-                    <li>A framework to estimate token demand</li>
-                    <li>Tokenomics audit by experts</li>
-                  </ul>
-                </p>
-                {/* <div className="flex justify-center"> */}
-                <Link
-                  href="/tokenomics-design"
-                  className="w-36 mt-10 rounded-md border-2 border-dark-tdao bg-white px-4 py-2 text-center text-sm font-medium text-dark-tdao hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
-                >
-                  Design a Token
-                </Link>
+            {showBanner && (
+              <div className="flex w-3/4 max-w-6xl items-center justify-center gap-5 rounded-lg bg-gradient-to-r from-dao-green to-dao-red p-5 text-white">
+                <div className="flex flex-col items-start justify-between">
+                  <h2 className="mb-5 text-2xl font-bold">
+                    Interested in Crypto Token Design?
+                  </h2>
+                  <div className="prose max-w-2xl text-base text-white">
+                    <p>
+                      Check out the Tokenomics Design Space (TDS), an all-in-one
+                      platform that simplifies token design which includes:
+                    </p>
+                    <ul>
+                      <li>An easy-to-follow design process</li>
+                      <li>
+                        Relevant data on similar projects in the same niche{' '}
+                      </li>
+                      <li>Supply and demand modelling </li>
+                      <li>A framework to estimate token demand</li>
+                      <li>Tokenomics audit by experts</li>
+                    </ul>
+                  </div>
+                  {/* <div className="flex justify-center"> */}
+                  <Link
+                    href="/tokenomics-design"
+                    className="mt-10 w-36 rounded-md border-2 border-dark-tdao bg-white px-4 py-2 text-center text-sm font-medium text-dark-tdao hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+                  >
+                    Design a Token
+                  </Link>
+                  <button onClick={hideBanner} className='text-xs underline mt-1'>I'm not interested</button>
+                  {/* </div> */}
+                </div>
+                <div className="relative">
+                  <Image
+                    width={1191 / 2}
+                    height={948 / 2}
+                    src="/demandCalcHalf.png"
+                    className="rounded-md shadow-xl"
+                    alt="Token Editor Flow"
+                  />
+                </div>
                 {/* </div> */}
               </div>
-              <div className="relative">
-                <Image
-                  width={1191 / 2}
-                  height={948 / 2}
-                  src="/demandCalcHalf.png"
-                  className="rounded-md shadow-xl"
-                  alt="Token Editor Flow"
-                />
-              </div>
-              {/* </div> */}
-            </div>
+            )}
           </div>
           <div className="mt-10 mb-10 flex justify-center gap-4 text-center"></div>
           <div className="m-auto flex w-1/2 max-w-5xl">
