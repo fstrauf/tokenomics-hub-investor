@@ -17,9 +17,9 @@ import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
 
 export default function MyDesigns({ posts }) {
   const { user } = useUser()
-  const admin = user?.publicMetadata?.admin || false
+  // const admin = user?.publicMetadata?.admin || false
   return (
-    <Layout mode={headerStatus.main}>
+    <Layout mode={headerStatus.design}>
       <>
         <div className="my-10 w-full">
           <div className="flex items-center justify-between gap-4 rounded-lg bg-gradient-to-r from-dao-red to-dao-green p-2">

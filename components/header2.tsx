@@ -27,7 +27,21 @@ export default function Header2({ mode = headerStatus.main, children = null }) {
     switch (mode) {
       case headerStatus.design:
         return (
-          <HeaderGenericSection pathName="/myDesigns" title="Design a Token" />
+          <>
+            {' '}
+            <HeaderGenericSection
+              pathName="/audit-design-help"
+              title="Audit & Design Help"
+            />
+            <HeaderGenericSection
+              pathName="/book-an-expert#contact-us"
+              title="Support"
+            />
+            <HeaderGenericSection
+              pathName="/myDesigns"
+              title="Design a Token"
+            />
+          </>
         )
       case headerStatus.main:
         return (

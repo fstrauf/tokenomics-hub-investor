@@ -8,7 +8,7 @@ export default function ProductCard({
   purchaseLink,
   purchaseLink2 = {},
   highlight = false,
-  included = [''],
+  included = [],
 }) {
   return (
     <div
@@ -22,15 +22,17 @@ export default function ProductCard({
         <h2 className="text-center text-xl font-bold">{title}</h2>
         <p className="text-center text-gray-600">{description}</p>
         <p className="mt-4 text-lg">{price}</p>
+        {included.length > 0 && (
+          <div className="prose my-3 max-w-xs text-xs">
+            <p className="text-center font-bold">Included:</p>
+            <ul className="">
+              {included.map((i) => (
+                <li className="">{i}</li>
+              ))}
+            </ul>
+          </div>
+        )}
 
-        <div className="prose my-3 max-w-xs text-xs">
-          <p className="font-bold text-center">Included:</p>
-          <ul className="">
-            {included.map((i) => (
-              <li className="">{i}</li>
-            ))}
-          </ul>
-        </div>
         <Link href={termsLink} className="text-xs text-blue-500 underline">
           Scope, Terms & Conditions
         </Link>
