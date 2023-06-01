@@ -10,7 +10,7 @@ export default withClerkMiddleware((req: NextRequest) => {
   const path = url.pathname;
   console.log("🚀 ~ file: middleware.tsx:9 ~ withClerkMiddleware ~ path:", path)
 
-  if (path === "/myDesigns" && !hostname.startsWith("design.")) {
+  if (path === "/myDesigns" && !hostname.startsWith("design.") && !hostname.startsWith("preview.")) {
     const newHost = `design.${hostname}`;
     url.host = newHost;
     return NextResponse.redirect(url);
