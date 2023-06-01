@@ -11,6 +11,7 @@ import Link from 'next/link'
 import THUBFaqSection from '../components/static/THUBfaqSection'
 import Image from 'next/image'
 import { useState } from 'react'
+import { event } from 'nextjs-google-analytics'
 
 type Props = {
   allPosts: any
@@ -25,6 +26,10 @@ const Index: React.FC<Props> = (props) => {
 
   const hideBanner = () => {
     setShowBanner(false);
+    event(`NotInterestedinDesign`, {
+      category: 'UserAction',
+      label: 'NotInterestedinDesign',
+    })
   };
 
   function filterCategories(newValue: MultiValue<any>): void {
