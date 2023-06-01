@@ -229,7 +229,7 @@ model Mechanism {
   PostUser                  PostUser[]
   calculation               Calculation?                @relation(fields: [calculationId], references: [id], onDelete: Cascade)
   CalculationTimeSeries     CalculationTimeSeries[]
-  mechanismTypeId           String?
+  mechanismTypeId           String?                     @unique
   mechanismType             Mechanism?                  @relation("MechanismType", fields: [mechanismTypeId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   mechanismTypes            Mechanism[]                 @relation("MechanismType")
   incentiveTarget           Mechanism[]                 @relation("Incentives")

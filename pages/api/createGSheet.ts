@@ -37,20 +37,14 @@ export default async function handler(
       'https://www.googleapis.com/auth/drive',
     ]
 
-    const sMechanismId = await prisma.mechanism.findFirst({
+    const sMechanismId = await prisma.mechanism.findUnique({
       where: {
-        id: id,
-        isTemplate: true,
+        mechanismTypeId: id,
       },
     })
 
-    if (!sMechanismId) {
-      return res.status(400).json({
-        message: 'Invalid Template',
-      })
-    }
-
     if (
+      !sMechanismId ||
       sMechanismId.templateSheet == null ||
       sMechanismId.templateSheet == undefined
     ) {
