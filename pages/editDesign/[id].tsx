@@ -2,12 +2,10 @@ import { GetServerSideProps } from 'next'
 import React from 'react'
 import TDFMain from '../../components/tdf/TDFMain'
 import { clerkConvertJSON, formatDate } from '../../lib/helper'
-import { clerkClient } from '@clerk/nextjs/server'
+import { clerkClient, getAuth } from '@clerk/nextjs/server'
 import prisma from '../../lib/prisma'
 import CommentForm from '../../components/commentForm'
 import Comments from '../../components/comments'
-import { getAuth } from '@clerk/nextjs/dist/server/getAuth'
-import { AuthData } from '@clerk/nextjs/dist/server/types'
 
 const EditDesign: React.FC<UpdateNewDesignProps> = (props) => {
   return (
@@ -27,7 +25,7 @@ const EditDesign: React.FC<UpdateNewDesignProps> = (props) => {
 export default EditDesign
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { userId }: AuthData = getAuth(context.req) || undefined
+  const { userId } = getAuth(context.req) || undefined
   const processedUserId = userId !== null ? userId : '';
   const txCalls = []
   txCalls.push(
