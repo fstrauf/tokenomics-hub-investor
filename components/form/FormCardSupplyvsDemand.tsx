@@ -121,7 +121,7 @@ export const FormCardSupplyvsDemand = ({
                   <></>
                 ) : (
                   <>
-                    <div className="absolute inset-0 rounded-lg bg-gray-100 opacity-70"></div>
+                    {/* <div className="absolute inset-0 rounded-lg bg-gray-100 opacity-70"></div>
                     <div className="absolute inset-0 z-10 flex flex-col items-center justify-center">
                       <p className="rounded-lg bg-gray-200 p-10 text-3xl font-bold text-gray-900">
                         Premium Members Only
@@ -131,7 +131,7 @@ export const FormCardSupplyvsDemand = ({
                           Subscribe Now
                         </button>
                       </Link>
-                    </div>
+                    </div> */}
                   </>
                 )}
 
@@ -191,7 +191,7 @@ export const FormCardSupplyvsDemand = ({
                   <></>
                 ) : (
                   <>
-                    <div className="absolute inset-0 rounded-lg bg-gray-100 opacity-70"></div>
+                    {/* <div className="absolute inset-0 rounded-lg bg-gray-100 opacity-70"></div>
                     <div className="absolute inset-0 z-10 flex flex-col items-center justify-center">
                       <p className="rounded-lg bg-gray-200 p-10 text-3xl font-bold text-gray-900">
                         Premium Members Only
@@ -201,7 +201,7 @@ export const FormCardSupplyvsDemand = ({
                           Subscribe Now
                         </button>
                       </Link>
-                    </div>
+                    </div> */}
                   </>
                 )}
 

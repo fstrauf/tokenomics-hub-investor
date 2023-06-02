@@ -8,14 +8,12 @@ import {
   // Form,
 } from 'formik'
 import React from 'react'
-import FormSelectUtility from '../form/FormSelectUtility'
+
 import * as duration from 'dayjs/plugin/duration'
 import * as dayjs from 'dayjs'
-import GenericTab from '../generic/GenericTab'
 import { supplyDemandType } from '../../lib/helper'
-import { createSpreadSheet, uploadSpreadsheet } from '../../lib/helper'
+import { DemandUtility, DemandMechanism } from '../supplyDemandType/SupplyType'
 import { useState } from 'react'
-import { toast } from 'react-hot-toast'
 
 export const MechanismCardDemand = ({
   field,
@@ -45,7 +43,22 @@ export const MechanismCardDemand = ({
   const [name, setName] = useState('Create Spreadsheet')
   const [name_, setName_] = useState('Upload Spreadsheet')
 
-  const [url, setUrl] = useState('')
+  const [url, setUrl] = useState(null)
+
+  let propsOfUtilityDemand = {
+    field,
+    values,
+    mechanismIndex,
+    name,
+    name_,
+    templates,
+    disabled,
+    url,
+    setName,
+    setName_,
+    setUrl,
+    setDisabled,
+    setFieldValue,}
 
   const Tabs = [
     { tab: 'Manual' },
@@ -440,7 +453,11 @@ export const MechanismCardDemand = ({
         as="textarea"
         rows={4}
       />
-      {isUtility ? demandUtility() : demandMechanism()}
+      {isUtility ? (
+        <DemandUtility {...propsOfUtilityDemand} />
+      ) : (
+        <DemandMechanism {...propsOfUtilityDemand} />
+      )}
     </div>
   )
 }

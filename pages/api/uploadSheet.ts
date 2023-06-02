@@ -10,17 +10,20 @@ export default async function handler(
   res: NextApiResponse<Data>
 ) {
   try {
-    const { id, url } = req.body
+    const { mechanismTypeId, url } = req.body
     let spreadSheetId = url.toString().split('/')[5]
 
-    const sMechanismId = await prisma.mechanism.findFirst({
+    const sMechanismId = await prisma.mechanism.findUnique({
       where: {
-        id: id,
-        isTemplate: true,
+        id: mechanismTypeId,
       },
     })
 
-    if (!sMechanismId) {
+    if (
+      !sMechanismId ||
+      sMechanismId.templateSheet == null ||
+      sMechanismId.templateSheet == undefined
+    ) {
       return res.status(400).json({
         data: [{ message: 'Invalid Template' }],
       })
@@ -42,7 +45,6 @@ export default async function handler(
       private_key: process.env.GOOGLE_PRIVATE_KEY,
     })
 
-    
     await doc.loadInfo()
     const sheet = doc.sheetsByIndex[1]
     let aRows = await sheet.getRows()
@@ -53,7 +55,7 @@ export default async function handler(
 
     console.log('sheet ========', aRows[1])
     console.log('sheet 2 ========', aTempRows[1])
-    if (aRows[1]._rawData[5] !=  aTempRows[1]._rawData[5]) {
+    if (aRows[1]._rawData[5] != aTempRows[1]._rawData[5]) {
       return res.status(403).json({
         data: [{ message: 'Invalid Template' }],
       })

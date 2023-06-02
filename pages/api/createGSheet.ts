@@ -25,8 +25,7 @@ export default async function handler(
   res: NextApiResponse<Data>
 ) {
   try {
-    const { id, title, data } = req.body
-    console.log("🚀 ~ file: createGSheet.ts:29 ~ id:", id)
+    const { mechanismTypeId, title, data } = req.body
     const { JWT } = require('google-auth-library')
     const { GoogleSpreadsheet } = require('google-spreadsheet')
     const sheetBaseUrl = `https://sheets.googleapis.com/v4/spreadsheets`
@@ -38,21 +37,14 @@ export default async function handler(
       'https://www.googleapis.com/auth/drive',
     ]
 
-    const sMechanismId = await prisma.mechanism.findFirst({
+    const sMechanismId = await prisma.mechanism.findUnique({
       where: {
-        id: id,
-        isTemplate: true,
+        id: mechanismTypeId,
       },
     })
-    console.log("🚀 ~ file: createGSheet.ts:46 ~ sMechanismId:", sMechanismId)
-
-    if (!sMechanismId) {
-      return res.status(400).json({
-        message: 'Invalid Template',
-      })
-    }
 
     if (
+      !sMechanismId ||
       sMechanismId.templateSheet == null ||
       sMechanismId.templateSheet == undefined
     ) {
