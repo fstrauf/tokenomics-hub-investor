@@ -5,8 +5,9 @@ import {
   SignedIn,
   SignedOut,
 } from '@clerk/clerk-react/dist/components/controlComponents'
-import { UserButton } from '@clerk/clerk-react/dist/components/uiComponents'
-import { SignInButton } from '@clerk/clerk-react/dist/components/SignInButton'
+// import { UserButton } from '@clerk/clerk-react/dist/components/uiComponents'
+// import { SignInButton } from '@clerk/clerk-react/dist/components/SignInButton'
+import { SignInButton, UserButton } from '@clerk/nextjs'
 import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
 import ThubLogo from '../public/svg/thub-logo'
 import Bars3Icon from '../public/svg/bars3Icon'
@@ -128,7 +129,7 @@ export default function Header2({ mode = headerStatus.main, children = null }) {
               )}
               <div>{children}</div>
               <SignedIn>
-                <UserButton afterSignOutUrl="/"/>
+                <UserButton afterSignOutUrl="/" />
               </SignedIn>
               <SignedOut>
                 <div className="text-white">
@@ -171,7 +172,7 @@ export default function Header2({ mode = headerStatus.main, children = null }) {
               <div className="space-y-6 py-6 px-5">
                 <div className="flex w-full justify-end">
                   <SignedIn>
-                    <UserButton afterSignOutUrl="/"/>
+                    <UserButton afterSignOutUrl="/" />
                   </SignedIn>
                   <SignedOut>
                     <SignInButton />
