@@ -9,12 +9,9 @@ const FormSelectUtilty = ({
   options,
   isMulti = false,
   placeholder = 'Select or create',
-  templates,
-  index,
   defaultValue,
 }) => {
-  console.log("🚀 ~ file: FormSelectUtility.tsx:15 ~ field:", field)
-  console.log("🚀 ~ file: FormSelectUtility.tsx:15 ~ templates:", templates)
+
   function onChange(option) {
     form.setFieldValue(field.name, option ? option : {})
   }

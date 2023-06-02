@@ -1,7 +1,7 @@
-import { Field, FieldArray, useFormikContext } from 'formik'
+import { Field, useFormikContext } from 'formik'
 import React, { useState } from 'react'
 import FormSelectUser from '../form/FormSelectUser'
-import FormTipTap from '../form/FormTipTap'
+// import FormTipTap from '../form/FormTipTap'
 import * as duration from 'dayjs/plugin/duration'
 import * as dayjs from 'dayjs'
 import { supplyDemandType } from '../../lib/helper'
@@ -22,11 +22,8 @@ export const MechanismCardSupplyvsDemand = ({
 }) => {
   //   const isSink = field.value[mechanismIndex]?.isSink || false
   dayjs.extend(duration)
-  const secondsPerMonth = 2628000
+  // const secondsPerMonth = 2628000
 
-  console.log('field =======', field.value[mechanismIndex])
-  console.log('mechanaism index = ', mechanismIndex)
-  console.log('values ==== ', values)
   const [disabled, setDisabled] = useState(false)
   const [name, setName] = useState('Create Spreadsheet')
   const [name_, setName_] = useState('Upload Spreadsheet')

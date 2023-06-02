@@ -256,10 +256,7 @@ export function getAreaData(months, calculationRows, totalSupply, startDate) {
     if (cr?.isSink) {
       // sum up the demand data for supplydemand totals
       getDemandAreaData(cr, months, props.supplyDemandTotals, startDate)
-      console.log(
-        '🚀 ~ file: helper.ts:286 ~ calculationRows?.forEach ~ props.supplyDemandTotals - getDemandAreaData:',
-        props.supplyDemandTotals
-      )
+      
     } else {
       // console.log("🚀 ~ file: helper.ts:263 ~ calculationRows?.forEach ~ cr:", cr)
       if (cr.isEpochDistro) {
@@ -272,10 +269,6 @@ export function getAreaData(months, calculationRows, totalSupply, startDate) {
           startDate,
           props.supplyDemandTotals
         )
-        console.log(
-          '🚀 ~ file: helper.ts:286 ~ calculationRows?.forEach ~ props.supplyDemandTotals - getMonthEpochAreaData:',
-          props.supplyDemandTotals
-        )
       } else {
         getLinearAreaData(
           cr,
@@ -286,10 +279,6 @@ export function getAreaData(months, calculationRows, totalSupply, startDate) {
           props.supplyDemandTotals
         )
       }
-      console.log(
-        '🚀 ~ file: helper.ts:286 ~ calculationRows?.forEach ~ props.supplyDemandTotals - getLinearAreaData:',
-        props.supplyDemandTotals
-      )
       // console.log("🚀 ~ file: helper.ts:284 ~ calculationRows?.forEach ~ props.supplyDemandTotals:", props.supplyDemandTotals)
     }
   })
@@ -305,6 +294,7 @@ export function getDemandAreaData(
 ) {
   if (calculationRow.CalculationTimeSeries !== undefined) {
     const inputData = calculationRow.CalculationTimeSeries || []
+    console.log("🚀 ~ file: helper.ts:297 ~ inputData:", inputData)
     const sortedMonthsInput = inputData.sort((a, b) => a.months - b.months)
 
     for (let i = 0; i < months; i++) {
@@ -321,7 +311,12 @@ export function getDemandAreaData(
               months: input.months,
             }
           } else {
-            supplyDemandTotals[i].demand = input.tokens
+            if (supplyDemandTotals[i].demand === undefined) {
+              supplyDemandTotals[i].demand = 0
+            }
+            supplyDemandTotals[i].demand += Number(input.tokens)
+            console.log("🚀 ~ file: helper.ts:315 ~ input.tokens:", input.tokens)
+            console.log("🚀 ~ file: helper.ts:315 ~ supplyDemandTotals[i].demand:", supplyDemandTotals[i].demand)
           }
           monthExists = true
           break
@@ -425,10 +420,6 @@ export function getLinearAreaData(
         categoryLine[calculationRow.name || calculationRow.category]
       )
     }
-    console.log(
-      '🚀 ~ file: helper.ts:387 ~ supplyDemandTotals:',
-      supplyDemandTotals
-    )
   }
 }
 

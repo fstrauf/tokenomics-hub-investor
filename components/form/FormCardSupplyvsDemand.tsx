@@ -3,9 +3,9 @@ import React, { useState } from 'react'
 import XMarkIcon from '../../public/svg/xmarkicon'
 import Drawer from '../slugView/Drawer'
 import MechanismCardSupplyvsDemand from '../tdf/MechanismCardSupplyvsDemand'
-import { validateTierAccess } from '../../lib/helper'
+// import { validateTierAccess } from '../../lib/helper'
 import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
-import Link from 'next/link'
+// import Link from 'next/link'
 import { supplyDemandType } from '../../lib/helper'
 
 export const FormCardSupplyvsDemand = ({
@@ -13,9 +13,8 @@ export const FormCardSupplyvsDemand = ({
   values,
   mechanismTemplates,
   setFieldValue,
-  subscription,
+  // subscription,
 }) => {
-  console.log('🚀 ~ file: FormCardSupplyvsDemand.tsx:18 ~ values:', field)
   const { user } = useUser()
   const admin = user?.publicMetadata?.admin || false
   let [mechanismIndex, setMechanismIndex] = useState(0)
@@ -117,24 +116,6 @@ export const FormCardSupplyvsDemand = ({
                 </div>
               </div>
               <div className="relative w-1/2">
-                {validateTierAccess(subscription, admin) ? (
-                  <></>
-                ) : (
-                  <>
-                    {/* <div className="absolute inset-0 rounded-lg bg-gray-100 opacity-70"></div>
-                    <div className="absolute inset-0 z-10 flex flex-col items-center justify-center">
-                      <p className="rounded-lg bg-gray-200 p-10 text-3xl font-bold text-gray-900">
-                        Premium Members Only
-                      </p>
-                      <Link href="/manage-subscriptions">
-                        <button className="mt-5 rounded-md bg-dao-red px-6 py-4 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
-                          Subscribe Now
-                        </button>
-                      </Link>
-                    </div> */}
-                  </>
-                )}
-
                 <div className="mb-1 gap-2">
                   <p>Demand</p>
                   <p className="mt-5">Utility</p>
@@ -187,23 +168,7 @@ export const FormCardSupplyvsDemand = ({
                 </div>
               </div>
               <div className="relative w-1/2">
-                {validateTierAccess(subscription, admin) ? (
-                  <></>
-                ) : (
-                  <>
-                    {/* <div className="absolute inset-0 rounded-lg bg-gray-100 opacity-70"></div>
-                    <div className="absolute inset-0 z-10 flex flex-col items-center justify-center">
-                      <p className="rounded-lg bg-gray-200 p-10 text-3xl font-bold text-gray-900">
-                        Premium Members Only
-                      </p>
-                      <Link href="/manage-subscriptions">
-                        <button className="mt-5 rounded-md bg-dao-red px-6 py-4 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
-                          Subscribe Now
-                        </button>
-                      </Link>
-                    </div> */}
-                  </>
-                )}
+
 
                 <div className="mb-1 gap-2">
                   <p className="mt-5">Mechanisms</p>
