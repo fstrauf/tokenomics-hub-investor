@@ -225,7 +225,7 @@ model Mechanism {
   unlockPeriod              Float?
   percentageUnlockTGE       Float?
   supplyDemandType          Mechanism_supplyDemandType?
-  mechanismTypeId           String?                     @unique
+  mechanismTypeId           String?                     
   templateSheet             String?
   post                      Post?                       @relation(fields: [postId], references: [id], onDelete: Cascade)
   PostUser                  PostUser[]

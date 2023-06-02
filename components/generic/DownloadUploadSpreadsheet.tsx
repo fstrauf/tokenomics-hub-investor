@@ -69,7 +69,7 @@ export async function downloadSpreadsheet(
       aSpreadSheetData
     )
     let spreadSheetUrl = await createSpreadSheet({
-      id: field.value[mechanismIndex].mechanismTypeId,
+      mechanismTypeId: field.value[mechanismIndex].mechanismTypeId,
       title: field.value[mechanismIndex].name.replace(/[0-9]/g, '').trim(),
       data: aSpreadSheetData,
     })

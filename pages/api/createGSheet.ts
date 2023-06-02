@@ -25,7 +25,7 @@ export default async function handler(
   res: NextApiResponse<Data>
 ) {
   try {
-    const { id, title, data } = req.body
+    const { mechanismTypeId, title, data } = req.body
     const { JWT } = require('google-auth-library')
     const { GoogleSpreadsheet } = require('google-spreadsheet')
     const sheetBaseUrl = `https://sheets.googleapis.com/v4/spreadsheets`
@@ -39,7 +39,7 @@ export default async function handler(
 
     const sMechanismId = await prisma.mechanism.findUnique({
       where: {
-        mechanismTypeId: id,
+        id: mechanismTypeId,
       },
     })
 
