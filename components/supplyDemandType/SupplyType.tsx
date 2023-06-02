@@ -332,7 +332,6 @@ export function DemandUtility(props) {
         templates={props.templates}
         isMulti={true}
         index={props.mechanismIndex}
-        onChange={changeMechanismType}
       />
       <div className="mt-10">
         <label className="m-auto tracking-tight text-gray-900">
