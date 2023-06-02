@@ -128,7 +128,7 @@ export default function Header2({ mode = headerStatus.main, children = null }) {
               )}
               <div>{children}</div>
               <SignedIn>
-                <UserButton />
+                <UserButton afterSignOutUrl="/"/>
               </SignedIn>
               <SignedOut>
                 <div className="text-white">
@@ -171,7 +171,7 @@ export default function Header2({ mode = headerStatus.main, children = null }) {
               <div className="space-y-6 py-6 px-5">
                 <div className="flex w-full justify-end">
                   <SignedIn>
-                    <UserButton />
+                    <UserButton afterSignOutUrl="/"/>
                   </SignedIn>
                   <SignedOut>
                     <SignInButton />
