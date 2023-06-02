@@ -36,6 +36,7 @@ export async function downloadSpreadsheet(
       field.value[mechanismIndex].mechanismTypeId == null ||
       field.value[mechanismIndex].mechanismTypeId == undefined
     ) {
+      console.log("🚀 ~ file: DownloadUploadSpreadsheet.tsx:39 ~ field.value[mechanismIndex]:", field.value[mechanismIndex])
       return toast.error('Invalid Mechanism', { position: 'bottom-right' })
     }
     setName('Creating Spreadsheet..')

@@ -14,6 +14,8 @@ const FormSelectUtilty = ({
 
   function onChange(option) {
     form.setFieldValue(field.name, option ? option : {})
+    console.log("🚀 ~ file: FormSelectUtility.tsx:17 ~ onChange ~ option:", option)
+    console.log("🚀 ~ file: FormSelectUtility.tsx:17 ~ onChange ~ field.name:", field.name)
   }
 
 

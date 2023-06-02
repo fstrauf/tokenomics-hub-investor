@@ -306,7 +306,6 @@ export function SupplyExternal(props) {
 }
 
 export function DemandUtility(props) {
-
   return (
     <>
       <label className="mt-5 block text-sm font-medium text-gray-900 ">
@@ -333,6 +332,7 @@ export function DemandUtility(props) {
         templates={props.templates}
         isMulti={true}
         index={props.mechanismIndex}
+        onChange={changeMechanismType}
       />
       <div className="mt-10">
         <label className="m-auto tracking-tight text-gray-900">
@@ -355,7 +355,6 @@ export function DemandUtility(props) {
 }
 
 export function DemandMechanism(props) {
-
   return (
     <>
       <label className="mt-5 block text-sm font-medium text-gray-900 ">

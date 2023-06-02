@@ -113,7 +113,7 @@ export function Functions() {
 export function Spreadsheet(
  props
 ) {
-console.log("props of spreadsheet ==== ",props)
+  console.log("🚀 ~ file: TabComponent.tsx:116 ~ props:", props)
   return (
     <>
       <div className="m-auto mt-5 flex flex-col gap-3">
