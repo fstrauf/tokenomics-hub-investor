@@ -10,12 +10,12 @@ export default async function handler(
   res: NextApiResponse<Data>
 ) {
   try {
-    const { id, url } = req.body
+    const { mechanismTypeId, url } = req.body
     let spreadSheetId = url.toString().split('/')[5]
 
     const sMechanismId = await prisma.mechanism.findUnique({
       where: {
-        mechanismTypeId: id,
+        id: mechanismTypeId,
       },
     })
 

@@ -108,7 +108,7 @@ export async function uploadSheet(
     setName_('Uploading sheet...')
     let updateResponse = JSON.parse(
       await uploadSpreadsheet({
-        id: field.value[mechanismIndex].mechanismTypeId,
+        mechanismTypeId: field.value[mechanismIndex].mechanismTypeId,
         url,
       })
     )
