@@ -1,11 +1,6 @@
 import {
   Field,
   FieldArray,
-  useFormikContext,
-  // useFormik,
-  // ErrorMessage,
-  // Formik,
-  // Form,
 } from 'formik'
 import { Key } from 'react'
 import {
@@ -13,7 +8,6 @@ import {
   uploadSheet,
 } from '../generic/DownloadUploadSpreadsheet'
 export function DemandBuilder(props) {
-  console.log('props ==== ', props)
   return (
     <>
       <FieldArray
@@ -23,9 +17,6 @@ export function DemandBuilder(props) {
             <table className="mb-1 overflow-x-auto text-left text-sm text-gray-500">
               <thead className="bg-gray-50 text-xs text-gray-700">
                 <tr>
-                  {/* <th scope="col" className="py-3">
-                      Phase
-                    </th> */}
                   <th scope="col" className="py-3">
                     Months
                   </th>
@@ -47,18 +38,6 @@ export function DemandBuilder(props) {
                           key={factorIndex}
                           className="border-b bg-white text-xs font-normal"
                         >
-                          {/* <th
-                              scope="row"
-                              className="whitespace-nowrap text-gray-900 "
-                            >
-                              {' '}
-                              <Field
-                                name={`${props.field.name}.${props.mechanismIndex}.CalculationTimeSeries.${factorIndex}.phase`}
-                                className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-gray-900 focus:border-blue-500 focus:ring-blue-500"
-                                type="number"
-                                onWheel={(event) => event.currentTarget.blur()}
-                              />
-                            </th> */}
                           <td className="">
                             {' '}
                             <Field
@@ -108,11 +87,13 @@ export function DemandBuilder(props) {
               className="mt-3 mr-3 w-36 rounded-md bg-dao-red px-2 py-1 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
               onClick={() =>
                 arrayHelpers.push({
-                  phase:
-                    props.field.value[props.mechanismIndex]
-                      ?.CalculationTimeSeries?.length + 1 || 1,
-                  months: 6,
+                  // phase:
+                  //   props.field.value[props.mechanismIndex]
+                  //     ?.CalculationTimeSeries?.length + 1 || 1,
+                  months: props.field.value[props.mechanismIndex]
+                  ?.CalculationTimeSeries?.length + 1 || 1,
                   tokens: 10000000,
+                  
                 })
               }
             >

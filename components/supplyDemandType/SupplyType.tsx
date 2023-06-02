@@ -306,7 +306,6 @@ export function SupplyExternal(props) {
 }
 
 export function DemandUtility(props) {
-  console.log('templates =========', props.templates)
 
   return (
     <>
@@ -356,7 +355,6 @@ export function DemandUtility(props) {
 }
 
 export function DemandMechanism(props) {
-  console.log('templates =========', props.templates)
 
   return (
     <>
