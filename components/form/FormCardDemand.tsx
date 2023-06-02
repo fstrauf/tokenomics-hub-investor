@@ -6,7 +6,7 @@ import { supplyDemandType } from '../../lib/helper'
 import XMarkIcon from '../../public/svg/xmarkicon'
 // import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
 
-export const FormCardSupply = ({
+export const FormCardDemand = ({
   field,
   values,
   mechanismTemplates,
@@ -283,4 +283,4 @@ export const FormCardSupply = ({
   )
 }
 
-export default FormCardSupply
+export default FormCardDemand

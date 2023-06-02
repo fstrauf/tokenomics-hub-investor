@@ -23,7 +23,7 @@ export const MechanismCardDemand = ({
   // users,
   templates,
 }) => {
-  console.log("🚀 ~ file: MechanismCardDemand.tsx:28 ~ templates:", templates)
+  console.log("🚀 ~ file: MechanismCardDemand.tsx:28 ~ values= ======= :", values)
 
   const { setFieldValue } = useFormikContext()
 

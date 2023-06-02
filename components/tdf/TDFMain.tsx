@@ -118,7 +118,7 @@ export default function TDFMain({ props, header = headerStatus.design }) {
 
   const submitData = async (values, { setSubmitting }) => {
     const body = { values }
-    console.log("🚀 ~ file: TDFMain.tsx:121 ~ submitData ~ body:", body)
+
     if (values?.id === '') {
       try {
         const response = await fetch('/api/post/newDesign', {
@@ -352,16 +352,16 @@ explanation`}
             reviewRequiredFields={reviewRequiredFields}
           />
         )
-        case 505:
-          return (
-            <TDF505
-              props={props}
-              values={values}
-              activePhase={activePhase}
-              setFieldValue={setFieldValue}
-              reviewRequiredFields={reviewRequiredFields}
-            />
-          )
+      case 505:
+        return (
+          <TDF505
+            props={props}
+            values={values}
+            activePhase={activePhase}
+            setFieldValue={setFieldValue}
+            reviewRequiredFields={reviewRequiredFields}
+          />
+        )
       case 701:
         return (
           <TDF701 props={props} values={values} activePhase={activePhase} />
@@ -394,9 +394,7 @@ explanation`}
           <TDF901 props={props} values={values} activePhase={activePhase} />
         )
       default:
-        return (
-          <TDFComingSoon/>
-        )
+        return <TDFComingSoon />
     }
   }
 
