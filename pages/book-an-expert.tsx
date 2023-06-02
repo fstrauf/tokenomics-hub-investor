@@ -6,7 +6,7 @@ import { discordWebhooks, sendDiscordMessage } from '../lib/discordMessenger'
 import ProductOverview from '../components/subscription/ProductOverview'
 import { headerStatus } from '../lib/helper'
 
-export default function BookAnExpert(props) {
+export default function BookAnExpert() {
   const [isSubmittingForm, setIsSubmittingForm] = useState(false)
   const submitData = async (values, { resetForm }) => {
     setIsSubmittingForm(true)
