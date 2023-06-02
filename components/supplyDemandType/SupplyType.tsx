@@ -361,7 +361,7 @@ export function DemandMechanism(props) {
       </label>
       <Field
         className="custom-select mt-5"
-        name={`${props.field.name}.${props.mechanismIndex}.requirement`}
+        name={`${props.field.name}.${props.mechanismIndex}.mechanismType`}
         options={props.templates.filter((option) => {
           return (
             option.supplyDemandType ==
@@ -386,12 +386,9 @@ export function DemandMechanism(props) {
       </label>
       <Field
         className="custom-select mt-5"
-        name={`${props.field.name}.${props.mechanismIndex}.incentive`}
+        name={`${props.field.name}.${props.mechanismIndex}.incentiveTarget`}
         options={props.field.value.filter((option) => {
-          if (option.name.replace(/[0-9]/g, '').trim() == 'Default') {
-            return
-          }
-          return option.supplyDemandType == supplyDemandType.supplyExternal
+         return option.supplyDemandType == supplyDemandType.supplyExternal
         })}
         defaultValue={''}
         component={FormSelectUtility}

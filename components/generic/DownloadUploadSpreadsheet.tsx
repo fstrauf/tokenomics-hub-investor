@@ -11,6 +11,8 @@ export async function downloadSpreadsheet(
   setDisabled: { (value: SetStateAction<boolean>): void; (arg0: boolean): void }
 ) {
   try {
+    //console.log("field inside download = ====",field.value[mechanismIndex].mechanismType.mechanismTypeId)
+
     if ('areaData' in values.Calculation == false) {
       throw 'supply/demand not found'
     }
@@ -32,13 +34,15 @@ export async function downloadSpreadsheet(
     ) {
       throw 'supply/demand not found'
     }
-    if (
-      field.value[mechanismIndex].mechanismTypeId == null ||
-      field.value[mechanismIndex].mechanismTypeId == undefined
-    ) {
-      console.log("🚀 ~ file: DownloadUploadSpreadsheet.tsx:39 ~ field.value[mechanismIndex]:", field.value[mechanismIndex])
-      return toast.error('Invalid Mechanism', { position: 'bottom-right' })
+    if ('mechanismType' in field.value[mechanismIndex] == false) {
+      return toast.error('Invalid Mechanism..', { position: 'bottom-right' })
     }
+    // if (
+    //   field.value[mechanismIndex].mechanismTypeId == null ||
+    //   field.value[mechanismIndex].mechanismTypeId == undefined
+    // ) {
+    //   return toast.error('Invalid Mechanism', { position: 'bottom-right' })
+    // }
     setName('Creating Spreadsheet..')
     setDisabled(true)
     let aSpreadSheetData = [
@@ -70,7 +74,7 @@ export async function downloadSpreadsheet(
       aSpreadSheetData
     )
     let spreadSheetUrl = await createSpreadSheet({
-      mechanismTypeId: field.value[mechanismIndex].mechanismTypeId,
+      templateSheetUrl: field.value[mechanismIndex].mechanismType.templateSheet,
       title: field.value[mechanismIndex].name.replace(/[0-9]/g, '').trim(),
       data: aSpreadSheetData,
     })

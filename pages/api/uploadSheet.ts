@@ -13,6 +13,11 @@ export default async function handler(
     const { mechanismTypeId, url } = req.body
     let spreadSheetId = url.toString().split('/')[5]
 
+    if (mechanismTypeId == null || mechanismTypeId == undefined) {
+      return res.status(400).json({
+        data: [{ message: 'Invalid Template' }],
+      })
+    }
     const sMechanismId = await prisma.mechanism.findUnique({
       where: {
         id: mechanismTypeId,

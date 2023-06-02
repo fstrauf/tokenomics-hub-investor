@@ -351,16 +351,16 @@ explanation`}
             reviewRequiredFields={reviewRequiredFields}
           />
         )
-        case 505:
-          return (
-            <TDF505
-              props={props}
-              values={values}
-              activePhase={activePhase}
-              setFieldValue={setFieldValue}
-              reviewRequiredFields={reviewRequiredFields}
-            />
-          )
+      case 505:
+        return (
+          <TDF505
+            props={props}
+            values={values}
+            activePhase={activePhase}
+            setFieldValue={setFieldValue}
+            reviewRequiredFields={reviewRequiredFields}
+          />
+        )
       case 701:
         return (
           <TDF701 props={props} values={values} activePhase={activePhase} />
@@ -393,9 +393,7 @@ explanation`}
           <TDF901 props={props} values={values} activePhase={activePhase} />
         )
       default:
-        return (
-          <TDFComingSoon/>
-        )
+        return <TDFComingSoon />
     }
   }
 
