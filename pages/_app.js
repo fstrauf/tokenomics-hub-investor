@@ -3,28 +3,28 @@ import { GoogleAnalytics } from 'nextjs-google-analytics'
 import Head from 'next/head'
 import {
   ClerkProvider,
-  SignedIn,
-  SignedOut,
-  RedirectToSignIn,
+  // SignedIn,
+  // SignedOut,
+  // RedirectToSignIn,
 } from '@clerk/nextjs'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import TagManager from 'react-gtm-module'
 
-const publicPages = [
-  '/',
-  '/thub',
-  '/terms',
-  '/calculator',
-  '/posts/[id]',
-  '/authors/[slug]',
-  '/book-an-expert',
-  '/glossary',
-  '/tokenomics-design',
-  '/[id]',
-  '/privacy-policy',
-  '/about-us'
-]
+// const publicPages = [
+//   '/',
+//   '/thub',
+//   '/terms',
+//   '/calculator',
+//   '/posts/[id]',
+//   '/authors/[slug]',
+//   '/book-an-expert',
+//   '/glossary',
+//   '/tokenomics-design',
+//   '/[id]',
+//   '/privacy-policy',
+//   '/about-us'
+// ]
 
 function MyApp({ Component, pageProps }) {
   const { pathname } = useRouter()
@@ -32,7 +32,7 @@ function MyApp({ Component, pageProps }) {
   useEffect(() => {
     TagManager.initialize({ gtmId: 'G-3MWJJK74SD' })
   }, [])
-  const isPublicPage = publicPages.includes(pathname)
+  // const isPublicPage = publicPages.includes(pathname)
   return (
     <>
       <Head>
@@ -58,18 +58,18 @@ function MyApp({ Component, pageProps }) {
       </Head>
       <GoogleAnalytics strategy="lazyOnload" trackPageViews />
       <ClerkProvider {...pageProps}>
-        {isPublicPage ? (
+        {/* {isPublicPage ? ( */}
           <Component {...pageProps} />
-        ) : (
-          <>
-            <SignedIn>
-              <Component {...pageProps} />
-            </SignedIn>
-            <SignedOut>
-              <RedirectToSignIn />
-            </SignedOut>
-          </>
-        )}
+        {/* // ) : (
+        //   <>
+        //     <SignedIn>
+        //       <Component {...pageProps} />
+        //     </SignedIn>
+        //     <SignedOut>
+        //       <RedirectToSignIn />
+        //     </SignedOut>
+        //   </>
+        // )} */}
       </ClerkProvider>
     </>
   )

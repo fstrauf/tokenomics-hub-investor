@@ -1,12 +1,13 @@
 import { Fragment } from 'react'
 import { Popover, Transition } from '@headlessui/react'
 // import Link from 'next/link'
-import {
-  SignedIn,
-  SignedOut,
-} from '@clerk/clerk-react/dist/components/controlComponents'
-import { UserButton } from '@clerk/clerk-react/dist/components/uiComponents'
-import { SignInButton } from '@clerk/clerk-react/dist/components/SignInButton'
+// import {
+//   // SignedIn,
+//   SignedOut,
+// } from '@clerk/clerk-react/dist/components/controlComponents'
+import { SignInButton, UserButton, SignedIn, SignedOut } from '@clerk/nextjs'
+// import { UserButton } from '@clerk/clerk-react/dist/components/uiComponents'
+// import { SignInButton } from '@clerk/clerk-react/dist/components/SignInButton'
 import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
 import ThubLogo from '../public/svg/thub-logo'
 import Bars3Icon from '../public/svg/bars3Icon'
