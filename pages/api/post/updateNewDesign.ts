@@ -72,19 +72,11 @@ export default async function handle(req, res) {
       CalculationTimeSeries: {
         create: calculationTimeSeries,
       },
-      // mechanismType: {
-      //   connect: mechanismType,
-      // },
       mechanismTypeId: m.mechanismType?.id,
       PostUser: postUsers,
       supplyDemandType: m.supplyDemandType,
     }
   })
-  
-  console.log(
-    '🚀 ~ file: updateNewDesign.ts:76 ~ mechanisms ~ mechanisms:',
-    mechanisms
-  )
 
   var DesignElement = inputFields.DesignElement.map((de) => {
     if (typeof de.content === 'object') {
