@@ -34,8 +34,10 @@ export async function downloadSpreadsheet(
     ) {
       throw 'supply/demand not found'
     }
+    console.log("🚀 ~ file: DownloadUploadSpreadsheet.tsx:38 ~ field.value[mechanismIndex]:", field.value[mechanismIndex])
     if ('mechanismType' in field.value[mechanismIndex] == false) {
-      return toast.error('Invalid Mechanism..', { position: 'bottom-right' })
+      
+      return toast.error('No Utility or Mechanism assigned', { position: 'bottom-right' })
     }
     // if (
     //   field.value[mechanismIndex].mechanismTypeId == null ||

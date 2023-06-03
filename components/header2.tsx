@@ -35,7 +35,7 @@ export default function Header2({ mode = headerStatus.main, children = null }) {
               title="Audit & Design Help"
             />
             <HeaderGenericSection
-              pathName="/book-an-expert#contact-us"
+              pathName="/support"
               title="Support"
             />
             <HeaderGenericSection
