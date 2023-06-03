@@ -1,8 +1,7 @@
 import Layout from '../components/layout'
 import { headerStatus } from '../lib/helper'
 import SubscriptionStatus from '../components/SubscriptionStatus'
-import { getAuth } from '@clerk/nextjs/dist/server/getAuth'
-import { AuthData } from '@clerk/nextjs/dist/server/types'
+import { getAuth } from "@clerk/nextjs/server"
 import prisma from '../lib/prisma'
 import { GetServerSideProps } from 'next'
 import SubscriptionOptions from '../components/SubscriptionOptions'
@@ -75,7 +74,7 @@ export default function ManageSubscriptions(props) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { userId }: AuthData = getAuth(context.req)
+  const { userId } = getAuth(context.req)
   const subscription = await prisma.subscriptions.findUnique({
     where: { authorClerkId: userId },
   })

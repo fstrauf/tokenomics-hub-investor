@@ -4,11 +4,10 @@ import prisma from '../lib/prisma'
 import { GetServerSideProps } from 'next'
 import { getMergedInitialCalcValues, postStatus, postType, upDateFirstTimeVisit } from '../lib/helper'
 import TDFMain from '../components/tdf/TDFMain'
-import { getAuth } from '@clerk/nextjs/dist/server/getAuth'
 import GenericPopover from '../components/generic/GenericPopover'
 // import ReportIntro from '../components/tdf/ReportIntro'
 import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
-import { AuthData } from '@clerk/nextjs/dist/server/types'
+import { getAuth } from "@clerk/nextjs/server"
 import DesignIntro from '../components/tdf/DesignIntro'
 
 export default function NewDesign(props) {
@@ -35,7 +34,7 @@ export default function NewDesign(props) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { userId }: AuthData = getAuth(context.req)
+  const { userId } = getAuth(context.req)
 
   const txCalls = []
 
