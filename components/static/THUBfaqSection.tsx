@@ -1,6 +1,6 @@
 export default function THUBFaqSection() {
   return (
-    <article className="prose prose-slate m-auto flex flex-col py-10 text-left text-gray-700 ">
+    <section id='what-is-tokenomics-hub' className="prose prose-slate m-auto flex flex-col py-10 text-left text-gray-700 ">
       <h1 className="">What are tokenomics?</h1>
       <p className="">
         When a problem is solved value is created. Tokenomics look at how that
@@ -67,6 +67,6 @@ export default function THUBFaqSection() {
         experience of Tokenomics DAO in designing tokenomics, providing a
         a user-friendly approach to creating robust tokenomics solutions.
       </p>
-    </article>
+    </section>
   )
 }

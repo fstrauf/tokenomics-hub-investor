@@ -79,6 +79,7 @@ const Index: React.FC<Props> = (props) => {
               <h1 className="text-center text-3xl font-bold">
                 Welcome to Tokenomics Hub.
               </h1>
+              <h2 className="text-center text-xl"> Tokenomics reports of leading crypto and web3 protocols</h2>
             </div>
             {showBanner && (
               <div className="flex w-3/4 max-w-6xl items-center justify-center gap-5 rounded-lg bg-gradient-to-r from-dao-green to-dao-red p-5 text-white">

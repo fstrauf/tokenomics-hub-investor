@@ -66,7 +66,8 @@ export default function Header2({ mode = headerStatus.main, children = null }) {
               <HeaderGenericSection pathName="/calculator" title="Calculator" />
             </HeaderComboSection>
 
-            <HeaderGenericSection pathName="/myDesigns" title="My Designs" />
+            <HeaderGenericSection pathName="/myReports" title="My Reports" />
+            <HeaderGenericSection pathName="/#what-is-tokenomics-hub" title="What is Tokenomics Hub" />
           </>
         )
       case headerStatus.report:
