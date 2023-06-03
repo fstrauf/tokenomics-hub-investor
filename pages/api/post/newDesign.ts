@@ -34,7 +34,6 @@ export default async function handle(req, res) {
       details: m.details,
       isSink: m.isSink,
       token: m.token,
-      // postId: m.postId,
       isTemplate: false,
       category: m.category,
       lockupPeriod: m.lockupPeriod,
@@ -49,6 +48,7 @@ export default async function handle(req, res) {
       CalculationTimeSeries: {
         create: calculationTimeSeries,
       },
+      mechanismTypeId: m.mechanismType?.id,
       PostUser: postUsers,
       supplyDemandType: m.supplyDemandType,
     }
