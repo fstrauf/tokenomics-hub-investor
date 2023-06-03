@@ -100,11 +100,6 @@ export default async function handle(req, res) {
     }
     return 0; // no change in order
   });
-  
-  console.log(
-    '🚀 ~ file: updateNewDesign.ts:96 ~ mechanisms ~ mechanisms:',
-    mechanisms
-  )
 
   var DesignElement = inputFields.DesignElement.map((de) => {
     if (typeof de.content === 'object') {
