@@ -58,8 +58,6 @@ export default async function handler(
     const tempSheet = temDoc.sheetsByIndex[1]
     let aTempRows = await tempSheet.getRows()
 
-    console.log('sheet ========', aRows[1])
-    console.log('sheet 2 ========', aTempRows[1])
     if (aRows[1]._rawData[5] != aTempRows[1]._rawData[5]) {
       return res.status(403).json({
         data: [{ message: 'Invalid Template' }],

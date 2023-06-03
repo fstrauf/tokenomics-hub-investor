@@ -8,7 +8,7 @@
     "start:web": "next start",
     "analyze": "ANALYZE=true next build",
     "postinstall": "prisma generate",
-    "connect_db":"pscale login && pscale org switch tokenomicsdao && pscale connect tutorial-db test --port 3309"
+    "connect_db": "pscale login && pscale org switch tokenomicsdao && pscale connect tutorial-db test --port 3309"
   },
   "prettier": {
     "semi": false,
@@ -16,7 +16,6 @@
   },
   "dependencies": {
     "@clerk/nextjs": "^4.19.0",
-    "@emotion/styled": "^11.11.0",
     "@google-cloud/storage": "^6.8.0",
     "@headlessui/react": "^1.7.7",
     "@mui/material": "^5.13.0",

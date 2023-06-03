@@ -34,8 +34,8 @@ export default function CommentForm(props) {
           initialValues={{
             comment: '',
             date: new Date().toLocaleDateString('en-CA'),
-            user: user.id,
-            postId: props.id
+            user: user?.id,
+            postId: props?.id
           }}
           onSubmit={submitData}
         >
