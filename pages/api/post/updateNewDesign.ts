@@ -4,7 +4,6 @@ import { stringToKey } from '../../../lib/helper'
 
 export default async function handle(req, res) {
   const { values } = req.body
-  console.log("🚀 ~ file: updateNewDesign.ts:7 ~ handle ~ values:", values)
   const inputFields = values
 
   var breakdown = inputFields.breakdown
@@ -33,6 +32,7 @@ export default async function handle(req, res) {
   }))
 
   const mechanisms = inputFields.Mechanism.map((m) => {
+    console.log("🚀 ~ file: updateNewDesign.ts:81 ~ mechanisms ~ m:", m.mechanismType)
     var postUsers = {}
     if (m?.PostUser === undefined) {
     } else {
@@ -42,7 +42,10 @@ export default async function handle(req, res) {
         })),
       }
     }
-
+    let mechanismType = {}
+    if (!m.mechanismType===undefined) {
+      mechanismType = { id: mechanismType?.id }
+    }
     const calculationTimeSeries =
       m?.CalculationTimeSeries?.map((cts) => ({
         phase: cts.phase,
@@ -69,10 +72,19 @@ export default async function handle(req, res) {
       CalculationTimeSeries: {
         create: calculationTimeSeries,
       },
+      // mechanismType: {
+      //   connect: mechanismType,
+      // },
+      mechanismTypeId: m.mechanismType?.id,
       PostUser: postUsers,
       supplyDemandType: m.supplyDemandType,
     }
   })
+  
+  console.log(
+    '🚀 ~ file: updateNewDesign.ts:76 ~ mechanisms ~ mechanisms:',
+    mechanisms
+  )
 
   var DesignElement = inputFields.DesignElement.map((de) => {
     if (typeof de.content === 'object') {
@@ -231,7 +243,7 @@ export default async function handle(req, res) {
             data: resource,
           },
         },
-        PostUser: {create: postUser},
+        PostUser: { create: postUser },
         Mechanism: {
           create: mechanisms,
         },
@@ -252,11 +264,9 @@ export default async function handle(req, res) {
   // )
 
   try {
-    console.log("🚀 ~ file: updateNewDesign.ts:256 ~ handle ~ txCalls:", txCalls)
     response = await prisma.$transaction(txCalls)
-    
   } catch (e) {
-    // console.log('🚀 ~ file: updateNewDesign.ts:252 ~ handle ~ e:', e)
+    console.log('🚀 ~ file: updateNewDesign.ts:252 ~ handle ~ e:', e)
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
       // The .code property can be accessed in a type-safe manner
       if (e.code === 'P2002') {
