@@ -20,6 +20,7 @@ export default authMiddleware({
     '/[id]',
     '/privacy-policy',
     '/about-us',
+    '/api'
   ],
 })
 
