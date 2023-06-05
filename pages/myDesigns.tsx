@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import prisma from '../lib/prisma'
 import { GetServerSideProps } from 'next'
 import { clerkClient, getAuth } from '@clerk/nextjs/server'
@@ -13,11 +13,16 @@ import DesignCard from '../components/tdf/designCard'
 import Link from 'next/link'
 import InfoSection from '../components/generic/InfoSection'
 import Layout from '../components/layout'
-// import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
+import GenericPopover from '../components/generic/GenericPopover'
 
 export default function MyDesigns({ posts }) {
-  // const { user } = useUser()
-  // const admin = user?.publicMetadata?.admin || false
+  const [isOpen, setIsOpen] = useState(false)
+  function handleNewDesign(
+    event: MouseEvent<HTMLButtonElement, MouseEvent>
+  ): void {
+    setIsOpen(true)
+  }
+
   return (
     <Layout mode={headerStatus.design}>
       <>
@@ -55,8 +60,19 @@ export default function MyDesigns({ posts }) {
               >
                 New Design
               </Link>
+              <button
+                onClick={handleNewDesign}
+                className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
+              >
+                New Design Popup
+              </button>
             </div>
           </div>
+          <GenericPopover isOpen={isOpen} setIsOpen={setIsOpen}>
+            {/* <ReportIntro />
+             */}
+            <p>hi</p>
+          </GenericPopover>
           <div className="overflow-x-auto rounded-lg bg-white">
             <div className="flex flex-wrap items-center justify-center">
               {posts?.length === 0 ? (
