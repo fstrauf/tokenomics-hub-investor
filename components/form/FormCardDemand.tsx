@@ -12,6 +12,7 @@ export const FormCardDemand = ({
   setFieldValue,
   // subscription,
 }) => {
+  console.log("🚀 ~ file: FormCardDemand.tsx:15 ~ values:", values)
   let [mechanismIndex, setMechanismIndex] = useState(0)
   // const { user } = useUser()
   // const admin = user?.publicMetadata?.admin || false

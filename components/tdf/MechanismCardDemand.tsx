@@ -1,11 +1,6 @@
 import {
   Field,
-  // FieldArray,
   useFormikContext,
-  // useFormik,
-  // ErrorMessage,
-  // Formik,
-  // Form,
 } from 'formik'
 import React from 'react'
 
@@ -14,14 +9,11 @@ import * as dayjs from 'dayjs'
 import { supplyDemandType } from '../../lib/helper'
 import { DemandUtility, DemandMechanism } from '../supplyDemandType/SupplyType'
 import { useState } from 'react'
-// import toast from 'react-hot-toast'
 
 export const MechanismCardDemand = ({
   field,
   values,
   mechanismIndex,
-  // setFieldValue,
-  // users,
   templates,
 }) => {
 
@@ -36,9 +28,8 @@ export const MechanismCardDemand = ({
     isUtility = true
   }
 
-  // const isSink = field.value[mechanismIndex]?.isSink || false
   dayjs.extend(duration)
-  // const secondsPerMonth = 2628000
+
   const [disabled, setDisabled] = useState(false)
   const [name, setName] = useState('Create Spreadsheet')
   const [name_, setName_] = useState('Upload Spreadsheet')

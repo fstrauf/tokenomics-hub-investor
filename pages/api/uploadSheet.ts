@@ -11,11 +11,12 @@ export default async function handler(
 ) {
   try {
     const { mechanismTypeId, url } = req.body
+    console.log("🚀 ~ file: uploadSheet.ts:14 ~ mechanismTypeId:", mechanismTypeId)
     let spreadSheetId = url.toString().split('/')[5]
 
     if (mechanismTypeId == null || mechanismTypeId == undefined) {
       return res.status(400).json({
-        data: [{ message: 'Invalid Template' }],
+        data: [{ message: 'No template mechanism provided' }],
       })
     }
     const sMechanismId = await prisma.mechanism.findUnique({
@@ -23,6 +24,7 @@ export default async function handler(
         id: mechanismTypeId,
       },
     })
+    console.log("🚀 ~ file: uploadSheet.ts:27 ~ sMechanismId:", sMechanismId)
 
     if (
       !sMechanismId ||
@@ -30,7 +32,7 @@ export default async function handler(
       sMechanismId.templateSheet == undefined
     ) {
       return res.status(400).json({
-        data: [{ message: 'Invalid Template' }],
+        data: [{ message: 'template mechanism could not be found' }],
       })
     }
     console.log('mechanism data = ', sMechanismId)
@@ -53,16 +55,18 @@ export default async function handler(
     await doc.loadInfo()
     const sheet = doc.sheetsByIndex[1]
     let aRows = await sheet.getRows()
+    console.log("🚀 ~ file: uploadSheet.ts:58 ~ aRows:", aRows[1])
 
     await temDoc.loadInfo()
     const tempSheet = temDoc.sheetsByIndex[1]
     let aTempRows = await tempSheet.getRows()
+    console.log("🚀 ~ file: uploadSheet.ts:63 ~ aTempRows:", aTempRows[1])
 
-    if (aRows[1]._rawData[5] != aTempRows[1]._rawData[5]) {
-      return res.status(403).json({
-        data: [{ message: 'Invalid Template' }],
-      })
-    }
+    // if (aRows[1]._rawData[5] != aTempRows[1]._rawData[5]) {
+    //   return res.status(400).json({
+    //     data: [{ message: 'Invalid Template' }],
+    //   })
+    // }
     let allRow = []
     for (let row of aRows) {
       allRow.push({

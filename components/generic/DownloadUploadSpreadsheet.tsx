@@ -10,6 +10,7 @@ export async function downloadSpreadsheet(
   setUrl: { (value: SetStateAction<string>): void; (arg0: any): void },
   setDisabled: { (value: SetStateAction<boolean>): void; (arg0: boolean): void }
 ) {
+  console.log("🚀 ~ file: DownloadUploadSpreadsheet.tsx:13 ~ values:", values)
   try {
     //console.log("field inside download = ====",field.value[mechanismIndex].mechanismType.mechanismTypeId)
 
@@ -31,9 +32,9 @@ export async function downloadSpreadsheet(
     if ('supply' in aSpreadsheetData[0] == false) {
       throw 'No Supply Found'
     }
-    if ('demand' in aSpreadsheetData[0] == false) {
-      throw 'No Demand Found'
-    }
+    // if ('demand' in aSpreadsheetData[0] == false) {
+    //   throw 'No Demand Found'
+    // }
     console.log(
       '🚀 ~ file: DownloadUploadSpreadsheet.tsx:38 ~ field.value[mechanismIndex]:',
       field.value[mechanismIndex]
@@ -107,19 +108,21 @@ export async function uploadSheet(
     if (url == null) {
       return toast.error('Empty field', { position: 'bottom-right' })
     }
-    if (
-      field.value[mechanismIndex].mechanismTypeId == null ||
-      field.value[mechanismIndex].mechanismTypeId == undefined
-    ) {
-      return toast.error('Invalid Mechanism', { position: 'bottom-right' })
-    }
+    // if (
+    //   field.value[mechanismIndex].mechanismTypeId == null ||
+    //   field.value[mechanismIndex].mechanismTypeId == undefined
+    // ) {
+    //   return toast.error('Invalid Mechanism', { position: 'bottom-right' })
+    // }
     setDisabled(true)
     setName_('Uploading sheet...')
+    console.log("🚀 ~ file: DownloadUploadSpreadsheet.tsx:124 ~ field.value[mechanismIndex]:", field.value[mechanismIndex])
     let updateResponse = JSON.parse(
       await uploadSpreadsheet({
-        mechanismTypeId: field.value[mechanismIndex].mechanismTypeId,
+        mechanismTypeId: field.value[mechanismIndex]?.mechanismType?.id,
         url,
       })
+        
     )
     console.log(
       '🚀 ~ file: MechanismCardDemand.tsx:113 ~ uploadSheet ~ updateResponse:',
