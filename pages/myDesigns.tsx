@@ -71,6 +71,13 @@ export default function MyDesigns({ posts }) {
           <GenericPopover isOpen={isOpen} setIsOpen={setIsOpen}>
             {/* <ReportIntro />
              */}
+             {/* // load relevant data in mydesigns
+             // need to pass all predefined JSON data
+             // formik form with name, summary, caregories, tags - rest default.
+             // questions on level of content
+             // submit formik save
+             // */}
+
             <p>hi</p>
           </GenericPopover>
           <div className="overflow-x-auto rounded-lg bg-white">
