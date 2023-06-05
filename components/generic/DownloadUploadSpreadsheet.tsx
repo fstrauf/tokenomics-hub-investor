@@ -14,30 +14,34 @@ export async function downloadSpreadsheet(
     //console.log("field inside download = ====",field.value[mechanismIndex].mechanismType.mechanismTypeId)
 
     if ('areaData' in values.Calculation == false) {
-      throw 'supply/demand not found'
+      throw 'areaData is not assigned'
     }
     if ('supplyDemandTotals' in values.Calculation.areaData == false) {
-      throw 'supply/demand not found'
+      throw 'supplyDemandTotals is not assigned'
     }
     if (values.Calculation.areaData.supplyDemandTotals.length == 0) {
-      throw 'supply/demand not found'
+      throw 'No Supply Found'
     }
 
-    let aSpreadsheetData = values.Calculation.areaData.supplyDemandTotals
+    let aSpreadsheetData: any = values.Calculation.areaData.supplyDemandTotals
     console.log(
       '🚀 ~ file: MechanismCardDemand.tsx:56 ~ downloadSpreadsheet ~ aSpreadsheetData:',
-      aSpreadsheetData
+      aSpreadsheetData[0].supply
     )
-    if (
-      'supply' in aSpreadsheetData[0] == false ||
-      'demand' in aSpreadsheetData[0] == false
-    ) {
-      throw 'supply/demand not found'
+    if ('supply' in aSpreadsheetData[0] == false) {
+      throw 'No Supply Found'
     }
-    console.log("🚀 ~ file: DownloadUploadSpreadsheet.tsx:38 ~ field.value[mechanismIndex]:", field.value[mechanismIndex])
+    if ('demand' in aSpreadsheetData[0] == false) {
+      throw 'No Demand Found'
+    }
+    console.log(
+      '🚀 ~ file: DownloadUploadSpreadsheet.tsx:38 ~ field.value[mechanismIndex]:',
+      field.value[mechanismIndex]
+    )
     if ('mechanismType' in field.value[mechanismIndex] == false) {
-      
-      return toast.error('No Utility or Mechanism assigned', { position: 'bottom-right' })
+      return toast.error('No Utility or Mechanism assigned', {
+        position: 'bottom-right',
+      })
     }
     // if (
     //   field.value[mechanismIndex].mechanismTypeId == null ||
@@ -60,21 +64,19 @@ export async function downloadSpreadsheet(
       },
     ]
 
-    for (let data of aSpreadsheetData) {
+    for (let [index, data] of aSpreadsheetData.entries()) {
       let obj = {
-        Months: data.months,
+        Months: data.months == undefined ? index +=1 : data.months,
         'Circulating supply': data.supply,
         'Expected Token Demand': data.demand,
+        'Month Count': index == 1 ? aSpreadsheetData.length : '',
         'Template Type': field.value[mechanismIndex].name
           .replace(/[0-9]/g, '')
           .trim(),
       }
       aSpreadSheetData.push(obj)
     }
-    console.log(
-      '🚀 ~ file: MechanismCardDemand.tsx:88 ~ downloadSpreadsheet ~ aSpreadSheetData:',
-      aSpreadSheetData
-    )
+    console.log('pushed data = ', aSpreadSheetData)
     let spreadSheetUrl = await createSpreadSheet({
       templateSheetUrl: field.value[mechanismIndex].mechanismType.templateSheet,
       title: field.value[mechanismIndex].name.replace(/[0-9]/g, '').trim(),

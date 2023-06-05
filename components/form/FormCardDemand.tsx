@@ -256,7 +256,7 @@ export const FormCardDemand = ({
                     Add
                   </button>
                 </div>
-                <div className="h-60 rounded-lg border-2 border-slate-300">
+                <div className="h-60 overflow-auto rounded-lg border-2 border-slate-300">
                   <div
                     key={4811}
                     className="flex flex-row flex-wrap gap-2 overflow-auto p-2"

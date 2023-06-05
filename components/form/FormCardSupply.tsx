@@ -221,7 +221,7 @@ export const FormCardSupplyDemand = ({
               </div>
               <div className="relative w-1/2">
                 <div className="mb-1 flex gap-2">
-                  {' '}
+              
                   <p className="font-light">External Allocations</p>
                   <select
                     onChange={handleChange}
@@ -262,7 +262,7 @@ export const FormCardSupplyDemand = ({
                     Add
                   </button>
                 </div>
-                <div className="h-60 rounded-lg border-2 border-slate-300">
+                <div className="h-60 overflow-auto rounded-lg border-2 border-slate-300"> 
                   <div
                     key={4811}
                     className="flex flex-row flex-wrap gap-2 overflow-auto p-2"
