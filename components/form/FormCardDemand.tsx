@@ -32,7 +32,7 @@ export const FormCardDemand = ({
     color: `#${Math.floor(Math.random() * 16777215).toString(16)}`,
     isEpochDistro: false,
     epochDurationInSeconds: 0,
-    supplyDemandType: '',
+    supplyDemandType: 'demandUtility',
     initialEmissionPerSecond: 0,
     emissionReductionPerEpoch: 0,
     CalculationTimeSeries: [],

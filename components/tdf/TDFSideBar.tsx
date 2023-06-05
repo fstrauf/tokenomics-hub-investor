@@ -110,7 +110,7 @@ export default function TDFSideBar({
 
   return (
     <div className="overflow-y-auto rounded-lg border-2 border-gray-100 bg-white p-2">
-      <Disclosure defaultOpen>
+      <Disclosure>
         {
           <div className="mt-2 rounded-lg border-4  border-gray-300 border-opacity-20">
             <Disclosure.Button className="flex w-full justify-between rounded-sm bg-gray-300 bg-opacity-20 px-4 py-1 text-left text-sm font-medium hover:bg-opacity-100 focus:outline-none focus-visible:ring focus-visible:ring-gray-500 focus-visible:ring-opacity-75">

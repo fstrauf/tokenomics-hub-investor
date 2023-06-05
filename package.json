@@ -18,8 +18,6 @@
     "@clerk/nextjs": "^4.19.0",
     "@google-cloud/storage": "^6.8.0",
     "@headlessui/react": "^1.7.7",
-    "@mui/material": "^5.13.0",
-    "@mui/styled-engine-sc": "^5.12.0",
     "@prisma/client": "^4.13.0",
     "@react-pdf/renderer": "^3.1.9",
     "@sendgrid/mail": "^7.7.0",

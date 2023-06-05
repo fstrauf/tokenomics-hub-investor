@@ -17,7 +17,7 @@ export default function TDFMain({ props, header = headerStatus.design }) {
   const router = useRouter()
 
   const [activePhase, setActivePhase] = useState(
-    router.query.phase ? +router.query.phase : 11
+    router.query.phase ? +router.query.phase : 503
   )
   const [postId, setPostId] = useState(props.post.id || '')
   const [isRequestReviewOpen, setIsRequestReviewOpen] = useState(false)
@@ -438,13 +438,6 @@ explanation`}
                 >
                   Preview
                 </button>
-                {/* <Link
-                  as={`/postPreview/${postId}`}
-                  href="/postPreview/[id]]"
-                  className="rounded-md border-2 border-dao-red bg-gradient-to-r from-dao-red via-dao-red to-dao-green bg-clip-text py-1 px-4 text-transparent hover:bg-opacity-80"
-                >
-                  Preview
-                </Link> */}
                 <HelpButton
                   values={values}
                   setIsRequestReviewOpen={setIsRequestReviewOpen}
