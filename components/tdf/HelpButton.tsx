@@ -23,14 +23,14 @@ export default function HelpButton({
 
   const [isReviewSubmitting, setReviewSubmitting] = useState(false)
   function handleReviewClick(values) {
-    let typeA = values.postType
-    let typeB = postType.design
-    if (typeA === typeB) {
-      setIsRequestReviewOpen(true)
-    } else {
+    // let typeA = values.postType
+    // let typeB = postType.design
+    // if (typeA === typeB) {
+    //   setIsRequestReviewOpen(true)
+    // } else {
       //only for reports
       sendToReview(values)
-    }
+    // }
   }
   // const router = useRouter()
 
@@ -60,7 +60,7 @@ export default function HelpButton({
           toast.error(JSON.parse(error).error, { position: 'bottom-right' })
           throw new Error(error)
         } else {
-          toast.success('Sent to review', { position: 'bottom-right' })
+          toast.success('Sent to review - We will get back to you shortly', { position: 'bottom-right' })
           notifyDiscord(
             `${WEBSITE_URL_BASE}/editDesign/${postId}`,
             postStatus.reviewRequired
@@ -71,14 +71,17 @@ export default function HelpButton({
     }
   }
 
-  const requestReview = (
+  const publishReport = (
     <button
       type="button"
       onClick={() => handleReviewClick(values)}
       className={`rounded-md bg-white bg-clip-text py-2 px-4 text-left text-transparent hover:bg-dao-red`}
       disabled={isReviewSubmitting || values.status === postStatus.published}
     >
-      {values.postType === postType.design ? 'Request Review' : 'Send to Review'}
+      Publish Report
+      {/* {values.postType === postType.design
+        ? 'Request Review'
+        : 'Send to Review'} */}
     </button>
   )
 
@@ -87,14 +90,16 @@ export default function HelpButton({
       <Popover.Group as="nav" className="hidden space-x-10 md:flex">
         <HeaderComboSection classNames={classNames} title="Review" boxed={true}>
           {values.postType === postType.design ? (
-            <HeaderGenericSection
-              pathName="/bookAnExpert"
-              title="Request Design Services"
-            />
+            <>
+              <HeaderGenericSection
+                pathName="/bookAnExpert"
+                title="Request Design Services"
+              />
+            </>
           ) : (
             <></>
           )}
-          {requestReview}
+          {publishReport}
         </HeaderComboSection>
       </Popover.Group>
     </div>

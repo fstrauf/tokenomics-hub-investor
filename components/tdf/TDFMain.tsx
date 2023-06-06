@@ -12,7 +12,7 @@ import { designElementStatus, headerStatus } from '../../lib/helper'
 import { event } from 'nextjs-google-analytics'
 import Header2 from '../header2'
 import HelpButton from './HelpButton'
-
+import PublishIntro from './PublishIntro'
 
 export default function TDFMain({ props, header = headerStatus.design }) {
   const router = useRouter()
@@ -39,8 +39,6 @@ export default function TDFMain({ props, header = headerStatus.design }) {
     setActivePhase(phase)
   }
 
-
-
   useEffect(() => {}, [router.query.phase])
 
   const TDFHeaders = dynamic(() => import('./TDFHeaders'), {
@@ -58,9 +56,12 @@ export default function TDFMain({ props, header = headerStatus.design }) {
   const TDFDynamicOneField = dynamic(() => import('./TDFDynamicOneField'), {
     loading: () => <p>Loading</p>,
   })
-  const AuditDesignHelpContent = dynamic(() => import('../AuditDesignHelpContent'), {
-    loading: () => <p>Loading</p>,
-  })
+  const AuditDesignHelpContent = dynamic(
+    () => import('../AuditDesignHelpContent'),
+    {
+      loading: () => <p>Loading</p>,
+    }
+  )
   const TDF301 = dynamic(() => import('./TDF301'), {
     loading: () => <p>Loading</p>,
   })
@@ -121,7 +122,6 @@ export default function TDFMain({ props, header = headerStatus.design }) {
   const TDF901 = dynamic(() => import('./TDF901'), {
     loading: () => <p>Loading</p>,
   })
-  
 
   const submitData = async (values, { setSubmitting }) => {
     const body = { values }
@@ -373,6 +373,8 @@ explanation`}
         return (
           <TDF701 props={props} values={values} activePhase={activePhase} />
         )
+      case 702:
+        return <PublishIntro />
       case 801:
         return (
           <TDF_valueDemandUtility
@@ -395,18 +397,14 @@ explanation`}
         return (
           <TDF804 props={props} values={values} activePhase={activePhase} />
         )
-        case 805:
-          return (
-            <AuditDesignHelpContent/>
-          )
+      case 805:
+        return <AuditDesignHelpContent />
       case 901:
         return (
           <TDF901 props={props} values={values} activePhase={activePhase} />
         )
       default:
-        return (
-          <TDFComingSoon/>
-        )
+        return <TDFComingSoon />
     }
   }
 

@@ -34,6 +34,7 @@ const GenericCarousel = ({ children }) => {
         <button
           className=" rounded-lg bg-dao-red px-4 py-2 text-center text-xs font-medium text-white"
           onClick={prevSlide}
+          type='button'
         >
           {/* <ChevronLeftIcon className="h-6 w-6 text-gray-500" />
            */}
@@ -42,6 +43,7 @@ const GenericCarousel = ({ children }) => {
         <button
           className=" rounded-lg bg-dao-red px-4 py-2 text-center text-xs font-medium text-white"
           onClick={nextSlide}
+          type='button'
         >
           Next
           {/* <ChevronRightIcon className="h-6 w-6 text-gray-500" /> */}

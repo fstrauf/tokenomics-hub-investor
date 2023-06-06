@@ -9,7 +9,7 @@ import Comments from '../../components/comments'
 
 const EditDesign: React.FC<UpdateNewDesignProps> = (props) => {
   if (Object.keys(props.post).length === 0) {
-    return <div>The request object does not exist</div>
+    return <div>The requested object does not exist</div>
   }
 
   return (

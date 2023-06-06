@@ -1,69 +1,57 @@
 import GenericCarousel from '../generic/GenericCarousel'
 import Image from 'next/image'
 
-export default function DemandIntro() {
+export default function PublishIntro() {
   return (
     <GenericCarousel>
       <div className="flex h-140 flex-col items-center justify-center p-3">
         <div className="flex gap-5">
           <div className="relative">
             <Image
-              width={1758 / 2}
-              height={870 / 2}
-              src="/demand_builder_mechanism_utility.png"
+              width={2084/3}
+              height={1552/3}
+              src="/thub-front.png"
               className="rounded-md shadow-xl"
-              alt="Demand Builder Mechanism Utility"
+              alt="List your token on the Tokenomics Hub"
               priority={true}
             />
           </div>
         </div>
         <h1 className=" mt-10 text-3xl font-bold leading-10 md:whitespace-nowrap">
-          Who will buy your token?
+          List your Tokenomics
         </h1>
         <p className="text-center text-xl">
-          Demand can come from Utility or Mechanisms.
-          <br />
-          <br />
-          Use our templates or think about how your project creates demand for
-          its token.
+          Publish this standardised report as a documentation of your tokenomics.
         </p>
       </div>
       <div className="flex h-140 flex-col items-center justify-center p-3">
         <Image
-          src="/demand_calculation_template.png"
+          src="/thub-report-detail.png"
           className="rounded-md shadow-xl"
-          alt="Demand Calculation Template"
-          width={2488/3}
-          height={1326 /3}
+          alt="Detail view of a published Tokenomics Hub report"
+          width={3024/4}
+          height={1814/4}
         />
         <h1 className="mt-10 text-3xl font-bold leading-10 md:whitespace-nowrap">
-          Quantify your demand
+          Break down the most relevant aspects of your token
         </h1>
         <p className="text-center text-xl">
-          We don't claim to have the perfect answer, but a good guess is better
-          than nothing.
-          <br />
-          <br />
-          Use our range of calculation templates to estimate how much demand
-          could exist for your token.
+          Share an easy to read, standardised format with investors and other builders.
         </p>
       </div>
       <div className="flex h-140 flex-col items-center justify-center p-3">
         <Image
-          src="/supply_vs_demand.png"
-          width={2508/2}
-          height={732/2}
+          src="/thub-publish-report.png"
           className="rounded-md shadow-xl"
-          alt="Supply versus Demand Overview"
+          alt="List your tokenomics on Tokenomics Hub"
+          width={1768/2}
+          height={1020/2}
         />
         <h1 className="mt-10 text-3xl font-bold leading-10 md:whitespace-nowrap">
-          Bringing it all together
+          Let us know you want it listed.
         </h1>
         <p className="text-center text-xl">
-          Quantifying demand will allow you to better plan your issuance.
-          <br />
-          <br />
-          Compare your supply and demand to achieve a stable token price.
+          We'll ensure everything is in place and get back to you once your Tokenomics have been published.
         </p>
       </div>
     </GenericCarousel>
