@@ -225,8 +225,8 @@ export const FormTable = ({ field, form, phaseId, users }) => {
               className="mt-3 mr-3 rounded-md bg-dao-red px-2 py-1 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
               onClick={() =>
                 arrayHelpers.push({
-                  user: 'Treasury',
-                  task: 'asd',
+                  user: '',
+                  task: '',
                 })
               }
             >

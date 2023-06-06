@@ -14,8 +14,9 @@ import Link from 'next/link'
 import InfoSection from '../components/generic/InfoSection'
 import Layout from '../components/layout'
 import GenericPopover from '../components/generic/GenericPopover'
+import NewDesignMinimal from '../components/tdf/newDesignMinimal'
 
-export default function MyDesigns({ posts }) {
+export default function MyDesigns(props) {
   const [isOpen, setIsOpen] = useState(false)
   function handleNewDesign(
     event: MouseEvent<HTMLButtonElement, MouseEvent>
@@ -54,28 +55,26 @@ export default function MyDesigns({ posts }) {
             <p className="text-xl font-bold">My Designs</p>
             <div className="flex gap-1">
               {' '}
-              <Link
+              {/* <Link
                 href="/newDesign"
                 className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
               >
                 New Design
-              </Link>
-              {/* <button
+              </Link> */}
+              <button
                 onClick={handleNewDesign}
                 className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
               >
-                New Design Popup
-              </button> */}
+                New Design
+              </button>
             </div>
           </div>
           <GenericPopover isOpen={isOpen} setIsOpen={setIsOpen}>
-            {/* <ReportIntro />
-             */}
-            <p>hi</p>
+            <NewDesignMinimal newPost={props?.newPost} userId={props?.userId}/>
           </GenericPopover>
           <div className="overflow-x-auto rounded-lg bg-white">
             <div className="flex flex-wrap items-center justify-center">
-              {posts?.length === 0 ? (
+              {props?.posts?.length === 0 ? (
                 <div className="pb-5">
                   <InfoSection
                     text="Tokenomics Hub offers entrepreneurs an industry leading framework with a built in suite of tools to help you create sustainable tokenomics (in beta)"
@@ -94,7 +93,7 @@ export default function MyDesigns({ posts }) {
               ) : (
                 <></>
               )}
-              {posts.map((post, index) => {
+              {props?.posts.map((post, index) => {
                 return (
                   <div key={index}>
                     <DesignCard post={post} context="myDrafts" />
@@ -112,7 +111,9 @@ export default function MyDesigns({ posts }) {
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const { userId }: AuthData = getAuth(req)
 
-  const posts = await prisma.post.findMany({
+  const txCalls = []
+
+  txCalls.push(prisma.post.findMany({
     where: {
       status: {
         not: postStatus.published,
@@ -134,7 +135,127 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
       author: {},
     },
     take: 20,
-  })
+  }))
+
+  // txCalls.push(
+  //   prisma.mechanism.findMany({
+  //     where: {
+  //       isTemplate: true,
+  //     },
+  //   })
+  // )
+  
+  txCalls.push(prisma.designPhases.findMany({ orderBy: { phaseOrder: 'asc' } }))
+
+  const [posts, designPhases ] =
+    await prisma.$transaction(txCalls)
+
+  const defaultContent = {
+    id: '',
+    title: '',
+    authorClerkId: userId,
+    status: postStatus.draft,
+    ticker: '',
+    DesignElement: designPhases
+      .filter((dp) => dp.parentPhaseId)
+      .map((dp) => {
+        return {
+          id: '',
+          content: '',
+          designPhasesId: String(dp.phaseId),
+          designElementStatus: '',
+        }
+      }),
+    Calculation: {
+      id: '',
+      title: '',
+      authorClerkId: '',
+      months: 60,
+      totalSupply: 10000,
+      startDate: new Date().toLocaleDateString('en-CA'),
+      areaData: [],
+      calculationRows: [],
+    },
+    Mechanism: [{
+      id: '',
+      name: `Supply 1`,
+      summary:
+        'Adjust this to whoever you are giving tokens to',
+      details: '',
+      isSink: false,
+      token: '',
+      category: `supply1`,
+      lockupPeriod: 5,
+      unlockPeriod: 12,
+      percentageUnlockTGE: 0,
+      percentageAllocation: 35,
+      color: `#FF6666`,
+      isEpochDistro: false,
+      supplyDemandType: 'supplyExternal',
+      epochDurationInSeconds: 0,
+      initialEmissionPerSecond: 0,
+      emissionReductionPerEpoch: 0,
+      CalculationTimeSeries: [],
+      isTemplate: false,
+      PostUser: [],
+    },{
+      id: '',
+      name: `Supply 2`,
+      summary:
+        'Briefly explain what this mechanism incentivises users to do and why they want to do it. (e.g., users are incentivised to buy and stake a token in order to receive token emissions)',
+      details: '',
+      isSink: false,
+      token: '',
+      category: `supply2`,
+      lockupPeriod: 5,
+      unlockPeriod: 12,
+      percentageUnlockTGE: 0,
+      percentageAllocation: 65,
+      color: `#008090`,
+      isEpochDistro: false,
+      supplyDemandType: 'supplyInternal',
+      epochDurationInSeconds: 0,
+      initialEmissionPerSecond: 0,
+      emissionReductionPerEpoch: 0,
+      CalculationTimeSeries: [],
+      isTemplate: false,
+      PostUser: [],
+    }],
+    mechanismTemplates: [],
+    PostUser: [],
+    slug: '',
+    shortDescription: '',
+    categories: [],
+    tags: [],
+    protocolTimeLine: [],
+    publishedAt: new Date().toLocaleDateString('en-CA'),
+    breakdown: '',
+    mainImageUrl: '',
+    tokenUtility: '',
+    tokenUtilityStrength: 0,
+    businessModel: '',
+    businessModelStrength: 0,
+    valueCreation: '',
+    valueCreationStrength: 0,
+    valueCapture: '',
+    valueCaptureStrength: 0,
+    demandDrivers: '',
+    demandDriversStrength: 0,
+    totalTokenStrength: 0,
+    threeMonthHorizon: '',
+    oneYearHorizon: '',
+    upside: '',
+    postType: postType.design,
+    downside: '',
+    horizon: '',
+    metrics: '',
+    diagramUrl: '',
+    ProtocolResources: [],
+    strongPoints: '',
+    weakPoints: '',
+    problemSolution: '',
+    parent: '',
+  }
 
   let user = userId ? await clerkClient.users.getUser(userId) : {}
 
@@ -155,8 +276,9 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 
   return {
     props: {
+      newPost: defaultContent || {},
       posts: postsWithUserNames || null,
-      // ...buildClerkProps(req)
+      // userId: userId || null,
     },
     // revalidate: 1,
   }

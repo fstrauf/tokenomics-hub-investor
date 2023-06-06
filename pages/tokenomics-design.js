@@ -9,7 +9,7 @@ import { headerStatus } from '../lib/helper'
 
 export default function TokenomicsDesignSpace() {
   const designLink = (
-    <Link href="/newDesign">
+    <Link href="/myDesigns">
       <button className="mt-5 rounded-md bg-dao-red px-6 py-4 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
         Design a Token (it's free)
       </button>

@@ -4,6 +4,7 @@ import { stringToKey } from '../../../lib/helper'
 
 export default async function handle(req, res) {
   const { values } = req.body
+  console.log("🚀 ~ file: updateNewDesign.ts:7 ~ handle ~ values:", values)
   const inputFields = values
 
   var breakdown = inputFields.breakdown
@@ -33,7 +34,6 @@ export default async function handle(req, res) {
 
   //i could save the incentivedesign in a similar as the postusers
   const mechanisms = inputFields.Mechanism.map((m) => {
-    console.log('🚀 ~ file: updateNewDesign.ts:81 ~ mechanisms ~ m:', m)
     var postUsers = {}
     if (m?.PostUser === undefined) {
     } else {
