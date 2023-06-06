@@ -1,13 +1,6 @@
-import { Fragment } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { Popover, Transition } from '@headlessui/react'
-// import Link from 'next/link'
-// import {
-//   // SignedIn,
-//   SignedOut,
-// } from '@clerk/clerk-react/dist/components/controlComponents'
 import { SignInButton, UserButton, SignedIn, SignedOut } from '@clerk/nextjs'
-// import { UserButton } from '@clerk/clerk-react/dist/components/uiComponents'
-// import { SignInButton } from '@clerk/clerk-react/dist/components/SignInButton'
 import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
 import ThubLogo from '../public/svg/thub-logo'
 import Bars3Icon from '../public/svg/bars3Icon'
@@ -23,21 +16,43 @@ function classNames(...classes) {
 export default function Header2({ mode = headerStatus.main, children = null }) {
   const { user } = useUser()
   const admin = user?.publicMetadata?.admin || false
+  const [headerName, setHeaderName] = useState(() => {
+    switch (mode) {
+      case headerStatus.design:
+        return 'Tokenomics Design Space'
+      case headerStatus.main:
+        return 'Tokenomics Hub'
+      case headerStatus.report:
+      default:
+        return 'Tokenomics Hub'
+    }
+  })
+
+  useEffect(() => {
+    switch (mode) {
+      case headerStatus.design:
+        setHeaderName('Tokenomics Design Space')
+        break
+      case headerStatus.main:
+        setHeaderName('Tokenomics Hub')
+        break
+      case headerStatus.report:
+      default:
+        setHeaderName('Tokenomics Hub')
+        break
+    }
+  }, [mode])
 
   function renderSwitch() {
     switch (mode) {
       case headerStatus.design:
         return (
           <>
-            {' '}
             <HeaderGenericSection
               pathName="/audit-design-help"
               title="Audit & Design Help"
             />
-            <HeaderGenericSection
-              pathName="/support"
-              title="Support"
-            />
+            <HeaderGenericSection pathName="/support" title="Support" />
             <HeaderGenericSection
               pathName="/myDesigns"
               title="Design a Token"
@@ -67,14 +82,15 @@ export default function Header2({ mode = headerStatus.main, children = null }) {
             </HeaderComboSection>
 
             <HeaderGenericSection pathName="/myReports" title="My Reports" />
-            <HeaderGenericSection pathName="/#what-is-tokenomics-hub" title="What is Tokenomics Hub" />
+            <HeaderGenericSection
+              pathName="/#what-is-tokenomics-hub"
+              title="What is Tokenomics Hub"
+            />
           </>
         )
       case headerStatus.report:
       default:
-        return (
-          <HeaderGenericSection pathName="/myDesigns" title="List a Token" />
-        )
+        return <HeaderGenericSection pathName="/myDesigns" title="List a Token" />
     }
   }
 
@@ -88,7 +104,7 @@ export default function Header2({ mode = headerStatus.main, children = null }) {
                 <ThubLogo />
               </div>
               <div className="hidden md:ml-2 md:flex md:items-center">
-                <p className="text-2xl text-white">Tokenomics Hub</p>
+                <p className="text-2xl text-white">{headerName}</p>
               </div>
             </div>
             <div className="-my-2 -mr-2 md:hidden">

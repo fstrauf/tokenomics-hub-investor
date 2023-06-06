@@ -5,6 +5,7 @@ import ThubLogo from '../public/svg/thub-logo'
 import LiteYouTubeEmbed from 'react-lite-youtube-embed'
 import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css'
 import FaqSection from '../components/static/TDSfaqSection'
+import { headerStatus } from '../lib/helper'
 
 export default function TokenomicsDesignSpace() {
   const designLink = (
@@ -17,7 +18,7 @@ export default function TokenomicsDesignSpace() {
 
   return (
     <>
-      <Header2 />
+      <Header2 mode={headerStatus.design} />
 
       <div className="m-auto">
         <div className="">

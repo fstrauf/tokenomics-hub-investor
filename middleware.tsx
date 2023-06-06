@@ -35,7 +35,8 @@ function middleware(req: NextRequest) {
   if (
     (path === '/myDesigns' ||
       path === '/newDesign' ||
-      path === '/editDesign') &&
+      path === '/editDesign' || 
+      path === '/tokenomics-design' ) &&
     !hostname.startsWith('design.') &&
     !hostname.startsWith('preview.')
   ) {
