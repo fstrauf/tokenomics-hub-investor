@@ -12,6 +12,7 @@ import { designElementStatus, headerStatus } from '../../lib/helper'
 import { event } from 'nextjs-google-analytics'
 import Header2 from '../header2'
 import HelpButton from './HelpButton'
+import { Loader } from '../generic/Loader'
 
 export default function TDFMain({ props, header = headerStatus.design }) {
   const router = useRouter()
@@ -23,6 +24,7 @@ export default function TDFMain({ props, header = headerStatus.design }) {
   const [isRequestReviewOpen, setIsRequestReviewOpen] = useState(false)
   const initialValues = props.post
   const [reviewRequiredFields, setreviewRequiredFields] = useState({})
+  const [isLoaderVisible, setLoaderVisibility] = useState('visible') //use invisible for hide
 
   function handlePhaseChange(phase) {
     // if (postId) {
@@ -37,8 +39,6 @@ export default function TDFMain({ props, header = headerStatus.design }) {
     })
     setActivePhase(phase)
   }
-
-
 
   useEffect(() => {}, [router.query.phase])
 
@@ -86,19 +86,39 @@ export default function TDFMain({ props, header = headerStatus.design }) {
     }
   )
   const TDF501 = dynamic(() => import('./TDF501'), {
-    loading: () => <p>Loading</p>,
+    loading: () => (
+      <p className="mt-10 ml-10">
+        <Loader isVisible={isLoaderVisible} />
+      </p>
+    ),
   })
   const TDF502 = dynamic(() => import('./TDF502'), {
-    loading: () => <p>Loading</p>,
+    loading: () => (
+      <p className="mt-10 ml-10">
+        <Loader isVisible={isLoaderVisible} />
+      </p>
+    ),
   })
   const TDF503 = dynamic(() => import('./TDF503'), {
-    loading: () => <p>Loading</p>,
+    loading: () => (
+      <p className="mt-10 ml-10">
+        <Loader isVisible={isLoaderVisible} />
+      </p>
+    ),
   })
   const TDF504 = dynamic(() => import('./TDF504'), {
-    loading: () => <p>Loading</p>,
+    loading: () => (
+      <p className="mt-10 ml-10">
+        <Loader isVisible={isLoaderVisible} />
+      </p>
+    ),
   })
   const TDF505 = dynamic(() => import('./TDF505'), {
-    loading: () => <p>Loading</p>,
+    loading: () => (
+      <p className="mt-10 ml-10">
+        <Loader isVisible={isLoaderVisible} />
+      </p>
+    ),
   })
   const TDF701 = dynamic(() => import('./TDF701'), {
     loading: () => <p>Loading</p>,

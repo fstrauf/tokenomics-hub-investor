@@ -71,11 +71,15 @@ export const FormCardSupplyDemand = ({
     updateMechanism.isSink = isSink
     updateMechanism.supplyDemandType = tempType
     if (isSink) {
-      updateMechanism.name = updateMechanism.name+ ' ' + (field.value?.length + 1)
-      updateMechanism.category =  updateMechanism.category+ ' ' + (field.value?.length + 1)
+      updateMechanism.name =
+        updateMechanism.name + ' ' + (field.value?.length + 1)
+      updateMechanism.category =
+        updateMechanism.category + ' ' + (field.value?.length + 1)
     } else {
-      updateMechanism.name = updateMechanism.name+ ' ' + (field.value?.length + 1)
-      updateMechanism.category = updateMechanism.category+ ' ' + (field.value?.length + 1)
+      updateMechanism.name =
+        updateMechanism.name + ' ' + (field.value?.length + 1)
+      updateMechanism.category =
+        updateMechanism.category + ' ' + (field.value?.length + 1)
       updateMechanism.summary = ''
     }
 
@@ -91,6 +95,14 @@ export const FormCardSupplyDemand = ({
     setIsOpen(true)
   }
 
+  const getTotalPercent = () => {
+    let ntotalPercent = 0
+    field.value.forEach((data) => {
+      ntotalPercent += data.percentageAllocation
+    })
+    return Number(ntotalPercent)
+  }
+
   const mechanismTile = (input, index, arrayHelpers) => {
     return (
       <div
@@ -103,17 +115,17 @@ export const FormCardSupplyDemand = ({
             {/* {input?.isSink ? (
               <></>
             ) : ( */}
-              <div
-                className="mr-2 h-5 w-5 bg-slate-600"
-                style={{ background: input.color }}
-              ></div>
+            <div
+              className="mr-2 h-5 w-5 bg-slate-600"
+              style={{ background: input.color }}
+            ></div>
             {/* )} */}
             <p className="">{input.name}</p>
           </div>
           {/* {input.isSink ? (
             <></>
           ) : ( */}
-            <p className="mt-2">{input.percentageAllocation} %</p>
+          <p className="mt-2">{input.percentageAllocation} %</p>
           {/* )} */}
         </div>
         <div className="flex h-7 border-t-2">
@@ -196,6 +208,17 @@ export const FormCardSupplyDemand = ({
                   >
                     Add
                   </button>
+                  <p className='ml-3 mt-2'>
+                    {getTotalPercent() > 100 ? (
+                      <p className="font-medium text-red-600">
+                        {getTotalPercent()} / 100 Supply Exceeds
+                      </p>
+                    ) : (
+                      <p className="font-medium">
+                        {getTotalPercent()} / 100
+                      </p>
+                    )}
+                  </p>
                 </div>
                 <div className="h-60 overflow-auto rounded-lg border-2 border-slate-300">
                   <div
@@ -219,7 +242,6 @@ export const FormCardSupplyDemand = ({
               </div>
               <div className="relative w-1/2">
                 <div className="mb-1 flex gap-2">
-              
                   <p className="font-light">External Allocations</p>
                   <select
                     onChange={handleChange}
@@ -260,7 +282,7 @@ export const FormCardSupplyDemand = ({
                     Add
                   </button>
                 </div>
-                <div className="h-60 overflow-auto rounded-lg border-2 border-slate-300"> 
+                <div className="h-60 overflow-auto rounded-lg border-2 border-slate-300">
                   <div
                     key={4811}
                     className="flex flex-row flex-wrap gap-2 overflow-auto p-2"
