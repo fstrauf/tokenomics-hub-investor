@@ -13,8 +13,8 @@ import ThubLogo from '../public/svg/thub-logo'
 import Bars3Icon from '../public/svg/bars3Icon'
 import XMarkIcon from '../public/svg/xmarkicon'
 import { headerStatus } from '../lib/helper'
-import HeaderComboSection from './HeaderComboSection'
-import HeaderGenericSection from './HeaderGenericSection'
+import HeaderComboSection from './generic/HeaderComboSection'
+import HeaderGenericSection from './generic/HeaderGenericSection'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -28,7 +28,21 @@ export default function Header2({ mode = headerStatus.main, children = null }) {
     switch (mode) {
       case headerStatus.design:
         return (
-          <HeaderGenericSection pathName="/myDesigns" title="Design a Token" />
+          <>
+            {' '}
+            <HeaderGenericSection
+              pathName="/audit-design-help"
+              title="Audit & Design Help"
+            />
+            <HeaderGenericSection
+              pathName="/support"
+              title="Support"
+            />
+            <HeaderGenericSection
+              pathName="/myDesigns"
+              title="Design a Token"
+            />
+          </>
         )
       case headerStatus.main:
         return (
@@ -45,10 +59,15 @@ export default function Header2({ mode = headerStatus.main, children = null }) {
                 pathName="/thub"
                 title="Calculation Template"
               />
-              <HeaderGenericSection pathName="/book-an-expert" title="Tokenomics Consulting" />
+              <HeaderGenericSection
+                pathName="/book-an-expert"
+                title="Tokenomics Consulting"
+              />
+              <HeaderGenericSection pathName="/calculator" title="Calculator" />
             </HeaderComboSection>
-            <HeaderGenericSection pathName="/calculator" title="Calculator" />
-            <HeaderGenericSection pathName="/myDesigns" title="My Dashboard" />
+
+            <HeaderGenericSection pathName="/myReports" title="My Reports" />
+            <HeaderGenericSection pathName="/#what-is-tokenomics-hub" title="What is Tokenomics Hub" />
           </>
         )
       case headerStatus.report:
@@ -65,8 +84,8 @@ export default function Header2({ mode = headerStatus.main, children = null }) {
         <div className="mx-auto max-w-full px-6">
           <div className="flex items-center justify-between py-1 md:justify-start md:space-x-10">
             <div className="flex justify-start lg:w-0 lg:flex-1">
-              <div className='w-12 h-12'>
-              <ThubLogo />
+              <div className="h-12 w-12">
+                <ThubLogo />
               </div>
               <div className="hidden md:ml-2 md:flex md:items-center">
                 <p className="text-2xl text-white">Tokenomics Hub</p>
@@ -111,7 +130,7 @@ export default function Header2({ mode = headerStatus.main, children = null }) {
               )}
               <div>{children}</div>
               <SignedIn>
-                <UserButton />
+                <UserButton afterSignOutUrl="/" />
               </SignedIn>
               <SignedOut>
                 <div className="text-white">
@@ -154,7 +173,7 @@ export default function Header2({ mode = headerStatus.main, children = null }) {
               <div className="space-y-6 py-6 px-5">
                 <div className="flex w-full justify-end">
                   <SignedIn>
-                    <UserButton />
+                    <UserButton afterSignOutUrl="/" />
                   </SignedIn>
                   <SignedOut>
                     <SignInButton />

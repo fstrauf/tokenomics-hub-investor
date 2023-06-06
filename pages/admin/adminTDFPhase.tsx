@@ -10,8 +10,10 @@ import dynamic from 'next/dynamic'
 import Router from 'next/router'
 import { confirmAlert } from 'react-confirm-alert'
 import 'react-confirm-alert/src/react-confirm-alert.css'
+import { designPhaseGrouping } from '../../lib/helper'
 
 export default function adminTDFPhase({ alldesignPhases }) {
+  console.log("🚀 ~ file: adminTDFPhase.tsx:16 ~ adminTDFPhase ~ alldesignPhases:", alldesignPhases)
   const [initialValues, setInititalValues] = useState(alldesignPhases[0])
   const [isDeleteSubmitting, setIsDeleteSubmitting] = useState(false)
   const [adminPhaseId, setAdminPhaseId] = useState('')
@@ -120,7 +122,21 @@ export default function adminTDFPhase({ alldesignPhases }) {
                     placeholder="name"
                     className="mb-3 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
                   />
-
+                  <label className="mb-2 block text-sm font-medium text-gray-900">
+                    Group
+                  </label>
+                  <Field
+                    id="phaseGrouping"
+                    name="phaseGrouping"
+                    placeholder="phaseGrouping"
+                    as="select"
+                    className="mb-3 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
+                  >
+                    <option value={null}>none</option>
+                    <option value={designPhaseGrouping.research}>{designPhaseGrouping.research}</option>
+                    <option value={designPhaseGrouping.design}>{designPhaseGrouping.design}</option>
+                    <option value={designPhaseGrouping.review}>{designPhaseGrouping.review}</option>
+                  </Field>
                   <label className="mb-2 block text-sm font-medium text-gray-900">
                     ParentPhaseId
                   </label>

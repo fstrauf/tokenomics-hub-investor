@@ -3,11 +3,12 @@ import ErrorPage from 'next/error'
 import prisma from '../../lib/prisma'
 import { clerkClient } from '@clerk/nextjs/server'
 import { clerkConvertJSON, headerStatus, postStatus } from '../../lib/helper'
-import PostView from '../../components/PostView'
+// import PostView from '../../components/PostView'
+import PostView from '../../components/slugView/PostView'
 import { GetServerSideProps } from 'next/types'
 import Header2 from '../../components/header2'
 import Link from 'next/link'
-import InfoSection from '../../components/InfoSection'
+import InfoSection from '../../components/generic/InfoSection'
 
 const PostPreview: React.FC<UpdateNewDesignProps> = ({ post, author }) => {
   const router = useRouter()

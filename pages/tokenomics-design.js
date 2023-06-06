@@ -4,54 +4,48 @@ import Header2 from '../components/header2'
 import ThubLogo from '../public/svg/thub-logo'
 import LiteYouTubeEmbed from 'react-lite-youtube-embed'
 import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css'
+import FaqSection from '../components/static/TDSfaqSection'
 
 export default function TokenomicsDesignSpace() {
-
   const designLink = (
     <Link href="/newDesign">
       <button className="mt-5 rounded-md bg-dao-red px-6 py-4 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
-        Design a Token
+        Design a Token (it's free)
       </button>
     </Link>
   )
 
   return (
     <>
-      {/* <Layout> */}
       <Header2 />
 
       <div className="m-auto">
         <div className="">
           <div className="flex w-full justify-between gap-5 bg-gradient-to-r from-dao-green to-dao-red py-5 pt-10">
-            <div className="p-10">
-              <h1 className="mb-5 text-5xl font-bold leading-10 text-white md:whitespace-nowrap">
-                Design sustainable Tokenomics
+            <div className="prose p-10">
+              <h1 className="text-5xl font-bold leading-10 text-white md:whitespace-nowrap">
+                Improved Tokenomics Calculator
               </h1>
-              <div className="flex p-3 text-xl text-white">
-                <p className="">
-                  <li>
-                    User-friendly, step-by-step process for designing a token
-                  </li>
-                  <li>Non-jargon guidance and education</li>
-                  <li>
-                    Make the best design decisions with relevant data and
-                    insights on similar projects
-                  </li>
-                  <li>
-                    Receive a clear and concise, shareable report summarizing
-                    your tokenomics
-                  </li>
-                  <li>
-                    Get the opinion of an expert to point out potential flaws
-                  </li>
+              <h2 className='text-white font-normal mt-0'>Design Sustainable Tokenomics</h2>
+              <div className="prose flex flex-col p-3 text-white">
+                <p>
+                  Designing tokenomics in a spreadsheet can be complicated and
+                  frustrating. Simplify the process with Tokenomics Design Space
                 </p>
+                <ul className="prose text-white">
+                  <li>
+                    Easy to use interface with built in step by step process
+                  </li>
+                  <li>
+                    Contextual insights on similar projects in the same niche
+                  </li>
+                  <li>Framework for estimating demand</li>
+                  <li>Get your tokenomics audited by an expert</li>
+                </ul>
               </div>
-              <div className="flex gap-3">
-                {designLink}
-                {/* {videoLink} */}
-              </div>
+              <div className="flex gap-3">{designLink}</div>
             </div>
-            <div className="w-[650px] m-10">
+            <div className="m-10 w-[650px]">
               {' '}
               <LiteYouTubeEmbed
                 id="dq_SowJgRvE"
@@ -63,44 +57,38 @@ export default function TokenomicsDesignSpace() {
         <hr className="my-4 mx-auto h-1 w-48 rounded border-0 bg-gray-100 dark:bg-gray-700 md:my-10"></hr>
 
         <div className="flex justify-evenly p-10">
-          <div className="pl-20">
-            <h1 className="mb-10 text-3xl font-bold leading-10 md:whitespace-nowrap">
-              Simple step by step design process
+          <div className="prose pl-20">
+            <h1 className="prose mb-10 text-3xl font-bold leading-10 md:whitespace-nowrap">
+              Easy to use interface
             </h1>
             <div className="flex flex-col gap-4 text-xl">
-              <p>Industry leading design process</p>
-              <p>Educational resources along the way</p>
-              <p>Know your unknown unknowns. </p>
-              <p>Tokenomics design made simple</p>
+              <p>
+                Tokenomics Design Space offers an intuitive interface that
+                simplifies the token design process.
+              </p>
+              <p>
+                If you’ve ever felt like you’re leaving out an important step or
+                simply don’t know what the next step in the design process is,
+                we’ve got you covered.
+              </p>
             </div>
           </div>
-          <div className="flex gap-5">
             <div className="relative">
               <Image
-                width={502 / 2}
-                height={802 / 2}
-                src="/Greatnewtoken.png"
+                width={1191}
+                height={948}
+                src="/demandCalcHalf.png"
                 className="rounded-md shadow-xl"
                 alt="Token Editor Flow"
               />
             </div>
-            <div className="relative object-scale-down">
-              <Image
-                width={1248 / 3}
-                height={1266 / 3}
-                src="/ValueCapture.png"
-                className="rounded-md shadow-xl"
-                alt="Value Capture Explanation Section"
-              />
-            </div>
-          </div>
         </div>
         <hr className="my-4 mx-auto h-1 w-48 rounded border-0 bg-gray-100 dark:bg-gray-700 md:my-10"></hr>
         <div className="flex flex-col items-center bg-gray-50 p-3">
-          <h1 className="mb-10 text-3xl font-bold leading-10 md:whitespace-nowrap">
+          <h1 className="prose mb-10 text-3xl font-bold leading-10 md:whitespace-nowrap">
             Put your design into perspective
           </h1>
-          <p className="mt-5 p-10 text-center text-xl">
+          <p className="prose mt-5 p-10 text-center text-xl">
             We show you relevant data, examples and the industry standard of
             similar projects to help you make better design decisions through
             every step of the way
@@ -120,58 +108,59 @@ export default function TokenomicsDesignSpace() {
           <div className="flex">
             <div className="relative object-scale-down">
               <Image
-                width={1218 / 2.5}
-                height={1458 / 2.5}
-                src="/Aave.png"
+                width={1000/1.2}
+                height={292/1.2}
+                src="/supply_vs_demand.png"
                 className="rounded-md shadow-xl"
-                alt="See you design in a nice and easy to understand report format"
+                alt="Compare supply and demand"
               />
             </div>
           </div>
-          <div>
+          <div className="prose">
             <h1 className="mb-10 text-3xl font-bold leading-10 md:whitespace-nowrap">
-              Share your tokenomics easily
+              Estimate your Token Demand
             </h1>
-            <p className="mt-5 w-96 text-right text-xl">
-              Share your design with team members, VCs, investors, advisors,
-              users, anyone!<br></br>
-              <br></br>The TDS is also built into the Tokenomics Hub platform,
-              allow your community to easily understand your tokenomics by
-              publishing your design as a report on the platform
-            </p>
+            <div className="prose flex flex-col p-3">
+                <p>
+                Tokenomics Design Space provides a framework for estimating token demand in 3 simple steps:
+                </p>
+                <ol className="prose">
+                  <li>
+                    Easy to use interface with built in step by step process
+                  </li>
+                  <li>
+                    Contextual insights on similar projects in the same niche
+                  </li>
+                  <li>Framework for estimating demand</li>
+                  <li>Get your tokenomics audited by an expert</li>
+                </ol>
+              </div>
           </div>
         </div>
         <hr className="my-4 mx-auto h-1 w-48 rounded border-0 bg-gray-100 dark:bg-gray-700 md:my-10"></hr>
         <div className="flex flex-col items-center bg-gray-50 p-3">
-          <h1 className="mb-10 text-3xl font-bold leading-10 md:whitespace-nowrap">
-            Get an expert to review your design
+          <h1 className="prose mb-10 text-3xl font-bold leading-10 md:whitespace-nowrap">
+          Tokenomics Audit
           </h1>
-          <p className="mt-5 text-center text-xl">
-            Get feedback, guidance and even design help on your tokenomics from
-            experts in the Tokenomics DAO community
+          <p className="prose mt-5 text-center text-xl">
+          Get a Tokenomics DAO expert to audit your tokenomics and provide feedback, guidance and even design help
           </p>
           <div className="m-10 h-24 w-24">
             <ThubLogo />
           </div>
         </div>
-
-        {/* <hr className="my-4 mx-auto h-1 w-48 rounded border-0 bg-gray-100 dark:bg-gray-700 md:my-10"></hr> */}
-
+        <FaqSection/>
         <div className="flex w-full flex-col justify-between gap-5 bg-gradient-to-r from-dao-green to-dao-red py-5 pt-10">
-          <h1 className="text-center text-4xl font-bold leading-10 text-white md:whitespace-nowrap">
-            Build better Tokenomics
+          <h1 className="prose text-center text-4xl font-bold leading-10 text-white md:whitespace-nowrap">
+            Build better Tokenomics Easily
           </h1>
           <p className="mt-5 text-center text-xl text-white">
             Powerful and simple to use tokenomics design software to help you
             create a sustainable token economy
           </p>
-          <div className="flex justify-center gap-3">
-            {designLink}
-            {/* {videoLink} */}
-          </div>
+          <div className="flex justify-center gap-3">{designLink}</div>
         </div>
       </div>
-      {/* </Layout> */}
     </>
   )
 }

@@ -1,27 +1,45 @@
-// import { getAllPostsForHome } from '../lib/api'
 import Layout from '../components/layout'
-// import Intro from '../components/intro'
 import Image from 'next/image'
 import Link from 'next/link'
 import Script from 'next/script'
+// import InfoSection from '../components/InfoSection'
 
 export default function tokenomicshub() {
   return (
     <>
       <Layout>
-        {/* <Intro /> */}
-        <div className="m-auto mt-10 max-w-md sm:max-w-xl md:max-w-2xl lg:max-w-4xl">
-          <h1 className="text-xl">
+        {/* Add a disclaimer here that we building a second version */}
+        <div className="prose m-auto mt-10 max-w-md sm:max-w-xl md:max-w-2xl lg:max-w-4xl">
+          <h1 className="">
             Design your own tokenomics using our tools and help from our
             community.
           </h1>
+          <div className="pb-5">
+            <div className="my-10 w-full">
+              <div className="flex items-center justify-between gap-4 rounded-lg bg-gradient-to-r from-dao-red to-dao-green p-2">
+                <h1 className=" my-auto text-center text-2xl text-white">
+                  Check out our new Tokenomics Design Space
+                </h1>
+                <div className="flex gap-3">
+                  <Link
+                    href="/tokenomics-design"
+                    className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
+                  >
+                    Design a token
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div className="mt-5 flex">
-            <div className="relative h-[276px] w-[384px] object-scale-down">
+            <div className="relative object-scale-down">
               <Image
-                layout="fill"
+                width={384}
+                height={276}
                 src="/tdf.jpg"
-                className="rounded-md"
-                objectFit="contain"
+                className="rounded-md shadow-xl"
+                alt="Tokenomics Design"
               />
             </div>
             <div className="ml-10">

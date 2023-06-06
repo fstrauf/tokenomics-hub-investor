@@ -19,6 +19,7 @@ export default async function handle(req, res) {
       Resources: Resources,
       isReport: values.isReport,
       phaseOrder: parseInt(values.phaseOrder),
+      phaseGrouping: values.phaseGrouping
     },
     create: {
       phaseId: parseInt(values.phaseId),
@@ -28,6 +29,7 @@ export default async function handle(req, res) {
       Resources: Resources,
       isReport: values.isReport,
       phaseOrder: parseInt(values.phaseOrder),
+      phaseGrouping: values.phaseGrouping
     },
   })
 

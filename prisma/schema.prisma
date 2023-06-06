@@ -178,14 +178,15 @@ model DesignElement {
 }
 
 model DesignPhases {
-  id              String          @id @default(cuid())
+  id              String                      @id @default(cuid())
   parentPhaseId   Int?
-  Resources       String?         @db.Text
-  phaseId         Int?            @unique
+  Resources       String?                     @db.Text
+  phaseId         Int?                        @unique
   name            String?
   phaseOrder      Int?
   postDataElement String?
-  isReport        Boolean?        @default(false)
+  isReport        Boolean?                    @default(false)
+  phaseGrouping   DesignPhases_phaseGrouping?
   DesignElement   DesignElement[]
 
   @@index([parentPhaseId])
@@ -204,33 +205,40 @@ model CalculationTimeSeries {
 }
 
 model Mechanism {
-  id                        String                     @id @default(cuid())
+  id                        String                      @id @default(cuid())
   name                      String?
-  summary                   String?                    @db.Text
-  details                   String?                    @db.Text
+  summary                   String?                     @db.Text
+  details                   String?                     @db.Text
   isSink                    Boolean?
   token                     String?
   postId                    String?
-  isTemplate                Boolean?                   @default(false)
+  isTemplate                Boolean?                    @default(false)
   calculationId             String?
   category                  String?
   color                     String?
   emissionReductionPerEpoch Float?
   epochDurationInSeconds    Float?
   initialEmissionPerSecond  Float?
-  isEpochDistro             Boolean                    @default(false)
+  isEpochDistro             Boolean                     @default(false)
   lockupPeriod              Float?
   percentageAllocation      Float?
   unlockPeriod              Float?
   percentageUnlockTGE       Float?
-  supplyDemandType          Mechanism_supplyDemandType @default(supplyInternal)
-  post                      Post?                      @relation(fields: [postId], references: [id], onDelete: Cascade)
+  supplyDemandType          Mechanism_supplyDemandType?
+  mechanismTypeId           String?                     
+  templateSheet             String?
+  post                      Post?                       @relation(fields: [postId], references: [id], onDelete: Cascade)
   PostUser                  PostUser[]
-  calculation               Calculation?               @relation(fields: [calculationId], references: [id], onDelete: Cascade)
+  calculation               Calculation?                @relation(fields: [calculationId], references: [id], onDelete: Cascade)
   CalculationTimeSeries     CalculationTimeSeries[]
+  mechanismType             Mechanism?                  @relation("MechanismType", fields: [mechanismTypeId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  mechanismTypes            Mechanism[]                 @relation("MechanismType")
+  incentiveTarget           Mechanism[]                 @relation("Incentives")
+  IncentivisedBy            Mechanism[]                 @relation("Incentives")
 
   @@index([postId])
   @@index([calculationId])
+  @@index([mechanismTypeId])
 }
 
 model PostUser {
@@ -487,9 +495,24 @@ model PostToTag {
   @@map("_PostToTag")
 }
 
+model Incentives {
+  A String
+  B String
+
+  @@unique([A, B], map: "_Incentives_AB_unique")
+  @@index([B], map: "_Incentives_B_index")
+  @@map("_Incentives")
+}
+
 enum Mechanism_supplyDemandType {
   supplyInternal
   supplyExternal
   demandUtility
   demandMechanism
+}
+
+enum DesignPhases_phaseGrouping {
+  Research
+  Design
+  Review
 }

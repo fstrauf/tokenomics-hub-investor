@@ -18,8 +18,10 @@ export const FormAreaDataMechanism = (props) => {
         values.Calculation?.totalSupply,
         values?.Calculation?.startDate
       )
+      // console.log("🚀 ~ file: FormAreaDataMechanism.tsx:24 ~ newTimerId ~ props.name:", props.name)
       setFieldValue(props.name, chartProps)
     }, 1000)
+      
 
     // Save the new timer id to clear it on the next form input
     setTimerId(newTimerId)
@@ -36,25 +38,3 @@ export const FormAreaDataMechanism = (props) => {
 }
 
 export default FormAreaDataMechanism
-
-// import React from 'react'
-// import { useFormikContext } from 'formik'
-// import { getAreaData } from '../../lib/helper'
-
-// export const FormAreaDataMechanism = (props) => {
-
-//   const {
-//     values,
-//     setFieldValue,
-//   } = useFormikContext()
-
-//   React.useEffect(() => {
-//     const chartProps = getAreaData(values?.Calculation?.months, values?.Mechanism, values.Calculation?.totalSupply, values.Calculation?.startDate)
-
-//     setFieldValue(props.name, chartProps)
-//   }, [setFieldValue, props.name, values?.Calculation?.months, values?.Mechanism, values.Calculation?.totalSupply, values?.Calculation?.startDate])
-
-//   return <></>
-// }
-
-// export default FormAreaDataMechanism

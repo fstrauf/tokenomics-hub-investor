@@ -8,11 +8,13 @@ import WalkthroughSection from './WalkthroughSection'
 export default function TDF105({ props, values, activePhase }) {
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
 
-  const { setFieldValue } = useFormikContext()
+  const { setFieldValue, dirty } = useFormikContext()
 
   useEffect(() => {
-    designElementStatusUpdate(values, designPhase.phaseId, setFieldValue)
-  }, [])
+    if (dirty) {
+      designElementStatusUpdate(values, designPhase.phaseId, setFieldValue)
+    }
+  }, [dirty])
 
   return (
     <div className="flex flex-col">

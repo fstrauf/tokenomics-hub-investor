@@ -1,6 +1,8 @@
+import Link from "next/link";
+
 export default function ThubLogo() {
   return (
-    <a href="/" >
+    <Link href='/home' >
       {/* <a href="/" className="mb-6 h-3.5 w-3.5 md:mb-0"></a> */}
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 153 153">
         <rect width="153" height="153" rx="7.66" fill="#f66" />
@@ -43,6 +45,6 @@ export default function ThubLogo() {
         />
       </svg>
       <span className="sr-only">Website</span>
-    </a>
+    </Link>
   )
 }

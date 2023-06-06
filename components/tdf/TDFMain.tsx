@@ -17,7 +17,7 @@ export default function TDFMain({ props, header = headerStatus.design }) {
   const router = useRouter()
 
   const [activePhase, setActivePhase] = useState(
-    router.query.phase ? +router.query.phase : 11
+    router.query.phase ? +router.query.phase : 503
   )
   const [postId, setPostId] = useState(props.post.id || '')
   const [isRequestReviewOpen, setIsRequestReviewOpen] = useState(false)
@@ -38,6 +38,8 @@ export default function TDFMain({ props, header = headerStatus.design }) {
     setActivePhase(phase)
   }
 
+
+
   useEffect(() => {}, [router.query.phase])
 
   const TDFHeaders = dynamic(() => import('./TDFHeaders'), {
@@ -47,6 +49,9 @@ export default function TDFMain({ props, header = headerStatus.design }) {
     loading: () => <p>Loading</p>,
   })
   const TDFGenericOneField = dynamic(() => import('./TDFGenericOneField'), {
+    loading: () => <p>Loading</p>,
+  })
+  const TDFComingSoon = dynamic(() => import('./TDFComingSoon'), {
     loading: () => <p>Loading</p>,
   })
   const TDFComingSoon = dynamic(() => import('./TDFComingSoon'), {
@@ -89,6 +94,15 @@ export default function TDFMain({ props, header = headerStatus.design }) {
   const TDF502 = dynamic(() => import('./TDF502'), {
     loading: () => <p>Loading</p>,
   })
+  const TDF503 = dynamic(() => import('./TDF503'), {
+    loading: () => <p>Loading</p>,
+  })
+  const TDF504 = dynamic(() => import('./TDF504'), {
+    loading: () => <p>Loading</p>,
+  })
+  const TDF505 = dynamic(() => import('./TDF505'), {
+    loading: () => <p>Loading</p>,
+  })
   const TDF701 = dynamic(() => import('./TDF701'), {
     loading: () => <p>Loading</p>,
   })
@@ -109,6 +123,7 @@ export default function TDFMain({ props, header = headerStatus.design }) {
 
   const submitData = async (values, { setSubmitting }) => {
     const body = { values }
+    console.log('🚀 ~ file: TDFMain.tsx:121 ~ submitData ~ body:', body)
     if (values?.id === '') {
       try {
         const response = await fetch('/api/post/newDesign', {
@@ -322,6 +337,36 @@ explanation`}
             reviewRequiredFields={reviewRequiredFields}
           />
         )
+      case 503:
+        return (
+          <TDF503
+            props={props}
+            values={values}
+            activePhase={activePhase}
+            setFieldValue={setFieldValue}
+            reviewRequiredFields={reviewRequiredFields}
+          />
+        )
+      case 504:
+        return (
+          <TDF504
+            props={props}
+            values={values}
+            activePhase={activePhase}
+            setFieldValue={setFieldValue}
+            reviewRequiredFields={reviewRequiredFields}
+          />
+        )
+      case 505:
+        return (
+          <TDF505
+            props={props}
+            values={values}
+            activePhase={activePhase}
+            setFieldValue={setFieldValue}
+            reviewRequiredFields={reviewRequiredFields}
+          />
+        )
       case 701:
         return (
           <TDF701 props={props} values={values} activePhase={activePhase} />
@@ -393,18 +438,11 @@ explanation`}
                 <button
                   type="button"
                   disabled={isSubmitting}
-                  onClick={()=>previewAndSave(submitForm)}
+                  onClick={() => previewAndSave(submitForm)}
                   className="rounded-md border-2 border-dao-red bg-gradient-to-r from-dao-red via-dao-red to-dao-green bg-clip-text py-1 px-4 text-transparent hover:bg-opacity-80 disabled:opacity-50"
                 >
                   Preview
                 </button>
-                {/* <Link
-                  as={`/postPreview/${postId}`}
-                  href="/postPreview/[id]]"
-                  className="rounded-md border-2 border-dao-red bg-gradient-to-r from-dao-red via-dao-red to-dao-green bg-clip-text py-1 px-4 text-transparent hover:bg-opacity-80"
-                >
-                  Preview
-                </Link> */}
                 <HelpButton
                   values={values}
                   setIsRequestReviewOpen={setIsRequestReviewOpen}

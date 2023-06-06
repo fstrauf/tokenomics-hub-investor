@@ -21,11 +21,13 @@ export default function TDF701({ props, values, activePhase }) {
     setShowNote(true)
   }
 
-  const { setFieldValue } = useFormikContext()
+  const { setFieldValue, dirty } = useFormikContext()
 
   useEffect(() => {
-    designElementStatusUpdate(values, designPhase.phaseId, setFieldValue)
-  }, [])
+    if (dirty) {
+      designElementStatusUpdate(values, designPhase.phaseId, setFieldValue)
+    }
+  }, [dirty])
 
   return (
     <div>

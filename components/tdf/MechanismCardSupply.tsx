@@ -1,0 +1,66 @@
+import { Field } from 'formik'
+import React from 'react'
+import FormSelectUser from '../form/FormSelectUser'
+// import FormTipTap from '../form/FormTipTap'
+import * as duration from 'dayjs/plugin/duration'
+import * as dayjs from 'dayjs'
+import { shortBigNumber, supplyDemandType } from '../../lib/helper'
+import { SupplyInternal, SupplyExternal } from '../supplyDemandType/SupplyType'
+
+export const MechanismCardSupply = ({
+  field,
+  mechanismIndex,
+  // setFieldValue,
+  users,
+}) => {
+  let isInternal = false
+  if (
+    field.value[mechanismIndex]?.supplyDemandType ===
+    supplyDemandType.supplyInternal
+  ) {
+    isInternal = true
+  }
+  // const isSink = field.value[mechanismIndex]?.isSink || false
+  dayjs.extend(duration)
+  const secondsPerMonth = 2628000
+  let propsOfInternalExternal = {
+    field,
+    mechanismIndex,
+  }
+
+  return (
+    <div
+      key={mechanismIndex}
+      className="ml-auto mr-auto flex max-w-2xl flex-col p-4"
+    >
+      <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 ">
+        {isInternal ? <>Internal Allocation</> : <>External Allocation</>}
+      </h5>
+      <label className="block text-sm font-medium text-gray-900 ">Name</label>
+      <Field
+        name={`${field.name}.${mechanismIndex}.name`}
+        placeholder="Name"
+        className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-xs text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+        type="text"
+      />
+
+      <label className="block text-sm font-medium text-gray-900 ">User</label>
+      <Field
+        className="custom-select"
+        name={`${field.name}.${mechanismIndex}.PostUser`}
+        options={users}
+        component={FormSelectUser}
+        placeholder="Select Users"
+        isMulti={true}
+      />
+
+      {isInternal ? (
+        <SupplyInternal {...propsOfInternalExternal} />
+      ) : (
+        <SupplyExternal {...propsOfInternalExternal} />
+      )}
+    </div>
+  )
+}
+
+export default MechanismCardSupply

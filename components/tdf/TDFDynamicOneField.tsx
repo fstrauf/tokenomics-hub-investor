@@ -11,15 +11,16 @@ export default function TDFDynamicOneField({
   placeholder,
   values,
 }) {
-  console.log("🚀 ~ file: TDFDynamicOneField.tsx:14 ~ props:", props)
-  console.log("🚀 ~ file: TDFDynamicOneField.tsx:14 ~ activePhase:", activePhase)
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
-  console.log("🚀 ~ file: TDFDynamicOneField.tsx:16 ~ designPhase:", designPhase)
-  const { setFieldValue } = useFormikContext()
+  // const { setFieldValue } = useFormikContext()
+
+  const { setFieldValue, dirty } = useFormikContext()
 
   useEffect(() => {
-    designElementStatusUpdate(values, designPhase.phaseId, setFieldValue)
-  }, [])
+    if (dirty) {
+      designElementStatusUpdate(values, designPhase.phaseId, setFieldValue)
+    }
+  }, [dirty])
 
   console.log(`DesignElement.${values?.DesignElement?.findIndex(
     (de) => de.designPhasesId === String(designPhase.phaseId)

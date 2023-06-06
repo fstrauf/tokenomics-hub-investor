@@ -18,7 +18,7 @@ export default function UserProfile({
   return (
     <>
       <Layout>
-        <Intro />
+        {/* <Intro /> */}
         <div className="bg-blueGray-200 py-16">
           <div className="container mx-auto px-4">
             <div className="mb-6 flex w-full min-w-0 flex-col break-words rounded-lg bg-white shadow-xl">

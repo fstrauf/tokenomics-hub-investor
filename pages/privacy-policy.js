@@ -1,12 +1,11 @@
 // import { getAllPostsForHome } from '../lib/api'
 import Layout from '../components/layout'
-import Intro from '../components/intro'
+// import Intro from '../components/intro'
 
 export default function PivacyPolicy() {
   return (
     <>
       <Layout>
-        <Intro />
         <div className="min-h-screen prose flex flex-col m-auto">
           <div className="mx-auto max-w-7xl py-16 px-4 sm:px-6 lg:px-8">
             <h1 className="mb-8 text-3xl font-bold">Privacy Policy</h1>

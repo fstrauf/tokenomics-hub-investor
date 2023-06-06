@@ -1,10 +1,11 @@
 import Layout from '../components/layout'
 import { headerStatus } from '../lib/helper'
-import SubscriptionStatus from '../components/SubscriptionStatus'
-import { getAuth } from "@clerk/nextjs/server"
+// import SubscriptionStatus from '../components/SubscriptionStatus'
+import SubscriptionStatus from '../components/subscription/SubscriptionStatus'
 import prisma from '../lib/prisma'
 import { GetServerSideProps } from 'next'
-import SubscriptionOptions from '../components/SubscriptionOptions'
+import SubscriptionOptions from '../components/subscription/SubscriptionOptions'
+import { getAuth } from "@clerk/nextjs/server"
 
 export default function ManageSubscriptions(props) {
   return (

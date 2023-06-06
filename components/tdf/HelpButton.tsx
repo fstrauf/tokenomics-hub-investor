@@ -8,8 +8,8 @@ import {
 } from '../../lib/helper'
 import toast from 'react-hot-toast'
 import { WEBSITE_URL_BASE } from '../../lib/constants'
-import HeaderComboSection from '../HeaderComboSection'
-import HeaderGenericSection from '../HeaderGenericSection'
+import HeaderComboSection from '../generic/HeaderComboSection'
+import HeaderGenericSection from '../generic/HeaderGenericSection'
 // import { useRouter } from 'next/router'
 
 export default function HelpButton({

@@ -14,7 +14,6 @@ export const FormCardSupplyDemand = ({
   setFieldValue,
   subscription,
 }) => {
-  console.log("🚀 ~ file: FormCardSupplyDemand.tsx:16 ~ values:", values)
   const { user } = useUser()
   const admin = user?.publicMetadata?.admin || false
   let [mechanismIndex, setMechanismIndex] = useState(0)
@@ -33,7 +32,6 @@ export const FormCardSupplyDemand = ({
     unlockPeriod: 12,
     percentageUnlockTGE: 0,
     percentageAllocation: 30,
-    color: `#${Math.floor(Math.random() * 16777215).toString(16)}`,
     color: `#${Math.floor(Math.random() * 16777215).toString(16)}`,
     isEpochDistro: false,
     epochDurationInSeconds: 0,
@@ -184,7 +182,7 @@ export const FormCardSupplyDemand = ({
                 ) : (
                   <>
                     {' '}
-                    <div className="absolute inset-0 rounded-lg bg-gray-100 opacity-70"></div>
+                    {/* <div className="absolute inset-0 rounded-lg bg-gray-100 opacity-70"></div>
                     <div className="absolute inset-0 z-10 flex flex-col items-center justify-center">
                       <p className="rounded-lg bg-gray-200 p-10 text-3xl font-bold text-gray-900">
                         Premium Members Only
@@ -194,7 +192,7 @@ export const FormCardSupplyDemand = ({
                           Subscribe Now
                         </button>
                       </Link>
-                    </div>
+                    </div> */}
                   </>
                 )}
 
@@ -229,7 +227,7 @@ export const FormCardSupplyDemand = ({
                     Add Demand
                   </button>
                 </div>
-                <div className="h-60 rounded-lg border-2 border-slate-300">
+                <div className="h-60 overflow-auto rounded-lg border-2 border-slate-300">
                   <div
                     key={4811}
                     className="flex flex-row flex-wrap gap-2 overflow-auto p-2"

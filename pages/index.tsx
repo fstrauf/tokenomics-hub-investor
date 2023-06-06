@@ -8,6 +8,10 @@ import Select from 'react-select'
 import { useRouter } from 'next/router'
 import { headerStatus, postStatus } from '../lib/helper'
 import Link from 'next/link'
+import THUBFaqSection from '../components/static/THUBfaqSection'
+import Image from 'next/image'
+import { useState } from 'react'
+import { event } from 'nextjs-google-analytics'
 
 type Props = {
   allPosts: any
@@ -18,7 +22,15 @@ type Props = {
 
 const Index: React.FC<Props> = (props) => {
   const router = useRouter()
-  // const [showBanner, setShowBanner] = useState(true)
+  const [showBanner, setShowBanner] = useState(true)
+
+  const hideBanner = () => {
+    setShowBanner(false)
+    event(`NotInterestedinDesign`, {
+      category: 'UserAction',
+      label: 'NotInterestedinDesign',
+    })
+  }
 
   function filterCategories(newValue: MultiValue<any>): void {
     if (newValue.length === 0) {
@@ -67,33 +79,56 @@ const Index: React.FC<Props> = (props) => {
               <h1 className="text-center text-3xl font-bold">
                 Welcome to Tokenomics Hub.
               </h1>
+              <h2 className="text-center text-xl"> Tokenomics reports of leading crypto and web3 protocols</h2>
             </div>
-            <div className="flex w-3/4 max-w-6xl flex-col justify-center gap-5 rounded-lg bg-gradient-to-r from-dao-green to-dao-red p-5 text-white items-center">
-              <h2 className="text-center text-2xl font-bold">
-                Crypto Token Design
-              </h2>
-              <p className="max-w-2xl text-center text-base">
-                Tokenomic Hub is your step-by-step guide to token design. <br />
-                <br />
-                Our library of tokenomic reports help web3 entrepreneurs and
-                crypto investors, builders and contributors to explore, compare
-                and evaluate the tokenomics of leading of crypto and web 3
-                protocols. <br />
-                <br />
-                So that you can apply this knowledge to the token design of your
-                next project.
-              </p>
-              <div className="flex justify-center">
-                <Link
-                  href="/tokenomics-design"
-                  className="w-36 self-center rounded-md border-2 border-dark-tdao bg-white px-4 py-2 text-center text-sm font-medium text-dark-tdao hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
-                >
-                  Design a Token
-                </Link>
+            {showBanner && (
+              <div className="flex w-3/4 max-w-6xl items-center justify-center gap-5 rounded-lg bg-gradient-to-r from-dao-green to-dao-red p-5 text-white">
+                <div className="flex flex-col items-start justify-between">
+                  <h2 className="mb-5 text-2xl font-bold">
+                    Interested in Crypto Token Design?
+                  </h2>
+                  <div className="prose max-w-2xl text-base text-white">
+                    <p>
+                      Check out the Tokenomics Design Space (TDS), an all-in-one
+                      platform that simplifies token design which includes:
+                    </p>
+                    <ul>
+                      <li>An easy-to-follow design process</li>
+                      <li>
+                        Relevant data on similar projects in the same niche{' '}
+                      </li>
+                      <li>Supply and demand modelling </li>
+                      <li>A framework to estimate token demand</li>
+                      <li>Tokenomics audit by experts</li>
+                    </ul>
+                  </div>
+                  {/* <div className="flex justify-center"> */}
+                  <Link
+                    href="/tokenomics-design"
+                    className="mt-10 w-36 rounded-md border-2 border-dark-tdao bg-white px-4 py-2 text-center text-sm font-medium text-dark-tdao hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+                  >
+                    Design a Token
+                  </Link>
+                  <button
+                    onClick={hideBanner}
+                    className="mt-1 text-xs underline"
+                  >
+                    I'm not interested
+                  </button>
+                  {/* </div> */}
+                </div>
+                <div className="relative">
+                  <Image
+                    width={1191 / 2}
+                    height={948 / 2}
+                    src="/demandCalcHalf.png"
+                    className="rounded-md shadow-xl"
+                    alt="Token Editor Flow"
+                  />
+                </div>
+                {/* </div> */}
               </div>
-
-              {/* </div> */}
-            </div>
+            )}
           </div>
           <div className="mt-10 mb-10 flex justify-center gap-4 text-center"></div>
           <div className="m-auto flex w-1/2 max-w-5xl">
@@ -121,6 +156,16 @@ const Index: React.FC<Props> = (props) => {
           </div>
           <Table prop={props.allPosts} />
         </Container>
+        <div className='flex justify-center items-center'>
+        <Link
+          href="/newPost"
+          className="mt-4 rounded-full bg-dao-red py-2 px-4 text-white hover:underline"
+        >
+          List a token
+        </Link>
+        </div>
+        <hr className="my-4 mx-auto h-1 w-48 rounded border-0 bg-gray-100 dark:bg-gray-700 md:my-10"></hr>
+        <THUBFaqSection />
       </Layout>
     </>
   )

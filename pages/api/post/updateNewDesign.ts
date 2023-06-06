@@ -31,7 +31,9 @@ export default async function handle(req, res) {
     role: pu.role,
   }))
 
+  //i could save the incentivedesign in a similar as the postusers
   const mechanisms = inputFields.Mechanism.map((m) => {
+    console.log('🚀 ~ file: updateNewDesign.ts:81 ~ mechanisms ~ m:', m)
     var postUsers = {}
     if (m?.PostUser === undefined) {
     } else {
@@ -42,6 +44,19 @@ export default async function handle(req, res) {
       }
     }
 
+    var incentiveTargets = {}
+    if (m?.incentiveTarget === undefined) {
+    } else {
+      if (m?.incentiveTarget) {
+        incentiveTargets = {
+          connect: {
+            id: inputFields?.id + '_' + stringToKey(m?.incentiveTarget?.name),
+          },
+        }
+      }
+    }
+    // if(m.isSink)
+
     const calculationTimeSeries =
       m?.CalculationTimeSeries?.map((cts) => ({
         phase: cts.phase,
@@ -49,6 +64,7 @@ export default async function handle(req, res) {
         tokens: cts.tokens,
       })) || {}
     return {
+      id: inputFields?.id + '_' + stringToKey(m.name),
       name: m.name,
       summary: m.summary,
       details: m.details,
@@ -68,9 +84,22 @@ export default async function handle(req, res) {
       CalculationTimeSeries: {
         create: calculationTimeSeries,
       },
+      mechanismTypeId: m.mechanismType?.id,
       PostUser: postUsers,
+      supplyDemandType: m.supplyDemandType,
+      incentiveTarget: incentiveTargets,
     }
   })
+
+  mechanisms.sort((a, b) => {
+    if (a.isSink && !b.isSink) {
+      return 1; // a should come after b
+    }
+    if (!a.isSink && b.isSink) {
+      return -1; // a should come before b
+    }
+    return 0; // no change in order
+  });
 
   var DesignElement = inputFields.DesignElement.map((de) => {
     if (typeof de.content === 'object') {
@@ -229,7 +258,7 @@ export default async function handle(req, res) {
             data: resource,
           },
         },
-        PostUser: {create: postUser},
+        PostUser: { create: postUser },
         Mechanism: {
           create: mechanisms,
         },
