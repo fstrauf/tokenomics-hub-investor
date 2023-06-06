@@ -8,6 +8,10 @@ import CommentForm from '../../components/commentForm'
 import Comments from '../../components/comments'
 
 const EditDesign: React.FC<UpdateNewDesignProps> = (props) => {
+  if (Object.keys(props.post).length === 0) {
+    return <div>The request object does not exist</div>
+  }
+
   return (
     <>
       <TDFMain props={props} header={props?.post?.postType} />
@@ -26,7 +30,7 @@ export default EditDesign
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { userId } = getAuth(context.req) || undefined
-  const processedUserId = userId !== null ? userId : '';
+  const processedUserId = userId !== null ? userId : ''
   const txCalls = []
   txCalls.push(
     prisma.post.findUnique({
@@ -74,69 +78,76 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   txCalls.push(prisma.tag.findMany())
 
   txCalls.push(
-    prisma.subscriptions.findUnique({ where: { authorClerkId: processedUserId } })    
+    prisma.subscriptions.findUnique({
+      where: { authorClerkId: processedUserId },
+    })
   )
 
   const [post, mechanismTemplates, designPhases, Category, Tag, Subscription] =
     await prisma.$transaction(txCalls)
+  let postWithUpdatedComments = {}
 
-  let clerkUser = {}
-  try {
-    if (post?.authorClerkId) {
-      clerkUser = await clerkClient.users.getUser(post.authorClerkId)
-    }
-  } catch (error) {
-    console.error('Error fetching user from Clerk:', error)
-    // Handle the error here, e.g. set a default user or show an error message to the user
-  }
-
-  clerkUser = clerkConvertJSON(clerkUser)
-
-  const userIds = post?.Comments?.map((comment) => {
-    return comment.authorClerkId
-  })
-  let users = clerkConvertJSON(await clerkClient.users.getUserList({ userIds })||null)
-  
-
-  const commentsWithUserNames = post?.Comments?.map((comment) => {
-    const currentUser = users?.find((u) => u.id === comment.authorClerkId)
-
-    return {
-      ...comment,
-      author: currentUser?.username,
-    }
-  })
-
-  let postWithUpdatedComments = post
-
-  postWithUpdatedComments.Comments = commentsWithUserNames
-  postWithUpdatedComments.protocolTimeLine =
-    postWithUpdatedComments.protocolTimeLine.map((ptl) => ({
-      ...ptl,
-      // date: new Date(ptl.date).toLocaleDateString('en-CA'),
-      date: formatDate(ptl.date),
-    }))
-  if (postWithUpdatedComments.Calculation === null) {
-    postWithUpdatedComments.Calculation = {}
-  } else {
-    postWithUpdatedComments.Calculation.startDate = formatDate(
-      postWithUpdatedComments?.Calculation?.startDate || new Date()
-    )
-  }
-  // postWithUpdatedComments.Calculation.startDate = new Date(
-  //   postWithUpdatedComments?.Calculation?.startDate || ''
-  // ).toLocaleDateString('en-CA')
-
-  postWithUpdatedComments.DesignElement =
-    postWithUpdatedComments?.DesignElement?.map((de) => {
-      try {
-        var content = JSON.parse(de.content)
-      } catch {}
-      return {
-        ...de,
-        content: content,
+  if (post !== null) {
+    let clerkUser = {}
+    try {
+      if (post?.authorClerkId) {
+        clerkUser = await clerkClient.users.getUser(post.authorClerkId)
       }
+    } catch (error) {
+      console.error('Error fetching user from Clerk:', error)
+      // Handle the error here, e.g. set a default user or show an error message to the user
+    }
+
+    clerkUser = clerkConvertJSON(clerkUser)
+
+    const userIds = post?.Comments?.map((comment) => {
+      return comment.authorClerkId
     })
+    let users = clerkConvertJSON(
+      (await clerkClient.users.getUserList({ userIds })) || null
+    )
+
+    const commentsWithUserNames =
+      post?.Comments?.map((comment) => {
+        const currentUser = users?.find((u) => u.id === comment.authorClerkId)
+
+        return {
+          ...comment,
+          author: currentUser?.username,
+        }
+      }) || {}
+
+    postWithUpdatedComments = post
+
+    postWithUpdatedComments.Comments = commentsWithUserNames || {}
+    postWithUpdatedComments.protocolTimeLine =
+      postWithUpdatedComments.protocolTimeLine.map((ptl) => ({
+        ...ptl,
+        // date: new Date(ptl.date).toLocaleDateString('en-CA'),
+        date: formatDate(ptl.date),
+      }))
+    if (postWithUpdatedComments.Calculation === null) {
+      postWithUpdatedComments.Calculation = {}
+    } else {
+      postWithUpdatedComments.Calculation.startDate = formatDate(
+        postWithUpdatedComments?.Calculation?.startDate || new Date()
+      )
+    }
+    // postWithUpdatedComments.Calculation.startDate = new Date(
+    //   postWithUpdatedComments?.Calculation?.startDate || ''
+    // ).toLocaleDateString('en-CA')
+
+    postWithUpdatedComments.DesignElement =
+      postWithUpdatedComments?.DesignElement?.map((de) => {
+        try {
+          var content = JSON.parse(de.content)
+        } catch {}
+        return {
+          ...de,
+          content: content,
+        }
+      })
+  }
 
   return {
     props: {

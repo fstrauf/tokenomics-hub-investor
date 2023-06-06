@@ -1,9 +1,7 @@
 import { Field, useFormikContext } from 'formik'
 import { getActiveDesignPhase } from '../../lib/helper'
 import FormCardDemand from '../form/FormCardDemand'
-// import BreakdownBox from '../slugView/breakdown-box'
 import ResourceSection from './ResourceSection'
-// import TDFCalculator from './TDFCalculator'
 import Tiptap from '../TipTap'
 import ExampleSection from './ExampleSection'
 import { useEffect } from 'react'
@@ -12,13 +10,14 @@ import WalkthroughSection from './WalkthroughSection'
 import FormErrorMessage from '../form/FormErrorMessage'
 import { validateTierAccess } from '../../lib/helper'
 import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
+import DemandIntro from './DemandIntro'
+import Link from 'next/link'
 
 
 export default function TDF504({
   props,
   values,
   activePhase,
-  // setFieldValue,
   reviewRequiredFields,
 }) {
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
@@ -59,7 +58,7 @@ export default function TDF504({
         <></>
       ) : (
         <>
-          {/* <div className="absolute inset-0 flex items-center justify-center">
+          <div className="absolute inset-0 flex items-center justify-center">
             <div className="z-10 flex h-full w-full justify-center bg-gray-100 bg-opacity-80">
               <div className="z-9 m-auto mt-1 flex justify-center rounded-md bg-gradient-to-r from-dao-red to-dao-green p-1 shadow-md">
                 <div className="flex flex-col items-center rounded-lg bg-white p-4">
@@ -75,7 +74,7 @@ export default function TDF504({
                 </div>
               </div>
             </div>
-          </div> */}
+          </div>
         </>
       )}
       <label className="mb-2 block text-xs font-medium text-gray-900">

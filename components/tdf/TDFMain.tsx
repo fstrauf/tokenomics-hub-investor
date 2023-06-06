@@ -89,12 +89,12 @@ export default function TDFMain({ props, header = headerStatus.design }) {
       loading: () => <p>Loading</p>,
     }
   )
-  const TDF501 = dynamic(() => import('./TDF501'), {
-    loading: () => <p>Loading</p>,
-  })
-  const TDF502 = dynamic(() => import('./TDF502'), {
-    loading: () => <p>Loading</p>,
-  })
+  // const TDF501 = dynamic(() => import('./TDF501'), {
+  //   loading: () => <p>Loading</p>,
+  // })
+  // const TDF502 = dynamic(() => import('./TDF502'), {
+  //   loading: () => <p>Loading</p>,
+  // })
   const TDF503 = dynamic(() => import('./TDF503'), {
     loading: () => <p>Loading</p>,
   })
@@ -320,25 +320,25 @@ explanation`}
           <TDF404 props={props} values={values} activePhase={activePhase} />
         )
 
-      case 501:
-        return (
-          <TDF501
-            props={props}
-            values={values}
-            activePhase={activePhase}
-            setFieldValue={setFieldValue}
-          />
-        )
-      case 502:
-        return (
-          <TDF502
-            props={props}
-            values={values}
-            activePhase={activePhase}
-            setFieldValue={setFieldValue}
-            reviewRequiredFields={reviewRequiredFields}
-          />
-        )
+      // case 501:
+      //   return (
+      //     <TDF501
+      //       props={props}
+      //       values={values}
+      //       activePhase={activePhase}
+      //       setFieldValue={setFieldValue}
+      //     />
+      //   )
+      // case 502:
+      //   return (
+      //     <TDF502
+      //       props={props}
+      //       values={values}
+      //       activePhase={activePhase}
+      //       setFieldValue={setFieldValue}
+      //       reviewRequiredFields={reviewRequiredFields}
+      //     />
+      //   )
       case 503:
         return (
           <TDF503
