@@ -92,7 +92,7 @@ export function DemandBuilder(props) {
                   //     ?.CalculationTimeSeries?.length + 1 || 1,
                   months: props.field.value[props.mechanismIndex]
                   ?.CalculationTimeSeries?.length + 1 || 1,
-                  tokens: 10000000,
+                  tokens: 10000,
                   
                 })
               }
