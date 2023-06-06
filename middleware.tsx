@@ -45,7 +45,8 @@ function middleware(req: NextRequest) {
     return NextResponse.redirect(url)
   }
 
-  if (path === '/home' && hostname.startsWith('design.')) {
+  if (path === '/home') {
+    // if (path === '/home' && hostname.startsWith('design.')) {
     const newHost = hostname.replace('design.', '')
     // console.log("🚀 ~ file: middleware.tsx:20 ~ withClerkMiddleware ~ newHost:", newHost)
     url.host = newHost
