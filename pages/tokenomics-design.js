@@ -18,7 +18,6 @@ export default function TokenomicsDesignSpace() {
   return (
     <>
       <Header2 />
-
       <div className="m-auto">
         <div className="">
           <div className="flex w-full justify-between gap-5 bg-gradient-to-r from-dao-green to-dao-red py-5 pt-10">
