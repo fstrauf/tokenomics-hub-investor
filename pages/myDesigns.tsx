@@ -60,12 +60,12 @@ export default function MyDesigns({ posts }) {
               >
                 New Design
               </Link>
-              <button
+              {/* <button
                 onClick={handleNewDesign}
                 className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
               >
                 New Design Popup
-              </button>
+              </button> */}
             </div>
           </div>
           <GenericPopover isOpen={isOpen} setIsOpen={setIsOpen}>

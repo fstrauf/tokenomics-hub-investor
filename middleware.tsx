@@ -20,7 +20,7 @@ export default authMiddleware({
     '/privacy-policy',
     '/about-us',
     '/api/stripeHook',
-    '/api/stripeSync'
+    '/api/stripeSync',
   ],
 })
 
@@ -33,7 +33,9 @@ function middleware(req: NextRequest) {
   // console.log("🚀 ~ file: middleware.tsx:9 ~ withClerkMiddleware ~ path:", path)
 
   if (
-    path === '/myDesigns' &&
+    (path === '/myDesigns' ||
+      path === '/newDesign' ||
+      path === '/editDesign') &&
     !hostname.startsWith('design.') &&
     !hostname.startsWith('preview.')
   ) {
