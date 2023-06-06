@@ -54,9 +54,6 @@ export default function TDFMain({ props, header = headerStatus.design }) {
   const TDFComingSoon = dynamic(() => import('./TDFComingSoon'), {
     loading: () => <p>Loading</p>,
   })
-  const TDFComingSoon = dynamic(() => import('./TDFComingSoon'), {
-    loading: () => <p>Loading</p>,
-  })
   const TDFDynamicOneField = dynamic(() => import('./TDFDynamicOneField'), {
     loading: () => <p>Loading</p>,
   })

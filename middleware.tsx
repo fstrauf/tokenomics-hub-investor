@@ -1,6 +1,3 @@
-// import { withClerkMiddleware } from "@clerk/nextjs/server";
-import { NextResponse } from 'next/server'
-// import { withClerkMiddleware } from "@clerk/nextjs/server";
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import { authMiddleware } from '@clerk/nextjs/server'
@@ -57,9 +54,6 @@ function middleware(req: NextRequest) {
   return NextResponse.next()
 }
 
-// Stop Middleware running on static files
-// export const config = { matcher: '/((?!api/|_next/|_static/|examples/|[\\w-]+\\.\\w+).*)' }
 export const config = {
   matcher: ['/((?!.*\\..*|_next).*)', '/', '/(api|trpc)(.*)'],
 }
-// export const config = { matcher: '/((?!.*\\.).*)' }
