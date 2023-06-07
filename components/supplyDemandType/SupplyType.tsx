@@ -5,8 +5,21 @@ import { DemandBuilder, Functions, Spreadsheet } from '../generic/TabComponent'
 import GenericTab from '../generic/GenericTab'
 import FormSelectUtility from '../form/FormSelectUtility'
 import { supplyDemandType } from '../../lib/helper'
+import { ErrorBoundary } from 'react-error-boundary'
 const secondsPerMonth = 2628000
 const Tabs = [{ tab: 'Manual' }, { tab: 'Functions' }, { tab: 'Spreadsheets' }]
+
+function Fallback({ error, resetErrorBoundary }) {
+  // Call resetErrorBoundary() to reset the error boundary and retry the render.
+
+  return (
+    <div role="alert">
+      <p>Something went wrong:</p>
+      <pre style={{ color: 'red' }}>{error.message}</pre>
+    </div>
+  )
+}
+
 export function SupplyInternal(props) {
   return (
     <>
@@ -339,14 +352,21 @@ export function DemandUtility(props) {
         </label>
         <hr className="mt-5 mb-5"></hr>
         <div>
-          <GenericTab
-            tabs={Tabs}
-            panels={[
-              <DemandBuilder {...props}></DemandBuilder>,
-              <Functions></Functions>,
-              <Spreadsheet {...props}></Spreadsheet>,
-            ]}
-          ></GenericTab>
+          <ErrorBoundary
+            FallbackComponent={Fallback}
+            onReset={(details) => {
+              // Reset the state of your app so the error doesn't happen again
+            }}
+          >
+            <GenericTab
+              tabs={Tabs}
+              panels={[
+                <DemandBuilder {...props}></DemandBuilder>,
+                <Functions></Functions>,
+                <Spreadsheet {...props}></Spreadsheet>,
+              ]}
+            ></GenericTab>
+          </ErrorBoundary>
         </div>
       </div>
     </>
@@ -388,7 +408,7 @@ export function DemandMechanism(props) {
         className="custom-select mt-5"
         name={`${props.field.name}.${props.mechanismIndex}.incentiveTarget`}
         options={props.field.value.filter((option) => {
-         return option.supplyDemandType == supplyDemandType.supplyExternal
+          return option.supplyDemandType == supplyDemandType.supplyExternal
         })}
         defaultValue={''}
         component={FormSelectUtility}
@@ -406,14 +426,21 @@ export function DemandMechanism(props) {
         <hr className="mt-5 mb-5"></hr>
 
         <div>
-          <GenericTab
-            tabs={Tabs}
-            panels={[
-              <DemandBuilder {...props}></DemandBuilder>,
-              <Functions></Functions>,
-              <Spreadsheet {...props}></Spreadsheet>,
-            ]}
-          ></GenericTab>
+          <ErrorBoundary
+            FallbackComponent={Fallback}
+            onReset={(details) => {
+              // Reset the state of your app so the error doesn't happen again
+            }}
+          >
+            <GenericTab
+              tabs={Tabs}
+              panels={[
+                <DemandBuilder {...props}></DemandBuilder>,
+                <Functions></Functions>,
+                <Spreadsheet {...props}></Spreadsheet>,
+              ]}
+            ></GenericTab>
+          </ErrorBoundary>
         </div>
       </div>
     </>

@@ -52,8 +52,6 @@ export default async function handler(
 
     await jwt.authorize()
 
-    console.log('🚀 ~ file: createGSheet.ts:36 ~ jwt:', jwt)
-
     const sheetRes = await fetch(sheetBaseUrl, {
       method: 'POST',
       body: JSON.stringify({
