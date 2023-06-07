@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
-import prisma from '../../lib/prisma'
+// import prisma from '../../lib/prisma'
 // import prisma from '../../lib/prisma'
 
 type Data = {
@@ -29,8 +29,8 @@ export default async function handler(
     const { JWT } = require('google-auth-library')
     const { GoogleSpreadsheet } = require('google-spreadsheet')
     const sheetBaseUrl = `https://sheets.googleapis.com/v4/spreadsheets`
-    const copyTemplateSpreadsheetId =
-      '1vfGrJYzYRYyaqo6xvPA5vQSHPjd-KaJyQz4AaRn-Iag'
+    // const copyTemplateSpreadsheetId =
+    //   '1vfGrJYzYRYyaqo6xvPA5vQSHPjd-KaJyQz4AaRn-Iag'
 
     const GOOGLE_AUTH_SCOPES = [
       'https://www.googleapis.com/auth/spreadsheets',

@@ -5,7 +5,7 @@ import Drawer from '../slugView/Drawer'
 import MechanismCard from '../tdf/MechanismCard'
 import { validateTierAccess } from '../../lib/helper'
 import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
-import Link from 'next/link'
+// import Link from 'next/link'
 
 export const FormCardSupplyDemand = ({
   field,
@@ -145,7 +145,7 @@ export const FormCardSupplyDemand = ({
         name={field.name}
         render={(arrayHelpers) => (
           <>
-            <div key={87944} className="flex">
+            <div key={field.name} className="flex">
               <div className="w-1/2">
                 <div className="mb-1 flex gap-2">
                   {' '}

@@ -290,7 +290,10 @@ export function getDemandAreaData(
   supplyDemandTotals,
   startDate
 ) {
-  console.log("🚀 ~ file: helper.ts:293 ~ supplyDemandTotals:", supplyDemandTotals)
+  console.log(
+    '🚀 ~ file: helper.ts:293 ~ supplyDemandTotals:',
+    supplyDemandTotals
+  )
   if (calculationRow.CalculationTimeSeries !== undefined) {
     const inputData = calculationRow.CalculationTimeSeries || []
     console.log('🚀 ~ file: helper.ts:297 ~ inputData:', inputData)
@@ -691,19 +694,26 @@ export async function updateSubscriptionData(subscription: object) {
 
 export async function createSpreadSheet(data) {
   const body = data
+  console.log('🚀 ~ file: helper.ts:694 ~ createSpreadSheet ~ data:', data)
   try {
     const response = await fetch('/api/createGSheet', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
     })
-    const spreadsheetUrl = await response.text()
-    console.log(
-      '🚀 ~ file: helper.ts:553 ~ createSpreadSheet ~ spreadsheetUrl:',
-      spreadsheetUrl
-    )
-    // toast.success('Message sent', { position: 'bottom-right' })
-    return spreadsheetUrl
+    if (response?.ok) {
+      const spreadsheetUrl = await response.text()
+
+      console.log(
+        '🚀 ~ file: helper.ts:553 ~ createSpreadSheet ~ spreadsheetUrl:',
+        spreadsheetUrl
+      )
+      // toast.success('Message sent', { position: 'bottom-right' })
+      return spreadsheetUrl
+    } else {
+      throw response.text()
+    }
+
   } catch (error) {
     console.error(error)
     // toast.error('An error occurred', { position: 'bottom-right' })
