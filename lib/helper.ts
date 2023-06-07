@@ -717,7 +717,7 @@ export async function createSpreadSheet(data) {
   } catch (error) {
     console.error(error)
     // toast.error('An error occurred', { position: 'bottom-right' })
-    return error
+    throw error
   }
 }
 
