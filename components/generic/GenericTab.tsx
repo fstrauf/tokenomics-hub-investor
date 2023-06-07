@@ -38,6 +38,7 @@ export default function GenericTab({ tabs, panels }) {
                     'rounded-xl bg-white p-3',
                     'ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2'
                   )}
+                  key={panel}
                 >
                   {panel}
                 </Tab.Panel>

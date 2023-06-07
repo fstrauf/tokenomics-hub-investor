@@ -50,6 +50,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         Mechanism: {
           include: {
             CalculationTimeSeries: {},
+            mechanismType: {},
+            incentiveTarget: {},
           },
         },
         DesignElement: {},

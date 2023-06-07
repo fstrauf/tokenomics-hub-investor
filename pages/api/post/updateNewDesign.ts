@@ -45,9 +45,11 @@ export default async function handle(req, res) {
     }
 
     var incentiveTargets = {}
+    
     if (m?.incentiveTarget === undefined) {
     } else {
-      if (m?.incentiveTarget) {
+      if (m?.incentiveTarget.length>0) {
+        
         incentiveTargets = {
           connect: {
             id: inputFields?.id + '_' + stringToKey(m?.incentiveTarget?.name),
@@ -55,7 +57,6 @@ export default async function handle(req, res) {
         }
       }
     }
-    // if(m.isSink)
 
     const calculationTimeSeries =
       m?.CalculationTimeSeries?.map((cts) => ({

@@ -150,7 +150,7 @@ export enum designPhaseGrouping {
 }
 
 export const stringToKey = (name) => {
-  return name.trim().replace(/\s+/g, '-').toLowerCase().replace(/&/g, 'and')
+  return name?.trim().replace(/\s+/g, '-').toLowerCase().replace(/&/g, 'and') || name
 }
 
 export const getTotalStrength = (post) => {
