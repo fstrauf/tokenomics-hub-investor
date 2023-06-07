@@ -711,7 +711,7 @@ export async function createSpreadSheet(data) {
       // toast.success('Message sent', { position: 'bottom-right' })
       return spreadsheetUrl
     } else {
-      throw response.text()
+      throw await response.text()
     }
 
   } catch (error) {
