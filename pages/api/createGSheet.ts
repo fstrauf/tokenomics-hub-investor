@@ -59,14 +59,14 @@ export default async function handler(
         Authorization: `Bearer ${jwt.credentials.access_token}`,
       },
     })
-    const sheetData = await sheetRes.json()
-    // console.log('🚀 ~ file: createGSheet.ts:36 ~ sheetData:', sheetData)
+    const blankSpreadSheetData = await sheetRes.json()
+    // console.log('🚀 ~ file: createGSheet.ts:36 ~ blankSpreadSheetData:', blankSpreadSheetData)
 
     const promisesAccountAuth = []
 
     promisesAccountAuth.push(
       fetch(
-        `https://www.googleapis.com/drive/v3/files/${sheetData.spreadsheetId}/permissions`,
+        `https://www.googleapis.com/drive/v3/files/${blankSpreadSheetData.spreadsheetId}/permissions`,
         {
           method: 'POST',
           body: JSON.stringify({
@@ -81,20 +81,22 @@ export default async function handler(
       )
     )
 
-    const doc = new GoogleSpreadsheet(sheetData.spreadsheetId)
-    const copyTemplateDoc = new GoogleSpreadsheet(
+    const newSpreadSheet = new GoogleSpreadsheet(
+      blankSpreadSheetData.spreadsheetId
+    )
+    const templateSpreadSheet = new GoogleSpreadsheet(
       templateSheetUrl.toString().split('/')[5]
     )
 
     promisesAccountAuth.push(
-      doc.useServiceAccountAuth({
+      newSpreadSheet.useServiceAccountAuth({
         client_email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
         private_key: process.env.GOOGLE_PRIVATE_KEY,
       })
     )
 
     promisesAccountAuth.push(
-      copyTemplateDoc.useServiceAccountAuth({
+      templateSpreadSheet.useServiceAccountAuth({
         client_email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
         private_key: process.env.GOOGLE_PRIVATE_KEY,
       })
@@ -102,64 +104,79 @@ export default async function handler(
 
     await Promise.all(promisesAccountAuth)
 
-    const promisesLoadInfo = []
+    // const promisesLoadInfo = []
 
-    promisesLoadInfo.push(copyTemplateDoc.loadInfo())
-    promisesLoadInfo.push(doc.loadInfo())
-
-    await Promise.all(promisesLoadInfo)
-
-    const promisesCopy = []
+    promisesAccountAuth.push(templateSpreadSheet.loadInfo())
+    promisesAccountAuth.push(newSpreadSheet.loadInfo())
+    await Promise.all(promisesAccountAuth)
 
     for (
       let counter = 0;
-      counter < copyTemplateDoc.sheetsByIndex.length;
+      counter < templateSpreadSheet.sheetsByIndex.length;
       counter++
     ) {
-      const sheet = copyTemplateDoc.sheetsByIndex[counter]
+      const sheet = templateSpreadSheet.sheetsByIndex[counter]
 
       if (counter <= 1) {
-        await sheet.copyToSpreadsheet(sheetData.spreadsheetId)
+        await sheet.copyToSpreadsheet(blankSpreadSheetData.spreadsheetId)
 
         if (sheet.title === 'TimeSeries') {
-          await doc.loadInfo()
+          await newSpreadSheet.loadInfo()
 
-          let docSheet = doc.sheetsByIndex[doc.sheetsByIndex.length - 1]
+          let docSheet =
+            newSpreadSheet.sheetsByIndex[
+              newSpreadSheet.sheetsByIndex.length - 1
+            ]
 
           await docSheet.updateProperties({ title: sheet.title })
         }
       } else {
-        promisesCopy.push(sheet.copyToSpreadsheet(sheetData.spreadsheetId))
+        sheet.copyToSpreadsheet(blankSpreadSheetData.spreadsheetId)
       }
     }
 
-    if (promisesCopy.length) await Promise.all(promisesCopy)
+    // if (promisesCopy.length) await Promise.all(promisesCopy)
 
-    let docFirstSheet = doc.sheetsByIndex[0]
+    let docFirstSheet = newSpreadSheet.sheetsByIndex[0]
     await docFirstSheet.delete()
 
-    await doc.loadInfo()
+    await newSpreadSheet.loadInfo()
 
     for (
       let sheetIndex = 0;
-      sheetIndex < doc.sheetsByIndex.length;
+      sheetIndex < newSpreadSheet.sheetsByIndex.length;
       sheetIndex++
     ) {
-      const sheet = doc.sheetsByIndex[sheetIndex]
-      const templateSheet = copyTemplateDoc.sheetsByIndex[sheetIndex]
+      const sheet = newSpreadSheet.sheetsByIndex[sheetIndex]
+      const templateSheet = templateSpreadSheet.sheetsByIndex[sheetIndex]
 
       sheet.updateProperties({ title: templateSheet.title })
     }
 
-    await doc.loadInfo()
-    const sheet = doc.sheetsByIndex[1]
-    await sheet.clearRows()
+    await newSpreadSheet.loadInfo()
+    const timeSeriesSheet = newSpreadSheet.sheetsByIndex[1]
 
-    const updatedData = updateData(data)
+    await timeSeriesSheet.loadCells('A3:E')
+    for (let i = 0; i < data.length; i++) {
+      timeSeriesSheet.getCellByA1(`B${i + 3}`).value =
+        data[i]['Circulating supply']
+      if (timeSeriesSheet.getCellByA1(`C${i + 3}`).formula) {
+        //handle cross referencing sheets
+        timeSeriesSheet.getCellByA1(`C${i + 3}`).formula =
+          timeSeriesSheet.getCellByA1(`C${i + 3}`).formula
+      }
+    }
 
-    await sheet.addRows(updatedData)
+    await timeSeriesSheet.saveUpdatedCells()
+    // await sheet.clearRows()
 
-    return res.status(200).json({ message: sheetData?.spreadsheetUrl })
+    // const updatedData = updateData(data)
+
+    // await sheet.addRows(updatedData)
+
+    return res
+      .status(200)
+      .json({ message: blankSpreadSheetData?.spreadsheetUrl })
   } catch (error) {
     console.log('error = ', error)
     return res.status(400).json({
