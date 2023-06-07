@@ -1,38 +1,24 @@
 import '../styles/index.css'
 import { GoogleAnalytics } from 'nextjs-google-analytics'
 import Head from 'next/head'
-import {
-  ClerkProvider,
-  // SignedIn,
-  // SignedOut,
-  // RedirectToSignIn,
-} from '@clerk/nextjs'
-import { useRouter } from 'next/router'
+import { ClerkProvider } from '@clerk/nextjs'
 import { useEffect } from 'react'
 import TagManager from 'react-gtm-module'
+import Router from 'next/router';
+import NProgress from 'nprogress'; //nprogress module
+import '../styles/nProgress.css'; 
 
-// const publicPages = [
-//   '/',
-//   '/thub',
-//   '/terms',
-//   '/calculator',
-//   '/posts/[id]',
-//   '/authors/[slug]',
-//   '/book-an-expert',
-//   '/glossary',
-//   '/tokenomics-design',
-//   '/[id]',
-//   '/privacy-policy',
-//   '/about-us'
-// ]
+Router.events.on('routeChangeStart', () => NProgress.start()); 
+Router.events.on('routeChangeComplete', () => NProgress.done()); 
+Router.events.on('routeChangeError', () => NProgress.done());
+NProgress.configure({ showSpinner: false })
 
 function MyApp({ Component, pageProps }) {
-  const { pathname } = useRouter()
+
 
   useEffect(() => {
     TagManager.initialize({ gtmId: 'G-3MWJJK74SD' })
   }, [])
-  // const isPublicPage = publicPages.includes(pathname)
   return (
     <>
       <Head>
@@ -58,18 +44,7 @@ function MyApp({ Component, pageProps }) {
       </Head>
       <GoogleAnalytics strategy="lazyOnload" trackPageViews />
       <ClerkProvider {...pageProps}>
-        {/* {isPublicPage ? ( */}
-          <Component {...pageProps} />
-        {/* // ) : (
-        //   <>
-        //     <SignedIn>
-        //       <Component {...pageProps} />
-        //     </SignedIn>
-        //     <SignedOut>
-        //       <RedirectToSignIn />
-        //     </SignedOut>
-        //   </>
-        // )} */}
+        <Component {...pageProps} />
       </ClerkProvider>
     </>
   )

@@ -6,6 +6,7 @@ import LiteYouTubeEmbed from 'react-lite-youtube-embed'
 import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css'
 import FaqSection from '../components/static/TDSfaqSection'
 import { headerStatus } from '../lib/helper'
+import Loader from '../components/generic/Loader'
 
 export default function TokenomicsDesignSpace() {
   const designLink = (

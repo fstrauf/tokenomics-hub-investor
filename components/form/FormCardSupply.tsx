@@ -2,7 +2,6 @@ import { FieldArray } from 'formik'
 import React, { useState } from 'react'
 import XMarkIcon from '../../public/svg/xmarkicon'
 import Drawer from '../slugView/Drawer'
-// import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
 import MechanismCardSupply from '../tdf/MechanismCardSupply'
 import { supplyDemandType } from '../../lib/helper'
 
@@ -11,10 +10,7 @@ export const FormCardSupplyDemand = ({
   values,
   mechanismTemplates,
   setFieldValue,
-  // subscription,
 }) => {
-  // const { user } = useUser()
-  // const admin = user?.publicMetadata?.admin || false
   let [mechanismIndex, setMechanismIndex] = useState(0)
   const defaultMechanism = {
     id: '',
@@ -50,6 +46,7 @@ export const FormCardSupplyDemand = ({
 
   const [isOpen, setIsOpen] = useState(false)
   const [selectedTemplate, setSelectedTemplate] = useState(defaultMechanism)
+  const [percentageExceeds, setPercentageExceeds] = useState(false)
 
   function handleChange(e) {
     if (e.target.value === 'none') {
@@ -100,21 +97,13 @@ export const FormCardSupplyDemand = ({
         {' '}
         <div>
           <div className="flex">
-            {/* {input?.isSink ? (
-              <></>
-            ) : ( */}
               <div
                 className="mr-2 h-5 w-5 bg-slate-600"
                 style={{ background: input.color }}
               ></div>
-            {/* )} */}
             <p className="">{input.name}</p>
           </div>
-          {/* {input.isSink ? (
-            <></>
-          ) : ( */}
             <p className="mt-2">{input.percentageAllocation} %</p>
-          {/* )} */}
         </div>
         <div className="flex h-7 border-t-2">
           {' '}
@@ -137,8 +126,22 @@ export const FormCardSupplyDemand = ({
     )
   }
 
+  const getTotalPercent = () => {
+    let ntotalPercent = 0
+    field.value.forEach((data) => {
+      ntotalPercent += data.percentageAllocation
+    })
+    if(ntotalPercent>100){
+      setPercentageExceeds(true)
+    } else{
+      setPercentageExceeds(false)
+    }
+    return Number(ntotalPercent)
+  }
+
   return (
-    <div className="relative overflow-x-auto">
+    <div className="relative overflow-x-auto mt-10">
+      
       <Drawer isOpen={isOpen} setIsOpen={setIsOpen}>
         {isOpen && (
           <MechanismCardSupply
@@ -153,7 +156,9 @@ export const FormCardSupplyDemand = ({
         name={field.name}
         render={(arrayHelpers) => (
           <>
-            <div key={87944} className="mt-10 flex">
+          <div className={`flex py-5 font-light ${percentageExceeds ? 'text-red-600' : ''}`}><p className='font-bold'>{getTotalPercent()} / 100%</p></div>
+          
+            <div key={87944} className="flex">
               <div className="w-1/2">
                 <div className="mb-1 flex gap-3">
                   {' '}
@@ -174,7 +179,6 @@ export const FormCardSupplyDemand = ({
                             <option
                               key={mt.id}
                               value={mt.id}
-                              // label={mt.name}
                             >
                               {mt.name}
                             </option>
@@ -237,7 +241,6 @@ export const FormCardSupplyDemand = ({
                             <option
                               key={mt.id}
                               value={mt.id}
-                              // label={mt.name}
                             >
                               {mt.name}
                             </option>

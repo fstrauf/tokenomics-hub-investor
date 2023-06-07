@@ -71,6 +71,7 @@
     "next": "^13.1.1",
     "next-superjson-plugin": "^0.5.2",
     "nextjs-google-analytics": "^2.2.0",
+    "nprogress": "^0.2.0",
     "openai": "^3.2.1",
     "prosemirror-commands": "^1.5.0",
     "prosemirror-dropcursor": "^1.6.1",

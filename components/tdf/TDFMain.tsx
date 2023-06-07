@@ -20,7 +20,7 @@ export default function TDFMain({ props, header = headerStatus.design }) {
   const [activePhase, setActivePhase] = useState(
     router.query.phase ? +router.query.phase : 503
   )
-  const [postId, setPostId] = useState(props.post.id || '')
+  // const [postId, setPostId] = useState(props?.post?.id || '')
   const [isRequestReviewOpen, setIsRequestReviewOpen] = useState(false)
   const initialValues = props.post
   const [reviewRequiredFields, setreviewRequiredFields] = useState({})
@@ -54,6 +54,9 @@ export default function TDFMain({ props, header = headerStatus.design }) {
     loading: () => <p>Loading</p>,
   })
   const TDFDynamicOneField = dynamic(() => import('./TDFDynamicOneField'), {
+    loading: () => <p>Loading</p>,
+  })
+  const TDFNoField = dynamic(() => import('./TDFNoField'), {
     loading: () => <p>Loading</p>,
   })
   const AuditDesignHelpContent = dynamic(
@@ -90,12 +93,6 @@ export default function TDFMain({ props, header = headerStatus.design }) {
       loading: () => <p>Loading</p>,
     }
   )
-  // const TDF501 = dynamic(() => import('./TDF501'), {
-  //   loading: () => <p>Loading</p>,
-  // })
-  // const TDF502 = dynamic(() => import('./TDF502'), {
-  //   loading: () => <p>Loading</p>,
-  // })
   const TDF503 = dynamic(() => import('./TDF503'), {
     loading: () => <p>Loading</p>,
   })
@@ -126,32 +123,32 @@ export default function TDFMain({ props, header = headerStatus.design }) {
   const submitData = async (values, { setSubmitting }) => {
     const body = { values }
     console.log('🚀 ~ file: TDFMain.tsx:121 ~ submitData ~ body:', body)
-    if (values?.id === '') {
-      try {
-        const response = await fetch('/api/post/newDesign', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(body),
-        })
+    // if (values?.id === '') {
+    //   try {
+    //     const response = await fetch('/api/post/newDesign', {
+    //       method: 'POST',
+    //       headers: { 'Content-Type': 'application/json' },
+    //       body: JSON.stringify(body),
+    //     })
 
-        if (!response.ok) {
-          const error = await response.text()
-          toast.error(JSON.parse(error).error, { position: 'bottom-right' })
-          throw new Error(error)
-        } else {
-          const id = await response.text()
-          toast.success('Changes auto-saved ', {
-            position: 'bottom-right',
-          })
-          setPostId(JSON.parse(id).id)
-          router.push(`/editDesign/${JSON.parse(id).id}`)
-        }
+    //     if (!response.ok) {
+    //       const error = await response.text()
+    //       toast.error(JSON.parse(error).error, { position: 'bottom-right' })
+    //       throw new Error(error)
+    //     } else {
+    //       const id = await response.text()
+    //       toast.success('Changes auto-saved ', {
+    //         position: 'bottom-right',
+    //       })
+    //       setPostId(JSON.parse(id).id)
+    //       router.push(`/editDesign/${JSON.parse(id).id}`)
+    //     }
 
-        setSubmitting(false)
-      } catch (error) {
-        console.error(error)
-      }
-    } else {
+    //     setSubmitting(false)
+    //   } catch (error) {
+    //     console.error(error)
+    //   }
+    // } else {
       try {
         const response = await fetch('/api/post/updateNewDesign', {
           method: 'POST',
@@ -170,7 +167,7 @@ export default function TDFMain({ props, header = headerStatus.design }) {
       } catch (error) {
         console.error(error)
       }
-    }
+    // }
   }
 
   function renderSwitch(values, setFieldValue) {
@@ -266,20 +263,16 @@ explanation`}
         )
       case 602:
         return (
-          <TDFDynamicOneField
+          <TDFNoField
             props={props}
-            values={values}
             activePhase={activePhase}
-            placeholder="Token Launch"
           />
         )
       case 603:
         return (
-          <TDFDynamicOneField
+          <TDFNoField
             props={props}
-            values={values}
             activePhase={activePhase}
-            placeholder="Valuation"
           />
         )
       case 105:
@@ -319,26 +312,6 @@ explanation`}
         return (
           <TDF404 props={props} values={values} activePhase={activePhase} />
         )
-
-      // case 501:
-      //   return (
-      //     <TDF501
-      //       props={props}
-      //       values={values}
-      //       activePhase={activePhase}
-      //       setFieldValue={setFieldValue}
-      //     />
-      //   )
-      // case 502:
-      //   return (
-      //     <TDF502
-      //       props={props}
-      //       values={values}
-      //       activePhase={activePhase}
-      //       setFieldValue={setFieldValue}
-      //       reviewRequiredFields={reviewRequiredFields}
-      //     />
-      //   )
       case 503:
         return (
           <TDF503
@@ -417,7 +390,7 @@ explanation`}
 
   const previewAndSave = async (submitForm) => {
     submitForm()
-    router.push(`/postPreview/${postId}`)
+    router.push(`/postPreview/${props?.post?.id}`)
   }
 
   return (
@@ -501,7 +474,7 @@ explanation`}
                     )}
                   />
                   <FormId
-                    postId={postId}
+                    postId={props?.post?.id}
                     type="text"
                     name="id"
                     className="hidden w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"
