@@ -124,6 +124,7 @@ const Index: React.FC<Props> = (props) => {
                     src="/demandCalcHalf.png"
                     className="rounded-md shadow-xl"
                     alt="Token Editor Flow"
+                    priority={true}
                   />
                 </div>
                 {/* </div> */}
