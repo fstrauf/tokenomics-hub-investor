@@ -53,16 +53,16 @@ export async function downloadSpreadsheet(
     setName('Creating Spreadsheet..')
     setDisabled(true)
     let aSpreadSheetData = [
-      {
-        Months: "Don't Change - Imported from Tokenomics Design Space",
-        'Circulating supply':
-          "Don't Change - Imported from Tokenomics Design Space",
-        'Expected Token Demand':
-          "Don't Change - Imported from Tokenomics Design Space",
-        'Month Count': "Don't Change - Imported from Tokenomics Design Space",
-        'Rewards Type': 'Please select the relevant tab',
-        'Template Type': "Don't Change - Imported from Tokenomics Design Space",
-      },
+      // {
+      //   Months: "Don't Change - Imported from Tokenomics Design Space",
+      //   'Circulating supply':
+      //     "Don't Change - Imported from Tokenomics Design Space",
+      //   'Expected Token Demand':
+      //     "Don't Change - Imported from Tokenomics Design Space",
+      //   'Month Count': "Don't Change - Imported from Tokenomics Design Space",
+      //   'Rewards Type': 'Please select the relevant tab',
+      //   'Template Type': "Don't Change - Imported from Tokenomics Design Space",
+      // },
     ]
 
     for (let [index, data] of aSpreadsheetData.entries()) {
