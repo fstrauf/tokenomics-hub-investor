@@ -692,26 +692,36 @@ export async function updateSubscriptionData(subscription: object) {
   })
 }
 
-export async function createSpreadSheet(data) {
-  const body = data
-  console.log('🚀 ~ file: helper.ts:694 ~ createSpreadSheet ~ data:', data)
+export async function createSpreadSheet({templateSheetUrl,title,data}) {
+  const createBody = {title, templateSheetUrl}
   try {
-    const response = await fetch('/api/createGSheet', {
+    const responseCreate = await fetch('/api/createGSheet', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body),
+      body: JSON.stringify(createBody),
     })
-    if (response?.ok) {
-      const spreadsheetUrl = await response.text()
+    if (responseCreate?.ok) {
+      const blankSpreadSheetId = JSON.parse(await responseCreate.text())?.message
+      console.log("🚀 ~ file: helper.ts:706 ~ createSpreadSheet ~ blankSpreadSheetId:", blankSpreadSheetId)
 
-      console.log(
-        '🚀 ~ file: helper.ts:553 ~ createSpreadSheet ~ spreadsheetUrl:',
-        spreadsheetUrl
-      )
-      // toast.success('Message sent', { position: 'bottom-right' })
-      return spreadsheetUrl
+      let fillBody = {blankSpreadSheetId, templateSheetUrl, data}
+      const responseFill = await fetch('/api/fillGSheet', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(fillBody),
+      })
+      if (responseFill?.ok) {
+        const spreadsheetUrl = await responseFill.text()
+        console.log("🚀 ~ file: helper.ts:715 ~ createSpreadSheet ~ spreadsheetUrl:", spreadsheetUrl)
+
+        return spreadsheetUrl
+      } else {
+        throw await responseCreate.text()
+      }
+
+      // return spreadsheetUrl
     } else {
-      throw await response.text()
+      throw await responseCreate.text()
     }
 
   } catch (error) {
@@ -719,6 +729,7 @@ export async function createSpreadSheet(data) {
     // toast.error('An error occurred', { position: 'bottom-right' })
     throw error
   }
+  
 }
 
 export async function uploadSpreadsheet(data) {
