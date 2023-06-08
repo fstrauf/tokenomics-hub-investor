@@ -4,18 +4,18 @@ type Data = {
   message: string
 }
 
-function updateData(data: object[]) {
-  const updatedData = data.map((element, index) => {
-    if (index === 0) return { ...element }
+// function updateData(data: object[]) {
+//   const updatedData = data.map((element, index) => {
+//     if (index === 0) return { ...element }
 
-    let rowNumber = index + 2 // Start from 3rd row
-    const formulaString = `=IF($E$3="Staking + Normal Rewards Calc",'Staking + Normal Rewards Calc'!C${rowNumber},IF($E$3="Staking + Revenue Share Rewards Calc",'Staking + Revenue Share Rewards Calc'!C${rowNumber},IF($E$3="Staking + Vesting Rewards Calc",'Staking + Vesting Rewards Calc'!C${rowNumber},0)))`
+//     let rowNumber = index + 2 // Start from 3rd row
+//     const formulaString = `=IF($E$3="Staking + Normal Rewards Calc",'Staking + Normal Rewards Calc'!C${rowNumber},IF($E$3="Staking + Revenue Share Rewards Calc",'Staking + Revenue Share Rewards Calc'!C${rowNumber},IF($E$3="Staking + Vesting Rewards Calc",'Staking + Vesting Rewards Calc'!C${rowNumber},0)))`
 
-    return { ...element, 'Expected Token Demand': formulaString }
-  })
+//     return { ...element, 'Expected Token Demand': formulaString }
+//   })
 
-  return updatedData
-}
+//   return updatedData
+// }
 
 export default async function handler(
   req: NextApiRequest,
@@ -102,7 +102,7 @@ export default async function handler(
       })
     )
 
-    await Promise.all(promisesAccountAuth)
+    // await Promise.all(promisesAccountAuth)
 
     // const promisesLoadInfo = []
 
@@ -110,17 +110,19 @@ export default async function handler(
     promisesAccountAuth.push(newSpreadSheet.loadInfo())
     await Promise.all(promisesAccountAuth)
 
+    //here is where i could cut off and call a second function
+
     for (
       let counter = 0;
       counter < templateSpreadSheet.sheetsByIndex.length;
       counter++
     ) {
-      const sheet = templateSpreadSheet.sheetsByIndex[counter]
+      const templateSheet = templateSpreadSheet.sheetsByIndex[counter]
 
       if (counter <= 1) {
-        await sheet.copyToSpreadsheet(blankSpreadSheetData.spreadsheetId)
+        await templateSheet.copyToSpreadsheet(blankSpreadSheetData.spreadsheetId)
 
-        if (sheet.title === 'TimeSeries') {
+        if (templateSheet.title === 'TimeSeries') {
           await newSpreadSheet.loadInfo()
 
           let docSheet =
@@ -128,10 +130,10 @@ export default async function handler(
               newSpreadSheet.sheetsByIndex.length - 1
             ]
 
-          await docSheet.updateProperties({ title: sheet.title })
+          await docSheet.updateProperties({ title: templateSheet.title })
         }
       } else {
-        sheet.copyToSpreadsheet(blankSpreadSheetData.spreadsheetId)
+        templateSheet.copyToSpreadsheet(blankSpreadSheetData.spreadsheetId)
       }
     }
 
@@ -147,10 +149,10 @@ export default async function handler(
       sheetIndex < newSpreadSheet.sheetsByIndex.length;
       sheetIndex++
     ) {
-      const sheet = newSpreadSheet.sheetsByIndex[sheetIndex]
+      const newSheet = newSpreadSheet.sheetsByIndex[sheetIndex]
       const templateSheet = templateSpreadSheet.sheetsByIndex[sheetIndex]
 
-      sheet.updateProperties({ title: templateSheet.title })
+      newSheet.updateProperties({ title: templateSheet.title })
     }
 
     await newSpreadSheet.loadInfo()
@@ -168,11 +170,7 @@ export default async function handler(
     }
 
     await timeSeriesSheet.saveUpdatedCells()
-    // await sheet.clearRows()
 
-    // const updatedData = updateData(data)
-
-    // await sheet.addRows(updatedData)
 
     return res
       .status(200)
