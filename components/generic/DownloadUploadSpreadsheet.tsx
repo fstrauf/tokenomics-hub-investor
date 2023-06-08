@@ -10,7 +10,7 @@ export async function downloadSpreadsheet(
   setUrl: { (value: SetStateAction<string>): void; (arg0: any): void },
   setDisabled: { (value: SetStateAction<boolean>): void; (arg0: boolean): void }
 ) {
-  console.log("🚀 ~ file: DownloadUploadSpreadsheet.tsx:13 ~ values:", values)
+  // console.log("🚀 ~ file: DownloadUploadSpreadsheet.tsx:13 ~ values:", values)
   try {
     //console.log("field inside download = ====",field.value[mechanismIndex].mechanismType.mechanismTypeId)
 
@@ -25,20 +25,20 @@ export async function downloadSpreadsheet(
     }
 
     let aSpreadsheetData: any = values.Calculation.areaData.supplyDemandTotals
-    console.log(
-      '🚀 ~ file: MechanismCardDemand.tsx:56 ~ downloadSpreadsheet ~ aSpreadsheetData:',
-      aSpreadsheetData[0].supply
-    )
+    // console.log(
+    //   '🚀 ~ file: MechanismCardDemand.tsx:56 ~ downloadSpreadsheet ~ aSpreadsheetData:',
+    //   aSpreadsheetData[0].supply
+    // )
     if ('supply' in aSpreadsheetData[0] == false) {
       throw 'No Supply Found'
     }
     // if ('demand' in aSpreadsheetData[0] == false) {
     //   throw 'No Demand Found'
     // }
-    console.log(
-      '🚀 ~ file: DownloadUploadSpreadsheet.tsx:38 ~ field.value[mechanismIndex]:',
-      field.value[mechanismIndex]
-    )
+    // console.log(
+    //   '🚀 ~ file: DownloadUploadSpreadsheet.tsx:38 ~ field.value[mechanismIndex]:',
+    //   field.value[mechanismIndex]
+    // )
     if ('mechanismType' in field.value[mechanismIndex] == false) {
       return toast.error('No Utility or Mechanism assigned', {
         position: 'bottom-right',
@@ -85,6 +85,8 @@ export async function downloadSpreadsheet(
     })
     if (JSON.parse(spreadSheetUrl).message == 'Invalid Template')
       throw JSON.parse(spreadSheetUrl).message
+
+      toast.success('Spreadsheet Created, copy the link to edit your data', { position: 'bottom-right' })
     setUrl(JSON.parse(spreadSheetUrl).message)
     setName('Create Spreadsheet')
     setDisabled(false)
@@ -116,7 +118,7 @@ export async function uploadSheet(
     // }
     setDisabled(true)
     setName_('Uploading sheet...')
-    console.log("🚀 ~ file: DownloadUploadSpreadsheet.tsx:124 ~ field.value[mechanismIndex]:", field.value[mechanismIndex])
+    // console.log("🚀 ~ file: DownloadUploadSpreadsheet.tsx:124 ~ field.value[mechanismIndex]:", field.value[mechanismIndex])
     let updateResponse = JSON.parse(
       await uploadSpreadsheet({
         mechanismTypeId: field.value[mechanismIndex]?.mechanismType?.id,
@@ -124,10 +126,10 @@ export async function uploadSheet(
       })
         
     )
-    console.log(
-      '🚀 ~ file: MechanismCardDemand.tsx:113 ~ uploadSheet ~ updateResponse:',
-      updateResponse
-    )
+    // console.log(
+    //   '🚀 ~ file: MechanismCardDemand.tsx:113 ~ uploadSheet ~ updateResponse:',
+    //   updateResponse
+    // )
 
     if (updateResponse) {
       try {
@@ -151,7 +153,7 @@ export async function uploadSheet(
           `${field.name}.${mechanismIndex}.CalculationTimeSeries`,
           calculationTimeSeries
         )
-        toast.success('Upload successfull', { position: 'bottom-right' })
+        toast.success('Upload successful', { position: 'bottom-right' })
       } catch (error) {
         console.log(
           '🚀 ~ file: MechanismCardDemand.tsx:136 ~ uploadSheet ~ error:',
