@@ -280,7 +280,7 @@ export function getAreaData(months, calculationRows, totalSupply, startDate) {
       // console.log("🚀 ~ file: helper.ts:284 ~ calculationRows?.forEach ~ props.supplyDemandTotals:", props.supplyDemandTotals)
     }
   })
-  console.log('🚀 ~ file: helper.ts:253 ~ getAreaData ~ props:', props)
+  // console.log('🚀 ~ file: helper.ts:253 ~ getAreaData ~ props:', props)
   return props
 }
 
@@ -290,23 +290,23 @@ export function getDemandAreaData(
   supplyDemandTotals,
   startDate
 ) {
-  console.log(
-    '🚀 ~ file: helper.ts:293 ~ supplyDemandTotals:',
-    supplyDemandTotals
-  )
+  // console.log(
+  //   '🚀 ~ file: helper.ts:293 ~ supplyDemandTotals:',
+  //   supplyDemandTotals
+  // )
   if (calculationRow.CalculationTimeSeries !== undefined) {
     const inputData = calculationRow.CalculationTimeSeries || []
-    console.log('🚀 ~ file: helper.ts:297 ~ inputData:', inputData)
+    // console.log('🚀 ~ file: helper.ts:297 ~ inputData:', inputData)
     const sortedMonthsInput = inputData.sort((a, b) => a.months - b.months)
 
     for (let i = 0; i < months; i++) {
       let monthExists = false
       for (const input of sortedMonthsInput) {
         if (input.months === i + 1) {
-          console.log(
-            '🚀 ~ file: helper.ts:306 ~ supplyDemandTotals[i]:',
-            supplyDemandTotals[i]
-          )
+          // console.log(
+          //   '🚀 ~ file: helper.ts:306 ~ supplyDemandTotals[i]:',
+          //   supplyDemandTotals[i]
+          // )
           if (supplyDemandTotals[i] === undefined) {
             supplyDemandTotals[i] = {
               date: new Date(startDate).setMonth(
@@ -339,10 +339,10 @@ export function getDemandAreaData(
           supplyDemandTotals[i].demand = 0
         }
       }
-      console.log(
-        '🚀 ~ file: helper.ts:306 ~ supplyDemandTotals[i]:',
-        supplyDemandTotals[i]
-      )
+      // console.log(
+      //   '🚀 ~ file: helper.ts:306 ~ supplyDemandTotals[i]:',
+      //   supplyDemandTotals[i]
+      // )
     }
   }
 }

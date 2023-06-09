@@ -10,7 +10,7 @@ export default async function handle(req, res) {
     },
     create: {
       authorClerkId: subscription.authorClerkId,
-      stripeCustomerId: '',
+      // stripeCustomerId: '',
       tier: 'inactive',
       exampleSectionCounter: subscription.exampleSectionCounter,
       exampleViewStart: subscription.exampleViewStart

@@ -76,7 +76,7 @@ model Tag {
 
 model Subscriptions {
   authorClerkId         String    @id
-  stripeCustomerId      String    @unique
+  stripeCustomerId      String    @unique @default(cuid())
   tier                  String
   exampleSectionCounter Int?
   exampleViewStart      DateTime?
