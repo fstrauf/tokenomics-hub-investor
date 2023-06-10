@@ -235,10 +235,14 @@ export function getMonthEpochAreaData(
         supply: Number(
           categoryLine[calculationRow.name || calculationRow.category]
         ),
+        demand: 0,
       }
     } else {
       if (supplyDemandTotals[i].supply === undefined) {
         supplyDemandTotals[i].supply = 0
+      }
+      if (supplyDemandTotals[i].demand === undefined) {
+        supplyDemandTotals[i].demand = 0
       }
       supplyDemandTotals[i].supply += Number(
         categoryLine[calculationRow.name || calculationRow.category]
@@ -280,7 +284,7 @@ export function getAreaData(months, calculationRows, totalSupply, startDate) {
       // console.log("🚀 ~ file: helper.ts:284 ~ calculationRows?.forEach ~ props.supplyDemandTotals:", props.supplyDemandTotals)
     }
   })
-  // console.log('🚀 ~ file: helper.ts:253 ~ getAreaData ~ props:', props)
+  console.log('🚀 ~ file: helper.ts:253 ~ getAreaData ~ props:', props)
   return props
 }
 
@@ -314,10 +318,14 @@ export function getDemandAreaData(
               ),
               demand: input.tokens,
               months: input.months,
+              supply: 0
             }
           } else {
             if (supplyDemandTotals[i].demand === undefined) {
               supplyDemandTotals[i].demand = 0
+            }
+            if (supplyDemandTotals[i].supply === undefined) {
+              supplyDemandTotals[i].supply = 0
             }
             supplyDemandTotals[i].demand += Number(input.tokens)
           }
@@ -418,10 +426,14 @@ export function getLinearAreaData(
         supply: Number(
           categoryLine[calculationRow.name || calculationRow.category]
         ),
+        demand: 0,
       }
     } else {
       if (supplyDemandTotals[i].supply === undefined) {
         supplyDemandTotals[i].supply = 0
+      }
+      if (supplyDemandTotals[i].demand === undefined) {
+        supplyDemandTotals[i].demand = 0
       }
       supplyDemandTotals[i].supply += Number(
         categoryLine[calculationRow.name || calculationRow.category]
