@@ -4,7 +4,7 @@ import FormSelectUser from '../form/FormSelectUser'
 // import FormTipTap from '../form/FormTipTap'
 import * as duration from 'dayjs/plugin/duration'
 import * as dayjs from 'dayjs'
-import { shortBigNumber, supplyDemandType } from '../../lib/helper'
+import { supplyDemandType } from '../../lib/helper'
 import { SupplyInternal, SupplyExternal } from '../supplyDemandType/SupplyType'
 
 export const MechanismCardSupply = ({
