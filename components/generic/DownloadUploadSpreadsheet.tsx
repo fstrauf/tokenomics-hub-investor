@@ -77,7 +77,6 @@ export async function downloadSpreadsheet(
       }
       aSpreadSheetData.push(obj)
     }
-    console.log('pushed data = ', aSpreadSheetData)
     let spreadSheetUrl = await createSpreadSheet({
       templateSheetUrl: field.value[mechanismIndex].mechanismType.templateSheet,
       title: field.value[mechanismIndex].name.replace(/[0-9]/g, '').trim(),
@@ -126,10 +125,10 @@ export async function uploadSheet(
       })
         
     )
-    // console.log(
-    //   '🚀 ~ file: MechanismCardDemand.tsx:113 ~ uploadSheet ~ updateResponse:',
-    //   updateResponse
-    // )
+    console.log(
+      '🚀 ~ file: MechanismCardDemand.tsx:113 ~ uploadSheet ~ updateResponse:',
+      updateResponse
+    )
 
     if (updateResponse) {
       try {
@@ -140,9 +139,9 @@ export async function uploadSheet(
           (ur: { [x: string]: string }) => ({
             months: Number(ur['Months']),
             tokens: parseInt(
-              ur['Expected Token Demand'].replace(/,/g, '').split('.')[0],
+              ur['Expected Token Demand']?.replace(/,/g, '').split('.')[0],
               10
-            ),
+            ) || 0,
           })
         )
         console.log('calculation time series = ', calculationTimeSeries)
