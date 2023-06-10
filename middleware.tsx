@@ -1,6 +1,9 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import { authMiddleware } from '@clerk/nextjs/server'
+import publicRoutesFromFile from './publicRoutes.json';
+
+// const privatePages = ['/myDesigns']
 
 export default authMiddleware({
   beforeAuth: (req) => {
@@ -16,27 +19,37 @@ export default authMiddleware({
     '/book-an-expert',
     '/glossary',
     '/tokenomics-design',
-    '/[id]',
     '/privacy-policy',
     '/about-us',
     '/api/stripeHook',
     '/api/stripeSync',
+    '/[id]',
+    // '/:id',
+    [...publicRoutesFromFile]
   ],
+  // afterAuth(auth, req, evt) {    
+  //   console.log('🚀 ~ file: middleware.tsx:28 ~ afterAuth ~ req:', req.nextUrl.pathname)
+  //   console.log('🚀 ~ file: middleware.tsx:28 ~ afterAuth ~ auth:', auth)
+  //   // handle users who aren't authenticated
+  //   console.log(privatePages.includes(req.nextUrl.pathname))
+  //   if (!auth.userId && privatePages.includes(req.nextUrl.pathname)) {
+  //     const signInUrl = new URL('/sign-in', req.url)
+  //     signInUrl.searchParams.set('redirect_url', req.url)
+  //     return NextResponse.redirect(signInUrl)
+  //   }
+  // },
 })
 
 function middleware(req: NextRequest) {
   const url = req.nextUrl
-  // console.log("🚀 ~ file: middleware.tsx:7 ~ withClerkMiddleware ~ url:", url)
   const hostname = req.headers.get('host') || 'tokenomicshub.xyz'
-  // console.log("🚀 ~ file: middleware.tsx:8 ~ withClerkMiddleware ~ hostname:", hostname)
   const path = url.pathname
-  // console.log("🚀 ~ file: middleware.tsx:9 ~ withClerkMiddleware ~ path:", path)
 
   if (
     (path === '/myDesigns' ||
       path === '/newDesign' ||
-      path === '/editDesign' || 
-      path === '/tokenomics-design' ) &&
+      path === '/editDesign' ||
+      path === '/tokenomics-design') &&
     !hostname.startsWith('design.') &&
     !hostname.startsWith('preview.')
   ) {
@@ -46,12 +59,9 @@ function middleware(req: NextRequest) {
   }
 
   if (path === '/home') {
-    // if (path === '/home' && hostname.startsWith('design.')) {
     const newHost = hostname.replace('design.', '')
-    // console.log("🚀 ~ file: middleware.tsx:20 ~ withClerkMiddleware ~ newHost:", newHost)
     url.host = newHost
     url.pathname = '/'
-    // console.log("🚀 ~ file: middleware.tsx:22 ~ withClerkMiddleware ~ url:", url)
     return NextResponse.redirect(url)
   }
 
@@ -59,5 +69,5 @@ function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/((?!.*\\..*|_next).*)', '/', '/(api|trpc)(.*)'],
+  matcher: ["/((?!.*\\..*|_next).*)","/","/(api|trpc)(.*)"]
 }

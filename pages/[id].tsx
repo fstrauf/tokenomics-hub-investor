@@ -8,6 +8,7 @@ import { clerkClient } from '@clerk/nextjs/server'
 // import { clerkConvertJSON, postStatus } from '../../lib/helper'
 import { clerkConvertJSON, postStatus } from '../lib/helper'
 import PostView from '../components/slugView/PostView'
+import fs from 'fs'
 
 export default function Post({ post, author }) {
   const router = useRouter()
@@ -116,13 +117,20 @@ export async function getStaticPaths() {
     },
   })
 
+  const allPaths =    
+  allPosts?.map((post) => ({
+    params: {
+      id: post.id,
+    },
+  })) || []
+
+  const data = JSON.stringify(allPosts.map((obj) => `/${obj.id}`), null, 2);
+
+  // Write the publicRoutes array to a JSON file
+  fs.writeFileSync('publicRoutes.json', data);
+
   return {
-    paths:
-      allPosts?.map((post) => ({
-        params: {
-          id: post.id,
-        },
-      })) || [],
+    paths: allPaths,
     fallback: true,
   }
 }

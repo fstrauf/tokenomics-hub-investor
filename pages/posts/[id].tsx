@@ -5,6 +5,8 @@ import prisma from '../../lib/prisma'
 import { clerkClient } from '@clerk/nextjs/server'
 import { clerkConvertJSON, postStatus } from '../../lib/helper'
 import PostView from '../../components/slugView/PostView'
+import fs from 'fs'
+
 export default function Post({ post, author }) {
   const router = useRouter()
 
@@ -105,20 +107,29 @@ export async function getStaticProps({ params }) {
 export async function getStaticPaths() {
   const allPosts = await prisma.post.findMany({
     where: {
-        status: postStatus.published,
+      status: postStatus.published,
     },
     select: {
       id: true,
     },
   })
+  
+
+  const allPaths =    
+    allPosts?.map((post) => ({
+      params: {
+        id: post.id,
+      },
+    })) || []
+
+
+    const data = JSON.stringify(allPaths, null, 2);
+
+    // Write the publicRoutes array to a JSON file
+    fs.writeFileSync('publicRoutes.json', data);
 
   return {
-    paths:
-      allPosts?.map((post) => ({
-        params: {
-          id: post.id,
-        },
-      })) || [],
+    paths: allPaths,
     fallback: true,
   }
 }

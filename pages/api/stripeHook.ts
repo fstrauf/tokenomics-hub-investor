@@ -50,8 +50,7 @@ export default async function handler(
             //   '🚀 ~ file: stripeHook.ts:50 ~ checkoutSession:',
             //   checkoutSession
             // )
-            productTier = String(
-              
+            productTier = String(              
               checkoutSession.line_items.data[0].price.product
             )
           } catch (error) {

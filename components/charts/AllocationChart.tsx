@@ -23,7 +23,6 @@ export default function AllocationChart({
   fields,
   hideLegend = false,
 }: PieProps) {
-  console.log("🚀 ~ file: AllocationChart.tsx:26 ~ fields:", fields)
   const innerWidth = width - margin.left - margin.right
   const innerHeight = height - margin.top - margin.bottom
   const radius = Math.min(innerWidth, innerHeight) / 2
