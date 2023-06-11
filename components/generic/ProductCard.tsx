@@ -38,13 +38,13 @@ export default function ProductCard({
         </Link>
         <div className="flex gap-4">
           <Link href={purchaseLink?.link}>
-            <button className="mt-4 rounded-full bg-dao-red py-2 px-4 text-white">
+            <button className="mt-4 rounded-full bg-dao-red py-2 px-4 text-white" type='button'>
               {purchaseLink?.name}
             </button>
           </Link>
           {Object.keys(purchaseLink2).length > 0 && (
             <Link href={purchaseLink2?.link}>
-              <button className="mt-4 rounded-full bg-dao-red py-2 px-4 text-white">
+              <button className="mt-4 rounded-full bg-dao-red py-2 px-4 text-white" type='button'>
                 {purchaseLink2?.name}
               </button>
             </Link>
