@@ -22,67 +22,8 @@ export default async function handler(
   res: NextApiResponse<Data>
 ) {
   try {
-    const { blankSpreadSheetId, templateSheetUrl, data } = req.body
-    // console.log("🚀 ~ file: fillGSheet.ts:26 ~ templateSheetUrl:", templateSheetUrl)
-    // console.log("🚀 ~ file: fillGSheet.ts:26 ~ blankSpreadSheetId:", blankSpreadSheetId)
-    // const { JWT } = require('google-auth-library')
+    const { blankSpreadSheetId, templateSheetUrl, data } = req.body    
     const { GoogleSpreadsheet } = require('google-spreadsheet')
-    // const sheetBaseUrl = `https://sheets.googleapis.com/v4/spreadsheets`
-    // const copyTemplateSpreadsheetId =
-    //   '1vfGrJYzYRYyaqo6xvPA5vQSHPjd-KaJyQz4AaRn-Iag'
-
-    // const GOOGLE_AUTH_SCOPES = [
-    //   'https://www.googleapis.com/auth/spreadsheets',
-    //   'https://www.googleapis.com/auth/drive',
-    // ]
-
-    // if (title == null || templateSheetUrl == null) {
-    //   return res.status(400).json({
-    //     message: 'Invalid Template',
-    //   })
-    // }
-
-    // const jwt = new JWT({
-    //   email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
-    //   key: process.env.GOOGLE_PRIVATE_KEY,
-    //   scopes: GOOGLE_AUTH_SCOPES,
-    //   // subject: impersonateAs,
-    // })
-
-    // await jwt.authorize()
-
-    // const sheetRes = await fetch(sheetBaseUrl, {
-    //   method: 'POST',
-    //   body: JSON.stringify({
-    //     properties: { title: title },
-    //   }),
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     Authorization: `Bearer ${jwt.credentials.access_token}`,
-    //   },
-    // })
-    // const blankSpreadSheetData = await sheetRes.json()
-    // // console.log('🚀 ~ file: createGSheet.ts:36 ~ blankSpreadSheetData:', blankSpreadSheetData)
-
-    
-
-    // promisesAccountAuth.push(
-    //   fetch(
-    //     `https://www.googleapis.com/drive/v3/files/${blankSpreadSheetData.spreadsheetId}/permissions`,
-    //     {
-    //       method: 'POST',
-    //       body: JSON.stringify({
-    //         role: 'writer',
-    //         type: 'anyone',
-    //       }),
-    //       headers: {
-    //         'Content-Type': 'application/json',
-    //         Authorization: `Bearer ${jwt.credentials.access_token}`,
-    //       },
-    //     }
-    //   )
-    // )
-
     const promisesAccountAuth = []
 
     const newSpreadSheet = new GoogleSpreadsheet(
@@ -117,14 +58,16 @@ export default async function handler(
 
     // console.log("🚀 ~ file: fillGSheet.ts:92 ~ newSpreadSheet:", newSpreadSheet)
     //here is where i could cut off and call a second function
-
+    // console.log("🚀 ~ file: fillGSheet.ts:67 ~ templateSpreadSheet.sheetsByIndex.length:", templateSpreadSheet.sheetsByIndex.length)
     for (
       let counter = 0;
       counter < templateSpreadSheet.sheetsByIndex.length;
       counter++
     ) {
+      
       const templateSheet = templateSpreadSheet.sheetsByIndex[counter]
-
+      console.log("🚀 ~ file: fillGSheet.ts:69 ~ templateSheet:", templateSheet.title)
+      
       if (counter <= 1) {
         await templateSheet.copyToSpreadsheet(blankSpreadSheetId)
 
@@ -143,22 +86,26 @@ export default async function handler(
       }
     }
 
-    // if (promisesCopy.length) await Promise.all(promisesCopy)
-
     let docFirstSheet = newSpreadSheet.sheetsByIndex[0]
     await docFirstSheet.delete()
 
     await newSpreadSheet.loadInfo()
-
+    console.log("🚀 ~ file: fillGSheet.ts:67 ~ templateSpreadSheet.sheetsByIndex.length:", templateSpreadSheet.sheetsByIndex.length)
+    console.log("🚀 ~ file: fillGSheet.ts:103 ~ newSpreadSheet.sheetsByIndex.length:", newSpreadSheet.sheetsByIndex.length)
     for (
       let sheetIndex = 0;
       sheetIndex < newSpreadSheet.sheetsByIndex.length;
       sheetIndex++
     ) {
-      const newSheet = newSpreadSheet.sheetsByIndex[sheetIndex]
-      const templateSheet = templateSpreadSheet.sheetsByIndex[sheetIndex]
+      // const originalString = 'Copy of Staking + Revenue Share Rewards Calc';
+      // const updatedString = originalString.replace(/^Copy of /, '');
 
-      newSheet.updateProperties({ title: templateSheet.title })
+      const newSheet = newSpreadSheet.sheetsByIndex[sheetIndex]
+      // console.log("🚀 ~ file: fillGSheet.ts:105 ~ newSheet:", newSheet.title)
+      const templateSheet = templateSpreadSheet.sheetsByIndex[sheetIndex]
+      // console.log("🚀 ~ file: fillGSheet.ts:103 ~ templateSheet.title:", templateSheet.title)
+      newSheet.updateProperties({ title: templateSheet.title.replace(/^Copy of /, '') })
+      
     }
 
     await newSpreadSheet.loadInfo()
