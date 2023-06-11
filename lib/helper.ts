@@ -150,7 +150,9 @@ export enum designPhaseGrouping {
 }
 
 export const stringToKey = (name) => {
-  return name?.trim().replace(/\s+/g, '-').toLowerCase().replace(/&/g, 'and') || name
+  return (
+    name?.trim().replace(/\s+/g, '-').toLowerCase().replace(/&/g, 'and') || name
+  )
 }
 
 export const getTotalStrength = (post) => {
@@ -196,8 +198,9 @@ export function getMonthEpochAreaData(
   let emissionsPerSecond = calculationRow.initialEmissionPerSecond
   // console.log("🚀 ~ file: helper.ts:110 ~ emissionsPerSecond", emissionsPerSecond)
   // const epochDurationInMonths = Math.floor(
-    const epochDurationInMonths = 
-    Math.ceil(calculationRow.epochDurationInSeconds / secondsPerMonth) //hardcode to start with
+  const epochDurationInMonths = Math.ceil(
+    calculationRow.epochDurationInSeconds / secondsPerMonth
+  ) //hardcode to start with
   // console.log("🚀 ~ file: helper.ts:201 ~ epochDurationInMonths:", epochDurationInMonths)
   let epochs = 0
 
@@ -213,7 +216,6 @@ export function getMonthEpochAreaData(
     //   console.log("🚀 ~ file: helper.ts:213 ~ emissionsPerSecond:", emissionsPerSecond)
     //   console.log("🚀 ~ file: helper.ts:213 ~ emissions:", emissions)
     if (emissions + secondsPerMonth * emissionsPerSecond < rowAllocation) {
-      
       emissions += secondsPerMonth * emissionsPerSecond
 
       if (i === epochDurationInMonths * (epochs + 1)) {
@@ -286,7 +288,7 @@ export function getAreaData(months, calculationRows, totalSupply, startDate) {
           startDate,
           props.supplyDemandTotals
         )
-      }                
+      }
     }
   })
   return props
@@ -322,7 +324,7 @@ export function getDemandAreaData(
               ),
               demand: input.tokens,
               months: input.months,
-              supply: 0
+              supply: 0,
             }
           } else {
             if (supplyDemandTotals[i].demand === undefined) {
@@ -708,44 +710,60 @@ export async function updateSubscriptionData(subscription: object) {
   })
 }
 
-export async function createSpreadSheet({templateSheetUrl,title,data}) {
-  const createBody = {title, templateSheetUrl}
+export async function createSpreadSheet({ templateSheetUrl, title, data }) {
+  const createBody = { title, templateSheetUrl, data }
   try {
-    const responseCreate = await fetch('/api/createGSheet', {
+    const responseCreate = await fetch('/api/createSheet', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(createBody),
     })
     if (responseCreate?.ok) {
-      const blankSpreadSheetId = JSON.parse(await responseCreate.text())?.message
-      console.log("🚀 ~ file: helper.ts:706 ~ createSpreadSheet ~ blankSpreadSheetId:", blankSpreadSheetId)
+      const spreadsheetUrl = await responseCreate.text()
 
-      let fillBody = {blankSpreadSheetId, templateSheetUrl, data}
-      const responseFill = await fetch('/api/fillGSheet', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(fillBody),
-      })
-      if (responseFill?.ok) {
-        const spreadsheetUrl = await responseFill.text()
-        console.log("🚀 ~ file: helper.ts:715 ~ createSpreadSheet ~ spreadsheetUrl:", spreadsheetUrl)
-
-        return spreadsheetUrl
-      } else {
-        throw await responseCreate.text()
-      }
-
-      // return spreadsheetUrl
+      return spreadsheetUrl
     } else {
       throw await responseCreate.text()
     }
-
   } catch (error) {
-    console.error(error)
-    // toast.error('An error occurred', { position: 'bottom-right' })
     throw error
   }
-  
+
+  // try {
+  //   const responseCreate = await fetch('/api/createGSheet', {
+  //     method: 'POST',
+  //     headers: { 'Content-Type': 'application/json' },
+  //     body: JSON.stringify(createBody),
+  //   })
+  //   if (responseCreate?.ok) {
+  //     const blankSpreadSheetId = JSON.parse(await responseCreate.text())?.message
+  //     console.log("🚀 ~ file: helper.ts:706 ~ createSpreadSheet ~ blankSpreadSheetId:", blankSpreadSheetId)
+
+  //     let fillBody = {blankSpreadSheetId, templateSheetUrl, data}
+  //     const responseFill = await fetch('/api/fillGSheet', {
+  //       method: 'POST',
+  //       headers: { 'Content-Type': 'application/json' },
+  //       body: JSON.stringify(fillBody),
+  //     })
+  //     if (responseFill?.ok) {
+  //       const spreadsheetUrl = await responseFill.text()
+  //       console.log("🚀 ~ file: helper.ts:715 ~ createSpreadSheet ~ spreadsheetUrl:", spreadsheetUrl)
+
+  //       return spreadsheetUrl
+  //     } else {
+  //       throw await responseCreate.text()
+  //     }
+
+  //     // return spreadsheetUrl
+  //   } else {
+  //     throw await responseCreate.text()
+  //   }
+
+  // } catch (error) {
+  //   console.error(error)
+  //   // toast.error('An error occurred', { position: 'bottom-right' })
+  //   throw error
+  // }
 }
 
 export async function uploadSpreadsheet(data) {

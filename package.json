@@ -63,7 +63,7 @@
     "d3-time-format": "^4.1.0",
     "dayjs": "^1.11.7",
     "formik": "^2.2.9",
-    "google-spreadsheet": "^3.3.0",
+    "googleapis": "^118.0.0",
     "html-react-parser": "^3.0.4",
     "lodash.debounce": "^4.0.8",
     "micro": "^10.0.1",
