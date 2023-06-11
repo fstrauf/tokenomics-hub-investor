@@ -159,7 +159,7 @@ const Index: React.FC<Props> = (props) => {
         </Container>
         <div className='flex justify-center items-center'>
         <Link
-          href="/newPost"
+          href="/myReports"
           className="mt-4 rounded-full bg-dao-red py-2 px-4 text-white hover:underline"
         >
           List a token
