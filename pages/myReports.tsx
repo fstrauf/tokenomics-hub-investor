@@ -73,7 +73,7 @@ export default function MyReports(props) {
               )}
               {props?.posts.map((post, index) => {
                 return (
-                  <div key={index}>
+                  <div key={post?.id}>
                     <DesignCard post={post} context="myDrafts" />
                   </div>
                 )

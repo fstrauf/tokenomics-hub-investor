@@ -1,8 +1,6 @@
 import { useState } from 'react'
-// import MechanismCardViewer from "../slugView/MechanismCardViewer"
 import Drawer from './Drawer'
 import { MechanismCardViewer } from './MechanismCardViewer'
-// import StaticAllocationAndVestingChart from '../charts/StaticAllocationAndVestingChart'
 import TDFCalculatorViewer from './TDFCalculatorViewer'
 
 export default function MechanismViewer({ post }) {
@@ -16,8 +14,9 @@ export default function MechanismViewer({ post }) {
   const mechanismTile = (input, index) => {
     return (
       <div
-        key={index}
+        key={`${input.isSink}-${index}`}
         className="grid h-24 w-36 content-between rounded-md border-2 border-dao-green p-1 text-xs"
+        
       >
         {' '}
         <div>
@@ -63,7 +62,7 @@ export default function MechanismViewer({ post }) {
             </div>
             <div className="overflow-auto rounded-lg border-2 border-slate-300">
               <div
-                key={4711}
+                // key={`supply-${index}`}
                 className="flex flex-row flex-wrap gap-2 overflow-auto p-2"
               >
                 {post.Mechanism.length > 0 &&
@@ -87,7 +86,7 @@ export default function MechanismViewer({ post }) {
 
             <div className="rounded-lg border-2 border-slate-300">
               <div
-                key={4811}
+                // key={`demand-${index}`}
                 className="flex flex-row flex-wrap gap-2 overflow-auto p-2"
               >
                 {post.Mechanism.length > 0 &&

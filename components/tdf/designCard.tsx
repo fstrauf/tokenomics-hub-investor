@@ -51,7 +51,7 @@ export default function DesignCard({ post, context }) {
 
   return (
     <div
-      key={post.id}
+      key={post?.id}
       className="m-5 grid h-64 w-80 max-w-sm content-between rounded-lg border border-gray-200 bg-white p-2 shadow-md"
     >
       <div className="">
