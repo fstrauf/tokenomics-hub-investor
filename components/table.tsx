@@ -129,9 +129,9 @@ const Table: React.FC<{ prop: Props }> = ({ prop }) => {
 
 export default Table
 
-export function CategoryPill({ value, key }) {
+export function CategoryPill({ value, id }) {
   return (
-    <span key={key} className="leading-wide rounded-full bg-gray-100 px-3 py-1 text-xs font-bold uppercase text-gray-700 shadow-sm">
+    <span key={id} className="leading-wide rounded-full bg-gray-100 px-3 py-1 text-xs font-bold uppercase text-gray-700 shadow-sm">
       {value}
     </span>
   )
@@ -142,7 +142,7 @@ function CategoryPills({ value, id }) {
     <>
       <div className="mr-1 mb-1 flex flex-wrap">
         {value.map((v) => (
-          <CategoryPill key={`${id}+${v.label}`} value={v.label} />
+          <CategoryPill id={`${id}+${v.label}`} value={v.label} />
         ))}
       </div>
     </>

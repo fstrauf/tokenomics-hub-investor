@@ -4,7 +4,7 @@ import { stringToKey } from '../../../lib/helper'
 
 export default async function handle(req, res) {
   const { values } = req.body
-  console.log("🚀 ~ file: updateNewDesign.ts:7 ~ handle ~ values:", values)
+  console.log('🚀 ~ file: updateNewDesign.ts:7 ~ handle ~ values:', values)
   const inputFields = values
 
   var breakdown = inputFields.breakdown
@@ -37,19 +37,31 @@ export default async function handle(req, res) {
     var postUsers = {}
     if (m?.PostUser === undefined) {
     } else {
+      // postUsers = {
+      //   connect: m?.PostUser?.map((pu) => ({
+      //     id: inputFields?.id + '_' + pu.name,
+      //   })),
+      // }
+      // console.log("🚀 ~ file: updateNewDesign.ts:47 ~ connectOrCreate:m?.PostUser?.map ~ m?.PostUser:", m?.PostUser)
       postUsers = {
-        connect: m?.PostUser?.map((pu) => ({
-          id: inputFields?.id + '_' + pu.name,
+        connectOrCreate: m?.PostUser?.map((pu) => ({          
+          where: {
+            id: inputFields?.id + '_' + pu.value,
+          },
+          create: {
+            id: inputFields?.id + '_' + pu.value,
+            name: pu.value,
+            Post: { connect: { id: inputFields?.id } },
+          },
         })),
       }
     }
 
     var incentiveTargets = {}
-    
+
     if (m?.incentiveTarget === undefined) {
     } else {
-      if (m?.incentiveTarget.length>0) {
-        
+      if (m?.incentiveTarget.length > 0) {
         incentiveTargets = {
           connect: {
             id: inputFields?.id + '_' + stringToKey(m?.incentiveTarget?.name),
@@ -94,13 +106,13 @@ export default async function handle(req, res) {
 
   mechanisms.sort((a, b) => {
     if (a.isSink && !b.isSink) {
-      return 1; // a should come after b
+      return 1 // a should come after b
     }
     if (!a.isSink && b.isSink) {
-      return -1; // a should come before b
+      return -1 // a should come before b
     }
-    return 0; // no change in order
-  });
+    return 0 // no change in order
+  })
 
   var DesignElement = inputFields.DesignElement.map((de) => {
     if (typeof de.content === 'object') {

@@ -1,16 +1,18 @@
 import { Field } from 'formik'
 import React from 'react'
-import FormSelectUser from '../form/FormSelectUser'
+// import FormSelectUser from '../form/FormSelectUser'
 // import FormTipTap from '../form/FormTipTap'
-import * as duration from 'dayjs/plugin/duration'
-import * as dayjs from 'dayjs'
+// import * as duration from 'dayjs/plugin/duration'
+// import * as dayjs from 'dayjs'
 import { supplyDemandType } from '../../lib/helper'
 import { SupplyInternal, SupplyExternal } from '../supplyDemandType/SupplyType'
+// import Select from 'react-select'
+import FormSelect from '../form/FormSelect'
 
 export const MechanismCardSupply = ({
   field,
   mechanismIndex,
-  // setFieldValue,
+  setFieldValue,
   users,
 }) => {
   let isInternal = false
@@ -21,8 +23,8 @@ export const MechanismCardSupply = ({
     isInternal = true
   }
   // const isSink = field.value[mechanismIndex]?.isSink || false
-  dayjs.extend(duration)
-  const secondsPerMonth = 2628000
+  // dayjs.extend(duration)
+  // const secondsPerMonth = 2628000
   let propsOfInternalExternal = {
     field,
     mechanismIndex,
@@ -45,13 +47,25 @@ export const MechanismCardSupply = ({
       />
 
       <label className="block text-sm font-medium text-gray-900 ">User</label>
-      <Field
+      {/* <Field
         className="custom-select"
         name={`${field.name}.${mechanismIndex}.PostUser`}
         options={users}
         component={FormSelectUser}
         placeholder="Select Users"
         isMulti={true}
+      /> */}
+      <Field
+        className="custom-select"
+        name={`${field.name}.${mechanismIndex}.PostUser`}
+        options={users}
+        component={FormSelect}
+        placeholder="Select Users"
+        isMulti={true}
+        // onChange={(e) => {
+        //   const { value } = e.target
+        //   setFieldValue('PostUser', value)
+        // }}
       />
 
       {isInternal ? (
