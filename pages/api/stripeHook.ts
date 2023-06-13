@@ -26,14 +26,14 @@ export default async function handler(
         sig,
         process.env.STRIPE_WEBHOOK_SECRET
       )
-      console.log("🚀 ~ file: stripeHook.ts:29 ~ event:", event)
       switch (event?.type) {
         case 'checkout.session.completed':
           const userId = event.data.object?.client_reference_id
+          
+          console.log("🚀 ~ file: stripeHook.ts:33 ~ userId:", userId)
           if(!userId){
             return res.status(200).json({ error: `Webhook Error: No Client Reference passed` })
-          }
-          console.log('🚀 ~ file: stripeHook.ts:38 ~ userId:', userId)
+          }        
           const checkoutSessionId = event.data.object?.id
           const customer = event.data.object?.customer
           console.log('🚀 ~ file: stripeHook.ts:41 ~ customer:', customer)

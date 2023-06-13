@@ -20,3 +20,13 @@ https://console.cloud.google.com/apis/credentials?project=quickstart-16075063151
 
 Template used
 https://github.com/sanity-io/sanity-template-nextjs-blog-comments/tree/d414580b737a65fdd12ce820f2d1792d845f1647
+
+Run stripe webhooks in testmode
+
+ stripe listen --forward-to localhost:3000/api/stripeHook
+
+ stripe trigger checkout.session.completed \
+  --add "checkout_session:client_reference_id=user_2JGKXMvgTJldPjQnfdUt6ak0jVe" \
+  --add "checkout_session:customer=cus_NsBPHJih1ZZL0C"
+
+  

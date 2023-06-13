@@ -7,6 +7,7 @@ import UnAuthorised from '../../components/unauthorised'
 import { useAuth } from '@clerk/clerk-react/dist/hooks/useAuth'
 import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
 import { headerStatus } from '../../lib/helper'
+import { GetServerSideProps } from 'next'
 // import dynamic from 'next/dynamic'
 // import * as yup from 'yup'
 
@@ -128,7 +129,7 @@ export default function subscriptions({ allSubscriptions }) {
   }
 }
 
-export async function getStaticProps() {
+export const getServerSideProps: GetServerSideProps = async (context) => {
   const allSubscriptions = await prisma.subscriptions.findMany()
 
   return {
