@@ -1,5 +1,6 @@
 import { Field } from 'formik'
 import { shortBigNumber } from '../../lib/helper'
+import * as duration from 'dayjs/plugin/duration'
 import * as dayjs from 'dayjs'
 import { DemandBuilder, Functions, Spreadsheet } from '../generic/TabComponent'
 import GenericTab from '../generic/GenericTab'
@@ -9,6 +10,7 @@ import { ErrorBoundary } from 'react-error-boundary'
 const secondsPerMonth = 2628000
 const Tabs = [{ tab: 'Manual' }, { tab: 'Functions' }, { tab: 'Spreadsheets' }]
 
+dayjs.extend(duration)
 function Fallback({ error, resetErrorBoundary }) {
   // Call resetErrorBoundary() to reset the error boundary and retry the render.
 
@@ -170,6 +172,17 @@ export function SupplyInternal(props) {
 }
 
 export function SupplyExternal(props) {
+  console.log(
+    Math.floor(
+      dayjs
+        .duration(
+          props.field.value[props.mechanismIndex].epochDurationInSeconds,
+          'seconds'
+        )
+        .asMonths()
+    )
+  )
+
   return (
     <>
       <div>
