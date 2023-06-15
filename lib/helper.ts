@@ -262,6 +262,7 @@ export function getMonthEpochAreaData(
 export function getAreaData(months, calculationRows, totalSupply, startDate) {
   var props = { chartData: [], supplyDemandTotals: [] }
 
+  
   calculationRows?.forEach((cr) => {
     const rowAllocation = (totalSupply * cr.percentageAllocation) / 100
     if (cr?.isSink) {
@@ -290,6 +291,7 @@ export function getAreaData(months, calculationRows, totalSupply, startDate) {
         )
       }
     }
+    // console.log("🚀 ~ file: helper.ts:265 ~ getAreaData ~ supplyDemandTotals:", props.supplyDemandTotals)  
   })
   return props
 }
@@ -306,12 +308,13 @@ export function getDemandAreaData(
   // )
   if (calculationRow.CalculationTimeSeries !== undefined) {
     const inputData = calculationRow.CalculationTimeSeries || []
-    // console.log('🚀 ~ file: helper.ts:297 ~ inputData:', inputData)
+    console.log('🚀 ~ file: helper.ts:297 ~ inputData:', inputData)
     const sortedMonthsInput = inputData.sort((a, b) => a.months - b.months)
 
     for (let i = 0; i < months; i++) {
       let monthExists = false
       for (const input of sortedMonthsInput) {
+        // console.log("🚀 ~ file: helper.ts:316 ~ input:", input)
         if (input.months === i + 1) {
           // console.log(
           //   '🚀 ~ file: helper.ts:306 ~ supplyDemandTotals[i]:',
@@ -334,6 +337,7 @@ export function getDemandAreaData(
               supplyDemandTotals[i].supply = 0
             }
             supplyDemandTotals[i].demand += Number(input.tokens)
+            console.log("🚀 ~ file: helper.ts:340 ~ Number(input.tokens):", Number(input.tokens))
           }
           monthExists = true
           break
@@ -350,7 +354,10 @@ export function getDemandAreaData(
             months: i + 1,
           }
         } else {
-          supplyDemandTotals[i].demand = 0
+          if (supplyDemandTotals[i].demand === undefined) {
+            supplyDemandTotals[i].demand = 0
+          }
+          // supplyDemandTotals[i].demand = 0
         }
       }
       // console.log(
