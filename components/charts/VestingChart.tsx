@@ -55,15 +55,12 @@ export default withTooltip<StackedAreasProps, TooltipData>(
     totalSupply,
     hideLegend = false,
   }: StackedAreasProps & WithTooltipProvidedProps<TooltipData>) => {
-    console.log("🚀 ~ file: VestingChart.tsx:58 ~ data:", data)
     if (data === undefined) {
       return null
     }
-    console.log("🚀 ~ file: VestingChart.tsx:64 ~ keys ~ fields:", fields)
     const keys = fields?.map((f) => {      
       return f.name || f.category
     })
-    console.log("🚀 ~ file: VestingChart.tsx:66 ~ keys ~ keys:", keys)
 
     const colors = fields?.map((f) => {
       return f.color

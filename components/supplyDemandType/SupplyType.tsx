@@ -172,16 +172,16 @@ export function SupplyInternal(props) {
 }
 
 export function SupplyExternal(props) {
-  console.log(
-    Math.floor(
-      dayjs
-        .duration(
-          props?.field?.value[props.mechanismIndex]?.epochDurationInSeconds,
-          'seconds'
-        )
-        .asMonths()
-    )
-  )
+  // console.log(
+  //   Math.floor(
+  //     dayjs
+  //       .duration(
+  //         props?.field?.value[props.mechanismIndex]?.epochDurationInSeconds,
+  //         'seconds'
+  //       )
+  //       .asMonths()
+  //   )
+  // )
 
   return (
     <>

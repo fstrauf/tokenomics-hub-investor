@@ -127,7 +127,6 @@ export const FormCardSupplyDemand = ({
   }
 
   const mechanismTile = (input, index, arrayHelpers) => {
-    console.log("🚀 ~ file: FormCardSupply.tsx:92 ~ mechanismTile ~ index:", index)
     return (
       <div
         key={index}
