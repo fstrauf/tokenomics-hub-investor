@@ -23,6 +23,7 @@ export default authMiddleware({
     '/about-us',
     '/api/stripeHook',
     '/api/stripeSync',
+    '/api/uploadSheet',
     '/[id]',
     // '/:id',
     [...publicRoutesFromFile]
