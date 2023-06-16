@@ -5,7 +5,7 @@ import Drawer from '../slugView/Drawer'
 import MechanismCardSupply from '../tdf/MechanismCardSupply'
 import { supplyDemandType } from '../../lib/helper'
 
-export const FormCardSupplyDemand = ({
+export const FormCardSupply = ({
   field,
   values,
   mechanismTemplates,
@@ -307,4 +307,4 @@ export const FormCardSupplyDemand = ({
   )
 }
 
-export default FormCardSupplyDemand
+export default FormCardSupply
