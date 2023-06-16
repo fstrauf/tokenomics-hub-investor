@@ -128,7 +128,7 @@ export const FormCardSupplyDemand = ({
 
   const getTotalPercent = () => {
     let ntotalPercent = 0
-    field.value.forEach((data) => {
+    field.value.filter((v)=>v.isSink===false).forEach((data) => {
       ntotalPercent += data.percentageAllocation
     })
     if(ntotalPercent>100){

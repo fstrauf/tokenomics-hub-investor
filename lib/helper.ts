@@ -308,7 +308,6 @@ export function getDemandAreaData(
   // )
   if (calculationRow.CalculationTimeSeries !== undefined) {
     const inputData = calculationRow.CalculationTimeSeries || []
-    console.log('🚀 ~ file: helper.ts:297 ~ inputData:', inputData)
     const sortedMonthsInput = inputData.sort((a, b) => a.months - b.months)
 
     for (let i = 0; i < months; i++) {
@@ -337,7 +336,6 @@ export function getDemandAreaData(
               supplyDemandTotals[i].supply = 0
             }
             supplyDemandTotals[i].demand += Number(input.tokens)
-            console.log("🚀 ~ file: helper.ts:340 ~ Number(input.tokens):", Number(input.tokens))
           }
           monthExists = true
           break
@@ -357,13 +355,8 @@ export function getDemandAreaData(
           if (supplyDemandTotals[i].demand === undefined) {
             supplyDemandTotals[i].demand = 0
           }
-          // supplyDemandTotals[i].demand = 0
         }
       }
-      // console.log(
-      //   '🚀 ~ file: helper.ts:306 ~ supplyDemandTotals[i]:',
-      //   supplyDemandTotals[i]
-      // )
     }
   }
 }
