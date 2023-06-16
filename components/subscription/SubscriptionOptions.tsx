@@ -30,11 +30,11 @@ export default function SubscriptionOptions() {
         termsLink="/manage-subscriptions#genesis"
         included={["Genesis Tier",'Chat Support: ask questions, our experts answer']}
         purchaseLink={{
-          link: `https://buy.stripe.com/cN202dejh7mefYs28g?prefilled_email=${user.primaryEmailAddress.emailAddress}&client_reference_id=${user.id}`,
+          link: `https://buy.stripe.com/cN202dejh7mefYs28g?prefilled_email=${user?.primaryEmailAddress?.emailAddress}&client_reference_id=${user?.id}`,
           name: 'Monthly',
         }}
         purchaseLink2={{          
-          link: `https://buy.stripe.com/14kcOZ6QPgWO9A414a?prefilled_email=${user.primaryEmailAddress.emailAddress}&client_reference_id=${user.id}`,
+          link: `https://buy.stripe.com/14kcOZ6QPgWO9A414a?prefilled_email=${user?.primaryEmailAddress?.emailAddress}&client_reference_id=${user?.id}`,
           name: 'Yearly',
         }}
         highlight={true}
@@ -47,7 +47,7 @@ export default function SubscriptionOptions() {
         included={["1 year Navigator subscription",'1x Tokenomics Audit by a Tokenomics DAO Expert (we ask questions)']}
         purchaseLink={{
           // link: `https://buy.stripe.com/test_5kA4k98YwaUzgrCaEE?prefilled_email=${user.primaryEmailAddress.emailAddress}&client_reference_id=${user.id}`,
-          link: `https://buy.stripe.com/dR6bKV8YXfSK7rW7sz?prefilled_email=${user.primaryEmailAddress.emailAddress}&client_reference_id=${user.id}`,
+          link: `https://buy.stripe.com/dR6bKV8YXfSK7rW7sz?prefilled_email=${user?.primaryEmailAddress?.emailAddress}&client_reference_id=${user?.id}`,
           // https://buy.stripe.com/dR6bKV8YXfSK7rW7sz
           name: 'Purchase',
         }}
