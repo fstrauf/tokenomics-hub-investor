@@ -176,7 +176,7 @@ export function SupplyExternal(props) {
     Math.floor(
       dayjs
         .duration(
-          props.field.value[props.mechanismIndex].epochDurationInSeconds,
+          props?.field?.value[props.mechanismIndex]?.epochDurationInSeconds,
           'seconds'
         )
         .asMonths()

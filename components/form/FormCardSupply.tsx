@@ -58,30 +58,68 @@ export const FormCardSupplyDemand = ({
     }
   }
 
+  // const handleNewMechanism = (
+  //   arrayHelpers,
+  //   isSink: boolean,
+  //   tempType: string
+  // ) => {
+  //   const updateMechanism = selectedTemplate
+
+  //   updateMechanism.isSink = isSink
+  //   updateMechanism.supplyDemandType = tempType
+  //   if (isSink) {
+  //     updateMechanism.name = updateMechanism.name+ ' ' + (field.value?.length + 1)
+  //     updateMechanism.category =  updateMechanism.category+ ' ' + (field.value?.length + 1)
+  //   } else {
+  //     updateMechanism.name = updateMechanism.name+ ' ' + (field.value?.length + 1)
+  //     updateMechanism.category = updateMechanism.category+ ' ' + (field.value?.length + 1)
+  //     updateMechanism.summary = ''
+  //   }
+
+  //   arrayHelpers.push(updateMechanism)
+
+  //   setMechanismIndex(field.value?.length)
+  //   setIsOpen(true)
+  //   setSelectedTemplate(defaultMechanism)
+  // }
+
   const handleNewMechanism = (
     arrayHelpers,
     isSink: boolean,
     tempType: string
   ) => {
-    const updateMechanism = selectedTemplate
-
-    updateMechanism.isSink = isSink
-    updateMechanism.supplyDemandType = tempType
-    if (isSink) {
-      updateMechanism.name = updateMechanism.name+ ' ' + (field.value?.length + 1)
-      updateMechanism.category =  updateMechanism.category+ ' ' + (field.value?.length + 1)
-    } else {
-      updateMechanism.name = updateMechanism.name+ ' ' + (field.value?.length + 1)
-      updateMechanism.category = updateMechanism.category+ ' ' + (field.value?.length + 1)
-      updateMechanism.summary = ''
+    const updateMechanism = { ...selectedTemplate }; // Make a copy of the selected template
+  
+    updateMechanism.isSink = isSink;
+    updateMechanism.supplyDemandType = tempType;
+  
+    // Generate a unique name for the mechanism
+    let mechanismIndex = field.value?.length + 1;
+    let uniqueName = `${updateMechanism.name} ${mechanismIndex}`;
+    let uniqueCategory = `${updateMechanism.category} ${mechanismIndex}`;
+  
+    // Check if the generated name already exists and increment the index until a unique name is found
+    let existingNames = field.value?.map((mechanism) => mechanism.name);
+    while (existingNames.includes(uniqueName)) {
+      uniqueName = `${updateMechanism.name} ${mechanismIndex + 1}`;
+      uniqueCategory = `${updateMechanism.category} ${mechanismIndex + 1}`;
+      mechanismIndex++;
     }
-
-    arrayHelpers.push(updateMechanism)
-
-    setMechanismIndex(field.value?.length)
-    setIsOpen(true)
-    setSelectedTemplate(defaultMechanism)
-  }
+  
+    updateMechanism.name = uniqueName;
+    updateMechanism.category = uniqueCategory;
+  
+    if (!isSink) {
+      updateMechanism.summary = '';
+    }
+  
+    arrayHelpers.push(updateMechanism);
+  
+    setMechanismIndex(mechanismIndex);
+    setIsOpen(true);
+    setSelectedTemplate(defaultMechanism);
+  };
+  
 
   const handleEditMechanism = (index) => {
     setMechanismIndex(index)
@@ -89,6 +127,7 @@ export const FormCardSupplyDemand = ({
   }
 
   const mechanismTile = (input, index, arrayHelpers) => {
+    console.log("🚀 ~ file: FormCardSupply.tsx:92 ~ mechanismTile ~ index:", index)
     return (
       <div
         key={index}

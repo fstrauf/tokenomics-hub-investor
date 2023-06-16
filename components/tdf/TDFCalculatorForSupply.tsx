@@ -16,7 +16,7 @@ export default function TDFCalculatorForSupply(props) {
     ssr: false,
   })
 
-  const [postId, setPostId] = useState(values.id || '')
+  // const [postId, setPostId] = useState(values.id || '')
 
   return (
     <>
@@ -91,7 +91,7 @@ export default function TDFCalculatorForSupply(props) {
         </div>
 
         <FormId
-          postId={postId}
+          postId={values?.id}
           type="text"
           name="id"
           className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-dao-red focus:ring-dao-red"

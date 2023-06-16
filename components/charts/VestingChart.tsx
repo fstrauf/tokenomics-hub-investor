@@ -1,9 +1,7 @@
 import React, { useMemo, useCallback } from 'react'
 import { AreaStack } from '@visx/shape'
-// import { LinearGradient } from '@visx/gradient'
 import { scaleTime, scaleLinear, scaleOrdinal } from '@visx/scale'
 import { extent, bisector } from 'd3-array'
-// import tinycolor from 'tinycolor2'
 import { localPoint } from '@visx/event'
 import {
   withTooltip,
@@ -28,7 +26,6 @@ const tooltipStyles = {
 }
 
 const formatDate = timeFormat("%b %d, '%y")
-// const formatTicks = value => new Intl.NumberFormat('en', {notation: 'compact'}).format(value)
 
 const getDate = (d) => new Date(d.date)
 
@@ -58,13 +55,15 @@ export default withTooltip<StackedAreasProps, TooltipData>(
     totalSupply,
     hideLegend = false,
   }: StackedAreasProps & WithTooltipProvidedProps<TooltipData>) => {
+    console.log("🚀 ~ file: VestingChart.tsx:58 ~ data:", data)
     if (data === undefined) {
       return null
     }
-
-    const keys = fields?.map((f) => {
+    console.log("🚀 ~ file: VestingChart.tsx:64 ~ keys ~ fields:", fields)
+    const keys = fields?.map((f) => {      
       return f.name || f.category
     })
+    console.log("🚀 ~ file: VestingChart.tsx:66 ~ keys ~ keys:", keys)
 
     const colors = fields?.map((f) => {
       return f.color
@@ -77,7 +76,6 @@ export default withTooltip<StackedAreasProps, TooltipData>(
       () =>
         scaleTime({
           range: [0, innerWidth],
-          // range: [margin.left, innerWidth],
           domain: extent(data, getDate) as [Date, Date],
         }),
       [innerWidth, data]
@@ -227,7 +225,7 @@ export default withTooltip<StackedAreasProps, TooltipData>(
             >
               <div className="rounded-lg">
                 {fields.map((k) => (
-                  <div key={k.category} className="flex justify-end">
+                  <div key={k.name} className="flex justify-end">
                     <p style={{ color: k.color }} className="mr-2 font-bold">
                       {k.name || k.category}:{' '}
                     </p>

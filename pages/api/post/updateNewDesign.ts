@@ -37,12 +37,6 @@ export default async function handle(req, res) {
     var postUsers = {}
     if (m?.PostUser === undefined) {
     } else {
-      // postUsers = {
-      //   connect: m?.PostUser?.map((pu) => ({
-      //     id: inputFields?.id + '_' + pu.name,
-      //   })),
-      // }
-      // console.log("🚀 ~ file: updateNewDesign.ts:47 ~ connectOrCreate:m?.PostUser?.map ~ m?.PostUser:", m?.PostUser)
       postUsers = {
         connectOrCreate: m?.PostUser?.map((pu) => ({          
           where: {
