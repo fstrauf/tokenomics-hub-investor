@@ -58,31 +58,6 @@ export const FormCardSupplyDemand = ({
     }
   }
 
-  // const handleNewMechanism = (
-  //   arrayHelpers,
-  //   isSink: boolean,
-  //   tempType: string
-  // ) => {
-  //   const updateMechanism = selectedTemplate
-
-  //   updateMechanism.isSink = isSink
-  //   updateMechanism.supplyDemandType = tempType
-  //   if (isSink) {
-  //     updateMechanism.name = updateMechanism.name+ ' ' + (field.value?.length + 1)
-  //     updateMechanism.category =  updateMechanism.category+ ' ' + (field.value?.length + 1)
-  //   } else {
-  //     updateMechanism.name = updateMechanism.name+ ' ' + (field.value?.length + 1)
-  //     updateMechanism.category = updateMechanism.category+ ' ' + (field.value?.length + 1)
-  //     updateMechanism.summary = ''
-  //   }
-
-  //   arrayHelpers.push(updateMechanism)
-
-  //   setMechanismIndex(field.value?.length)
-  //   setIsOpen(true)
-  //   setSelectedTemplate(defaultMechanism)
-  // }
-
   const handleNewMechanism = (
     arrayHelpers,
     isSink: boolean,

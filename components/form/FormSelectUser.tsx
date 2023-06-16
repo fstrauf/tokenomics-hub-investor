@@ -1,6 +1,6 @@
 // import { FieldProps } from "formik";
 import React from "react";
-import Select from "react-select";
+import Select from "react-select/creatable";
 
 const FormSelectUser = ({
   field,
