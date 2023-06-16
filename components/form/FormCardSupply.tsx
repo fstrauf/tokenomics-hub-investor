@@ -69,16 +69,17 @@ export const FormCardSupplyDemand = ({
     updateMechanism.supplyDemandType = tempType;
   
     // Generate a unique name for the mechanism
-    let mechanismIndex = field.value?.length + 1;
+    let mechanismIndex = field.value?.length;
     let uniqueName = `${updateMechanism.name} ${mechanismIndex}`;
     let uniqueCategory = `${updateMechanism.category} ${mechanismIndex}`;
+    let mechnismNameCounter = 0
   
     // Check if the generated name already exists and increment the index until a unique name is found
     let existingNames = field.value?.map((mechanism) => mechanism.name);
     while (existingNames.includes(uniqueName)) {
-      uniqueName = `${updateMechanism.name} ${mechanismIndex + 1}`;
-      uniqueCategory = `${updateMechanism.category} ${mechanismIndex + 1}`;
-      mechanismIndex++;
+      uniqueName = `${updateMechanism.name} ${mechnismNameCounter + 1}`;
+      uniqueCategory = `${updateMechanism.category} ${mechnismNameCounter + 1}`;
+      mechnismNameCounter++;
     }
   
     updateMechanism.name = uniqueName;
@@ -87,13 +88,15 @@ export const FormCardSupplyDemand = ({
     if (!isSink) {
       updateMechanism.summary = '';
     }
-  
+    console.log("🚀 ~ file: FormCardSupply.tsx:92 ~ updateMechanism:", updateMechanism)
     arrayHelpers.push(updateMechanism);
-  
+    
+    console.log("🚀 ~ file: FormCardSupply.tsx:98 ~ mechanismIndex:", mechanismIndex)
     setMechanismIndex(mechanismIndex);
     setIsOpen(true);
     setSelectedTemplate(defaultMechanism);
   };
+    
   
 
   const handleEditMechanism = (index) => {

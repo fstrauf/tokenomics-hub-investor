@@ -10,6 +10,8 @@ export const MechanismCardSupply = ({
   users,
 }) => {
   console.log("🚀 ~ file: MechanismCardSupply.tsx:12 ~ users:", users)
+  console.log("🚀 ~ file: MechanismCardSupply.tsx:12 ~ field:", field)
+  console.log("🚀 ~ file: MechanismCardSupply.tsx:12 ~ mechanismIndex:", mechanismIndex)
   let isInternal = false
   if (
     field.value[mechanismIndex]?.supplyDemandType ===
