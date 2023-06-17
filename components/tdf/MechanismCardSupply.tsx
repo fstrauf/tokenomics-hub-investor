@@ -45,10 +45,6 @@ export const MechanismCardSupply = ({
         component={FormSelectUser}
         placeholder="Select Users"
         isMulti={true}
-        // onChange={(e) => {
-        //   const { value } = e.target
-        //   setFieldValue('PostUser', value)
-        // }}
       />
 
       {isInternal ? (
