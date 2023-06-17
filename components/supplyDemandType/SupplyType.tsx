@@ -161,10 +161,10 @@ export function SupplyInternal(props) {
             className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
             type="color"
           />
-          <p className="text-xs font-bold uppercase text-gray-700">APR</p>
+          {/* <p className="text-xs font-bold uppercase text-gray-700">APR</p>
           <p className="block p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500">
             15 %
-          </p>
+          </p> */}
         </div>
       </div>
     </>
@@ -172,17 +172,6 @@ export function SupplyInternal(props) {
 }
 
 export function SupplyExternal(props) {
-  // console.log(
-  //   Math.floor(
-  //     dayjs
-  //       .duration(
-  //         props?.field?.value[props.mechanismIndex]?.epochDurationInSeconds,
-  //         'seconds'
-  //       )
-  //       .asMonths()
-  //   )
-  // )
-
   return (
     <>
       <div>
@@ -321,10 +310,6 @@ export function SupplyExternal(props) {
             className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
             type="color"
           />
-          <p className="text-xs font-bold uppercase text-gray-700">APR</p>
-          <p className="block p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500">
-            15 %
-          </p>
         </div>
       </div>
     </>

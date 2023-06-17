@@ -192,7 +192,6 @@ export function getMonthEpochAreaData(
   startDate,
   supplyDemandTotals
 ) {
-  // console.log("🚀 ~ file: helper.ts:193 ~ rowAllocation:", rowAllocation)
   let emissions = 0
   const secondsPerMonth = 2628000
   let emissionsPerSecond = calculationRow.initialEmissionPerSecond
@@ -201,7 +200,6 @@ export function getMonthEpochAreaData(
   const epochDurationInMonths = Math.ceil(
     calculationRow.epochDurationInSeconds / secondsPerMonth
   ) //hardcode to start with
-  // console.log("🚀 ~ file: helper.ts:201 ~ epochDurationInMonths:", epochDurationInMonths)
   let epochs = 0
 
   for (let i = 0; i < months; i++) {
@@ -212,9 +210,6 @@ export function getMonthEpochAreaData(
       chartData[i] = {}
     }
     //prevent over-emitting
-    // console.log("🚀 ~ file: helper.ts:213 ~ rowAllocation:", rowAllocation)
-    //   console.log("🚀 ~ file: helper.ts:213 ~ emissionsPerSecond:", emissionsPerSecond)
-    //   console.log("🚀 ~ file: helper.ts:213 ~ emissions:", emissions)
     if (emissions + secondsPerMonth * emissionsPerSecond < rowAllocation) {
       emissions += secondsPerMonth * emissionsPerSecond
 
@@ -224,6 +219,9 @@ export function getMonthEpochAreaData(
           (1 - calculationRow.emissionReductionPerEpoch / 100)
         epochs++
       }
+    } else {
+      // allocation remaining amount
+      emissions = rowAllocation 
     }
 
     if (categoryLine['date'] === undefined) {
