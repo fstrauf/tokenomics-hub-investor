@@ -85,6 +85,7 @@ export default async function handle(req, res) {
       isEpochDistro: m.isEpochDistro,
       epochDurationInSeconds: m.epochDurationInSeconds,
       initialEmissionPerSecond: m.initialEmissionPerSecond,
+      percentageEmittedFirstEpoch: m.percentageEmittedFirstEpoch,
       percentageUnlockTGE: m.percentageUnlockTGE,
       emissionReductionPerEpoch: m.emissionReductionPerEpoch,
       color: m.color,

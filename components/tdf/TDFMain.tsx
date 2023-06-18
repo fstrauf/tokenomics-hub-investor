@@ -122,33 +122,7 @@ export default function TDFMain({ props, header = headerStatus.design }) {
 
   const submitData = async (values, { setSubmitting }) => {
     const body = { values }
-    console.log('🚀 ~ file: TDFMain.tsx:121 ~ submitData ~ body:', body)
-    // if (values?.id === '') {
-    //   try {
-    //     const response = await fetch('/api/post/newDesign', {
-    //       method: 'POST',
-    //       headers: { 'Content-Type': 'application/json' },
-    //       body: JSON.stringify(body),
-    //     })
-
-    //     if (!response.ok) {
-    //       const error = await response.text()
-    //       toast.error(JSON.parse(error).error, { position: 'bottom-right' })
-    //       throw new Error(error)
-    //     } else {
-    //       const id = await response.text()
-    //       toast.success('Changes auto-saved ', {
-    //         position: 'bottom-right',
-    //       })
-    //       setPostId(JSON.parse(id).id)
-    //       router.push(`/editDesign/${JSON.parse(id).id}`)
-    //     }
-
-    //     setSubmitting(false)
-    //   } catch (error) {
-    //     console.error(error)
-    //   }
-    // } else {
+      console.log("🚀 ~ file: TDFMain.tsx:125 ~ submitData ~ body:", body)
       try {
         const response = await fetch('/api/post/updateNewDesign', {
           method: 'POST',

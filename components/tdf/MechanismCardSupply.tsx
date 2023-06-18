@@ -8,6 +8,7 @@ export const MechanismCardSupply = ({
   field,
   mechanismIndex,
   users,
+  totalSupply,
 }) => {
   let isInternal = false
   if (
@@ -19,6 +20,7 @@ export const MechanismCardSupply = ({
   let propsOfInternalExternal = {
     field,
     mechanismIndex,
+    totalSupply,
   }
 
   return (

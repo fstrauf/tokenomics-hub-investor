@@ -9,7 +9,6 @@ export const FormCardSupply = ({
   field,
   values,
   mechanismTemplates,
-  setFieldValue,
 }) => {
   let [mechanismIndex, setMechanismIndex] = useState(0)
   const defaultMechanism = {
@@ -25,6 +24,7 @@ export const FormCardSupply = ({
     unlockPeriod: 12,
     percentageUnlockTGE: 0,
     percentageAllocation: 30,
+    percentageEmittedFirstEpoch: 0,
     color: `#${Math.floor(Math.random() * 16777215).toString(16)}`,
     isEpochDistro: false,
     supplyDemandType: 'supplyExternal',
@@ -88,10 +88,9 @@ export const FormCardSupply = ({
     if (!isSink) {
       updateMechanism.summary = '';
     }
-    console.log("🚀 ~ file: FormCardSupply.tsx:92 ~ updateMechanism:", updateMechanism)
+  
     arrayHelpers.push(updateMechanism);
     
-    console.log("🚀 ~ file: FormCardSupply.tsx:98 ~ mechanismIndex:", mechanismIndex)
     setMechanismIndex(mechanismIndex);
     setIsOpen(true);
     setSelectedTemplate(defaultMechanism);
@@ -163,7 +162,8 @@ export const FormCardSupply = ({
           <MechanismCardSupply
             field={field}
             mechanismIndex={mechanismIndex}
-            setFieldValue={setFieldValue}
+            // setFieldValue={setFieldValue}
+            totalSupply={values?.Calculation?.totalSupply}
             users={values.PostUser} // mechanismImpactFactors={mechanismImpactFactors}
           />
         )}

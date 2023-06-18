@@ -1,4 +1,4 @@
-import { Field } from 'formik'
+import { Field, useFormikContext } from 'formik'
 import { shortBigNumber } from '../../lib/helper'
 import * as duration from 'dayjs/plugin/duration'
 import * as dayjs from 'dayjs'
@@ -141,6 +141,25 @@ function DemandComponent(props) {
 }
 
 function SupplyComponent(props) {
+  const { setFieldValue } = useFormikContext()
+  const tokenAllocation = Math.floor(
+    (props.field.value[props.mechanismIndex].percentageAllocation *
+      props?.totalSupply) /
+      100
+  )
+  
+  const handlePercentageEmittedFirstEpochChange = (percentageEmittedFirstEpoch) => {
+    // const { percentageEmittedFirstEpoch } = values;
+    const initialEmissionPerSecond =
+      (tokenAllocation * percentageEmittedFirstEpoch / 100) /
+      props.field.value[props.mechanismIndex].epochDurationInSeconds
+
+    setFieldValue(
+      `${props.field.name}.${props.mechanismIndex}.initialEmissionPerSecond`,
+      Number(initialEmissionPerSecond)
+    )
+  }
+      
   return (
     <>
       <div>
@@ -162,7 +181,7 @@ function SupplyComponent(props) {
             Log
           </span>
         </div>
-        <div className="grid grid-cols-2 items-center gap-1">
+        <div className="grid grid-cols-2 items-center justify-between gap-1">
           <p className="text-xs font-bold uppercase text-gray-700">
             Percentage Allocation (
             {props.field.values?.reduce(
@@ -171,13 +190,18 @@ function SupplyComponent(props) {
             )}
             %)
           </p>{' '}
-          <Field
-            name={`${props.field.name}.${props.mechanismIndex}.percentageAllocation`}
-            placeholder="percentageAllocation"
-            className="block w-28 rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
-            type="number"
-            onWheel={(event) => event.currentTarget.blur()}
-          />
+          <div className="flex">
+            <Field
+              name={`${props.field.name}.${props.mechanismIndex}.percentageAllocation`}
+              placeholder="percentageAllocation"
+              className="block w-28 rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+              type="number"
+              onWheel={(event) => event.currentTarget.blur()}
+            />
+            <span className="ml-1 self-center text-xs">
+              (= {tokenAllocation} tokens)
+            </span>
+          </div>
           {props.field?.value[props.mechanismIndex]?.isEpochDistro ? (
             <>
               {' '}
@@ -216,6 +240,7 @@ function SupplyComponent(props) {
                   placeholder="Initial Emission per Seconds"
                   className="block w-28 rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
                   type="number"
+                  disabled={true}
                   onWheel={(event) => event.currentTarget.blur()}
                 />
                 <span className="ml-1 self-center text-xs">
@@ -225,6 +250,34 @@ function SupplyComponent(props) {
                       .initialEmissionPerSecond * secondsPerMonth
                   )}{' '}
                   per month)
+                </span>
+              </div>
+              <p className="text-xs font-bold uppercase text-gray-700">
+                % of tokens to be emitted in first epoch
+              </p>
+              <div className="flex">
+                <Field
+                  name={`${props.field.name}.${props.mechanismIndex}.percentageEmittedFirstEpoch`}
+                  placeholder="% of tokens to be emitted in first epoch"
+                  className="block w-28 rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+                  type="number"
+                  onChange={(e) => {
+                    setFieldValue(
+                      `${props.field.name}.${props.mechanismIndex}.percentageEmittedFirstEpoch`,
+                      Number(e.target.value)
+                    )
+                    handlePercentageEmittedFirstEpochChange(e.target.value)
+                  }}
+                  onWheel={(event) => event.currentTarget.blur()}
+                />
+                <span className="ml-1 self-center text-xs">
+                  (={' '}
+                  {shortBigNumber(
+                    tokenAllocation *
+                      props.field.value[props.mechanismIndex]
+                        .percentageEmittedFirstEpoch / 100
+                  )}{' '}                      
+                  tokens)
                 </span>
               </div>
               <p className="text-xs font-bold uppercase text-gray-700">

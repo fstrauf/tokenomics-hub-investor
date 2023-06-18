@@ -205,36 +205,37 @@ model CalculationTimeSeries {
 }
 
 model Mechanism {
-  id                        String                      @id @default(cuid())
-  name                      String?
-  summary                   String?                     @db.Text
-  details                   String?                     @db.Text
-  isSink                    Boolean?
-  token                     String?
-  postId                    String?
-  isTemplate                Boolean?                    @default(false)
-  calculationId             String?
-  category                  String?
-  color                     String?
-  emissionReductionPerEpoch Float?
-  epochDurationInSeconds    Float?
-  initialEmissionPerSecond  Float?
-  isEpochDistro             Boolean                     @default(false)
-  lockupPeriod              Float?
-  percentageAllocation      Float?
-  unlockPeriod              Float?
-  percentageUnlockTGE       Float?
-  supplyDemandType          Mechanism_supplyDemandType?
-  mechanismTypeId           String?                     
-  templateSheet             String?
-  post                      Post?                       @relation(fields: [postId], references: [id], onDelete: Cascade)
-  PostUser                  PostUser[]
-  calculation               Calculation?                @relation(fields: [calculationId], references: [id], onDelete: Cascade)
-  CalculationTimeSeries     CalculationTimeSeries[]
-  mechanismType             Mechanism?                  @relation("MechanismType", fields: [mechanismTypeId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  mechanismTypes            Mechanism[]                 @relation("MechanismType")
-  incentiveTarget           Mechanism[]                 @relation("Incentives")
-  IncentivisedBy            Mechanism[]                 @relation("Incentives")
+  id                          String                      @id @default(cuid())
+  name                        String?
+  summary                     String?                     @db.Text
+  details                     String?                     @db.Text
+  isSink                      Boolean?
+  token                       String?
+  postId                      String?
+  isTemplate                  Boolean?                    @default(false)
+  calculationId               String?
+  category                    String?
+  color                       String?
+  emissionReductionPerEpoch   Float?
+  epochDurationInSeconds      Float?
+  initialEmissionPerSecond    Float?
+  percentageEmittedFirstEpoch Float?
+  isEpochDistro               Boolean                     @default(false)
+  lockupPeriod                Float?
+  percentageAllocation        Float?
+  unlockPeriod                Float?
+  percentageUnlockTGE         Float?
+  supplyDemandType            Mechanism_supplyDemandType?
+  mechanismTypeId             String?
+  templateSheet               String?
+  post                        Post?                       @relation(fields: [postId], references: [id], onDelete: Cascade)
+  PostUser                    PostUser[]
+  calculation                 Calculation?                @relation(fields: [calculationId], references: [id], onDelete: Cascade)
+  CalculationTimeSeries       CalculationTimeSeries[]
+  mechanismType               Mechanism?                  @relation("MechanismType", fields: [mechanismTypeId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  mechanismTypes              Mechanism[]                 @relation("MechanismType")
+  incentiveTarget             Mechanism[]                 @relation("Incentives")
+  IncentivisedBy              Mechanism[]                 @relation("Incentives")
 
   @@index([postId])
   @@index([calculationId])
