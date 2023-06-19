@@ -32,12 +32,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const { userId } = getAuth(context.req) || undefined
   const processedUserId = userId !== null ? userId : ''
   const txCalls = []
-  console.log("🚀 ~ file: [id].tsx:40 ~ constgetServerSideProps:GetServerSideProps= ~ String(context.params?.id):", String(context.params?.id))
+
   txCalls.push(
     prisma.post.findUnique({
       where: {
         id: String(context.params?.id),
-      },        
+      },
       include: {
         author: {
           select: { name: true, email: true },
@@ -53,7 +53,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
             CalculationTimeSeries: {},
             mechanismType: {},
             incentiveTarget: {},
-            // PostUser: {},
+            PostUser: {},
           },
         },
         DesignElement: {},
@@ -86,9 +86,22 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     })
   )
 
-  const [post, mechanismTemplates, designPhases, Category, Tag, Subscription] =    
+  const [post, mechanismTemplates, designPhases, Category, Tag, Subscription] =
     await prisma.$transaction(txCalls)
-  console.log("🚀 ~ file: [id].tsx:90 ~ constgetServerSideProps:GetServerSideProps= ~ post:", post)
+
+  // const res = await prisma.mechanism.findMany({
+  //   where: { postId: String(context.params?.id) },
+
+  // })
+
+  // res.forEach(async (m)=>{
+  //   const resMech = await prisma.mechanism.findUnique({
+  //     where: {id:m.id},
+  //     include: {PostUser:{}}
+  //   })
+  //   console.log("🚀 ~ file: [id].tsx:102 ~ res.forEach ~ resMech:", resMech)
+  // })
+
   let postWithUpdatedComments = {}
 
   if (post !== null) {

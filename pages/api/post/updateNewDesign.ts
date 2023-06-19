@@ -5,7 +5,7 @@ import { stringToKey } from '../../../lib/helper'
 
 export default async function handle(req, res) {
   const { values } = req.body
-  console.log('🚀 ~ file: updateNewDesign.ts:7 ~ handle ~ values:', values)
+  // console.log('🚀 ~ file: updateNewDesign.ts:7 ~ handle ~ values:', values)
 
   //fetch all postusers
 
