@@ -1,10 +1,14 @@
 import prisma from '../../../lib/prisma'
 import { Prisma } from '@prisma/client'
 import { stringToKey } from '../../../lib/helper'
+// import { forEach } from '@tiptap/core/dist/packages/core/src/commands'
 
 export default async function handle(req, res) {
   const { values } = req.body
   console.log('🚀 ~ file: updateNewDesign.ts:7 ~ handle ~ values:', values)
+
+  //fetch all postusers
+
   const inputFields = values
 
   var breakdown = inputFields.breakdown
@@ -38,13 +42,13 @@ export default async function handle(req, res) {
     if (m?.PostUser === undefined) {
     } else {
       postUsers = {
-        connectOrCreate: m?.PostUser?.map((pu) => ({          
+        connectOrCreate: m?.PostUser?.map((pu) => ({
           where: {
-            id: inputFields?.id + '_' + pu.value,
+            id: inputFields?.id + '_' + pu.name,
           },
           create: {
-            id: inputFields?.id + '_' + pu.value,
-            name: pu.value,
+            id: inputFields?.id + '_' + pu.name,
+            name: pu.name,
             Post: { connect: { id: inputFields?.id } },
           },
         })),
@@ -141,54 +145,114 @@ export default async function handle(req, res) {
     }
   })
 
+  const mappingEntries = await prisma.postUser.findMany({
+    where: {
+      postId: inputFields?.id,
+    },
+    select: {
+      id: true,
+    },
+  })
+
   var response = {}
 
   const txCalls = []
 
+
   txCalls.push(
-    prisma.protocolTimeLine.deleteMany({
+    prisma.mechanismToPostUser.deleteMany({
       where: {
-        postId: inputFields?.id,
+        B: {
+          in: mappingEntries.map((entry) => entry.id),
+        },
       },
     })
   )
 
+  // mappingEntries.forEach((mE) => {
+  //   txCalls.push(
+
+  //     prisma.postUser.update({
+  //       where: {
+  //         id: mE.id,
+  //       },
+  //       data: { Mechanism: { deleteMany:{}}}
+  //     })
+  //   );
+  // })
+
+  // txCalls.push(
+  //   prisma.protocolTimeLine.deleteMany({
+  //     where: {
+  //       postId: inputFields?.id,
+  //     },
+  //   })
+  // )
+
   //disconnect
+  // txCalls.push(
+  //   prisma.post.update({
+  //     where: {
+  //       id: inputFields?.id,
+  //     },
+  //     data: {
+  //       categories: { set: [] },
+  //       tags: { set: [] },
+  //     },
+  //   })
+  // )
+
+  // txCalls.push(
+  //   prisma.designElement.deleteMany({
+  //     where: {
+  //       postId: inputFields?.id,
+  //     },
+  //   })
+  // )
+
+  //cleanup
   txCalls.push(
     prisma.post.update({
       where: {
         id: inputFields?.id,
       },
       data: {
+        PostUser: {
+          deleteMany: {},
+        },
+        Mechanism: {
+          deleteMany: {},
+        },
+        DesignElement: {
+          deleteMany: {},
+        },
         categories: { set: [] },
         tags: { set: [] },
+        protocolTimeLine: {
+          deleteMany: {},
+        },
+        ProtocolResources: {
+          deleteMany: {},
+        },
       },
     })
   )
 
-  txCalls.push(
-    prisma.designElement.deleteMany({
-      where: {
-        postId: inputFields?.id,
-      },
-    })
-  )
+  // txCalls.push(
+  //   prisma.postUser.deleteMany({
+  //     where: {
+  //       postId: inputFields?.id,
+  //     },
+  //   })
+  // )
 
-  txCalls.push(
-    prisma.postUser.deleteMany({
-      where: {
-        postId: inputFields?.id,
-      },
-    })
-  )
-
-  txCalls.push(
-    prisma.mechanism.deleteMany({
-      where: {
-        postId: inputFields?.id,
-      },
-    })
-  )
+  // txCalls.push(
+  //   prisma.mechanism.deleteMany({
+  //     where: {
+  //       postId: inputFields?.id,
+  //     },
+  //   })
+  // )
 
   // txCalls.push(
   //   prisma.calculation.deleteMany({
@@ -198,13 +262,13 @@ export default async function handle(req, res) {
   //   })
   // )
 
-  txCalls.push(
-    prisma.protocolResources.deleteMany({
-      where: {
-        postId: inputFields?.id,
-      },
-    })
-  )
+  // txCalls.push(
+  //   prisma.protocolResources.deleteMany({
+  //     where: {
+  //       postId: inputFields?.id,
+  //     },
+  //   })
+  // )
   txCalls.push(
     prisma.post.update({
       where: {

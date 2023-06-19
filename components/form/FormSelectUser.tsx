@@ -1,21 +1,15 @@
-// import { FieldProps } from "formik";
-import React from "react";
-import Select from "react-select/creatable";
+import React from 'react'
+import Select from 'react-select/creatable'
 
 const FormSelectUser = ({
   field,
   form,
   options,
   isMulti = false,
-  placeholder = 'Select or create'
+  placeholder = 'Select or create',
 }) => {
-  // console.log("🚀 ~ file: FormSelectUser.tsx:12 ~ options:", options)
   function onChange(option) {
-
-    form.setFieldValue(
-      field.name,
-      option ? (option).map((item) => item) : [],
-    );
+    form.setFieldValue(field.name, option ? option.map((item) => item) : [])
   }
 
   if (!isMulti) {
@@ -23,7 +17,9 @@ const FormSelectUser = ({
       <Select
         options={options}
         name={field.name}
-        value={options ? options.find(option => option.value === field.value) : ''}
+        value={
+          options ? options.find((option) => option.value === field.value) : ''
+        }
         onChange={(option) => form.setFieldValue(field.name, option.value)}
         onBlur={field.onBlur}
         placeholder={placeholder}
@@ -36,11 +32,16 @@ const FormSelectUser = ({
         classNamePrefix="react-select"
         name={field.name}
         value={field.value}
+        // value={options ? options.find(option => option.name === field.value) : ''}
         onChange={onChange}
         options={options}
-        getOptionValue={option => option.id}
-        getOptionLabel={option => option.name}
-        // getNewOptionData={(value, label) => ({ id: value, name: label, __isNew__: true })}
+        getOptionValue={(option) => option.id}
+        getOptionLabel={(option) => option.name}
+        getNewOptionData={(value, label) => ({
+          id: value,
+          name: label,
+          __isNew__: true,
+        })}
         isMulti={true}
         placeholder={placeholder}
       />
@@ -48,6 +49,4 @@ const FormSelectUser = ({
   }
 }
 
-export default FormSelectUser;
-
-
+export default FormSelectUser

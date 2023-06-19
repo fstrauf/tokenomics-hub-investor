@@ -121,9 +121,8 @@ function DemandComponent(props) {
         <div>
           <ErrorBoundary
             FallbackComponent={Fallback}
-            onReset={(details) => {
-              // Reset the state of your app so the error doesn't happen again
-            }}
+            // onReset={(details) => {
+            // }}
           >
             <GenericTab
               tabs={Tabs}
