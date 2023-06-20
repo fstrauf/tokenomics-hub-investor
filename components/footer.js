@@ -40,7 +40,7 @@ export default function Footer() {
             <Link href="/privacy-policy" className="hover:underline">
               Privacy Policy
             </Link>
-            <Link href="/newPost" className="hover:underline">
+            <Link href="/myReports" className="hover:underline">
               List a token
             </Link>
           </div>
