@@ -1,8 +1,9 @@
 import PostTitle from './post-title'
-import { CircularProgressbar } from 'react-circular-progressbar'
+// import { CircularProgressbar } from 'react-circular-progressbar'
 import { TwitterShareButton } from 'react-share'
 import { WEBSITE_URL_BASE } from '../../lib/constants'
-import Badge from '../../public/svg/badge'
+import BadgeOfficial from '../../public/svg/BadgeOfficial'
+// import BadgeReview from '../../public/svg/BadgeReview'
 
 export default function PostHeader({
   title,
@@ -10,13 +11,12 @@ export default function PostHeader({
   shortDescription,
   cats,
   tags,
-  tokenStrength,
   slug,
   ticker,
   imageUrl,
   isOfficial,
 }) {
-  const percentageComplete = tokenStrength || 0
+  // const percentageComplete = tokenStrength || 0
 
   return (
     <div key={title}>
@@ -85,7 +85,7 @@ export default function PostHeader({
           {isOfficial && (
             <>
               <div class="group relative">
-                <Badge />
+                <BadgeOfficial />
                 <div class="absolute bottom-0 right-14 mb-6 hidden flex-col items-center group-hover:flex">
                   <span class="whitespace-no-wrap w-32 relative z-10 bg-gray-200 p-2 text-xs leading-none text-black shadow-lg">
                     This report was published by {title}

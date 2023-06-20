@@ -67,21 +67,6 @@ export async function getStaticProps({ params }) {
     prisma.$queryRaw`select count(A) as count,A as cat,p.authorClerkId from _CategoryToPost join Post as p on p.id = B WHERE p.authorClerkId = ${post?.authorClerkId} AND p.status = ${postStatus.published} GROUP BY A, p.authorClerkId`
   )
 
-  // txCalls.push(
-  //   prisma.userStrengthRating.aggregate({
-  //     _avg: {
-  //       tokenUtilityStrength: true,
-  //       businessModelStrength: true,
-  //       valueCreationStrength: true,
-  //       valueCaptureStrength: true,
-  //       demandDriversStrength: true,
-  //     },
-  //     where: {
-  //       postId: post.id,
-  //     },
-  //   })
-  // )
-
   const [postCount, postCategoryCount] = await prisma.$transaction(txCalls)
 
   let clerkUser = {}
