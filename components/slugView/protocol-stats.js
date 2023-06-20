@@ -14,29 +14,19 @@ export default function ProtocolStats({ protocol }) {
         </h1>
       </div>
     )
-  console.log(
-    '🚀 ~ file: protocol-stats.js:8 ~ ProtocolStats ~ protocol:',
-    protocol
-  )
   const statsData = useSWR(
     'https://api.coingecko.com/api/v3/coins/' + protocol,
     fetcher,
     { refreshInterval: 30000 }
   )
-  console.log(
-    '🚀 ~ file: protocol-stats.js:14 ~ ProtocolStats ~ statsData:',
-    statsData
-  )
+
   // console.log("🚀 ~ file: protocol-stats.js:13 ~ ProtocolStats ~ statsData:", statsData)
   const chartData = useSWR(
     `https://api.coingecko.com/api/v3/coins/${protocol}/market_chart?vs_currency=usd&days=max&interval=weekly`,
     fetcher,
     { refreshInterval: 30000 }
   )
-  console.log(
-    '🚀 ~ file: protocol-stats.js:20 ~ ProtocolStats ~ chartData:',
-    chartData
-  )
+
 
   const PriceChart = dynamic(() => import('../charts/PriceChart'), {
     ssr: false,
