@@ -13,7 +13,6 @@
   "/clgt22do10000l70fbw5un62k",
   "/clhasxadz0000l60folm2apcf",
   "/clhheqahy0000lb0f99q7eub7",
-  "/clhxl0mmh001gmi0fivd2v7wy",
   "/convex-finance",
   "/cult-dao",
   "/dogecoin",
@@ -23,6 +22,7 @@
   "/helium",
   "/ipor",
   "/kilt-protocol",
+  "/landshare",
   "/lido-dao",
   "/maker",
   "/olympus",
@@ -32,10 +32,13 @@
   "/phuture-defi-index",
   "/polkadot",
   "/qredo",
+  "/radix",
   "/redacted",
   "/rune",
   "/the-graph",
   "/the-sandbox",
   "/tokemak",
-  "/uniswap"
+  "/uniswap",
+  "/y2k-finance",
+  "/yearn-finance"
 ]

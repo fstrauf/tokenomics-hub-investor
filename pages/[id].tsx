@@ -126,6 +126,7 @@ export async function getStaticPaths() {
 
   const data = JSON.stringify(allPosts.map((obj) => `/${obj.id}`), null, 2);
 
+  console.log("🚀 ~ file: [id].tsx:129 ~ getStaticPaths ~ data:", data)
   // Write the publicRoutes array to a JSON file
   fs.writeFileSync('publicRoutes.json', data);
 
