@@ -1,7 +1,7 @@
 import PostTitle from './post-title'
 import { TwitterShareButton } from 'react-share'
 import { WEBSITE_URL_BASE } from '../../lib/constants'
-import BadgeOfficial from '../../public/svg/BadgeOfficial'
+// import BadgeOfficial from '../../public/svg/BadgeOfficial'
 import BadgeReview from '../../public/svg/BadgeReview'
 // import BadgeReview from '../../public/svg/BadgeReview'
 
