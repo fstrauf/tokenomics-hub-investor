@@ -1,5 +1,4 @@
 import PostTitle from './post-title'
-// import { CircularProgressbar } from 'react-circular-progressbar'
 import { TwitterShareButton } from 'react-share'
 import { WEBSITE_URL_BASE } from '../../lib/constants'
 import BadgeOfficial from '../../public/svg/BadgeOfficial'
@@ -16,7 +15,6 @@ export default function PostHeader({
   imageUrl,
   isOfficial,
 }) {
-  // const percentageComplete = tokenStrength || 0
 
   return (
     <div key={title}>

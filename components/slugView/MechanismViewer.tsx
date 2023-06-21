@@ -4,6 +4,13 @@ import { MechanismCardViewer } from './MechanismCardViewer'
 import TDFCalculatorViewer from './TDFCalculatorViewer'
 
 export default function MechanismViewer({ post }) {
+  if (post?.Mechanism?.length===0)
+    return (
+      <h1 className="section-head mt-10 mb-4 text-xl font-bold text-black md:mt-20 md:text-2xl lg:text-3xl">
+        Supply and Demand.
+      </h1>
+    )
+
   let [mechanismIndex, setMechanismIndex] = useState(0)
   const [isOpen, setIsOpen] = useState(false)
   const handleViewMechanism = (index) => {
@@ -16,7 +23,6 @@ export default function MechanismViewer({ post }) {
       <div
         key={`${input.isSink}-${index}`}
         className="grid h-24 w-36 content-between rounded-md border-2 border-dao-green p-1 text-xs"
-        
       >
         {' '}
         <div>

@@ -1,13 +1,12 @@
 export default function UserViewer({ users }) {
-  console.log("🚀 ~ file: UserViewer.tsx:2 ~ UserViewer ~ users:", users)
-  // if (users.lenght === 0)
-  //   return (
-  //     <div>
-  //       <h1 className="section-head mt-10 mb-4 text-xl font-bold text-black md:mt-20 md:text-2xl lg:text-3xl">
-  //         Ecosystem Users.
-  //       </h1>
-  //     </div>
-  //   )
+  if (users.length === 0)
+    return (
+      <div>
+        <h1 className="section-head mt-10 mb-4 text-xl font-bold text-black md:mt-20 md:text-2xl lg:text-3xl">
+          Ecosystem Users.
+        </h1>
+      </div>
+    )
 
   return (
     <section>
