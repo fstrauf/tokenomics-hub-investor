@@ -32,7 +32,7 @@ export default function ProtocolStats({ protocol }) {
     ssr: false,
   })
 
-  if (statsData.data.error || chartData.data.error)
+  if (statsData?.data?.error || chartData?.data?.error)
     return (
       <div>
         {' '}

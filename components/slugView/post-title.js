@@ -1,11 +1,12 @@
 import Image from 'next/image'
 
 export default function PostTitle({ title, imageUrl }) {
+  // console.log("🚀 ~ file: post-title.js:4 ~ PostTitle ~ imageUrl:", imageUrl)
   return (
     <div className="flex justify-start">
       <div className="w-9 sm:w-16">
         <div className="relative m-auto h-44 rounded-lg">
-          {imageUrl ? (
+          {imageUrl !=='' ? (
             <Image
               alt={`Cover Image for ${title}`}
               className="object-contain"

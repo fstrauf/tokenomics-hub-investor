@@ -47,8 +47,9 @@ const columns = [
   }),
   columnHelper.accessor((row) => row.categories, {
     id: 'Category',
-    cell: (info) => <CategoryPills value={info.getValue()}
-    id={info.row.original.id} />,
+    cell: (info) => (
+      <CategoryPills value={info.getValue()} id={info.row.original.id} />
+    ),
   }),
 ]
 
@@ -126,12 +127,14 @@ const Table: React.FC<{ prop: Props }> = ({ prop }) => {
   )
 }
 
-
 export default Table
 
 export function CategoryPill({ value, id }) {
   return (
-    <span key={id} className="leading-wide rounded-full bg-gray-100 px-3 py-1 text-xs font-bold uppercase text-gray-700 shadow-sm">
+    <span
+      key={id}
+      className="leading-wide rounded-full bg-gray-100 px-3 py-1 text-xs font-bold uppercase text-gray-700 shadow-sm"
+    >
       {value}
     </span>
   )
@@ -165,14 +168,10 @@ function HeaderLink({ value, id, ticker }) {
 }
 
 function ProtocolImage({ value, id }) {
+  if (value === '') return <></>
   return (
     <div className="ml-4 w-4 sm:w-16">
-      <CoverImage
-        id={id}
-        title={id}
-        imageObject={value}
-        url={value}
-      />
+      <CoverImage id={id} title={id} imageObject={value} url={value} />
     </div>
   )
 }

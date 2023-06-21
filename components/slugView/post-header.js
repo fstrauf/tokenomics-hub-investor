@@ -84,10 +84,10 @@ export default function PostHeader({
         <div>
           {isOfficial && (
             <>
-              <div class="group relative">
+              <div className="group relative">
                 <BadgeOfficial />
-                <div class="absolute bottom-0 right-14 mb-6 hidden flex-col items-center group-hover:flex">
-                  <span class="whitespace-no-wrap w-32 relative z-10 bg-gray-200 p-2 text-xs leading-none text-black shadow-lg">
+                <div className="absolute bottom-0 right-14 mb-6 hidden flex-col items-center group-hover:flex">
+                  <span className="whitespace-no-wrap w-32 relative z-10 bg-gray-200 p-2 text-xs leading-none text-black shadow-lg">
                     This report was published by {title}
                   </span>
                 </div>
