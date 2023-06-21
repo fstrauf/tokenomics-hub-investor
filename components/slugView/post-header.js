@@ -2,6 +2,7 @@ import PostTitle from './post-title'
 import { TwitterShareButton } from 'react-share'
 import { WEBSITE_URL_BASE } from '../../lib/constants'
 import BadgeOfficial from '../../public/svg/BadgeOfficial'
+import BadgeReview from '../../public/svg/BadgeReview'
 // import BadgeReview from '../../public/svg/BadgeReview'
 
 export default function PostHeader({
@@ -83,7 +84,7 @@ export default function PostHeader({
           {isOfficial && (
             <>
               <div className="group relative">
-                <BadgeOfficial />
+                <BadgeReview />
                 <div className="absolute bottom-0 right-14 mb-6 hidden flex-col items-center group-hover:flex">
                   <span className="whitespace-no-wrap w-32 relative z-10 bg-gray-200 p-2 text-xs leading-none text-black shadow-lg">
                     This report was published by {title}
