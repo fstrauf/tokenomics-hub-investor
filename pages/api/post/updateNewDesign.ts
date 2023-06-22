@@ -10,6 +10,7 @@ export default async function handle(req, res) {
   //fetch all postusers
 
   const inputFields = values
+  // console.log("🚀 ~ file: updateNewDesign.ts:13 ~ handle ~ inputFields:", inputFields)
 
   var breakdown = inputFields.breakdown
   if (typeof inputFields.breakdown === 'object') {
@@ -41,7 +42,7 @@ export default async function handle(req, res) {
     var postUsers = {}
     if (m?.PostUser === undefined) {
     } else {
-      postUsers = {
+      postUsers = {        
         connectOrCreate: m?.PostUser?.map((pu) => ({
           where: {
             id: inputFields?.id + '_' + pu.name,
@@ -56,14 +57,13 @@ export default async function handle(req, res) {
     }
 
     var incentiveTargets = {}
-
     if (m?.incentiveTarget === undefined) {
     } else {
       if (m?.incentiveTarget.length > 0) {
-        incentiveTargets = {
-          connect: {
-            id: inputFields?.id + '_' + stringToKey(m?.incentiveTarget?.name),
-          },
+        incentiveTargets = {        
+          connect: m?.incentiveTarget?.map((it) => ({
+              id: inputFields?.id + '_' + stringToKey(it.name),
+          })),
         }
       }
     }
@@ -169,47 +169,6 @@ export default async function handle(req, res) {
     })
   )
 
-  // mappingEntries.forEach((mE) => {
-  //   txCalls.push(
-
-  //     prisma.postUser.update({
-  //       where: {
-  //         id: mE.id,
-  //       },
-  //       data: { Mechanism: { deleteMany:{}}}
-  //     })
-  //   );
-  // })
-
-  // txCalls.push(
-  //   prisma.protocolTimeLine.deleteMany({
-  //     where: {
-  //       postId: inputFields?.id,
-  //     },
-  //   })
-  // )
-
-  //disconnect
-  // txCalls.push(
-  //   prisma.post.update({
-  //     where: {
-  //       id: inputFields?.id,
-  //     },
-  //     data: {
-  //       categories: { set: [] },
-  //       tags: { set: [] },
-  //     },
-  //   })
-  // )
-
-  // txCalls.push(
-  //   prisma.designElement.deleteMany({
-  //     where: {
-  //       postId: inputFields?.id,
-  //     },
-  //   })
-  // )
-
   //cleanup
   txCalls.push(
     prisma.post.update({
@@ -238,37 +197,6 @@ export default async function handle(req, res) {
     })
   )
 
-  // txCalls.push(
-  //   prisma.postUser.deleteMany({
-  //     where: {
-  //       postId: inputFields?.id,
-  //     },
-  //   })
-  // )
-
-  // txCalls.push(
-  //   prisma.mechanism.deleteMany({
-  //     where: {
-  //       postId: inputFields?.id,
-  //     },
-  //   })
-  // )
-
-  // txCalls.push(
-  //   prisma.calculation.deleteMany({
-  //     where: {
-  //       id: inputFields?.Calculation?.id,
-  //     },
-  //   })
-  // )
-
-  // txCalls.push(
-  //   prisma.protocolResources.deleteMany({
-  //     where: {
-  //       postId: inputFields?.id,
-  //     },
-  //   })
-  // )
   txCalls.push(
     prisma.post.update({
       where: {
@@ -343,12 +271,6 @@ export default async function handle(req, res) {
       },
     })
   )
-
-  // txCalls.push(
-  //   prisma.mechanism.createMany({
-  //     data: mechanisms,
-  //   })
-  // )
 
   try {
     response = await prisma.$transaction(txCalls)

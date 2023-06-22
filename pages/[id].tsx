@@ -1,11 +1,8 @@
 import { useRouter } from 'next/router'
 import ErrorPage from 'next/error'
-// import Layout from '../../components/layout'
 import Layout from '../components/layout'
-// import prisma from '../../lib/prisma'
 import prisma from '../lib/prisma'
 import { clerkClient } from '@clerk/nextjs/server'
-// import { clerkConvertJSON, postStatus } from '../../lib/helper'
 import { clerkConvertJSON, postStatus } from '../lib/helper'
 import PostView from '../components/slugView/PostView'
 import fs from 'fs'
@@ -25,6 +22,7 @@ export default function Post({ post, author }) {
 
 export async function getStaticProps({ params }) {
   const txCalls = []
+
   const post = await prisma.post.findUnique({
     where: {
       id: params.id,
@@ -42,6 +40,8 @@ export async function getStaticProps({ params }) {
         include: {
           CalculationTimeSeries: {},
           PostUser: {},
+          mechanismType: {},
+          incentiveTarget:{}
         },
       },
       PostUser: {},
@@ -102,18 +102,22 @@ export async function getStaticPaths() {
     },
   })
 
-  const allPaths =    
-  allPosts?.map((post) => ({
-    params: {
-      id: post.id,
-    },
-  })) || []
+  const allPaths =
+    allPosts?.map((post) => ({
+      params: {
+        id: post.id,
+      },
+    })) || []
 
-  const data = JSON.stringify(allPosts.map((obj) => `/${obj.id}`), null, 2);
+  const data = JSON.stringify(
+    allPosts.map((obj) => `/${obj.id}`),
+    null,
+    2
+  )
 
-  console.log("🚀 ~ file: [id].tsx:129 ~ getStaticPaths ~ data:", data)
+  console.log('🚀 ~ file: [id].tsx:129 ~ getStaticPaths ~ data:', data)
   // Write the publicRoutes array to a JSON file
-  fs.writeFileSync('publicRoutes.json', data);
+  fs.writeFileSync('publicRoutes.json', data)
 
   return {
     paths: allPaths,

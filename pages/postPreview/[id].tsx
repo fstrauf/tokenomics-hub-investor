@@ -63,6 +63,9 @@ export const getServerSideProps: GetServerSideProps = async ({
         include: {
           CalculationTimeSeries: {},
           PostUser: {},
+          mechanismType:{},
+          incentiveTarget:{}
+
         },
       },
       PostUser: {},
@@ -74,6 +77,7 @@ export const getServerSideProps: GetServerSideProps = async ({
       },
     },
   })
+  console.log("🚀 ~ file: [id].tsx:78 ~ post:", post)
 
   txCalls.push(
     prisma.post.count({

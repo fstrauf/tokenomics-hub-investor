@@ -1,4 +1,6 @@
-export default function UserViewer({ users }) {
+export default function UserViewer({ users, headerless=false }) {
+  console.log("🚀 ~ file: UserViewer.tsx:2 ~ UserViewer ~ users:", users)
+  if(headerless)return(<></>)
   if (users.length === 0)
     return (
       <div>
@@ -10,9 +12,10 @@ export default function UserViewer({ users }) {
 
   return (
     <section>
-      <h1 className="section-head mt-10 mb-4 text-xl font-bold text-black md:mt-20 md:text-2xl lg:text-3xl">
+      {!headerless && <h1 className="section-head mt-10 mb-4 text-xl font-bold text-black md:mt-20 md:text-2xl lg:text-3xl">
         Ecosystem Users.
-      </h1>
+      </h1>}
+      
       <div className="flex justify-center rounded-lg border-2 p-2">
         <table className="mb-1 w-full text-left text-sm text-gray-500">
           <thead className="bg-gray-50 text-xs uppercase text-gray-700">

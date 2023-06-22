@@ -3,7 +3,7 @@ import React from 'react'
 import Select from 'react-select'
 
 
-const FormSelectUtilty = ({
+const FormSelectIncentive = ({
   field,
   form,
   options,
@@ -45,16 +45,16 @@ const FormSelectUtilty = ({
         name={field.name}
         value={field.value}
         onChange={onChange}
-        defaultValue={defaultValue}
+        // defaultValue={defaultValue}
         options={options}
         getOptionValue={(option) => option.name.replace(/[0-9]/g, '').trim()}
         getOptionLabel={(option) =>  option.name.replace(/[0-9]/g, '').trim()}
         // getNewOptionData={(value, label) => ({ id: value, name: label, __isNew__: true })}
-        //isMulti={true}
+        isMulti={true}
         placeholder={placeholder}
       />
     )
   }
 }
 
-export default FormSelectUtilty
+export default FormSelectIncentive

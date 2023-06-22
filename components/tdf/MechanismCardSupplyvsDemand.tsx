@@ -111,35 +111,36 @@ export const MechanismCardSupplyvsDemand = ({
         {returnsTab(sCurrentTab)}
       </div>
     )
+  } else {
+    return (
+      <div
+        key={mechanismIndex}
+        className="ml-20 mr-20 flex max-w-2xl flex-col p-4"
+      >
+        <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 ">
+          {returnsTabName(sCurrentTab)}
+        </h5>
+        <label className="block text-sm font-medium text-gray-900 ">Name</label>
+        <Field
+          name={`${field.name}.${mechanismIndex}.name`}
+          placeholder="Name"
+          className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-xs text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+          type="text"
+        />
+        <label className="block text-sm font-medium text-gray-900 ">
+          Summary
+        </label>
+        <Field
+          name={`${field.name}.${mechanismIndex}.summary`}
+          placeholder="Summary"
+          className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-xs text-gray-900 focus:border-blue-500 focus:ring-blue-500"
+          as="textarea"
+          rows={4}
+        />
+        {returnsTab(sCurrentTab)}
+      </div>
+    )
   }
-  return (
-    <div
-      key={mechanismIndex}
-      className="ml-20 mr-20 flex max-w-2xl flex-col p-4"
-    >
-      <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 ">
-        {returnsTabName(sCurrentTab)}
-      </h5>
-      <label className="block text-sm font-medium text-gray-900 ">Name</label>
-      <Field
-        name={`${field.name}.${mechanismIndex}.name`}
-        placeholder="Name"
-        className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-xs text-gray-900 focus:border-blue-500 focus:ring-blue-500"
-        type="text"
-      />
-      <label className="block text-sm font-medium text-gray-900 ">
-        Summary
-      </label>
-      <Field
-        name={`${field.name}.${mechanismIndex}.summary`}
-        placeholder="Summary"
-        className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-xs text-gray-900 focus:border-blue-500 focus:ring-blue-500"
-        as="textarea"
-        rows={4}
-      />
-      {returnsTab(sCurrentTab)}
-    </div>
-  )
 }
 
 export default MechanismCardSupplyvsDemand

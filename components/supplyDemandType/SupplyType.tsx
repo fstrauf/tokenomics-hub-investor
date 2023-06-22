@@ -7,6 +7,7 @@ import GenericTab from '../generic/GenericTab'
 import FormSelectUtility from '../form/FormSelectUtility'
 import { supplyDemandType } from '../../lib/helper'
 import { ErrorBoundary } from 'react-error-boundary'
+import FormSelectIncentive from '../form/FormSelectIncentive'
 const secondsPerMonth = 2628000
 const Tabs = [{ tab: 'Manual' }, { tab: 'Functions' }, { tab: 'Spreadsheets' }]
 
@@ -24,8 +25,16 @@ export function SupplyInternal(props) {
   return <>{SupplyComponent(props)}</>
 }
 
+export function SupplyInternalViewer(props) {
+  return <>{SupplyComponentViewer(props)}</>
+}
+
 export function SupplyExternal(props) {
   return <>{SupplyComponent(props)}</>
+}
+
+export function SupplyExternalViewer(props) {
+  return <>{SupplyComponentViewer(props)}</>
 }
 
 export function DemandUtility(props) {
@@ -36,7 +45,7 @@ export function DemandUtility(props) {
       </label>
       <Field
         className="custom-select mt-5"
-        name={`${props.field.name}.${props.mechanismIndex}.Utility`}
+        name={`${props.field.name}.${props.mechanismIndex}.mechanismType`}
         options={props.templates.filter((option) => {
           return (
             option.supplyDemandType ==
@@ -57,6 +66,43 @@ export function DemandUtility(props) {
         index={props.mechanismIndex}
       />
       {DemandComponent(props)}
+    </>
+  )
+}
+
+export function DemandUtilityViewer(props) {
+  const mechanism = props?.mechanism
+  return (
+    <>
+      <label className="mt-5 block text-sm font-medium text-gray-900 ">
+        Utility
+      </label>
+      <span className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-xs text-gray-900 focus:border-blue-500 focus:ring-blue-500">
+        {mechanism?.mechanismType?.name}
+      </span>
+    </>
+  )
+}
+
+export function DemandMechanismViewer(props) {
+  const mechanism = props?.mechanism
+
+  return (
+    <>
+      <label className="mt-5 block text-sm font-medium text-gray-900 ">
+        Mechanism
+      </label>
+      <span className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-xs text-gray-900 focus:border-blue-500 focus:ring-blue-500">
+        {mechanism?.mechanismType?.name}
+      </span>
+      <label className="mt-5 block text-sm font-medium text-gray-900 ">
+        Incentived External Allocations
+      </label>
+      <ul className="list-inside list-disc text-xs text-gray-900">
+        {mechanism.incentiveTarget.map((target, index) => (
+          <li key={index}>{target.name}</li>
+        ))}
+      </ul>
     </>
   )
 }
@@ -99,7 +145,7 @@ export function DemandMechanism(props) {
           return option.supplyDemandType == supplyDemandType.supplyExternal
         })}
         defaultValue={''}
-        component={FormSelectUtility}
+        component={FormSelectIncentive}
         placeholder={''}
         isMulti={true}
         index={props.mechanismIndex}
@@ -119,11 +165,7 @@ function DemandComponent(props) {
         <hr className="mt-5 mb-5"></hr>
 
         <div>
-          <ErrorBoundary
-            FallbackComponent={Fallback}
-            // onReset={(details) => {
-            // }}
-          >
+          <ErrorBoundary FallbackComponent={Fallback}>
             <GenericTab
               tabs={Tabs}
               panels={[
@@ -141,24 +183,26 @@ function DemandComponent(props) {
 
 function SupplyComponent(props) {
   const { setFieldValue } = useFormikContext()
+  const mechanism = props.field.value[props.mechanismIndex]
   const tokenAllocation = Math.floor(
-    (props.field.value[props.mechanismIndex].percentageAllocation *
-      props?.totalSupply) /
-      100
+    (mechanism.percentageAllocation * props?.totalSupply) / 100
   )
-  
-  const handlePercentageEmittedFirstEpochChange = (percentageEmittedFirstEpoch) => {
+
+  const handlePercentageEmittedFirstEpochChange = (
+    percentageEmittedFirstEpoch
+  ) => {
     // const { percentageEmittedFirstEpoch } = values;
     const initialEmissionPerSecond =
-      (tokenAllocation * percentageEmittedFirstEpoch / 100) /
-      props.field.value[props.mechanismIndex].epochDurationInSeconds
+      (tokenAllocation * percentageEmittedFirstEpoch) /
+      100 /
+      mechanism.epochDurationInSeconds
 
     setFieldValue(
       `${props.field.name}.${props.mechanismIndex}.initialEmissionPerSecond`,
       Number(initialEmissionPerSecond)
     )
   }
-      
+
   return (
     <>
       <div>
@@ -201,7 +245,7 @@ function SupplyComponent(props) {
               (= {tokenAllocation} tokens)
             </span>
           </div>
-          {props.field?.value[props.mechanismIndex]?.isEpochDistro ? (
+          {mechanism?.isEpochDistro ? (
             <>
               {' '}
               <p className="text-xs font-bold uppercase text-gray-700">
@@ -220,11 +264,7 @@ function SupplyComponent(props) {
                   (~{' '}
                   {Math.floor(
                     dayjs
-                      .duration(
-                        props.field.value[props.mechanismIndex]
-                          .epochDurationInSeconds,
-                        'seconds'
-                      )
+                      .duration(mechanism.epochDurationInSeconds, 'seconds')
                       .asMonths()
                   )}{' '}
                   months)
@@ -245,8 +285,7 @@ function SupplyComponent(props) {
                 <span className="ml-1 self-center text-xs">
                   (~{' '}
                   {shortBigNumber(
-                    props.field.value[props.mechanismIndex]
-                      .initialEmissionPerSecond * secondsPerMonth
+                    mechanism.initialEmissionPerSecond * secondsPerMonth
                   )}{' '}
                   per month)
                 </span>
@@ -272,10 +311,9 @@ function SupplyComponent(props) {
                 <span className="ml-1 self-center text-xs">
                   (={' '}
                   {shortBigNumber(
-                    tokenAllocation *
-                      props.field.value[props.mechanismIndex]
-                        .percentageEmittedFirstEpoch / 100
-                  )}{' '}                      
+                    (tokenAllocation * mechanism.percentageEmittedFirstEpoch) /
+                      100
+                  )}{' '}
                   tokens)
                 </span>
               </div>
@@ -331,6 +369,136 @@ function SupplyComponent(props) {
             className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500"
             type="color"
           />
+        </div>
+      </div>
+    </>
+  )
+}
+
+function SupplyComponentViewer(props) {
+  // console.log("🚀 ~ file: SupplyType.tsx:379 ~ SupplyComponentViewer ~ props:", props)
+  const mechanism = props?.mechanism
+  // const tokenAllocation = Math.floor(
+  //   (mechanism.percentageAllocation * props?.totalSupply) / 100
+  // )
+
+  return (
+    <>
+      <div>
+        <div className="flex py-5">
+          {mechanism?.isEpochDistro ? <span className="text-sm font-medium text-gray-900">
+            Allocation Based Supply
+          </span> : <span className="text-sm font-medium text-gray-900 ">
+            Emission Based Supply
+          </span>}
+          
+          {/* <label className="relative mr-5 inline-flex cursor-pointer items-center">
+            <span>{mechanism.isEpochDistro}</span>
+            <div className="peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:top-0.5 after:left-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-red-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:ring-4 peer-focus:ring-red-300 dark:border-gray-600 dark:bg-gray-700 dark:peer-focus:ring-red-800"></div>
+          </label>
+           */}
+        </div>
+
+        <div className="grid grid-cols-2 items-center justify-between gap-1">
+          <p className="text-xs font-bold uppercase text-gray-700">
+            Percentage Allocation (%)
+          </p>{' '}
+          <div className="flex">
+            <p className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-xs text-gray-900 focus:border-blue-500 focus:ring-blue-500">
+              {mechanism.percentageAllocation}
+            </p>
+            {/* <span className="ml-1 self-center text-xs">
+              (= {tokenAllocation} tokens)
+            </span> */}
+          </div>
+          {mechanism?.isEpochDistro ? (
+            <>
+              {' '}
+              <p className="text-xs font-bold uppercase text-gray-700">
+                Epoch Duration in Seconds
+              </p>
+              <div className="flex">
+                <p className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-xs text-gray-900 focus:border-blue-500 focus:ring-blue-500">
+                  {mechanism.epochDurationInSeconds}
+                </p>
+                <span className="ml-1 self-center text-xs">
+                  (~{' '}
+                  {Math.floor(
+                    dayjs
+                      .duration(mechanism.epochDurationInSeconds, 'seconds')
+                      .asMonths()
+                  )}{' '}
+                  months)
+                </span>
+              </div>
+              <p className="text-xs font-bold uppercase text-gray-700">
+                Initial Emission per second
+              </p>
+              <div className="flex">
+                <p className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-xs text-gray-900 focus:border-blue-500 focus:ring-blue-500">
+                  {mechanism.initialEmissionPerSecond}
+                </p>
+                <span className="ml-1 self-center text-xs">
+                  (~{' '}
+                  {shortBigNumber(
+                    mechanism.initialEmissionPerSecond * secondsPerMonth
+                  )}{' '}
+                  per month)
+                </span>
+              </div>
+              <p className="text-xs font-bold uppercase text-gray-700">
+                % of tokens to be emitted in first epoch
+              </p>
+              <div className="flex">
+                <p className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-xs text-gray-900 focus:border-blue-500 focus:ring-blue-500">
+                  {mechanism.percentageEmittedFirstEpoch}
+                </p>
+                {/* <span className="ml-1 self-center text-xs">
+                  (={' '}
+                  {shortBigNumber(
+                    (tokenAllocation * mechanism.percentageEmittedFirstEpoch) /
+                      100
+                  )}{' '}
+                  tokens)
+                </span> */}
+              </div>
+              <p className="text-xs font-bold uppercase text-gray-700">
+                Emission Reduction per Epoch (in %)
+              </p>
+              <p className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-xs text-gray-900 focus:border-blue-500 focus:ring-blue-500">
+                {mechanism.emissionReductionPerEpoch}
+              </p>
+            </>
+          ) : (
+            <>
+              <p className="w-16 text-xs font-bold uppercase text-gray-700">
+                % Unlock at TGE
+              </p>
+              <p className="block w-14 rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-xs text-gray-900 focus:border-blue-500 focus:ring-blue-500">
+                {mechanism.percentageUnlockTGE}
+              </p>
+
+              <p className="w-16 text-xs font-bold uppercase text-gray-700">
+                Lockup Period
+              </p>
+              <p className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-xs text-gray-900 focus:border-blue-500 focus:ring-blue-500">
+                {mechanism.lockupPeriod}
+              </p>
+
+              <p className="text-xs font-bold uppercase text-gray-700">
+                Unlocking Period
+              </p>
+              <p className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-xs text-gray-900 focus:border-blue-500 focus:ring-blue-500">
+                {mechanism.unlockPeriod}
+              </p>
+            </>
+          )}
+          {/* <div className="flex">
+            <p className="text-xs font-bold uppercase text-gray-700">Color</p>
+            <p className="block rounded-lg border border-gray-300 bg-gray-50 p-1.5 text-xs text-gray-900 focus:border-blue-500 focus:ring-blue-500">
+              {mechanism.color}
+            </p>
+          </div> */}
         </div>
       </div>
     </>

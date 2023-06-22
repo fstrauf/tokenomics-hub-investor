@@ -8,7 +8,11 @@ const FormSelectUser = ({
   isMulti = false,
   placeholder = 'Select or create',
 }) => {
+  console.log("🚀 ~ file: FormSelectUser.tsx:11 ~ options:", options)
+  
   function onChange(option) {
+    console.log("🚀 ~ file: FormSelectUser.tsx:12 ~ onChange ~ option:", option)
+    console.log("🚀 ~ file: FormSelectUser.tsx:11 ~ field:", field.name)
     form.setFieldValue(field.name, option ? option.map((item) => item) : [])
   }
 

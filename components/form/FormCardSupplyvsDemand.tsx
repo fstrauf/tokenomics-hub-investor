@@ -1,12 +1,10 @@
 import { FieldArray } from 'formik'
 import React, { useState } from 'react'
-import XMarkIcon from '../../public/svg/xmarkicon'
 import Drawer from '../slugView/Drawer'
 import MechanismCardSupplyvsDemand from '../tdf/MechanismCardSupplyvsDemand'
-// import { validateTierAccess } from '../../lib/helper'
-import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
-// import Link from 'next/link'
+// import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
 import { supplyDemandType } from '../../lib/helper'
+import MechanismTile from '../tdf/MechanismTile'
 
 export const FormCardSupplyvsDemand = ({
   field,
@@ -15,8 +13,8 @@ export const FormCardSupplyvsDemand = ({
   setFieldValue,
   // subscription,
 }) => {
-  const { user } = useUser()
-  const admin = user?.publicMetadata?.admin || false
+  // const { user } = useUser()
+  // const admin = user?.publicMetadata?.admin || false
   let [mechanismIndex, setMechanismIndex] = useState(0)
 
   const mechTemplates = mechanismTemplates.map((obj) => ({ ...obj }))
@@ -25,50 +23,6 @@ export const FormCardSupplyvsDemand = ({
   const handleEditMechanism = (index) => {
     setMechanismIndex(index)
     setIsOpen(true)
-  }
-
-  const mechanismTile = (input, index, arrayHelpers) => {
-    return (
-      <div
-        key={index}
-        className="grid h-24 w-36 content-between rounded-md border-2 border-dao-green p-1 text-xs"
-      >
-        <div>
-          <div className="flex">
-            {input?.isSink ? (
-              <></>
-            ) : (
-              <div
-                className="mr-2 h-5 w-5 bg-slate-600"
-                style={{ background: input.color }}
-              ></div>
-            )}
-            <p className="">{input.name}</p>
-          </div>
-          {input.isSink ? (
-            <></>
-          ) : (
-            <p className="mt-2">{input.percentageAllocation} %</p>
-          )}
-        </div>
-        <div className="flex h-7 border-t-2">
-          <button
-            type="button"
-            className="w-full"
-            onClick={() => handleEditMechanism(index)}
-          >
-            Edit
-          </button>
-          <button
-            className="relative float-right"
-            onClick={() => arrayHelpers.remove(index)}
-            type="button"
-          >
-            <XMarkIcon className="h-3 w-3" aria-hidden="true" />
-          </button>
-        </div>
-      </div>
-    )
   }
 
   return (
@@ -106,7 +60,12 @@ export const FormCardSupplyvsDemand = ({
                           {!input.isSink &&
                           input.supplyDemandType ==
                             supplyDemandType.supplyInternal ? (
-                            <>{mechanismTile(input, index, arrayHelpers)}</>
+                            <MechanismTile
+                              input={input}
+                              index={index}
+                              arrayHelpers={arrayHelpers}
+                              handleEditMechanism={handleEditMechanism}
+                            />
                           ) : (
                             <></>
                           )}
@@ -131,7 +90,12 @@ export const FormCardSupplyvsDemand = ({
                           {input.isSink &&
                           input.supplyDemandType ==
                             supplyDemandType.demandUtility ? (
-                            <>{mechanismTile(input, index, arrayHelpers)}</>
+                            <MechanismTile
+                              input={input}
+                              index={index}
+                              arrayHelpers={arrayHelpers}
+                              handleEditMechanism={handleEditMechanism}
+                            />
                           ) : (
                             <></>
                           )}
@@ -141,7 +105,6 @@ export const FormCardSupplyvsDemand = ({
                 </div>
               </div>
             </div>
-            {/* added code */}
             <div key={87945} className="flex">
               <div className="w-1/2">
                 <div className="mb-1 gap-2">
@@ -158,7 +121,12 @@ export const FormCardSupplyvsDemand = ({
                           {!input.isSink &&
                           input.supplyDemandType ==
                             supplyDemandType.supplyExternal ? (
-                            <>{mechanismTile(input, index, arrayHelpers)}</>
+                              <MechanismTile
+                              input={input}
+                              index={index}
+                              arrayHelpers={arrayHelpers}
+                              handleEditMechanism={handleEditMechanism}
+                            />
                           ) : (
                             <></>
                           )}
@@ -168,8 +136,6 @@ export const FormCardSupplyvsDemand = ({
                 </div>
               </div>
               <div className="relative w-1/2">
-
-
                 <div className="mb-1 gap-2">
                   <p className="mt-5">Mechanisms</p>
                 </div>
@@ -184,7 +150,12 @@ export const FormCardSupplyvsDemand = ({
                           {input.isSink &&
                           input.supplyDemandType ==
                             supplyDemandType.demandMechanism ? (
-                            <>{mechanismTile(input, index, arrayHelpers)}</>
+                              <MechanismTile
+                              input={input}
+                              index={index}
+                              arrayHelpers={arrayHelpers}
+                              handleEditMechanism={handleEditMechanism}
+                            />
                           ) : (
                             <></>
                           )}

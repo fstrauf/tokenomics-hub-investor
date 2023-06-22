@@ -1,9 +1,9 @@
 import PostTitle from './post-title'
 import { TwitterShareButton } from 'react-share'
 import { WEBSITE_URL_BASE } from '../../lib/constants'
-// import BadgeOfficial from '../../public/svg/BadgeOfficial'
 import BadgeReview from '../../public/svg/BadgeReview'
-// import BadgeReview from '../../public/svg/BadgeReview'
+import { Tooltip } from 'react-tippy'
+// import 'react-tippy/dist/tippy.css'
 
 export default function PostHeader({
   title,
@@ -85,9 +85,10 @@ export default function PostHeader({
             <>
               <div className="group relative">
                 <BadgeReview />
+                
                 <div className="absolute bottom-0 right-14 mb-6 hidden flex-col items-center group-hover:flex">
                   <span className="whitespace-no-wrap w-32 relative z-10 bg-gray-200 p-2 text-xs leading-none text-black shadow-lg">
-                    This report was published by {title}
+                    This report was audited by Tokenomics DAO on 21/06/2023
                   </span>
                 </div>
               </div>

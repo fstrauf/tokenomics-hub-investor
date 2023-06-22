@@ -2,6 +2,8 @@ import { useState } from 'react'
 import Drawer from './Drawer'
 import { MechanismCardViewer } from './MechanismCardViewer'
 import TDFCalculatorViewer from './TDFCalculatorViewer'
+import MechanismTile from '../tdf/MechanismTile'
+// import MechanismCardSupplyvsDemand from '../tdf/MechanismCardSupplyvsDemand'
 
 export default function MechanismViewer({ post }) {
   if (post?.Mechanism?.length===0)
@@ -16,37 +18,6 @@ export default function MechanismViewer({ post }) {
   const handleViewMechanism = (index) => {
     setMechanismIndex(index)
     setIsOpen(true)
-  }
-
-  const mechanismTile = (input, index) => {
-    return (
-      <div
-        key={`${input.isSink}-${index}`}
-        className="grid h-24 w-36 content-between rounded-md border-2 border-dao-green p-1 text-xs"
-      >
-        {' '}
-        <div>
-          <div className="flex">
-            <div
-              className="mr-2 h-5 w-5 bg-slate-600"
-              style={{ background: input.color }}
-            ></div>
-            <p className="">{input.name}</p>
-          </div>
-          {input.isSink ? (
-            <></>
-          ) : (
-            <p className="mt-2">{input.percentageAllocation} %</p>
-          )}
-        </div>
-        <div className="flex h-7 border-t-2">
-          {' '}
-          <button className="w-full" onClick={() => handleViewMechanism(index)}>
-            Details
-          </button>
-        </div>
-      </div>
-    )
   }
 
   return (
@@ -75,7 +46,14 @@ export default function MechanismViewer({ post }) {
                   post.Mechanism.map((input, index) => (
                     <>
                       {!input.isSink ? (
-                        <>{mechanismTile(input, index)}</>
+                        // <>{mechanismTile(input, index)}</>
+                        <MechanismTile
+                        input={input}
+                        index={index}
+                        viewer={true}
+                        arrayHelpers={null}
+                        handleEditMechanism={handleViewMechanism}
+                      />
                       ) : (
                         <></>
                       )}
@@ -99,7 +77,14 @@ export default function MechanismViewer({ post }) {
                   post.Mechanism.map((input, index) => (
                     <>
                       {input.isSink ? (
-                        <>{mechanismTile(input, index)}</>
+                        // <>{mechanismTile(input, index)}</>
+                        <MechanismTile
+                        input={input}
+                        index={index}
+                        viewer={true}
+                        arrayHelpers={null}
+                        handleEditMechanism={handleViewMechanism}
+                      />
                       ) : (
                         <></>
                       )}
