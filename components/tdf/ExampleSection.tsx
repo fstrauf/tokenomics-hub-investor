@@ -8,7 +8,6 @@ import Select from 'react-select'
 import { event } from 'nextjs-google-analytics'
 import { validateFreeTrialExamples } from '../../lib/helper'
 import GenericPopover from '../generic/GenericPopover'
-// import SubscriptionTable from '../../pages/SubscriptionTable'
 import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
 import SubscriptionOptions from '../subscription/SubscriptionOptions'
 
@@ -48,7 +47,6 @@ export default function ExampleSection({
   async function handleDetailClicked(c) {
     //check subscription
     const trialStatus = await validateFreeTrialExamples(props?.Subscription, admin, user?.id)
-    console.log("🚀 ~ file: ExampleSection.tsx:50 ~ handleDetailClicked ~ trialStatus:", trialStatus)
     
     if (trialStatus) {
       

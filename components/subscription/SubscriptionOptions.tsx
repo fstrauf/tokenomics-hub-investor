@@ -12,13 +12,11 @@ export default function SubscriptionOptions() {
         price="USD $70/m or $250/y"
         termsLink="/manage-subscriptions#genesis"
         purchaseLink={{
-          // link: `https://buy.stripe.com/test_5kA4k98YwaUzgrCaEE?prefilled_email=${user.primaryEmailAddress.emailAddress}&client_reference_id=${user.id}`,
           link: `https://buy.stripe.com/3cs6qBdfd9um4fK8wA?prefilled_email=${user?.primaryEmailAddress?.emailAddress}&client_reference_id=${user?.id}`,
           name: 'Monthly',
         }}
-        included={["Unlimited use of Example Section",'Demand Side Tokenomics','Create/Work on unlimited token designs']}
+        included={["Unlimited use of Example Section",'Demand Side Tokenomics','Create/Work on unlimited token designs', 'Unlimited token designs']}
         purchaseLink2={{
-          // link: `https://buy.stripe.com/test_5kA4k98YwaUzgrCaEE?prefilled_email=${user.primaryEmailAddress.emailAddress}&client_reference_id=${user.id}`,
           link: `https://buy.stripe.com/5kAaGRa317me7rWaEJ?prefilled_email=${user?.primaryEmailAddress?.emailAddress}&client_reference_id=${user?.id}`,
           name: 'Yearly',
         }}

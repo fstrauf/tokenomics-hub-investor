@@ -54,13 +54,6 @@ export default function MyDesigns(props) {
           <div className="flex items-center justify-between rounded-lg p-2 py-2">
             <p className="text-xl font-bold">My Designs</p>
             <div className="flex gap-1">
-              {' '}
-              {/* <Link
-                href="/newDesign"
-                className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
-              >
-                New Design
-              </Link> */}
               <button
                 onClick={handleNewDesign}
                 className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
@@ -70,7 +63,7 @@ export default function MyDesigns(props) {
             </div>
           </div>
           <GenericPopover isOpen={isOpen} setIsOpen={setIsOpen}>
-            <NewDesignMinimal newPost={props?.newPost} userId={props?.userId}/>
+            <NewDesignMinimal newPost={props?.newPost} postCount={props?.postCount} subscription={props?.subscription} />
           </GenericPopover>
           <div className="overflow-x-auto rounded-lg bg-white">
             <div className="flex flex-wrap items-center justify-center">
@@ -113,42 +106,50 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 
   const txCalls = []
 
-  txCalls.push(prisma.post.findMany({
-    where: {
-      status: {
-        not: postStatus.published,
+  txCalls.push(
+    prisma.post.findMany({
+      where: {
+        // status: {
+        //   not: postStatus.published,
+        // },
+        postType: postType.design,
+        authorClerkId: userId,
       },
-      postType: postType.design,
-      authorClerkId: userId,
-    },
-    include: {
-      categories: {
-        select: {
-          label: true,
+      include: {
+        categories: {
+          select: {
+            label: true,
+          },
         },
-      },
-      tags: {
-        select: {
-          label: true,
+        tags: {
+          select: {
+            label: true,
+          },
         },
+        author: {},
       },
-      author: {},
-    },
-    take: 20,
-  }))
+      take: 20,
+    })
+  )
 
-  // txCalls.push(
-  //   prisma.mechanism.findMany({
-  //     where: {
-  //       isTemplate: true,
-  //     },
-  //   })
-  // )
-  
+  txCalls.push(
+    prisma.post.count({
+      where: {
+        postType: postType.design,
+        authorClerkId: userId,
+      },
+    })
+  )
+
   txCalls.push(prisma.designPhases.findMany({ orderBy: { phaseOrder: 'asc' } }))
 
-  const [posts, designPhases ] =
-    await prisma.$transaction(txCalls)
+  txCalls.push(
+    prisma.subscriptions.findUnique({
+      where: { authorClerkId: userId },
+    })
+  )
+
+  const [posts, postCount, designPhases, subscription] = await prisma.$transaction(txCalls)
 
   const defaultContent = {
     id: '',
@@ -176,51 +177,53 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
       areaData: [],
       calculationRows: [],
     },
-    Mechanism: [{
-      id: '',
-      name: `Supply 1`,
-      summary:
-        'Adjust this to whoever you are giving tokens to',
-      details: '',
-      isSink: false,
-      token: '',
-      category: `supply1`,
-      lockupPeriod: 5,
-      unlockPeriod: 12,
-      percentageUnlockTGE: 0,
-      percentageAllocation: 35,
-      color: `#FF6666`,
-      isEpochDistro: false,
-      supplyDemandType: 'supplyExternal',
-      epochDurationInSeconds: 0,
-      initialEmissionPerSecond: 0,
-      emissionReductionPerEpoch: 0,
-      CalculationTimeSeries: [],
-      isTemplate: false,
-      PostUser: [],
-    },{
-      id: '',
-      name: `Supply 2`,
-      summary:
-        'Briefly explain what this mechanism incentivises users to do and why they want to do it. (e.g., users are incentivised to buy and stake a token in order to receive token emissions)',
-      details: '',
-      isSink: false,
-      token: '',
-      category: `supply2`,
-      lockupPeriod: 5,
-      unlockPeriod: 12,
-      percentageUnlockTGE: 0,
-      percentageAllocation: 65,
-      color: `#008090`,
-      isEpochDistro: false,
-      supplyDemandType: 'supplyInternal',
-      epochDurationInSeconds: 0,
-      initialEmissionPerSecond: 0,
-      emissionReductionPerEpoch: 0,
-      CalculationTimeSeries: [],
-      isTemplate: false,
-      PostUser: [],
-    }],
+    Mechanism: [
+      {
+        id: '',
+        name: `Supply 1`,
+        summary: 'Adjust this to whoever you are giving tokens to',
+        details: '',
+        isSink: false,
+        token: '',
+        category: `supply1`,
+        lockupPeriod: 5,
+        unlockPeriod: 12,
+        percentageUnlockTGE: 0,
+        percentageAllocation: 35,
+        color: `#FF6666`,
+        isEpochDistro: false,
+        supplyDemandType: 'supplyExternal',
+        epochDurationInSeconds: 0,
+        initialEmissionPerSecond: 0,
+        emissionReductionPerEpoch: 0,
+        CalculationTimeSeries: [],
+        isTemplate: false,
+        PostUser: [],
+      },
+      {
+        id: '',
+        name: `Supply 2`,
+        summary:
+          'Briefly explain what this mechanism incentivises users to do and why they want to do it. (e.g., users are incentivised to buy and stake a token in order to receive token emissions)',
+        details: '',
+        isSink: false,
+        token: '',
+        category: `supply2`,
+        lockupPeriod: 5,
+        unlockPeriod: 12,
+        percentageUnlockTGE: 0,
+        percentageAllocation: 65,
+        color: `#008090`,
+        isEpochDistro: false,
+        supplyDemandType: 'supplyInternal',
+        epochDurationInSeconds: 0,
+        initialEmissionPerSecond: 0,
+        emissionReductionPerEpoch: 0,
+        CalculationTimeSeries: [],
+        isTemplate: false,
+        PostUser: [],
+      },
+    ],
     mechanismTemplates: [],
     PostUser: [],
     slug: '',
@@ -278,6 +281,8 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     props: {
       newPost: defaultContent || {},
       posts: postsWithUserNames || null,
+      postCount: postCount || 0,
+      subscription: subscription || {},
       // userId: userId || null,
     },
     // revalidate: 1,

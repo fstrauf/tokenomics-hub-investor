@@ -2,15 +2,16 @@ import React, { useState } from 'react'
 import { Field, Form, Formik } from 'formik'
 import toast, { Toaster } from 'react-hot-toast'
 import { useRouter } from 'next/router'
+import { validateTierAccess } from '../../lib/helper'
+import SubscriptionOptions from '../subscription/SubscriptionOptions'
 
-export default function NewDesignMinimal({ newPost }) {
+export default function NewDesignMinimal({ newPost, postCount, subscription }) {
   const router = useRouter()
   const [isSubmittingForm, setIsSubmittingForm] = useState(false)
   const submitData = async (values) => {
-
     const body = { values }
     setIsSubmittingForm(true)
-  try {
+    try {
       const response = await fetch('/api/post/newDesign', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -29,12 +30,18 @@ export default function NewDesignMinimal({ newPost }) {
         })
         router.push(`/editDesign/${JSON.parse(id).id}`)
       }
-
     } catch (error) {
       setIsSubmittingForm(false)
       console.error(error)
     }
   }
+
+  if(postCount >=3 && !validateTierAccess(subscription) ) return(
+    <div>
+    <h1 className='text-center font-bold'>You have reached 3 free designs, subscribe for more.</h1>
+    <SubscriptionOptions/>
+  </div>
+  )
 
   return (
     <>
