@@ -28,17 +28,6 @@ export default authMiddleware({
     // '/:id',
     [...publicRoutesFromFile]
   ],
-  // afterAuth(auth, req, evt) {    
-  //   console.log('🚀 ~ file: middleware.tsx:28 ~ afterAuth ~ req:', req.nextUrl.pathname)
-  //   console.log('🚀 ~ file: middleware.tsx:28 ~ afterAuth ~ auth:', auth)
-  //   // handle users who aren't authenticated
-  //   console.log(privatePages.includes(req.nextUrl.pathname))
-  //   if (!auth.userId && privatePages.includes(req.nextUrl.pathname)) {
-  //     const signInUrl = new URL('/sign-in', req.url)
-  //     signInUrl.searchParams.set('redirect_url', req.url)
-  //     return NextResponse.redirect(signInUrl)
-  //   }
-  // },
 })
 
 function middleware(req: NextRequest) {
