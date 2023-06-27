@@ -131,7 +131,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     id: '',
     title: '',
     authorClerkId: userId,
-    status: postStatus.draft,
+    // status: postStatus.draft,
     ticker: '',
     DesignElement: designPhases
       .filter((dp) => dp.parentPhaseId)
