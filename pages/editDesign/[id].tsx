@@ -6,11 +6,16 @@ import { clerkClient, getAuth } from '@clerk/nextjs/server'
 import prisma from '../../lib/prisma'
 import CommentForm from '../../components/commentForm'
 import Comments from '../../components/comments'
+import { useAuth } from '@clerk/nextjs'
+import UnAuthenticated from '../../components/unauthenticated'
 
 const EditDesign: React.FC<UpdateNewDesignProps> = (props) => {
   if (Object.keys(props.post).length === 0) {
     return <div>The requested object does not exist</div>
   }
+
+  const { isSignedIn } = useAuth()
+  if (!isSignedIn) return(<UnAuthenticated/>)
 
   return (
     <>

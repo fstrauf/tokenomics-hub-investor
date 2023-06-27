@@ -9,6 +9,7 @@ import { clerkConvertJSON, headerStatus, postStatus } from '../lib/helper'
 import Link from 'next/link'
 
 export default function MyDrafts({ posts }) {
+
   return (
     <>
       <Layout mode={headerStatus.report}>

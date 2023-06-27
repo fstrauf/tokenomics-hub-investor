@@ -15,8 +15,12 @@ import InfoSection from '../components/generic/InfoSection'
 import Layout from '../components/layout'
 import GenericPopover from '../components/generic/GenericPopover'
 import NewDesignMinimal from '../components/tdf/newDesignMinimal'
+import { useAuth } from '@clerk/nextjs'
+import UnAuthenticated from '../components/unauthenticated'
 
 export default function MyDesigns(props) {
+  const { isSignedIn } = useAuth()
+  if (!isSignedIn) return(<UnAuthenticated/>)
   const [isOpen, setIsOpen] = useState(false)
   function handleNewDesign(
     event: MouseEvent<HTMLButtonElement, MouseEvent>
@@ -63,7 +67,11 @@ export default function MyDesigns(props) {
             </div>
           </div>
           <GenericPopover isOpen={isOpen} setIsOpen={setIsOpen}>
-            <NewDesignMinimal newPost={props?.newPost} postCount={props?.postCount} subscription={props?.subscription} />
+            <NewDesignMinimal
+              newPost={props?.newPost}
+              postCount={props?.postCount}
+              subscription={props?.subscription}
+            />
           </GenericPopover>
           <div className="overflow-x-auto rounded-lg bg-white">
             <div className="flex flex-wrap items-center justify-center">
@@ -102,7 +110,8 @@ export default function MyDesigns(props) {
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-  const { userId }: AuthData = getAuth(req)
+  const { userId = null }: AuthData = getAuth(req)
+  const userIdUndefined = userId === null ? '' : userId
 
   const txCalls = []
 
@@ -113,7 +122,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
         //   not: postStatus.published,
         // },
         postType: postType.design,
-        authorClerkId: userId,
+        authorClerkId: userIdUndefined,
       },
       include: {
         categories: {
@@ -136,7 +145,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     prisma.post.count({
       where: {
         postType: postType.design,
-        authorClerkId: userId,
+        authorClerkId: userIdUndefined,
       },
     })
   )
@@ -145,16 +154,17 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 
   txCalls.push(
     prisma.subscriptions.findUnique({
-      where: { authorClerkId: userId },
+      where: { authorClerkId: userIdUndefined },
     })
   )
 
-  const [posts, postCount, designPhases, subscription] = await prisma.$transaction(txCalls)
+  const [posts, postCount, designPhases, subscription] =
+    await prisma.$transaction(txCalls)
 
   const defaultContent = {
     id: '',
     title: '',
-    authorClerkId: userId,
+    authorClerkId: userIdUndefined,
     status: postStatus.draft,
     ticker: '',
     DesignElement: designPhases

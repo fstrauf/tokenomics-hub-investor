@@ -203,12 +203,13 @@ export default function PostView({ post, author }) {
               <div id="stats"></div>
               <ProtocolStats protocol={post.slug} />
 
-              {!isSignedIn && (
+              {/* {!isSignedIn && (
                 <div className="mt-10">
                   <Login message="You need to sign in to see more - it's free" />
                 </div>
-              )}
-              <div className={`${isSignedIn ? '' : 'blur-sm'}`}>
+              )} */}
+              {/* <div className={`${isSignedIn ? '' : 'blur-sm'}`}> */}
+              <div>
                 <div id="ourTake"></div>
                 <OurTake content={post} />
                 <div id="timeline"></div>

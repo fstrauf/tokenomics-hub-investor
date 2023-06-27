@@ -1,9 +1,6 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import { authMiddleware } from '@clerk/nextjs/server'
-import publicRoutesFromFile from './publicRoutes.json';
-
-// const privatePages = ['/myDesigns']
 
 export default authMiddleware({
   beforeAuth: (req) => {
@@ -14,8 +11,7 @@ export default authMiddleware({
     '/thub',
     '/terms',
     '/calculator',
-    '/posts/[id]',
-    '/authors/[slug]',
+
     '/book-an-expert',
     '/glossary',
     '/tokenomics-design',
@@ -24,9 +20,20 @@ export default authMiddleware({
     '/api/stripeHook',
     '/api/stripeSync',
     '/api/uploadSheet',
-    '/[id]',
+    // '/[id]',
+    /^\.*$/,
+    '/:path*',
+    // '^(?!\/tds(.*))',
+    // /^\/foo\/.*$/,
+    // /^(?!\/tds\/).*/,
+    // /^(?!\/admin\/).*/,
+    // /^(?!\/editDesign\/).*/,
+
+    '/(.*)',
+    // '?!\/tds'
+    // isPathPublic,
     // '/:id',
-    [...publicRoutesFromFile]
+    // [...publicRoutesFromFile]
   ],
 })
 
@@ -34,6 +41,8 @@ function middleware(req: NextRequest) {
   const url = req.nextUrl
   const hostname = req.headers.get('host') || 'tokenomicshub.xyz'
   const path = url.pathname
+
+
 
   if (
     (path === '/myDesigns' ||

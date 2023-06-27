@@ -47,7 +47,7 @@ export default function subscriptions({ allSubscriptions }) {
     )
   }
 
-  if (isSignedIn && admin) {
+  if (admin) {
     return (
       <Layout mode={headerStatus.main}>
         <Toaster />

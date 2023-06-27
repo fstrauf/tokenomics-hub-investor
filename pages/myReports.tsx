@@ -15,9 +15,13 @@ import InfoSection from '../components/generic/InfoSection'
 import Layout from '../components/layout'
 import GenericPopover from '../components/generic/GenericPopover'
 import NewDesignMinimal from '../components/tdf/newDesignMinimal'
+import { useAuth } from '@clerk/nextjs'
+import UnAuthenticated from '../components/unauthenticated'
 // import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
 
 export default function MyReports(props) {
+  const { isSignedIn } = useAuth()
+  if (!isSignedIn) return(<UnAuthenticated/>)
   const [isOpen, setIsOpen] = useState(false)
   function handleNewDesign(
     event: MouseEvent<HTMLButtonElement, MouseEvent>

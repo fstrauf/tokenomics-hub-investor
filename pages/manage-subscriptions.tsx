@@ -6,8 +6,12 @@ import prisma from '../lib/prisma'
 import { GetServerSideProps } from 'next'
 import SubscriptionOptions from '../components/subscription/SubscriptionOptions'
 import { getAuth } from "@clerk/nextjs/server"
+import { useAuth } from '@clerk/nextjs'
+import UnAuthenticated from '../components/unauthenticated'
 
 export default function ManageSubscriptions(props) {
+  const { isSignedIn } = useAuth()
+  if (!isSignedIn) return(<UnAuthenticated/>)
   return (
     <>
       <Layout mode={headerStatus.main}>
