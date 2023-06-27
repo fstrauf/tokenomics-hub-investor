@@ -80,8 +80,9 @@ export default function ManageSubscriptions(props) {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { userId } = getAuth(context.req)
+  const userIdUndefined = userId === null ? '' : userId
   const subscription = await prisma.subscriptions.findUnique({
-    where: { authorClerkId: userId },
+    where: { authorClerkId: userIdUndefined },
   })
 
   return {

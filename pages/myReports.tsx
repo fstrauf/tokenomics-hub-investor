@@ -21,7 +21,7 @@ import UnAuthenticated from '../components/unauthenticated'
 
 export default function MyReports(props) {
   const { isSignedIn } = useAuth()
-  if (!isSignedIn) return(<UnAuthenticated/>)
+  // if (!isSignedIn) return(<UnAuthenticated/>)
   const [isOpen, setIsOpen] = useState(false)
   function handleNewDesign(
     event: MouseEvent<HTMLButtonElement, MouseEvent>
@@ -31,60 +31,62 @@ export default function MyReports(props) {
   return (
     <Layout mode={headerStatus.main}>
       <>
-        <div className="mt-4 mb-4 rounded-lg bg-gray-100 p-1">
-          <div className="flex items-center justify-between rounded-lg p-2 py-2">
-            <p className="text-xl font-bold">My Reports</p>
-            <div className="flex gap-1">
-              {/* {' '}
-              <Link
-                href="/newPost"
-                className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
-              >
-                New Report
-              </Link> */}
-              <button
-                onClick={handleNewDesign}
-                className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
-              >
-                New Report
-              </button>
-            </div>
-          </div>
-          <GenericPopover isOpen={isOpen} setIsOpen={setIsOpen}>
-            <NewDesignMinimal newPost={props?.newPost} userId={props?.userId} />
-          </GenericPopover>
-          <div className="overflow-x-auto rounded-lg bg-white">
-            <div className="flex flex-wrap items-center justify-center">
-              {props?.posts?.length === 0 ? (
-                <div className="pb-5">
-                  <InfoSection
-                    text="Tokenomics Hub is a community driven platform showcasing the need-to-know tokenomics information per project. No matter if you’re an avid user, a fellow degen or a protocol owner/team member, anyone can list a token"
-                    title="Contribute to Tokenomics Hub"
+        {isSignedIn ? (
+          <>
+            <div className="mt-4 mb-4 rounded-lg bg-gray-100 p-1">
+              <div className="flex items-center justify-between rounded-lg p-2 py-2">
+                <p className="text-xl font-bold">My Reports</p>
+                <div className="flex gap-1">
+                  <button
+                    onClick={handleNewDesign}
+                    className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
                   >
-                    {' '}
-                    <div className="flex justify-center">
-                      <Link
-                        href="/newPost"
-                        className="w-36 self-center rounded-md border-2 border-dark-tdao bg-white px-4 py-2 text-center text-sm font-medium text-dark-tdao hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
-                      >
-                        List a Token
-                      </Link>
-                    </div>
-                  </InfoSection>
+                    New Report
+                  </button>
                 </div>
-              ) : (
-                <></>
-              )}
-              {props?.posts.map((post, index) => {
-                return (
-                  <div key={post?.id}>
-                    <DesignCard post={post} context="myDrafts" />
-                  </div>
-                )
-              })}
+              </div>
+              <GenericPopover isOpen={isOpen} setIsOpen={setIsOpen}>
+                <NewDesignMinimal
+                  newPost={props?.newPost}
+                  userId={props?.userId}
+                />
+              </GenericPopover>
+              <div className="overflow-x-auto rounded-lg bg-white">
+                <div className="flex flex-wrap items-center justify-center">
+                  {props?.posts?.length === 0 ? (
+                    <div className="pb-5">
+                      <InfoSection
+                        text="Tokenomics Hub is a community driven platform showcasing the need-to-know tokenomics information per project. No matter if you’re an avid user, a fellow degen or a protocol owner/team member, anyone can list a token"
+                        title="Contribute to Tokenomics Hub"
+                      >
+                        {' '}
+                        <div className="flex justify-center">
+                          <Link
+                            href="/newPost"
+                            className="w-36 self-center rounded-md border-2 border-dark-tdao bg-white px-4 py-2 text-center text-sm font-medium text-dark-tdao hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+                          >
+                            List a Token
+                          </Link>
+                        </div>
+                      </InfoSection>
+                    </div>
+                  ) : (
+                    <></>
+                  )}
+                  {props?.posts.map((post, index) => {
+                    return (
+                      <div key={post?.id}>
+                        <DesignCard post={post} context="myDrafts" />
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
+          </>
+        ) : (
+          <UnAuthenticated />
+        )}
       </>
     </Layout>
   )
