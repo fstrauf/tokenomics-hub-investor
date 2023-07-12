@@ -19,10 +19,15 @@ export default function ScopeTermsConditions() {
             and suggestions to improve your tokenomics design.
           </p>
           <br />
-          <p>
-            The review will include 2 1 hour meetings. The specifics of what to
-            review and provide feedback on can be discussed within the meeting.
-          </p>
+          <p>The Audit includes the following:</p>
+          <div className='prose'>
+            <ul>
+              <li>2 x 1 hour meetings</li>
+              <li>A report on the front-page of Tokenomics Hub (incl. an official badge confirming the audit)</li>
+              <li>A joint AMA and/or publishing of the audit doc / Tokenomics Hub report on our socials</li>
+              <li>Get an NFT confirming our audit and use the audit-badge on your website</li>
+            </ul>
+          </div>
           <p>
             Prefer crypto payment? We accept DAI or USDC on Ethereum:
             eth:0x9bcF35BD44Cd5902bfa0738b7B2de12d09CC2DC9 send your tx-link to{' '}
