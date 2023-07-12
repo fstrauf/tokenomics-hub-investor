@@ -40,7 +40,7 @@ export default function ScopeTermsConditions() {
             We will analyse, review and provide a report with written feedback{' '}
             <a
               className="underline"
-              href="https://docs.google.com/document/d/1MYPr1nCKQQ8P9MS6F5Pjkp8xITUItKYI9Udwm6Syh9o"
+              href="https://docs.google.com/document/d/1cZVRJsVNCrBucitPmmr53uds7uGMmMJDmtLYa4RNuy4"
             >
               (using this format)
             </a>{' '}
@@ -48,10 +48,15 @@ export default function ScopeTermsConditions() {
             option, your full token design must be in the Tokenomics Design
             Space
           </p>
-          <p>
-            The review will include 2 1 hour meetings. The specifics of what to
-            review and provide feedback on can be discussed within the meeting.
-          </p>
+          <p>The Audit includes the following:</p>
+          <div className='prose'>
+            <ul>
+              <li>2 x 1 hour meetings</li>
+              <li>A report on the front-page of Tokenomics Hub (incl. an official badge confirming the audit)</li>
+              <li>A joint AMA and/or publishing of the audit doc / Tokenomics Hub report on our socials</li>
+              <li>Get an NFT confirming our audit and use the audit-badge on your website</li>
+            </ul>
+          </div>
           <p>
             Prefer crypto payment? We accept DAI or USDC on Ethereum:
             eth:0x9bcF35BD44Cd5902bfa0738b7B2de12d09CC2DC9 send your tx-link to{' '}

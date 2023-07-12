@@ -64,7 +64,7 @@ export default function Header2({ mode = headerStatus.main, children = null }) {
           <>
             <HeaderComboSection
               classNames={classNames}
-              title="Products & Consulting"
+              title="Products & Audit Services"
             >
               <HeaderGenericSection
                 pathName="/tokenomics-design"
@@ -76,7 +76,7 @@ export default function Header2({ mode = headerStatus.main, children = null }) {
               />
               <HeaderGenericSection
                 pathName="/book-an-expert"
-                title="Tokenomics Consulting"
+                title="Tokenomics Audit"
               />
               <HeaderGenericSection pathName="/calculator" title="Calculator" />
             </HeaderComboSection>

@@ -25,44 +25,20 @@ export async function downloadSpreadsheet(
     }
 
     let aSpreadsheetData: any = values.Calculation.areaData.supplyDemandTotals
-    // console.log(
-    //   '🚀 ~ file: MechanismCardDemand.tsx:56 ~ downloadSpreadsheet ~ aSpreadsheetData:',
-    //   aSpreadsheetData[0].supply
-    // )
+
     if ('supply' in aSpreadsheetData[0] == false) {
       throw 'No Supply Found'
     }
-    // if ('demand' in aSpreadsheetData[0] == false) {
-    //   throw 'No Demand Found'
-    // }
-    // console.log(
-    //   '🚀 ~ file: DownloadUploadSpreadsheet.tsx:38 ~ field.value[mechanismIndex]:',
-    //   field.value[mechanismIndex]
-    // )
+
     if ('mechanismType' in field.value[mechanismIndex] == false) {
       return toast.error('No Utility or Mechanism assigned', {
         position: 'bottom-right',
       })
     }
-    // if (
-    //   field.value[mechanismIndex].mechanismTypeId == null ||
-    //   field.value[mechanismIndex].mechanismTypeId == undefined
-    // ) {
-    //   return toast.error('Invalid Mechanism', { position: 'bottom-right' })
-    // }
+
     setName('Creating Spreadsheet..')
     setDisabled(true)
     let aSpreadSheetData = [
-      // {
-      //   Months: "Don't Change - Imported from Tokenomics Design Space",
-      //   'Circulating supply':
-      //     "Don't Change - Imported from Tokenomics Design Space",
-      //   'Expected Token Demand':
-      //     "Don't Change - Imported from Tokenomics Design Space",
-      //   'Month Count': "Don't Change - Imported from Tokenomics Design Space",
-      //   'Rewards Type': 'Please select the relevant tab',
-      //   'Template Type': "Don't Change - Imported from Tokenomics Design Space",
-      // },
     ]
 
     for (let [index, data] of aSpreadsheetData.entries()) {
@@ -109,12 +85,6 @@ export async function uploadSheet(
     if (url == null) {
       return toast.error('Empty field', { position: 'bottom-right' })
     }
-    // if (
-    //   field.value[mechanismIndex].mechanismTypeId == null ||
-    //   field.value[mechanismIndex].mechanismTypeId == undefined
-    // ) {
-    //   return toast.error('Invalid Mechanism', { position: 'bottom-right' })
-    // }
     setDisabled(true)
     setName_('Uploading sheet...')
     // console.log("🚀 ~ file: DownloadUploadSpreadsheet.tsx:124 ~ field.value[mechanismIndex]:", field.value[mechanismIndex])

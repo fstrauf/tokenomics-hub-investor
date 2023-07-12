@@ -726,42 +726,6 @@ export async function createSpreadSheet({ templateSheetUrl, title, data }) {
   } catch (error) {
     throw error
   }
-
-  // try {
-  //   const responseCreate = await fetch('/api/createGSheet', {
-  //     method: 'POST',
-  //     headers: { 'Content-Type': 'application/json' },
-  //     body: JSON.stringify(createBody),
-  //   })
-  //   if (responseCreate?.ok) {
-  //     const blankSpreadSheetId = JSON.parse(await responseCreate.text())?.message
-  //     console.log("🚀 ~ file: helper.ts:706 ~ createSpreadSheet ~ blankSpreadSheetId:", blankSpreadSheetId)
-
-  //     let fillBody = {blankSpreadSheetId, templateSheetUrl, data}
-  //     const responseFill = await fetch('/api/fillGSheet', {
-  //       method: 'POST',
-  //       headers: { 'Content-Type': 'application/json' },
-  //       body: JSON.stringify(fillBody),
-  //     })
-  //     if (responseFill?.ok) {
-  //       const spreadsheetUrl = await responseFill.text()
-  //       console.log("🚀 ~ file: helper.ts:715 ~ createSpreadSheet ~ spreadsheetUrl:", spreadsheetUrl)
-
-  //       return spreadsheetUrl
-  //     } else {
-  //       throw await responseCreate.text()
-  //     }
-
-  //     // return spreadsheetUrl
-  //   } else {
-  //     throw await responseCreate.text()
-  //   }
-
-  // } catch (error) {
-  //   console.error(error)
-  //   // toast.error('An error occurred', { position: 'bottom-right' })
-  //   throw error
-  // }
 }
 
 export async function uploadSpreadsheet(data) {
