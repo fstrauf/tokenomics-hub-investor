@@ -19,6 +19,7 @@ import { useAuth } from '@clerk/nextjs'
 import UnAuthenticated from '../components/unauthenticated'
 
 export default function MyDesigns(props) {
+  console.log("🚀 ~ file: myDesigns.tsx:22 ~ MyDesigns ~ props:", props)
   const { isSignedIn } = useAuth()
 
   const [isOpen, setIsOpen] = useState(false)

@@ -11,7 +11,9 @@ export default function TDFDynamicOneField({
   placeholder,
   values,
 }) {
+  console.log("🚀 ~ file: TDFDynamicOneField.tsx:14 ~ values:", values)
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
+  console.log("🚀 ~ file: TDFDynamicOneField.tsx:15 ~ designPhase:", designPhase)
   // const { setFieldValue } = useFormikContext()
 
   const { setFieldValue, dirty } = useFormikContext()

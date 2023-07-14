@@ -10,6 +10,7 @@ import { useAuth } from '@clerk/nextjs'
 import UnAuthenticated from '../../components/unauthenticated'
 
 const EditDesign: React.FC<UpdateNewDesignProps> = (props) => {
+  console.log("🚀 ~ file: [id].tsx:13 ~ props:", props)
   if (Object.keys(props.post).length === 0) {
     return <div>The requested object does not exist</div>
   }
