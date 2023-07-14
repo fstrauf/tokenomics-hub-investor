@@ -10,6 +10,8 @@ export async function downloadSpreadsheet(
   setUrl: { (value: SetStateAction<string>): void; (arg0: any): void },
   setDisabled: { (value: SetStateAction<boolean>): void; (arg0: boolean): void }
 ) {
+  console.log("🚀 ~ file: DownloadUploadSpreadsheet.tsx:13 ~ field:", field.value[mechanismIndex])
+  // console.log("🚀 ~ file: DownloadUploadSpreadsheet.tsx:13 ~ values:", values)
   // console.log("🚀 ~ file: DownloadUploadSpreadsheet.tsx:13 ~ values:", values)
   try {
     //console.log("field inside download = ====",field.value[mechanismIndex].mechanismType.mechanismTypeId)
@@ -28,6 +30,12 @@ export async function downloadSpreadsheet(
 
     if ('supply' in aSpreadsheetData[0] == false) {
       throw 'No Supply Found'
+    }
+
+    if (!field?.value?.[mechanismIndex]?.mechanismType?.templateSheet) {
+      return toast.error('No Utility or Mechanism assigned', {
+        position: 'bottom-right',
+      })
     }
 
     if ('mechanismType' in field.value[mechanismIndex] == false) {
@@ -54,7 +62,7 @@ export async function downloadSpreadsheet(
       aSpreadSheetData.push(obj)
     }
     let spreadSheetUrl = await createSpreadSheet({
-      templateSheetUrl: field.value[mechanismIndex].mechanismType.templateSheet,
+      templateSheetUrl: field.value[mechanismIndex]?.mechanismType?.templateSheet,
       title: field.value[mechanismIndex].name.replace(/[0-9]/g, '').trim(),
       data: aSpreadSheetData,
     })
