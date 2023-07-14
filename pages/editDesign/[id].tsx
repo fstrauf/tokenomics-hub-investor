@@ -10,13 +10,12 @@ import { useAuth } from '@clerk/nextjs'
 import UnAuthenticated from '../../components/unauthenticated'
 
 const EditDesign: React.FC<UpdateNewDesignProps> = (props) => {
-  console.log("🚀 ~ file: [id].tsx:13 ~ props:", props)
   if (Object.keys(props.post).length === 0) {
     return <div>The requested object does not exist</div>
   }
 
   const { isSignedIn } = useAuth()
-  if (!isSignedIn) return(<UnAuthenticated/>)
+  if (!isSignedIn) return <UnAuthenticated />
 
   return (
     <>
@@ -95,19 +94,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const [post, mechanismTemplates, designPhases, Category, Tag, Subscription] =
     await prisma.$transaction(txCalls)
 
-  // const res = await prisma.mechanism.findMany({
-  //   where: { postId: String(context.params?.id) },
-
-  // })
-
-  // res.forEach(async (m)=>{
-  //   const resMech = await prisma.mechanism.findUnique({
-  //     where: {id:m.id},
-  //     include: {PostUser:{}}
-  //   })
-  //   console.log("🚀 ~ file: [id].tsx:102 ~ res.forEach ~ resMech:", resMech)
-  // })
-
   let postWithUpdatedComments = {}
 
   if (post !== null) {
@@ -141,6 +127,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       }) || {}
 
     postWithUpdatedComments = post
+    console.log("🚀 ~ file: [id].tsx:134 ~ constgetServerSideProps:GetServerSideProps= ~ postWithUpdatedComments:", postWithUpdatedComments)
 
     postWithUpdatedComments.Comments = commentsWithUserNames || {}
     postWithUpdatedComments.protocolTimeLine =
@@ -156,15 +143,20 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         postWithUpdatedComments?.Calculation?.startDate || new Date()
       )
     }
-    // postWithUpdatedComments.Calculation.startDate = new Date(
-    //   postWithUpdatedComments?.Calculation?.startDate || ''
-    // ).toLocaleDateString('en-CA')
 
     postWithUpdatedComments.DesignElement =
       postWithUpdatedComments?.DesignElement?.map((de) => {
+        if (de.phaseId === 105) {
+          console.log(
+            '🚀 ~ file: [id].tsx:155 ~ postWithUpdatedComments?.DesignElement?.map ~ de:',
+            de
+          )
+        }
         try {
           var content = JSON.parse(de.content)
-        } catch {}
+        } catch {
+          var content = de.content
+        }
         return {
           ...de,
           content: content,

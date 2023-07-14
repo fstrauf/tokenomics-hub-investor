@@ -13,10 +13,23 @@ export default function TDFDynamicOneField({
 }) {
   console.log("🚀 ~ file: TDFDynamicOneField.tsx:14 ~ values:", values)
   const designPhase = getActiveDesignPhase(props.designPhases, activePhase)
-  console.log("🚀 ~ file: TDFDynamicOneField.tsx:15 ~ designPhase:", designPhase)
+  // console.log("🚀 ~ file: TDF105.tsx:10 ~ TDF105 ~ props.designPhases:", props.designPhases)
   // const { setFieldValue } = useFormikContext()
 
   const { setFieldValue, dirty } = useFormikContext()
+  if(values.DesignElement.length ===0){
+    values.DesignElement = props.designPhases
+    .filter((dp) => dp.parentPhaseId)
+    .map((dp) => {
+      return {
+        id: '',
+        content: '',
+        designPhasesId: String(dp.phaseId),
+        designElementStatus: '',
+      }
+    })
+  }
+
 
   useEffect(() => {
     if (dirty) {

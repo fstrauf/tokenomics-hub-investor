@@ -1,16 +1,12 @@
 import prisma from '../../../lib/prisma'
 import { Prisma } from '@prisma/client'
 import { stringToKey } from '../../../lib/helper'
-// import { forEach } from '@tiptap/core/dist/packages/core/src/commands'
+
 
 export default async function handle(req, res) {
   const { values } = req.body
-  // console.log('🚀 ~ file: updateNewDesign.ts:7 ~ handle ~ values:', values)
-
-  //fetch all postusers
 
   const inputFields = values
-  // console.log("🚀 ~ file: updateNewDesign.ts:13 ~ handle ~ inputFields:", inputFields)
 
   var breakdown = inputFields.breakdown
   if (typeof inputFields.breakdown === 'object') {
@@ -128,6 +124,7 @@ export default async function handle(req, res) {
       }
     }
   })
+  console.log("🚀 ~ file: updateNewDesign.ts:131 ~ DesignElement ~ DesignElement:", DesignElement)
 
   const timeLine = inputFields?.protocolTimeLine?.map((tl) => {
     return {
