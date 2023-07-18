@@ -14,7 +14,7 @@ export default function SubscriptionOptions() {
         termsLink="/manage-subscriptions#genesis"
         purchaseLink={{
           link: `https://buy.stripe.com/3cs6qBdfd9um4fK8wA?prefilled_email=${user?.primaryEmailAddress?.emailAddress}&client_reference_id=${user?.id}`,
-          name: 'Monthly',
+          name: 'Purchase',
         }}
         included={["Unlimited use of Example Section",'Demand Side Tokenomics','Create/Work on unlimited token designs', 'Unlimited token designs']}
         // purchaseLink2={{
@@ -31,7 +31,7 @@ export default function SubscriptionOptions() {
         included={["Genesis Tier",'Chat Support: ask questions, our experts answer']}
         purchaseLink={{
           link: `https://buy.stripe.com/cN202dejh7mefYs28g?prefilled_email=${user?.primaryEmailAddress?.emailAddress}&client_reference_id=${user?.id}`,
-          name: 'Monthly',
+          name: 'Purchase',
         }}
         // purchaseLink2={{          
         //   link: `https://buy.stripe.com/14kcOZ6QPgWO9A414a?prefilled_email=${user?.primaryEmailAddress?.emailAddress}&client_reference_id=${user?.id}`,
