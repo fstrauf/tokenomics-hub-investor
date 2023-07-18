@@ -59,7 +59,7 @@ export default function ManageSubscriptions(props) {
                 <li>All the benefits of the Genesis Tier.</li>
                 <li>
                   Chat with our experts to discuss issues, questions and ideate
-                  on your design.
+                  on your design for up to two hours a month.
                 </li>
               </ul>
             </section>
