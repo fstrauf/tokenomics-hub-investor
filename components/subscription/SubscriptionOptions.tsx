@@ -27,7 +27,7 @@ export default function SubscriptionOptions() {
         description="Ultimate Tokenomics Design + Support."
         price="USD $160/m"
         // price="USD $160/m or $600/y"
-        termsLink="/manage-subscriptions#genesis"
+        termsLink="/manage-subscriptions#navigator"
         included={["Genesis Tier",'Chat Support: ask questions, our experts answer']}
         purchaseLink={{
           link: `https://buy.stripe.com/cN202dejh7mefYs28g?prefilled_email=${user?.primaryEmailAddress?.emailAddress}&client_reference_id=${user?.id}`,
@@ -43,7 +43,7 @@ export default function SubscriptionOptions() {
         title="Frontier"
         description="Ultimate DIY Tokenomics Design + Support + Review."
         price="USD $2000/y"
-        termsLink="/manage-subscriptions#genesis"
+        termsLink="/manage-subscriptions#frontier"
         included={["1 year Navigator subscription",'1x Tokenomics Audit by a Tokenomics DAO Expert (we ask questions)']}
         purchaseLink={{
           // link: `https://buy.stripe.com/test_5kA4k98YwaUzgrCaEE?prefilled_email=${user.primaryEmailAddress.emailAddress}&client_reference_id=${user.id}`,
