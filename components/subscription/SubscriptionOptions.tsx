@@ -9,32 +9,34 @@ export default function SubscriptionOptions() {
       <ProductCard
         title="Genesis"
         description="Ultimate DIY Tokenomics Design."
-        price="USD $70/m or $250/y"
+        price="USD $70/m"
+        // price="USD $70/m or $250/y"
         termsLink="/manage-subscriptions#genesis"
         purchaseLink={{
           link: `https://buy.stripe.com/3cs6qBdfd9um4fK8wA?prefilled_email=${user?.primaryEmailAddress?.emailAddress}&client_reference_id=${user?.id}`,
           name: 'Monthly',
         }}
         included={["Unlimited use of Example Section",'Demand Side Tokenomics','Create/Work on unlimited token designs', 'Unlimited token designs']}
-        purchaseLink2={{
-          link: `https://buy.stripe.com/5kAaGRa317me7rWaEJ?prefilled_email=${user?.primaryEmailAddress?.emailAddress}&client_reference_id=${user?.id}`,
-          name: 'Yearly',
-        }}
+        // purchaseLink2={{
+        //   link: `https://buy.stripe.com/5kAaGRa317me7rWaEJ?prefilled_email=${user?.primaryEmailAddress?.emailAddress}&client_reference_id=${user?.id}`,
+        //   name: 'Yearly',
+        // }}
       />
       <ProductCard
         title="Navigator"
         description="Ultimate Tokenomics Design + Support."
-        price="USD $160/m or $600/y"
+        price="USD $160/m"
+        // price="USD $160/m or $600/y"
         termsLink="/manage-subscriptions#genesis"
         included={["Genesis Tier",'Chat Support: ask questions, our experts answer']}
         purchaseLink={{
           link: `https://buy.stripe.com/cN202dejh7mefYs28g?prefilled_email=${user?.primaryEmailAddress?.emailAddress}&client_reference_id=${user?.id}`,
           name: 'Monthly',
         }}
-        purchaseLink2={{          
-          link: `https://buy.stripe.com/14kcOZ6QPgWO9A414a?prefilled_email=${user?.primaryEmailAddress?.emailAddress}&client_reference_id=${user?.id}`,
-          name: 'Yearly',
-        }}
+        // purchaseLink2={{          
+        //   link: `https://buy.stripe.com/14kcOZ6QPgWO9A414a?prefilled_email=${user?.primaryEmailAddress?.emailAddress}&client_reference_id=${user?.id}`,
+        //   name: 'Yearly',
+        // }}
         highlight={true}
       />
       <ProductCard
