@@ -16,13 +16,13 @@ export default function DesignCard({ post, context }) {
   let [isOpen, setIsOpen] = useState(false)
   const contributor = user?.publicMetadata?.contributor || false
 
-  function closeModal() {
-    setIsOpen(false)
-  }
+  // function closeModal() {
+  //   setIsOpen(false)
+  // }
 
-  function openModal() {
-    setIsOpen(true)
-  }
+  // function openModal() {
+  //   setIsOpen(true)
+  // }
 
   const deleteDraft = async (id: String) => {
     // console.log('🚀 ~ file: designCard.tsx:44 ~ deleteDraft ~ id:', id)
@@ -31,7 +31,8 @@ export default function DesignCard({ post, context }) {
       method: 'PUT',
     })
     setSubmitting(false)
-    await Router.push(`/myDesigns`)
+    // await Router.push(`/myDesigns`)
+    await Router.reload()
   }
 
   const confirmDelete = async (id: String) => {

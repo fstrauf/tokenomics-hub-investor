@@ -90,7 +90,7 @@ export default function Header2({ mode = headerStatus.main, children = null }) {
         )
       case headerStatus.report:
       default:
-        return <HeaderGenericSection pathName="/myDesigns" title="List a Token" />
+        return <HeaderGenericSection pathName="/myReports" title="List a Token" />
     }
   }
 
