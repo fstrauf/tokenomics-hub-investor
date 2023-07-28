@@ -4,7 +4,7 @@ import Image from 'next/image'
 export default function DemandIntro() {
   return (
     <GenericCarousel>
-      <div className="flex h-140 flex-col items-center justify-center p-3">
+      <div className="flex flex-col items-center justify-center p-3">
         <div className="flex gap-5">
           <div className="relative">
             <Image
@@ -28,7 +28,7 @@ export default function DemandIntro() {
           its token.
         </p>
       </div>
-      <div className="flex h-140 flex-col items-center justify-center p-3">
+      <div className="flex flex-col items-center justify-center p-3">
         <Image
           src="/demand_calculation_template.png"
           className="rounded-md shadow-xl"
@@ -48,7 +48,7 @@ export default function DemandIntro() {
           could exist for your token.
         </p>
       </div>
-      <div className="flex h-140 flex-col items-center justify-center p-3">
+      <div className="flex flex-col items-center justify-center p-3">
         <Image
           src="/supply_vs_demand.png"
           width={2508/2}

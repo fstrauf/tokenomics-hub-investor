@@ -19,7 +19,10 @@ const GenericCarousel = ({ children }) => {
   }
 
   return (
-    <div className="grid content-between">
+    // <div className="grid content-between">
+    <div className="flex flex-col items-center space-y-4">
+    {/* <div className="flex flex-col justify-between items-center min-h-full"> */}
+    {/* <div className="overflow-auto"> */}
       {children?.map((child, index) => (
         <div
           key={index}
@@ -30,7 +33,8 @@ const GenericCarousel = ({ children }) => {
           {child}
         </div>
       ))}
-      <div className="flex gap-3 justify-center">
+      {/* </div */}
+      <div className="flex gap-3 justify-center mt-5">
         <button
           className=" rounded-lg bg-dao-red px-4 py-2 text-center text-xs font-medium text-white"
           onClick={prevSlide}

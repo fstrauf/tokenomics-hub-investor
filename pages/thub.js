@@ -2,6 +2,7 @@ import Layout from '../components/layout'
 import Image from 'next/image'
 import Link from 'next/link'
 import Script from 'next/script'
+import DemandIntro from '../components/tdf/DemandIntro'
 // import InfoSection from '../components/InfoSection'
 
 export default function tokenomicshub() {
@@ -14,24 +15,40 @@ export default function tokenomicshub() {
             Design your own tokenomics using our tools and help from our
             community.
           </h1>
-          <div className="pb-5">
-            <div className="my-10 w-full">
-              <div className="flex items-center justify-between gap-4 rounded-lg bg-gradient-to-r from-dao-red to-dao-green p-2">
-                <h1 className=" my-auto text-center text-2xl text-white">
-                  Check out our new Tokenomics Design Space
-                </h1>
-                <div className="flex gap-3">
-                  <Link
-                    href="/tokenomics-design"
-                    className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
-                  >
-                    Design a token
-                  </Link>
-                </div>
+
+          <div className="z-10 flex w-full justify-center bg-gray-100 bg-opacity-80">
+            <div className="z-9 m-auto flex flex-col justify-center rounded-md bg-gradient-to-r from-dao-red to-dao-green p-1 shadow-md">
+            <div className="w-full">
+            <div className="flex items-center justify-between gap-4 rounded-lg bg-gradient-to-r from-dao-red to-dao-green p-2">
+              <h1 className=" my-auto text-center text-2xl text-white">
+                Check out our new Tokenomics Design Space
+              </h1>
+              <div className="flex gap-3">
+                <Link
+                  href="/tokenomics-design"
+                  className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
+                >
+                  Design a token
+                </Link>
+              </div>
+            </div>
+          </div>
+              <div className="flex flex-col items-center rounded-lg bg-white p-4">
+                <h2 className="text-center text-xl font-bold">
+                  Access The Demand Builder to Balance Your Supply!
+                </h2>
+                <DemandIntro />
+                <Link href="/manage-subscriptions">
+                  <button className="mt-5 rounded-md bg-dao-red px-6 py-4 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
+                    Subscribe Now
+                  </button>
+                </Link>
               </div>
             </div>
           </div>
 
+          <hr className="my-4 mx-auto h-1 w-48 rounded border-0 bg-gray-100 dark:bg-gray-700 md:my-10"></hr>
+          <h1 className="">Legacy Content</h1>
           <div className="mt-5 flex">
             <div className="relative object-scale-down">
               <Image

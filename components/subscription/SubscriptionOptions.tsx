@@ -16,7 +16,7 @@ export default function SubscriptionOptions() {
           link: `https://buy.stripe.com/3cs6qBdfd9um4fK8wA?prefilled_email=${user?.primaryEmailAddress?.emailAddress}&client_reference_id=${user?.id}`,
           name: 'Purchase',
         }}
-        included={["Unlimited use of Example Section",'Demand Side Tokenomics','Create/Work on unlimited token designs', 'Unlimited token designs']}
+        included={["Unlimited use of Example Section",'Demand Side Tokenomics','Create/Work on unlimited token designs']}
         // purchaseLink2={{
         //   link: `https://buy.stripe.com/5kAaGRa317me7rWaEJ?prefilled_email=${user?.primaryEmailAddress?.emailAddress}&client_reference_id=${user?.id}`,
         //   name: 'Yearly',
