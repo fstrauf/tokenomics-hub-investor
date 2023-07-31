@@ -22,7 +22,7 @@ function SubscriptionStatus({ customerId }) {
           })
           console.log("🚀 ~ file: SubscriptionStatus.tsx:22 ~ fetchSubscription ~ subscriptions:", subscriptions)
           const activeSubscription = subscriptions.data.find(
-            (sub) => sub.status === 'active'
+            (sub) => sub.status === 'active' || sub.status === 'trialing'
           )
           console.log("🚀 ~ file: SubscriptionStatus.tsx:26 ~ fetchSubscription ~ activeSubscription:", activeSubscription)
           setSubscription(activeSubscription)
