@@ -14,19 +14,24 @@ function SubscriptionStatus({ customerId }) {
       // const stripe = await stripePromise;
       // const customerId = 'cus_NpqkFvgxXprQTY'; // replace with the customer ID
       if (customerId) {
+        console.log("🚀 ~ file: SubscriptionStatus.tsx:17 ~ fetchSubscription ~ customerId:", customerId)
         try {
           const subscriptions = await stripe.subscriptions.list({
             customer: customerId,
           })
+          console.log("🚀 ~ file: SubscriptionStatus.tsx:22 ~ fetchSubscription ~ subscriptions:", subscriptions)
           const activeSubscription = subscriptions.data.find(
             (sub) => sub.status === 'active'
           )
+          console.log("🚀 ~ file: SubscriptionStatus.tsx:26 ~ fetchSubscription ~ activeSubscription:", activeSubscription)
           setSubscription(activeSubscription)
 
           const productId = activeSubscription.items.data[0].price.product
           const product = await stripe.products.retrieve(productId)
+          console.log("🚀 ~ file: SubscriptionStatus.tsx:31 ~ fetchSubscription ~ product:", product)
           setProduct(product)
         } catch (error) {
+          console.log("🚀 ~ file: SubscriptionStatus.tsx:34 ~ fetchSubscription ~ error:", error)
           //do nothing
         }
       }

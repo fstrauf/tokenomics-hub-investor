@@ -10,6 +10,7 @@ import { useAuth } from '@clerk/nextjs'
 import UnAuthenticated from '../components/unauthenticated'
 
 export default function ManageSubscriptions(props) {
+  console.log("🚀 ~ file: manage-subscriptions.tsx:13 ~ ManageSubscriptions ~ props:", props)
   const { isSignedIn } = useAuth()
   if (!isSignedIn) return(<UnAuthenticated/>)
   return (
