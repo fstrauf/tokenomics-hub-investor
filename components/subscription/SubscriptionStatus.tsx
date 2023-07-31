@@ -6,6 +6,7 @@ const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY, {
 })
 
 function SubscriptionStatus({ customerId }) {
+  console.log("🚀 ~ file: SubscriptionStatus.tsx:9 ~ SubscriptionStatus ~ customerId:", customerId)
   const [subscription, setSubscription] = useState(null)
   const [product, setProduct] = useState(null)
 
