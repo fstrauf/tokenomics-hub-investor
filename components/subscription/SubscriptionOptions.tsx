@@ -47,7 +47,7 @@ export default function SubscriptionOptions() {
         included={["1 year Navigator subscription",'1x Tokenomics Audit by a Tokenomics DAO Expert (we ask questions)']}
         purchaseLink={{
           // link: `https://buy.stripe.com/test_5kA4k98YwaUzgrCaEE?prefilled_email=${user.primaryEmailAddress.emailAddress}&client_reference_id=${user.id}`,
-          link: `https://buy.stripe.com/dR6bKV8YXfSK7rW7sz?prefilled_email=${user?.primaryEmailAddress?.emailAddress}&client_reference_id=${user?.id}`,
+          link: `https://buy.stripe.com/5kAdT33EDfSKfYscMV?prefilled_email=${user?.primaryEmailAddress?.emailAddress}&client_reference_id=${user?.id}`,
           // https://buy.stripe.com/dR6bKV8YXfSK7rW7sz
           name: 'Purchase',
         }}
