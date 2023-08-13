@@ -1,34 +1,72 @@
 import Image from 'next/image'
-import Link from 'next/link'
 import Header2 from '../components/header2'
 import ThubLogo from '../public/svg/thub-logo'
 import LiteYouTubeEmbed from 'react-lite-youtube-embed'
 import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css'
 import FaqSection from '../components/static/TDSfaqSection'
 import { headerStatus } from '../lib/helper'
-import Loader from '../components/generic/Loader'
+import { useRouter } from 'next/router'
+import GenericPopover from '../components/generic/GenericPopover'
+import SubscriptionOptions from '../components/subscription/SubscriptionOptions'
+import SubscriptionTC from '../components/subscription/SubscriptionTC'
+import UnAuthenticated from '../components/unauthenticated'
+import { getAuth } from '@clerk/nextjs/server'
+import React, { useState } from 'react'
+import { validateTierAccess } from '../lib/helper'
+import { useAuth } from '@clerk/nextjs'
 
-export default function TokenomicsDesignSpace() {
+export default function TokenomicsDesignSpace(props) {
+  const router = useRouter()
+  const [isOpen, setIsOpen] = useState(false)
+  const { isSignedIn } = useAuth()
+
+  const handleDesignClick = () => {
+    if (validateTierAccess(props?.subscription)) {
+      // nav go page
+      router.push('/myDesigns')
+    } else {
+      setIsOpen(true)
+    }
+  }
+
   const designLink = (
-    <Link href="/myDesigns">
-      <button className="mt-5 rounded-md bg-dao-red px-6 py-4 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
-        Design a Token (it's free)
-      </button>
-    </Link>
+    <button
+      onClick={handleDesignClick}
+      className="mt-5 rounded-md bg-dao-red px-6 py-4 text-lg font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+    >
+      Design a Token
+    </button>
   )
 
   return (
     <>
       <Header2 mode={headerStatus.design} />
-
-      <div className="m-auto">
+      <GenericPopover isOpen={isOpen} setIsOpen={setIsOpen}>
+        <div>
+          {isSignedIn ? (
+            <>
+              <h1 className="my-40 text-center text-2xl font-bold">
+                Subscribe to get full access to the Tokenomics Design Space
+              </h1>
+              <SubscriptionOptions />
+              <div className="mb-40"></div>
+              <SubscriptionTC />
+            </>
+          ) : (
+            <><UnAuthenticated/></>
+          )}
+        </div>
+      </GenericPopover>
+      <div className="container mx-auto px-4">
         <div className="">
           <div className="flex w-full justify-between gap-5 bg-gradient-to-r from-dao-green to-dao-red py-5 pt-10">
             <div className="prose p-10">
               <h1 className="text-5xl font-bold leading-10 text-white md:whitespace-nowrap">
                 Improved Tokenomics Calculator
               </h1>
-              <h2 className='text-white font-normal mt-0'>Design Sustainable Tokenomics</h2>
+              <h2 className="mt-0 font-normal text-white">
+                Design Sustainable Tokenomics
+              </h2>
               <div className="prose flex flex-col p-3 text-white">
                 <p>
                   Designing tokenomics in a spreadsheet can be complicated and
@@ -45,16 +83,16 @@ export default function TokenomicsDesignSpace() {
                   <li>Get your tokenomics audited by an expert</li>
                 </ul>
               </div>
-              <div className="flex gap-3">{designLink}</div>
             </div>
             <div className="m-10 w-[650px]">
               {' '}
               <LiteYouTubeEmbed
                 id="icWDmXFe7Bo"
-                title="What’s new in Material Design for the web (Chrome Dev Summit 2019)"
+                title="Tokenomics Design Space Walkthrough Video"
               />
             </div>
           </div>
+          <div className="flex justify-center gap-3">{designLink}</div>
         </div>
         <hr className="my-4 mx-auto h-1 w-48 rounded border-0 bg-gray-100 dark:bg-gray-700 md:my-10"></hr>
 
@@ -75,15 +113,15 @@ export default function TokenomicsDesignSpace() {
               </p>
             </div>
           </div>
-            <div className="relative">
-              <Image
-                width={1191}
-                height={948}
-                src="/demandCalcHalf.png"
-                className="rounded-md shadow-xl"
-                alt="Token Editor Flow"
-              />
-            </div>
+          <div className="relative">
+            <Image
+              width={1191}
+              height={948}
+              src="/demandCalcHalf.png"
+              className="rounded-md shadow-xl"
+              alt="Token Editor Flow"
+            />
+          </div>
         </div>
         <hr className="my-4 mx-auto h-1 w-48 rounded border-0 bg-gray-100 dark:bg-gray-700 md:my-10"></hr>
         <div className="flex flex-col items-center bg-gray-50 p-3">
@@ -110,8 +148,8 @@ export default function TokenomicsDesignSpace() {
           <div className="flex">
             <div className="relative object-scale-down">
               <Image
-                width={1000/1.2}
-                height={292/1.2}
+                width={1000 / 1.2}
+                height={292 / 1.2}
                 src="/supply_vs_demand.png"
                 className="rounded-md shadow-xl"
                 alt="Compare supply and demand"
@@ -123,35 +161,37 @@ export default function TokenomicsDesignSpace() {
               Estimate your Token Demand
             </h1>
             <div className="prose flex flex-col p-3">
-                <p>
-                Tokenomics Design Space provides a framework for estimating token demand in 3 simple steps:
-                </p>
-                <ol className="prose">
-                  <li>
-                    Easy to use interface with built in step by step process
-                  </li>
-                  <li>
-                    Contextual insights on similar projects in the same niche
-                  </li>
-                  <li>Framework for estimating demand</li>
-                  <li>Get your tokenomics audited by an expert</li>
-                </ol>
-              </div>
+              <p>
+                Tokenomics Design Space provides a framework for estimating
+                token demand in 3 simple steps:
+              </p>
+              <ol className="prose">
+                <li>
+                  Easy to use interface with built in step by step process
+                </li>
+                <li>
+                  Contextual insights on similar projects in the same niche
+                </li>
+                <li>Framework for estimating demand</li>
+                <li>Get your tokenomics audited by an expert</li>
+              </ol>
+            </div>
           </div>
         </div>
         <hr className="my-4 mx-auto h-1 w-48 rounded border-0 bg-gray-100 dark:bg-gray-700 md:my-10"></hr>
         <div className="flex flex-col items-center bg-gray-50 p-3">
           <h1 className="prose mb-10 text-3xl font-bold leading-10 md:whitespace-nowrap">
-          Tokenomics Audit
+            Tokenomics Audit
           </h1>
           <p className="prose mt-5 text-center text-xl">
-          Get a Tokenomics DAO expert to audit your tokenomics and provide feedback, guidance and even design help
+            Get a Tokenomics DAO expert to audit your tokenomics and provide
+            feedback, guidance and even design help
           </p>
           <div className="m-10 h-24 w-24">
             <ThubLogo />
           </div>
         </div>
-        <FaqSection/>
+        <FaqSection />
         <div className="flex w-full flex-col justify-between gap-5 bg-gradient-to-r from-dao-green to-dao-red py-5 pt-10">
           <h1 className="prose text-center text-4xl font-bold leading-10 text-white md:whitespace-nowrap">
             Build better Tokenomics Easily
@@ -165,4 +205,18 @@ export default function TokenomicsDesignSpace() {
       </div>
     </>
   )
+}
+
+export const getServerSideProps = async ({ req, res }) => {
+  const { userId = null } = getAuth(req)
+  const userIdUndefined = userId === null ? '' : userId
+
+  const subscription = await prisma.subscriptions.findUnique({
+    where: { authorClerkId: userIdUndefined },
+  })
+  return {
+    props: {
+      subscription: subscription || null,
+    },
+  }
 }

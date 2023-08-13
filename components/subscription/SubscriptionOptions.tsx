@@ -11,12 +11,12 @@ export default function SubscriptionOptions() {
         description="Ultimate DIY Tokenomics Design."
         price="USD $70/m"
         // price="USD $70/m or $250/y"
-        termsLink="/manage-subscriptions#genesis"
+        termsLink="/tokenomics-design#genesis"
         purchaseLink={{
           link: `https://buy.stripe.com/3cs6qBdfd9um4fK8wA?prefilled_email=${user?.primaryEmailAddress?.emailAddress}&client_reference_id=${user?.id}`,
           name: 'Purchase',
         }}
-        included={["Unlimited use of Example Section",'Demand Side Tokenomics','Create/Work on unlimited token designs']}
+        included={["Full access to the Tokenomics Design Space",'Demand Side Tokenomics','Create/Work on unlimited token designs', 'unlimted access to example section']}
         // purchaseLink2={{
         //   link: `https://buy.stripe.com/5kAaGRa317me7rWaEJ?prefilled_email=${user?.primaryEmailAddress?.emailAddress}&client_reference_id=${user?.id}`,
         //   name: 'Yearly',
@@ -27,7 +27,7 @@ export default function SubscriptionOptions() {
         description="Ultimate Tokenomics Design + Support."
         price="USD $160/m"
         // price="USD $160/m or $600/y"
-        termsLink="/manage-subscriptions#navigator"
+        termsLink="/tokenomics-design#navigator"
         included={["Genesis Tier",'Chat Support: ask questions, our experts answer']}
         purchaseLink={{
           link: `https://buy.stripe.com/cN202dejh7mefYs28g?prefilled_email=${user?.primaryEmailAddress?.emailAddress}&client_reference_id=${user?.id}`,
@@ -43,7 +43,7 @@ export default function SubscriptionOptions() {
         title="Frontier"
         description="Ultimate DIY Tokenomics Design + Support + Review."
         price="USD $2000/y"
-        termsLink="/manage-subscriptions#frontier"
+        termsLink="/tokenomics-design#frontier"
         included={["1 year Navigator subscription",'1x Tokenomics Audit by a Tokenomics DAO Expert (we ask questions)']}
         purchaseLink={{
           // link: `https://buy.stripe.com/test_5kA4k98YwaUzgrCaEE?prefilled_email=${user.primaryEmailAddress.emailAddress}&client_reference_id=${user.id}`,
