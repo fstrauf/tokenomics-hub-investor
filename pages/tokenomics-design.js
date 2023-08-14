@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import Header2 from '../components/header2'
+import prisma from '../lib/prisma'
 import ThubLogo from '../public/svg/thub-logo'
 import LiteYouTubeEmbed from 'react-lite-youtube-embed'
 import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css'
