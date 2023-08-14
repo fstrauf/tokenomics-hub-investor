@@ -46,12 +46,26 @@ export default function TokenomicsDesignSpace(props) {
         <div>
           {isSignedIn ? (
             <>
-              <h1 className="my-40 text-center text-2xl font-bold">
-                Subscribe to get full access to the Tokenomics Design Space
+              <h1 className="mb-16 mt-10 flex items-center justify-center break-words text-[35px] leading-tight text-gray-600">
+                Subscribe to save up to{' '}
+                <span className="ml-2 mr-2 inline-block font-oswald text-[35px] font-bold text-dao-green">
+                  12,000 USD
+                </span>
+                on your token design.
               </h1>
               <SubscriptionOptions />
+              <div className="mt-14 flex justify-center">
+                <Image
+                  src="/tds_saving_barchart.png"
+                  width={670 / 1.5}
+                  height={482 / 1.5}
+                  className="rounded-md shadow-xl"
+                  alt="Savings when comparing consulting to TDS"
+                />
+              </div>
               <div className="mb-40"></div>
               <SubscriptionTC />
+
             </>
           ) : (
             <>
@@ -191,7 +205,7 @@ export default function TokenomicsDesignSpace(props) {
           </div>
         </div>
         <div className="flex justify-center gap-3 py-10">{designLink}</div>
-        
+
         <div className="flex flex-col items-center bg-gray-100 p-5">
           <h1 className="prose mb-10 text-3xl font-bold leading-10 md:whitespace-nowrap">
             Put your design into perspective
