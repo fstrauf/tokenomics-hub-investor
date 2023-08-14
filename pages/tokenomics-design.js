@@ -15,6 +15,7 @@ import { getAuth } from '@clerk/nextjs/server'
 import React, { useState } from 'react'
 import { validateTierAccess } from '../lib/helper'
 import { useAuth } from '@clerk/nextjs'
+import { event } from 'nextjs-google-analytics'
 // import Link from 'next/link'
 
 export default function TokenomicsDesignSpace(props) {
@@ -23,6 +24,11 @@ export default function TokenomicsDesignSpace(props) {
   const { isSignedIn } = useAuth()
 
   const handleDesignClick = () => {
+    //record GA event
+    event(`landingPageDesignClick`, {
+      category: 'UserAction',
+      // label: phase,
+    })
     if (validateTierAccess(props?.subscription)) {
       // nav go page
       router.push('/myDesigns')
