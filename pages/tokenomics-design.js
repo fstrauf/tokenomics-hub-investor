@@ -61,6 +61,7 @@ export default function TokenomicsDesignSpace(props) {
                   width={670 / 1.5}
                   height={482 / 1.5}
                   className="rounded-md shadow-xl"
+                  priority={true}
                   alt="Savings when comparing consulting to TDS"
                 />
               </div>
