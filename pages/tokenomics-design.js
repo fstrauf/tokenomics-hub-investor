@@ -73,7 +73,7 @@ export default function TokenomicsDesignSpace(props) {
             </h1>
           </div>
 
-          <div className="flex items-center justify-center space-x-8">
+          <div className="flex items-center justify-evenly space-x-8">
             {/* Classic Consulting Section */}
             <div className="flex flex-col items-center space-y-4">
               <h2 className="text-center text-5xl font-medium text-gray-600">
@@ -92,7 +92,7 @@ export default function TokenomicsDesignSpace(props) {
               </div>
             </div>
             <div>
-              <p className="px-4 text-6xl">🤷‍♀️</p>
+              <p className="px-4 text-[70px]">🤷‍♀️</p>
             </div>
 
             {/* Tokenomics Design Space Section */}
