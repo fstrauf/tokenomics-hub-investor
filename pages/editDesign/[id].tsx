@@ -1,15 +1,23 @@
 import { GetServerSideProps } from 'next'
 import React from 'react'
 import TDFMain from '../../components/tdf/TDFMain'
-import { clerkConvertJSON, formatDate } from '../../lib/helper'
+import { clerkConvertJSON, formatDate, headerStatus } from '../../lib/helper'
 import { clerkClient, getAuth } from '@clerk/nextjs/server'
 import prisma from '../../lib/prisma'
 import CommentForm from '../../components/commentForm'
 import Comments from '../../components/comments'
 import { useAuth } from '@clerk/nextjs'
 import UnAuthenticated from '../../components/unauthenticated'
+import { validateTierAccess } from '../../lib/helper'
+import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
+import Link from 'next/link'
+import SubscriptionOptions from '../../components/subscription/SubscriptionOptions'
+import SubscriptionTC from '../../components/subscription/SubscriptionTC'
+import Layout from '../../components/layout'
 
 const EditDesign: React.FC<UpdateNewDesignProps> = (props) => {
+  const { user } = useUser()
+  const admin = user?.publicMetadata?.admin || false
   if (Object.keys(props.post).length === 0) {
     return <div>The requested object does not exist</div>
   }
@@ -19,14 +27,35 @@ const EditDesign: React.FC<UpdateNewDesignProps> = (props) => {
 
   return (
     <>
-      <TDFMain props={props} header={props?.post?.postType} />
-      <div className="m-auto max-w-md sm:max-w-2xl lg:max-w-screen-2xl">
-        <h1 className="section-head mt-10 mb-4 text-xl font-bold text-black md:mt-20 md:text-2xl lg:text-3xl">
-          Comments.
-        </h1>
-        <CommentForm id={props?.post?.id} />
-        <Comments comments={props?.post?.Comments} />
-      </div>
+      {validateTierAccess(props.Subscription, admin) ? (
+        <>
+          <TDFMain props={props} header={props?.post?.postType} />
+          <div className="m-auto max-w-md sm:max-w-2xl lg:max-w-screen-2xl">
+            <h1 className="section-head mt-10 mb-4 text-xl font-bold text-black md:mt-20 md:text-2xl lg:text-3xl">
+              Comments.
+            </h1>
+            <CommentForm id={props?.post?.id} />
+            <Comments comments={props?.post?.Comments} />
+          </div>
+        </>
+      ) : (
+        <Layout mode={headerStatus.design}>
+          <div className="flex flex-col items-center justify-center gap-10">
+            <h1 className="my-20 text-center text-2xl font-bold">
+              Subscribe to get full access to the Tokenomics Design Space
+            </h1>
+            <Link
+              href="/tokenomics-design"
+              className="mt-5 rounded-md bg-dao-red px-6 py-4 text-lg font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+            >
+              Learn More
+            </Link>
+            <SubscriptionOptions />
+            <div className="mb-40"></div>
+            <SubscriptionTC />
+          </div>
+        </Layout>
+      )}
     </>
   )
 }
@@ -127,7 +156,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       }) || {}
 
     postWithUpdatedComments = post
-    console.log("🚀 ~ file: [id].tsx:134 ~ constgetServerSideProps:GetServerSideProps= ~ postWithUpdatedComments:", postWithUpdatedComments)
+    console.log(
+      '🚀 ~ file: [id].tsx:134 ~ constgetServerSideProps:GetServerSideProps= ~ postWithUpdatedComments:',
+      postWithUpdatedComments
+    )
 
     postWithUpdatedComments.Comments = commentsWithUserNames || {}
     postWithUpdatedComments.protocolTimeLine =

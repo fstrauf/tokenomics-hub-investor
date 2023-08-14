@@ -17,10 +17,15 @@ import GenericPopover from '../components/generic/GenericPopover'
 import NewDesignMinimal from '../components/tdf/newDesignMinimal'
 import { useAuth } from '@clerk/nextjs'
 import UnAuthenticated from '../components/unauthenticated'
+import { validateTierAccess } from '../lib/helper'
+import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
+import SubscriptionOptions from '../components/subscription/SubscriptionOptions'
+import SubscriptionTC from '../components/subscription/SubscriptionTC'
 
 export default function MyDesigns(props) {
-  console.log("🚀 ~ file: myDesigns.tsx:22 ~ MyDesigns ~ props:", props)
   const { isSignedIn } = useAuth()
+  const { user } = useUser()
+  const admin = user?.publicMetadata?.admin || false
 
   const [isOpen, setIsOpen] = useState(false)
 
@@ -35,79 +40,93 @@ export default function MyDesigns(props) {
       <>
         {isSignedIn ? (
           <>
-            <div className="my-10 w-full">
-              <div className="flex items-center justify-between gap-4 rounded-lg bg-gradient-to-r from-dao-red to-dao-green p-2">
-                <p className="text-center text-white">
-                  Upgrade your Token Design - use expert help and unlock the
-                  demand builder!
-                </p>
-                <div className="flex gap-3">
-                  <Link
-                    href="/manage-subscriptions"
-                    className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
-                  >
-                    Upgrade to Premium
-                  </Link>
-                  <Link
-                    href="/manage-subscriptions"
-                    className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
-                  >
-                    Manage Subscription
-                  </Link>
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-4 mb-4 rounded-lg bg-gray-100 p-1">
-              <div className="flex items-center justify-between rounded-lg p-2 py-2">
-                <p className="text-xl font-bold">My Designs</p>
-                <div className="flex gap-1">
-                  <button
-                    onClick={handleNewDesign}
-                    className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
-                  >
-                    New Design
-                  </button>
-                </div>
-              </div>
-              <GenericPopover isOpen={isOpen} setIsOpen={setIsOpen}>
-                <NewDesignMinimal
-                  newPost={props?.newPost}
-                  postCount={props?.postCount}
-                  subscription={props?.subscription}
-                />
-              </GenericPopover>
-              <div className="overflow-x-auto rounded-lg bg-white">
-                <div className="flex flex-wrap items-center justify-center">
-                  {props?.posts?.length === 0 ? (
-                    <div className="pb-5">
-                      <InfoSection
-                        text="Tokenomics Hub offers entrepreneurs an industry leading framework with a built in suite of tools to help you create sustainable tokenomics (in beta)"
-                        title="Want to design a token?"
+            {validateTierAccess(props.Subscription, admin) ? (
+              <>
+                <div className="my-10 w-full">
+                  <div className="flex items-center justify-between gap-4 rounded-lg bg-gradient-to-r from-dao-red to-dao-green p-2">
+                    <p className="text-center text-white">
+                      Upgrade your Token Design - use expert help and unlock the
+                      demand builder!
+                    </p>
+                    <div className="flex gap-3">
+                      <Link
+                        href="/manage-subscriptions"
+                        className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
                       >
-                        <div className="flex justify-center">
-                          <Link
-                            href="/tokenomics-design"
-                            className="w-36 self-center rounded-md border-2 border-dark-tdao bg-white px-4 py-2 text-center text-sm font-medium text-dark-tdao hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
-                          >
-                            Design a Token
-                          </Link>
-                        </div>
-                      </InfoSection>
+                        Upgrade to Premium
+                      </Link>
+                      <Link
+                        href="/manage-subscriptions"
+                        className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
+                      >
+                        Manage Subscription
+                      </Link>
                     </div>
-                  ) : (
-                    <></>
-                  )}
-                  {props?.posts.map((post, index) => {
-                    return (
-                      <div key={index}>
-                        <DesignCard post={post} context="myDrafts" />
-                      </div>
-                    )
-                  })}
+                  </div>
                 </div>
+
+                <div className="mt-4 mb-4 rounded-lg bg-gray-100 p-1">
+                  <div className="flex items-center justify-between rounded-lg p-2 py-2">
+                    <p className="text-xl font-bold">My Designs</p>
+                    <div className="flex gap-1">
+                      <button
+                        onClick={handleNewDesign}
+                        className="rounded-md bg-dao-red px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 disabled:opacity-40"
+                      >
+                        New Design
+                      </button>
+                    </div>
+                  </div>
+                  <GenericPopover isOpen={isOpen} setIsOpen={setIsOpen}>
+                    <NewDesignMinimal
+                      newPost={props?.newPost}
+                      postCount={props?.postCount}
+                      subscription={props?.subscription}
+                    />
+                  </GenericPopover>
+                  <div className="overflow-x-auto rounded-lg bg-white">
+                    <div className="flex flex-wrap items-center justify-center">
+                      {props?.posts?.length === 0 ? (
+                        <div className="pb-5">
+                          <InfoSection
+                            text="Tokenomics Hub offers entrepreneurs an industry leading framework with a built in suite of tools to help you create sustainable tokenomics (in beta)"
+                            title="Want to design a token?"
+                          >
+                            <div className="flex justify-center">
+                              <Link
+                                href="/tokenomics-design"
+                                className="w-36 self-center rounded-md border-2 border-dark-tdao bg-white px-4 py-2 text-center text-sm font-medium text-dark-tdao hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+                              >
+                                Design a Token
+                              </Link>
+                            </div>
+                          </InfoSection>
+                        </div>
+                      ) : (
+                        <></>
+                      )}
+                      {props?.posts.map((post, index) => {
+                        return (
+                          <div key={index}>
+                            <DesignCard post={post} context="myDrafts" />
+                          </div>
+                        )
+                      })}
+                    </div>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <div className="flex flex-col items-center justify-center gap-10">
+                <h1 className="my-20 text-center text-2xl font-bold">
+                  Subscribe to get full access to the Tokenomics Design Space
+                </h1>
+                <Link href='/tokenomics-design' className="mt-5 rounded-md bg-dao-red px-6 py-4 text-lg font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">Learn More</Link>
+                <SubscriptionOptions />
+                <div className="mb-40"></div>
+                <SubscriptionTC />
               </div>
-            </div>
+            )}
           </>
         ) : (
           <UnAuthenticated />

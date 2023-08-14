@@ -41,6 +41,8 @@ function MyApp({ Component, pageProps }) {
           href="/favicon-16x16.png"
         />
         <link rel="manifest" href="/site.webmanifest"></link>
+        <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500&display=swap" rel="stylesheet"/>
+
       </Head>
       <GoogleAnalytics strategy="lazyOnload" trackPageViews />
       <ClerkProvider {...pageProps}>

@@ -14,6 +14,7 @@ import { getAuth } from '@clerk/nextjs/server'
 import React, { useState } from 'react'
 import { validateTierAccess } from '../lib/helper'
 import { useAuth } from '@clerk/nextjs'
+// import Link from 'next/link'
 
 export default function TokenomicsDesignSpace(props) {
   const router = useRouter()
@@ -53,48 +54,114 @@ export default function TokenomicsDesignSpace(props) {
               <SubscriptionTC />
             </>
           ) : (
-            <><UnAuthenticated/></>
+            <>
+              <UnAuthenticated />
+            </>
           )}
         </div>
       </GenericPopover>
-      <div className="container mx-auto px-4">
-        <div className="">
-          <div className="flex w-full justify-between gap-5 bg-gradient-to-r from-dao-green to-dao-red py-5 pt-10">
-            <div className="prose p-10">
-              <h1 className="text-5xl font-bold leading-10 text-white md:whitespace-nowrap">
-                Improved Tokenomics Calculator
-              </h1>
-              <h2 className="mt-0 font-normal text-white">
-                Design Sustainable Tokenomics
+
+      <div className="container mx-auto px-4 py-16">
+        <div className="flex flex-col justify-center space-y-8 py-10">
+          <div className="mb-3 text-center">
+            <h1 className="mb-10 flex items-center justify-center text-[60px] leading-10 text-gray-600 md:whitespace-nowrap">
+              Save up to{' '}
+              <span className="ml-2 mr-4 inline-block font-oswald text-[60px] font-bold text-dao-green">
+                12,000 USD
+              </span>
+              on your token design.
+            </h1>
+          </div>
+
+          <div className="flex items-center justify-center space-x-8">
+            {/* Classic Consulting Section */}
+            <div className="flex flex-col items-center space-y-4">
+              <h2 className="text-center text-5xl font-medium text-gray-600">
+                Hire a Consultant?
               </h2>
-              <div className="prose flex flex-col p-3 text-white">
-                <p>
-                  Designing tokenomics in a spreadsheet can be complicated and
-                  frustrating. Simplify the process with Tokenomics Design Space
+              <div className="w-96 rounded-md border border-dao-red bg-dao-red bg-opacity-25 p-3 text-center shadow-inner">
+                <p className="text-center text-2xl font-bold text-gray-600">
+                  ... and pay min{' '}
                 </p>
-                <ul className="prose text-white">
-                  <li>
-                    Easy to use interface with built in step by step process
-                  </li>
-                  <li>
-                    Contextual insights on similar projects in the same niche
-                  </li>
-                  <li>Framework for estimating demand</li>
-                  <li>Get your tokenomics audited by an expert</li>
-                </ul>
+                <div className="relative flex items-center justify-center">
+                  <span className="mr-4 text-4xl">👎</span>
+                  <span className="inline-block w-72 font-oswald text-[50px] text-dao-red">
+                    15,000 USD
+                  </span>
+                </div>
               </div>
             </div>
-            <div className="m-10 w-[650px]">
-              {' '}
-              <LiteYouTubeEmbed
-                id="icWDmXFe7Bo"
-                title="Tokenomics Design Space Walkthrough Video"
-              />
+            <div>
+              <p className="px-4 text-6xl">🤷‍♀️</p>
             </div>
+
+            {/* Tokenomics Design Space Section */}
+            <div className="flex flex-col items-center space-y-4">
+              <h2 className="text-2xl text-5xl font-medium text-gray-600">
+                Or DIY?
+              </h2>
+              <p className="text-center">
+                using our step by step guide, education & expert support...
+              </p>
+              <div className="w-96 rounded-md border border-dao-green bg-dao-green bg-opacity-25 p-3 text-center shadow-inner">
+                <p className="text-center text-2xl font-bold text-gray-600">
+                  ... and pay max{' '}
+                </p>
+                <div className="relative flex items-center justify-center">
+                  <span className="mr-4 text-4xl">👍</span>
+                  <span className="inline-block w-72 font-oswald text-[50px] text-dao-green">
+                    2,500 USD
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="mt-8 flex justify-center">
+            <Image
+              src="/tds_saving_barchart.png"
+              width={670 / 1.5}
+              height={482 / 1.5}
+              className="rounded-md shadow-xl"
+              alt="Savings when comparing consulting to TDS"
+            />
           </div>
           <div className="flex justify-center gap-3">{designLink}</div>
         </div>
-        <hr className="my-4 mx-auto h-1 w-48 rounded border-0 bg-gray-100 dark:bg-gray-700 md:my-10"></hr>
+
+        <div className="flex w-full justify-between gap-5 bg-gradient-to-r from-dao-green to-dao-red py-5 pt-10">
+          <div className="prose p-10">
+            <h1 className="text-5xl font-bold leading-10 text-white md:whitespace-nowrap">
+              Improved Tokenomics Calculator
+            </h1>
+            <h2 className="mt-0 font-normal text-white">
+              Design Sustainable Tokenomics
+            </h2>
+            <div className="prose flex flex-col p-3 text-white">
+              <p>
+                Designing tokenomics in a spreadsheet can be complicated and
+                frustrating. Simplify the process with Tokenomics Design Space
+              </p>
+              <ul className="prose text-white">
+                <li>
+                  Easy to use interface with built in step by step process
+                </li>
+                <li>
+                  Contextual insights on similar projects in the same niche
+                </li>
+                <li>Framework for estimating demand</li>
+                <li>Get your tokenomics audited by an expert</li>
+              </ul>
+            </div>
+          </div>
+          <div className="m-10 w-[650px]">
+            {' '}
+            <LiteYouTubeEmbed
+              id="icWDmXFe7Bo"
+              title="Tokenomics Design Space Walkthrough Video"
+            />
+          </div>
+        </div>
+        <div className="flex justify-center gap-3">{designLink}</div>
 
         <div className="flex justify-evenly p-10">
           <div className="prose pl-20">
@@ -123,8 +190,9 @@ export default function TokenomicsDesignSpace(props) {
             />
           </div>
         </div>
-        <hr className="my-4 mx-auto h-1 w-48 rounded border-0 bg-gray-100 dark:bg-gray-700 md:my-10"></hr>
-        <div className="flex flex-col items-center bg-gray-50 p-3">
+        <div className="flex justify-center gap-3 py-10">{designLink}</div>
+        
+        <div className="flex flex-col items-center bg-gray-100 p-5">
           <h1 className="prose mb-10 text-3xl font-bold leading-10 md:whitespace-nowrap">
             Put your design into perspective
           </h1>
@@ -143,13 +211,12 @@ export default function TokenomicsDesignSpace(props) {
             />
           </div>
         </div>
-        <hr className="my-4 mx-auto h-1 w-48 rounded border-0 bg-gray-100 dark:bg-gray-700 md:my-10"></hr>
-        <div className="flex justify-evenly p-3">
+        <div className="flex justify-evenly p-10">
           <div className="flex">
             <div className="relative object-scale-down">
               <Image
-                width={1000 / 1.2}
-                height={292 / 1.2}
+                width={1000 / 1.5}
+                height={292 / 1.5}
                 src="/supply_vs_demand.png"
                 className="rounded-md shadow-xl"
                 alt="Compare supply and demand"
@@ -178,8 +245,7 @@ export default function TokenomicsDesignSpace(props) {
             </div>
           </div>
         </div>
-        <hr className="my-4 mx-auto h-1 w-48 rounded border-0 bg-gray-100 dark:bg-gray-700 md:my-10"></hr>
-        <div className="flex flex-col items-center bg-gray-50 p-3">
+        <div className="flex flex-col items-center bg-gray-100 p-10">
           <h1 className="prose mb-10 text-3xl font-bold leading-10 md:whitespace-nowrap">
             Tokenomics Audit
           </h1>

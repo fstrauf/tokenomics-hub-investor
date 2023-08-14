@@ -5,6 +5,9 @@ module.exports = {
   ],  
   theme: {
     extend: {
+      fontFamily: {
+        oswald: ['"Oswald"']
+      },
       colors: {
         'dao-red': '#FF6666',
         'dao-green': '#008090',
