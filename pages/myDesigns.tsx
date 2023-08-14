@@ -23,9 +23,12 @@ import SubscriptionOptions from '../components/subscription/SubscriptionOptions'
 import SubscriptionTC from '../components/subscription/SubscriptionTC'
 
 export default function MyDesigns(props) {
+  // console.log("🚀 ~ file: myDesigns.tsx:26 ~ MyDesigns ~ props:", props)
+  
   const { isSignedIn } = useAuth()
   const { user } = useUser()
   const admin = user?.publicMetadata?.admin || false
+  // console.log("🚀 ~ file: myDesigns.tsx:26 ~ MyDesigns ~ props:", validateTierAccess(props.subscription, admin))
 
   const [isOpen, setIsOpen] = useState(false)
 
@@ -40,7 +43,7 @@ export default function MyDesigns(props) {
       <>
         {isSignedIn ? (
           <>
-            {validateTierAccess(props.Subscription, admin) ? (
+            {validateTierAccess(props.subscription, admin) ? (
               <>
                 <div className="my-10 w-full">
                   <div className="flex items-center justify-between gap-4 rounded-lg bg-gradient-to-r from-dao-red to-dao-green p-2">

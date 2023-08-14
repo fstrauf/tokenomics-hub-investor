@@ -602,11 +602,14 @@ export function validateTierAccess(
   subscription: any,
   admin: boolean = false
 ): boolean {
+
   if (
     subscription?.tier === subTiers.genesis ||
     subscription?.tier === subTiers.frontier ||
     subscription?.tier === subTiers.navigator
   ) {
+    
+    
     console.log('user has subscriptiom')
     return true
   } else {
