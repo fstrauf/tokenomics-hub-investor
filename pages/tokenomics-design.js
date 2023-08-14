@@ -35,7 +35,7 @@ export default function TokenomicsDesignSpace(props) {
       onClick={handleDesignClick}
       className="mt-5 rounded-md bg-dao-red px-6 py-4 text-lg font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
     >
-      Design a Token
+      Design Your Token Now
     </button>
   )
 
@@ -210,6 +210,7 @@ export default function TokenomicsDesignSpace(props) {
               alt="Examples help to break diwn the complexity of token design"
             />
           </div>
+          <div className="flex justify-center gap-3 py-10">{designLink}</div>
         </div>
         <div className="flex justify-evenly p-10">
           <div className="flex">
@@ -245,6 +246,7 @@ export default function TokenomicsDesignSpace(props) {
             </div>
           </div>
         </div>
+        <div className="flex justify-center gap-3 py-10">{designLink}</div>
         <div className="flex flex-col items-center bg-gray-100 p-10">
           <h1 className="prose mb-10 text-3xl font-bold leading-10 md:whitespace-nowrap">
             Tokenomics Audit
