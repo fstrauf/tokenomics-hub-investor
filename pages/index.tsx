@@ -12,6 +12,7 @@ import THUBFaqSection from '../components/static/THUBfaqSection'
 import Image from 'next/image'
 import { useState } from 'react'
 import { event } from 'nextjs-google-analytics'
+import THUBUseCaseSection from '../components/static/THUBUseCaseSection'
 
 type Props = {
   allPosts: any
@@ -167,6 +168,7 @@ const Index: React.FC<Props> = (props) => {
         </div>
         <hr className="my-4 mx-auto h-1 w-48 rounded border-0 bg-gray-100 dark:bg-gray-700 md:my-10"></hr>
         <THUBFaqSection />
+        <THUBUseCaseSection />
       </Layout>
     </>
   )
