@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 export default function THUBUseCaseSection() {
   return (
-    <>
+    <div className="prose prose-slate m-auto flex flex-col py-10 text-left text-gray-700 ">
       <h3 className="pr-2 text-xl">Use Cases:</h3>
       <div className="prose mt-4 flex flex-col items-center space-x-4">
         <Link
@@ -54,6 +54,6 @@ export default function THUBUseCaseSection() {
           Incentive Design
         </Link>
       </div>
-    </>
+    </div>
   )
 }
