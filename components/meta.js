@@ -38,7 +38,7 @@ export default function Meta() {
       <meta name="theme-color" content="#000" />
       <link rel="alternate" type="application/rss+xml" href="/feed.xml" />
       <meta
-        name="description"
+        name="Tokenomics Hub"
         content={`Explore, compare and evaluate tokenomics of crypto projects.`}
       />
       <meta property="og:image" content={HOME_OG_IMAGE_URL} />
