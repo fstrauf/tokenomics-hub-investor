@@ -3,40 +3,29 @@ import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
 
 export default function SubscriptionOptions() {
   const { user } = useUser()
-  // console.log("🚀 ~ file: SubscriptionOptions.tsx:6 ~ SubscriptionOptions ~ user:", user)
   return (
-    <div className="mt-10 flex items-center justify-center gap-8">
+    <div className="mt-10 flex flex-col lg:flex-row items-center justify-center gap-4 md:gap-8">
       <ProductCard
         title="Genesis"
         description="Ultimate DIY Tokenomics Design."
         price="USD $70/m"
-        // price="USD $70/m or $250/y"
         termsLink="/tokenomics-design#genesis"
         purchaseLink={{
           link: `https://buy.stripe.com/3cs6qBdfd9um4fK8wA?prefilled_email=${user?.primaryEmailAddress?.emailAddress}&client_reference_id=${user?.id}`,
           name: 'Purchase',
         }}
         included={["Full access to the Tokenomics Design Space",'Demand Side Tokenomics','Create/Work on unlimited token designs', 'unlimted access to example section']}
-        // purchaseLink2={{
-        //   link: `https://buy.stripe.com/5kAaGRa317me7rWaEJ?prefilled_email=${user?.primaryEmailAddress?.emailAddress}&client_reference_id=${user?.id}`,
-        //   name: 'Yearly',
-        // }}
       />
       <ProductCard
         title="Navigator"
         description="Ultimate Tokenomics Design + Support."
         price="USD $160/m"
-        // price="USD $160/m or $600/y"
         termsLink="/tokenomics-design#navigator"
         included={["Genesis Tier",'Chat Support: ask questions, our experts answer']}
         purchaseLink={{
           link: `https://buy.stripe.com/cN202dejh7mefYs28g?prefilled_email=${user?.primaryEmailAddress?.emailAddress}&client_reference_id=${user?.id}`,
           name: 'Purchase',
         }}
-        // purchaseLink2={{          
-        //   link: `https://buy.stripe.com/14kcOZ6QPgWO9A414a?prefilled_email=${user?.primaryEmailAddress?.emailAddress}&client_reference_id=${user?.id}`,
-        //   name: 'Yearly',
-        // }}
         highlight={true}
       />
       <ProductCard
@@ -46,9 +35,7 @@ export default function SubscriptionOptions() {
         termsLink="/tokenomics-design#frontier"
         included={["1 year Navigator subscription",'1x Tokenomics Audit by a Tokenomics DAO Expert (we ask questions)']}
         purchaseLink={{
-          // link: `https://buy.stripe.com/test_5kA4k98YwaUzgrCaEE?prefilled_email=${user.primaryEmailAddress.emailAddress}&client_reference_id=${user.id}`,
           link: `https://buy.stripe.com/5kAdT33EDfSKfYscMV?prefilled_email=${user?.primaryEmailAddress?.emailAddress}&client_reference_id=${user?.id}`,
-          // https://buy.stripe.com/dR6bKV8YXfSK7rW7sz
           name: 'Purchase',
         }}
       />

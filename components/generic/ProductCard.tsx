@@ -12,12 +12,12 @@ export default function ProductCard({
 }) {
   return (
     <div
-      className={`h-full w-full rounded-md bg-gradient-to-r ${
+      className={`h-full w-full max-w-[296px] rounded-md bg-gradient-to-r ${
         highlight ? 'from-dao-red to-dao-green p-1' : ''
       }  shadow-md`}
     >
       <div
-        className={`flex h-96 w-72 flex-col items-center justify-between rounded-lg bg-white p-4 `}
+        className={`flex h-96 w-[288px] flex-col items-center justify-between rounded-lg bg-white p-4 `}
       >
         <h2 className="text-center text-xl font-bold">{title}</h2>
         <p className="text-center text-gray-600">{description}</p>

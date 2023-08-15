@@ -14,10 +14,10 @@ export default function GenericPopover({ children, isOpen, setIsOpen }) {
         className="fixed inset-0 z-50 overflow-y-auto"
         onClose={() => setIsOpen(false)}
       >
-        <div className="flex min-h-screen items-center justify-center p-4">
+        <div className="flex min-h-screen items-center justify-center lg:p-4">
           <Dialog.Overlay className="fixed inset-0 bg-gray-500 bg-opacity-75" />
 
-          <div className="relative mx-auto h-3/4 w-3/4 rounded-lg bg-white">
+          <div className="relative mx-auto lg:h-3/4 lg:w-3/4 rounded-lg bg-white">
             <div className="absolute top-0 right-0 m-4 z-50">
               <button
                 type="button"

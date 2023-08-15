@@ -53,13 +53,14 @@ export default function TokenomicsDesignSpace(props) {
         <div>
           {isSignedIn ? (
             <>
-              <h1 className="mb-16 mt-10 flex items-center justify-center break-words text-[35px] leading-tight text-gray-600">
+              <h1 className="mb-8 mt-6 flex items-center justify-center break-words text-xl leading-tight text-gray-600 md:mb-16 md:mt-10">
                 Subscribe to save up to{' '}
-                <span className="ml-2 mr-2 inline-block font-oswald text-[35px] font-bold text-dao-green">
+                <span className="ml-1 mr-1 inline-block font-oswald text-xl font-bold text-dao-green md:ml-2 md:mr-2 md:text-[35px]">
                   12,000 USD
                 </span>
                 on your token design.
               </h1>
+
               <SubscriptionOptions />
               <div className="mt-14 flex justify-center">
                 <Image
@@ -73,7 +74,6 @@ export default function TokenomicsDesignSpace(props) {
               </div>
               <div className="mb-40"></div>
               <SubscriptionTC />
-
             </>
           ) : (
             <>
@@ -83,62 +83,64 @@ export default function TokenomicsDesignSpace(props) {
         </div>
       </GenericPopover>
 
-      <div className="container mx-auto px-4 py-16">
-        <div className="flex flex-col justify-center space-y-8 py-10">
+      <div className="container mx-auto px-4 py-16 md:px-6">
+        <div className="flex flex-col justify-center space-y-6 py-6 md:space-y-8 md:py-10 lg:space-y-8 lg:py-10">
           <div className="mb-3 text-center">
-            <h1 className="mb-10 flex items-center justify-center text-[60px] leading-10 text-gray-600 md:whitespace-nowrap">
+            <h1 className="mb-6 text-[25px] leading-7 text-gray-600 md:mb-10 md:text-[30px] md:leading-10 lg:mb-10 lg:text-[60px] lg:leading-10">
               Save up to{' '}
-              <span className="ml-2 mr-4 inline-block font-oswald text-[60px] font-bold text-dao-green">
+              <span className="mr-2 font-oswald text-xl text-[25px] font-bold text-dao-green md:text-[30px] lg:mr-4 lg:text-[60px]">
                 12,000 USD
               </span>
               on your token design.
             </h1>
           </div>
 
-          <div className="flex items-center justify-evenly space-x-8">
+          <div className="flex flex-col items-center justify-evenly space-y-4 md:space-y-0 md:space-x-8 lg:flex-row lg:space-y-0 lg:space-x-8">
             {/* Classic Consulting Section */}
             <div className="flex flex-col items-center space-y-4">
-              <h2 className="text-center text-5xl font-medium text-gray-600">
+              <h2 className="text-3xl font-medium text-gray-600 md:text-5xl lg:text-5xl">
                 Hire a Consultant?
               </h2>
-              <div className="w-96 rounded-md border border-dao-red bg-dao-red bg-opacity-25 p-3 text-center shadow-inner">
-                <p className="text-center text-2xl font-bold text-gray-600">
+              <div className="w-64 rounded-md border border-dao-red bg-dao-red bg-opacity-25 p-3 text-center shadow-inner md:w-96 lg:w-96 lg:p-6">
+                <p className="text-lg font-bold text-gray-600 md:text-2xl lg:mb-6 lg:text-2xl">
                   ... and pay min{' '}
                 </p>
-                <div className="relative flex items-center justify-center">
-                  <span className="mr-4 text-4xl">👎</span>
-                  <span className="inline-block w-72 font-oswald text-[50px] text-dao-red">
+                <div className="flex items-center justify-center">
+                  <span className="mr-2 text-3xl md:mr-4 lg:mr-4">👎</span>
+                  <span className="font-oswald text-3xl text-dao-red md:text-[50px] lg:text-[50px]">
                     15,000 USD
                   </span>
                 </div>
               </div>
             </div>
-            <div>
-              <p className="px-4 text-[70px]">🤷‍♀️</p>
+
+            <div className="my-4 text-center md:my-0 md:p-10 lg:my-0">
+              <p className="text-4xl md:text-[70px] lg:text-[70px]">🤷‍♀️</p>
             </div>
 
             {/* Tokenomics Design Space Section */}
             <div className="flex flex-col items-center space-y-4">
-              <h2 className="text-2xl text-5xl font-medium text-gray-600">
+              <h2 className="text-3xl font-medium text-gray-600 md:text-5xl lg:text-5xl">
                 Or DIY?
               </h2>
-              <p className="text-center">
+              <p className="text-center text-base md:text-lg lg:text-lg">
                 using our step by step guide, education & expert support...
               </p>
-              <div className="w-96 rounded-md border border-dao-green bg-dao-green bg-opacity-25 p-3 text-center shadow-inner">
-                <p className="text-center text-2xl font-bold text-gray-600">
+              <div className="w-64 rounded-md border border-dao-green bg-dao-green bg-opacity-25 p-3 text-center shadow-inner md:w-96 lg:w-96 lg:p-6">
+                <p className="text-lg font-bold text-gray-600 md:text-2xl lg:mb-6 lg:text-2xl">
                   ... and pay max{' '}
                 </p>
-                <div className="relative flex items-center justify-center">
-                  <span className="mr-4 text-4xl">👍</span>
-                  <span className="inline-block w-72 font-oswald text-[50px] text-dao-green">
+                <div className="flex items-center justify-center">
+                  <span className="mr-2 text-3xl md:mr-4 lg:mr-4">👍</span>
+                  <span className="font-oswald text-3xl text-dao-green md:text-[50px] lg:text-[50px]">
                     2,500 USD
                   </span>
                 </div>
               </div>
             </div>
           </div>
-          <div className="mt-8 flex justify-center">
+
+          <div className="flex justify-center pt-6 md:pt-8">
             <Image
               src="/tds_saving_barchart.png"
               width={670 / 1.5}
@@ -150,7 +152,7 @@ export default function TokenomicsDesignSpace(props) {
           <div className="flex justify-center gap-3">{designLink}</div>
         </div>
 
-        <div className="flex w-full justify-between gap-5 bg-gradient-to-r from-dao-green to-dao-red py-5 pt-10">
+        <div className="flex w-full flex-col lg:flex-row justify-between gap-5 bg-gradient-to-r from-dao-green to-dao-red py-5 pt-10">
           <div className="prose p-10">
             <h1 className="text-5xl font-bold leading-10 text-white md:whitespace-nowrap">
               Improved Tokenomics Calculator
@@ -175,7 +177,7 @@ export default function TokenomicsDesignSpace(props) {
               </ul>
             </div>
           </div>
-          <div className="m-10 w-[650px]">
+          <div className="m-10 lg:w-[650px]">
             {' '}
             <LiteYouTubeEmbed
               id="icWDmXFe7Bo"
@@ -185,7 +187,7 @@ export default function TokenomicsDesignSpace(props) {
         </div>
         <div className="flex justify-center gap-3">{designLink}</div>
 
-        <div className="flex justify-evenly p-10">
+        <div className="flex flex-col lg:flex-row justify-evenly p-10">
           <div className="prose pl-20">
             <h1 className="prose mb-10 text-3xl font-bold leading-10 md:whitespace-nowrap">
               Easy to use interface
@@ -234,8 +236,8 @@ export default function TokenomicsDesignSpace(props) {
           </div>
           <div className="flex justify-center gap-3 py-10">{designLink}</div>
         </div>
-        <div className="flex justify-evenly p-10">
-          <div className="flex">
+        <div className="flex flex-col lg:flex-row justify-evenly p-10">
+          <div className="flex mb-10">
             <div className="relative object-scale-down">
               <Image
                 width={1000 / 1.5}
