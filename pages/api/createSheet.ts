@@ -50,6 +50,7 @@ export default async function handler(
     };
   
     try {
+      // @ts-ignore
       const response = await sheets.spreadsheets.values.update({
         spreadsheetId: newSpreadSheetId,
         range: timeSeriesRange, // Update the desired sheet and range
