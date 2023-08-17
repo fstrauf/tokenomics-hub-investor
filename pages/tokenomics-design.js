@@ -52,38 +52,30 @@ export default function TokenomicsDesignSpace(props) {
       <Header2 mode={headerStatus.design} />
       <GenericPopover isOpen={isOpen} setIsOpen={setIsOpen}>
         <div>
-          {isSignedIn ? (
-            <>
-              <h1 className="mb-8 mt-6 items-center justify-center break-words text-xl leading-tight text-gray-600 md:mb-16 md:mt-10 md:text-[35px]">
-                Why pay more? Save up to{' '}
-                <span className="ml-1 mr-1 inline-block font-oswald text-xl font-bold text-dao-green md:ml-2 md:mr-2 md:text-[35px]">
-                  $12,000
-                </span>
-                on your token design.
-              </h1>
-              <SubscriptionOptions />
-              <UserCounter/>
-              <Testimonials/>
-              {/* testimonials
-              counter for number of subscribers / people that have used the tools */}
-              <div className="mt-14 flex justify-center">
-                <Image
-                  src="/tds_saving_barchart.png"
-                  width={670 / 1.5}
-                  height={482 / 1.5}
-                  className="rounded-md shadow-xl"
-                  priority={true}
-                  alt="Savings when comparing consulting to TDS"
-                />
-              </div>
-              <div className="mb-40"></div>
-              <SubscriptionTC />
-            </>
-          ) : (
-            <>
-              <UnAuthenticated />
-            </>
-          )}
+          <div>
+            <h1 className="mb-8 mt-6 items-center justify-center break-words text-xl leading-tight text-gray-600 md:mb-16 md:mt-10 md:text-[35px]">
+              Why pay more? Save up to{' '}
+              <span className="ml-1 mr-1 inline-block font-oswald text-xl font-bold text-dao-green md:ml-2 md:mr-2 md:text-[35px]">
+                $12,000
+              </span>
+              on your token design.
+            </h1>
+            <SubscriptionOptions />
+            <UserCounter />
+            <Testimonials />
+            <div className="mt-14 flex justify-center">
+              <Image
+                src="/tds_saving_barchart.png"
+                width={670 / 1.5}
+                height={482 / 1.5}
+                className="rounded-md shadow-xl"
+                priority={true}
+                alt="Savings when comparing consulting to TDS"
+              />
+            </div>
+            <div className="mb-40"></div>
+            <SubscriptionTC />
+          </>
         </div>
       </GenericPopover>
 
@@ -275,7 +267,7 @@ export default function TokenomicsDesignSpace(props) {
           </div>
         </div>
         <div className="flex justify-center gap-3 py-10">{designLink}</div>
-        <Testimonials/>
+        <Testimonials />
 
         <div className="flex flex-col items-center p-10">
           <h1 className="prose mb-10 text-3xl font-bold leading-10 md:whitespace-nowrap">
