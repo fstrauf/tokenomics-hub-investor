@@ -27,7 +27,7 @@ export default async function handler(
     res.status(400).json({})
   }
 
-  const evt = req.body.evt as WebhookEvent
+  const evt = msg as WebhookEvent
   switch (evt.type) {
     case 'user.created': // this is typed
       const primaryEmail = getPrimaryEmail(
