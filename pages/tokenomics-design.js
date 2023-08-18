@@ -52,9 +52,9 @@ export default function TokenomicsDesignSpace(props) {
       <Header2 mode={headerStatus.design} />
       <GenericPopover isOpen={isOpen} setIsOpen={setIsOpen}>
         <div>
-          <h1 className="mb-8 mt-6 items-center justify-center break-words text-xl leading-tight text-gray-600 md:mb-16 md:mt-10 md:text-[35px]">
+          <h1 className="mb-8 mt-6 items-center justify-center break-words text-2xl leading-tight text-gray-600 md:mb-16 md:mt-10 md:text-[35px]">
             Why pay more? Save up to{' '}
-            <span className="ml-1 mr-1 inline-block font-oswald text-xl font-bold text-dao-green md:ml-2 md:mr-2 md:text-[35px]">
+            <span className="ml-1 mr-1 inline-block font-oswald text-2xl font-bold text-dao-green md:ml-2 md:mr-2 md:text-[35px]">
               $12,000
             </span>
             on your token design.
@@ -80,10 +80,10 @@ export default function TokenomicsDesignSpace(props) {
       <div className="container mx-auto px-4 py-16 md:px-6">
         <div className="flex flex-col justify-center space-y-6 py-6 md:space-y-8 md:py-10 lg:space-y-8 lg:py-10">
           <div className="mb-3 text-center">
-            <h1 className="mb-6 text-[25px] leading-7 text-gray-600 md:mb-10 md:text-[30px] md:leading-10 lg:mb-10 lg:text-[60px] lg:leading-10">
+            <h1 className="mb-6 text-[35px] leading-7 text-gray-600 md:mb-10 md:leading-10 lg:mb-10 lg:text-[60px] lg:leading-10">
               Save up to{' '}
-              <span className="mr-2 font-oswald text-xl text-[25px] font-bold text-dao-green md:text-[30px] lg:mr-4 lg:text-[60px]">
-                12,000 USD
+              <span className="mr-2 font-oswald text-xl text-[35px] font-bold text-dao-green lg:mr-4 lg:text-[60px]">
+                $12,000
               </span>
               on your token design.
             </h1>

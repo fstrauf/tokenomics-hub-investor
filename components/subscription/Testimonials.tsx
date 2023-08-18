@@ -1,7 +1,7 @@
 export default function Testimonials() {
   return (
     <>
-     <div className="flex flex-col gap-5 items-center p-10">
+     <div className="flex flex-col gap-5 items-center lg:p-10">
           <h1 className="prose mb-10 text-3xl font-bold leading-10 md:whitespace-nowrap">
             What other users say
           </h1>
@@ -20,7 +20,7 @@ export default function Testimonials() {
                   />
                 </svg>
                 <blockquote>
-                  <p className="text-2xl font-medium text-gray-900 dark:text-white">
+                  <p className="lg:text-2xl font-medium text-gray-900 dark:text-white">
                     “Tokenomics DAO have performed a crucial audit of Goracle’s
                     Tokenomics. It provides investors and potential ecosystem
                     members with a trusted breakdown of how Goracle works and
@@ -63,7 +63,7 @@ export default function Testimonials() {
                   />
                 </svg>
                 <blockquote>
-                  <p className="text-2xl font-medium text-gray-900 dark:text-white">
+                  <p className="lg:text-2xl font-medium text-gray-900 dark:text-white">
                     “It was a pleasure working with Flo and Giorgio from the
                     Tokenomics DAO team. Incredibly knowledgeable and super nice
                     folk. We highly recommend to all beings.”
