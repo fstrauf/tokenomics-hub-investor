@@ -746,7 +746,7 @@ export async function uploadSpreadsheet(data) {
 
 export function getPrimaryEmail(emailAddresses, primaryEmailId) {
   const primaryEmail =
-    emailAddresses.find((email) => email.id === primaryEmailId)?.emailAddress ||
+    emailAddresses.find((email) => email.id === primaryEmailId)?.email_address ||
     ''
   return primaryEmail
 }
