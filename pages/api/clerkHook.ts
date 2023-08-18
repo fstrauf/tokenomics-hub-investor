@@ -30,6 +30,10 @@ export default async function handler(
   const evt = msg as WebhookEvent
   switch (evt.type) {
     case 'user.created': // this is typed
+      console.log(
+        '🚀 ~ file: clerkHook.ts:35 ~ evt.data?.email_addresses:',
+        evt.data?.email_addresses
+      )
       const primaryEmail = getPrimaryEmail(
         evt.data?.email_addresses,
         evt.data?.primary_email_address_id
@@ -47,6 +51,7 @@ export default async function handler(
         })
         console.log('🚀 ~ file: clerkHook.ts:49 ~ response:', response)
       } catch (error) {
+        console.log("🚀 ~ file: clerkHook.ts:54 ~ error:", error)
         return res
           .status(400)
           .json({ error: `Webhook Error: ${error.message}` })
