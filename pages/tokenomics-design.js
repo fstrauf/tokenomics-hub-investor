@@ -10,11 +10,11 @@ import { useRouter } from 'next/router'
 import GenericPopover from '../components/generic/GenericPopover'
 import SubscriptionOptions from '../components/subscription/SubscriptionOptions'
 import SubscriptionTC from '../components/subscription/SubscriptionTC'
-import UnAuthenticated from '../components/unauthenticated'
+// import UnAuthenticated from '../components/unauthenticated'
 import { getAuth } from '@clerk/nextjs/server'
 import React, { useState } from 'react'
 import { validateTierAccess } from '../lib/helper'
-import { useAuth } from '@clerk/nextjs'
+// import { useAuth } from '@clerk/nextjs'
 import { event } from 'nextjs-google-analytics'
 import Testimonials from '../components/subscription/Testimonials'
 import UserCounter from '../components/subscription/UserCounter'
@@ -22,7 +22,7 @@ import UserCounter from '../components/subscription/UserCounter'
 export default function TokenomicsDesignSpace(props) {
   const router = useRouter()
   const [isOpen, setIsOpen] = useState(false)
-  const { isSignedIn } = useAuth()
+  // const { isSignedIn } = useAuth()
 
   const handleDesignClick = () => {
     //record GA event
@@ -302,6 +302,9 @@ export const getServerSideProps = async ({ req, res }) => {
   const subscription = await prisma.subscriptions.findUnique({
     where: { authorClerkId: userIdUndefined },
   })
+
+
+
   return {
     props: {
       subscription: subscription || null,

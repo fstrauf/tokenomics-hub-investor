@@ -78,6 +78,8 @@ model Subscriptions {
   authorClerkId         String    @id
   stripeCustomerId      String    @unique @default(cuid())
   tier                  String
+  customerEmail         String?
+  subWOSignup           Boolean   @default(false)
   exampleSectionCounter Int?
   exampleViewStart      DateTime?
 }
@@ -229,7 +231,7 @@ model Mechanism {
   mechanismTypeId             String?
   templateSheet               String?
   post                        Post?                       @relation(fields: [postId], references: [id], onDelete: Cascade)
-  PostUser                    PostUser[] 
+  PostUser                    PostUser[]
   calculation                 Calculation?                @relation(fields: [calculationId], references: [id], onDelete: Cascade)
   CalculationTimeSeries       CalculationTimeSeries[]
   mechanismType               Mechanism?                  @relation("MechanismType", fields: [mechanismTypeId], references: [id], onDelete: NoAction, onUpdate: NoAction)

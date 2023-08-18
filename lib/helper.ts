@@ -221,7 +221,7 @@ export function getMonthEpochAreaData(
       }
     } else {
       // allocation remaining amount
-      emissions = rowAllocation 
+      emissions = rowAllocation
     }
 
     if (categoryLine['date'] === undefined) {
@@ -260,7 +260,6 @@ export function getMonthEpochAreaData(
 export function getAreaData(months, calculationRows, totalSupply, startDate) {
   var props = { chartData: [], supplyDemandTotals: [] }
 
-  
   calculationRows?.forEach((cr) => {
     const rowAllocation = (totalSupply * cr.percentageAllocation) / 100
     if (cr?.isSink) {
@@ -289,7 +288,7 @@ export function getAreaData(months, calculationRows, totalSupply, startDate) {
         )
       }
     }
-    // console.log("🚀 ~ file: helper.ts:265 ~ getAreaData ~ supplyDemandTotals:", props.supplyDemandTotals)  
+    // console.log("🚀 ~ file: helper.ts:265 ~ getAreaData ~ supplyDemandTotals:", props.supplyDemandTotals)
   })
   return props
 }
@@ -602,14 +601,11 @@ export function validateTierAccess(
   subscription: any,
   admin: boolean = false
 ): boolean {
-
   if (
     subscription?.tier === subTiers.genesis ||
     subscription?.tier === subTiers.frontier ||
     subscription?.tier === subTiers.navigator
   ) {
-    
-    
     console.log('user has subscriptiom')
     return true
   } else {
@@ -746,4 +742,11 @@ export async function uploadSpreadsheet(data) {
     // toast.error('An error occurred', { position: 'bottom-right' })
     return ''
   }
+}
+
+export function getPrimaryEmail(emailAddresses, primaryEmailId) {
+  const primaryEmail =
+    emailAddresses.find((email) => email.id === primaryEmailId)?.emailAddress ||
+    ''
+  return primaryEmail
 }

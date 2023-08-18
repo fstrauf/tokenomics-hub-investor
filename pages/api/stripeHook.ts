@@ -28,11 +28,13 @@ export default async function handler(
       )
       switch (event?.type) {
         case 'checkout.session.completed':
-          const userId = event.data.object?.client_reference_id
+          let userId = event.data.object?.client_reference_id
+          const email = event.data.object?.customer_details?.email
+          let subWOSignup = false
           
-          console.log("🚀 ~ file: stripeHook.ts:33 ~ userId:", userId)
-          if(!userId){
-            return res.status(200).json({ error: `Webhook Error: No Client Reference passed` })
+          if(!userId){          
+            userId = email
+            subWOSignup = true
           }        
           const checkoutSessionId = event.data.object?.id
           const customer = event.data.object?.customer
@@ -46,10 +48,6 @@ export default async function handler(
               }
             )
 
-            // console.log(
-            //   '🚀 ~ file: stripeHook.ts:50 ~ checkoutSession:',
-            //   checkoutSession
-            // )
             productTier = String(              
               checkoutSession.line_items.data[0].price.product
             )
@@ -70,6 +68,8 @@ export default async function handler(
                 authorClerkId: userId,
                 stripeCustomerId: customer,
                 tier: productTier,
+                subWOSignup: subWOSignup,
+                customerEmail: email,
               },
               update: {
                 stripeCustomerId: customer,
