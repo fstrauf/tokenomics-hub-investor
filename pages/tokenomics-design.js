@@ -22,20 +22,16 @@ import UserCounter from '../components/subscription/UserCounter'
 export default function TokenomicsDesignSpace(props) {
   const router = useRouter()
   const [isOpen, setIsOpen] = useState(false)
-  // const { isSignedIn } = useAuth()
 
   const handleDesignClick = () => {
-    //record GA event
     event(`landingPageDesignClick`, {
       category: 'UserAction',
-      // label: phase,
     })
-    if (validateTierAccess(props?.subscription)) {
-      // nav go page
+    // if (validateTierAccess(props?.subscription)) {
       router.push('/myDesigns')
-    } else {
-      setIsOpen(true)
-    }
+    // } else {
+    //   setIsOpen(true)
+    // }
   }
 
   const designLink = (

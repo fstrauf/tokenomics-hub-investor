@@ -8,12 +8,12 @@ import CommentForm from '../../components/commentForm'
 import Comments from '../../components/comments'
 import { useAuth } from '@clerk/nextjs'
 import UnAuthenticated from '../../components/unauthenticated'
-import { validateTierAccess } from '../../lib/helper'
+// import { validateTierAccess } from '../../lib/helper'
 import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
-import Link from 'next/link'
-import SubscriptionOptions from '../../components/subscription/SubscriptionOptions'
-import SubscriptionTC from '../../components/subscription/SubscriptionTC'
-import Layout from '../../components/layout'
+// import Link from 'next/link'
+// import SubscriptionOptions from '../../components/subscription/SubscriptionOptions'
+// import SubscriptionTC from '../../components/subscription/SubscriptionTC'
+// import Layout from '../../components/layout'
 
 const EditDesign: React.FC<UpdateNewDesignProps> = (props) => {
   const { user } = useUser()
@@ -27,18 +27,18 @@ const EditDesign: React.FC<UpdateNewDesignProps> = (props) => {
 
   return (
     <>
-      {validateTierAccess(props.Subscription, admin) ? (
-        <>
-          <TDFMain props={props} header={props?.post?.postType} />
-          <div className="m-auto max-w-md sm:max-w-2xl lg:max-w-screen-2xl">
-            <h1 className="section-head mt-10 mb-4 text-xl font-bold text-black md:mt-20 md:text-2xl lg:text-3xl">
-              Comments.
-            </h1>
-            <CommentForm id={props?.post?.id} />
-            <Comments comments={props?.post?.Comments} />
-          </div>
-        </>
-      ) : (
+      {/* {validateTierAccess(props.Subscription, admin) ? ( */}
+      <>
+        <TDFMain props={props} header={props?.post?.postType} />
+        <div className="m-auto max-w-md sm:max-w-2xl lg:max-w-screen-2xl">
+          <h1 className="section-head mt-10 mb-4 text-xl font-bold text-black md:mt-20 md:text-2xl lg:text-3xl">
+            Comments.
+          </h1>
+          <CommentForm id={props?.post?.id} />
+          <Comments comments={props?.post?.Comments} />
+        </div>
+      </>
+      {/* ) : (
         <Layout mode={headerStatus.design}>
           <div className="flex flex-col items-center justify-center gap-10">
             <h1 className="my-20 text-center text-2xl font-bold">
@@ -55,7 +55,7 @@ const EditDesign: React.FC<UpdateNewDesignProps> = (props) => {
             <SubscriptionTC />
           </div>
         </Layout>
-      )}
+      )} */}
     </>
   )
 }

@@ -17,10 +17,10 @@ import GenericPopover from '../components/generic/GenericPopover'
 import NewDesignMinimal from '../components/tdf/newDesignMinimal'
 import { useAuth } from '@clerk/nextjs'
 import UnAuthenticated from '../components/unauthenticated'
-import { validateTierAccess } from '../lib/helper'
+// import { validateTierAccess } from '../lib/helper'
 import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
-import SubscriptionOptions from '../components/subscription/SubscriptionOptions'
-import SubscriptionTC from '../components/subscription/SubscriptionTC'
+// import SubscriptionOptions from '../components/subscription/SubscriptionOptions'
+// import SubscriptionTC from '../components/subscription/SubscriptionTC'
 
 export default function MyDesigns(props) {
   // console.log("🚀 ~ file: myDesigns.tsx:26 ~ MyDesigns ~ props:", props)
@@ -43,7 +43,7 @@ export default function MyDesigns(props) {
       <>
         {isSignedIn ? (
           <>
-            {validateTierAccess(props.subscription, admin) ? (
+            {/* {validateTierAccess(props.subscription, admin) ? ( */}
               <>
                 <div className="my-10 w-full">
                   <div className="flex items-center justify-between gap-4 rounded-lg bg-gradient-to-r from-dao-red to-dao-green p-2">
@@ -119,7 +119,7 @@ export default function MyDesigns(props) {
                   </div>
                 </div>
               </>
-            ) : (
+            {/* ) : (
               <div className="flex flex-col items-center justify-center gap-10">
                 <h1 className="my-20 text-center text-2xl font-bold">
                   Subscribe to get full access to the Tokenomics Design Space
@@ -129,7 +129,7 @@ export default function MyDesigns(props) {
                 <div className="mb-40"></div>
                 <SubscriptionTC />
               </div>
-            )}
+            )} */}
           </>
         ) : (
           <UnAuthenticated />
