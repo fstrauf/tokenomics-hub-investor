@@ -83,7 +83,7 @@ const Index: React.FC<Props> = (props) => {
               <h2 className="text-center text-xl"> Tokenomics reports of leading crypto and web3 protocols</h2>
             </div>
             {showBanner && (
-              <div className="flex w-3/4 max-w-6xl items-center justify-center gap-5 rounded-lg bg-gradient-to-r from-dao-green to-dao-red p-5 text-white">
+              <div className="flex flex-col lg:flex-row lg:w-3/4 max-w-6xl items-center justify-center gap-5 rounded-lg bg-gradient-to-r from-dao-green to-dao-red p-5 text-white">
                 <div className="flex flex-col items-start justify-between">
                   <h2 className="mb-5 text-2xl font-bold">
                     Interested in Crypto Token Design?
