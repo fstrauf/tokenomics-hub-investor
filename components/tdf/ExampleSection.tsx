@@ -45,8 +45,11 @@ export default function ExampleSection({
   const admin = user?.publicMetadata?.admin || false
 
   async function handleDetailClicked(c) {
+    console.log("🚀 ~ file: ExampleSection.tsx:50 ~ handleDetailClicked ~ c:", c)
+    
     //check subscription
     const trialStatus = await validateFreeTrialExamples(props?.Subscription, admin, user?.id)
+    console.log("🚀 ~ file: ExampleSection.tsx:54 ~ handleDetailClicked ~ trialStatus:", trialStatus)
     
     if (trialStatus) {
       
@@ -85,7 +88,7 @@ export default function ExampleSection({
     )
   }
 
-  if (exampleDetail !== undefined) {
+  if (exampleDetail !== undefined && exampleDetail !== null) {
     ExampleDetail = exampleDetail
   }
 
