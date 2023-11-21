@@ -57,7 +57,8 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     },
     orderBy:{
       publishedAt: 'desc',
-    }
+    },
+    take: 400,
   })
 
   const userId = posts

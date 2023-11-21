@@ -11,7 +11,7 @@ export const MechanismTile = ({
   return (
     <div
       key={index}
-      className="grid h-24 w-36 content-between rounded-md border-2 border-dao-green p-1 text-xs"
+      className="grid h-28 w-36 content-between rounded-md border-2 border-dao-green p-1 text-xs"
     >
       <div>
         <div className="flex">

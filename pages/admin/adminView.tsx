@@ -280,6 +280,10 @@ export async function getStaticProps() {
       status: true,
       postType: true,
     },
+    orderBy:{
+      publishedAt: 'desc',
+    },
+    take: 400,
   })
 
   return {
