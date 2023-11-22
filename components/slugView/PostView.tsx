@@ -84,6 +84,7 @@ export default function PostView({ post, author }) {
               shortDescription={post.shortDescription}
               cats={post.categories}
               tags={post.tags}
+              publishDate={post.publishedAt}
               tokenStrength={Number(getTotalStrength(post?._avg).toFixed(1))}
               ticker={post.ticker}
               imageUrl={post.mainImageUrl}

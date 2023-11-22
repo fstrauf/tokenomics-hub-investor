@@ -15,6 +15,7 @@ export default function PostHeader({
   ticker,
   imageUrl,
   isOfficial,
+  publishDate
 }) {
   return (
     <div key={title}>
@@ -82,7 +83,8 @@ export default function PostHeader({
           {isOfficial && (
             <>
               <Tooltip
-                title={`audited by Tokenomics DAO on 21/06/2023`}
+                title={`audited by Tokenomics DAO on ${publishDate.toISOString().slice(0, 10)}`}
+                // title={publishDate.toISOString().slice(0, 10)}
                 arrow
                 position="left"
                 trigger="mouseenter"
