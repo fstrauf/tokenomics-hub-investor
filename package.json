@@ -65,6 +65,7 @@
     "formik": "^2.4.2",
     "googleapis": "^118.0.0",
     "html-react-parser": "^3.0.4",
+    "json2csv": "^6.0.0-alpha.2",
     "lodash.debounce": "^4.0.8",
     "micro": "^10.0.1",
     "micromark": "^3.1.0",

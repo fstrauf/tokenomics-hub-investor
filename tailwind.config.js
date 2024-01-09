@@ -11,7 +11,7 @@ module.exports = {
       colors: {
         'dao-red': '#FF6666',
         'dao-green': '#008090',
-        'dark-tdao': 'rgb(16 22 35)',
+        'dark-tdao': '#101623',
         'accent-7': '#333',
         success: '#0070f3',
         cyan: '#79FFE1',

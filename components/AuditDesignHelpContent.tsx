@@ -23,11 +23,11 @@ export default function AuditDesignHelpContent() {
               <ProductCard
                 title="Audit of Tokenomics Design Space"
                 description="Get an expert to audit your design in the Tokenomics Design Space."
-                price="USD $2000"
+                // price="USD $2000"
                 termsLink="/audit-design-help#review-of-tokenomics-design"
                 purchaseLink={{
-                  link: `https://buy.stripe.com/14k02da31dKCbIc9AC`,
-                  name: 'Purchase',
+                  link: `/audit-design-help#contact-us`,
+                  name: 'Contact Us',
                 }}
                 highlight={true}
               />
