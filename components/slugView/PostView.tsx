@@ -230,14 +230,18 @@ export default function PostView({ post, author }) {
                 </div>
               </div>
             </main>
-            <h1 className="section-head mt-10 mb-4 text-xl font-bold text-black md:mt-20 md:text-2xl lg:text-3xl">
-              Author.
-            </h1>
 
             {!post.isOfficial ? (
-              <AuthorCard author={author} />
+              // <AuthorCard author={author} />
+              <></>
             ) : (
-              <ProtocolCard author={author} post={post} />
+              <>
+                {' '}
+                <h1 className="section-head mt-10 mb-4 text-xl font-bold text-black md:mt-20 md:text-2xl lg:text-3xl">
+                  Author.
+                </h1>
+                <ProtocolCard author={author} post={post} />
+              </>
             )}
           </article>
           <SectionSeparator />
