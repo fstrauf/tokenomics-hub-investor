@@ -61,7 +61,7 @@ export default function ExampleSection({
       })
     } else {      
       //show subscription popup
-      setIsOpen(true)
+      // setIsOpen(true)
       
     }
   }
@@ -106,13 +106,12 @@ export default function ExampleSection({
     if (isLoading) return <div className="skeleton">loading</div>
     return (
       <div>
-        <GenericPopover isOpen={isOpen} setIsOpen={setIsOpen}>
+        {/* <GenericPopover isOpen={isOpen} setIsOpen={setIsOpen}>
           <div>
             <h1 className='text-center font-bold'>You have reached 3 weekly examples, subscribe for more.</h1>
-            {/* <SubscriptionTable /> */}
             <SubscriptionOptions/>
           </div>
-        </GenericPopover>
+        </GenericPopover> */}
         <div className="m-auto mt-3 flex max-w-5xl lg:w-1/2">
           <Select
             defaultValue={catFilters}
