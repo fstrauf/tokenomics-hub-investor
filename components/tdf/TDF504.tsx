@@ -8,10 +8,10 @@ import { useEffect } from 'react'
 import { designElementStatusUpdate } from '../../lib/designElementStatusField'
 import WalkthroughSection from './WalkthroughSection'
 import FormErrorMessage from '../form/FormErrorMessage'
-import { validateTierAccess } from '../../lib/helper'
+// import { validateTierAccess } from '../../lib/helper'
 import { useUser } from '@clerk/clerk-react/dist/hooks/useUser'
-import DemandIntro from './DemandIntro'
-import Link from 'next/link'
+// import DemandIntro from './DemandIntro'
+// import Link from 'next/link'
 
 
 export default function TDF504({
@@ -54,7 +54,7 @@ export default function TDF504({
       <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 ">
         {designPhase.name}
       </h5>
-      {validateTierAccess(props.Subscription, admin) ? (
+      {/* {validateTierAccess(props.Subscription, admin) ? (
         <></>
       ) : (
         <>
@@ -76,7 +76,7 @@ export default function TDF504({
             </div>
           </div>
         </>
-      )}
+      )} */}
       <label className="mb-2 block text-xs font-medium text-gray-900">
         Total Supply
       </label>

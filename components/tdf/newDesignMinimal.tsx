@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import { Field, Form, Formik } from 'formik'
 import toast, { Toaster } from 'react-hot-toast'
 import { useRouter } from 'next/router'
-import { validateTierAccess } from '../../lib/helper'
-import SubscriptionOptions from '../subscription/SubscriptionOptions'
+// import { validateTierAccess } from '../../lib/helper'
+// import SubscriptionOptions from '../subscription/SubscriptionOptions'
 
 export default function NewDesignMinimal({ newPost, postCount, subscription }) {
   const router = useRouter()
@@ -36,12 +36,12 @@ export default function NewDesignMinimal({ newPost, postCount, subscription }) {
     }
   }
 
-  if(postCount >=3 && !validateTierAccess(subscription) ) return(
-    <div>
-    <h1 className='text-center font-bold'>You have reached 3 free designs, subscribe for more.</h1>
-    <SubscriptionOptions/>
-  </div>
-  )
+  // if(postCount >=3 && !validateTierAccess(subscription) ) return(
+  //   <div>
+  //   <h1 className='text-center font-bold'>You have reached 3 free designs, subscribe for more.</h1>
+  //   <SubscriptionOptions/>
+  // </div>
+  // )
 
   return (
     <>
