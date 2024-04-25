@@ -6,7 +6,8 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        oswald: ['"Oswald"']
+        oswald: ['"Oswald"', 'sans-serif'],
+        sora: ['"Sora"', 'sans-serif']
       },
       colors: {
         'dao-red': '#FF6666',

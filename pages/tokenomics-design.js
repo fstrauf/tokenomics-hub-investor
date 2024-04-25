@@ -1,290 +1,199 @@
-import Image from 'next/image'
 import Header2 from '../components/header2'
 import prisma from '../lib/prisma'
-import ThubLogo from '../public/svg/thub-logo'
-import LiteYouTubeEmbed from 'react-lite-youtube-embed'
 import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css'
-import FaqSection from '../components/static/TDSfaqSection'
 import { headerStatus } from '../lib/helper'
 import { useRouter } from 'next/router'
-import GenericPopover from '../components/generic/GenericPopover'
-import SubscriptionOptions from '../components/subscription/SubscriptionOptions'
-import SubscriptionTC from '../components/subscription/SubscriptionTC'
-// import UnAuthenticated from '../components/unauthenticated'
 import { getAuth } from '@clerk/nextjs/server'
-import React, { useState } from 'react'
-import { validateTierAccess } from '../lib/helper'
-// import { useAuth } from '@clerk/nextjs'
+import React from 'react'
 import { event } from 'nextjs-google-analytics'
-import Testimonials from '../components/subscription/Testimonials'
-import UserCounter from '../components/subscription/UserCounter'
+import ThubLogo from '../public/svg/thub-logo'
 
 export default function TokenomicsDesignSpace(props) {
   const router = useRouter()
-  const [isOpen, setIsOpen] = useState(false)
+  // const [isOpen, setIsOpen] = useState(false)
 
   const handleDesignClick = () => {
     event(`landingPageDesignClick`, {
       category: 'UserAction',
     })
     // if (validateTierAccess(props?.subscription)) {
-      router.push('/myDesigns')
+    router.push('/myDesigns')
     // } else {
     //   setIsOpen(true)
     // }
   }
 
+  const PlusSign = () => {
+    return (
+      <svg
+        width="40"
+        height="41"
+        viewBox="0 0 40 41"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M20.75 8C20.75 7.58579 20.4142 7.25 20 7.25C19.5858 7.25 19.25 7.58579 19.25 8H20.75ZM19.25 33C19.25 33.4142 19.5858 33.75 20 33.75C20.4142 33.75 20.75 33.4142 20.75 33H19.25ZM32.5 21.25C32.9142 21.25 33.25 20.9142 33.25 20.5C33.25 20.0858 32.9142 19.75 32.5 19.75V21.25ZM7.5 19.75C7.08579 19.75 6.75 20.0858 6.75 20.5C6.75 20.9142 7.08579 21.25 7.5 21.25L7.5 19.75ZM19.25 8V33H20.75V8H19.25ZM32.5 19.75L7.5 19.75L7.5 21.25L32.5 21.25V19.75Z"
+          fill="#000F21"
+        />
+      </svg>
+    )
+  }
+
+  const ForgdLogo = () => {
+    return (
+      <svg
+        width="100"
+        height="101"
+        viewBox="0 0 100 101"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <rect
+          x="0.5"
+          y="1"
+          width="99"
+          height="99"
+          rx="23.5"
+          fill="url(#paint0_linear_76_3632)"
+        />
+        <rect x="0.5" y="1" width="99" height="99" rx="23.5" stroke="#95958D" />
+        <g filter="url(#filter0_i_76_3632)">
+          <path
+            d="M31.5272 67.3545L47.2244 30.7H87.4001L83.2269 40.348C82.6013 41.7943 81.4309 42.8917 79.9018 43.4657L55.7933 52.5152C53.4383 53.3992 54.1107 56.8841 56.8307 57.8916L59.2884 58.8019C60.5049 59.2525 61.234 60.5715 60.8232 61.5786L57.8275 68.9221C57.4784 69.778 56.6386 70.2999 55.6106 70.2999H33.8352C32.2856 70.2999 30.9796 68.6332 31.5272 67.3545Z"
+            fill="#C7C7BE"
+          />
+        </g>
+        <g filter="url(#filter1_i_76_3632)">
+          <path
+            d="M15.52 37.5C12.5322 44.2024 19.3017 53.1 27.3888 53.1H28.7491C29.1025 53.1 29.393 52.9213 29.5195 52.6261L36 37.5H15.52Z"
+            fill="#C7C7BE"
+          />
+        </g>
+        <defs>
+          <filter
+            id="filter0_i_76_3632"
+            x="31.4001"
+            y="30.7"
+            width="56.2"
+            height="39.8"
+            filterUnits="userSpaceOnUse"
+            color-interpolation-filters="sRGB"
+          >
+            <feFlood flood-opacity="0" result="BackgroundImageFix" />
+            <feBlend
+              mode="normal"
+              in="SourceGraphic"
+              in2="BackgroundImageFix"
+              result="shape"
+            />
+            <feColorMatrix
+              in="SourceAlpha"
+              type="matrix"
+              values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+              result="hardAlpha"
+            />
+            <feOffset dx="0.4" dy="0.8" />
+            <feGaussianBlur stdDeviation="0.1" />
+            <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
+            <feColorMatrix
+              type="matrix"
+              values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0"
+            />
+            <feBlend
+              mode="normal"
+              in2="shape"
+              result="effect1_innerShadow_76_3632"
+            />
+          </filter>
+          <filter
+            id="filter1_i_76_3632"
+            x="14.8"
+            y="37.5"
+            width="21.4"
+            height="15.8"
+            filterUnits="userSpaceOnUse"
+            color-interpolation-filters="sRGB"
+          >
+            <feFlood flood-opacity="0" result="BackgroundImageFix" />
+            <feBlend
+              mode="normal"
+              in="SourceGraphic"
+              in2="BackgroundImageFix"
+              result="shape"
+            />
+            <feColorMatrix
+              in="SourceAlpha"
+              type="matrix"
+              values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+              result="hardAlpha"
+            />
+            <feOffset dx="0.4" dy="0.8" />
+            <feGaussianBlur stdDeviation="0.1" />
+            <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
+            <feColorMatrix
+              type="matrix"
+              values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0"
+            />
+            <feBlend
+              mode="normal"
+              in2="shape"
+              result="effect1_innerShadow_76_3632"
+            />
+          </filter>
+          <linearGradient
+            id="paint0_linear_76_3632"
+            x1="50"
+            y1="0.5"
+            x2="50"
+            y2="100.5"
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop stop-color="#021842" />
+            <stop offset="1" stop-color="#001221" />
+          </linearGradient>
+        </defs>
+      </svg>
+    )
+  }
+
   const designLink = (
-    <button
-      onClick={handleDesignClick}
-      className="mt-5 rounded-md bg-dao-red px-6 py-4 text-lg font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
-    >
-      Design Your Token Now
+    <button onClick={handleDesignClick}>
+      <div className="font-sora text-base font-semibold leading-6 text-white">
+        Design Your Token Now
+      </div>
     </button>
   )
 
   return (
     <>
       <Header2 mode={headerStatus.design} />
-      <GenericPopover isOpen={isOpen} setIsOpen={setIsOpen}>
-        <div>
-          <h1 className="mb-8 mt-6 items-center justify-center break-words text-2xl leading-tight text-gray-600 md:mb-16 md:mt-10 md:text-[35px]">
-            Why pay more? Save up to{' '}
-            <span className="ml-1 mr-1 inline-block font-oswald text-2xl font-bold text-dao-green md:ml-2 md:mr-2 md:text-[35px]">
-              $12,000
-            </span>
-            on your token design.
-          </h1>
-          <SubscriptionOptions />
-          <UserCounter />
-          <Testimonials />
-          <div className="mt-14 flex justify-center">
-            <Image
-              src="/tds_saving_barchart.png"
-              width={670 / 1.5}
-              height={482 / 1.5}
-              className="rounded-md shadow-xl"
-              priority={true}
-              alt="Savings when comparing consulting to TDS"
-            />
-          </div>
-          <div className="mb-40"></div>
-          <SubscriptionTC />
-        </div>
-      </GenericPopover>
-
-      <div className="container mx-auto px-4 py-16 md:px-6">
-        <div className="flex flex-col justify-center space-y-6 py-6 md:space-y-8 md:py-10 lg:space-y-8 lg:py-10">
-          <div className="mb-3 text-center">
-            <h1 className="mb-6 text-[35px] leading-7 text-gray-600 md:mb-10 md:leading-10 lg:mb-10 lg:text-[60px] lg:leading-10">
-              Save up to{' '}
-              <span className="mr-2 font-oswald text-xl text-[35px] font-bold text-dao-green lg:mr-4 lg:text-[60px]">
-                $12,000
-              </span>
-              on your token design.
-            </h1>
+      <div className="flex items-center justify-center p-28">
+        <div className="inline-flex h-[650px] w-[910px] flex-col items-center justify-center gap-6 rounded-lg bg-neutral-200 py-8">
+          <div className="inline-flex items-center justify-start gap-6">
+            <ForgdLogo />
+            <div className="relative h-10 w-10">
+              <PlusSign />
+            </div>
+            <div className="h-[100px] w-[100px]">
+              <ThubLogo />
+            </div>
           </div>
 
-          <div className="flex flex-col items-center justify-evenly space-y-4 md:space-y-0 md:space-x-8 lg:flex-row lg:space-y-0 lg:space-x-8">
-            {/* Classic Consulting Section */}
-            <div className="flex flex-col items-center space-y-4">
-              <h2 className="text-3xl font-medium text-gray-600 md:text-5xl lg:text-5xl">
-                Hire a Consultant?
-              </h2>
-              <div className="w-64 rounded-md border border-dao-red bg-dao-red bg-opacity-25 p-3 text-center shadow-inner md:w-96 lg:w-96 lg:p-6">
-                <p className="text-lg font-bold text-gray-600 md:text-2xl lg:mb-6 lg:text-2xl">
-                  ... and pay min{' '}
-                </p>
-                <div className="flex items-center justify-center">
-                  <span className="mr-2 text-3xl md:mr-4 lg:mr-4">👎</span>
-                  <span className="font-oswald text-3xl text-dao-red md:text-[50px] lg:text-[50px]">
-                    15,000 USD
-                  </span>
-                </div>
+          <div className="flex w-full flex-col items-center justify-center">
+            <div className="mx-auto flex max-w-[800px] flex-col items-center justify-start gap-2 self-stretch">
+              <div className="text-slate-950 self-stretch text-center font-sora text-4xl font-semibold leading-[54px]">
+                Tokenomics Hub is now part of Forgd
               </div>
-            </div>
-
-            <div className="my-4 text-center md:my-0 md:p-10 lg:my-0">
-              <p className="text-4xl md:text-[70px] lg:text-[70px]">🤷‍♀️</p>
-            </div>
-
-            {/* Tokenomics Design Space Section */}
-            <div className="flex flex-col items-center space-y-4">
-              <h2 className="text-3xl font-medium text-gray-600 md:text-5xl lg:text-5xl">
-                Or DIY?
-              </h2>
-              <p className="text-center text-base md:text-lg lg:text-lg">
-                using our step by step guide, education & expert support...
-              </p>
-              <div className="w-64 rounded-md border border-dao-green bg-dao-green bg-opacity-25 p-3 text-center shadow-inner md:w-96 lg:w-96 lg:p-6">
-                <p className="text-lg font-bold text-gray-600 md:text-2xl lg:mb-6 lg:text-2xl">
-                  ... and pay max{' '}
-                </p>
-                <div className="flex items-center justify-center">
-                  <span className="mr-2 text-3xl md:mr-4 lg:mr-4">👍</span>
-                  <span className="font-oswald text-3xl text-dao-green md:text-[50px] lg:text-[50px]">
-                    2,500 USD
-                  </span>
-                </div>
+              <div className="self-stretch text-center font-sora text-xl font-normal leading-7 text-[#000F21]">
+                If you have previously used Tokenomics Design Space and want to
+                continue using it, access it below.
               </div>
             </div>
           </div>
-
-          <div className="flex justify-center pt-6 md:pt-8">
-            <Image
-              src="/tds_saving_barchart.png"
-              width={670 / 1.5}
-              height={482 / 1.5}
-              className="rounded-md shadow-xl"
-              alt="Savings when comparing consulting to TDS"
-            />
+          <div className="border-radius: 8px border- inline-flex h-[60px] w-[280px] items-center justify-center gap-2 rounded-lg bg-[#000F21] px-[40px] py-2.5">
+            <div className="flex items-center justify-center">{designLink}</div>
           </div>
-          <div className="flex justify-center gap-3">{designLink}</div>
-        </div>
-
-        <div className="flex w-full flex-col justify-between gap-5 bg-gradient-to-r from-dao-green to-dao-red py-5 pt-10 lg:flex-row">
-          <div className="prose p-10">
-            <h1 className="text-5xl font-bold leading-10 text-white md:whitespace-nowrap">
-              Improved Tokenomics Calculator
-            </h1>
-            <h2 className="mt-0 font-normal text-white">
-              Design Sustainable Tokenomics
-            </h2>
-            <div className="prose flex flex-col p-3 text-white">
-              <p>
-                Designing tokenomics in a spreadsheet can be complicated and
-                frustrating. Simplify the process with Tokenomics Design Space
-              </p>
-              <ul className="prose text-white">
-                <li>
-                  Easy to use interface with built in step by step process
-                </li>
-                <li>
-                  Contextual insights on similar projects in the same niche
-                </li>
-                <li>Framework for estimating demand</li>
-                <li>Get your tokenomics audited by an expert</li>
-              </ul>
-            </div>
-          </div>
-          <div className="m-10 lg:w-[650px]">
-            {' '}
-            <LiteYouTubeEmbed
-              id="icWDmXFe7Bo"
-              title="Tokenomics Design Space Walkthrough Video"
-            />
-          </div>
-        </div>
-        <div className="flex justify-center gap-3">{designLink}</div>
-
-        <div className="flex flex-col justify-evenly p-10 lg:flex-row">
-          <div className="prose pl-20">
-            <h1 className="prose mb-10 text-3xl font-bold leading-10 md:whitespace-nowrap">
-              Easy to use interface
-            </h1>
-            <div className="flex flex-col gap-4 text-xl">
-              <p>
-                Tokenomics Design Space offers an intuitive interface that
-                simplifies the token design process.
-              </p>
-              <p>
-                If you’ve ever felt like you’re leaving out an important step or
-                simply don’t know what the next step in the design process is,
-                we’ve got you covered.
-              </p>
-            </div>
-          </div>
-          <div className="relative">
-            <Image
-              width={1191}
-              height={948}
-              src="/demandCalcHalf.png"
-              className="rounded-md shadow-xl"
-              alt="Token Editor Flow"
-            />
-          </div>
-        </div>
-        <div className="flex justify-center gap-3 py-10">{designLink}</div>
-
-        <div className="flex flex-col items-center bg-gray-100 p-5">
-          <h1 className="prose mb-10 text-3xl font-bold leading-10 md:whitespace-nowrap">
-            Put your design into perspective
-          </h1>
-          <p className="prose mt-5 p-10 text-center text-xl">
-            We show you relevant data, examples and the industry standard of
-            similar projects to help you make better design decisions through
-            every step of the way
-          </p>
-          <div className="relative object-scale-down">
-            <Image
-              src="/Example.png"
-              width={2550 / 2}
-              height={606 / 2}
-              className="rounded-md shadow-xl"
-              alt="Examples help to break diwn the complexity of token design"
-            />
-          </div>
-          <div className="flex justify-center gap-3 py-10">{designLink}</div>
-        </div>
-        <div className="flex flex-col justify-evenly p-10 lg:flex-row">
-          <div className="mb-10 flex">
-            <div className="relative object-scale-down">
-              <Image
-                width={1000 / 1.5}
-                height={292 / 1.5}
-                src="/supply_vs_demand.png"
-                className="rounded-md shadow-xl"
-                alt="Compare supply and demand"
-              />
-            </div>
-          </div>
-          <div className="prose">
-            <h1 className="mb-10 text-3xl font-bold leading-10 md:whitespace-nowrap">
-              Estimate your Token Demand
-            </h1>
-            <div className="prose flex flex-col p-3">
-              <p>
-                Tokenomics Design Space provides a framework for estimating
-                token demand in 3 simple steps:
-              </p>
-              <ol className="prose">
-                <li>
-                  Easy to use interface with built in step by step process
-                </li>
-                <li>
-                  Contextual insights on similar projects in the same niche
-                </li>
-                <li>Framework for estimating demand</li>
-                <li>Get your tokenomics audited by an expert</li>
-              </ol>
-            </div>
-          </div>
-        </div>
-        <div className="flex justify-center gap-3 py-10">{designLink}</div>
-        <Testimonials />
-
-        <div className="flex flex-col items-center p-10">
-          <h1 className="prose mb-10 text-3xl font-bold leading-10 md:whitespace-nowrap">
-            Tokenomics Audit
-          </h1>
-          <p className="prose mt-5 text-center text-xl">
-            Get a Tokenomics DAO expert to audit your tokenomics and provide
-            feedback, guidance and even design help
-          </p>
-          <div className="m-10 h-24 w-24">
-            <ThubLogo />
-          </div>
-        </div>
-        <FaqSection />
-        <div className="flex w-full flex-col justify-between gap-5 bg-gradient-to-r from-dao-green to-dao-red py-5 pt-10">
-          <h1 className="prose text-center text-4xl font-bold leading-10 text-white md:whitespace-nowrap">
-            Build better Tokenomics Easily
-          </h1>
-          <p className="mt-5 text-center text-xl text-white">
-            Powerful and simple to use tokenomics design software to help you
-            create a sustainable token economy
-          </p>
-          <div className="flex justify-center gap-3">{designLink}</div>
         </div>
       </div>
     </>
@@ -298,8 +207,6 @@ export const getServerSideProps = async ({ req, res }) => {
   const subscription = await prisma.subscriptions.findUnique({
     where: { authorClerkId: userIdUndefined },
   })
-
-
 
   return {
     props: {
