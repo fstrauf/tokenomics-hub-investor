@@ -10,5 +10,13 @@
       "path": "/api/syncStripe",
       "schedule": "0 5 * * *"
     }
+  ],
+    "redirects": [
+    {
+      "source": "https://tokenomicshub.xyz",
+      "destination": "https://tokenomicsdao.forgd.com",
+      "permanent": true,
+      "statusCode": 301
+    }
   ]
 }
