@@ -13,7 +13,7 @@
   ],
     "redirects": [
     {
-      "source": "/",
+      "source": "^/(?!.*\\.)",
       "destination": "https://tokenomicsdao.forgd.com",
       "permanent": true,
       "statusCode": 301
