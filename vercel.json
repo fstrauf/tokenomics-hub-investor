@@ -13,7 +13,7 @@
   ],
     "redirects": [
     {
-      "source": "https://tokenomicshub.xyz",
+      "source": "/",
       "destination": "https://tokenomicsdao.forgd.com",
       "permanent": true,
       "statusCode": 301
